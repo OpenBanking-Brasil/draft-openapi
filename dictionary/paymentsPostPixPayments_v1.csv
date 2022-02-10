@@ -45,7 +45,7 @@ PART
 ACSP 
 ACSC 
 ACCC 
-RJCT";1;1;"";Não permitido;string;PDNG
+RJCT";1;1;"";Não permitido;string;RJCT
 /data/rejectionReason;rejectionReason;"Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.
 ABORTED_SETTLEMENT_TIMEOUT - Liquidação da transação interrompida devido a timeout no SPI (AB03).
 ERROR_CREDITOR_AGENT - Transação interrompida devido a erro no participante do usuário recebedor (AB09).
@@ -148,7 +148,7 @@ QRDN
 QRES 
 INIC";1;1;"";Não permitido;string;DICT
 /data/cnpjInitiator;cnpjInitiator;CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135
-/data/payment;payment;Objeto contendo dados do pagameto como moeda e valor.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;
+/data/payment;payment;Objeto contendo dados do pagamento como moeda e valor.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;
 /data/payment/amount;amount;Valor da transação com 2 casas decimais.;Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12
 /data/payment/currency;currency;"Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.  
 Todos os valores monetários informados estão representados com a moeda vigente do Brasil.";Texto;3;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL
@@ -163,20 +163,21 @@ A detentora de conta deve validar se a condicionalidade do campo foi atendida pe
 /data/remittanceInformation;remittanceInformation;Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.;Texto;140;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Pagamento da nota RSTO035-002.
 /data/creditorAccount;creditorAccount;Objeto que contém a identificação da conta de destino do beneficiário/recebedor.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;
 /data/creditorAccount/ispb;ispb;Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.;Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;12345678
-/data/creditorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito.  
-(Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,  
+/data/creditorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito.
+(Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,
 no exercício de atividades da instituição, não podendo ser móvel ou transitória).";Texto;4;Condicional;^\d{4}$;;0;1;" Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
 ";Não permitido;string;1774
-/data/creditorAccount/number;number;"Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),  
+/data/creditorAccount/number;number;"Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),
 se houver valor alfanumérico, este deve ser convertido para 0.";Texto;20;Obrigatório;^\d{3,20}$;;1;1;"";Não permitido;string;1234567890
-/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento via Pix.  
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
-conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
-Segue descrição de cada valor do ENUM para o escopo do Pix.  
-CACC - Current - Conta Corrente.  
-SLRY - Salary - Conta-Salário.  
-SVGS - Savings - Conta de Poupança.  
-TRAN - TransactingAccount - Conta de Pagamento pré-paga.";Texto;4;Obrigatório;;"CACC 
+/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento via Pix.
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,
+conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
+Segue descrição de cada valor do ENUM para o escopo do Pix.
+CACC - Current - Conta Corrente.
+SLRY - Salary - Conta-Salário.
+SVGS - Savings - Conta de Poupança.
+TRAN - TransactingAccount - Conta de Pagamento pré-paga.";Texto;4;Condicional;;"CACC 
 SLRY 
 SVGS 
-TRAN";1;1;"";Não permitido;string;CACC
+TRAN";1;1;" O <b>campo data.payment.creditorAccount.accountType</b> quando o arranjo alvo for TED só suportará os tipos <b>CACC</b> (Conta corrente), <b>SVGS</b> (Poupança) e <b>TRAN</b> (Conta de Pagamento pré-paga).<br/><br/>
+";Não permitido;string;CACC
