@@ -243,7 +243,11 @@ components:
           type: string
           format: uri
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: |
+            O atributo self do objeto link:
+
+            1 - Quando chamado método GET deverá retornar o link para o próprio recurso consultado.    
+            2 - Quando chamado método POST deverá retornar o link para o recurso criado.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
@@ -317,47 +321,7 @@ components:
             businessEntity:
               $ref: '#/components/schemas/BusinessEntity'
             permissions:
-              type: array
-              items:
-                description: 'Especifica os tipos de permissões de acesso às APIs no escopo do Open Banking Brasil - Fase 2, de acordo com os blocos de consentimento fornecidos pelo usuário e necessários ao acesso a cada endpoint das APIs.'
-                type: string
-                enum:
-                  - ACCOUNTS_READ
-                  - ACCOUNTS_BALANCES_READ
-                  - ACCOUNTS_TRANSACTIONS_READ
-                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
-                  - CREDIT_CARDS_ACCOUNTS_READ
-                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
-                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
-                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
-                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
-                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
-                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
-                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
-                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
-                  - FINANCINGS_READ
-                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
-                  - FINANCINGS_PAYMENTS_READ
-                  - FINANCINGS_WARRANTIES_READ
-                  - INVOICE_FINANCINGS_READ
-                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
-                  - INVOICE_FINANCINGS_PAYMENTS_READ
-                  - INVOICE_FINANCINGS_WARRANTIES_READ
-                  - LOANS_READ
-                  - LOANS_SCHEDULED_INSTALMENTS_READ
-                  - LOANS_PAYMENTS_READ
-                  - LOANS_WARRANTIES_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
-                  - RESOURCES_READ
-              minItems: 1
-              maxItems: 30
-              example:
-                - ACCOUNTS_READ
-                - ACCOUNTS_OVERDRAFT_LIMITS_READ
-                - RESOURCES_READ
+              $ref: '#/components/schemas/Permissions'
             expirationDateTime:
               description: 'Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).'
               type: string
@@ -429,47 +393,7 @@ components:
               example: '2021-05-21T08:30:00Z'
               maxLength: 20
             permissions:
-              type: array
-              maxItems: 30
-              minItems: 1
-              description: 'Especifica os tipos de permissões de acesso às APIs no escopo do Open Banking Brasil - Fase 2, de acordo com os blocos de consentimento fornecidos pelo usuário e necessários ao acesso a cada endpoint das APIs.'
-              items:
-                type: string
-                enum:
-                  - ACCOUNTS_READ
-                  - ACCOUNTS_BALANCES_READ
-                  - ACCOUNTS_TRANSACTIONS_READ
-                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
-                  - CREDIT_CARDS_ACCOUNTS_READ
-                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
-                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
-                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
-                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
-                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
-                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
-                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
-                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
-                  - FINANCINGS_READ
-                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
-                  - FINANCINGS_PAYMENTS_READ
-                  - FINANCINGS_WARRANTIES_READ
-                  - INVOICE_FINANCINGS_READ
-                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
-                  - INVOICE_FINANCINGS_PAYMENTS_READ
-                  - INVOICE_FINANCINGS_WARRANTIES_READ
-                  - LOANS_READ
-                  - LOANS_SCHEDULED_INSTALMENTS_READ
-                  - LOANS_PAYMENTS_READ
-                  - LOANS_WARRANTIES_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
-                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
-                  - RESOURCES_READ
-              example:
-                - ACCOUNTS_READ
-                - ACCOUNTS_OVERDRAFT_LIMITS_READ
-                - RESOURCES_READ
+              $ref: '#/components/schemas/Permissions'
             expirationDateTime:
               description: 'Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).'
               type: string
@@ -581,6 +505,57 @@ components:
               description: Tipo do documento de identificação oficial do titular pessoa jurídica.
               example: CNPJ
               pattern: '^[A-Z]{4}$'
+    Permissions:
+      type: array
+      items:
+        description: |
+          Especifica os tipos de permissões de acesso às APIs no escopo do Open Banking Brasil - Fase 2, de acordo com os blocos de consentimento fornecidos pelo usuário e necessários ao acesso a cada endpoint das APIs.
+
+          [Regra de negócio] A lista de permissões contidas para o campo permissions devem ser mutuamente exclusivas para PF e PJ.
+
+          – PF: CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ, CUSTOMERS_PERSONAL_ADITTIONALINFO_READ.
+
+          – PJ: CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ, CUSTOMERS_BUSINESS_ADITTIONALINFO_READ.
+
+          [Restrição] Para instituições transmissoras: Caso recebam uma solicitação de consentimento com permissões de dados cadastrais PF e PJ em conjunto, ela deve retornar um erro HTTP status code 400.
+        type: string
+        enum:
+          - ACCOUNTS_READ
+          - ACCOUNTS_BALANCES_READ
+          - ACCOUNTS_TRANSACTIONS_READ
+          - ACCOUNTS_OVERDRAFT_LIMITS_READ
+          - CREDIT_CARDS_ACCOUNTS_READ
+          - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+          - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+          - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+          - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+          - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+          - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+          - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+          - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+          - FINANCINGS_READ
+          - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+          - FINANCINGS_PAYMENTS_READ
+          - FINANCINGS_WARRANTIES_READ
+          - INVOICE_FINANCINGS_READ
+          - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+          - INVOICE_FINANCINGS_PAYMENTS_READ
+          - INVOICE_FINANCINGS_WARRANTIES_READ
+          - LOANS_READ
+          - LOANS_SCHEDULED_INSTALMENTS_READ
+          - LOANS_PAYMENTS_READ
+          - LOANS_WARRANTIES_READ
+          - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+          - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+          - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+          - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+          - RESOURCES_READ
+        minItems: 1
+        maxItems: 30
+      example:
+        - ACCOUNTS_READ
+        - ACCOUNTS_OVERDRAFT_LIMITS_READ
+        - RESOURCES_READ
   parameters:
     consentId:
       name: consentId
@@ -724,7 +699,7 @@ components:
         x-fapi-interaction-id:
           description: |
             Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação.  
-            Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.          
+            Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.
           schema:
             type: string
             pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
@@ -741,7 +716,7 @@ components:
         x-fapi-interaction-id:
           description: |
             Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação.  
-            Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.          
+            Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.
           schema:
             type: string
             pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
@@ -758,7 +733,7 @@ components:
         x-fapi-interaction-id:
           description: |
             Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação.  
-            Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.          
+            Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.
           schema:
             type: string
             pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'

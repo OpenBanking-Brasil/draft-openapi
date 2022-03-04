@@ -558,7 +558,7 @@ components:
           maxLength: 3
           pattern: '^(\w{3}){1}$|^NA$'
           example: CAN
-          description: Pais de emissão do tipo de documento informado. Código do pais de acordo com o código “alpha3” do ISO-3166
+          description: Pais de emissão do tipo de documento informado. Código do pais de acordo com o código alpha3 do ISO-3166
         expirationDate:
           type: string
           format: date
@@ -810,7 +810,7 @@ components:
           type: string
           maxLength: 3
           example: BRA
-          description: Código do pais de acordo com o código “alpha3” do ISO-3166
+          description: Código do pais de acordo com o código alpha3 do ISO-3166
         geographicCoordinates:
           $ref: '#/components/schemas/GeographicCoordinates'
       additionalProperties: false
@@ -879,7 +879,7 @@ components:
           type: string
           maxLength: 3
           example: BRA
-          description: Código do pais de acordo com o código “alpha3” do ISO-3166.
+          description: Código do pais de acordo com o código alpha3 do ISO-3166.
         geographicCoordinates:
           $ref: '#/components/schemas/GeographicCoordinates'
       additionalProperties: false
@@ -1005,7 +1005,7 @@ components:
           example: 8599604
         isMain:
           type: boolean
-          description: Indica se é o ramo principal de atividade da empresa quando true e se é o ramo secundário quando false.
+          description: 'Indica se é o ramo principal de atividade da empresa quando true e se é o ramo secundário quando false. [Restrição] Somente uma ocorrência relativa ao código da atividade econômica principal deve trazer o valor true.'
           example: true
     EnumAreaCode:
       type: string
@@ -1274,7 +1274,10 @@ components:
           type: string
           format: uri
           maxLength: 2000
-          description: URI completo que gerou a resposta atual.
+          description: |
+            O atributo self do objeto link:
+
+            Quando chamado método GET deverá retornar o link para o próprio recurso consultado.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
@@ -1343,7 +1346,7 @@ components:
           maxLength: 40
           example: CAN
           description: |
-            Campo de preenchimento obrigatório caso o cliente não possua nacionalidade brasileira. Preencher indicando todas suas demais nacionalidades utilizando o código de pais de acordo com o código “alpha3” do ISO-3166.p.ex.'CAN'
+            Campo de preenchimento obrigatório caso o cliente não possua nacionalidade brasileira. Preencher indicando todas suas demais nacionalidades utilizando o código de pais de acordo com o código alpha3 do ISO-3166.p.ex.'CAN'
         documents:
           type: array
           items:
@@ -1532,7 +1535,7 @@ components:
           maxLength: 3
           pattern: '^(\w{3}){1}$|^NA$'
           example: CAN
-          description: Pais de emissão do passaporte. Código do pais de acordo com o código 'alpha3' do ISO-3166.
+          description: Pais de emissão do passaporte. Código do pais de acordo com o código alpha3 do ISO-3166.
         passportExpirationDate:
           type: string
           format: date

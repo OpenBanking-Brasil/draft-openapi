@@ -57,7 +57,7 @@ OUTROS";1;1;"";Não permitido;string;SAC
 /data/amortizationScheduledAdditionalInfo;amortizationScheduledAdditionalInfo;Campo obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS.;Texto;50;Condicional;[\w\W\s]*;;1;1;" Obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS, para os demais casos informar ""NA"".
 ";Não permitido;string;NA
 /data/cnpjConsignee;cnpjConsignee;CNPJ do consignante (CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica). Deve-se ter apenas os números do CNPJ, sem máscara. Informação adicional específica para Modalidade de Crédito: Empréstimo-Crédito Pessoal Consignado;Texto;14;Obrigatório;\d{14}|^NA$;;1;1;"";Não permitido;string;60500998000135
-/data/interestRates;interestRates;"";Lista;;Obrigatório;;;1;N;"";Não permitido;array;
+/data/interestRates;interestRates;"";Lista;;Obrigatório;;;0;N;"";Não permitido;array;
 /data/interestRates/taxType;taxType;"Tipo de Taxa (vide  Enum)
 - NOMINAL (taxa nominal é uma taxa de juros em que a unidade referencial não coincide com a unidade de tempo da capitalização. Ela é sempre fornecida em termos anuais, e seus períodos de capitalização podem ser diários, mensais, trimestrais ou semestrais. p.ex. Uma taxa de 12% ao ano com capitalização mensal)
 - EFETIVA (É a taxa de juros em que a unidade referencial coincide com a unidade de tempo da capitalização. Como as unidades de medida de tempo da taxa de juros e dos períodos de capitalização são iguais, usa-se exemplos simples como 1% ao mês, 60% ao ano)";Texto;7;Obrigatório;;"NOMINAL 
