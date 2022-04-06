@@ -1,0 +1,19 @@
+type: object
+required:
+  - participant
+  - investmentType
+  - custodyFee
+  - loadingRate
+  - targetAudience
+properties:
+  participant:
+    $ref: ../business_commons/Participant.yaml
+  investmentType:
+    $ref: ../enum/EnumInvestmentsVariableIncomeInvestmentType.yaml
+  custodyFee:
+    $ref: ../business_commons/NoIdentificationFrequencyDistribution.yaml
+  loadingRate:
+    $ref: ../business_commons/NoIdentificationFrequencyDistribution.yaml
+  targetAudience:
+    $ref: ../business_commons/EnumDistinctTargetAudience.yaml
+additionalProperties: false

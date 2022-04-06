@@ -1,0 +1,13 @@
+type: object
+description: 'Valor da transação. Expresso em valor monetário com 4 casas decimais. Se a transação foi realizada em moeda estrangeira, deve ser preenchido com o valor original da transação, sem convertê-lo.'
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    type: string
+    pattern: '^\d{1,16}\.\d{2,4}$'
+    example: '1.1000'
+  currency:
+    $ref: ../business_commons/CurrencyCode.yaml
+additionalProperties: false

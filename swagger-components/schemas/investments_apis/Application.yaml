@@ -1,0 +1,14 @@
+type: object
+required:
+  - quotationDays
+  - quotationTerm
+properties:
+  quotationDays:
+    type: integer
+    format: int32
+    description: Prazo em dias indicado no regulamento do fundo para a conversão do dinheiro em cotas do fundo.
+    minimum: 0
+    example: 60
+  quotationTerm:
+    $ref: ../enum/EnumInvestmentsFundGeneralConditionsTermType.yaml
+additionalProperties: false

@@ -1,0 +1,33 @@
+type: object
+required:
+  - feeName
+  - feeCode
+  - feeAmount
+properties:
+  feeName:
+    type: string
+    maxLength: 140
+    minLength: 2
+    pattern: 'NA|[\w\W\s]+'
+    description: |
+      Denominação da Tarifa pactuada
+      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
+    example: Excesso em Conta
+  feeCode:
+    type: string
+    maxLength: 140
+    minLength: 2
+    pattern: 'NA|[\w\W\s]+'
+    description: |
+      Sigla identificadora da tarifa pactuada
+      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
+    example: EXCESSO_CONTA
+  feeAmount:
+    description: |
+      Valor monetário da tarifa pactuada no contrato. Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo
+    type: string
+    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    maxLength: 21
+    minLength: 1
+    example: '100000.0400'
+additionalProperties: false

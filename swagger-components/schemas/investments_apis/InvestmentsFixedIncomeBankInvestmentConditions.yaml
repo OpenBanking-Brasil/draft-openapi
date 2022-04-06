@@ -1,0 +1,21 @@
+type: object
+required:
+  - minimumAmount
+  - redemptionTerm
+  - expirationPeriod
+  - gracePeriod
+properties:
+  minimumAmount:
+    type: string
+    description: Valor mínimo de aplicação no ativo.
+    minLength: 4
+    maxLength: 19
+    pattern: '^\d{1,16}\.\d{2}$'
+    example: '100.00'
+  redemptionTerm:
+    $ref: ../enum/EnumInvestmentsFixedIncomeBankRedemptionTerm.yaml
+  expirationPeriod:
+    $ref: ./EnumExpirationGracePeriod.yaml
+  gracePeriod:
+    $ref: ./EnumExpirationGracePeriod.yaml
+additionalProperties: false
