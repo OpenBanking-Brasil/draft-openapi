@@ -6,7 +6,8 @@ jsonArrayTemplate='[%s]'
 jsonObjectsBuilt=
 jsonArrayBuilt=
 
-SWAGGER_BASE_PATH=../swagger-apis
+PROJECT_ROOT_DIR=`git rev-parse --absolute-git-dir | cut -d '.' -f1`
+SWAGGER_BASE_PATH=$PROJECT_ROOT_DIR/swagger-apis
 
 echo "Starting Swagger index.html generation."
 
@@ -31,7 +32,7 @@ do
             echo "Generated index.html for $previousApiName API."
             jsonArrayBuilt="[$jsonObjectsBuilt]"
             urlsPrimaryName=`echo $jsonArrayBuilt | jq -r '.[. | length -1].name'`
-            cp ../swagger-ui-template-page.html "$previousApiDirPath/index.html"
+            cp $PROJECT_ROOT_DIR/swagger-ui-template-page.html "$previousApiDirPath/index.html"
 
             sed -i "s@{{URLS_SWAGGER_UI}}@$jsonArrayBuilt@" $previousApiDirPath/index.html
             sed -i "s@{{URLS_PRIMARY_NAME_SWAGGER_UI}}@\"$urlsPrimaryName\"@" $previousApiDirPath/index.html

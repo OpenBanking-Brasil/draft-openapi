@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
-chmod + dictionary_generator
 
-DICT_PATH=../dictionary
-COMPONENTS_BASE_PATH=../swagger-components
-GENERATED_SWAGGERS_PATH=../swagger-apis
-GENERATED_DICTIONARIES_PATH=../dictionary
+PROJECT_ROOT_DIR=`git rev-parse --absolute-git-dir | cut -d '.' -f1`
+DICT_PATH=$PROJECT_ROOT_DIR/dictionary
+COMPONENTS_BASE_PATH=$PROJECT_ROOT_DIR/swagger-components
+GENERATED_SWAGGERS_PATH=$PROJECT_ROOT_DIR/swagger-apis
+GENERATED_DICTIONARIES_PATH=$PROJECT_ROOT_DIR/dictionary
 GENERATED_SWAGGERS_TO_GEN_DICTIONARIES_PATH=
+
+chmod + $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator
 
 APIS=(
   "accounts"
@@ -38,10 +40,10 @@ do
 
   swagger-cli validate ${GENERATED_SWAGGERS_PATH}/$API_FOLDER_NAME/$API_VERSION.yml
 
-  ./dictionary_generator ${OPTIONS- } \
+  ruby $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator ${OPTIONS- } \
     -f "${GENERATED_SWAGGERS_PATH}/$API_FOLDER_NAME/$API_VERSION.yml" \
     -o $DICT_PATH
 done
 
-sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' ../dictionary/*.csv
-sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' ../dictionary/example/*.csv
+sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $PROJECT_ROOT_DIR/dictionary/*.csv
+sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $PROJECT_ROOT_DIR/dictionary/example/*.csv

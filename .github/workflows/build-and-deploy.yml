@@ -10,11 +10,20 @@ on:
 jobs:
   build:  
     env:
+      ruby-version: 2.5
       enable-openapi-integration: ${{ github.repository ==  'Sensedia/draft-openapi' &&  startsWith(github.ref_name,'GT-PR-')}}
     name: Build Github pages 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: sudo apt-get purge ruby 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.ruby-version }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
       - uses: actions/cache@v2
         with:
           path: node_modules
@@ -24,8 +33,7 @@ jobs:
 
       - name: Compile Swagger Files and generate dictionaries
         run: |
-          cd automation-scripts
-          bash ./build.sh
+          bash ./automation-scripts/build.sh
 
       - name: Set Github user data
         id: githubData
