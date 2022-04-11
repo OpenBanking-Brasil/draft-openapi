@@ -59,7 +59,7 @@ jobs:
           file_glob: 'swagger-apis/**/*.yml'
   deploy:
     env:
-       enable-deploy: ${{ github.ref_name == 'tests' || (github.repository !=  'Sensedia/draft-openapi' && github.ref_name == 'main')}}
+       enable-deploy: ${{ (github.repository !=  'Sensedia/draft-openapi' && github.ref_name == 'main')}}
     needs: build
     runs-on: ubuntu-latest
     steps:
