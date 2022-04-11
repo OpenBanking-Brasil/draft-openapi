@@ -2595,11 +2595,13 @@ paths:
                                     1. IPCA (IBGE)
                                     2. IGP-M (FGV)
                                     3. INPC (IBGE)
-                                maxLength: 5
+                                    4. NÃO APLICA
+                                maxLength: 10
                                 enum:
                                   - IPCA
                                   - IGP_M
                                   - INPC
+                                  - NAO_APLICA
                                 example: IPCA
                           additionalProperties: false
                         ageAdjustment:
@@ -6204,6 +6206,21 @@ components:
         - VARIAVEL_ACORDO_CRITERIO_ESPECIFICO
         - NAO_APLICA
       maxLength: 35
+    EnumInsurancePersonalBenefitRecalculationUpdateIndex:
+      type: string
+      description: |
+        Índice utilizado na atualização da PMBaC:
+          1. IPCA (IBGE)
+          2. IGP-M (FGV)
+          3. INPC (IBGE)
+          4. NÃO APLICA
+      maxLength: 10
+      enum:
+        - IPCA
+        - IGP_M
+        - INPC
+        - NAO_APLICA
+      example: IPCA
     AutomotivePartsItem:
       type: object
       properties:
@@ -7917,11 +7934,13 @@ components:
                 1. IPCA (IBGE)
                 2. IGP-M (FGV)
                 3. INPC (IBGE)
-            maxLength: 5
+                4. NÃO APLICA
+            maxLength: 10
             enum:
               - IPCA
               - IGP_M
               - INPC
+              - NAO_APLICA
             example: IPCA
       additionalProperties: false
     OKResponsePersonalInsuranceList:
@@ -8488,11 +8507,13 @@ components:
                           1. IPCA (IBGE)
                           2. IGP-M (FGV)
                           3. INPC (IBGE)
-                      maxLength: 5
+                          4. NÃO APLICA
+                      maxLength: 10
                       enum:
                         - IPCA
                         - IGP_M
                         - INPC
+                        - NAO_APLICA
                       example: IPCA
                 additionalProperties: false
               ageAdjustment:
@@ -9394,11 +9415,13 @@ components:
                     1. IPCA (IBGE)
                     2. IGP-M (FGV)
                     3. INPC (IBGE)
-                maxLength: 5
+                    4. NÃO APLICA
+                maxLength: 10
                 enum:
                   - IPCA
                   - IGP_M
                   - INPC
+                  - NAO_APLICA
                 example: IPCA
           additionalProperties: false
         ageAdjustment:
@@ -12373,11 +12396,13 @@ components:
                                 1. IPCA (IBGE)
                                 2. IGP-M (FGV)
                                 3. INPC (IBGE)
-                            maxLength: 5
+                                4. NÃO APLICA
+                            maxLength: 10
                             enum:
                               - IPCA
                               - IGP_M
                               - INPC
+                              - NAO_APLICA
                             example: IPCA
                       additionalProperties: false
                     ageAdjustment:
