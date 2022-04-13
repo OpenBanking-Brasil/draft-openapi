@@ -1,0 +1,11 @@
+type: object
+description: 'Valor da transação. Expressa em valor monetário com 4 casas decimais.'
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    $ref: ../business_commons/AmountCurrencyCode.yaml
+  currency:
+    $ref: ../business_commons/CurrencyCode.yaml
+additionalProperties: false
