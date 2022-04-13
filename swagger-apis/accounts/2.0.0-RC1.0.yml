@@ -278,7 +278,7 @@ components:
         amount:
           $ref: '#/components/schemas/AmountCurrencyCode'
         currency:
-          $ref: '#/components/schemas/AccountBalancesDataBlockedAmount/properties/currency'
+          $ref: '#/components/schemas/AccountTransactionsDataAmount/properties/currency'
       additionalProperties: false
     AccountBalancesDataBlockedAmount:
       type: object
@@ -290,10 +290,7 @@ components:
         amount:
           $ref: '#/components/schemas/AmountCurrencyCode'
         currency:
-          type: string
-          pattern: '^[A-Z]{3}$'
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
-          example: BRL
+          $ref: '#/components/schemas/AccountTransactionsDataAmount/properties/currency'
     AccountBalancesDataAvailableAmount:
       type: object
       description: 'Saldo disponível para utilização imediata. No caso de conta de depósito a vista, sem considerar cheque especial e investimentos atrelados a conta. Expresso em valor monetário com 4 casas decimais.'
@@ -304,7 +301,7 @@ components:
         amount:
           $ref: '#/components/schemas/AmountCurrencyCode'
         currency:
-          $ref: '#/components/schemas/AccountBalancesDataBlockedAmount/properties/currency'
+          $ref: '#/components/schemas/AccountTransactionsDataAmount/properties/currency'
       additionalProperties: false
     AccountBalancesData:
       type: object
@@ -495,8 +492,7 @@ components:
         - creditDebitType
         - transactionName
         - type
-        - amount
-        - transactionCurrency
+        - transactionAmount
         - transactionDate
         - partieCnpjCpf
         - partiePersonType
@@ -523,13 +519,8 @@ components:
           example: TRANSFCWAR5TXHCX5I9IDBHML8082N8NEO30M6LNNG7ANAYIJYRM00ZBZPU8
         type:
           $ref: '#/components/schemas/EnumTransactionTypes'
-        amount:
-          type: string
-          pattern: '^-?\d{1,15}\.\d{2,4}$'
-          description: Valor da transação. Expressa em valor monetário com 4 casas decimais.
-          maxLength: 20
-          minLength: 0
-          example: '500.54'
+        transactionAmount:
+          $ref: '#/components/schemas/AccountTransactionsDataAmount'
         transactionCurrency:
           type: string
           pattern: '^(\w{3}){1}$'
@@ -548,7 +539,7 @@ components:
         partieCnpjCpf:
           type: string
           maxLength: 14
-          pattern: '^\d{11}$|^\d{14}$|^NA$'
+          pattern: '^\d{11}$|^\d{14}$'
           description: |
             Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação)
           example: '43908445778'
@@ -557,19 +548,19 @@ components:
         partieCompeCode:
           type: string
           maxLength: 3
-          pattern: '\d{3}|^NA$'
+          pattern: '^\d{3}$'
           description: 'Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas) referente à pessoa envolvida na transação. O número-código substituiu o antigo código COMPE. Todos os participantes do STR, exceto as Infraestruturas do Mercado Financeiro (IMF) e a Secretaria do Tesouro Nacional, possuem um número-código independentemente de participarem da Centralizadora da Compensação de Cheques (Compe). O campo tem a anotação “n/a” (“não se aplica”) para os participantes do STR aos quais não é atribuído um número-código'
           example: '001'
         partieBranchCode:
           type: string
           maxLength: 4
-          pattern: '\d{4}|^NA$'
+          pattern: '^\d{4}$'
           description: 'Código da Agência detentora da conta da pessoa envolvida na transação. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)'
           example: '6272'
         partieNumber:
           type: string
           maxLength: 20
-          pattern: '^\d{8,20}$|^NA$'
+          pattern: '^\d{8,20}$'
           description: Número da conta da pessoa envolvida na transação
           example: '67890854360'
         partieCheckDigit:
@@ -578,6 +569,21 @@ components:
           pattern: '[\w\W\s]*'
           description: Dígito da conta da pessoa envolvida na transação
           example: '4'
+      additionalProperties: false
+    AccountTransactionsDataAmount:
+      type: object
+      description: Valor da transação. Expressa em valor monetário com 4 casas decimais.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          $ref: '#/components/schemas/AmountCurrencyCode'
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          example: BRL
       additionalProperties: false
     AmountCurrencyCode:
       type: string
