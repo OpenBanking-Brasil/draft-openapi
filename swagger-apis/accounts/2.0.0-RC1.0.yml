@@ -395,20 +395,20 @@ components:
         compeCode:
           type: string
           maxLength: 3
-          pattern: '\d{3}|^NA$'
+          pattern: '^\d{3}$'
           description: 'Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas). O número-código substituiu o antigo código COMPE. Todos os participantes do STR, exceto as Infraestruturas do Mercado Financeiro (IMF) e a Secretaria do Tesouro Nacional, possuem um número-código independentemente de participarem da Centralizadora da Compensação de Cheques (Compe). O campo tem a anotação “n/a” (“não se aplica”) para os participantes do STR aos quais não é atribuído um número-código'
           example: '001'
         branchCode:
           type: string
           maxLength: 4
-          pattern: '\d{4}|^NA$'
+          pattern: '\d{4}$'
           description: |
             Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
           example: '6272'
         number:
           type: string
           maxLength: 20
-          pattern: '^\d{8,20}$|^NA$'
+          pattern: '^\d{8,20}$'
           description: |
             Número da conta
           example: '24550245'
