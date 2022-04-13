@@ -1,0 +1,15 @@
+type: string
+description: |
+  Traz outros tipos de crédito contratados no cartão.   
+  [Restrição] Preenchimento obrigatório se o tipo transação selecionado for 'OPERACOES_CREDITO_CONTRATADAS_CARTAO'.
+
+  Para transmissora: Quando não for do tipo OPERACOES_CREDITO_CONTRATADAS_CARTAO, preencher com OUTROS.
+
+  Para recebedora: Ignorar o campo preenchido conforme esse cenário.
+maxLength: 19
+enum:
+  - CREDITO_ROTATIVO
+  - PARCELAMENTO_FATURA
+  - EMPRESTIMO
+  - OUTROS
+example: "CREDITO_ROTATIVO"

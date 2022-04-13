@@ -1,0 +1,153 @@
+﻿openapi: "3.0.0"
+info:
+  title: API Resources - Open Banking Brasil
+  description: |
+    API que trata da consulta do status de recursos para o Open Banking Brasil - Fase 2.\
+    Não possui segregação entre pessoa natural e pessoa jurídica.
+
+    # Orientações importantes
+    - A API resources lista os recursos vinculados ao consentimento específico, identificado por `consentId` e vinculado ao token enviado no header `Authorization`.
+    - Os `STATUS` dos recursos listados DEVEM considerar não apenas o consentimento vinculado mas também a disponibilidade do recurso na instituição transmissora dos dados.
+    - Na lista de recursos devolvida na API resources somente constará informação no atributo `resourceId` para recursos com o `STATUS` `AVAILABLE`.
+    - Para os demais `STATUS` não é devolvido o identificador do recurso - `resourceId`.
+    - A `permission` específica desta API  - `RESOURCES_READ` - DEVE ser solicitada pela instituição receptora na ocasião do pedido de criação do consentimento.
+    - A consulta à API Resources não é obrigatória por parte das instituições receptoras - esta API foi criada para dar visibilidade da existência de ocorrências que possam impedir o compartilhamento de determinados recursos por parte da instituição transmissora dos dados.
+    - O identificador do recurso devolvido na API Resources - `resourceId` - quando apresentado corresponde ao mesmo identificador designado para o recurso em sua API específica, o seja: o `resourceId` corresponde ao `accountId` da API accounts, ao `creditCardAccountId` da API de conta
+    pós-paga e assim sucessivamente.
+    
+    ## Status previstos para os recursos listados na API Resources
+    - AVAILABLE: indica que o recurso encontra-se disponível e o(s) consentimento(s) associado(s) possui(em) status `AUTHORISED`.
+    - UNAVAILABLE: indica que o recurso não está mais disponível, por exemplo, em caso de uma conta encerrada.
+    - TEMPORARILY_UNAVAILABLE: indica que o recurso encontra-se temporariamente indisponível, embora o(s) consentimento(s) associado(s) possua(m) status `AUTHORISED`.  
+    Caso de exemplo: conta temporariamente bloqueada por suspeita de fraude.
+    - PENDING_AUTHORISATION: indica a existência de pendências para o compartilhamento do recurso, por exemplo, em caso de alçada dupla, quando é necessário o consentimento de mais de um titular.
+ 
+    ## Permissions necessárias para a API Resources
+    ### `/resources`
+      - permissions:
+        - GET: **RESOURCES_READ**
+  version: 1.0.2
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+  contact:
+    name: Governança do Open Banking Brasil – Especificações
+    email: gt-interfaces@openbankingbr.org
+    url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
+servers:
+  - url: 'https://api.banco.com.br/open-banking/resources/v1'
+    description: Servidor de Produção
+  - url: 'https://apih.banco.com.br/open-banking/resources/v1'
+    description: Servidor de Homologação
+tags:
+  - name: Resources
+paths:
+  /resources:
+    get:
+      tags:
+        - Resources
+      summary: Obtém a lista de recursos consentidos pelo cliente.
+      operationId: resourcesGetResources
+      description: 'Método para obter a lista de recursos mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.'
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseResourceList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/OKResponseResourceList'
+      security:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'resources'              
+components:
+  schemas:
+    ResponseResourceList:
+      $ref: ./schemas/resources_apis/ResponseResourceList.yaml
+    Links:
+      $ref: ./schemas/Links.yaml
+    Meta:
+      $ref: ./schemas/Meta.yaml
+    ResponseError:
+      $ref: ./schemas/ResponseError.yaml
+    XFapiInteractionId:
+      $ref: ./headers/XFapiInteractionId.yaml
+  parameters:
+    Authorization:
+      $ref: ./parameters/Authorization.yaml
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
+    xCustomerUserAgent:
+      $ref: ./parameters/XCustomerUserAgent.yaml
+    xFapiAuthDate:
+      $ref: ./parameters/XFapiAuthDate.yaml
+    xFapiCustomerIpAddress:
+      $ref: ./parameters/XFapiCustomerIpAddress.yaml
+    xFapiInteractionId:
+      $ref: ./parameters/XFapiInteractionId.yaml
+  securitySchemes:
+    OpenId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
+    OAuth2Security:
+      type: oauth2
+      description: "Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados."
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            resources: "Escopo necessário para acesso à API Resources. O controle dos endpoints específicos é feito via permissions."      
+  responses:
+    OKResponseResourceList:
+      description: Dados de status dos recursos obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseResourceList'
+    BadRequest:
+      $ref: ./responses/BadRequest.yaml
+    Forbidden:
+      $ref: ./responses/Forbidden.yaml
+    InternalServerError:
+      $ref: ./responses/InternalServerError.yaml
+    MethodNotAllowed:
+      $ref: ./responses/MethodNotAllowed.yaml
+    NotAcceptable:
+      $ref: ./responses/NotAcceptable.yaml
+    NotFound:
+      $ref: ./responses/NotFound.yaml
+    TooManyRequests:
+      $ref: ./responses/TooManyRequests.yaml
+    Unauthorized:
+      $ref: ./responses/Unauthorized.yaml
