@@ -1,0 +1,10 @@
+type: object
+description: 'Valor de operação contratada em caráter emergencial para cobertura de saldo devedor em conta de depósitos à vista e de excesso sobre o limite pactuado de cheque especial.'
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    $ref: ../business_commons/AmountCurrencyCode.yaml
+  currency:
+    $ref: ../business_commons/CurrencyCode.yaml
