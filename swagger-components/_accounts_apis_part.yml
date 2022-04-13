@@ -268,6 +268,12 @@ paths:
             - 'accounts' 
 components:
   schemas:
+    AccountBalancesDataAutomaticallyInvestedAmount:
+      $ref: ./schemas/accounts_apis/AccountBalancesDataAutomaticallyInvestedAmount.yaml
+    AccountBalancesDataBlockedAmount:
+      $ref: ./schemas/accounts_apis/AccountBalancesDataBlockedAmount.yaml
+    AccountBalancesDataAvailableAmount:
+      $ref: ./schemas/accounts_apis/AccountBalancesDataAvailableAmount.yaml
     AccountBalancesData:
       $ref: ./schemas/accounts_apis/AccountBalancesData.yaml
     AccountData:
@@ -278,6 +284,8 @@ components:
       $ref: ./schemas/accounts_apis/AccountOverdraftLimitsData.yaml
     AccountTransactionsData:
       $ref: ./schemas/accounts_apis/AccountTransactionsData.yaml
+    AmountCurrencyCode:
+      $ref: ./schemas/business_commons/AmountCurrencyCode.yaml
     EnumAccountSubType:
       $ref: ./schemas/enum/EnumAccountSubType.yaml
     EnumAccountType:

@@ -1,0 +1,10 @@
+type: object
+description: 'Saldo bloqueado, não disponível para utilização imediata, por motivo de bloqueio apresentado para o cliente nos canais eletrônicos Expresso em valor monetário com 4 casas decimais.'
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    $ref: ../business_commons/AmountCurrencyCode.yaml
+  currency:
+    $ref: ../business_commons/CurrencyCode.yaml
