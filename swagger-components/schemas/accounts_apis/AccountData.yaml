@@ -18,7 +18,7 @@ properties:
   companyCnpj:
     type: string
     maxLength: 14
-    pattern: \d{14}|^NA$
+    pattern: ^\d{14}$
     description: Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara
     example: "21128159000166"
   type:
@@ -26,19 +26,19 @@ properties:
   compeCode:
     type: string
     description: Código identificador atribuído pelo Banco Central do Brasil às instituições participantes do STR (Sistema de Transferência de reservas).O Compe (Sistema de Compensação de Cheques e Outros Papéis) é um sistema que identifica e processa as compensações bancárias. Ele é representado por um código de três dígitos que serve como identificador de bancos, sendo assim, cada instituição bancária possui um número exclusivo
-    pattern: \d{3}|^NA$
+    pattern: ^\d{3}$
     maxLength: 3
     example: "001"
   branchCode:
     type: string
     description: Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
-    pattern: \d{4}|^NA$
+    pattern: ^\d{4}$
     maxLength: 4
     example: "6272"
   number:
     type: string
     description: Número da conta
-    pattern: ^\d{8,20}$|^NA$
+    pattern: ^\d{8,20}$
     maxLength: 20
     example: "94088392"
   checkDigit:
