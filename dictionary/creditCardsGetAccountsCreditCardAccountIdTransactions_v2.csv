@@ -8,7 +8,7 @@
 Débito (no extrato) Em um extrato bancário, os débitos, marcados com a letra “D” ao lado do valor registrado, informam as saídas de dinheiro na conta-corrente.
 Crédito (no extrato) Em um extrato bancário, os créditos, marcados com a letra “C” ao lado do valor registrado, informam as entradas de dinheiro na conta-corrente.";Texto;;Obrigatório;;"CREDITO 
 DEBITO";1;1;"";Não permitido;string;DEBITO
-/data/transactionType;transactionType;Traz os tipos de Transação;Texto;36;Obrigatório;;"PAGAMENTO 
+/data/transactionType;transactionType;Traz os tipos de Transação;Texto;;Obrigatório;;"PAGAMENTO 
 TARIFA 
 OPERACOES_CREDITO_CONTRATADAS_CARTAO 
 ESTORNO 
@@ -19,14 +19,14 @@ OUTROS";1;1;"";Não permitido;string;CASHBACK
 
 Para transmissora: preencher com qualquer opção.
 
-Para recebedora: ignorar o campo preenchido quando não for uma transação do tipo pagamento.";Texto;7;Obrigatório;;"A_VISTA 
+Para recebedora: ignorar o campo preenchido quando não for uma transação do tipo pagamento.";Texto;;Obrigatório;;"A_VISTA 
 A_PRAZO";1;1;"";Não permitido;string;A_VISTA
 /data/feeType;feeType;"Traz os tipos de Tarifas: (Vide Enum)
 Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA.   
 
 Para transmissora: quando não for do tipo TARIFA, preenche com OUTRA.
 
-Para recebedora: ignorar o campo preenchido conforme esse cenário.";Texto;29;Opcional;;"ANUIDADE 
+Para recebedora: ignorar o campo preenchido conforme esse cenário.";Texto;;Opcional;;"ANUIDADE 
 SAQUE_CARTAO_BRASIL 
 SAQUE_CARTAO_EXTERIOR 
 AVALIACAO_EMERGENCIAL_CREDITO 
@@ -36,7 +36,7 @@ SMS
 OUTRA";0;1;" Preenchimento obrigatório se Tipo de Transação selecionada for 'TARIFA'.
 ";Não permitido;string;ANUIDADE
 /data/feeTypeAdditionalInfo;feeTypeAdditionalInfo;Campo livre, de preenchimento obrigatório quando selecionada tipo de tarifa OUTRA;Texto;140;Obrigatório;;;1;1;"";Não permitido;string;
-/data/otherCreditsType;otherCreditsType;Traz outros tipos de crédito contratados no cartão.;Texto;19;Obrigatório;;"CREDITO_ROTATIVO 
+/data/otherCreditsType;otherCreditsType;Traz outros tipos de crédito contratados no cartão.;Texto;;Obrigatório;;"CREDITO_ROTATIVO 
 PARCELAMENTO_FATURA 
 EMPRESTIMO 
 OUTROS";1;1;" Preenchimento obrigatório se o tipo transação selecionado for 'OPERACOES_CREDITO_CONTRATADAS_CARTAO'.

@@ -335,11 +335,7 @@ components:
           pattern: '^\d{1,16}\.\d{2,4}$'
           example: '1.1000'
         currency:
-          type: string
-          pattern: '^[A-Z]{3}$'
-          maxLength: 3
-          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
-          example: BRL
+          $ref: '#/components/schemas/CurrencyCode'
       additionalProperties: false
     CreditCardAccountsTransactionBrazilianAmount:
       type: object
@@ -355,7 +351,7 @@ components:
           maxLength: 21
           example: '100000.0400'
         currency:
-          $ref: '#/components/schemas/CreditCardAccountsTransactionAmount/properties/currency'
+          $ref: '#/components/schemas/CurrencyCode'
       additionalProperties: false
     CreditCardsAccountsIdentificationData:
       type: object
@@ -613,7 +609,6 @@ components:
           example: '4453'
         lineName:
           type: string
-          maxLength: 28
           enum:
             - CREDITO_A_VISTA
             - CREDITO_PARCELADO
@@ -719,7 +714,6 @@ components:
         - chargeNumber
         - brazilianAmount
         - amount
-        - currency
         - transactionDate
         - billPostDate
         - payeeMCC
@@ -816,6 +810,12 @@ components:
           description: |
             O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
       additionalProperties: false
+    CurrencyCode:
+      type: string
+      pattern: '^[A-Z]{3}$'
+      maxLength: 3
+      description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+      example: BRL
     EnumCreditCardAccountFee:
       type: string
       description: |
@@ -827,7 +827,6 @@ components:
         Para recebedora: ignorar o campo preenchido conforme esse cenário.
 
         [Restrição] Preenchimento obrigatório se Tipo de Transação selecionada for 'TARIFA'.
-      maxLength: 29
       enum:
         - ANUIDADE
         - SAQUE_CARTAO_BRASIL
@@ -845,7 +844,6 @@ components:
          - Valor de pagamento da fatura com parcelamento
          - Valor pagamento da fatura realizado
          - Outro Valor pago na fatura
-      maxLength: 32
       enum:
         - VALOR_PAGAMENTO_FATURA_PARCELADO
         - VALOR_PAGAMENTO_FATURA_REALIZADO
@@ -853,7 +851,6 @@ components:
     EnumCreditCardAccountsConsolidationType:
       type: string
       description: Indicador que permite informar se o valor do limite é consolidado ou individual.
-      maxLength: 11
       enum:
         - CONSOLIDADO
         - INDIVIDUAL
@@ -869,7 +866,6 @@ components:
         - IOF
         - Sem Encargo
         - Outros
-      maxLength: 44
       enum:
         - JUROS_REMUNERATORIOS_ATRASO_PAGAMENTO_FATURA
         - MULTA_ATRASO_PAGAMENTO_FATURA
@@ -880,7 +876,6 @@ components:
     EnumCreditCardAccountsLineLimitType:
       type: string
       description: Indicador do tipo de limite
-      maxLength: 34
       enum:
         - LIMITE_CREDITO_TOTAL
         - LIMITE_CREDITO_MODALIDADE_OPERACAO
@@ -890,7 +885,6 @@ components:
       description: |
         Categoria de Bandeiras de Cartões de Crédito (Instituidor do arranjo de pagamento).
         Bandeira é a detentora de todos os direitos e deveres da utilização da marca estampada no cartão, inclusive as bandeiras pertencentes aos emissores.
-      maxLength: 17
       enum:
         - VISA
         - MASTERCARD
@@ -911,7 +905,6 @@ components:
         Para transmissora: Quando não for do tipo OPERACOES_CREDITO_CONTRATADAS_CARTAO, preencher com OUTROS.
 
         Para recebedora: Ignorar o campo preenchido conforme esse cenário.
-      maxLength: 19
       enum:
         - CREDITO_ROTATIVO
         - PARCELAMENTO_FATURA
@@ -926,7 +919,6 @@ components:
         - Boleto bancário
         - Averbação em folha
         - PIX
-      maxLength: 21
       enum:
         - DEBITO_CONTA_CORRENTE
         - BOLETO_BANCARIO
@@ -940,7 +932,6 @@ components:
         Para transmissora: preencher com qualquer opção.
 
         Para recebedora: ignorar o campo preenchido quando não for uma transação do tipo pagamento.
-      maxLength: 7
       enum:
         - A_VISTA
         - A_PRAZO
@@ -948,7 +939,6 @@ components:
     EnumCreditCardAccountsProductType:
       type: string
       description: 'Categoria atribuída a um cartão de pagamento, sob uma certa denominação, que lhe agrega um conjunto de vantagens, diferenciando-o de acordo com o perfil do portador.'
-      maxLength: 26
       enum:
         - CLASSIC_NACIONAL
         - CLASSIC_INTERNACIONAL
@@ -980,7 +970,6 @@ components:
     EnumCreditCardTransactionType:
       type: string
       description: Traz os tipos de Transação
-      maxLength: 36
       enum:
         - PAGAMENTO
         - TARIFA
