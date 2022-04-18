@@ -340,6 +340,19 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
       additionalProperties: false
+    EnumContractFinanceChargeType:
+      type: string
+      description: Tipo de encargo pactuado no contrato.
+      maxLength: 31
+      enum:
+        - JUROS_REMUNERATORIOS_POR_ATRASO
+        - MULTA_ATRASO_PAGAMENTO
+        - JUROS_MORA_ATRASO
+        - IOF_CONTRATACAO
+        - IOF_POR_ATRASO
+        - SEM_ENCARGO
+        - OUTROS
+      example: JUROS_REMUNERATORIOS_POR_ATRASO
     EnumProductType:
       type: string
       description: |
@@ -540,7 +553,7 @@ components:
         - chargeAmount
       properties:
         chargeType:
-          $ref: '#/components/schemas/FinancingsFinanceCharge/properties/chargeType'
+          $ref: '#/components/schemas/EnumContractFinanceChargeType'
         chargeAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
@@ -865,18 +878,7 @@ components:
         - chargeAdditionalInfo
       properties:
         chargeType:
-          type: string
-          description: Tipo de encargo pactuado no contrato.
-          maxLength: 31
-          enum:
-            - JUROS_REMUNERATORIOS_POR_ATRASO
-            - MULTA_ATRASO_PAGAMENTO
-            - JUROS_MORA_ATRASO
-            - IOF_CONTRATACAO
-            - IOF_POR_ATRASO
-            - SEM_ENCARGO
-            - OUTROS
-          example: JUROS_REMUNERATORIOS_POR_ATRASO
+          $ref: '#/components/schemas/EnumContractFinanceChargeType'
         chargeAdditionalInfo:
           type: string
           description: |
@@ -1317,6 +1319,11 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
       additionalProperties: false
+    XFapiInteractionId:
+      type: string
+      pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+      maxLength: 100
+      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
   parameters:
     Authorization:
       name: Authorization
@@ -1414,7 +1421,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/responses/OKResponseFinancingsContract/headers/x-fapi-interaction-id/schema'
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/json:
           schema:
@@ -1424,10 +1431,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            type: string
-            pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-            maxLength: 100
-            description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/json:
           schema:
@@ -1437,7 +1441,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/responses/OKResponseFinancingsContract/headers/x-fapi-interaction-id/schema'
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/json:
           schema:
@@ -1447,7 +1451,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/responses/OKResponseFinancingsContract/headers/x-fapi-interaction-id/schema'
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/json:
           schema:
@@ -1457,7 +1461,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/responses/OKResponseFinancingsContract/headers/x-fapi-interaction-id/schema'
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/json:
           schema:

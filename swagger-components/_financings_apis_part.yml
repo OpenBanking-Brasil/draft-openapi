@@ -276,6 +276,8 @@ components:
       $ref: ./schemas/financings_apis/ResponseFinancingsPayments.yaml
     ResponseFinancingsWarranties:
       $ref: ./schemas/financings_apis/ResponseFinancingsWarranties.yaml
+    EnumContractFinanceChargeType:
+      $ref: ./schemas/enum/EnumContractFinanceChargeType.yaml
     EnumProductType:
       $ref: ./schemas/enum/EnumContractProductTypeFinancings.yaml
     EnumProductSubType:
@@ -312,7 +314,8 @@ components:
       $ref: ./schemas/Links.yaml
     ResponseError:
       $ref: ./schemas/ResponseError.yaml
-
+    XFapiInteractionId:
+      $ref: ./headers/XFapiInteractionId.yaml
   parameters:
     Authorization:
       $ref: ./parameters/Authorization.yaml
