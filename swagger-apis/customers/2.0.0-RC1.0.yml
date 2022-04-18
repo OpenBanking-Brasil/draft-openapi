@@ -342,6 +342,7 @@ components:
         - incorporationDate
         - parties
         - contacts
+      additionalProperties: false
       properties:
         updateDateTime:
           type: string
@@ -388,16 +389,17 @@ components:
           description: 'Número completo do CNPJ da Empresa consultada  - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
         companyCnpjNumber:
           type: array
-          items:
-            type: string
-          maxLength: 14
-          pattern: '\d{14}|^NA$'
           example:
             - '50685362000135'
             - '50685362006555'
           description: |
             Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. 
             Deve-se ter apenas os números do CNPJ, sem máscara
+          items:
+            type: string
+            maxLength: 14
+            pattern: '\d{14}|^NA$'
+            example: '50685362000135'
         otherDocuments:
           type: array
           items:
@@ -423,7 +425,6 @@ components:
       properties:
         type:
           type: string
-          maxLength: 19
           enum:
             - REPRESENTANTE_LEGAL
             - PROCURADOR
@@ -489,7 +490,6 @@ components:
               type: string
               maxLength: 100
               pattern: '[\w\W\s]*'
-              minItems: 0
               example: Informações adicionais
               description: |
                 Texto livre para complementar informação relativa ao patrimonio.
@@ -512,7 +512,6 @@ components:
               description: 'Moeda referente ao valor do patrimônio, segundo modelo ISO-4217.'
             year:
               type: number
-              maxLength: 4
               maximum: 9999
               nullable: true
               example: 2010
@@ -660,7 +659,6 @@ components:
           description: 'Moeda referente ao valor do patrimônio, segundo modelo ISO-4217.'
         year:
           type: number
-          maxLength: 4
           maximum: 9999
           nullable: true
           example: 2010
@@ -828,7 +826,6 @@ components:
         additionalInfo:
           type: string
           maxLength: 30
-          minItems: 0
           pattern: '[\w\W\s]*'
           example: Fundos
           description: Alguns logradouros ainda necessitam ser especificados por meio de complemento.
@@ -913,19 +910,7 @@ components:
             Dígito da conta
           example: '4'
         type:
-          type: string
-          enum:
-            - CONTA_DEPOSITO_A_VISTA
-            - CONTA_POUPANCA
-            - CONTA_PAGAMENTO_PRE_PAGA
-            - SEM_TIPO_CONTA
-          description: |
-            Tipos de contas. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum
-            Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
-            Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
-            Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'.
-            SEM_TIPO_CONTA - para reporte nos dados de identificação quando o cliente não possuir conta na instituição transmissora.
-          example: CONTA_DEPOSITO_A_VISTA
+          $ref: '#/components/schemas/EnumAccountTypeCustomers'
       additionalProperties: false
     PersonalAccount:
       type: object
@@ -967,7 +952,7 @@ components:
             Dígito da conta
           example: '4'
         type:
-          $ref: '#/components/schemas/BusinessAccount/properties/type'
+          $ref: '#/components/schemas/EnumAccountTypeCustomers'
         subtype:
           type: string
           enum:
@@ -988,6 +973,7 @@ components:
       required:
         - code
         - isMain
+      additionalProperties: false
       properties:
         code:
           type: string
@@ -1001,11 +987,24 @@ components:
           type: boolean
           description: 'Indica se é o ramo principal de atividade da empresa quando true e se é o ramo secundário quando false. [Restrição] Somente uma ocorrência relativa ao código da atividade econômica principal deve trazer o valor true.'
           example: true
+    EnumAccountTypeCustomers:
+      type: string
+      enum:
+        - CONTA_DEPOSITO_A_VISTA
+        - CONTA_POUPANCA
+        - CONTA_PAGAMENTO_PRE_PAGA
+        - SEM_TIPO_CONTA
+      description: |
+        Tipos de contas. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Vide Enum
+        Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
+        Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
+        Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'.
+        SEM_TIPO_CONTA - para reporte nos dados de identificação quando o cliente não possuir conta na instituição transmissora.
+      example: CONTA_DEPOSITO_A_VISTA
     EnumAreaCode:
       type: string
       example: '19'
       description: Número de DDD (Discagem Direta à Distância) do telefone do cliente - se houver
-      maxLength: 2
       enum:
         - '11'
         - '12'
@@ -1111,7 +1110,6 @@ components:
     EnumCustomerPhoneType:
       type: string
       description: Identificação do Tipo de telefone do cliente.
-      maxLength: 5
       enum:
         - FIXO
         - MOVEL
@@ -1201,7 +1199,6 @@ components:
         Relação dos Códigos dos demais documentos pessoa natural.
     EnumProcuratorsTypePersonal:
       type: string
-      maxLength: 19
       enum:
         - REPRESENTANTE_LEGAL
         - PROCURADOR
@@ -1213,7 +1210,6 @@ components:
         Procurador - é qualquer pessoa que represente a Pessoa Natural em algum negócio, mediante autorização escrita do mesmo.
     EnumProductServiceType:
       type: string
-      maxLength: 24
       enum:
         - CONTA_DEPOSITO_A_VISTA
         - CONTA_POUPANCA
@@ -1383,7 +1379,6 @@ components:
           type: string
           maxLength: 80
           pattern: \w*\W*
-          minItems: 0
           example: Brasil
           description: |
             Nome do país.
@@ -1391,7 +1386,6 @@ components:
           type: string
           maxLength: 70
           pattern: '[\w\W\s]*'
-          minItems: 0
           description: Campo livre de preenchimento obrigatório se selecionada a opção OUTROS tipos de documentos.
           example: Informações adicionais.
       additionalProperties: false
@@ -1417,7 +1411,6 @@ components:
           description: Indica se a pessoa da parte envolvida é uma pessoa natural ou juridica
         type:
           type: string
-          maxLength: 13
           description: |
             Indica o perfil de atuação na empresa. Vide Enum
             O administrador é o responsável por desempenhar todas as funções administrativas da empresa. É ele quem conduz o dia a dia do negócio, assinando documentos, respondendo legalmente pela sociedade, realizando empréstimos e outras ações gerenciais. Apesar de estar na linha de frente da empresa, ele é denominado sócio por também possuir sua parcela de participação no Capital Social.
@@ -1434,7 +1427,6 @@ components:
         socialName:
           type: string
           maxLength: 70
-          minItems: 0
           pattern: '[\w\W\s]*'
           example: Karina
           description: |
@@ -1498,7 +1490,6 @@ components:
         documentIssueDate:
           type: string
           maxLength: 10
-          minItems: 0
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
@@ -1900,6 +1891,7 @@ components:
         - data
         - links
         - meta
+      additionalProperties: false
       properties:
         data:
           type: array
@@ -1909,7 +1901,6 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     ResponseBusinessCustomersQualification:
       type: object
       required:
