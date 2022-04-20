@@ -5,14 +5,13 @@ if [ "$#" -ne 6 ]; then
     echo "usage: $PROG [email] [name] [personal access token] [branch name] [repository name] [commit message]"
     exit 1
 fi
-
+PROJECT_ROOT_DIR=`git rev-parse --absolute-git-dir | cut -d '.' -f1`
 EMAIL=$1
 NAME=$2
 TOKEN=$3
 BRANCH=$4
 REPOSITORY=$5
 COMMIT_MESSAGE=$6
-
 if [[ $BRANCH == GT-PR-* ]]
 then
     `git config --global user.email $EMAIL`
@@ -21,12 +20,10 @@ then
     cd repointegration
     `git checkout -B $BRANCH`
     git pull origin $BRANCH
-    `cp -Rf ../swagger-apis/* swagger-apis`
-    `cp -Rf ../template-swagger-files/* .`
-    `cp -Rf ../dictionary/* dictionary`
+    `cp -Rf $PROJECT_ROOT_DIR/swagger-apis/* swagger-apis`
+    `cp -Rf $PROJECT_ROOT_DIR/dictionary/* dictionary`
     git add .
     HAS_FILES_TO_BE_COMMITED=`git status | grep -Rin "nothing to commit"`
-
     if [[ $HAS_FILES_TO_BE_COMMITED == '' ]]
     then
         git commit -m "$COMMIT_MESSAGE"
@@ -34,4 +31,4 @@ then
         cd ..
     fi
     rm -rf repointegration
-fi
+fi (edited) 
