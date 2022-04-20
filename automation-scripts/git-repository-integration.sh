@@ -14,8 +14,8 @@ REPOSITORY=$5
 COMMIT_MESSAGE=$6
 if [[ $BRANCH == GT-PR-* ]]
 then
-    `git config --global user.email $EMAIL`
-    `git config --global user.name $NAME`
+    `git config --global user.email "$EMAIL"`
+    `git config --global user.name "$NAME"`
     `git clone https://$TOKEN@github.com/Sensedia/$REPOSITORY repointegration`
     cd repointegration
     `git checkout -B $BRANCH`
