@@ -1,0 +1,33 @@
+type: object
+required:
+  - feeName
+  - feeCode
+  - feeAmount
+properties:
+  feeName:
+    type: string
+    maxLength: 140
+    pattern: '[\w\W\s]*'
+    example: Reavaliação periódica do bem
+    description: |
+      Denominação da Tarifa pactuada.
+      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
+  feeCode:
+    type: string
+    maxLength: 140
+    pattern: '[\w\W\s]*'
+    example: aval_bem
+    description: |
+      Sigla identificadora da tarifa pactuada.  
+      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
+  feeAmount:
+    type: string
+    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    maxLength: 21
+    minLength: 4
+    nullable: true
+    example: '100000.0400'
+    description: |
+      Valor monetário da tarifa pactuada no contrato.
+      [Restrição] Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo
+additionalProperties: false
