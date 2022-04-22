@@ -64,6 +64,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - run: echo "Validação de deploy após pull request closed merged" 
       - name: Deploy
         if: ${{ env.enable-deploy}}
         uses: peaceiris/actions-gh-pages@v3
