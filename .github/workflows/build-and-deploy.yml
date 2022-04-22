@@ -4,9 +4,12 @@ on:
     branches:
       - "**"
       - "**" 
-  pull_request:
+  pull_request_target:
+    types:
+      - closed
     branches:
-      - "**"
+      - "main"
+      - "tests"
 jobs:
   build:  
     env:
@@ -55,6 +58,7 @@ jobs:
        #  with:
       #     file_glob: 'swagger-apis/**/*.yml'
   deploy:
+    if: github.event.pull_request.merged == true
     env:
        enable-deploy: ${{ (github.repository !=  'Sensedia/draft-openapi' && github.ref_name == 'main')}}
     needs: build
