@@ -67,7 +67,7 @@ jobs:
     steps:
       - run: echo "Validação de deploy após pull request closed merged" 
       - name: Deploy
-        if: ${{ env.enable-deploy}}
+        if: env.enable-deploy == true
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
