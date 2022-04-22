@@ -3,13 +3,14 @@ on:
   push:
     branches:
       - "**"
-      - "**" 
+      - "!GT-PR-*"
+      - "!main"
   pull_request_target:
     types:
       - closed
     branches:
       - "main"
-      - "GT-PR-F4"
+      - "GT-PR-*"
 jobs:
   build:  
     env:
