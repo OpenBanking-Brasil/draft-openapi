@@ -49,6 +49,7 @@ properties:
   transactionalAdditionalInfo:
     type: string
     maxLength: 140
+    pattern: '^\S[\s\S]*$'
     description: Campo livre, de preenchimento obrigatório quando selecionado tipo de transação "OUTROS"
   paymentType:
     $ref: ../enum/EnumCreditCardAccountsPaymentType.yaml
@@ -56,6 +57,7 @@ properties:
     $ref: ../enum/EnumCreditCardAccountFee.yaml
   feeTypeAdditionalInfo:
     type: string
+    pattern: '^\S[\s\S]*$'
     maxLength: 140
     description: Campo livre, de preenchimento obrigatório quando selecionada tipo de tarifa "OUTRA"
   otherCreditsType:
@@ -63,6 +65,7 @@ properties:
   otherCreditsAdditionalInfo:
     type: string
     maxLength: 50
+    pattern: '^\S[\s\S]*$'
     description: |
       Campo livre, de preenchimento obrigatório quando selecionado tipo de crédito "OUTROS".
 
