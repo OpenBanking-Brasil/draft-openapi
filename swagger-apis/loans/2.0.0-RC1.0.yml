@@ -88,6 +88,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/OKResponseLoansContractList'
       security:
         - OpenId:
             - openid
@@ -129,6 +131,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/OKResponseLoansContract'
       security:
         - OpenId:
             - openid
@@ -172,6 +176,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/OKResponseLoansWarranties'
       security:
         - OpenId:
             - openid
@@ -215,6 +221,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/OKResponseLoansInstalments'
       security:
         - OpenId:
             - openid
@@ -258,6 +266,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/OKResponseLoansPayments'
       security:
         - OpenId:
             - openid
@@ -935,7 +945,7 @@ components:
           example: MES
         totalNumberOfInstalments:
           type: number
-          maxLength: 6
+          maximum: 999999999
           example: 130632
           nullable: true
           description: 'Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.'
@@ -952,25 +962,25 @@ components:
             Tipo de prazo remanescente do contrato referente à modalidade de crédito informada.
         contractRemainingNumber:
           type: number
-          maxLength: 6
+          maximum: 999999999
           description: 'Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.'
           nullable: true
           example: 14600
         paidInstalments:
           type: number
           description: 'Quantidade de prestações pagas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)'
-          maxLength: 3
+          maximum: 999
           nullable: true
           example: 73
         dueInstalments:
           type: number
-          maxLength: 3
+          maximum: 999
           description: 'Quantidade de prestações a vencer.(No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)'
           nullable: true
           example: 57
         pastDueInstalments:
           type: number
-          maxLength: 3
+          maximum: 999
           nullable: true
           description: 'Quantidade de prestações vencidas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)'
           example: 73
@@ -980,7 +990,6 @@ components:
             $ref: '#/components/schemas/LoansBalloonPayment'
           minItems: 0
           description: Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada
-          nullable: true
       additionalProperties: false
     LoansListContract:
       type: object
