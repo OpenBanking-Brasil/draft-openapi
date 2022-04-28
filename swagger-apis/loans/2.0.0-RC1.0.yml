@@ -1038,8 +1038,7 @@ components:
       properties:
         paidInstalments:
           type: number
-          maxLength: 3
-          nullable: true
+          maximum: 2147483647
           example: 73
           description: Quantidade total de parcelas pagas do contrato referente à Modalidade de Crédito informada.
         contractOutstandingBalance:
@@ -1139,7 +1138,6 @@ components:
           example: Reavaliação periódica do bem
           description: |
             Denominação da Tarifa pactuada.  
-            [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
         feeCode:
           type: string
           maxLength: 140
@@ -1147,8 +1145,6 @@ components:
           example: aval_bem
           description: |
             Sigla identificadora da tarifa pactuadas.
-
-            [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA
         feeAmount:
           type: string
           pattern: '^-?\d{1,15}\.\d{2,4}$'
