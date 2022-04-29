@@ -2,7 +2,6 @@ type: object
 required:
   - frequency
   - amount
-  - currency
 properties:
   frequency:  
     $ref:  ../enum/EnumInformedRevenueFrequency.yaml
@@ -16,24 +15,10 @@ properties:
       
       [Restrição] Preencher quando frequency for igual OUTROS.
   amount:
-    type: string
-    minLength: 4
-    maxLength: 21
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
-    example: '100000.0400'
-    description: |
-      Valor do patrimônio informado. Expresso em valor monetário com 4 casas decimais.
-      Patrimônio é o conjunto de bens vinculado a uma pessoa ou a uma entidade.
-  currency:
-    type: string
-    pattern: ^(\w{3}){1}$|^NA$
-    maxLength: 3
-    example: BRL
-    description: Moeda referente ao valor do patrimônio, segundo modelo ISO-4217.
+    $ref: ./InformedRevenueAmount.yaml
   year:
     type: number
     maximum: 9999
-    nullable: true
     example: 2010
     description: Ano de referência do Patrimônio, conforme especificação RFC-3339.
 additionalProperties: false
