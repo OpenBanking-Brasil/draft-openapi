@@ -52,7 +52,7 @@ properties:
   cnpjNumber:
     type: string
     maxLength: 14
-    pattern: \d{14}|^NA$
+    pattern: ^\d{14}$
     example: "50685362006773"
     description: Número completo do CNPJ da Empresa consultada  - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara
   companyCnpjNumber:
@@ -64,7 +64,7 @@ properties:
     items:
       type: string
       maxLength: 14
-      pattern: \d{14}|^NA$
+      pattern: ^\d{14}$
       example: "50685362000135"
   otherDocuments:
     type: array
