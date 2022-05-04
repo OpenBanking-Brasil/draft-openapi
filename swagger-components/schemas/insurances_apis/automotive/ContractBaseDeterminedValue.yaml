@@ -11,5 +11,9 @@ properties:
     maxLength: 21
     example: '50.000'
   currency:
-    $ref: ../../business_commons/CurrencyCode.yaml
+    type: string
+    pattern: '^[A-Z]{3}$'
+    maxLength: 3
+    description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+    example: BRL
 additionalProperties: false
