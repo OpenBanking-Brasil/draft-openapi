@@ -8,7 +8,6 @@ required:
   - referentialRateIndexerType
   - preFixedRate
   - postFixedRate
-  - additionalInfo
 properties:
   taxType:
     $ref: ../enum/EnumContractTaxType.yaml
@@ -57,5 +56,5 @@ properties:
     example: "Informações adicionais"
     description: |
       Texto com informações adicionais sobre a composição das taxas de juros pactuadas.
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
+      [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
 additionalProperties: false
