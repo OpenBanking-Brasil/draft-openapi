@@ -2,7 +2,11 @@ type: object
 description: Valor mínimo de prêmio/contribuição
 properties:
   currency:
-    $ref: ../../business_commons/CurrencyCode.yaml
+    type: string
+    pattern: '^[A-Z]{3}$'
+    maxLength: 3
+    description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+    example: BRL
   periodicity:
     $ref: ../../enum/EnumSurvivalPeriodicity.yaml
   amount:
