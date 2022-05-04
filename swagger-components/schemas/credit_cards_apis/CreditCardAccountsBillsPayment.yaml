@@ -18,13 +18,16 @@ properties:
   paymentMode:
     $ref: ../enum/EnumCreditCardAccountsPaymentMode.yaml
   amount:
-    type: number
+    type: string
     format: double
     pattern: '^-?\d{1,15}\.\d{2,4}$'
-    maxLength: 20
+    maxLength: 21
     minLength: 0
-    example: 100000.0400
-    description: Valor pagamento segundo o valueType.  Expresso em valor monetário com 4 casas decimais
+    example: '100000.0400'
+    description: |
+      Valor pagamento segundo o valueType.  
+      Expresso em valor monetário com 4 casas decimais.
+      O campo não pode assumir valor negativo por se tratar de um pagamento.
   currency:
     type: string
     pattern: '^(\w{3}){1}$'
