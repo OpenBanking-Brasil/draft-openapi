@@ -904,6 +904,7 @@ components:
           $ref: '#/components/schemas/EnumContractFinanceChargeType'
         chargeAdditionalInfo:
           type: string
+          maxLength: 140
           description: |
             Campo de preenchimento obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
             [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
@@ -911,10 +912,10 @@ components:
           example: Informações adicionais sobre encargos.
         chargeRate:
           type: string
+          maxLength: 20
           pattern: '^\d{1}\.\d{4}$'
           description: |
             Representa o valor do encargo em percentual pactuado no contrato. Exemplo: 0.0210 (=2.1%).
-          maxLength: 5
           example: '0.0700'
       additionalProperties: false
     LoansInstalments:
