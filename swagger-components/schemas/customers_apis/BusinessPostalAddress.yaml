@@ -55,7 +55,7 @@ properties:
     $ref: ../enum/EnumCountrySubDivision.yaml
   postCode:
     type: string
-    pattern: \d{8}|^NA$
+    pattern: ^\d{8}$
     maxLength: 8
     example: "17500001"
     description: |
@@ -71,6 +71,7 @@ properties:
   countryCode:
     type: string
     maxLength: 3
+    pattern: ^([A-Z]{3})$
     example: BRA
     description: "Código do pais de acordo com o código alpha3 do ISO-3166"
   geographicCoordinates:

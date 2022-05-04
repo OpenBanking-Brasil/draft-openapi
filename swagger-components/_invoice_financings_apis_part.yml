@@ -88,6 +88,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseInvoiceFinancingsContractList'
       security:
         - OpenId:
             - 'openid'
@@ -129,6 +131,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseInvoiceFinancingsContract'
       security:
         - OpenId:
             - 'openid'
@@ -172,6 +176,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseInvoiceFinancingsWarranties'
       security:
         - OpenId:
             - 'openid'
@@ -215,6 +221,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseInvoiceFinancingsInstalments'
       security:
         - OpenId:
             - 'openid'
@@ -258,6 +266,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseInvoiceFinancingsPayments'
       security:
         - OpenId:
             - 'openid'
@@ -296,6 +306,8 @@ components:
       $ref: ./schemas/enum/EnumContractProductSubTypeInvoiceFinancings.yaml
     EnumContractProductTypeInvoiceFinancings:
       $ref: ./schemas/enum/EnumContractProductTypeInvoiceFinancings.yaml
+    InvoiceFinancingsBallonPaymentAmount:
+      $ref: ./schemas/business_commons/InvoiceFinancingsBallonPaymentAmount.yaml
     InvoiceFinancingsContract:
       $ref: ./schemas/invoice_financings_apis/InvoiceFinancingsContract.yaml
     InvoiceFinancingsContractedWarranty:
