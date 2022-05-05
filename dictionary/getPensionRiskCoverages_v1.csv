@@ -42,25 +42,6 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL
 /data/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;"";Lista;31;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
 FIM_CICLO_DETERMINADO";0;N;"";Não permitido;array;QUANTIDADE_DETERMINADA_PARCELAS
-/data/coverages/attributes/maximumQtyIndemnifiableInstallments;maximumQtyIndemnifiableInstallments;Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;10
-/data/coverages/attributes/gracePeriod;gracePeriod;"";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;
-/data/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;90
-/data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Obrigatório;;"DIAS 
-MESES 
-NAO_APLICA";1;1;"";Não permitido;string;MESES
-/data/coverages/attributes/differentiatedGracePeriod;differentiatedGracePeriod;"";Objeto;;Opcional;;;0;1;"";Não permitido;object;
-/data/coverages/attributes/differentiatedGracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;90
-/data/coverages/attributes/differentiatedGracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Obrigatório;;"DIAS 
-MESES 
-NAO_APLICA";1;1;"";Não permitido;string;MESES
-/data/coverages/attributes/deductibleDays;deductibleDays;Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;10
-/data/coverages/attributes/differentiatedDeductibleDays;differentiatedDeductibleDays;Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade.<br>Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;15
-/data/coverages/attributes/deductible;deductible;Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.;Objeto;;Opcional;;;0;1;"";Não permitido;object;
-/data/coverages/attributes/deductible/amount;amount;"";Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01
-/data/coverages/attributes/deductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL
-/data/coverages/attributes/differentiatedDeductible;differentiatedDeductible;Detalhamento da franquia em reais diferentes para cada cobertura que exista alguma especificidade.<br>Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.;Objeto;;Opcional;;;0;1;"";Não permitido;object;
-/data/coverages/attributes/differentiatedDeductible/amount;amount;"";Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01
-/data/coverages/attributes/differentiatedDeductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL
 /data/coverages/attributes/excludedRisks;excludedRisks;"";Lista;40;Opcional;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
 OPERACOES_GUERRA 
@@ -139,7 +120,7 @@ NAO_HA";1;N;"";Não permitido;array;SORTEIO
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa
 /data/pmbacRemuneration;pmbacRemuneration;"";Objeto;;Opcional;;;0;1;"";Não permitido;object;
 /data/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;;Opcional;^\d{1,16}\.\d{4}$;;0;1;"";Não permitido;string;14.2521
-/data/pmbacRemuneration/updateIndexes;updateIndexes;"";Lista;5;Opcional;;"IPCA 
+/data/pmbacRemuneration/updateIndexes;updateIndexes;"";Lista;;Opcional;;"IPCA 
 IGP_M 
 INPC";0;N;"";Não permitido;array;IPCA
 /data/ageAdjustment;ageAdjustment;"";Objeto;;Opcional;;;0;1;"";Não permitido;object;
@@ -171,8 +152,9 @@ NAO_APLICA";0;N;"";Não permitido;array;SALDAMENTO
 /data/indemnityPaymentMethods;indemnityPaymentMethods;"";Lista;18;Opcional;;"UNICO 
 SOB_FORMA_RENDA";0;N;"";Não permitido;array;UNICO
 /data/minimumRequirement;minimumRequirement;"";Objeto;;Opcional;;;0;1;"";Não permitido;object;
-/data/minimumRequirement/contractType;contractType;"O tipo de serviço contratado. A considerar os domínios abaixo&#58;<br><ol><li>Coletivo</li><li>Individual</li></ol>";Texto;10;Obrigatório;;"COLETIVO 
-INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO
+/data/minimumRequirement/contractType;contractType;"O tipo de serviço contratado. A considerar os domínios abaixo&#58;<br><ol><li>Coletivo Averbado</li><li>Coletivo Instituído</li><li>Individual</li></ol>";Texto;;Obrigatório;;"COLETIVO_AVERBADO 
+COLETIVO_INSTITUIDO 
+INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO_AVERBADO
 /data/minimumRequirement/contractingMinRequirement;contractingMinRequirement;Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).;Texto;1024;Opcional;;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa
 /data/targetAudience;targetAudience;"A considerar os domínios abaixo:
 
