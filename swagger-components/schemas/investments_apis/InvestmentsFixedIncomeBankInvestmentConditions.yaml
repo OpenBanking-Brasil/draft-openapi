@@ -2,10 +2,8 @@ type: object
 required:
   - minimumAmount
   - redemptionTerm
-  - minimumExpirationTerm
-  - maximumExpirationTerm
-  - minimumGracePeriod
-  - maximumGracePeriod
+  - expirationPeriod
+  - gracePeriod
 properties:
   minimumAmount:
     type: string
@@ -16,28 +14,8 @@ properties:
     example: '100.00'
   redemptionTerm:
     $ref: ../enum/EnumInvestmentsFixedIncomeBankRedemptionTerm.yaml
-  minimumExpirationTerm:
-    type: number
-    format: int32
-    description: Prazo mínimo referente ao vencimento do título
-    minimum: 1
-    example: 30
-  maximumExpirationTerm:
-    type: number
-    format: int32
-    description: Prazo máximo referente ao vencimento do título
-    minimum: 1
-    example: 720
-  minimumGracePeriod:
-    type: number
-    format: int32
-    description: Prazo mínimo da carência, ou seja, quando passa a ser possível resgatar o investimento
-    minimum: 0
-    example: 5
-  maximumGracePeriod:
-    type: number
-    format: int32
-    description: Prazo máximo da carência, ou seja, quando passa a ser possível resgatar o investimento
-    minimum: 0
-    example: 180
+  expirationPeriod:
+    $ref: ./EnumExpirationGracePeriod.yaml
+  gracePeriod:
+    $ref: ./EnumExpirationGracePeriod.yaml
 additionalProperties: false

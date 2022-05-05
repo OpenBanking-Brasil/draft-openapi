@@ -22,7 +22,7 @@ O administrador é o responsável por desempenhar todas as funções administrat
 Sócio não tem qualquer envolvimento nas atividades administrativas da sociedade.";Texto;;Obrigatório;;"SOCIO 
 ADMINISTRADOR";1;1;"";Não permitido;string;
 /data/parties/civilName;civilName;Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte);Texto;70;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Juan Kaique Cláudio Fernandes
-/data/parties/socialName;socialName;Nome social da pessoa natural, se houver. (aquele pelo qual travestis e transexuais se reconhecem, bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local).;Texto;70;Opcional;[\w\W\s]*;;0;1;" De preenchimento obrigatório, se houver.
+/data/parties/socialName;socialName;Nome social da pessoa natural, se houver. (aquele pelo qual travestis e transexuais se reconhecem, bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local).;Texto;70;Opcional;[\w\W\s]*;;0;;" De preenchimento obrigatório, se houver.
 ";Não permitido;string;Karina
 /data/parties/companyName;companyName;Razão social da empresa consultada é o termo registrado sob o qual uma pessoa jurídica (PJ) se individualiza e exerce suas atividades. Também pode ser chamada por denominação social ou firma empresarial;Texto;70;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Luiza e Benjamin Assessoria Jurídica Ltda
 /data/parties/tradeName;tradeName;Nome fantasia da pessoa jurídica, se houver. (É o nome popular da empresa, utilizado para divulgação da empresa e melhor fixação com o público). De preenchimento obrigatório se houver;Texto;70;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Mundo da Eletronica
@@ -75,7 +75,7 @@ SP
 SE 
 TO 
 NA";1;1;"";Não permitido;string;SP
-/data/contacts/postalAddresses/postCode;postCode;Código de Endereçamento Postal: Composto por um conjunto numérico de oito dígitos, o objetivo principal do CEP é orientar e acelerar o encaminhamento, o tratamento e a entrega de objetos postados nos Correios, por meio da sua atribuição a localidades, logradouros, unidades dos Correios, serviços, órgãos públicos, empresas e edifícios. p.ex. '01311000';Texto;8;Obrigatório;^\d{8}$;;1;1;"";Não permitido;string;17500001
+/data/contacts/postalAddresses/postCode;postCode;Código de Endereçamento Postal: Composto por um conjunto numérico de oito dígitos, o objetivo principal do CEP é orientar e acelerar o encaminhamento, o tratamento e a entrega de objetos postados nos Correios, por meio da sua atribuição a localidades, logradouros, unidades dos Correios, serviços, órgãos públicos, empresas e edifícios. p.ex. '01311000';Texto;8;Obrigatório;\d{8}|^NA$;;1;1;"";Não permitido;string;17500001
 /data/contacts/postalAddresses/country;country;Nome do país;Texto;80;Obrigatório;\w*\W*;;1;1;" Caso a instituição não possua a informação para compartilhamento, informar NA.
 ";Não permitido;string;Brasil
 /data/contacts/postalAddresses/countryCode;countryCode;Código do pais de acordo com o código alpha3 do ISO-3166;Texto;3;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRA
@@ -88,8 +88,8 @@ NA";1;1;"";Não permitido;string;SP
 MOVEL 
 OUTRO";1;1;"";Não permitido;string;FIXO
 /data/contacts/phones/additionalInfo;additionalInfo;Informação complementar relativa ao tipo de telefone selecionado.;Texto;70;Opcional;[\w\W\s]*;;0;1; De preenchimento obrigatório quando selecionado o tipo 'OUTRO'.;Não permitido;string;Informações adicionais.
-/data/contacts/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Cliente - se houver;Texto;4;Obrigatório;^\d{2,4}$;;1;1;"";Não permitido;string;55
-/data/contacts/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone do cliente - se houver;Texto;;Obrigatório;;"11 
+/data/contacts/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Cliente - se houver;Texto;4;Obrigatório;^\d{2,4}$|^NA$;;1;1;"";Não permitido;string;55
+/data/contacts/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone do cliente - se houver;Texto;2;Obrigatório;;"11 
 12 
 13 
 14 

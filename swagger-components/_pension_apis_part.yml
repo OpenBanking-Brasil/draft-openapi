@@ -78,9 +78,9 @@ components:
     OKResponseSurvivalCoveragePension:
       $ref: "./schemas/pension_apis/survival/OkResponseGetSurvivalPensionContract.yaml"
     GetSurvivalPensionContractData:
-      $ref: "./schemas/pension_apis/survival/GetSurvivalPensionContractData.yaml"
-    SurvivalPensionInvestimentFund:
-      $ref: "./schemas/pension_apis/survival/SurvivalPensionInvestimentFund.yaml"
+      $ref: './schemas/pension_apis/survival/GetSurvivalPensionContractData.yaml'
+    SurvivalPensionInvestmentFund:
+      $ref: './schemas/pension_apis/survival/SurvivalPensionInvestmentFund.yaml'
     SurvivalPensionMinimumRequirements:
       $ref: ./schemas/pension_apis/survival/SurvivalPensionMinimumRequirements.yaml
     SusepProcessNumber:
@@ -105,10 +105,8 @@ components:
       $ref: ./schemas/pension_apis/survival/SurvivalPensionGrantPeriodBenefit.yaml
     Links:
       $ref: "./schemas/Links.yaml"
-    Meta:
-      $ref: "./schemas/Meta.yaml"
-    Phase4Meta:
-      $ref: ./schemas/Phase4Meta.yaml
+    OpenDataMeta:
+      $ref: ./schemas/OpenDataMeta.yaml
     Participant:
       $ref: ./schemas/business_commons/Participant.yaml
     InsurancePensionEnumIndemnifiablePeriodType:
@@ -135,20 +133,12 @@ components:
       $ref: ./schemas/business_commons/InsurancePensionMinValue.yaml
     InsurancePensionMaxValue:
       $ref: ./schemas/business_commons/InsurancePensionMaxValue.yaml
-    InsurancePensionCoverageDeductible:
-      $ref: ./schemas/business_commons/InsurancePensionCoverageDeductible.yaml
-    InsurancePensionCoverageDifferentiatedDeductible:
-      $ref: ./schemas/business_commons/InsurancePensionCoverageDifferentiatedDeductible.yaml
     RiskPensionMinimumRequirement:
       $ref: ./schemas/pension_apis/risk/RiskPensionMinimumRequirement.yaml
-    EnumInsurancePensionCategory:
-      $ref: ./schemas/enum/EnumInsurancePensionCategory.yaml
     InsurancePensionReclaimTableItem:
       $ref: ./schemas/business_commons/InsurancePensionReclaimTableItem.yaml
     InsurancePensionEnumPmbacRemuneration:
       $ref: ./schemas/business_commons/InsurancePensionEnumPmbacRemuneration.yaml
-    InsurancePensionBenefitRecalculation:
-      $ref: ./schemas/business_commons/InsurancePensionBenefitRecalculation.yaml
     AgeAdjustment:
       $ref: ./schemas/business_commons/InsurancePensionAgeAdjustment.yaml
     CurrencyCode:
@@ -161,8 +151,6 @@ components:
       $ref: ./schemas/business_commons/EnumAdditional.yaml
     EnumGracePeriodUnit:
       $ref: ./schemas/business_commons/EnumGracePeriodUnit.yaml
-    EnumTerm:
-      $ref: ./schemas/business_commons/EnumTerm.yaml
     InsurancePensionEnumFinancialRegime:
       $ref: ./schemas/business_commons/InsurancePensionEnumFinancialRegime.yaml
   parameters:
@@ -188,28 +176,28 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/OpenDataResponseError.yaml
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/OpenDataResponseError.yaml
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/OpenDataResponseError.yaml
     TooManyRequests:
       description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido"
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/OpenDataResponseError.yaml
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/OpenDataResponseError.yaml

@@ -6,13 +6,10 @@ required:
   - transactionType
   - transactionCategory
   - value
+  - targetAudience
 properties:
   foreignCurrency:
-    type: string
-    pattern: '^[A-Z]{3}$'
-    maxLength: 3
-    description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
-    example: BRL
+    $ref: ../business_commons/CurrencyCode.yaml
   deliveryForeignCurrency:
     $ref: ../enum/EnumExchangeDeliveryForeignCurrency.yaml
   transactionType:

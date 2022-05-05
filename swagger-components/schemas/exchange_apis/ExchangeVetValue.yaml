@@ -7,17 +7,14 @@ required:
   - deliveryForeignCurrency
   - rangeTransactionCategory
   - vetAmount
+  - targetAudience
 properties:
   participant:
     $ref: ../business_commons/Participant.yaml
   transactionType:
     $ref: ../enum/EnumExchangeTransactionType.yaml
   foreignCurrency:
-    type: string
-    pattern: '^[A-Z]{3}$'
-    maxLength: 3
-    description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
-    example: BRL
+    $ref: ../business_commons/CurrencyCode.yaml
   deliveryForeignCurrency:
     $ref: ../enum/EnumExchangeDeliveryForeignCurrency.yaml
   rangeTransactionCategory:
@@ -25,5 +22,5 @@ properties:
   targetAudience:
     $ref: ../business_commons/EnumTargetAudience.yaml
   vetAmount:
-    $ref: ../business_commons/FrequencyDistribution.yaml
+    $ref: ../business_commons/NoIdentificationFrequencyDistribution.yaml
 additionalProperties: false
