@@ -3,10 +3,14 @@ on:
   push:
     branches:
       - "**"
-      - "**" 
-  pull_request:
+      - "!GT-PR-*"
+      - "!main"
+  pull_request_target:
+    types:
+      - closed
     branches:
-      - "**"
+      - "main"
+      - "GT-PR-*"
 jobs:
   build:  
     env:
@@ -55,13 +59,15 @@ jobs:
        #  with:
       #     file_glob: 'swagger-apis/**/*.yml'
   deploy:
+    if: github.event.pull_request.merged == true
     env:
        enable-deploy: ${{ (github.repository !=  'Sensedia/draft-openapi' && github.ref_name == 'main')}}
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - run: echo "Validação de deploy após pull request closed merged" 
       - name: Deploy
-        if: ${{ env.enable-deploy}}
+        if: env.enable-deploy == true
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
