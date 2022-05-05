@@ -10,10 +10,8 @@ required:
   - contractAmount
   - settlementDate
   - currency
-  - dueDate
   - instalmentPeriodicity
   - instalmentPeriodicityAdditionalInfo
-  - firstInstalmentDueDate
   - CET
   - amortizationScheduled
   - amortizationScheduledAdditionalInfo
@@ -82,7 +80,7 @@ properties:
     type: string
     maxLength: 21
     minLength: 4
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    pattern: '^\d{1,15}\.\d{2,4}$'
     example: '100000.0400'
     description: Valor contratado da operação. Expresso em valor monetário com até 4 casas decimais
   currency:
@@ -102,6 +100,7 @@ properties:
     example: "2028-01-15"
     description: |
       Data de vencimento Final da operação. Especificação RFC-3339.
+      Informação deve ser enviada caso ela exista.
   instalmentPeriodicity:
     $ref: ../enum/EnumContractInstalmentPeriodicity.yaml
   instalmentPeriodicityAdditionalInfo:
@@ -120,6 +119,7 @@ properties:
     example: "2018-02-15"
     description: |
       Data de vencimento primeira parcela do principal.
+      Informação deve ser enviada caso ela exista.
   CET:
     type: string
     pattern: '^\d{1}\.\d{4}$'

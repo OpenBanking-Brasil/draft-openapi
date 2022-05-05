@@ -6,7 +6,6 @@ required:
   - paidDate
   - currency
   - paidAmount
-  - overParcel
 properties:
   paymentId:
     type: string
@@ -43,11 +42,13 @@ properties:
     type: string
     maxLength: 21
     minLength: 4
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    pattern: '^\d{1,15}\.\d{2,4}$'
     example: '100000.0400'
     description: |
       Valor do pagamento referente ao  contrato da modalidade de crédito consultada.
       Expresso em valor monetário com até 4 casas decimais.
   overParcel:
+    description: |
+      [Restrição] Informação deve ser enviada caso ela exista.
     $ref: ./LoansOverParcel.yaml
 additionalProperties: false  
