@@ -94,6 +94,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseCreditCardAccountsList'
       security:
         - OpenId:
             - 'openid'
@@ -135,6 +137,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseCreditCardAccountsIdentification'
       security:
         - OpenId:
             - 'openid'
@@ -180,6 +184,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseCreditCardAccountsBills'
       security:
         - OpenId:
             - 'openid'
@@ -228,6 +234,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
       security:
         - OpenId:
             - 'openid'
@@ -269,6 +277,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseCreditCardAccountsLimits'
       security:
         - OpenId:
             - 'openid'
@@ -316,6 +326,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
       security:
         - OpenId:
             - 'openid'
@@ -342,8 +354,12 @@ components:
       $ref: ./schemas/credit_cards_apis/CreditCardAccountsLimitsData.yaml
     CreditCardsAccountPaymentMethod:
       $ref: ./schemas/credit_cards_apis/CreditCardsAccountsPaymentMethod.yaml
+    CreditCardsBillTotalAmount:
+      $ref: ./schemas/credit_cards_apis/CreditCardsBillTotalAmount.yaml
     CreditCardAccountsTransaction:
       $ref: ./schemas/credit_cards_apis/CreditCardAccountsTransaction.yaml
+    CurrencyCode:
+      $ref: ./schemas/business_commons/CurrencyCode.yaml
     EnumCreditCardAccountFee:
       $ref: ./schemas/enum/EnumCreditCardAccountFee.yaml
     EnumCreditCardAccountsBillingValueType:

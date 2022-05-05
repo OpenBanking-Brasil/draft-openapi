@@ -13,9 +13,8 @@ properties:
     $ref: ../enum/EnumTypeNumberOfInstalments.yaml
   totalNumberOfInstalments:
     type: number
-    maxLength: 6
+    maximum: 999999
     example: 130632
-    nullable: true
     description: Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
   typeContractRemaining:
     type: string
@@ -25,31 +24,26 @@ properties:
       - MES
       - ANO
       - SEM_PRAZO_REMANESCENTE
-    maxLength: 22
     description: |
       Tipo de prazo remanescente do contrato referente à modalidade de crédito informada.
   contractRemainingNumber:
     type: number
-    maxLength: 6
+    maximum: 999
     description: Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
-    nullable: true
-    example: 14600
+    example: 80
   paidInstalments:
     type: number
     description: "Quantidade de prestações pagas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)"
-    maxLength: 3
-    nullable: true
+    maximum: 999
     example: 73
   dueInstalments:
     type: number
-    maxLength: 3
+    maximum: 999
     description: "Quantidade de prestações a vencer.(No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)"
-    nullable: true
     example: 57
   pastDueInstalments:
     type: number
-    maxLength: 3
-    nullable: true
+    maximum: 999
     description: "Quantidade de prestações vencidas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)"
     example: 73
   balloonPayments:
@@ -58,5 +52,4 @@ properties:
       $ref: ./UnarrangedAccountOverdraftBalloonPayment.yaml
     minItems: 0
     description: "Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada"
-    nullable: true
 additionalProperties: false

@@ -87,6 +87,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponsePersonalCustomersIdentification'
       security:
         - OpenId:
             - 'openid'     
@@ -125,6 +127,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponsePersonalCustomersQualification'
       security:
         - OpenId:
             - 'openid'     
@@ -163,6 +167,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponsePersonalCustomersFinancialRelation'
       security:
         - OpenId:
             - 'openid'     
@@ -201,6 +207,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseBusinessCustomersIdentification'
       security:
         - OpenId:
             - 'openid'     
@@ -239,6 +247,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseBusinessCustomersQualification'
       security:
         - OpenId:
             - 'openid'     
@@ -277,6 +287,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseBusinessCustomersFinancialRelation'
       security:
         - OpenId:
             - 'openid'     
@@ -307,6 +319,8 @@ components:
       $ref: ./schemas/customers_apis/CustomerEmail.yaml
     CustomerPhone:
       $ref: ./schemas/customers_apis/CustomerPhone.yaml
+    CurrencyCode: 
+      $ref: ./schemas/business_commons/CurrencyCode.yaml
     BusinessPostalAddress:
       $ref: ./schemas/customers_apis/BusinessPostalAddress.yaml
     PersonalPostalAddress:
@@ -317,6 +331,8 @@ components:
       $ref: ./schemas/customers_apis/PersonalAccount.yaml
     EconomicActivity:
       $ref: ./schemas/customers_apis/EconomicActivity.yaml
+    EnumAccountTypeCustomers:
+      $ref: ./schemas/enum/EnumAccountTypeCustomers.yaml
     EnumAreaCode:
       $ref: ./schemas/enum/EnumAreaCode.yaml
     EnumCountrySubDivision:
@@ -345,6 +361,16 @@ components:
       $ref: ./schemas/enum/EnumSex.yaml
     GeographicCoordinates:
       $ref: ./schemas/GeographicCoordinates.yaml
+    InformedRevenue:
+      $ref: ./schemas/customers_apis/InformedRevenue.yaml
+    InformedRevenueAmount:
+      $ref: ./schemas/customers_apis/InformedRevenueAmount.yaml
+    InformedIncome:
+      $ref: ./schemas/customers_apis/InformedIncome.yaml
+    InformedIncomeAmount:
+      $ref: ./schemas/customers_apis/InformedIncomeAmount.yaml
+    InformedPatrimonyAmount:
+      $ref: ./schemas/customers_apis/InformedPatrimonyAmount.yaml
     Links:
       $ref: ./schemas/Links.yaml
     Meta:

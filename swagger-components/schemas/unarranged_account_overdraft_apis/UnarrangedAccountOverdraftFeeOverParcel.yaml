@@ -14,11 +14,9 @@ properties:
   feeCode:
     type: string
     description: |
-      Sigla identificadora da tarifa avulsa fora da parcela
-
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA
+      Sigla identificadora da tarifa avulsa fora da parcela.
     maxLength: 140
-    pattern: '^\w{2}[\w\W\s]*$'
+    pattern: '[\w\W\s]*'
     example: "Saque descoberto"
   feeAmount:
     type: string

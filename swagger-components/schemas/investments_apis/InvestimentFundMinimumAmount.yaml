@@ -1,0 +1,19 @@
+type: object
+required:
+  - value
+  - currency
+properties:
+  value:
+    type: string
+    description: Valor mínimo do primeiro aporte.
+    minLength: 4
+    maxLength: 19
+    pattern: '^\d{1,16}\.\d{2}$'
+    example: '100000.12'
+  currency:
+    type: string
+    pattern: '^[A-Z]{3}$'
+    maxLength: 3
+    description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+    example: BRL
+additionalProperties: false

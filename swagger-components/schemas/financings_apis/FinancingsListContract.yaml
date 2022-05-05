@@ -10,7 +10,7 @@ required:
 properties:
   contractId:
     type: string
-    pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+    pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{1,100}$'
     maxLength: 100
     example: '92792126019929279212650822221989319252576'
     description: Identifica de forma única o contrato da operação de crédito do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.
@@ -22,7 +22,7 @@ properties:
     description: Nome da Marca reportada pelo participante do Open Banking. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes
   companyCnpj:
     type: string
-    pattern: \d{14}|^NA$
+    pattern: ^\d{14}$
     description: "Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara."
     maxLength: 14
     example: "21128159000166"

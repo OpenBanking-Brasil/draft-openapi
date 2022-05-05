@@ -7,15 +7,14 @@ required:
 properties:
   paidInstalments:
     type: number
-    maxLength: 3
-    nullable: true
+    maximum: 2147483647
     example: 73
     description: Quantidade total de parcelas pagas do contrato referente à Modalidade de Crédito informada.
   contractOutstandingBalance:
     description: "Valor necessario para o cliente liquidar a dívida."
     type: string
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
-    maxLength: 21
+    pattern: '^\d{1,15}\.\d{2,4}$'
+    maxLength: 20
     minLength: 4
     example: '100000.0400'
   releases:

@@ -12,19 +12,17 @@ properties:
     type: string
     maxLength: 140
     minLength: 2
-    pattern: 'NA|[\w\W\s]+'
+    pattern: '[\w\W\s]+'
     description: |
       Denominação da Tarifa pactuada
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
     example: Excesso em Conta
   feeCode:
     type: string
     maxLength: 140
     minLength: 2
-    pattern: 'NA|[\w\W\s]+'
+    pattern: '[\w\W\s]+'
     description: |
       Sigla identificadora da tarifa pactuada
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
     example: EXCESSO_CONTA
   feeChargeType:
     $ref: ../enum/EnumContractFeeChargeType.yaml
@@ -35,14 +33,16 @@ properties:
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     description: |
       Valor monetário da tarifa pactuada no contrato. Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo.
+      [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
     maxLength: 21
     minLength: 1
     example: '100000.04'
   feeRate:
     type: string
+    pattern: ^\d{1}\.\d{4}$
     description: |
       Percentual que representa o valor da tarifa pactuada para o contrato. 
       [Restrição] Preenchimento obrigatório quando a forma de cobrança por Percentual.
     maxLength: 19
-    example: '50.00'
+    example: '0.1234'
 additionalProperties: false

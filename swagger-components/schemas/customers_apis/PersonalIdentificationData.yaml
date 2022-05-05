@@ -71,7 +71,7 @@ properties:
     type: array
     items:
       type: string
-      pattern: '\d{14}|^NA$'
+      pattern: '^\d{14}$'
       maxLength: 14
     example: ["01773247000103", "01773247000563"]
     description: |
@@ -87,7 +87,6 @@ properties:
     description: Relação dos demais documentos
   hasBrazilianNationality:
     type: boolean
-    nullable: true
     example: false
     description: Informa se o Cliente tem nacionalidade brasileira.
   nationality:

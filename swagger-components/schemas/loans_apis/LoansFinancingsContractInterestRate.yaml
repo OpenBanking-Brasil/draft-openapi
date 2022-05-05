@@ -8,7 +8,6 @@ required:
   - referentialRateIndexerType
   - preFixedRate
   - postFixedRate
-  - additionalInfo
 properties:
   taxType:
     $ref: ../enum/EnumContractTaxType.yaml
@@ -32,8 +31,8 @@ properties:
     example: "Informações adicionais"
   preFixedRate:
     type: string
-    pattern: '^\d{1}\.\d{4}$'
-    maxLength: 6
+    pattern: '^\d{1}\.\d{4,6}$'
+    maxLength: 8
     minLength: 6
     example: '0.6000'
     description: |
@@ -42,8 +41,8 @@ properties:
       (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
   postFixedRate:
     type: string
-    pattern: '^\d{1}\.\d{4}$'
-    maxLength: 6
+    pattern: '^\d{1}\.\d{4,6}$'
+    maxLength: 8
     minLength: 6
     description: |
       Taxa pós fixada aplicada sob o contrato da modalidade crédito.
@@ -57,5 +56,5 @@ properties:
     example: "Informações adicionais"
     description: |
       Texto com informações adicionais sobre a composição das taxas de juros pactuadas.
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
+      [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
 additionalProperties: false

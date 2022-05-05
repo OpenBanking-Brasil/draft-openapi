@@ -88,6 +88,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseFinancingsContractList'
       security:
         - OpenId:
             - 'openid'
@@ -129,6 +131,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseFinancingsContract'
       security:
         - OpenId:
             - 'openid'
@@ -172,6 +176,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseFinancingsWarranties'
       security:
         - OpenId:
             - 'openid'
@@ -215,6 +221,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseFinancingsInstalments'
       security:
         - OpenId:
             - 'openid'
@@ -258,6 +266,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseFinancingsPayments'
       security:
         - OpenId:
             - 'openid'
@@ -276,6 +286,10 @@ components:
       $ref: ./schemas/financings_apis/ResponseFinancingsPayments.yaml
     ResponseFinancingsWarranties:
       $ref: ./schemas/financings_apis/ResponseFinancingsWarranties.yaml
+    CurrencyCode:
+      $ref: ./schemas/business_commons/CurrencyCode.yaml
+    EnumContractFinanceChargeType:
+      $ref: ./schemas/enum/EnumContractFinanceChargeType.yaml
     EnumProductType:
       $ref: ./schemas/enum/EnumContractProductTypeFinancings.yaml
     EnumProductSubType:
@@ -284,6 +298,8 @@ components:
       $ref: ./schemas/financings_apis/FinancingsContractInterestRate.yaml
     FinancingsBalloonPayment:
       $ref: ./schemas/financings_apis/FinancingsBalloonPayment.yaml
+    FinancingsBalloonPaymentAmount:
+      $ref: ./schemas/financings_apis/FinancingsBalloonPaymentAmount.yaml
     FinancingsChargeOverParcel:
       $ref: ./schemas/financings_apis/FinancingsChargeOverParcel.yaml
     FinancingsContract:
@@ -312,7 +328,8 @@ components:
       $ref: ./schemas/Links.yaml
     ResponseError:
       $ref: ./schemas/ResponseError.yaml
-
+    XFapiInteractionId:
+      $ref: ./headers/XFapiInteractionId.yaml
   parameters:
     Authorization:
       $ref: ./parameters/Authorization.yaml

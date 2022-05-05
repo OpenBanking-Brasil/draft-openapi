@@ -6,7 +6,6 @@ required:
   - paidDate
   - currency
   - paidAmount
-  - overParcel
 properties:
   paymentId:
     type: string
@@ -41,9 +40,9 @@ properties:
       Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
   paidAmount:
     type: string
-    maxLength: 21
-    minLength: 1
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    maxLength: 20
+    minLength: 4
+    pattern: '^\d{1,15}\.\d{2,4}$'
     example: '100000.0400'
     description: |
       Valor do pagamento referente ao  contrato da modalidade de crédito consultada.

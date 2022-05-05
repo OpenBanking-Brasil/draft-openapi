@@ -122,8 +122,14 @@ components:
       $ref: ./schemas/business_commons/EnumProductModality.yaml
     EnumGracePeriodUnit:
       $ref: ./schemas/business_commons/EnumGracePeriodUnit.yaml
+    InsurancePensionCoverageDeductible:
+      $ref: ./schemas/business_commons/InsurancePensionCoverageDeductible.yaml
+    InsurancePensionCoverageDifferentiatedDeductible:
+      $ref: ./schemas/business_commons/InsurancePensionCoverageDifferentiatedDeductible.yaml
     InsurancePensionEnumPmbacRemuneration:
       $ref: ./schemas/business_commons/InsurancePensionEnumPmbacRemuneration.yaml
+    InsurancePensionBenefitRecalculation:
+      $ref: ./schemas/business_commons/InsurancePensionBenefitRecalculation.yaml
     AgeAdjustment:
       $ref: ./schemas/business_commons/InsurancePensionAgeAdjustment.yaml
     InsurancePensionEnumFinancialRegime:
@@ -163,10 +169,6 @@ components:
       $ref: ./schemas/enum/EnumCoverageItemDeductibleType.yaml
     EnumCoverageItemGeographicScopeType:
       $ref: ./schemas/enum/EnumCoverageItemGeographicScopeType.yaml
-    EnumInsurancePersonalBenefitRecalculationCriteria:
-      $ref: ./schemas/enum/EnumInsurancePersonalBenefitRecalculationCriteria.yaml
-    EnumInsurancePersonalBenefitRecalculationUpdateIndex:
-      $ref: ./schemas/enum/EnumInsurancePersonalBenefitRecalculationUpdateIndex.yaml
     AutomotivePartsItem:
       $ref: ./schemas/insurances_apis/automotive/AutomotivePartsItem.yaml
     EnumAutomotivePartType:
@@ -217,12 +219,6 @@ components:
     # Fim home schemas
 
     # Início personal schemas
-    InsuranceCoverageDeductible:
-      $ref: ./schemas/insurances_apis/InsuranceCoverageDeductible.yaml
-    InsuranceCoverageDifferentiatedDeductible:
-      $ref: ./schemas/insurances_apis/InsuranceCoverageDifferentiatedDeductible.yaml
-    InsuranceBenefitRecalculation:
-      $ref: ./schemas/insurances_apis/InsuranceBenefitRecalculation.yaml
     OKResponsePersonalInsuranceList:
       $ref: ./schemas/insurances_apis/personal/ResponsePersonalInsuranceList.yaml
     PersonalInsuranceData:
@@ -231,12 +227,10 @@ components:
       $ref: ./schemas/insurances_apis/personal/PersonalCoverageItem.yaml
     PersonalCoverageItemAttributes:
       $ref: ./schemas/insurances_apis/personal/PersonalCoverageItemAttributes.yaml
-    EnumInsuranceCategory:
-      $ref: ./schemas/enum/EnumInsuranceCategory.yaml
+    EnumInsurancePensionCategory:
+      $ref: ./schemas/enum/EnumInsurancePensionCategory.yaml
     EnumPersonalIndemnityPaymentFrequencyType:
       $ref: ./schemas/enum/EnumPersonalIndemnityPaymentFrequencyType.yaml
-    EnumInsurancePersonalAgeAdjustmentCriteria:
-      $ref: ./schemas/enum/EnumInsurancePersonalAgeAdjustmentCriteria.yaml
     EnumExcludedRisks:
       $ref: ./schemas/business_commons/EnumExcludedRisks.yaml
     EnumPersonalInsuranceOtherGuaranteedValues:
@@ -253,8 +247,10 @@ components:
 
     Links:
       $ref: ./schemas/Links.yaml
-    OpenDataMeta:
-      $ref: ./schemas/OpenDataMeta.yaml
+    Meta:
+      $ref: ./schemas/Meta.yaml
+    Phase4Meta:
+      $ref: ./schemas/Phase4Meta.yaml
   parameters:
     page:
       $ref: ./parameters/Page.yaml
@@ -284,28 +280,28 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/OpenDataResponseError.yaml
+            $ref: ./schemas/ResponseError.yaml
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/OpenDataResponseError.yaml
+            $ref: ./schemas/ResponseError.yaml
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/OpenDataResponseError.yaml
+            $ref: ./schemas/ResponseError.yaml
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/OpenDataResponseError.yaml
+            $ref: ./schemas/ResponseError.yaml
     TooManyRequests:
       description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/OpenDataResponseError.yaml
+            $ref: ./schemas/ResponseError.yaml

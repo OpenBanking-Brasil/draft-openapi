@@ -27,6 +27,7 @@ properties:
     $ref: ../enum/EnumCreditCardAccountsLineName.yaml
   lineNameAdditionalInfo:
     type: string
+    maxLength: 50
     pattern: '[\w\W\s]*'
     example: "Informações adicionais e complementares."
     description: Campo de preenchimento obrigatório se selecionada a opção 'OUTRAS' em lineName.
@@ -37,52 +38,46 @@ properties:
   limitAmountCurrency:
     type: string
     maxLength: 3
-    pattern: '^(\w{3}){1}$|^NA$'
+    pattern: '^(\w{3}){1}$'
     example: BRL
     description: |
       Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.'
       Todos os limite informados estão representados com a moeda vigente do do Brasil.
   limitAmount:
-    type: number
+    type: string
     format: double
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     description: Valor total do limite informado Expresso em valor monetário com 4 casas decimais.
-    maxLength: 20
-    minLength: 0
-    example: 100000.0001
-    nullable: true
+    maxLength: 21
+    example: '100000.0001'
   usedAmountCurrency:
     type: string
     maxLength: 3
-    pattern: '^(\w{3}){1}$|^NA$'
+    pattern: '^(\w{3}){1}$'
     example: BRL
     description: |
       Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.'
       Todos os saldos informados estão representados com a moeda vigente do Brasil.
   usedAmount:
-    type: number
+    type: string
     format: double
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     description: Valor utilizado do limite informado Expresso em valor monetário com 4 casas decimais.
-    maxLength: 20
-    minLength: 0
-    example: 7500.0500
-    nullable: true
+    maxLength: 21
+    example: '7500.0500'
   availableAmountCurrency:
     type: string
     maxLength: 3
-    pattern: '^(\w{3}){1}$|^NA$'
+    pattern: '^(\w{3}){1}$'
     example: BRL
     description: |
       Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.'
       Todos os saldos informados estão representados com a moeda vigente do Brasil.
   availableAmount:
-    type: number
+    type: string
     format: double
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     description: Valor disponível do limite informado Expresso em valor monetário com 4 casas decimais.
-    maxLength: 20
-    minLength: 0
-    nullable: true
-    example: 2499.9500
+    maxLength: 21
+    example: '2499.9500'
 additionalProperties: false

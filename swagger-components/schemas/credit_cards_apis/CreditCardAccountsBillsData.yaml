@@ -24,12 +24,7 @@ properties:
     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: "2021-05-21"
   billTotalAmount:
-    type: string
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
-    maxLength: 20
-    minLength: 0
-    description: Valor total da fatura
-    example: '100000.0400'
+    $ref: ./CreditCardsBillTotalAmount.yaml
   billTotalAmountCurrency:
     type: string
     maxLength: 3
@@ -37,13 +32,13 @@ properties:
     description: Moeda referente ao valor de pagamento total da fatura, segundo modelo ISO-4217. p.ex. 'BRL' Todos os valores informados estão representados com a moeda vigente do Brasil
     example: BRL
   billMinimumAmount:
-    type: number
+    type: string
     format: double
     pattern: ^-?\d{1,15}\.\d{2,4}$
-    maxLength: 19
+    maxLength: 21
     minLength: 0
     description: Valor do pagamento minimo da fatura
-    example: 1000.0400
+    example: '1000.0400'
   billMinimumAmountCurrency:
     type: string
     maxLength: 3

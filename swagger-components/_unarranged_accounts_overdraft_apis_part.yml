@@ -87,6 +87,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftContractList'
       security:
         - OpenId:
             - 'openid'
@@ -128,6 +130,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftContract'
       security:
         - OpenId:
             - 'openid'
@@ -171,6 +175,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftWarranties'
       security:
         - OpenId:
             - 'openid'
@@ -214,6 +220,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftInstalments'
       security:
         - OpenId:
             - 'openid'
@@ -257,6 +265,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/OKResponseUnarrangedAccountOverdraftPayments'
       security:
         - OpenId:
             - 'openid'
@@ -321,6 +331,8 @@ components:
       $ref: ./schemas/unarranged_account_overdraft_apis/UnarrangedAccountOverdraftContractData.yaml
     UnarrangedAccountOverdraftContractInterestRate:
       $ref: ./schemas/unarranged_account_overdraft_apis/UnarrangedAccountOverdraftContractInterestRate.yaml
+    UnarrangedAccountOverdraftBalloonPaymentAmount:
+      $ref: ./schemas/business_commons/UnarrangedAccountOverdraftBalloonPaymentAmount.yaml
     ProductType:
       $ref: ./schemas/enum/EnumUnarrangedAccountOverdraftProductType.yaml
     ProductSubType:

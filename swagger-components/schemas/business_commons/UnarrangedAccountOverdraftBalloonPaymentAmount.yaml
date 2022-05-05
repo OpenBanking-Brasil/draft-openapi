@@ -1,0 +1,15 @@
+type: object
+required:
+  - amount
+  - currency
+description: Valor monetário da parcela não regular a vencer.
+properties:
+  amount:
+    type: string
+    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    maxLength: 21
+    minLength: 1
+    example: '100000.0400'
+  currency:
+    $ref: CurrencyCode.yaml
+additionalProperties: false

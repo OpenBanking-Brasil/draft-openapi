@@ -10,6 +10,7 @@ required:
   - incorporationDate
   - parties
   - contacts
+additionalProperties: false
 properties:
   updateDateTime:
     type: string
@@ -51,19 +52,20 @@ properties:
   cnpjNumber:
     type: string
     maxLength: 14
-    pattern: \d{14}|^NA$
+    pattern: ^\d{14}$
     example: "50685362006773"
     description: Número completo do CNPJ da Empresa consultada  - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara
   companyCnpjNumber:
     type: array
-    items:
-      type: string
-    maxLength: 14
-    pattern: \d{14}|^NA$
     example: ["50685362000135", "50685362006555"]
     description: |
       Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. 
       Deve-se ter apenas os números do CNPJ, sem máscara
+    items:
+      type: string
+      maxLength: 14
+      pattern: ^\d{14}$
+      example: "50685362000135"
   otherDocuments:
     type: array
     items:

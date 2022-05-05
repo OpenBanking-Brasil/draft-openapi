@@ -13,7 +13,6 @@ required:
   - dueDate
   - instalmentPeriodicity
   - instalmentPeriodicityAdditionalInfo
-  - firstInstalmentDueDate
   - CET
   - amortizationScheduled
   - amortizationScheduledAdditionalInfo
@@ -98,12 +97,10 @@ properties:
     format: date
     maxLength: 10
     minLength: 2
-    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$|^NA$
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: "2028-01-15"
     description: |
       Data de vencimento Final da operação. Especificação RFC-3339
-
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA
   instalmentPeriodicity:
     $ref: ../enum/EnumContractInstalmentPeriodicity.yaml
   instalmentPeriodicityAdditionalInfo:
@@ -119,12 +116,10 @@ properties:
     format: date
     maxLength: 10
     minLength: 2
-    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$|^NA$
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: "2018-02-15"
     description: |
       Data de vencimento primeira parcela do principal
-
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA
   CET:
     type: string
     pattern: '^\d{1}\.\d{4}$'

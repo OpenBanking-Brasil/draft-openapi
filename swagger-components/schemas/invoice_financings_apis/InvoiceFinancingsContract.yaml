@@ -9,10 +9,8 @@ required:
   - contractAmount
   - settlementDate
   - currency
-  - dueDate
   - instalmentPeriodicity
   - instalmentPeriodicityAdditionalInfo
-  - firstInstalmentDueDate
   - CET
   - amortizationScheduled
   - amortizationScheduledAdditionalInfo
@@ -23,6 +21,7 @@ properties:
   contractNumber:
     type: string
     maxLength: 100
+    pattern: ^\d{1,100}$
     example: "1324926521496"
     description: Número do contrato dado pela instituição contratante.
   ipocCode:
@@ -84,12 +83,11 @@ properties:
       [Restrição] Deve aceitar NA caso não seja retornado pela instituição.
   contractAmount:
     type: string
-    minLength: 1
-    maxLength: 21
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    minLength: 4
+    maxLength: 20
+    pattern: '^\d{1,15}\.\d{2,4}$'
     example: '100000.0400'
     description: Valor contratado da operação. Expresso em valor monetário com até 4 casas decimais
-    nullable: true
   currency:
     type: string
     maxLength: 3
@@ -103,7 +101,7 @@ properties:
     format: date
     maxLength: 10
     minLength: 2
-    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$|^NA$
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: "2028-01-15"
     description: Data de vencimento Final da operação. Especificação RFC-3339
   instalmentPeriodicity:
@@ -121,11 +119,10 @@ properties:
     format: date
     maxLength: 10
     minLength: 2
-    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$|^NA$
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: "2018-02-15"
     description: |
       Data de vencimento primeira parcela do principal.
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
   CET:
     type: string
     maxLength: 19
@@ -147,6 +144,7 @@ properties:
       [Restrição] Obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS, para os demais casos informar "NA".
   interestRates:
     type: array
+    minItems: 0
     description: Caso o contrato não possua taxas de juros, deve ser compartilhado uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
     items:
       $ref: ./InvoiceFinancingsContractInterestRate.yaml

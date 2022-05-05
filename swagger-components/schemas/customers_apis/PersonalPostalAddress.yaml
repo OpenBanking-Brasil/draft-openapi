@@ -20,7 +20,6 @@ properties:
   additionalInfo:
     type: string
     maxLength: 30
-    minItems: 0
     pattern: '[\w\W\s]*'
     example: Fundos
     description: Alguns logradouros ainda necessitam ser especificados por meio de complemento.
@@ -49,7 +48,7 @@ properties:
     $ref: ../enum/EnumCountrySubDivision.yaml
   postCode:
     type: string
-    pattern: \d{8}|^NA$
+    pattern: ^\d{8}$
     maxLength: 8
     example: "17500001"
     description: |
@@ -62,6 +61,7 @@ properties:
     description: Nome do país
   countryCode:
     type: string
+    pattern: '^([A-Z]{3})$'
     maxLength: 3
     example: BRA
     description: Código do pais de acordo com o código alpha3 do ISO-3166.
