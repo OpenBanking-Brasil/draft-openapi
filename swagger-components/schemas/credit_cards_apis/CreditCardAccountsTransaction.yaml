@@ -7,7 +7,7 @@ required:
   - transactionType
   - transactionalAdditionalInfo
   - paymentType
-  - feeTypeAdditionalInfo
+  - feeType
   - otherCreditsType
   - chargeIdentificator
   - chargeNumber
@@ -68,8 +68,6 @@ properties:
     pattern: '^\S[\s\S]*$'
     description: |
       Campo livre, de preenchimento obrigatório quando selecionado tipo de crédito "OUTROS".
-
-      Para recebedora: Ignorar o campo preenchido conforme esse cenário.
   chargeIdentificator:
     type: string
     maxLength: 50
