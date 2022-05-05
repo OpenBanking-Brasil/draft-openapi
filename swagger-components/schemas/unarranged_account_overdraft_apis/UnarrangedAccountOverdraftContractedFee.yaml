@@ -30,13 +30,12 @@ properties:
     maxLength: 20
     description: |
       Valor monetário da tarifa pactuada no contrato. Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo.
-    example: 100000.04
+    example: '100000.04'
   feeRate:
     type: string
     pattern: '^\d{1}\.\d{4}$'
     description: |
-      É o valor da tarifa em percentual pactuada no contrato. Deve-se informar 4 casas decimais, mesmo que preenchidas com zeros. Exemplo: 0.2000
-      [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual. Exemplo: 0.0150 = 1,5%.
+      É o valor da tarifa em percentual pactuada no contrato. Exemplo: 0.2000.
     maxLength: 6
     minLength: 6
     example: '0.0150'

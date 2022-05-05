@@ -1,7 +1,6 @@
 type: object
 required:
   - chargeType
-  - chargeAdditionalInfo
 properties:
   chargeType:
     $ref: ../enum/EnumContractFinanceChargeType.yaml
@@ -19,5 +18,5 @@ properties:
     maxLength: 20
     description: |
       Representa o valor do encargo em percentual pactuado no contrato. Exemplo: 0.0210 (=2.1%).
-    example: 0.0700
+    example: '0.0700'
 additionalProperties: false
