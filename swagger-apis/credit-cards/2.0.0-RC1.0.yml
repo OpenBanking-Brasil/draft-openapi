@@ -537,7 +537,7 @@ components:
           type: string
           format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          maxLength: 2
+          maxLength: 20
           minLength: 0
           example: '100000.0400'
           description: |
@@ -808,7 +808,9 @@ components:
           maxLength: 50
           pattern: '^\S[\s\S]*$'
           description: |
-            Campo livre, de preenchimento obrigatório quando selecionado tipo de crédito "OUTROS".
+            Campo livre para preenchimento de dados adicionais de outros tipos de crédito contratados no cartão.
+
+            [Restrição] Preenchimento obrigatório quando selecionado no campo outros tipos de crédito "OUTROS".
         chargeIdentificator:
           type: string
           maxLength: 50

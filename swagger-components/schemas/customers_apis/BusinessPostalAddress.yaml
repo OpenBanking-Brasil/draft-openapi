@@ -1,10 +1,7 @@
 type: object
 required:
   - isMain
-  - address
   - townName
-  - countrySubDivision
-  - postCode
   - country
   - countryCode
 properties:
@@ -20,8 +17,6 @@ properties:
     example: Av Naburo Ykesaki, 1270
     description: |
       Corresponde ao endereço comercial do cliente.
-
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
   additionalInfo:
     type: string
     maxLength: 30
@@ -43,8 +38,6 @@ properties:
     example: Marília
     description: |
       Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado.  
-      
-      [Restrição] Caso a transmissora não possua a informação deverá retornar "NA" neste campo.
   ibgeTownCode:
     type: string
     pattern: \d{7}$
@@ -65,9 +58,7 @@ properties:
     maxLength: 80
     pattern: '\w*\W*'
     example: Brasil
-    description: |
-      Nome do país
-      [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
+    description: Nome do país
   countryCode:
     type: string
     maxLength: 3
