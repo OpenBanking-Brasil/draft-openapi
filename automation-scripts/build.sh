@@ -54,3 +54,5 @@ done
 rm -rf $TEMP_GEN_DICTIONARY_DIR
 sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $PROJECT_ROOT_DIR/dictionary/*.csv
 sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $PROJECT_ROOT_DIR/dictionary/example/*.csv
+
+./generate-swagger-ui-html.sh
