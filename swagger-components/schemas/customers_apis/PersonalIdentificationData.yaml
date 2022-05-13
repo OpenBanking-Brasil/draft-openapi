@@ -9,12 +9,11 @@ required:
   - birthDate
   - maritalStatusCode
   - sex
-  - companyCnpj
+  - companiesCnpj
   - documents
   - otherDocuments
   - hasBrazilianNationality
   - nationality
-  - filiation
   - contacts
 properties:
   updateDateTime:
@@ -67,7 +66,7 @@ properties:
       [Restrição] Preenchimento obrigatório quando selecionado o tipo 'OUTRO'.
   sex:
     $ref: ../enum/EnumSex.yaml
-  companyCnpj:
+  companiesCnpj:
     type: array
     items:
       type: string
@@ -90,9 +89,7 @@ properties:
     example: false
     description: Informa se o Cliente tem nacionalidade brasileira.
   nationality:
-    type: array
-    items:
-      $ref: ./Nationality.yaml
+    $ref: ./Nationality.yaml
   filiation:
     type: array
     items:
