@@ -69,6 +69,7 @@ properties:
     $ref: ../enum/EnumSex.yaml
   companyCnpj:
     type: array
+    minItems: 1
     items:
       type: string
       pattern: '^\d{14}$'
@@ -91,10 +92,12 @@ properties:
     description: Informa se o Cliente tem nacionalidade brasileira.
   nationality:
     type: array
+    minItems: 1
     items:
       $ref: ./Nationality.yaml
   filiation:
     type: array
+    minItems: 1
     items:
       $ref: ./Filiation.yaml
   contacts:

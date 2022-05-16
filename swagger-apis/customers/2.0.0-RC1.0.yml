@@ -1699,6 +1699,7 @@ components:
           $ref: '#/components/schemas/EnumSex'
         companyCnpj:
           type: array
+          minItems: 1
           items:
             type: string
             pattern: '^\d{14}$'
@@ -1723,10 +1724,12 @@ components:
           description: Informa se o Cliente tem nacionalidade brasileira.
         nationality:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/Nationality'
         filiation:
           type: array
+          minItems: 1
           items:
             type: object
             required:
@@ -2010,6 +2013,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/PersonalIdentificationData'
         links:
