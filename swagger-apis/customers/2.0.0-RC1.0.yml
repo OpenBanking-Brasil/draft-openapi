@@ -349,7 +349,7 @@ components:
         - updateDateTime
         - brandName
         - cnpjNumber
-        - companyCnpjNumber
+        - companyCnpjNumbers
         - companyName
         - incorporationDate
         - parties
@@ -399,7 +399,8 @@ components:
           pattern: '^\d{14}$'
           example: '50685362006773'
           description: 'Número completo do CNPJ da Empresa consultada  - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
-        companyCnpjNumber:
+        companyCnpjNumbers:
+          minItems: 1
           type: array
           example:
             - '50685362000135'
@@ -414,9 +415,9 @@ components:
             example: '50685362000135'
         otherDocuments:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/BusinessOtherDocument'
-          minItems: 1
           description: Relação dos demais documentos
         parties:
           type: array
@@ -470,9 +471,6 @@ components:
       description: 'Objeto que reúne as informações relativas ao processo de qualificação. Considera-se qualificação as informações que permitam as instituições apreciar, avaliar, caracterizar e classificar o cliente com a finalidade de conhecer o seu perfil de risco e sua capacidade econômico-financeira'
       required:
         - updateDateTime
-        - economicActivities
-        - informedRevenue
-        - informedPatrimony
       properties:
         updateDateTime:
           type: string
@@ -484,7 +482,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EconomicActivity'
-          minItems: 1
+          minItems: 0
           description: 'Lista dos demais códigos relativos às demais atividades econômicas da empresa, segundo padrão CNAE (Classificação Nacional de Atividades Econômicas). De preenchimento obrigatório, se houver'
         informedRevenue:
           $ref: '#/components/schemas/InformedRevenue'
@@ -494,7 +492,9 @@ components:
     BusinessOtherDocument:
       type: object
       required:
-        - expirationDate
+        - type
+        - number
+        - country
       properties:
         type:
           type: string
@@ -540,13 +540,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomerPhone'
-          minItems: 1
+          minItems: 0
           description: Lista com telefones de contato da pessoa jurídica
         emails:
           type: array
           items:
             $ref: '#/components/schemas/CustomerEmail'
-          minItems: 1
+          minItems: 0
           description: Lista e-mails de contato
       additionalProperties: false
     PersonalContacts:
@@ -1085,7 +1085,6 @@ components:
         - TRIMESTRAL
         - SEMESTRAL
         - ANUAL
-        - SEM_FREQUENCIA_FATURAMENTO_INFORMADO
         - OUTROS
       example: DIARIA
     EnumInformedIncomeFrequency:
@@ -1204,7 +1203,6 @@ components:
     InformedRevenue:
       type: object
       required:
-        - frequency
         - amount
       properties:
         frequency:
@@ -1224,7 +1222,7 @@ components:
           type: number
           maximum: 9999
           example: 2010
-          description: 'Ano de referência do Patrimônio, conforme especificação RFC-3339.'
+          description: 'Ano de referência da Renda, conforme especificação RFC-3339.'
       additionalProperties: false
     InformedRevenueAmount:
       type: object
@@ -1458,7 +1456,6 @@ components:
         - personType
         - civilName
         - companyName
-        - shareholding
         - documentType
         - documentNumber
       properties:
@@ -1515,7 +1512,9 @@ components:
           pattern: '^((\d{1,9}\.\d{2}){1})$'
           example: '0.51'
           description: |
-            Percentual de participação societária (informar com 2 casas decimais). Sócio só deve ser informado se sua participação societária for igual ou superior a 25%. p.ex: 0.25 (Este valor  representa 25%. O valor '1 'representa 100%)
+            Percentual de participação societária (informar com 2 casas decimais). Sócio só deve ser informado se sua participação societária for igual ou superior a 25%. p.ex: 0.25 (Este valor  representa 25%. O valor '1 'representa 100%)   
+
+            [Restrição] Campo obrigatório caso o type for igual a SOCIO e este tiver participação societária maior que 25%.
         documentType:
           $ref: '#/components/schemas/EnumPartiesParticipationDocumentType'
         documentNumber:
@@ -1679,7 +1678,7 @@ components:
           maxLength: 10
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2021-05-21'
+          example: '1989-03-23'
           description: 'Data de nascimento, conforme especificação RFC-3339'
         maritalStatusCode:
           $ref: '#/components/schemas/EnumMaritalStatusCode'
@@ -1696,6 +1695,7 @@ components:
           $ref: '#/components/schemas/EnumSex'
         companiesCnpj:
           type: array
+          minItems: 1
           items:
             type: string
             pattern: '^\d{14}$'
@@ -1719,9 +1719,13 @@ components:
           example: false
           description: Informa se o Cliente tem nacionalidade brasileira.
         nationality:
-          $ref: '#/components/schemas/Nationality'
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/Nationality'
         filiation:
           type: array
+          minItems: 1
           items:
             type: object
             required:
@@ -1926,6 +1930,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/BusinessIdentificationData'
         links:
@@ -2004,6 +2009,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/PersonalIdentificationData'
         links:

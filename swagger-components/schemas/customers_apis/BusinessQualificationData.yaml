@@ -2,9 +2,6 @@ type: object
 description: 'Objeto que reúne as informações relativas ao processo de qualificação. Considera-se qualificação as informações que permitam as instituições apreciar, avaliar, caracterizar e classificar o cliente com a finalidade de conhecer o seu perfil de risco e sua capacidade econômico-financeira'
 required:
   - updateDateTime
-  - economicActivities
-  - informedRevenue
-  - informedPatrimony
 properties:
   updateDateTime:
     type: string
@@ -16,7 +13,7 @@ properties:
     type: array
     items:
       $ref: ./EconomicActivity.yaml
-    minItems: 1
+    minItems: 0
     description: 'Lista dos demais códigos relativos às demais atividades econômicas da empresa, segundo padrão CNAE (Classificação Nacional de Atividades Econômicas). De preenchimento obrigatório, se houver'
   informedRevenue:
     $ref:  ./InformedRevenue.yaml
