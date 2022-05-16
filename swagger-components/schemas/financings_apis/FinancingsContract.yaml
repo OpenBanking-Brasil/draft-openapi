@@ -145,7 +145,7 @@ properties:
       [Restrição] Obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS, para os demais casos informar "NA".
   interestRates:
     type: array
-    minItems: 0
+    minItems: 1
     description: |
       Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
     items:
@@ -154,11 +154,11 @@ properties:
     type: array
     items:
       $ref: ./FinancingsContractedFee.yaml
-    minItems: 0
+    minItems: 1
   contractedFinanceCharges:
     type: array
     description: "Lista que traz os encargos pactuados no contrato"
     items:
       $ref: ./FinancingsFinanceCharge.yaml
-    minItems: 0
+    minItems: 1
 additionalProperties: false
