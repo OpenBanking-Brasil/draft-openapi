@@ -6,7 +6,6 @@ required:
   - personType
   - civilName
   - companyName
-  - shareholding
   - documentType
   - documentNumber
 properties:
@@ -52,7 +51,9 @@ properties:
     pattern: ^((\d{1,9}\.\d{2}){1})$
     example: "0.51"
     description: |
-      Percentual de participação societária (informar com 2 casas decimais). Sócio só deve ser informado se sua participação societária for igual ou superior a 25%. p.ex: 0.25 (Este valor  representa 25%. O valor '1 'representa 100%)
+      Percentual de participação societária (informar com 2 casas decimais). Sócio só deve ser informado se sua participação societária for igual ou superior a 25%. p.ex: 0.25 (Este valor  representa 25%. O valor '1 'representa 100%)   
+      
+      [Restrição] Campo obrigatório caso o type for igual a SOCIO e este tiver participação societária maior que 25%.
   documentType:
     $ref: ../enum/EnumPartiesParticipationDocumentType.yaml
   documentNumber:
