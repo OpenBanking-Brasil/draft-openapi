@@ -153,16 +153,16 @@ properties:
     description: Caso o contrato não possua taxas de juros, deve ser compartilhado uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
     items:
       $ref: ./LoansFinancingsContractInterestRate.yaml
-    minItems: 0
+    minItems: 1
   contractedFees:
     type: array
     items:
       $ref: ./LoansFinancingsContractedFee.yaml
-    minItems: 0
+    minItems: 1
   contractedFinanceCharges:
     type: array
     description: Lista que traz os encargos pactuados no contrato
     items:
       $ref: ./LoansFinanceCharge.yaml
-    minItems: 0
+    minItems: 1
 additionalProperties: false
