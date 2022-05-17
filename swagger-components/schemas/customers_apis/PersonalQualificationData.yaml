@@ -3,15 +3,14 @@ description: 'Conjunto de informações relativas ao processo de qualificação.
 required:
   - updateDateTime
   - companyCnpj
-  - occupationCode
-  - occupationDescription
 properties:
   updateDateTime:
     type: string
     maxLength: 20
     format: date-time
     example: '2021-05-21T08:30:00Z'
-    description: 'Data e hora da atualização do bloco, conforme especificação RFC-3339'
+    description: |
+      Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
   companyCnpj:
     type: string
     pattern: '^\d{14}$'
@@ -27,7 +26,9 @@ properties:
     maxLength: 100
     pattern: '[\w\W\s]*'
     example: "01"
-    description: Campo livre, de preenchimento obrigatório. Traz o código da ocupação ou o descritivo da ocupação, se selecionada a opção 'OUTRO'
+    description: |
+      Campo livre, de preenchimento obrigatório. Se selecionada a opção *occupationCode* "RECEITA_FEDERAL" ou "CBO", informar o código desta lista padronizada.   
+      Se selecionada *occupationCode* "OUTRO", informar o descritivo da ocupação quando a IF não segue a lista padronizada da Receita Federal e nem da CBO.
   informedIncome:
     $ref:  ./InformedIncome.yaml
   informedPatrimony:

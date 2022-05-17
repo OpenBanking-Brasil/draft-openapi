@@ -12,7 +12,8 @@ properties:
     maxLength: 20
     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
     example: "2021-05-21T08:30:00Z"
-    description: Data e hora da atualização do bloco de Relacionamento, conforme especificação RFC-3339, formato UTC.
+    description: |
+      Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
   startDate:
     type: string
     format: date-time
