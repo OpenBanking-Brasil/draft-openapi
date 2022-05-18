@@ -118,9 +118,9 @@ POR_PARCELA";1;1;"";Não permitido;string;UNICA
 MAXIMO 
 FIXO 
 PERCENTUAL";1;1;"";Não permitido;string;MINIMO
-/data/contractedFees/feeAmount;feeAmount;Valor monetário da tarifa pactuada no contrato. Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo.;Texto;21;Condicional;^-?\d{1,15}\.\d{2,4}$;;1;1;" Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
+/data/contractedFees/feeAmount;feeAmount;Valor monetário da tarifa pactuada no contrato. Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo.;Texto;21;Condicional;^-?\d{1,15}\.\d{2,4}$;;0;1;" Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
 ";Não permitido;string;100000.04
-/data/contractedFees/feeRate;feeRate;Percentual que representa o valor da tarifa pactuada para o contrato.;Texto;19;Condicional;^\d{1}\.\d{4}$;;1;1;" Preenchimento obrigatório quando a forma de cobrança por Percentual.
+/data/contractedFees/feeRate;feeRate;Percentual que representa o valor da tarifa pactuada para o contrato.;Texto;19;Condicional;^\d{1}\.\d{4}$;;0;1;" Preenchimento obrigatório quando a forma de cobrança por Percentual.
 ";Não permitido;string;0.1234
 /data/contractedFinanceCharges;contractedFinanceCharges;Lista que traz os encargos pactuados no contrato;Lista;;Obrigatório;;;1;N;"";Não permitido;array;
 /data/contractedFinanceCharges/chargeType;chargeType;Tipo de encargo pactuado no contrato.;Texto;;Obrigatório;;"JUROS_REMUNERATORIOS_POR_ATRASO 
