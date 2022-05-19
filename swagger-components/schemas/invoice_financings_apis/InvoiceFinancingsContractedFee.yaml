@@ -37,10 +37,13 @@ properties:
     example: '100000.04'
   feeRate:
     type: string
-    pattern: ^\d{1}\.\d{4}$
+    pattern: ^[01]\.\d{6}$
+    format: double
+    minLength: 8
+    maxLength: 8
     description: |
-      Percentual que representa o valor da tarifa pactuada para o contrato. 
-      [Restrição] Preenchimento obrigatório quando a forma de cobrança por Percentual.
-    maxLength: 19
-    example: '0.1234'
+      Percentual que representa o valor da tarifa pactuada para o contrato.   
+      O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).   
+      [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
+    example: '0.062000'
 additionalProperties: false
