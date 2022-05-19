@@ -88,7 +88,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponsePersonalCustomersIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -128,7 +128,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponsePersonalCustomersQualification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -168,7 +168,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponsePersonalCustomersFinancialRelation'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -208,7 +208,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseBusinessCustomersIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -248,7 +248,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseBusinessCustomersQualification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -288,7 +288,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseBusinessCustomersFinancialRelation'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -514,3 +514,5 @@ components:
       $ref: ./responses/TooManyRequests.yaml
     Unauthorized:
       $ref: ./responses/Unauthorized.yaml
+    Default:
+      $ref: ./responses/Default.yaml

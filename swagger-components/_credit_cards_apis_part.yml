@@ -95,7 +95,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsList'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -138,7 +138,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -185,7 +185,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsBills'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -235,7 +235,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -278,7 +278,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsLimits'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -327,7 +327,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -549,3 +549,5 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/ResponseError.yaml
+    Default:
+      $ref: ./responses/Default.yaml
