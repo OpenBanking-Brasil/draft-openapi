@@ -1,0 +1,12 @@
+in: query
+name: fromBookingDate
+description: |
+  Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).   
+  [Restrição] Deve obrigatoriamente ser enviado caso o campo toBookingDate seja informado. 
+  Caso não seja informado, deve ser assumido o dia atual.
+required: false
+schema:
+  type: "string"
+  maxLength: 10
+  format: "date"
+  example: "2021-05-21"
