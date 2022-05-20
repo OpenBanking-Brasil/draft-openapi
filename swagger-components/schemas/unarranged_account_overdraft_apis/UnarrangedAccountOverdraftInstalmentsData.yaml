@@ -4,7 +4,6 @@ required:
   - dueInstalments
   - pastDueInstalments
   - typeContractRemaining
-  - contractRemainingNumber
   - typeNumberOfInstalments
   - totalNumberOfInstalments
   - paidInstalments
@@ -29,7 +28,10 @@ properties:
   contractRemainingNumber:
     type: number
     maximum: 999
-    description: Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+    description: |
+      Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+
+      [Restrição] Obrigatoriamente deve ser preenchido caso o typeNumberOfInstalments seja diferente de SEM_PRAZO_REMANESCENTE.
     example: 80
   paidInstalments:
     type: number
@@ -50,6 +52,6 @@ properties:
     type: array
     items:
       $ref: ./UnarrangedAccountOverdraftBalloonPayment.yaml
-    minItems: 0
+    minItems: 1
     description: "Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada"
 additionalProperties: false
