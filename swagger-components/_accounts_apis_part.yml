@@ -277,7 +277,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseAccountTransactions'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -367,6 +367,8 @@ components:
       $ref: ./schemas/enum/EnumTransactionTypes.yaml
     Links:
       $ref: ./schemas/Links.yaml
+    TransactionsLinks:
+      $ref: ./schemas/TransactionsLinks.yaml
     Meta:
       $ref: ./schemas/Meta.yaml
     MetaOnlyRequestDateTime:
