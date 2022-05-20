@@ -384,7 +384,7 @@ components:
     ResponseAccountTransactions:
       $ref: ./schemas/accounts_apis/ResponseAccountTransactions.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     XFapiInteractionId:  
       $ref: ./headers/XFapiInteractionId.yaml
   parameters:
@@ -481,22 +481,22 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountOverdraftLimits'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/accounts/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/accounts/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/accounts/InternalServerError.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/accounts/MethodNotAllowed.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/accounts/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/accounts/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/accounts/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/accounts/Unauthorized.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      $ref: ./responses/accounts/UnprocessableEntity.yaml
     Default:
-      $ref: ./responses/Default.yaml
+      $ref: ./responses/accounts/Default.yaml
