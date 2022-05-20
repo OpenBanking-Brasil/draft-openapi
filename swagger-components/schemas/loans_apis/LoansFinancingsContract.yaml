@@ -8,14 +8,11 @@ required:
   - productSubType
   - contractDate
   - contractAmount
-  - settlementDate
   - currency
   - instalmentPeriodicity
   - instalmentPeriodicityAdditionalInfo
   - CET
   - amortizationScheduled
-  - amortizationScheduledAdditionalInfo
-  - cnpjConsignee
   - interestRates
   - contractedFees
   - contractedFinanceCharges
@@ -137,7 +134,7 @@ properties:
     type: string
     pattern: '[\w\W\s]*'
     maxLength: 50
-    example: "NA"
+    example: "Informações complementares relativa à amortização do tipo 'OUTROS'"
     description: |
       Campo obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS.
   cnpjConsignee:
@@ -148,7 +145,8 @@ properties:
     description: |
       CNPJ do consignante (CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica). 
       Deve-se ter apenas os números do CNPJ, sem máscara. 
-      Informação adicional específica para Modalidade de Crédito: Empréstimo-Crédito Pessoal Consignado
+      
+      [Restrição] Informação adicional específica para Modalidade de Crédito: Empréstimo-Crédito Pessoal Consignado.
   interestRates:
     type: array
     description: Caso o contrato não possua taxas de juros, deve ser compartilhado uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
