@@ -30,7 +30,8 @@ properties:
     type: string
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     description: |
-      Valor monetário da tarifa pactuada no contrato. Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo.
+      Valor monetário da tarifa pactuada no contrato. 
+
       [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
     maxLength: 21
     minLength: 1
@@ -42,8 +43,8 @@ properties:
     minLength: 8
     maxLength: 8
     description: |
-      Percentual que representa o valor da tarifa pactuada para o contrato.   
-      O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).   
+      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
+
       [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
     example: '0.062000'
 additionalProperties: false

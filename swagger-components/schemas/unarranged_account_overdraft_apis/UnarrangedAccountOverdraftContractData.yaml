@@ -7,7 +7,6 @@ required:
   - productType
   - productSubType
   - contractDate
-  - currency
   - instalmentPeriodicity
   - instalmentPeriodicityAdditionalInfo
   - CET
@@ -105,8 +104,7 @@ properties:
     maxLength: 50
     example: "Informações adicionais sobre periodicidade"
     description: |
-      Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS.
-      [Restrição] Obrigatório para complementar a informação relativa da periodicidade de pagamento regular, quando selecionada o tipo ou subtipo OUTRO.
+      Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS. 
   firstInstalmentDueDate:
     type: string
     format: date
@@ -136,24 +134,23 @@ properties:
     example: "NA"
     description: |
       Campo obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS.
-      [Restrição] Obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS, para os demais casos informar "NA".
   interestRates:
     type: array
-    minItems: 1
+    minItems: 0
     items:
       $ref: ./UnarrangedAccountOverdraftContractInterestRate.yaml
     description: |
-      Caso o contrato não possua taxas de juros, deve ser compartilhardo uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
+      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
   contractedFees:
     type: array
     items:
       $ref: ./UnarrangedAccountOverdraftContractedFee.yaml
-    minItems: 1
-    description: "Lista que traz a relação de tarifas pactuadas no contrato"
+    minItems: 0
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
   contractedFinanceCharges:
     type: array
     description: Lista que traz os encargos pactuados no contrato
     items:
       $ref: ./UnarrangedAccountOverdraftFinanceCharge.yaml
-    minItems: 1
+    minItems: 0
 additionalProperties: false
