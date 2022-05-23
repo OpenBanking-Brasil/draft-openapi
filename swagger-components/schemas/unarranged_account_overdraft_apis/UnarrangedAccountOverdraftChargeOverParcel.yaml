@@ -2,7 +2,6 @@ type: object
 description: Lista dos encargos que foram pagos fora da parcela.
 required:
   - chargeType
-  - chargeAdditionalInfo
   - chargeAmount
 properties:
   chargeType:
@@ -14,7 +13,7 @@ properties:
     example: "Informações adicionais"
     description: |
       Campo livre para preenchimento das informações adicionais referente ao encargo.
-      [Restrição] Obrigatório quando chargeType for igual OUTROS.
+      [Restrição] Obrigatório quando chargeType for igual 'OUTROS'.
   chargeAmount:
     description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com até 4 casas decimais.
     type: string
