@@ -7,15 +7,9 @@ required:
   - productType
   - productSubType
   - contractDate
-  - contractAmount
-  - settlementDate
-  - currency
   - instalmentPeriodicity
-  - instalmentPeriodicityAdditionalInfo
   - CET
   - amortizationScheduled
-  - amortizationScheduledAdditionalInfo
-  - cnpjConsignee
   - interestRates
   - contractedFees
   - contractedFinanceCharges
@@ -110,7 +104,6 @@ properties:
     example: "Informações adicionais sobre periodicidade"
     description: |
       Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS.
-      [Restrição] Obrigatório para complementar a informação relativa da periodicidade de pagamento regular, quando selecionada o tipo ou subtipo OUTRO.
   firstInstalmentDueDate:
     type: string
     format: date
@@ -122,21 +115,22 @@ properties:
       Informação deve ser enviada caso ela exista.
   CET:
     type: string
-    pattern: '^\d{1}\.\d{4}$'
-    maxLength: 6
-    minLength: 6
-    example: '0.2900'
+    pattern: '^[01]\.\d{6}$'
+    format: double
+    maxLength: 8
+    minLength: 8
+    example: '0.290000'
     description: |
-      CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e   incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
-      O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
-      (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+      CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas). 
+      
+      O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
   amortizationScheduled:
     $ref: ../enum/EnumContractAmortizationScheduled.yaml
   amortizationScheduledAdditionalInfo:
     type: string
     pattern: '[\w\W\s]*'
     maxLength: 50
-    example: "NA"
+    example: "Informações complementares relativa à amortização do tipo 'OUTROS'"
     description: |
       Campo obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS.
   cnpjConsignee:
@@ -147,15 +141,18 @@ properties:
     description: |
       CNPJ do consignante (CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica). 
       Deve-se ter apenas os números do CNPJ, sem máscara. 
-      Informação adicional específica para Modalidade de Crédito: Empréstimo-Crédito Pessoal Consignado
+      
+      [Restrição] Informação adicional específica para Modalidade de Crédito: Empréstimo-Crédito Pessoal Consignado.
   interestRates:
     type: array
-    description: Caso o contrato não possua taxas de juros, deve ser compartilhado uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
+    description: |
+      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
     items:
       $ref: ./LoansFinancingsContractInterestRate.yaml
     minItems: 0
   contractedFees:
     type: array
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
     items:
       $ref: ./LoansFinancingsContractedFee.yaml
     minItems: 0

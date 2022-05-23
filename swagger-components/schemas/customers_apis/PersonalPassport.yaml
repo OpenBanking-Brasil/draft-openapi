@@ -1,13 +1,13 @@
 type: object
 description: |
   Documento concedido aos viajantes por uma autoridade administrativa nacional a fim de certificar sua identidade perante autoridades estrangeiras. 
+  
   [Restrição] Aplicável somente à Pessoa natural residente no exterior desobrigada de inscrição no CPF.
+  
   [Restrição] Campo de preenchimento obrigatório quando o campo documentType for PASSAPORT ou AMBOS. 
 required: 
   - number
   - country
-  - expirationDate
-  - issueDate
 properties:
   number:
     type: string

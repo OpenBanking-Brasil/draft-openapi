@@ -1,14 +1,15 @@
 type: object
 description: |
-  Objeto das tarifas e encargos que foram pagos fora da parcela.   
-  [Restrição] Informação deve ser enviada caso ela exista.
+  Objeto das tarifas e encargos que foram pagos fora da parcela.
+
+  [Restrição] Informação deve ser enviada caso ela exista, torna-se obrigatório caso haja parcelamento.
 required:
   - fees
   - charges
 properties:
   fees:
     type: array
-    minItems: 0
+    minItems: 1
     items:
       $ref: ./InvoiceFinancingsFeeOverParcel.yaml
     description: Lista das tarifas que foram pagas fora da parcela, só para pagamento avulso.

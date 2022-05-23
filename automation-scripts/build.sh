@@ -29,6 +29,7 @@ APIS=(
 function genSwaggerFiles(){
     WITH_REF=$1
     API=$2
+    OPTIONS=$3
     API_VERSION=`cat "$COMPONENTS_BASE_PATH/_${API}_apis_part.yml" | yq '.info.version'`
     API_FOLDER_NAME=`echo $API | sed -e 's/_/-/g'`
     API_FOLDER_BASE_PATH=
@@ -49,7 +50,7 @@ function genSwaggerFiles(){
 for API in "${APIS[@]}"
 do
  genSwaggerFiles 0 $API
- genSwaggerFiles 1 $API
+ genSwaggerFiles 1 $API '-c'
 done
 rm -rf $TEMP_GEN_DICTIONARY_DIR
 sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $PROJECT_ROOT_DIR/dictionary/*.csv

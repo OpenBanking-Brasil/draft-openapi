@@ -40,6 +40,9 @@ info:
     ### `/accounts/{creditCardAccountId}/transactions`
       - permissions:
         - GET: **CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ**
+    ### `/accounts/{creditCardAccountId}/transactions-current`
+      - permissions:
+        - GET: **CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ**
   version: 2.0.0-RC1.0
   license:
     name: Apache 2.0
@@ -94,7 +97,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseCreditCardAccountsList'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -137,7 +140,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseCreditCardAccountsIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -184,7 +187,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseCreditCardAccountsBills'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -234,7 +237,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -277,7 +280,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseCreditCardAccountsLimits'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -326,7 +329,56 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
+          $ref: '#/components/responses/Default'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - credit-cards-accounts
+  '/accounts/{creditCardAccountId}/transactions-current':
+    get:
+      tags:
+        - Credit Card
+      summary: Obtém a lista de transações da conta identificada por creditCardAccountId.
+      operationId: creditCardsGetAccountsCreditCardAccountIdTransactionsCurrent
+      description: Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/creditCardAccountId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
+        - $ref: '#/components/parameters/toTransactionDateMaxLimited'
+        - $ref: '#/components/parameters/creditCardTransactionType'
+        - $ref: '#/components/parameters/creditCardPayeeMCC'
+      responses:
+        '200':
           $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -571,7 +623,7 @@ components:
           example: XXZTR3459087
         brandName:
           type: string
-          description: 'Nome da Marca reportada pelo participante do Open Banking. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
+          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
           pattern: '[\w\W\s]*'
           maxLength: 80
           example: Organização A
@@ -611,8 +663,6 @@ components:
         - consolidationType
         - identificationNumber
         - isLimitFlexible
-        - limitAmountCurrency
-        - limitAmount
         - usedAmountCurrency
         - usedAmount
         - availableAmountCurrency
@@ -656,12 +706,15 @@ components:
           example: BRL
           description: |
             Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.'
-            Todos os limite informados estão representados com a moeda vigente do do Brasil.
+            Todos os limite informados estão representados com a moeda vigente do do Brasil.   
+            [Restrição] O campo é opcional caso isLimitFlexible for igual a false.
         limitAmount:
           type: string
           format: double
           pattern: '^-?\d{1,15}\.\d{2,4}$'
-          description: Valor total do limite informado Expresso em valor monetário com 4 casas decimais.
+          description: |
+            Valor total do limite informado Expresso em valor monetário com 4 casas decimais.   
+            [Restrição] O campo é opcional caso isLimitFlexible for igual a false.
           maxLength: 21
           example: '100000.0001'
         usedAmountCurrency:
@@ -751,12 +804,10 @@ components:
         - feeType
         - otherCreditsType
         - chargeIdentificator
-        - chargeNumber
         - brazilianAmount
         - amount
         - transactionDate
         - billPostDate
-        - payeeMCC
       properties:
         transactionId:
           type: string
@@ -820,9 +871,11 @@ components:
         chargeNumber:
           type: number
           format: integer
-          maximum: 2147483647
-          example: 3
-          description: Quantidade de parcelas
+          maximum: 999
+          example: 12
+          description: |
+            Quantidade de parcelas.   
+            [Restrição] O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
         brazilianAmount:
           $ref: '#/components/schemas/CreditCardAccountsTransactionBrazilianAmount'
         amount:
@@ -1094,6 +1147,19 @@ components:
           format: date-time
           example: '2021-05-21T08:30:00Z'
       additionalProperties: false
+    MetaOnlyRequestDateTime:
+      type: object
+      description: Meta informações referente à API requisitada.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
     ResponseCreditCardAccountsList:
       type: object
       required:
@@ -1176,11 +1242,11 @@ components:
           items:
             $ref: '#/components/schemas/CreditCardAccountsTransaction'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/TransactionsLinks'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaOnlyRequestDateTime'
       additionalProperties: false
-    ResponseError:
+    ResponseErrorMetaSingle:
       type: object
       required:
         - errors
@@ -1213,7 +1279,42 @@ components:
                 maxLength: 2048
             additionalProperties: false
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaOnlyRequestDateTime'
+      additionalProperties: false
+    TransactionsLinks:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI completo que gerou a resposta atual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
       additionalProperties: false
     XFapiInteractionId:
       type: string
@@ -1284,6 +1385,16 @@ components:
         maxLength: 10
         format: date
         example: '2021-05-21'
+    fromTransactionDateMaxLimited:
+      name: fromTransactionDate
+      description: Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
     page:
       name: page
       in: query
@@ -1317,6 +1428,16 @@ components:
     toTransactionDate:
       name: toTransactionDate
       description: Data final de filtragem.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    toTransactionDateMaxLimited:
+      name: toTransactionDate
+      description: Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
       required: false
       in: query
       schema:
@@ -1433,52 +1554,58 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotAcceptable:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     TooManyRequests:
       description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     UnprocessableEntity:
       description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Default:
+      description: Erro inesperado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'

@@ -88,7 +88,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponsePersonalCustomersIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -128,7 +128,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponsePersonalCustomersQualification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -168,7 +168,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponsePersonalCustomersFinancialRelation'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -208,7 +208,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseBusinessCustomersIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -248,7 +248,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseBusinessCustomersQualification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -288,7 +288,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseBusinessCustomersFinancialRelation'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -313,7 +313,8 @@ components:
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2020-07-21T08:30:00Z'
-          description: 'Data e hora da atualização do bloco de Relacionamento, conforme especificação RFC-3339, formato UTC.'
+          description: |
+            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
         startDate:
           type: string
           format: date-time
@@ -331,7 +332,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BusinessProcurator'
-          minItems: 1
+          minItems: 0
           description: Lista dos representantes. De preenchimento obrigatório se houver representante.
         accounts:
           type: array
@@ -349,7 +350,7 @@ components:
         - updateDateTime
         - brandName
         - cnpjNumber
-        - companyCnpjNumber
+        - companiesCnpj
         - companyName
         - incorporationDate
         - parties
@@ -361,7 +362,8 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-          description: 'Data e hora da atualização do bloco, conforme especificação RFC-3339'
+          description: |
+            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
         businessId:
           type: string
           maxLength: 100
@@ -374,7 +376,7 @@ components:
           pattern: '[\w\W\s]*'
           example: Organização A
           description: |
-            Nome da Marca reportada pelo participante do Open Banking. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes
+            Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).
         companyName:
           type: string
           maxLength: 70
@@ -399,7 +401,8 @@ components:
           pattern: '^\d{14}$'
           example: '50685362006773'
           description: 'Número completo do CNPJ da Empresa consultada  - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
-        companyCnpjNumber:
+        companiesCnpj:
+          minItems: 1
           type: array
           example:
             - '50685362000135'
@@ -414,9 +417,9 @@ components:
             example: '50685362000135'
         otherDocuments:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/BusinessOtherDocument'
-          minItems: 1
           description: Relação dos demais documentos
         parties:
           type: array
@@ -433,14 +436,12 @@ components:
         - type
         - cnpjCpfNumber
         - civilName
-        - socialName
       properties:
         type:
           type: string
           enum:
             - REPRESENTANTE_LEGAL
             - PROCURADOR
-            - NAO_POSSUI
           description: |
             Tipo de representante.
             Representante legal - Nome Civil completo da Pessoa Natural que represente uma entidade ou uma empresa e é nomeado em seu ato constitutivo, ou seja, no contrato social ou estatuto social.
@@ -466,28 +467,25 @@ components:
           description: |
             Nome social da pessoa natural, se houver. Aquele pelo qual travestis e transexuais se reconhecem, 
             bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local.
-            [Restrição] Preenchimento obrigatório quando o sócio for uma pessoa natural.
       additionalProperties: false
     BusinessQualificationData:
       type: object
       description: 'Objeto que reúne as informações relativas ao processo de qualificação. Considera-se qualificação as informações que permitam as instituições apreciar, avaliar, caracterizar e classificar o cliente com a finalidade de conhecer o seu perfil de risco e sua capacidade econômico-financeira'
       required:
         - updateDateTime
-        - economicActivities
-        - informedRevenue
-        - informedPatrimony
       properties:
         updateDateTime:
           type: string
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-          description: 'Data e hora da atualização do bloco, conforme especificação RFC-3339'
+          description: |
+            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
         economicActivities:
           type: array
           items:
             $ref: '#/components/schemas/EconomicActivity'
-          minItems: 1
+          minItems: 0
           description: 'Lista dos demais códigos relativos às demais atividades econômicas da empresa, segundo padrão CNAE (Classificação Nacional de Atividades Econômicas). De preenchimento obrigatório, se houver'
         informedRevenue:
           $ref: '#/components/schemas/InformedRevenue'
@@ -497,7 +495,9 @@ components:
     BusinessOtherDocument:
       type: object
       required:
-        - expirationDate
+        - type
+        - number
+        - country
       properties:
         type:
           type: string
@@ -543,13 +543,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CustomerPhone'
-          minItems: 1
+          minItems: 0
           description: Lista com telefones de contato da pessoa jurídica
         emails:
           type: array
           items:
             $ref: '#/components/schemas/CustomerEmail'
-          minItems: 1
+          minItems: 0
           description: Lista e-mails de contato
       additionalProperties: false
     PersonalContacts:
@@ -564,19 +564,19 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PersonalPostalAddress'
-          minItems: 1
+          minItems: 0
           description: Lista de endereços da pessoa natural
         phones:
           type: array
           items:
             $ref: '#/components/schemas/CustomerPhone'
-          minItems: 1
+          minItems: 0
           description: Lista com telefones de contato da pessoa natural
         emails:
           type: array
           items:
             $ref: '#/components/schemas/CustomerEmail'
-          minItems: 1
+          minItems: 0
           description: Lista e-mails de contato
       additionalProperties: false
     BusinessInformedPatrimony:
@@ -607,7 +607,7 @@ components:
           type: number
           maximum: 9999
           example: 2010
-          description: 'Ano de referência do Patrimônio, conforme especificação RFC-3339.'
+          description: 'Ano de referência da Renda, conforme especificação RFC-3339.'
       additionalProperties: false
     CustomerEmail:
       type: object
@@ -820,7 +820,6 @@ components:
       type: object
       required:
         - compeCode
-        - branchCode
         - number
         - checkDigit
         - type
@@ -836,7 +835,8 @@ components:
           maxLength: 4
           pattern: '^\d{4}$'
           description: |
-            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
+            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)   
+            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré paga.
           example: '6272'
         number:
           type: string
@@ -861,7 +861,6 @@ components:
         Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
       required:
         - compeCode
-        - branchCode
         - number
         - checkDigit
         - type
@@ -878,7 +877,8 @@ components:
           maxLength: 4
           pattern: '^\d{4}$'
           description: |
-            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
+            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)   
+            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré paga.
           example: '6272'
         number:
           type: string
@@ -1072,7 +1072,6 @@ components:
       enum:
         - MAE
         - PAI
-        - SEM_FILIACAO
       example: PAI
       description: Tipo de filiação.
     EnumInformedRevenueFrequency:
@@ -1089,7 +1088,6 @@ components:
         - TRIMESTRAL
         - SEMESTRAL
         - ANUAL
-        - SEM_FREQUENCIA_FATURAMENTO_INFORMADO
         - OUTROS
       example: DIARIA
     EnumInformedIncomeFrequency:
@@ -1103,7 +1101,6 @@ components:
         - TRIMESTRAL
         - SEMESTRAL
         - ANUAL
-        - SEM_FREQUENCIA_RENDA_INFORMADA
         - OUTROS
       description: Traz a frequência ou período da renda informada.
     EnumMaritalStatusCode:
@@ -1117,7 +1114,7 @@ components:
         - UNIAO_ESTAVEL
         - OUTRO
         - NAO_DISPONIVEL
-      example: SOLTEIRO
+      example: OUTRO
       description: |
         Estado marital do cliente.
     EnumOccupationMainCodeType:
@@ -1154,7 +1151,6 @@ components:
       enum:
         - REPRESENTANTE_LEGAL
         - PROCURADOR
-        - NAO_POSSUI
       example: PROCURADOR
       description: |
         Tipo de representante.
@@ -1210,7 +1206,6 @@ components:
     InformedRevenue:
       type: object
       required:
-        - frequency
         - amount
       properties:
         frequency:
@@ -1230,7 +1225,7 @@ components:
           type: number
           maximum: 9999
           example: 2010
-          description: 'Ano de referência do Patrimônio, conforme especificação RFC-3339.'
+          description: 'Ano de referência da Renda, conforme especificação RFC-3339.'
       additionalProperties: false
     InformedRevenueAmount:
       type: object
@@ -1414,8 +1409,6 @@ components:
       required:
         - type
         - number
-        - expirationDate
-        - issueDate
       properties:
         type:
           type: string
@@ -1466,7 +1459,6 @@ components:
         - personType
         - civilName
         - companyName
-        - shareholding
         - documentType
         - documentNumber
       properties:
@@ -1519,11 +1511,15 @@ components:
           description: 'Data de início da participação, conforme especificação RFC-3339.'
         shareholding:
           type: string
-          maxLength: 4
-          pattern: '^((\d{1,9}\.\d{2}){1})$'
-          example: '0.51'
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^[01]\.\d{6}$'
+          example: '0.510000'
           description: |
-            Percentual de participação societária (informar com 2 casas decimais). Sócio só deve ser informado se sua participação societária for igual ou superior a 25%. p.ex: 0.25 (Este valor  representa 25%. O valor '1 'representa 100%)
+            Percentual de participação societária (informar com 6 casas decimais). O Sócio só deve ser informado se sua participação societária for igual ou superior a 25%. p.ex: 0.250000 (Este valor  representa 25%. O valor '1 'representa 100%).
+
+            [Restrição]: Campo obrigatório caso o type for igual a SOCIO e este tiver participação societária maior que 25%.
         documentType:
           $ref: '#/components/schemas/EnumPartiesParticipationDocumentType'
         documentNumber:
@@ -1596,7 +1592,8 @@ components:
           maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
-          description: 'Data e hora da atualização do bloco de Relacionamento, conforme especificação RFC-3339, formato UTC.'
+          description: |
+            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
         startDate:
           type: string
           format: date-time
@@ -1646,12 +1643,9 @@ components:
         - birthDate
         - maritalStatusCode
         - sex
-        - companyCnpj
         - documents
         - otherDocuments
         - hasBrazilianNationality
-        - nationality
-        - filiation
         - contacts
       properties:
         updateDateTime:
@@ -1660,6 +1654,8 @@ components:
           format: date-time
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
+          description: |
+            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
         personalId:
           type: string
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
@@ -1671,7 +1667,7 @@ components:
           maxLength: 80
           pattern: '[\w\W\s]*'
           example: Organização A
-          description: 'Nome da Marca reportada pelo participante do Open Banking. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
+          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
         civilName:
           type: string
           maxLength: 70
@@ -1689,7 +1685,7 @@ components:
           maxLength: 10
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2021-05-21'
+          example: '1989-03-23'
           description: 'Data de nascimento, conforme especificação RFC-3339'
         maritalStatusCode:
           $ref: '#/components/schemas/EnumMaritalStatusCode'
@@ -1697,15 +1693,16 @@ components:
           type: string
           pattern: '[\w\W\s]*'
           maxLength: 50
-          example: Casado
+          example: Amasiado
           description: |
             Campo livre para complementar a informação relativa ao estado marital.
 
             [Restrição] Preenchimento obrigatório quando selecionado o tipo 'OUTRO'.
         sex:
           $ref: '#/components/schemas/EnumSex'
-        companyCnpj:
+        companiesCnpj:
           type: array
+          minItems: 0
           items:
             type: string
             pattern: '^\d{14}$'
@@ -1729,11 +1726,10 @@ components:
           example: false
           description: Informa se o Cliente tem nacionalidade brasileira.
         nationality:
-          type: array
-          items:
-            $ref: '#/components/schemas/Nationality'
+          $ref: '#/components/schemas/Nationality'
         filiation:
           type: array
+          minItems: 1
           items:
             type: object
             required:
@@ -1770,7 +1766,6 @@ components:
         - typeAdditionalInfo
         - number
         - checkDigit
-        - expirationDate
       properties:
         type:
           $ref: '#/components/schemas/EnumPersonalOtherDocumentType'
@@ -1840,13 +1835,13 @@ components:
       type: object
       description: |
         Documento concedido aos viajantes por uma autoridade administrativa nacional a fim de certificar sua identidade perante autoridades estrangeiras. 
+
         [Restrição] Aplicável somente à Pessoa natural residente no exterior desobrigada de inscrição no CPF.
+
         [Restrição] Campo de preenchimento obrigatório quando o campo documentType for PASSAPORT ou AMBOS. 
       required:
         - number
         - country
-        - expirationDate
-        - issueDate
       properties:
         number:
           type: string
@@ -1885,17 +1880,14 @@ components:
       required:
         - updateDateTime
         - companyCnpj
-        - informedIncome
-        - informedPatrimony
-        - occupationCode
-        - occupationDescription
       properties:
         updateDateTime:
           type: string
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-          description: 'Data e hora da atualização do bloco, conforme especificação RFC-3339'
+          description: |
+            Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
         companyCnpj:
           type: string
           pattern: '^\d{14}$'
@@ -1911,7 +1903,9 @@ components:
           maxLength: 100
           pattern: '[\w\W\s]*'
           example: '01'
-          description: 'Campo livre, de preenchimento obrigatório. Traz o código da ocupação ou o descritivo da ocupação, se selecionada a opção ''OUTRO'''
+          description: |
+            Campo livre, de preenchimento obrigatório. Se selecionada a opção *occupationCode* "RECEITA_FEDERAL" ou "CBO", informar o código desta lista padronizada.   
+            Se selecionada *occupationCode* "OUTRO", informar o descritivo da ocupação quando a IF não segue a lista padronizada da Receita Federal e nem da CBO.
         informedIncome:
           $ref: '#/components/schemas/InformedIncome'
         informedPatrimony:
@@ -1941,6 +1935,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/BusinessIdentificationData'
         links:
@@ -2019,6 +2014,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/PersonalIdentificationData'
         links:
@@ -2213,6 +2209,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Default:
+      description: Erro inesperado.
       content:
         application/json; charset=utf-8:
           schema:

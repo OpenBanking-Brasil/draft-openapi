@@ -40,6 +40,9 @@ info:
     ### `/accounts/{creditCardAccountId}/transactions`
       - permissions:
         - GET: **CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ**
+    ### `/accounts/{creditCardAccountId}/transactions-current`
+      - permissions:
+        - GET: **CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ**
 
   version: 2.0.0-RC1.0
   license:
@@ -95,7 +98,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsList'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -138,7 +141,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -185,7 +188,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsBills'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -235,7 +238,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -278,7 +281,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseCreditCardAccountsLimits'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -327,7 +330,56 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'credit-cards-accounts'
+  /accounts/{creditCardAccountId}/transactions-current:
+    get:
+      tags:
+        - Credit Card
+      summary: Obtém a lista de transações da conta identificada por creditCardAccountId.
+      operationId: creditCardsGetAccountsCreditCardAccountIdTransactionsCurrent
+      description: Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/creditCardAccountId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
+        - $ref: '#/components/parameters/toTransactionDateMaxLimited'
+        - $ref: '#/components/parameters/creditCardTransactionType'
+        - $ref: '#/components/parameters/creditCardPayeeMCC'
+      responses:
+        '200':
           $ref: '#/components/responses/OKResponseCreditCardAccountsTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -388,6 +440,8 @@ components:
       $ref: ./schemas/Links.yaml
     Meta:
       $ref: ./schemas/Meta.yaml
+    MetaOnlyRequestDateTime:
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseCreditCardAccountsList:
       $ref: ./schemas/credit_cards_apis/ResponseCreditCardAccountsList.yaml
     ResponseCreditCardAccountsBills:
@@ -398,8 +452,10 @@ components:
       $ref: ./schemas/credit_cards_apis/ResponseCreditCardAccountsLimits.yaml
     ResponseCreditCardAccountsTransactions:
       $ref: ./schemas/credit_cards_apis/ResponseCreditCardAccountsTransactions.yaml
-    ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+    ResponseErrorMetaSingle:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    TransactionsLinks:
+      $ref: ./schemas/TransactionsLinks.yaml
     XFapiInteractionId:
       $ref: ./headers/XFapiInteractionId.yaml
   parameters:
@@ -417,6 +473,8 @@ components:
       $ref: ./parameters/FromDueDate.yaml
     fromTransactionDate:
       $ref: ./parameters/FromTransactionDate.yaml
+    fromTransactionDateMaxLimited:
+      $ref: ./parameters/FromTransactionDateMaxLimited.yaml
     page:
       $ref: ./parameters/Page.yaml
     pageSize:
@@ -425,6 +483,8 @@ components:
       $ref: ./parameters/ToDueDate.yaml
     toTransactionDate:
       $ref: ./parameters/ToTransactionDate.yaml
+    toTransactionDateMaxLimited:
+      $ref: ./parameters/ToTransactionDateMaxLimited.yaml
     xCustomerUserAgent:
       $ref: ./parameters/XCustomerUserAgent.yaml
     xFapiAuthDate:
@@ -502,48 +562,58 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     NotAcceptable:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     TooManyRequests:
       description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      description: A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: ./schemas/ResponseError.yaml
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    Default:
+      description: Erro inesperado. 
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml

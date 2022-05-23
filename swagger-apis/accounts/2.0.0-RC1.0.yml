@@ -34,6 +34,9 @@ info:
     ### `/accounts/{accountId}/transactions`
       - permissions:
         - GET: **ACCOUNTS_TRANSACTIONS_READ**
+    ### `/accounts/{accountId}/transactions-current`
+      - permissions:
+        - GET: **ACCOUNTS_TRANSACTIONS_READ**
     ### `/accounts/{accountId}/overdraft-limits`
       - permissions:
         - GET: **ACCOUNTS_OVERDRAFT_LIMITS_READ**
@@ -92,7 +95,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseAccountList'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -135,7 +138,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseAccountIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -178,7 +181,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseAccountBalances'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -226,7 +229,55 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
+          $ref: '#/components/responses/Default'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - accounts
+  '/accounts/{accountId}/transactions-current':
+    get:
+      tags:
+        - Accounts
+      summary: Obtém a lista de transações da conta identificada por accountId.
+      operationId: accountsGetAccountsAccountIdTransactionsCurrent
+      description: 'Método para obter a lista de transações da conta de depósito à vista, poupança ou pagamento pré-paga identificada por accountId mantida pelo cliente na instituição transmissora.'
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/fromBookingDateMaxLimited'
+        - $ref: '#/components/parameters/toBookingDateMaxLimited'
+        - $ref: '#/components/parameters/creditDebitIndicator'
+      responses:
+        '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        default:
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -269,7 +320,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseAccountOverdraftLimits'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -427,14 +478,13 @@ components:
         - companyCnpj
         - type
         - compeCode
-        - branchCode
         - number
         - checkDigit
         - accountId
       properties:
         brandName:
           type: string
-          description: 'Nome da Marca reportada pelo participante do Open Banking. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
           maxLength: 80
           pattern: '[\w\W\s]*'
           example: Organização A
@@ -454,7 +504,10 @@ components:
           example: '001'
         branchCode:
           type: string
-          description: 'Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)'
+          description: |
+            Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
+
+            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré paga.
           pattern: '^\d{4}$'
           maxLength: 4
           example: '6272'
@@ -768,6 +821,41 @@ components:
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
       additionalProperties: false
+    TransactionsLinks:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI completo que gerou a resposta atual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+      additionalProperties: false
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -786,6 +874,19 @@ components:
           format: int32
           description: Número total de páginas no resultado
           example: 1
+        requestDateTime:
+          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+      additionalProperties: false
+    MetaOnlyRequestDateTime:
+      type: object
+      description: Meta informações referente à API requisitada.
+      required:
+        - requestDateTime
+      properties:
         requestDateTime:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
           type: string
@@ -868,9 +969,9 @@ components:
           description: |
             Lista dos lançamentos referentes às transações realizadas e de lançamentos futuros para as contas de: depósito à vista, poupança e de pagamento pré-paga
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/TransactionsLinks'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaOnlyRequestDateTime'
       additionalProperties: false
     ResponseError:
       type: object
@@ -905,7 +1006,7 @@ components:
                 maxLength: 2048
             additionalProperties: false
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaOnlyRequestDateTime'
       additionalProperties: false
     XFapiInteractionId:
       type: string
@@ -950,6 +1051,32 @@ components:
       description: 'Data inicial de filtragem. [Restrição] Deve obrigatoriamente ser enviado caso o campo toBookingDate seja informado. Caso não seja informado, deve ser assumido o dia atual.'
       required: false
       in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    fromBookingDateMaxLimited:
+      in: query
+      name: fromBookingDate
+      description: |
+        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).   
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo toBookingDate seja informado. 
+        Caso não seja informado, deve ser assumido o dia atual.
+      required: false
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    toBookingDateMaxLimited:
+      in: query
+      name: toBookingDate
+      description: |
+        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).   
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromBookingDate seja informado. 
+        Caso não seja informado, deve ser assumido o dia atual.
+      required: false
       schema:
         type: string
         maxLength: 10
@@ -1139,6 +1266,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntity:
       description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Default:
+      description: Erro inesperado.
       content:
         application/json; charset=utf-8:
           schema:

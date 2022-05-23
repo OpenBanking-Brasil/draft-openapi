@@ -34,6 +34,9 @@ info:
     ### `/accounts/{accountId}/transactions`
       - permissions:
         - GET: **ACCOUNTS_TRANSACTIONS_READ**
+    ### `/accounts/{accountId}/transactions-current`
+      - permissions:
+        - GET: **ACCOUNTS_TRANSACTIONS_READ**
     ### `/accounts/{accountId}/overdraft-limits`
       - permissions:
         - GET: **ACCOUNTS_OVERDRAFT_LIMITS_READ**
@@ -92,7 +95,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseAccountList'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -135,7 +138,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseAccountIdentification'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -178,7 +181,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseAccountBalances'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -226,7 +229,55 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'accounts' 
+  /accounts/{accountId}/transactions-current:
+    get:
+      tags:
+        - Accounts
+      summary: Obtém a lista de transações da conta identificada por accountId.
+      operationId: accountsGetAccountsAccountIdTransactionsCurrent
+      description: Método para obter a lista de transações da conta de depósito à vista, poupança ou pagamento pré-paga identificada por accountId mantida pelo cliente na instituição transmissora.
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/fromBookingDateMaxLimited'
+        - $ref: '#/components/parameters/toBookingDateMaxLimited'
+        - $ref: '#/components/parameters/creditDebitIndicator'
+      responses:
+        '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        'default':
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -269,7 +320,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseAccountOverdraftLimits'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'     
@@ -316,8 +367,12 @@ components:
       $ref: ./schemas/enum/EnumTransactionTypes.yaml
     Links:
       $ref: ./schemas/Links.yaml
+    TransactionsLinks:
+      $ref: ./schemas/TransactionsLinks.yaml
     Meta:
       $ref: ./schemas/Meta.yaml
+    MetaOnlyRequestDateTime:
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseAccountList:
       $ref: ./schemas/accounts_apis/ResponseAccountList.yaml
     ResponseAccountBalances:
@@ -329,7 +384,7 @@ components:
     ResponseAccountTransactions:
       $ref: ./schemas/accounts_apis/ResponseAccountTransactions.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     XFapiInteractionId:  
       $ref: ./headers/XFapiInteractionId.yaml
   parameters:
@@ -343,6 +398,10 @@ components:
       $ref: ./parameters/CreditCardDebitIndicator.yaml
     fromBookingDate:
       $ref: ./parameters/FromBookingDate.yaml
+    fromBookingDateMaxLimited:
+      $ref: ./parameters/FromBookingDateMaxLimited.yaml 
+    toBookingDateMaxLimited:
+      $ref: ./parameters/ToBookingDateMaxLimited.yaml
     page:
       $ref: ./parameters/Page.yaml
     pageSize:
@@ -422,20 +481,22 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountOverdraftLimits'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/accounts/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/accounts/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/accounts/InternalServerError.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/accounts/MethodNotAllowed.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/accounts/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/accounts/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/accounts/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/accounts/Unauthorized.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      $ref: ./responses/accounts/UnprocessableEntity.yaml
+    Default:
+      $ref: ./responses/accounts/Default.yaml

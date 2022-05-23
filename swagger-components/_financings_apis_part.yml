@@ -89,7 +89,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseFinancingsContractList'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -132,7 +132,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseFinancingsContract'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -177,7 +177,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseFinancingsWarranties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -222,7 +222,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseFinancingsInstalments'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -267,7 +267,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         'default':
-          $ref: '#/components/responses/OKResponseFinancingsPayments'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -430,3 +430,5 @@ components:
       $ref: ./responses/Unauthorized.yaml
     UnprocessableEntity:
       $ref: ./responses/UnprocessableEntity.yaml
+    Default:
+      $ref: ./responses/Default.yaml

@@ -4,9 +4,7 @@ required:
   - dueInstalments
   - pastDueInstalments
   - typeContractRemaining
-  - contractRemainingNumber
   - typeNumberOfInstalments
-  - totalNumberOfInstalments
   - paidInstalments
 properties:
   typeNumberOfInstalments:
@@ -15,7 +13,10 @@ properties:
     type: number
     maximum: 999999999
     example: 130632
-    description: Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+    description: |
+      Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+
+      [Restrição] Obrigatoriamente deve ser preenchido caso o typeNumberOfInstalments seja diferente de SEM_PRAZO_TOTAL.
   typeContractRemaining:
     type: string
     enum:
@@ -30,8 +31,11 @@ properties:
   contractRemainingNumber:
     type: number
     maximum: 999999999
-    description: Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
     example: 14600
+    description: |
+      Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+
+      [Restrição] Obrigatoriamente deve ser preenchido caso o typeNumberOfInstalments seja diferente de SEM_PRAZO_REMANESCENTE.
   paidInstalments:
     type: number
     description: 'Quantidade de prestações pagas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)'
@@ -51,6 +55,6 @@ properties:
     type: array
     items:
       $ref: ./LoansBalloonPayment.yaml
-    minItems: 1
+    minItems: 0
     description: "Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada"
 additionalProperties: false

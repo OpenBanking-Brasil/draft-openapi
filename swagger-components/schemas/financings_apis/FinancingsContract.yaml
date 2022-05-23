@@ -7,16 +7,8 @@ required:
   - productType
   - productSubType
   - contractDate
-  - contractAmount
-  - settlementDate
-  - currency
-  - dueDate
   - instalmentPeriodicity
-  - instalmentPeriodicityAdditionalInfo
-  - firstInstalmentDueDate
-  - CET
   - amortizationScheduled
-  - amortizationScheduledAdditionalInfo
   - interestRates
   - contractedFees
   - contractedFinanceCharges
@@ -61,7 +53,7 @@ properties:
     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: "2018-01-05"
     description: Data de contratação da operação de crédito. Especificação RFC-3339
-  disbursementDate:
+  disbursementDates:
     type: array
     description: |
       Lista que traz as Datas de Desembolso do valor contratado.
@@ -114,8 +106,7 @@ properties:
     maxLength: 50
     example: "Informações adicionais sobre periodicidade"
     description: |
-      Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS.
-      [Restrição] Obrigatório para complementar a informação relativa da periodicidade de pagamento regular, quando selecionada o tipo ou subtipo OUTRO.
+      Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS. 
   firstInstalmentDueDate:
     type: string
     format: date
@@ -126,13 +117,14 @@ properties:
       Data de vencimento primeira parcela do principal.
   CET:
     type: string
-    maxLength: 6
-    pattern: ^\d{1}\.\d{4}$
-    example: "0.2900"
+    format: double
+    maxLength: 8
+    minLength: 8
+    pattern: ^[01]\.\d{6}$
+    example: "0.290000"
     description: |
-      CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e   incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
-      O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
-      (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+      CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).   
+      O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
   amortizationScheduled:
     $ref: ../enum/EnumContractAmortizationScheduled.yaml
   amortizationScheduledAdditionalInfo:
@@ -142,17 +134,17 @@ properties:
     example: "NA"
     description: |
       Campo obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS.
-      [Restrição] Obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS, para os demais casos informar "NA".
   interestRates:
     type: array
+    minItems: 0
     description: |
-      Caso o contrato não possua taxas de juros, deve ser compartilhado uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
-
-      Receptora deve interpretar a informação conforme orientação acima.
+      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
     items:
       $ref: ./FinancingsContractInterestRate.yaml
   contractedFees:
     type: array
+    description: |
+      Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
     items:
       $ref: ./FinancingsContractedFee.yaml
     minItems: 0

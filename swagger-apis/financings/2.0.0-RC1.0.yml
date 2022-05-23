@@ -89,7 +89,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseFinancingsContractList'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -132,7 +132,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseFinancingsContract'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -177,7 +177,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseFinancingsWarranties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -222,7 +222,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseFinancingsInstalments'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -267,7 +267,7 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServerError'
         default:
-          $ref: '#/components/responses/OKResponseFinancingsPayments'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -285,6 +285,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/FinancingsListContract'
         links:
@@ -343,6 +344,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/FinancingsWarranties'
         links:
@@ -403,9 +405,6 @@ components:
         - taxPeriodicity
         - calculation
         - referentialRateIndexerType
-        - preFixedRate
-        - postFixedRate
-        - additionalInfo
       properties:
         taxType:
           type: string
@@ -490,39 +489,42 @@ components:
           example: Informações adicionais
           description: |
             Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
+
             [Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionada o tipo ou subtipo OUTRO.
         preFixedRate:
           type: string
-          maxLength: 6
-          pattern: '^\d{1}\.\d{4}$'
-          example: '0.6000'
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^[01]\.\d{6}$'
+          example: '0.600000'
           description: |
-            Taxa pré fixada aplicada sob o contrato da modalidade crédito.
-            p.ex. 0.0045. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
-            (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+            Taxa pré fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500.   
+            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
         postFixedRate:
           type: string
-          maxLength: 6
-          pattern: '^\d{1}\.\d{4}$'
-          example: '0.5500'
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^[01]\.\d{6}$'
+          example: '0.550000'
           description: |
-            Taxa pós fixada aplicada sob o contrato da modalidade crédito.
-            p.ex. 0.0045 .O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
-            (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500.   
+            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
         additionalInfo:
           type: string
           maxLength: 1200
           pattern: '[\w\W\s]*'
           example: Informações adicionais
           description: |
-            Texto com informações adicionais sobre a composição das taxas de juros pactuadas.
-            [Restrição] Caso a instituição não possua a informação para compartilhamento, informar "NA".
+            Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
+
+            [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
       additionalProperties: false
     FinancingsBalloonPayment:
       type: object
       description: Lista que traz as datas de vencimento e valor das parcelas não regulares  do contrato da modalidade de crédito consultada.
       required:
-        - dueDate
         - amount
       properties:
         dueDate:
@@ -560,7 +562,6 @@ components:
       type: object
       required:
         - chargeType
-        - chargeAdditionalInfo
         - chargeAmount
       properties:
         chargeType:
@@ -572,6 +573,7 @@ components:
           example: Informações adicionais
           description: |
             Campo livre para preenchimento das informações adicionais referente ao encargo.
+
             [Restrição] Obrigatório quando chargeType for igual 'OUTROS'.
         chargeAmount:
           description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com até 4 casas decimais.
@@ -591,16 +593,8 @@ components:
         - productType
         - productSubType
         - contractDate
-        - contractAmount
-        - settlementDate
-        - currency
-        - dueDate
         - instalmentPeriodicity
-        - instalmentPeriodicityAdditionalInfo
-        - firstInstalmentDueDate
-        - CET
         - amortizationScheduled
-        - amortizationScheduledAdditionalInfo
         - interestRates
         - contractedFees
         - contractedFinanceCharges
@@ -645,7 +639,7 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-01-05'
           description: Data de contratação da operação de crédito. Especificação RFC-3339
-        disbursementDate:
+        disbursementDates:
           type: array
           description: |
             Lista que traz as Datas de Desembolso do valor contratado.
@@ -712,8 +706,7 @@ components:
           maxLength: 50
           example: Informações adicionais sobre periodicidade
           description: |
-            Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS.
-            [Restrição] Obrigatório para complementar a informação relativa da periodicidade de pagamento regular, quando selecionada o tipo ou subtipo OUTRO.
+            Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS. 
         firstInstalmentDueDate:
           type: string
           format: date
@@ -724,13 +717,14 @@ components:
             Data de vencimento primeira parcela do principal.
         CET:
           type: string
-          maxLength: 6
-          pattern: '^\d{1}\.\d{4}$'
-          example: '0.2900'
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^[01]\.\d{6}$'
+          example: '0.290000'
           description: |
-            CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e   incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
-            O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros
-            (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+            CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).   
+            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
         amortizationScheduled:
           type: string
           description: |
@@ -753,17 +747,17 @@ components:
           example: NA
           description: |
             Campo obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS.
-            [Restrição] Obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS, para os demais casos informar "NA".
         interestRates:
           type: array
+          minItems: 0
           description: |
-            Caso o contrato não possua taxas de juros, deve ser compartilhado uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
-
-            Receptora deve interpretar a informação conforme orientação acima.
+            Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
           items:
             $ref: '#/components/schemas/FinancingsContractInterestRate'
         contractedFees:
           type: array
+          description: |
+            Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
           items:
             $ref: '#/components/schemas/FinancingsContractFee'
           minItems: 0
@@ -782,8 +776,6 @@ components:
         - feeCode
         - feeChargeType
         - feeCharge
-        - feeAmount
-        - feeRate
       properties:
         feeName:
           type: string
@@ -820,7 +812,9 @@ components:
           example: MINIMO
         feeAmount:
           description: |
-            "Valor monetário da tarifa pactuada no contrato. Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo"
+            Valor monetário da tarifa pactuada no contrato. 
+
+            [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
           type: string
           pattern: '^-?\d{1,15}\.\d{2,4}$'
           maxLength: 21
@@ -828,12 +822,15 @@ components:
           example: '100000.0400'
         feeRate:
           type: string
-          maxLength: 6
-          pattern: '^\d{1}\.\d{4}$'
+          format: double
+          maxLength: 8
+          minLength: 8
+          pattern: '^[01]\.\d{6}$'
           description: |
-            É o valor da tarifa em percentual pactuada no contrato. 
-            [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual. Exemplo: 0.0150 = 1,5%.
-          example: '0.2000'
+            Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
+
+            [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
+          example: '0.200000'
       additionalProperties: false
     FinancingsFeeOverParcel:
       type: object
@@ -849,7 +846,6 @@ components:
           example: Reavaliação periódica do bem
           description: |
             Denominação da Tarifa pactuada.
-            [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
         feeCode:
           type: string
           maxLength: 140
@@ -857,7 +853,6 @@ components:
           example: aval_bem
           description: |
             Sigla identificadora da tarifa pactuada.  
-            [Restrição] Caso a instituição não possua a informação para compartilhamento, informar NA.
         feeAmount:
           type: string
           pattern: '^\d{1,15}\.\d{2,4}$'
@@ -866,7 +861,6 @@ components:
           example: '100000.0400'
           description: |
             Valor monetário da tarifa pactuada no contrato.
-            [Restrição] Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo
       additionalProperties: false
     FinancingsFinanceCharge:
       type: object
@@ -880,19 +874,22 @@ components:
           type: string
           maxLength: 50
           description: |
-            Campo de preenchimento obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.   
+            Campo para informações adicionais.
+
             [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
           pattern: '[\w\W\s]*'
           example: Informações adicionais sobre encargos.
         chargeRate:
           type: string
           format: double
-          pattern: '^[0-1]\.\d{4}$'
-          maxLength: 6
-          minLength: 6
+          pattern: '^[01]\.\d{6}$'
+          maxLength: 8
+          minLength: 8
           description: |
-            Representa o valor do encargo em percentual pactuado no contrato. Exemplo: 0.0210 (=2.1%).
-          example: '0.0700'
+            Representa o valor do encargo em percentual pactuado no contrato.   
+            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. 
+            Este valor representa 15%. O valor 1 representa 100%).
+          example: '0.071200'
       additionalProperties: false
     FinancingsInstalments:
       type: object
@@ -901,9 +898,7 @@ components:
         - dueInstalments
         - pastDueInstalments
         - typeContractRemaining
-        - contractRemainingNumber
         - typeNumberOfInstalments
-        - totalNumberOfInstalments
         - paidInstalments
       properties:
         typeNumberOfInstalments:
@@ -920,7 +915,10 @@ components:
           type: number
           example: 130632
           maximum: 999999
-          description: 'Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.'
+          description: |
+            Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+
+            [Restrição] Obrigatoriamente deve ser preenchido caso o typeNumberOfInstalments seja diferente de SEM_PRAZO_TOTAL.
         typeContractRemaining:
           type: string
           enum:
@@ -934,7 +932,10 @@ components:
         contractRemainingNumber:
           type: number
           maximum: 999999
-          description: 'Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.'
+          description: |
+            Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+
+            [Restrição] Obrigatoriamente deve ser preenchido caso o typeNumberOfInstalments seja diferente de SEM_PRAZO_REMANESCENTE.
           example: 14600
         paidInstalments:
           type: number
@@ -980,7 +981,7 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 80
           example: Organização A
-          description: 'Nome da Marca reportada pelo participante do Open Banking. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
+          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
         companyCnpj:
           type: string
           pattern: '^\d{14}$'
@@ -1010,18 +1011,23 @@ components:
       additionalProperties: false
     FinancingsOverParcel:
       type: object
-      description: Objeto das tarifas e encargos que foram pagos fora da parcela.
+      description: |
+        Objeto das tarifas e encargos que foram pagos fora da parcela.
+
+        [Restrição] Informação deve ser enviada caso ela exista, torna-se obrigatório caso haja parcelamento.
       required:
         - fees
         - charges
       properties:
         fees:
           type: array
+          minItems: 1
           items:
             $ref: '#/components/schemas/FinancingsFeeOverParcel'
           description: 'Lista das tarifas que foram pagas fora da parcela, só para pagamento avulso.'
         charges:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/FinancingsChargeOverParcel'
           description: Lista dos encargos que foram pagos fora da parcela.
@@ -1048,6 +1054,7 @@ components:
           example: '100000.0400'
         releases:
           type: array
+          minItems: 1
           description: Lista dos pagamentos realizados no período
           items:
             $ref: '#/components/schemas/FinancingsReleases'
@@ -1061,7 +1068,6 @@ components:
         - paidDate
         - currency
         - paidAmount
-        - overParcel
       properties:
         paymentId:
           type: string
@@ -1206,6 +1212,8 @@ components:
           example: '200.0001'
           description: |
             Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
+
+            [Restrição] Preenchimento obrigatório se tipo de garantia selecionada for diferente de 'SEM_TIPO_GARANTIA'
       additionalProperties: false
     Meta:
       type: object
@@ -1507,6 +1515,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntity:
       description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Default:
+      description: Erro inesperado.
       content:
         application/json; charset=utf-8:
           schema:

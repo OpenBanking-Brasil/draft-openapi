@@ -14,7 +14,7 @@ properties:
   feeCode:
     type: string
     description: |
-      Sigla identificadora da tarifa avulsa fora da parcela.
+      Sigla identificadora da tarifa pactuada.
     maxLength: 140
     pattern: '[\w\W\s]*'
     example: "Saque descoberto"
@@ -26,5 +26,4 @@ properties:
     example: '100000.0400'
     description: |
       Valor monetário da tarifa pactuada no contrato.
-      [Restrição] Preenchimento obrigatório quando a forma de cobrança for: Mínimo, Máximo ou Fixo
 additionalProperties: false
