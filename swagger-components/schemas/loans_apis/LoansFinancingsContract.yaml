@@ -7,10 +7,7 @@ required:
   - productType
   - productSubType
   - contractDate
-  - contractAmount
-  - currency
   - instalmentPeriodicity
-  - instalmentPeriodicityAdditionalInfo
   - CET
   - amortizationScheduled
   - interestRates
@@ -107,7 +104,6 @@ properties:
     example: "Informações adicionais sobre periodicidade"
     description: |
       Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS.
-      [Restrição] Obrigatório para complementar a informação relativa da periodicidade de pagamento regular, quando selecionada o tipo ou subtipo OUTRO.
   firstInstalmentDueDate:
     type: string
     format: date
@@ -149,19 +145,21 @@ properties:
       [Restrição] Informação adicional específica para Modalidade de Crédito: Empréstimo-Crédito Pessoal Consignado.
   interestRates:
     type: array
-    description: Caso o contrato não possua taxas de juros, deve ser compartilhado uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 explícito.
+    description: |
+      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
     items:
       $ref: ./LoansFinancingsContractInterestRate.yaml
-    minItems: 1
+    minItems: 0
   contractedFees:
     type: array
+    description: Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
     items:
       $ref: ./LoansFinancingsContractedFee.yaml
-    minItems: 1
+    minItems: 0
   contractedFinanceCharges:
     type: array
     description: Lista que traz os encargos pactuados no contrato
     items:
       $ref: ./LoansFinanceCharge.yaml
-    minItems: 1
+    minItems: 0
 additionalProperties: false
