@@ -28,7 +28,8 @@ properties:
     $ref: ../enum/EnumContractFeeCharge.yaml
   feeAmount:
     type: string
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    format: double
+    pattern: '^\d{1,15}\.\d{2,4}$'
     description: |
       Valor monetário da tarifa pactuada no contrato. 
 
