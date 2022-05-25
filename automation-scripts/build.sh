@@ -39,6 +39,9 @@ function genSwaggerFiles(){
       $PARAM "$COMPONENTS_BASE_PATH/_${API}_apis_part.yml" \
       --outfile "$API_FOLDER_BASE_PATH/$API_VERSION.yml" --type=yaml
     swagger-cli validate ${GENERATED_SWAGGERS_PATH}/$API_FOLDER_NAME/$API_VERSION.yml
+
+    sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $API_FOLDER_BASE_PATH/$API_VERSION.yml
+
     if [[ $WITH_REF == 1 ]]
     then
       ruby $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator ${OPTIONS- } \
