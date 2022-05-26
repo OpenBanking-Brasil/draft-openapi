@@ -79,10 +79,11 @@ properties:
       Data de liquidação da operação.
   contractAmount:
     type: string
-    maxLength: 21
-    minLength: 4
+    format: double
     pattern: '^\d{1,15}\.\d{2,4}$'
-    example: '100000.0400'
+    maxLength: 20
+    minLength: 4
+    example: '1000.0400'
     description: Valor contratado da operação. Expresso em valor monetário com até 4 casas decimais
   currency:
     type: string

@@ -17,11 +17,12 @@ properties:
   warrantySubType:
     $ref: ../enum/EnumWarrantySubType.yaml
   warrantyAmount:
-    description: |
-      Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
     type: string
+    format: double
     pattern: '^\d{1,15}\.\d{2,4}$'
     maxLength: 20
     minLength: 4
-    example: '100000.0400'
+    example: '1000.0400'
+    description: |
+      Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
 additionalProperties: false
