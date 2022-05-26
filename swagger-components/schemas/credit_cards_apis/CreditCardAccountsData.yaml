@@ -12,7 +12,8 @@ properties:
     type: string
     description: Identifica de forma única a conta pagamento pós-paga do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.
     maxLength: 100
-    pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+    minLength: 1
+    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: "XXZTR3459087"
   brandName:
     type: string

@@ -17,7 +17,8 @@ properties:
     type: string
     description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
     maxLength: 100
-    pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+    minLength: 1
+    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl"
   completedAuthorisedPaymentType:
     $ref: ../enum/EnumCompletedAuthorisedPaymentIndicator.yaml
