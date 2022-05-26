@@ -22,11 +22,10 @@ properties:
     example: "BRL"
   amount:
     description: Valor monetário da parcela não regular a vencer.  Expresso em valor monetário com 4 casas decimais.
-    type: number
+    type: string
     format: double
     pattern: '^-?\d{1,15}\.\d{2,4}$'
-    nullable: true
-    maxLength: 20
-    minLength: 0
-    example: 100000.0400
+    maxLength: 21
+    minLength: 4
+    example: '100000.0400'
 additionalProperties: false
