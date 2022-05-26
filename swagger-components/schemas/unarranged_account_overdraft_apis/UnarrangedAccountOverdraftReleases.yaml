@@ -10,6 +10,7 @@ properties:
   paymentId:
     type: string
     maxLength: 100
+    minLength: 1
     example: "XlthLXpBLVowLTldW2EtekEtWjAtOVwtXXswLDk5fSQ" 
     pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     description: Identificador de pagamento de responsabilidade de cada Instituição transmissora.
@@ -20,6 +21,7 @@ properties:
   instalmentId:
     type: string
     maxLength: 100
+    minLength: 1
     pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: "WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH"
     description: Identificador de parcela, de responsabilidade de cada Instituição transmissora.

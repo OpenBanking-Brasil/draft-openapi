@@ -17,12 +17,14 @@ properties:
   transactionId:
     type: string
     maxLength: 100
+    minLength: 1
     pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
     description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
   identificationNumber:
     type: string
     maxLength: 100
+    minLength: 1
     pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: "4453"
     description: |
@@ -36,6 +38,7 @@ properties:
   billId:
     type: string
     maxLength: 100
+    minLength: 1
     pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: MTU0OTU1NjI2NTk4OTRmc2ZhZDRmc2Q1NmZkM
     description: Informação que identifica a fatura onde consta a transação informada.
