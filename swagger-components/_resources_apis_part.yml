@@ -72,6 +72,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -143,6 +145,8 @@ components:
       $ref: ./responses/InternalServerError.yaml
     MethodNotAllowed:
       $ref: ./responses/MethodNotAllowed.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     NotAcceptable:
       $ref: ./responses/NotAcceptable.yaml
     NotFound:
