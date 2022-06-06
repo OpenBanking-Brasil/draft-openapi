@@ -67,6 +67,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsContractList'
@@ -155,6 +156,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsWarranties'
@@ -200,6 +203,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsInstalments'
@@ -245,6 +250,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsPayments'
@@ -353,6 +360,8 @@ components:
       $ref: ./parameters/Authorization.yaml
     contractId:
       $ref: ./parameters/ContractId.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     page:
       $ref: ./parameters/Page.yaml
     pageSize:
