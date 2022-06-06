@@ -83,6 +83,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -126,6 +128,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -171,6 +175,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -216,6 +222,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -261,6 +269,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -345,6 +355,8 @@ components:
       $ref: ./schemas/Meta.yaml
     ResponseError:
       $ref: ./schemas/ResponseError.yaml
+    ResponseErrorMetaSingle:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     XFapiInteractionId:
       $ref: ./headers/XFapiInteractionId.yaml
   parameters:
@@ -434,6 +446,8 @@ components:
       $ref: ./responses/Forbidden.yaml
     InternalServerError:
       $ref: ./responses/InternalServerError.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     MethodNotAllowed:
       $ref: ./responses/MethodNotAllowed.yaml
     NotAcceptable:
