@@ -76,6 +76,8 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+      
       responses:
         '200':
           $ref: '#/components/responses/OKResponseCreditCardAccountsList'
@@ -168,6 +170,7 @@ paths:
         - $ref: '#/components/parameters/creditCardAccountId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
         - $ref: '#/components/parameters/fromDueDate'
         - $ref: '#/components/parameters/toDueDate'
       responses:
@@ -218,6 +221,8 @@ paths:
         - $ref: '#/components/parameters/billId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
         - $ref: '#/components/parameters/creditCardTransactionType'
@@ -314,6 +319,7 @@ paths:
         - $ref: '#/components/parameters/creditCardAccountId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
         - $ref: '#/components/parameters/creditCardTransactionType'
@@ -365,6 +371,7 @@ paths:
         - $ref: '#/components/parameters/creditCardAccountId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
         - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
         - $ref: '#/components/parameters/toTransactionDateMaxLimited'
         - $ref: '#/components/parameters/creditCardTransactionType'
@@ -491,6 +498,8 @@ components:
       $ref: ./parameters/Page.yaml
     pageSize:
       $ref: ./parameters/PageSize.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     toDueDate:
       $ref: ./parameters/ToDueDate.yaml
     toTransactionDate:
