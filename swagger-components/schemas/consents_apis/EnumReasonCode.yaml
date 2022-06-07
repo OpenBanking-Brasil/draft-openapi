@@ -1,0 +1,18 @@
+type: string
+description: |
+  Define o código da razão pela qual o consentimento foi rejeitado.
+
+  - CONSENT_EXPIRED – consentimento que ultrapassou o tempo limite para autorização.   
+  - CUSTOMER_MANUALLY_REJECTED – cliente efetuou a rejeição do consentimento manualmente através de interação nas instituições participantes.   
+  - CUSTOMER_MANUALLY_REVOKED – cliente efetuou a revogação após a autorização do consentimento.   
+  - CONSENT_MAX_DATE_REACHED – consentimento que ultrapassou o tempo limite de compartilhamento.   
+  - CONSENT_TECHNICAL_ISSUE – consentimento que foi rejeitado devido a um problema técnico que impossibilita seu uso pela instituição receptora, por exemplo: falha associada a troca do AuthCode pelo AccessToken, durante o processo de Hybid Flow.   
+  - INTERNAL_SECURITY_REASON – consentimento que foi rejeitado devido as políticas de segurança aplicada pela instituição transmissora.
+enum:
+  - CONSENT_EXPIRED
+  - CUSTOMER_MANUALLY_REJECTED
+  - CUSTOMER_MANUALLY_REVOKED
+  - CONSENT_MAX_DATE_REACHED
+  - CONSENT_TECHNICAL_ISSUE
+  - INTERNAL_SECURITY_REASON
+example: 'CONSENT_EXPIRED'
