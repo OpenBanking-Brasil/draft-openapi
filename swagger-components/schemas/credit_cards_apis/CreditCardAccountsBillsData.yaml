@@ -5,7 +5,6 @@ required:
   - dueDate
   - billTotalAmount
   - billMinimumAmount
-  - billMinimumAmountCurrency
   - isInstalment
   - financeCharges
   - payments
@@ -27,19 +26,7 @@ properties:
   billTotalAmount:
     $ref: ./CreditCardsBillTotalAmount.yaml
   billMinimumAmount:
-    type: string
-    format: double
-    pattern: ^-?\d{1,15}\.\d{2,4}$
-    maxLength: 21
-    minLength: 4
-    example: '100000.0400'
-    description: Valor do pagamento minimo da fatura
-  billMinimumAmountCurrency:
-    type: string
-    maxLength: 3
-    pattern: ^(\w{3}){1}$
-    description: Moeda referente ao valor de pagamento minimo da fatura, segundo modelo ISO-4217. p.ex. 'BRL' Todos os valores informados estão representados com a moeda vigente do Brasil
-    example: BRL
+    $ref: ./CreditCardAccountsBillMinimumAmount.yaml
   isInstalment:
     type: boolean
     description: Indica se a fatura permite parcelamento (true) ou não (false).
