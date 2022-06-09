@@ -245,8 +245,16 @@ components:
       $ref: ./schemas/Meta.yaml
     CreateConsent:
       $ref: ./schemas/consents_apis/CreateConsent.yaml
+    EnumRejectedBy:
+      $ref: ./schemas/consents_apis/EnumRejectedBy.yaml
+    EnumReasonCode:
+      $ref: ./schemas/consents_apis/EnumReasonCode.yaml
+    RejectedReason:
+      $ref: ./schemas/consents_apis/RejectedReason.yaml
     ResponseConsent:
       $ref: ./schemas/consents_apis/ResponseConsent.yaml
+    ResponseConsentRead:
+      $ref: ./schemas/consents_apis/ResponseConsentRead.yaml
     ResponseError:
       $ref: ./schemas/ResponseError.yaml
     ResponseErrorMetaSingle:
@@ -332,7 +340,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: ./schemas/consents_apis/ResponseConsent.yaml            
+            $ref: ./schemas/consents_apis/ResponseConsentRead.yaml            
     204ConsentsConsentIdDeleted:
       description: "Consentimento revogado com sucesso."
       headers:

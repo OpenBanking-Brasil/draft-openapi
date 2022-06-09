@@ -67,6 +67,8 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseFinancingsContractList'
@@ -82,6 +84,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
         '429':
@@ -125,6 +129,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
         '429':
@@ -155,6 +161,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseFinancingsWarranties'
@@ -170,6 +178,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
         '429':
@@ -200,6 +210,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseFinancingsInstalments'
@@ -215,6 +227,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
         '429':
@@ -245,6 +259,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseFinancingsPayments'
@@ -260,6 +276,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
         '429':
@@ -321,11 +339,11 @@ components:
     FinancingsWarranties:
       $ref: ./schemas/financings_apis/FinancingsWarranties.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     Links:
       $ref: ./schemas/Links.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     XFapiInteractionId:
       $ref: ./headers/XFapiInteractionId.yaml
   parameters:
@@ -333,6 +351,8 @@ components:
       $ref: ./parameters/Authorization.yaml
     contractId:
       $ref: ./parameters/ContractId.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     page:
       $ref: ./parameters/Page.yaml
     pageSize:
@@ -411,22 +431,24 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseFinancingsPayments'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/unpaged/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/unpaged/InternalServerError.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml 
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/unpaged/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/unpaged/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/unpaged/Unauthorized.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
     Default:
-      $ref: ./responses/Default.yaml
+      $ref: ./responses/unpaged/Default.yaml
