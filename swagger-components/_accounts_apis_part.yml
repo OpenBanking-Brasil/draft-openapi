@@ -73,6 +73,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/accountType'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountList'
@@ -213,6 +214,8 @@ paths:
         - $ref: '#/components/parameters/fromBookingDate'
         - $ref: '#/components/parameters/toBookingDate'
         - $ref: '#/components/parameters/creditDebitIndicator'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
@@ -263,6 +266,8 @@ paths:
         - $ref: '#/components/parameters/fromBookingDateMaxLimited'
         - $ref: '#/components/parameters/toBookingDateMaxLimited'
         - $ref: '#/components/parameters/creditDebitIndicator'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
@@ -414,6 +419,8 @@ components:
       $ref: ./parameters/FromBookingDateMaxLimited.yaml 
     toBookingDateMaxLimited:
       $ref: ./parameters/ToBookingDateMaxLimited.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     page:
       $ref: ./parameters/Page.yaml
     pageSize:
