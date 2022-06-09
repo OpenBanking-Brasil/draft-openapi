@@ -17,8 +17,10 @@ info:
     É também necessário que o recurso em questão (conta, contrato, etc) esteja disponível na instituição transmissora (ou seja, sem boqueios de qualquer natureza e com todas as autorizações/consentimentos já autorizados).\
     Além disso as `permissions` necessárias deverão ter sido solicitadas quando da criação do consentimento relacionado (`consentId`).\
     Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.\
-    Só deve ser informada uma fatura já fechada.\
-    Qualquer pagamento deve ser contado para a última fatura fechada.
+    ### `/accounts/{creditCardAccountId}/bills`
+      - description:
+        - Só deve ser informada uma fatura já fechada.
+        - Qualquer pagamento deve ser contado para a última fatura fechada.
     ## Permissions necessárias para a API Credit-cards-accounts
 
     Para cada um dos paths desta API, além dos escopos (`scopes`) indicados existem `permissions` que deverão ser observadas:
