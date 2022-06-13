@@ -349,10 +349,8 @@ components:
     LoansBalloonPaymentAmount:
       $ref: ./schemas/loans_apis/LoansBalloonPaymentAmount.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
-    ResponseErrorMetaSingle:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponseLoansContractList:
       $ref: ./schemas/loans_apis/ResponseLoansContractList.yaml
@@ -450,25 +448,25 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseLoansPayments'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/unpaged/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/unpaged/InternalServerError.yaml
     Locked:
       $ref: ./responses/Locked.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/unpaged/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/unpaged/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/unpaged/Unauthorized.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
     Default:
-      $ref: ./responses/Default.yaml
+      $ref: ./responses/unpaged/Default.yaml
 
