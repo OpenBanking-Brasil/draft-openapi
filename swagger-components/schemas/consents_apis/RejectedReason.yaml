@@ -1,13 +1,12 @@
 type: object
-description: Objeto a ser retornado caso o consentimento seja rejeitado.
+description: Define a razão pela qual o consentimento foi rejeitado.
 properties:
-  rejectedBy:
-    $ref: ./EnumRejectedBy.yaml
-  reasonCode:
+  code:
     $ref: ./EnumReasonCode.yaml
-  reasonAdditionalInfo:
+  additionalInformation:
     type: string
     description: Contém informações adicionais a critério da transmissora.
-    maxLength: 140
+    maxLength: 50
     pattern: '[\w\W\s]*'
-    example: 'Consentimento de dupla alçada sem uma das aprovações.'
+    example: 'Tempo de confirmação da múltipla alçada excedido.'
+additionalProperties: true
