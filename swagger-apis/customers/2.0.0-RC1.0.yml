@@ -352,7 +352,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/BusinessAccount'
-          minItems: 1
+          minItems: 0
           description: |
             Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora.    
     BusinessIdentificationData:
@@ -1443,8 +1443,6 @@ components:
       required:
         - type
         - personType
-        - civilName
-        - companyName
         - documentType
         - documentNumber
       properties:
@@ -1468,7 +1466,10 @@ components:
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Juan Kaique Cláudio Fernandes
-          description: 'Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)'
+          description: |
+            Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)
+
+            [Restrição] O campo civilName deve ser obrigatoriamente preenchido quando personType for PESSOA_NATURAL.
         socialName:
           type: string
           maxLength: 70
@@ -1481,7 +1482,10 @@ components:
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Luiza e Benjamin Assessoria Jurídica Ltda
-          description: Razão social da empresa consultada é o termo registrado sob o qual uma pessoa jurídica (PJ) se individualiza e exerce suas atividades. Também pode ser chamada por denominação social ou firma empresarial
+          description: |
+            Razão social da empresa consultada é o termo registrado sob o qual uma pessoa jurídica (PJ) se individualiza e exerce suas atividades. Também pode ser chamada por denominação social ou firma empresarial
+
+            [Restrição] o campo companyName deve ser obrigatoriamente preenchido quando personType for PESSOA_JURIDICA.
         tradeName:
           type: string
           maxLength: 70
