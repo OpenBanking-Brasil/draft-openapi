@@ -346,7 +346,7 @@ components:
   schemas:
     AccountBalancesDataAutomaticallyInvestedAmount:
       type: object
-      description: Saldo disponível com aplicação automática - corresponde a soma do saldo disponível acrescido do valor obtido a partir da aplicação automática Expresso em valor monetário com 4 casas decimais.
+      description: Saldo disponível com aplicação automática - corresponde a soma do saldo disponível acrescido do valor obtido a partir da aplicação automática. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
       required:
         - amount
         - currency
@@ -430,7 +430,7 @@ components:
           example: BRL
     AccountBalancesDataBlockedAmount:
       type: object
-      description: 'Saldo bloqueado, não disponível para utilização imediata, por motivo de bloqueio apresentado para o cliente nos canais eletrônicos Expresso em valor monetário com 4 casas decimais.'
+      description: 'Saldo bloqueado, não disponível para utilização imediata, por motivo de bloqueio apresentado para o cliente nos canais eletrônicos. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.'
       required:
         - amount
         - currency
@@ -451,7 +451,7 @@ components:
           example: BRL
     AccountBalancesDataAvailableAmount:
       type: object
-      description: 'Saldo disponível para utilização imediata. No caso de conta de depósito a vista, sem considerar cheque especial e investimentos atrelados a conta. Expresso em valor monetário com 4 casas decimais.'
+      description: 'Saldo disponível para utilização imediata. No caso de conta de depósito a vista, sem considerar cheque especial e investimentos atrelados a conta. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.'
       required:
         - amount
         - currency
@@ -687,7 +687,7 @@ components:
           example: '4'
     AccountTransactionsDataAmount:
       type: object
-      description: Valor da transação. Expressa em valor monetário com 4 casas decimais.
+      description: Valor da transação. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
       required:
         - amount
         - currency
