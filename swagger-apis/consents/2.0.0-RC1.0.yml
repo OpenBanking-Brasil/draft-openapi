@@ -368,8 +368,6 @@ components:
               maxLength: 20
               format: date-time
               example: '2021-05-21T08:30:00Z'
-          additionalProperties: false
-      additionalProperties: false
     EnumRejectedBy:
       type: string
       description: |
@@ -511,12 +509,10 @@ components:
               format: date-time
               example: '2021-05-21T08:30:00Z'
               maxLength: 20
-          additionalProperties: false
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     ResponseConsentRead:
       type: object
       required:
@@ -706,13 +702,11 @@ components:
     LoggedUser:
       type: object
       description: Usuário (pessoa natural) que encontra-se logado na instituição receptora e que iniciará o processo de consentimento para compartilhamento de dados.
-      additionalProperties: false
       required:
         - document
       properties:
         document:
           type: object
-          additionalProperties: false
           required:
             - identification
             - rel
