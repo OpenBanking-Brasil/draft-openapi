@@ -92,7 +92,7 @@ components:
     ResponseResourceList:
       $ref: ./schemas/resources_apis/ResponseResourceList.yaml
     Links:
-      $ref: ./schemas/Links.yaml
+      $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     Meta:
       $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseError:
@@ -149,7 +149,7 @@ components:
     MethodNotAllowed:
       $ref: ./responses/unpaged/MethodNotAllowed.yaml
     Locked:
-      $ref: ./responses/Locked.yaml
+      $ref: ./responses/withAdditionalProperties/Locked.yaml
     NotAcceptable:
       $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
@@ -159,7 +159,7 @@ components:
     Unauthorized:
       $ref: ./responses/unpaged/Unauthorized.yaml
     SiteIsOverloaded:
-      $ref: ./responses/SiteIsOverloaded.yaml
+      $ref: ./responses/withAdditionalProperties/SiteIsOverloaded.yaml
     Default:
       $ref: ./responses/unpaged/Default.yaml
 
