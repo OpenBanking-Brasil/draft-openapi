@@ -521,7 +521,7 @@ components:
           description: |
             Código da Agência detentora da conta. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória)
 
-            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré paga.
+            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de CONTA_PAGAMENTO_PRE_PAGA.
           pattern: '^\d{4}$'
           maxLength: 4
           example: '6272'
@@ -906,9 +906,9 @@ components:
         data:
           type: array
           description: 'Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento'
+          minItems: 0
           items:
             $ref: '#/components/schemas/AccountData'
-          minItems: 0
         links:
           $ref: '#/components/schemas/Links'
         meta:
