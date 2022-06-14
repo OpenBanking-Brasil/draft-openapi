@@ -1,4 +1,4 @@
-openapi: 3.0.0
+﻿openapi: 3.0.0
 info:
   title: API Consents - Open Banking Brasil
   description: |
@@ -88,9 +88,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/consents/v1'
+  - url: 'https://api.banco.com.br/open-banking/consents/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/consents/v1'
+  - url: 'https://apih.banco.com.br/open-banking/consents/v2'
     description: Servidor de Homologação
 tags:
   - name: Consents
@@ -135,6 +135,8 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -177,6 +179,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -218,6 +222,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -364,20 +370,52 @@ components:
               maxLength: 20
               format: date-time
               example: '2021-05-21T08:30:00Z'
-            transactionFromDateTime:
-              description: 'Data e hora da transação inicial. Se não for preenchido, a transação terá a data aberta e a data será retornada com a primeira transação disponível. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).'
-              type: string
-              maxLength: 20
-              format: date-time
-              example: '2021-01-01T00:00:00Z'
-            transactionToDateTime:
-              description: 'Data e hora final da transação. Se não for preenchido, a transação terá a data aberta e a data será retornada com a ultima transação disponível. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).'
-              type: string
-              maxLength: 20
-              format: date-time
-              example: '2021-02-01T23:59:59Z'
           additionalProperties: false
       additionalProperties: false
+    EnumRejectedBy:
+      type: string
+      description: |
+        Informar usuário responsável pela rejeição.   
+        1. USER usuário   
+        2. ASPSP instituição transmissora   
+        3. TPP instituição receptora   
+      enum:
+        - USER
+        - ASPSP
+        - TPP
+      example: USER
+    EnumReasonCode:
+      type: string
+      description: |
+        Define o código da razão pela qual o consentimento foi rejeitado.
+
+        - CONSENT_EXPIRED – consentimento que ultrapassou o tempo limite para autorização.   
+        - CUSTOMER_MANUALLY_REJECTED – cliente efetuou a rejeição do consentimento manualmente através de interação nas instituições participantes.   
+        - CUSTOMER_MANUALLY_REVOKED – cliente efetuou a revogação após a autorização do consentimento.   
+        - CONSENT_MAX_DATE_REACHED – consentimento que ultrapassou o tempo limite de compartilhamento.   
+        - CONSENT_TECHNICAL_ISSUE – consentimento que foi rejeitado devido a um problema técnico que impossibilita seu uso pela instituição receptora, por exemplo: falha associada a troca do AuthCode pelo AccessToken, durante o processo de Hybid Flow.   
+        - INTERNAL_SECURITY_REASON – consentimento que foi rejeitado devido as políticas de segurança aplicada pela instituição transmissora.
+      enum:
+        - CONSENT_EXPIRED
+        - CUSTOMER_MANUALLY_REJECTED
+        - CUSTOMER_MANUALLY_REVOKED
+        - CONSENT_MAX_DATE_REACHED
+        - CONSENT_TECHNICAL_ISSUE
+        - INTERNAL_SECURITY_REASON
+      example: CONSENT_EXPIRED
+    RejectedReason:
+      type: object
+      description: Define a razão pela qual o consentimento foi rejeitado.
+      properties:
+        code:
+          $ref: '#/components/schemas/EnumReasonCode'
+        additionalInformation:
+          type: string
+          description: Contém informações adicionais a critério da transmissora.
+          maxLength: 140
+          pattern: '[\w\W\s]*'
+          example: Tempo de confirmação da múltipla alçada excedido.
+      additionalProperties: true
     ResponseConsent:
       type: object
       required:
@@ -482,6 +520,119 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
       additionalProperties: false
+    ResponseConsentRead:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          required:
+            - consentId
+            - creationDateTime
+            - status
+            - statusUpdateDateTime
+            - permissions
+            - expirationDateTime
+          properties:
+            consentId:
+              description: |
+                O consentId é o identificador único do consentimento e deverá ser um URN - Uniform Resource Name.  
+                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
+                Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
+                seja um identificador de recurso persistente e independente da localização.  
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+                - o namespace(urn)
+                - o identificador associado ao namespace da instituição transnmissora (bancoex) 
+                - o identificador específico dentro do namespace (C1DD33123).  
+                Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              example: 'urn:bancoex:C1DD33123'
+            creationDateTime:
+              description: 'Data e hora em que o recurso foi criado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).'
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            status:
+              description: Estado atual do consentimento cadastrado.
+              type: string
+              enum:
+                - AUTHORISED
+                - AWAITING_AUTHORISATION
+                - REJECTED
+              example: AWAITING_AUTHORISATION
+            statusUpdateDateTime:
+              description: 'Data e hora em que o recurso foi atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).'
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            permissions:
+              type: array
+              maxItems: 30
+              minItems: 1
+              description: 'Especifica os tipos de permissões de acesso às APIs no escopo do Open Banking Brasil - Fase 2, de acordo com os blocos de consentimento fornecidos pelo usuário e necessários ao acesso a cada endpoint das APIs.'
+              items:
+                type: string
+                enum:
+                  - ACCOUNTS_READ
+                  - ACCOUNTS_BALANCES_READ
+                  - ACCOUNTS_TRANSACTIONS_READ
+                  - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_READ
+                  - CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ
+                  - CREDIT_CARDS_ACCOUNTS_LIMITS_READ
+                  - CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ
+                  - CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ
+                  - CUSTOMERS_PERSONAL_ADITTIONALINFO_READ
+                  - CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ
+                  - CUSTOMERS_BUSINESS_ADITTIONALINFO_READ
+                  - FINANCINGS_READ
+                  - FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - FINANCINGS_PAYMENTS_READ
+                  - FINANCINGS_WARRANTIES_READ
+                  - INVOICE_FINANCINGS_READ
+                  - INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ
+                  - INVOICE_FINANCINGS_PAYMENTS_READ
+                  - INVOICE_FINANCINGS_WARRANTIES_READ
+                  - LOANS_READ
+                  - LOANS_SCHEDULED_INSTALMENTS_READ
+                  - LOANS_PAYMENTS_READ
+                  - LOANS_WARRANTIES_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ
+                  - UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ
+                  - RESOURCES_READ
+              example:
+                - ACCOUNTS_READ
+                - ACCOUNTS_OVERDRAFT_LIMITS_READ
+                - RESOURCES_READ
+            expirationDateTime:
+              description: 'Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).'
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              maxLength: 20
+            rejection:
+              type: object
+              description: Objeto a ser retornado caso o consentimento seja rejeitado.
+              properties:
+                rejectedBy:
+                  $ref: '#/components/schemas/EnumRejectedBy'
+                reason:
+                  $ref: '#/components/schemas/RejectedReason'
+              additionalProperties: true
+          additionalProperties: true
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+      additionalProperties: true
     ResponseError:
       type: object
       required:
@@ -516,6 +667,52 @@ components:
             additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
+      additionalProperties: false
+    ResponseErrorMetaSingle:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de erro específico do endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+            additionalProperties: false
+        meta:
+          type: object
+          description: Meta informações referente à API requisitada.
+          required:
+            - requestDateTime
+          properties:
+            requestDateTime:
+              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+          additionalProperties: false
       additionalProperties: false
     LoggedUser:
       type: object
@@ -670,6 +867,12 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
+    Locked:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
@@ -739,7 +942,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ResponseConsent'
+            $ref: '#/components/schemas/ResponseConsentRead'
     204ConsentsConsentIdDeleted:
       description: Consentimento revogado com sucesso.
       headers:

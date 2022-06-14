@@ -43,8 +43,8 @@ properties:
     type: string
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     maxLength: 21
-    minLength: 1
-    example: '100000.0400'
+    minLength: 4
+    example: '100000.0001'
   overParcel:
     type: object
     description: Objeto das tarifas e encargos que foram pagos fora da parcela.
@@ -79,9 +79,9 @@ properties:
               type: string
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
-              minLength: 1
-              example: '100000.0400'
-          additionalProperties: false
+              minLength: 4
+              example: '100000.0001'
+          additionalProperties: true
         minItems: 1
       charge:
         type: array
@@ -115,8 +115,8 @@ properties:
               type: string
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
-              minLength: 1
+              minLength: 4
               example: '100000.0400'
-          additionalProperties: false
-    additionalProperties: false
-additionalProperties: false
+          additionalProperties: true
+    additionalProperties: true
+additionalProperties: true

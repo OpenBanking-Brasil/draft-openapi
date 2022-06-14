@@ -22,9 +22,9 @@ properties:
   warrantyAmount:
     type: number
     format: double
-    maxLength: 20
+    maxLength: 21
+    minLength: 4
+    example: '100000.0400'
     pattern: '^-?\d{1,15}\.\d{2,4}$'
-    nullable: true
     description: "Valor original da garantia. Valor monetário, expresso com até 4 casas decimais."
-    example: 0
-additionalProperties: false
+additionalProperties: true

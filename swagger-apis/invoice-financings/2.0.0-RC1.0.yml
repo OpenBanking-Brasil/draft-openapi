@@ -1,4 +1,4 @@
-openapi: 3.0.0
+﻿openapi: 3.0.0
 info:
   title: API Invoice-financings - Open Banking Brasil
   description: |
@@ -45,9 +45,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/invoice-financings/v1'
+  - url: 'https://api.banco.com.br/open-banking/invoice-financings/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/invoice-financings/v1'
+  - url: 'https://apih.banco.com.br/open-banking/invoice-financings/v2'
     description: Servidor de Homologação
 tags:
   - name: Invoice Financings
@@ -67,6 +67,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsContractList'
@@ -84,6 +85,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -127,6 +130,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -155,6 +160,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsWarranties'
@@ -172,6 +178,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -200,6 +208,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsInstalments'
@@ -217,6 +226,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -245,6 +256,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsPayments'
@@ -262,6 +274,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -330,14 +344,15 @@ components:
           $ref: '#/components/schemas/EnumContractFeeCharge'
         feeAmount:
           type: string
-          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          format: double
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          minLength: 4
+          example: '1000.0400'
           description: |
             Valor monetário da tarifa pactuada no contrato. 
 
             [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
-          maxLength: 21
-          minLength: 1
-          example: '100000.04'
         feeRate:
           type: string
           pattern: '^[01]\.\d{6}$'
@@ -349,7 +364,7 @@ components:
 
             [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
           example: '0.062000'
-      additionalProperties: false
+      additionalProperties: true
     EnumContractFeeCharge:
       type: string
       description: |
@@ -520,7 +535,6 @@ components:
       type: string
       description: 'Denominação/Identificação do tipo da garantia que avaliza a Modalidade da Operação de Crédito contratada  (Doc 3040, Anexo 12)'
       enum:
-        - SEM_TIPO_GARANTIA
         - CESSAO_DIREITOS_CREDITORIOS
         - CAUCAO
         - PENHOR
@@ -564,17 +578,18 @@ components:
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
           minLength: 4
-          example: '100000.0400'
+          example: '1000.0400'
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsContract:
       type: object
       required:
@@ -632,9 +647,9 @@ components:
           description: Data de contratação da operação de crédito. Especificação RFC-3339
         disbursementDates:
           type: array
+          minItems: 1
           description: |
             Lista que traz as Datas de Desembolso do valor contratado.
-          minItems: 0
           items:
             type: string
             format: date
@@ -648,17 +663,17 @@ components:
           type: string
           format: date
           maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$|^NA$'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-01-15'
           description: |
             Data de liquidação da operação.
-            [Restrição] Deve aceitar NA caso não seja retornado pela instituição.
         contractAmount:
           type: string
-          minLength: 4
-          maxLength: 20
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          example: '100000.0400'
+          maxLength: 20
+          minLength: 4
+          example: '1000.0400'
           description: Valor contratado da operação. Expresso em valor monetário com até 4 casas decimais
         currency:
           type: string
@@ -710,8 +725,8 @@ components:
         amortizationScheduledAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
-          maxLength: 50
-          example: NA
+          maxLength: 200
+          example: Informações complementares relativa à amortização do tipo 'OUTROS'
           description: |
             Campo obrigatório para complementar a informação relativa à amortização quando selecionada a opção OUTROS.
         interestRates:
@@ -733,7 +748,7 @@ components:
           items:
             $ref: '#/components/schemas/InvoiceFinancingsFinanceCharge'
           minItems: 0
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsContractedWarranty:
       type: object
       description: Conjunto de informações referentes às garantias que avalizam a operação de crédito contratada
@@ -741,6 +756,7 @@ components:
         - currency
         - warrantyType
         - warrantySubType
+        - warrantyAmount
       properties:
         currency:
           type: string
@@ -753,16 +769,15 @@ components:
         warrantySubType:
           $ref: '#/components/schemas/EnumWarrantySubType'
         warrantyAmount:
-          description: |
-            Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
-
-            [Restrição] Preenchimento obrigatório se tipo de garantia selecionada for diferente de 'SEM_TIPO_GARANTIA'
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
           minLength: 4
-          example: '100000.0400'
-      additionalProperties: false
+          example: '1000.0400'
+          description: |
+            Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
+      additionalProperties: true
     InvoiceFinancingsContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -832,7 +847,7 @@ components:
             [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
           pattern: '[\w\W\s]*'
           example: Informações adicionais
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsFinanceCharge:
       type: object
       description: Conjunto de informações referentes à identificação da operação de crédito
@@ -861,7 +876,7 @@ components:
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros 
             (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
           example: '0.071200'
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsBalloonPayment:
       type: object
       description: Conjunto de informações relativas às parcelas não regulares do contrato da modalidade de crédito consultada
@@ -878,7 +893,7 @@ components:
           example: '2021-05-21'
         amount:
           $ref: '#/components/schemas/InvoiceFinancingsBallonPaymentAmount'
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsInstalments:
       type: object
       description: Conjunto de informações referentes às parcelas / prestações da operação de crédito contratada
@@ -944,9 +959,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/InvoiceFinancingsBalloonPayment'
-          minItems: 0
+          minItems: 1
           description: Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsContractData:
       type: object
       description: Conjunto de informações de antecipação de recebíveis mantidos pelo cliente na instituição transmissora e para os quais ele tenha fornecido consentimento
@@ -960,7 +975,7 @@ components:
       properties:
         contractId:
           type: string
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           maxLength: 100
           minLength: 1
           example: '92792126019929279212650822221989319252576'
@@ -973,7 +988,7 @@ components:
           example: Organização A
         companyCnpj:
           type: string
-          pattern: '\d{14}|^NA$'
+          pattern: '^\d{14}$'
           description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
           maxLength: 14
           example: '21128159000166'
@@ -997,7 +1012,7 @@ components:
               3. Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
             - **Código do contrato:** 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
           example: '92792126019929279212650822221989319252576'
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsPayments:
       type: object
       description: Conjunto de informações dos pagamentos referentes às operações de direitos creditórios descontados  contratadas
@@ -1013,18 +1028,19 @@ components:
           description: Quantidade total de parcelas pagas do contrato referente à Modalidade de Crédito informada.
         contractOutstandingBalance:
           type: string
-          minLength: 4
-          maxLength: 20
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          example: '100000.0400'
+          maxLength: 20
+          minLength: 4
+          example: '1000.0400'
           description: Valor necessario para o cliente liquidar a dívida.
         releases:
           type: array
-          minItems: 1
+          minItems: 0
           items:
             $ref: '#/components/schemas/InvoiceFinancingsReleases'
           description: Lista dos pagamentos realizados no período.
-      additionalProperties: false
+      additionalProperties: true
     InvoiceFinancingsReleases:
       type: object
       description: Lista dos pagamentos realizados no período
@@ -1068,10 +1084,11 @@ components:
             Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
         paidAmount:
           type: string
+          format: double
+          pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
           minLength: 4
-          pattern: '^\d{1,15}\.\d{2,4}$'
-          example: '100000.0400'
+          example: '1000.0400'
           description: |
             Valor do pagamento referente ao  contrato da modalidade de crédito consultada.
             Expresso em valor monetário com até 4 casas decimais.
@@ -1087,7 +1104,7 @@ components:
           properties:
             fees:
               type: array
-              minItems: 1
+              minItems: 0
               items:
                 $ref: '#/components/schemas/InvoiceFinancingsFeeOverParcel'
               description: 'Lista das tarifas que foram pagas fora da parcela, só para pagamento avulso.'
@@ -1097,8 +1114,8 @@ components:
               items:
                 $ref: '#/components/schemas/InvoiceFinancingsChargeOverParcel'
               description: Lista dos encargos que foram pagos fora da parcela.
-          additionalProperties: false
-      additionalProperties: false
+          additionalProperties: true
+      additionalProperties: true
     InvoiceFinancingsFeeOverParcel:
       type: object
       required:
@@ -1123,14 +1140,15 @@ components:
             Sigla identificadora da tarifa pactuada.
           example: EXCESSO_CONTA
         feeAmount:
-          description: |
-            Valor monetário da tarifa pactuada no contrato.
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
           minLength: 4
-          example: '100000.0400'
-      additionalProperties: false
+          example: '1000.0400'
+          description: |
+            Valor monetário da tarifa pactuada no contrato.
+      additionalProperties: true
     InvoiceFinancingsChargeOverParcel:
       type: object
       required:
@@ -1159,13 +1177,14 @@ components:
           example: Informações adicionais
           maxLength: 140
         chargeAmount:
-          description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com até 4 casas decimais.
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
           minLength: 4
-          example: '100000.0400'
-      additionalProperties: false
+          example: '1000.0400'
+          description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com até 4 casas decimais.
+      additionalProperties: true
     Links:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -1212,20 +1231,8 @@ components:
       type: object
       description: Meta informações referente à API requisitada.
       required:
-        - totalRecords
-        - totalPages
         - requestDateTime
       properties:
-        totalRecords:
-          type: integer
-          format: int32
-          description: Número total de registros no resultado
-          example: 1
-        totalPages:
-          type: integer
-          format: int32
-          description: Número total de páginas no resultado
-          example: 1
         requestDateTime:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
           type: string
@@ -1281,7 +1288,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseInvoiceFinancingsInstalments:
       type: object
       required:
@@ -1295,7 +1302,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseInvoiceFinancingsContractList:
       type: object
       required:
@@ -1305,7 +1312,7 @@ components:
       properties:
         data:
           type: array
-          minItems: 1
+          minItems: 0
           description: Conjunto de informações  de contratos de direitos creditórios descontados mantidos pelo cliente na instituição transmissora e para os quais ele tenha fornecido consentimento
           items:
             $ref: '#/components/schemas/InvoiceFinancingsContractData'
@@ -1313,7 +1320,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseInvoiceFinancingsPayments:
       type: object
       required:
@@ -1327,7 +1334,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseInvoiceFinancingsWarranties:
       type: object
       required:
@@ -1337,7 +1344,7 @@ components:
       properties:
         data:
           type: array
-          minItems: 1
+          minItems: 0
           description: Conjunto de informações referentes às garantias que avalizam a operação de direitos creditórios descontados contratada
           items:
             $ref: '#/components/schemas/InvoiceFinancingsContractedWarranty'
@@ -1345,7 +1352,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
@@ -1370,6 +1377,14 @@ components:
         type: string
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
         maxLength: 100
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
     page:
       name: page
       in: query
@@ -1514,6 +1529,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Locked:
+      description: Locked
       content:
         application/json; charset=utf-8:
           schema:

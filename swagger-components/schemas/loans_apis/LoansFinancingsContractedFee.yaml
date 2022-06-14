@@ -25,14 +25,14 @@ properties:
   feeAmount:
     type: string
     format: double
-    maxLength: 21
-    minLength: 1
-    pattern: '^-?\d{1,15}\.\d{2,4}$'
+    pattern: '^\d{1,15}\.\d{2,4}$'
+    maxLength: 20
+    minLength: 4
     description: |
       Valor monetário da tarifa pactuada no contrato. 
 
       [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
-    example: '100000.04'
+    example: '100000.0400'
   feeRate:
     type: string
     pattern: '^[01]\.\d{6}$'
@@ -44,4 +44,4 @@ properties:
 
       [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
     example: '0.062000'
-additionalProperties: false
+additionalProperties: true

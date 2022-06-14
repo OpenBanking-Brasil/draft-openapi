@@ -3,18 +3,19 @@ description: 'Valor utilizado total do limite do cheque especial e o adiantament
 required:
   - amount
   - currency
-additionalProperties: false
 properties:
   amount:
     type: string
+    format: double
     pattern: '^\d{1,15}\.\d{2,4}$'
-    description: 'Valor relacionado ao objeto.'
     maxLength: 20
-    minLength: 0
-    example: '100000.0400'
+    minLength: 4
+    example: '1000.0400'
+    description: 'Valor relacionado ao objeto.'
   currency:
     type: string
     pattern: '^[A-Z]{3}$'
     maxLength: 3
     description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
     example: BRL
+additionalProperties: true

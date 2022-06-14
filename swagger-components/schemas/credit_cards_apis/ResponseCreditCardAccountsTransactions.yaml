@@ -6,10 +6,11 @@ required:
 properties:
   data:
     type: array
+    minItems: 0
     items: 
       $ref: ./CreditCardAccountsTransaction.yaml
   links:
     $ref: ../TransactionsLinks.yaml
   meta:
     $ref: ../MetaOnlyRequestDateTime.yaml
-additionalProperties: false
+additionalProperties: true

@@ -10,7 +10,7 @@ required:
 properties:
   contractId:
     type: string
-    pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
     maxLength: 100
     minLength: 1
     example: '92792126019929279212650822221989319252576'
@@ -23,7 +23,7 @@ properties:
     example: "Organização A"
   companyCnpj:
     type: string
-    pattern: \d{14}|^NA$
+    pattern: ^\d{14}$
     description: Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.
     maxLength: 14
     example: "21128159000166"
@@ -47,4 +47,4 @@ properties:
         3. Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
       - **Código do contrato:** 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
     example: '92792126019929279212650822221989319252576'
-additionalProperties: false
+additionalProperties: true

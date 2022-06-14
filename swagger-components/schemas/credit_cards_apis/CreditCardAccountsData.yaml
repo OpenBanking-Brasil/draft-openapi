@@ -12,7 +12,8 @@ properties:
     type: string
     description: Identifica de forma única a conta pagamento pós-paga do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.
     maxLength: 100
-    pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+    minLength: 1
+    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: "XXZTR3459087"
   brandName:
     type: string
@@ -23,7 +24,7 @@ properties:
   companyCnpj:
     type: string
     description: Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara
-    pattern: \d{14}|^NA$
+    pattern: ^\d{14}$
     maxLength: 14
     example: "21128159000166"
   name:
@@ -47,4 +48,4 @@ properties:
     pattern: '[\w\W\s]*'
     maxLength: 50
     example: "NA"
-additionalProperties: false
+additionalProperties: true

@@ -45,9 +45,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/loans/v1'
+  - url: 'https://api.banco.com.br/open-banking/loans/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/loans/v1'
+  - url: 'https://apih.banco.com.br/open-banking/loans/v2'
     description: Servidor de Homologação
 tags:
   - name: Loans
@@ -67,6 +67,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseLoansContractList'
@@ -84,6 +85,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -127,6 +130,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -155,6 +160,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseLoansWarranties'
@@ -172,6 +178,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -200,6 +208,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseLoansInstalments'
@@ -217,6 +226,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -245,6 +256,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseLoansPayments'
@@ -262,6 +274,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -333,11 +347,11 @@ components:
     LoansWarranties:
       $ref: ./schemas/loans_apis/LoansWarranties.yaml
     LoansBalloonPaymentAmount:
-      $ref: ./schemas/business_commons/LoansBalloonPaymentAmount.yaml
+      $ref: ./schemas/loans_apis/LoansBalloonPaymentAmount.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponseLoansContractList:
       $ref: ./schemas/loans_apis/ResponseLoansContractList.yaml
     ResponseLoansContract:
@@ -359,6 +373,8 @@ components:
       $ref: ./parameters/Page.yaml
     pageSize:
       $ref: ./parameters/PageSize.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     xCustomerUserAgent:
       $ref: ./parameters/XCustomerUserAgent.yaml
     xFapiAuthDate:
@@ -432,23 +448,25 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseLoansPayments'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/unpaged/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/unpaged/InternalServerError.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/unpaged/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/unpaged/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/unpaged/Unauthorized.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
     Default:
-      $ref: ./responses/Default.yaml
+      $ref: ./responses/unpaged/Default.yaml
 

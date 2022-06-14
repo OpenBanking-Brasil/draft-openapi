@@ -8,8 +8,6 @@ info:
     # Orientações importantes
     - A API resources lista os recursos vinculados ao consentimento específico, identificado por `consentId` e vinculado ao token enviado no header `Authorization`.
     - Os `STATUS` dos recursos listados DEVEM considerar não apenas o consentimento vinculado mas também a disponibilidade do recurso na instituição transmissora dos dados.
-    - Na lista de recursos devolvida na API resources somente constará informação no atributo `resourceId` para recursos com o `STATUS` `AVAILABLE`.
-    - Para os demais `STATUS` não é devolvido o identificador do recurso - `resourceId`.
     - A `permission` específica desta API  - `RESOURCES_READ` - DEVE ser solicitada pela instituição receptora na ocasião do pedido de criação do consentimento.
     - A consulta à API Resources não é obrigatória por parte das instituições receptoras - esta API foi criada para dar visibilidade da existência de ocorrências que possam impedir o compartilhamento de determinados recursos por parte da instituição transmissora dos dados.
     - O identificador do recurso devolvido na API Resources - `resourceId` - quando apresentado corresponde ao mesmo identificador designado para o recurso em sua API específica, o seja: o `resourceId` corresponde ao `accountId` da API accounts, ao `creditCardAccountId` da API de conta
@@ -35,9 +33,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/resources/v1'
+  - url: 'https://api.banco.com.br/open-banking/resources/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/resources/v1'
+  - url: 'https://apih.banco.com.br/open-banking/resources/v2'
     description: Servidor de Homologação
 tags:
   - name: Resources
@@ -57,6 +55,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseResourceList'
@@ -72,6 +71,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -91,9 +92,9 @@ components:
     Links:
       $ref: ./schemas/Links.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     XFapiInteractionId:
       $ref: ./headers/XFapiInteractionId.yaml
   parameters:
@@ -103,6 +104,8 @@ components:
       $ref: ./parameters/Page.yaml
     pageSize:
       $ref: ./parameters/PageSize.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     xCustomerUserAgent:
       $ref: ./parameters/XCustomerUserAgent.yaml
     xFapiAuthDate:
@@ -136,20 +139,22 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseResourceList'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/unpaged/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/unpaged/InternalServerError.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/unpaged/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/unpaged/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/unpaged/Unauthorized.yaml
     Default:
-      $ref: ./responses/Default.yaml
+      $ref: ./responses/unpaged/Default.yaml

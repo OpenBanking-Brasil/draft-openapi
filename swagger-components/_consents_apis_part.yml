@@ -88,9 +88,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: https://openbanking-brasil.github.io/areadesenvolvedor/
 servers:
-  - url: 'https://api.banco.com.br/open-banking/consents/v1'
+  - url: 'https://api.banco.com.br/open-banking/consents/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/consents/v1'
+  - url: 'https://apih.banco.com.br/open-banking/consents/v2'
     description: Servidor de Homologação  
 tags:
   - name: Consents
@@ -135,6 +135,8 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -177,6 +179,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -218,6 +222,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -239,10 +245,20 @@ components:
       $ref: ./schemas/Meta.yaml
     CreateConsent:
       $ref: ./schemas/consents_apis/CreateConsent.yaml
+    EnumRejectedBy:
+      $ref: ./schemas/consents_apis/EnumRejectedBy.yaml
+    EnumReasonCode:
+      $ref: ./schemas/consents_apis/EnumReasonCode.yaml
+    RejectedReason:
+      $ref: ./schemas/consents_apis/RejectedReason.yaml
     ResponseConsent:
       $ref: ./schemas/consents_apis/ResponseConsent.yaml
+    ResponseConsentRead:
+      $ref: ./schemas/consents_apis/ResponseConsentRead.yaml
     ResponseError:
       $ref: ./schemas/ResponseError.yaml
+    ResponseErrorMetaSingle:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     LoggedUser:
       $ref: ./schemas/consents_apis/LoggedUser.yaml
     BusinessEntity:
@@ -277,6 +293,8 @@ components:
       $ref: ./responses/Forbidden.yaml
     InternalServerError:
       $ref: ./responses/InternalServerError.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     MethodNotAllowed:
       $ref: ./responses/MethodNotAllowed.yaml
     NotAcceptable:
@@ -322,7 +340,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: ./schemas/consents_apis/ResponseConsent.yaml            
+            $ref: ./schemas/consents_apis/ResponseConsentRead.yaml            
     204ConsentsConsentIdDeleted:
       description: "Consentimento revogado com sucesso."
       headers:

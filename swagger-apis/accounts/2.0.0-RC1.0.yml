@@ -1,4 +1,4 @@
-openapi: 3.0.0
+﻿openapi: 3.0.0
 info:
   title: API Accounts - Open Banking Brasil
   description: |
@@ -49,9 +49,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/accounts/v1'
+  - url: 'https://api.banco.com.br/open-banking/accounts/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/accounts/v1'
+  - url: 'https://apih.banco.com.br/open-banking/accounts/v2'
     description: Servidor de Homologação
 tags:
   - name: Accounts
@@ -73,6 +73,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/accountType'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountList'
@@ -90,6 +91,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -133,6 +136,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -176,6 +181,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -207,6 +214,7 @@ paths:
         - $ref: '#/components/parameters/fromBookingDate'
         - $ref: '#/components/parameters/toBookingDate'
         - $ref: '#/components/parameters/creditDebitIndicator'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
@@ -224,6 +232,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -255,6 +265,7 @@ paths:
         - $ref: '#/components/parameters/fromBookingDateMaxLimited'
         - $ref: '#/components/parameters/toBookingDateMaxLimited'
         - $ref: '#/components/parameters/creditDebitIndicator'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
@@ -272,6 +283,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -315,6 +328,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -338,102 +353,107 @@ components:
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     AccountOverdraftLimitsDataOverdraftContractedLimit:
       type: object
       description: Valor do limite contratado do cheque especial.
       required:
         - amount
         - currency
-      additionalProperties: false
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
+      additionalProperties: true
     AccountOverdraftLimitsDataOverdraftUsedLimit:
       type: object
       description: Valor utilizado total do limite do cheque especial e o adiantamento a depositante.
       required:
         - amount
         - currency
-      additionalProperties: false
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
+      additionalProperties: true
     AccountOverdraftLimitsDataUnarrangedOverdraftAmount:
       type: object
       description: Valor de operação contratada em caráter emergencial para cobertura de saldo devedor em conta de depósitos à vista e de excesso sobre o limite pactuado de cheque especial.
       required:
         - amount
         - currency
-      additionalProperties: false
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
+      additionalProperties: true
     AccountBalancesDataBlockedAmount:
       type: object
       description: 'Saldo bloqueado, não disponível para utilização imediata, por motivo de bloqueio apresentado para o cliente nos canais eletrônicos Expresso em valor monetário com 4 casas decimais.'
       required:
         - amount
         - currency
-      additionalProperties: false
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
+      additionalProperties: true
     AccountBalancesDataAvailableAmount:
       type: object
       description: 'Saldo disponível para utilização imediata. No caso de conta de depósito a vista, sem considerar cheque especial e investimentos atrelados a conta. Expresso em valor monetário com 4 casas decimais.'
@@ -443,18 +463,19 @@ components:
       properties:
         amount:
           type: string
-          pattern: '^\d{1,15}\.\d{2,4}$'
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.0400'
           description: Valor relacionado ao objeto.
-          maxLength: 20
-          minLength: 0
-          example: '100000.0400'
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     AccountBalancesData:
       type: object
       description: |
@@ -470,7 +491,7 @@ components:
           $ref: '#/components/schemas/AccountBalancesDataBlockedAmount'
         automaticallyInvestedAmount:
           $ref: '#/components/schemas/AccountBalancesDataAutomaticallyInvestedAmount'
-      additionalProperties: false
+      additionalProperties: true
     AccountData:
       type: object
       required:
@@ -526,17 +547,17 @@ components:
         accountId:
           type: string
           description: 'Identifica de forma única  a conta do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           maxLength: 100
+          minLength: 1
           example: '92792126019929279212650822221989319252576'
-      additionalProperties: false
+      additionalProperties: true
     AccountIdentificationData:
       type: object
       description: |
         Conjunto dos atributos que caracterizam as Contas de: depósito à vista, poupança e de pagamento pré-paga
       required:
         - compeCode
-        - branchCode
         - number
         - checkDigit
         - type
@@ -582,7 +603,7 @@ components:
             Moeda referente ao valor da transação, segundo modelo ISO-4217. p.ex. 'BRL' 
             Todos os saldos informados estão representados com a moeda vigente do Brasil
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     AccountOverdraftLimitsData:
       type: object
       description: |
@@ -598,7 +619,7 @@ components:
           $ref: '#/components/schemas/AccountOverdraftLimitsDataOverdraftUsedLimit'
         unarrangedOverdraftAmount:
           $ref: '#/components/schemas/AccountOverdraftLimitsDataUnarrangedOverdraftAmount'
-      additionalProperties: false
+      additionalProperties: true
     AccountTransactionsData:
       type: object
       required:
@@ -608,18 +629,13 @@ components:
         - type
         - transactionAmount
         - transactionDate
-        - partieCnpjCpf
-        - partiePersonType
-        - partieCompeCode
-        - partieBranchCode
-        - partieNumber
-        - partieCheckDigit
       properties:
         transactionId:
           type: string
           description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
         completedAuthorisedPaymentType:
           $ref: '#/components/schemas/EnumCompletedAuthorisedPaymentIndicator'
@@ -677,7 +693,7 @@ components:
           pattern: '[\w\W\s]*'
           description: Dígito da conta da pessoa envolvida na transação
           example: '4'
-      additionalProperties: false
+      additionalProperties: true
     AccountTransactionsDataAmount:
       type: object
       description: Valor da transação. Expressa em valor monetário com 4 casas decimais.
@@ -687,18 +703,19 @@ components:
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     EnumAccountSubType:
       type: string
       enum:
@@ -748,7 +765,6 @@ components:
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
-        - NAO_SE_APLICA
       example: PESSOA_NATURAL
       description: |
         Identificação do Tipo de Pessoa da pessoa envolvida na transação.   
@@ -903,15 +919,15 @@ components:
       properties:
         data:
           type: array
+          description: 'Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento'
           items:
             $ref: '#/components/schemas/AccountData'
           minItems: 0
-          description: 'Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseAccountBalances:
       type: object
       required:
@@ -925,7 +941,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseAccountIdentification:
       type: object
       required:
@@ -939,7 +955,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseAccountOverdraftLimits:
       type: object
       required:
@@ -953,7 +969,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseAccountTransactions:
       type: object
       required:
@@ -963,16 +979,16 @@ components:
       properties:
         data:
           type: array
-          items:
-            $ref: '#/components/schemas/AccountTransactionsData'
-          minItems: 0
           description: |
             Lista dos lançamentos referentes às transações realizadas e de lançamentos futuros para as contas de: depósito à vista, poupança e de pagamento pré-paga
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/AccountTransactionsData'
         links:
           $ref: '#/components/schemas/TransactionsLinks'
         meta:
           $ref: '#/components/schemas/MetaOnlyRequestDateTime'
-      additionalProperties: false
+      additionalProperties: true
     ResponseError:
       type: object
       required:
@@ -1082,6 +1098,14 @@ components:
         maxLength: 10
         format: date
         example: '2021-05-21'
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
     page:
       name: page
       in: query
@@ -1230,6 +1254,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Locked:
+      description: Locked
       content:
         application/json; charset=utf-8:
           schema:

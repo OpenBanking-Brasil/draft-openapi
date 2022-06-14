@@ -1,4 +1,4 @@
-openapi: 3.0.0
+﻿openapi: 3.0.0
 info:
   title: API Resources - Open Banking Brasil
   description: |
@@ -8,8 +8,6 @@ info:
     # Orientações importantes
     - A API resources lista os recursos vinculados ao consentimento específico, identificado por `consentId` e vinculado ao token enviado no header `Authorization`.
     - Os `STATUS` dos recursos listados DEVEM considerar não apenas o consentimento vinculado mas também a disponibilidade do recurso na instituição transmissora dos dados.
-    - Na lista de recursos devolvida na API resources somente constará informação no atributo `resourceId` para recursos com o `STATUS` `AVAILABLE`.
-    - Para os demais `STATUS` não é devolvido o identificador do recurso - `resourceId`.
     - A `permission` específica desta API  - `RESOURCES_READ` - DEVE ser solicitada pela instituição receptora na ocasião do pedido de criação do consentimento.
     - A consulta à API Resources não é obrigatória por parte das instituições receptoras - esta API foi criada para dar visibilidade da existência de ocorrências que possam impedir o compartilhamento de determinados recursos por parte da instituição transmissora dos dados.
     - O identificador do recurso devolvido na API Resources - `resourceId` - quando apresentado corresponde ao mesmo identificador designado para o recurso em sua API específica, o seja: o `resourceId` corresponde ao `accountId` da API accounts, ao `creditCardAccountId` da API de conta
@@ -35,9 +33,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/resources/v1'
+  - url: 'https://api.banco.com.br/open-banking/resources/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/resources/v1'
+  - url: 'https://apih.banco.com.br/open-banking/resources/v2'
     description: Servidor de Homologação
 tags:
   - name: Resources
@@ -57,6 +55,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseResourceList'
@@ -72,6 +71,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -95,6 +96,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             type: object
             required:
@@ -111,7 +113,7 @@ components:
                   Empréstimos, Financiamentos, Direitos creditórios descontados e Adiantamento a depositantes: corresponde ao contractId.
                 minLength: 1
                 maxLength: 100
-                pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+                pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
                 example: 25cac914-d8ae-6789-b215-650a6215820d
               type:
                 type: string
@@ -146,7 +148,6 @@ components:
                   Pending Authorisation - Pendente de Autorização
                 example: AVAILABLE
             additionalProperties: false
-          minItems: 1
           description: Lista de recursos e seus respectivos status.
         links:
           $ref: '#/components/schemas/Links'
@@ -199,20 +200,8 @@ components:
       type: object
       description: Meta informações referente à API requisitada.
       required:
-        - totalRecords
-        - totalPages
         - requestDateTime
       properties:
-        totalRecords:
-          type: integer
-          format: int32
-          description: Número total de registros no resultado
-          example: 1
-        totalPages:
-          type: integer
-          format: int32
-          description: Número total de páginas no resultado
-          example: 1
         requestDateTime:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
           type: string
@@ -290,6 +279,14 @@ components:
         minimum: 1
         format: int32
         maximum: 1000
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
     xCustomerUserAgent:
       name: x-customer-user-agent
       in: header
@@ -374,6 +371,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Locked:
+      description: Locked
       content:
         application/json; charset=utf-8:
           schema:

@@ -49,9 +49,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: https://openbanking-brasil.github.io/areadesenvolvedor/
 servers:
-  - url: 'https://api.banco.com.br/open-banking/accounts/v1'
+  - url: 'https://api.banco.com.br/open-banking/accounts/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/accounts/v1'
+  - url: 'https://apih.banco.com.br/open-banking/accounts/v2'
     description: Servidor de Homologação
 tags:
   - name: Accounts
@@ -73,6 +73,7 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/accountType'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountList'
@@ -90,6 +91,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -133,6 +136,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -176,6 +181,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -207,6 +214,8 @@ paths:
         - $ref: '#/components/parameters/fromBookingDate'
         - $ref: '#/components/parameters/toBookingDate'
         - $ref: '#/components/parameters/creditDebitIndicator'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
@@ -224,6 +233,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -255,6 +266,8 @@ paths:
         - $ref: '#/components/parameters/fromBookingDateMaxLimited'
         - $ref: '#/components/parameters/toBookingDateMaxLimited'
         - $ref: '#/components/parameters/creditDebitIndicator'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseAccountTransactions'
@@ -272,6 +285,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -315,6 +330,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -402,6 +419,8 @@ components:
       $ref: ./parameters/FromBookingDateMaxLimited.yaml 
     toBookingDateMaxLimited:
       $ref: ./parameters/ToBookingDateMaxLimited.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     page:
       $ref: ./parameters/Page.yaml
     pageSize:
@@ -481,22 +500,24 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseAccountOverdraftLimits'
     BadRequest:
-      $ref: ./responses/accounts/BadRequest.yaml
+      $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/accounts/Forbidden.yaml
+      $ref: ./responses/unpaged/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/accounts/InternalServerError.yaml
+      $ref: ./responses/unpaged/InternalServerError.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     MethodNotAllowed:
-      $ref: ./responses/accounts/MethodNotAllowed.yaml
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
     NotAcceptable:
-      $ref: ./responses/accounts/NotAcceptable.yaml
+      $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/accounts/NotFound.yaml
+      $ref: ./responses/unpaged/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/accounts/TooManyRequests.yaml
+      $ref: ./responses/unpaged/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/accounts/Unauthorized.yaml
+      $ref: ./responses/unpaged/Unauthorized.yaml
     UnprocessableEntity:
-      $ref: ./responses/accounts/UnprocessableEntity.yaml
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
     Default:
-      $ref: ./responses/accounts/Default.yaml
+      $ref: ./responses/unpaged/Default.yaml

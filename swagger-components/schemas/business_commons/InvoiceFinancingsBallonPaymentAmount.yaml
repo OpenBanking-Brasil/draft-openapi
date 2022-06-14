@@ -6,10 +6,11 @@ description: Valor monetário da parcela não regular a vencer.  Expresso em val
 properties:
   amount:
     type: string
+    format: double
     pattern: '^\d{1,15}\.\d{2,4}$'
     maxLength: 20
     minLength: 4
-    example: '100000.0400'
+    example: '1000.0400'
   currency:
     $ref: CurrencyCode.yaml
-additionalProperties: false
+additionalProperties: true

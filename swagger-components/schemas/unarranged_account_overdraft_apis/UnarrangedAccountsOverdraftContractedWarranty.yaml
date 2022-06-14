@@ -4,6 +4,7 @@ required:
   - currency
   - warrantyType
   - warrantySubType
+  - warrantyAmount
 properties:
   currency:
     type: string
@@ -18,11 +19,9 @@ properties:
   warrantyAmount:
     description: |
       Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
-
-      [Restrição] Preenchimento obrigatório se tipo de garantia selecionada for diferente de 'SEM_TIPO_GARANTIA'
     type: string
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     maxLength: 21
     minLength: 4
     example: '100000.0400'
-additionalProperties: false
+additionalProperties: true

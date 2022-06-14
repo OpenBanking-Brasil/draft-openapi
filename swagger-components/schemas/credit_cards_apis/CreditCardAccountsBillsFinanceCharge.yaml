@@ -13,13 +13,12 @@ properties:
     example: Informações Adicionais
     description: Campo livre, de preenchimento obrigatório se selecionado tipo de encargo 'OUTROS'
   amount:
-    type: number
+    type: string
     format: double
-    minLength: 0
-    maxLength: 20
-    nullable: true
+    maxLength: 21
+    minLength: 4
     pattern: '^-?\d{1,15}\.\d{2,4}$'
-    example: 100000.0400
+    example: '100000.0400'
     description: Valor cobrado pelo encargo. Expresso em valor monetário com 4 casas decimais
   currency: 
     type: string
@@ -29,4 +28,4 @@ properties:
     description: |
       Moeda referente ao valor cobrado pelo encargo, segundo modelo ISO-4217. p.ex. 'BRL' 
       Todos os saldos informados estão representados com a moeda vigente do Brasil.
-additionalProperties: false
+additionalProperties: true

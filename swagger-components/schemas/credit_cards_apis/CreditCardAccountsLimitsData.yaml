@@ -19,7 +19,8 @@ properties:
     description: |
       Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Banking.
     maxLength: 100
-    pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+    minLength: 1
+    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$
     example: "4453"
   lineName:
     $ref: ../enum/EnumCreditCardAccountsLineName.yaml
@@ -50,6 +51,7 @@ properties:
       Valor total do limite informado Expresso em valor monetário com 4 casas decimais.   
       [Restrição] O campo é opcional caso isLimitFlexible for igual a false.
     maxLength: 21
+    minLength: 4
     example: '100000.0001'
   usedAmountCurrency:
     type: string
@@ -65,7 +67,8 @@ properties:
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     description: Valor utilizado do limite informado Expresso em valor monetário com 4 casas decimais.
     maxLength: 21
-    example: '7500.0500'
+    minLength: 4
+    example: '100000.0001'
   availableAmountCurrency:
     type: string
     maxLength: 3
@@ -80,5 +83,6 @@ properties:
     pattern: '^-?\d{1,15}\.\d{2,4}$'
     description: Valor disponível do limite informado Expresso em valor monetário com 4 casas decimais.
     maxLength: 21
-    example: '2499.9500'
-additionalProperties: false
+    minLength: 4
+    example: '100000.0001'
+additionalProperties: true

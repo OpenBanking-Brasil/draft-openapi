@@ -6,11 +6,11 @@ required:
 properties:
   data:
     type: array
-    minItems: 1
+    minItems: 0
     items:
       $ref: ./FinancingsListContract.yaml
   links:
     $ref: ../Links.yaml
   meta:
-    $ref: ../Meta.yaml
-additionalProperties: false
+    $ref: ../MetaOnlyRequestDateTime.yaml
+additionalProperties: true

@@ -1,4 +1,4 @@
-openapi: 3.0.0
+﻿openapi: 3.0.0
 info:
   title: API Credit-cards-accounts - Open Banking Brasil
   description: |
@@ -16,7 +16,17 @@ info:
     Os dados serão devolvidos na consulta desde que o `consentId` relacionado corresponda a um consentimento válido e com o status `AUTHORISED`.\
     É também necessário que o recurso em questão (conta, contrato, etc) esteja disponível na instituição transmissora (ou seja, sem boqueios de qualquer natureza e com todas as autorizações/consentimentos já autorizados).\
     Além disso as `permissions` necessárias deverão ter sido solicitadas quando da criação do consentimento relacionado (`consentId`).\
-    Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.
+    Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.\
+    ### `/accounts/{creditCardAccountId}/bills`
+      - description:
+        - Só deve ser informada uma fatura já fechada.
+        - Qualquer pagamento deve ser contado para a última fatura fechada.
+    ### `/accounts/{creditCardAccountId}/bills/{billId}/transactions`
+      - description:
+        - A lista a retornar se refere a transações após base 2/clearing/conciliado
+    ### `/accounts/{creditCardAccountId}/transactions`
+      - description:
+        - A lista a retornar se refere a transações após base 2/clearing/conciliado
 
     ## Permissions necessárias para a API Credit-cards-accounts
 
@@ -31,7 +41,7 @@ info:
     ### `/accounts/{creditCardAccountId}/bills`
       - permissions:
         - GET: **CREDIT_CARDS_ACCOUNTS_BILLS_READ**
-    ### `/accounts/{creditCardAccountId}/{billId}/transactions`
+    ### `/accounts/{creditCardAccountId}/bills/{billId}/transactions`
       - permissions:
         - GET: **CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ**
     ### `/accounts/{creditCardAccountId}/limits`
@@ -52,9 +62,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/credit-cards-accounts/v1'
+  - url: 'https://api.banco.com.br/open-banking/credit-cards-accounts/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/credit-cards-accounts/v1'
+  - url: 'https://apih.banco.com.br/open-banking/credit-cards-accounts/v2'
     description: Servidor de Homologação
 tags:
   - name: Credit Card
@@ -75,6 +85,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseCreditCardAccountsList'
@@ -92,6 +103,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -135,6 +148,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -152,7 +167,10 @@ paths:
       tags:
         - Credit Card
       summary: Obtém a lista de faturas da conta identificada por creditCardAccountId.
-      description: Método para obter a lista de faturas da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+      description: |
+        Método para obter a lista de faturas da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.\
+        Só deve ser informada uma fatura já fechada.\
+        Qualquer pagamento deve ser contado para a última fatura fechada.
       operationId: creditCardsGetAccountsCreditCardAccountIdBills
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -163,6 +181,7 @@ paths:
         - $ref: '#/components/parameters/creditCardAccountId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
         - $ref: '#/components/parameters/fromDueDate'
         - $ref: '#/components/parameters/toDueDate'
       responses:
@@ -182,6 +201,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -200,7 +221,9 @@ paths:
         - Credit Card
       summary: Obtém a lista de transações da conta identificada por creditCardAccountId e billId.
       operationId: creditCardsGetAccountsCreditCardAccountIdBillsBillIdTransactions
-      description: Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId e billId mantida pelo cliente na instituição transmissora.
+      description: |
+        Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId e billId mantida pelo cliente na instituição transmissora. 
+        A lista a retornar se refere a transações após base 2/clearing/conciliado
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -211,6 +234,7 @@ paths:
         - $ref: '#/components/parameters/billId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
         - $ref: '#/components/parameters/creditCardTransactionType'
@@ -232,6 +256,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -275,6 +301,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -293,7 +321,9 @@ paths:
         - Credit Card
       summary: Obtém a lista de transações da conta identificada por creditCardAccountId.
       operationId: creditCardsGetAccountsCreditCardAccountIdTransactions
-      description: Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+      description: |-
+        Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+        A lista a retornar se refere a transações após base 2/clearing/conciliado
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -303,6 +333,7 @@ paths:
         - $ref: '#/components/parameters/creditCardAccountId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
         - $ref: '#/components/parameters/creditCardTransactionType'
@@ -324,6 +355,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -352,6 +385,7 @@ paths:
         - $ref: '#/components/parameters/creditCardAccountId'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
         - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
         - $ref: '#/components/parameters/toTransactionDateMaxLimited'
         - $ref: '#/components/parameters/creditCardTransactionType'
@@ -373,6 +407,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -396,18 +432,19 @@ components:
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     CreditCardAccountsTransactionBrazilianAmount:
       type: object
       description: 'Valor da transação expresso em valor monetário com 4 casas decimais, em moeda corrente do Brasil'
@@ -417,18 +454,19 @@ components:
       properties:
         amount:
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
-          description: Valor relacionado ao objeto.
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     CreditCardsAccountsIdentificationData:
       type: object
       description: Conjunto de informações referentes à identificação da conta de pagamento pós-paga.
@@ -463,10 +501,12 @@ components:
           example: AURA CARD
         paymentMethod:
           type: array
+          description: |
+            Listagem dos cartões (ex.: virtual/adicional/titular) associados a conta cartão consentida, conforme disponíveis ao usuário nos canais proprietários.
           items:
             $ref: '#/components/schemas/CreditCardsAccountPaymentMethod'
           minItems: 1
-      additionalProperties: false
+      additionalProperties: true
     CreditCardAccountsBillsData:
       type: object
       description: Conjunto das informações referentes a lista de faturas associadas à conta de pagamento pós-paga
@@ -474,17 +514,17 @@ components:
         - billId
         - dueDate
         - billTotalAmount
-        - billTotalAmountCurrency
         - billMinimumAmount
-        - billMinimumAmountCurrency
         - isInstalment
         - financeCharges
+        - payments
       properties:
         billId:
           description: Informação que identifica a fatura
           type: string
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: 3459087XXZTR
         dueDate:
           description: 'Data de vencimento da Fatura, que aparece para pagamento pelo cliente'
@@ -495,26 +535,8 @@ components:
           example: '2021-05-21'
         billTotalAmount:
           $ref: '#/components/schemas/CreditCardsBillTotalAmount'
-        billTotalAmountCurrency:
-          type: string
-          maxLength: 3
-          pattern: '^(\w{3}){1}$'
-          description: 'Moeda referente ao valor de pagamento total da fatura, segundo modelo ISO-4217. p.ex. ''BRL'' Todos os valores informados estão representados com a moeda vigente do Brasil'
-          example: BRL
         billMinimumAmount:
-          type: string
-          format: double
-          pattern: '^-?\d{1,15}\.\d{2,4}$'
-          maxLength: 21
-          minLength: 0
-          description: Valor do pagamento minimo da fatura
-          example: '1000.0400'
-        billMinimumAmountCurrency:
-          type: string
-          maxLength: 3
-          pattern: '^(\w{3}){1}$'
-          description: 'Moeda referente ao valor de pagamento minimo da fatura, segundo modelo ISO-4217. p.ex. ''BRL'' Todos os valores informados estão representados com a moeda vigente do Brasil'
-          example: BRL
+          $ref: '#/components/schemas/CreditCardAccountsBillMinimumAmount'
         isInstalment:
           type: boolean
           description: Indica se a fatura permite parcelamento (true) ou não (false).
@@ -531,7 +553,7 @@ components:
             $ref: '#/components/schemas/CreditCardAccountsBillsPayment'
           minItems: 0
           description: Lista que traz os valores relativos aos pagamentos da Fatura da conta de pagamento pós-paga
-      additionalProperties: false
+      additionalProperties: true
     CreditCardAccountsBillsFinanceCharge:
       type: object
       required:
@@ -548,13 +570,12 @@ components:
           example: Informações Adicionais
           description: 'Campo livre, de preenchimento obrigatório se selecionado tipo de encargo ''OUTROS'''
         amount:
-          type: number
+          type: string
           format: double
-          minLength: 0
-          maxLength: 20
-          nullable: true
+          maxLength: 21
+          minLength: 4
           pattern: '^-?\d{1,15}\.\d{2,4}$'
-          example: 100000.04
+          example: '100000.0400'
           description: Valor cobrado pelo encargo. Expresso em valor monetário com 4 casas decimais
         currency:
           type: string
@@ -564,7 +585,7 @@ components:
           description: |
             Moeda referente ao valor cobrado pelo encargo, segundo modelo ISO-4217. p.ex. 'BRL' 
             Todos os saldos informados estão representados com a moeda vigente do Brasil.
-      additionalProperties: false
+      additionalProperties: true
     CreditCardAccountsBillsPayment:
       type: object
       required:
@@ -590,8 +611,8 @@ components:
           format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
-          minLength: 0
-          example: '100000.0400'
+          minLength: 4
+          example: '1000.0400'
           description: |
             Valor pagamento segundo o valueType.  
             Expresso em valor monetário com 4 casas decimais.
@@ -603,7 +624,7 @@ components:
           description: |
             Moeda referente ao valor de pagamento da fatura, segundo modelo ISO-4217. p.ex. 'BRL' Todos os valores informados estão representados com a moeda vigente do Brasil
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
     CreditCardAccountsData:
       type: object
       description: Conjunto de informações das Contas de pagamento pós paga
@@ -619,7 +640,8 @@ components:
           type: string
           description: 'Identifica de forma única a conta pagamento pós-paga do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: XXZTR3459087
         brandName:
           type: string
@@ -630,7 +652,7 @@ components:
         companyCnpj:
           type: string
           description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
-          pattern: '\d{14}|^NA$'
+          pattern: '^\d{14}$'
           maxLength: 14
           example: '21128159000166'
         name:
@@ -654,7 +676,7 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: NA
-      additionalProperties: false
+      additionalProperties: true
     CreditCardAccountsLimitsData:
       type: object
       description: Conjunto de informações referentes aos limites da conta de pagamento pós-paga.
@@ -677,7 +699,8 @@ components:
           description: |
             Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Banking.
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: '4453'
         lineName:
           type: string
@@ -716,6 +739,7 @@ components:
             Valor total do limite informado Expresso em valor monetário com 4 casas decimais.   
             [Restrição] O campo é opcional caso isLimitFlexible for igual a false.
           maxLength: 21
+          minLength: 4
           example: '100000.0001'
         usedAmountCurrency:
           type: string
@@ -731,7 +755,8 @@ components:
           pattern: '^-?\d{1,15}\.\d{2,4}$'
           description: Valor utilizado do limite informado Expresso em valor monetário com 4 casas decimais.
           maxLength: 21
-          example: '7500.0500'
+          minLength: 4
+          example: '100000.0001'
         availableAmountCurrency:
           type: string
           maxLength: 3
@@ -746,8 +771,9 @@ components:
           pattern: '^-?\d{1,15}\.\d{2,4}$'
           description: Valor disponível do limite informado Expresso em valor monetário com 4 casas decimais.
           maxLength: 21
-          example: '2499.9500'
-      additionalProperties: false
+          minLength: 4
+          example: '100000.0001'
+      additionalProperties: true
     CreditCardsAccountPaymentMethod:
       type: object
       description: Conjunto de informações relativas aos Meios de Pagamento da Conta de pagamento pós-paga
@@ -760,14 +786,15 @@ components:
           description: |
             Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para pessoa natural, ou então, preencher com um identificador para pessoa jurídica, com as características definidas para os IDs no Open Banking.
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: '4453'
         isMultipleCreditCard:
           type: boolean
           description: |
             Indica se o Cartão de crédito associado à conta pagamento pós-paga é múltiplo ou não. Cartões denominados múltiplos possuem tanto a função crédito quanto a função débito, devendo o proprietário do cartão, no momento de sua utilização, informar se o pagamento é na função crédito (que leva a um pagamento futuro, por meio de uma fatura do cartão de crédito) ou na função débito.
           example: true
-      additionalProperties: false
+      additionalProperties: true
     CreditCardsBillTotalAmount:
       type: object
       required:
@@ -778,19 +805,43 @@ components:
         O campo deve assumir valor positivo para saldo devedor e negativo para saldo credor.
       properties:
         amount:
-          description: Valor total da faturas. Expresso em valor monetário com 4 casas decimais.
           type: string
+          format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
           minLength: 4
-          example: '100000.0400'
+          example: '1000.0400'
+          description: Valor total da faturas. Expresso em valor monetário com 4 casas decimais.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: false
+      additionalProperties: true
+    CreditCardAccountsBillMinimumAmount:
+      type: object
+      required:
+        - amount
+        - currency
+      description: |
+        Valor do pagamento minimo da fatura
+      properties:
+        amount:
+          type: string
+          format: double
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          minLength: 4
+          example: '1000.0400'
+          description: Valor do pagamento minimo da fatura
+        currency:
+          type: string
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          example: BRL
+      additionalProperties: true
     CreditCardAccountsTransaction:
       type: object
       description: Lista que traz os valores relativos aos saldos do Limite de crédito total da conta de pagamento pós-paga
@@ -799,7 +850,6 @@ components:
         - transactionName
         - creditDebitType
         - transactionType
-        - transactionalAdditionalInfo
         - paymentType
         - feeType
         - otherCreditsType
@@ -812,13 +862,15 @@ components:
         transactionId:
           type: string
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
           description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
         identificationNumber:
           type: string
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: '4453'
           description: |
             Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Banking.
@@ -831,7 +883,8 @@ components:
         billId:
           type: string
           maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
           example: MTU0OTU1NjI2NTk4OTRmc2ZhZDRmc2Q1NmZkM
           description: Informação que identifica a fatura onde consta a transação informada.
         creditDebitType:
@@ -901,13 +954,7 @@ components:
           example: 5137
           description: |
             O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
-      additionalProperties: false
-    CurrencyCode:
-      type: string
-      pattern: '^[A-Z]{3}$'
-      maxLength: 3
-      description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
-      example: BRL
+      additionalProperties: true
     EnumCreditCardAccountFee:
       type: string
       description: |
@@ -936,13 +983,24 @@ components:
          - Valor de pagamento da fatura com parcelamento
          - Valor pagamento da fatura realizado
          - Outro Valor pago na fatura
+
+         VALOR_PAGAMENTO_FATURA_PARCELADO: Quando o pagamento corresponde ao fato gerador para abertura do plano de parcelamento da fatura
+
+         VALOR_PAGAMENTO_FATURA_REALIZADO: Quando o pagamento corresponde ao valor total da fatura
+
+         OUTRO_VALOR_PAGO_FATURA: Demais casos
       enum:
         - VALOR_PAGAMENTO_FATURA_PARCELADO
         - VALOR_PAGAMENTO_FATURA_REALIZADO
         - OUTRO_VALOR_PAGO_FATURA
     EnumCreditCardAccountsConsolidationType:
       type: string
-      description: Indicador que permite informar se o valor do limite é consolidado ou individual.
+      description: |
+        Indicador que permite informar se o valor do limite é consolidado ou individual.
+
+        CONSOLIDADO: utilizado quando o limite da conta cartão é compartilhado entre todos os métodos de pagamento (paymentMethod) atrelados a conta.
+
+        INDIVIDUAL: Utilizado quando cada método de pagamento (paymentMethod) possui seu limite segregado.
       enum:
         - CONSOLIDADO
         - INDIVIDUAL
@@ -967,7 +1025,12 @@ components:
         - OUTROS
     EnumCreditCardAccountsLineLimitType:
       type: string
-      description: Indicador do tipo de limite
+      description: |
+        Indicador do tipo de limite
+
+        LIMITE_CREDITO_TOTAL: Limite de crédito total aplicado a conta cartão.
+
+        LIMITE_CREDITO_MODALIDADE_OPERACAO: Limite de crédito por modalidade desse conta cartão (observar lineName e listar os aplicáveis da instituição).
       enum:
         - LIMITE_CREDITO_TOTAL
         - LIMITE_CREDITO_MODALIDADE_OPERACAO
@@ -1177,7 +1240,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseCreditCardAccountsBills:
       type: object
       required:
@@ -1187,13 +1250,14 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/CreditCardAccountsBillsData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseCreditCardAccountsIdentification:
       type: object
       required:
@@ -1207,7 +1271,7 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseCreditCardAccountsLimits:
       type: object
       required:
@@ -1223,13 +1287,14 @@ components:
             Cenário de limite com valor zerado, deve ter um registro explícito informando o valor como zero.
 
             Cenário de "cartão sem limite", isto é, cartões em que o uso do limite é ilimitado, deve ser informado em um registro explícito com isLimitFlexible como true.
+          minItems: 0
           items:
             $ref: '#/components/schemas/CreditCardAccountsLimitsData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
+      additionalProperties: true
     ResponseCreditCardAccountsTransactions:
       type: object
       required:
@@ -1239,13 +1304,14 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/CreditCardAccountsTransaction'
         links:
           $ref: '#/components/schemas/TransactionsLinks'
         meta:
           $ref: '#/components/schemas/MetaOnlyRequestDateTime'
-      additionalProperties: false
+      additionalProperties: true
     ResponseErrorMetaSingle:
       type: object
       required:
@@ -1356,8 +1422,9 @@ components:
       in: query
       schema:
         type: number
-        maxLength: 4
+        maximum: 9999
         example: 8299
+        format: int32
     creditCardTransactionType:
       name: transactionType
       description: Traz os tipos de Transação
@@ -1415,6 +1482,14 @@ components:
         minimum: 1
         format: int32
         maximum: 1000
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
     toDueDate:
       name: toDueDate
       description: Data final de filtragem.
@@ -1563,6 +1638,12 @@ components:
             $ref: '#/components/schemas/ResponseErrorMetaSingle'
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
+    Locked:
+      description: Locked
       content:
         application/json; charset=utf-8:
           schema:

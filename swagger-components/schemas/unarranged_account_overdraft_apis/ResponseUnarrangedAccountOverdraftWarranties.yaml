@@ -6,12 +6,12 @@ required:
 properties:
   data:
     type: array
-    minItems: 1
+    minItems: 0
     description: Conjunto de informações referentes às garantias que avalizam a operação de crédito de adiantamento a depositantes
     items:
       $ref: ./UnarrangedAccountsOverdraftContractedWarranty.yaml
   links:
     $ref: ../Links.yaml
   meta:
-    $ref: ../Meta.yaml
-additionalProperties: false
+    $ref: ../MetaOnlyRequestDateTime.yaml
+additionalProperties: true

@@ -25,7 +25,6 @@ properties:
       - MES
       - ANO
       - SEM_PRAZO_REMANESCENTE
-    maxLength: 22
     description: |
       Tipo de prazo remanescente do contrato referente à modalidade de crédito informada.
   contractRemainingNumber:
@@ -55,6 +54,6 @@ properties:
     type: array
     items:
       $ref: ./LoansBalloonPayment.yaml
-    minItems: 0
+    minItems: 1
     description: "Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada"
-additionalProperties: false
+additionalProperties: true

@@ -47,9 +47,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: https://openbanking-brasil.github.io/areadesenvolvedor/
 servers:
-  - url: 'https://api.banco.com.br/open-banking/customers/v1'
+  - url: 'https://api.banco.com.br/open-banking/customers/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/customers/v1'
+  - url: 'https://apih.banco.com.br/open-banking/customers/v2'
     description: Servidor de Homologação
 tags:
   - name: Customers
@@ -68,6 +68,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponsePersonalCustomersIdentification'
@@ -83,6 +84,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -123,6 +126,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -163,6 +168,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -188,6 +195,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseBusinessCustomersIdentification'
@@ -203,6 +211,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -243,6 +253,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -283,6 +295,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -319,8 +333,6 @@ components:
       $ref: ./schemas/customers_apis/CustomerEmail.yaml
     CustomerPhone:
       $ref: ./schemas/customers_apis/CustomerPhone.yaml
-    CurrencyCode: 
-      $ref: ./schemas/business_commons/CurrencyCode.yaml
     BusinessPostalAddress:
       $ref: ./schemas/customers_apis/BusinessPostalAddress.yaml
     PersonalPostalAddress:
@@ -424,6 +436,8 @@ components:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
       $ref: ./parameters/XFapiInteractionId.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
   securitySchemes:
     OpenId:
       type: openIdConnect
@@ -504,6 +518,8 @@ components:
       $ref: ./responses/Forbidden.yaml
     InternalServerError:
       $ref: ./responses/InternalServerError.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     MethodNotAllowed:
       $ref: ./responses/MethodNotAllowed.yaml
     NotAcceptable:

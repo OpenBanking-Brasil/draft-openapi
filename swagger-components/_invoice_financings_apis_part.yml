@@ -45,9 +45,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/invoice-financings/v1'
+  - url: 'https://api.banco.com.br/open-banking/invoice-financings/v2'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/invoice-financings/v1'
+  - url: 'https://apih.banco.com.br/open-banking/invoice-financings/v2'
     description: Servidor de Homologação
 tags:
   - name: Invoice Financings
@@ -67,6 +67,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsContractList'
@@ -84,6 +85,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -127,6 +130,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -155,6 +160,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsWarranties'
@@ -172,6 +179,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -200,6 +209,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsInstalments'
@@ -217,6 +228,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -245,6 +258,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/pagination-key'
+
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsPayments'
@@ -262,6 +277,8 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -333,9 +350,9 @@ components:
     Links:
       $ref: ./schemas/Links.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponseInvoiceFinancingsContract:
       $ref: ./schemas/invoice_financings_apis/ResponseInvoiceFinancingsContract.yaml
     ResponseInvoiceFinancingsInstalments:
@@ -353,6 +370,8 @@ components:
       $ref: ./parameters/Authorization.yaml
     contractId:
       $ref: ./parameters/ContractId.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
     page:
       $ref: ./parameters/Page.yaml
     pageSize:
@@ -430,23 +449,25 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseInvoiceFinancingsPayments'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/unpaged/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/unpaged/InternalServerError.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+    Locked:
+      $ref: ./responses/Locked.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/unpaged/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/unpaged/TooManyRequests.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/unpaged/Unauthorized.yaml
     Default:
-      $ref: ./responses/Default.yaml
+      $ref: ./responses/unpaged/Default.yaml
 
