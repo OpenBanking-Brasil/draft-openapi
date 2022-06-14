@@ -90,6 +90,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -518,6 +520,8 @@ components:
       $ref: ./responses/Forbidden.yaml
     InternalServerError:
       $ref: ./responses/InternalServerError.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/SiteIsOverloaded.yaml
     Locked:
       $ref: ./responses/Locked.yaml
     MethodNotAllowed:
