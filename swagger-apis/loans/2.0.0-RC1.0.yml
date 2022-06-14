@@ -568,7 +568,6 @@ components:
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-      additionalProperties: false
     LoansBalloonPayment:
       type: object
       description: Lista que traz as datas de vencimento e valor das parcelas não regulares  do contrato da modalidade de crédito consultada.
@@ -586,7 +585,6 @@ components:
             'Data de vencimento da parcela não regular  a vencer do contrato da modalidade de crédito consultada, conforme especificação RFC-3339. p.ex. 2014-03-19'
         amount:
           $ref: '#/components/schemas/LoansBalloonPaymentAmount'
-      additionalProperties: true
     LoansContract:
       type: object
       description: Conjunto de informações referentes à identificação da operação de crédito de empréstimo
@@ -761,7 +759,6 @@ components:
           items:
             $ref: '#/components/schemas/LoansFinanceCharge'
           minItems: 0
-      additionalProperties: true
     LoansContractedFee:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -809,7 +806,6 @@ components:
 
             [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
           example: '0.062000'
-      additionalProperties: true
     LoansContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -874,7 +870,6 @@ components:
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
 
             [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
-      additionalProperties: true
     LoansChargeOverParcel:
       type: object
       required:
@@ -900,7 +895,6 @@ components:
           minLength: 4
           example: '1000.0400'
           description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com até 4 casas decimais.
-      additionalProperties: true
     LoansFinanceCharge:
       type: object
       description: Conjunto de informações referentes à identificação da operação de crédito
@@ -929,7 +923,6 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
           example: '0.070000'
-      additionalProperties: true
     LoansInstalments:
       type: object
       description: Conjunto de informações referentes ao prazo remanescente e às parcelas de uma operação de crédito de empréstimos
@@ -997,7 +990,6 @@ components:
             $ref: '#/components/schemas/LoansBalloonPayment'
           minItems: 1
           description: Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada
-      additionalProperties: true
     LoansListContract:
       type: object
       description: Conjunto de informações de contratos de empréstimo mantidos pelo cliente na instituição transmissora e para os quais ele tenha fornecido consentimento
@@ -1048,7 +1040,6 @@ components:
               2. Para clientes pessoa jurídica com CNPJ (tipo de cliente = 2), informar as 8 (oito) posições iniciais do CNPJ;
               3. Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
             - **Código do contrato:** 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
-      additionalProperties: true
     LoansPayments:
       type: object
       description: Conjunto de informações referentes aos pagamentos realizados de uma operação de crédito de empréstimos.
@@ -1076,7 +1067,6 @@ components:
           items:
             $ref: '#/components/schemas/LoansReleases'
           description: Lista dos pagamentos realizados no período
-      additionalProperties: true
     LoansReleases:
       type: object
       description: Lista dos pagamentos realizados no período
@@ -1152,8 +1142,6 @@ components:
               items:
                 $ref: '#/components/schemas/LoansChargeOverParcel'
               description: Lista dos encargos que foram pagos fora da parcela.
-          additionalProperties: true
-      additionalProperties: true
     LoansFeeOverParcel:
       type: object
       required:
@@ -1183,7 +1171,6 @@ components:
           example: '100000.0400'
           description: |
             Valor monetário da tarifa pactuada no contrato.
-      additionalProperties: true
     LoansWarranties:
       type: object
       description: Conjunto de informações referentes à identificação da operação de crédito de empréstimo
@@ -1212,7 +1199,6 @@ components:
           example: '1000.0400'
           description: |
             Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
-      additionalProperties: true
     LoansBalloonPaymentAmount:
       type: object
       required:
@@ -1234,7 +1220,6 @@ components:
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-      additionalProperties: true
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -1247,7 +1232,6 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-      additionalProperties: false
     ResponseError:
       type: object
       required:
@@ -1279,10 +1263,8 @@ components:
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
-            additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     ResponseLoansContractList:
       type: object
       required:
@@ -1300,7 +1282,6 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: true
     ResponseLoansContract:
       type: object
       required:
@@ -1314,7 +1295,6 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: true
     ResponseLoansInstalments:
       type: object
       required:
@@ -1328,7 +1308,6 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: true
     ResponseLoansPayments:
       type: object
       required:
@@ -1342,7 +1321,6 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: true
     ResponseLoansWarranties:
       type: object
       required:
@@ -1360,7 +1338,6 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: true
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
