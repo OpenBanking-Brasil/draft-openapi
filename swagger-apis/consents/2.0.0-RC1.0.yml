@@ -280,7 +280,6 @@ components:
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-      additionalProperties: false
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -305,7 +304,6 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-      additionalProperties: false
     CreateConsent:
       type: object
       required:
@@ -415,7 +413,6 @@ components:
           maxLength: 140
           pattern: '[\w\W\s]*'
           example: Tempo de confirmação da múltipla alçada excedido.
-      additionalProperties: true
     ResponseConsent:
       type: object
       required:
@@ -626,13 +623,10 @@ components:
                   $ref: '#/components/schemas/EnumRejectedBy'
                 reason:
                   $ref: '#/components/schemas/RejectedReason'
-              additionalProperties: true
-          additionalProperties: true
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: true
     ResponseError:
       type: object
       required:
@@ -666,7 +660,30 @@ components:
                 maxLength: 2048
             additionalProperties: false
         meta:
-          $ref: '#/components/schemas/Meta'
+          type: object
+          description: Meta informações referente à API requisitada.
+          required:
+            - totalRecords
+            - totalPages
+            - requestDateTime
+          properties:
+            totalRecords:
+              type: integer
+              format: int32
+              description: Número total de registros no resultado
+              example: 1
+            totalPages:
+              type: integer
+              format: int32
+              description: Número total de páginas no resultado
+              example: 1
+            requestDateTime:
+              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+          additionalProperties: false
       additionalProperties: false
     ResponseErrorMetaSingle:
       type: object
