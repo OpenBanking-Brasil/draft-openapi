@@ -141,6 +141,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'  
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:  
@@ -185,6 +187,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -228,6 +232,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'   
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -307,6 +313,8 @@ components:
       $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
     Unauthorized:
       $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/SiteIsOverloaded.yaml
     201ConsentsCreated:
       description: "Consentimento criado com sucesso."
       headers:
