@@ -2,7 +2,7 @@ type: object
 required:
   - amount
   - currency
-description: Valor monetário da parcela não regular a vencer.
+description: Valor monetário da parcela não regular a vencer. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
 properties:
   amount:
     type: string
@@ -11,4 +11,4 @@ properties:
     minLength: 4
     example: '100000.0400'
   currency:
-    $ref: CurrencyCode.yaml
+    $ref: ../business_commons/CurrencyCode.yaml
