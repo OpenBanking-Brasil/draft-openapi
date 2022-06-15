@@ -16,9 +16,9 @@ OUTRO";0;1;"";Não permitido;string;OUTRO
 /data/maritalStatusAdditionalInfo;maritalStatusAdditionalInfo;Campo livre para complementar a informação relativa ao estado marital.;Texto;50;Condicional;[\w\W\s]*;;0;1;" Preenchimento obrigatório quando selecionado o tipo 'OUTRO'.
 ";Não permitido;string;Amasiado
 /data/sex;sex;"Conjunto de características anatomofisiológicas que distinguem o homem e a mulher: Sexo masculino; sexo feminino. 
-No caso de não ser feminino nem masculino é classificado como 'OUTRO'";Texto;;Obrigatório;;"FEMININO 
+No caso de não ser feminino nem masculino é classificado como 'OUTRO'";Texto;;Opcional;;"FEMININO 
 MASCULINO 
-OUTRO";1;1;"";Não permitido;string;FEMININO
+OUTRO";0;1;"";Não permitido;string;FEMININO
 /data/companiesCnpj;companiesCnpj;"Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. 
 Deve-se ter apenas os números do CNPJ, sem máscara";Lista;14;Opcional;^\d{14}$;;0;N;"";Não permitido;array;
 /data/documents;documents;Objeto agrupador de informações relativas a Documentos da pessoa natural;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;
