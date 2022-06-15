@@ -648,7 +648,6 @@ components:
       required:
         - isMain
         - type
-        - countryCallingCode
         - areaCode
         - number
       properties:
@@ -667,9 +666,12 @@ components:
         countryCallingCode:
           type: string
           maxLength: 4
-          pattern: '^\d{2,4}$'
+          pattern: '^\d{1,4}$'
           example: '55'
-          description: Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Cliente - se houver
+          description: |
+            Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Cliente - se houver
+
+            [Restrição] O preenchimento é obrigatório quando for diferente de 55. 
         areaCode:
           $ref: '#/components/schemas/EnumAreaCode'
         number:
