@@ -14,7 +14,7 @@ properties:
     maxLength: 10
     example: "2020-01-10"
   taxAmount:
-    description: "Traz o valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com 4 casas decimais"
+    description: "Traz o valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais."
     type: string
     format: double
     pattern: '^-?\d{1,15}\.\d{2,4}$'
