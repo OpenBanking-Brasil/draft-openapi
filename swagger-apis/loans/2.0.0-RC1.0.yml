@@ -682,7 +682,7 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor contratado da operação. Expresso em valor monetário com até 4 casas decimais
+          description: Valor contratado da operação.  Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
         currency:
           type: string
           maxLength: 3
@@ -904,7 +904,7 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com até 4 casas decimais.
+          description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
     LoansFinanceCharge:
       type: object
       description: Conjunto de informações referentes à identificação da operação de crédito
@@ -1129,7 +1129,7 @@ components:
           example: '1000.0400'
           description: |
             Valor do pagamento referente ao  contrato da modalidade de crédito consultada.
-            Expresso em valor monetário com até 4 casas decimais.
+            Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
         overParcel:
           type: object
           description: |
@@ -1208,7 +1208,7 @@ components:
           minLength: 4
           example: '1000.0400'
           description: |
-            Valor original da garantia. Valor monetário, expresso com até 4 casas decimais.
+            Valor original da garantia. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
     LoansBalloonPaymentAmount:
       type: object
       required:
@@ -1223,7 +1223,7 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor monetário da parcela não regular a vencer. Expresso em valor monetário com 4 casas decimais.
+          description: Valor monetário da parcela não regular a vencer. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
         currency:
           type: string
           pattern: '^[A-Z]{3}$'
