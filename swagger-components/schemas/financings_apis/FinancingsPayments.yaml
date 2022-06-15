@@ -1,7 +1,6 @@
 type: object
 description: "Conjunto de informações referentes aos pagamentos realizados de uma operação de crédito de adiantamento a depositantes"
 required:
-  - paidInstalments
   - contractOutstandingBalance
   - releases
 properties:
@@ -9,7 +8,10 @@ properties:
     type: number
     maximum: 2147483647
     example: 73
-    description: Quantidade total de parcelas pagas do contrato referente à Modalidade de Crédito informada.
+    description: |
+      Quantidade total de parcelas pagas do contrato referente à Modalidade de Crédito informada.
+
+      [Restrição] Obrigatório para modalidades que possuam parcelas.
   contractOutstandingBalance:
     type: string
     format: double

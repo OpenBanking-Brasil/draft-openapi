@@ -1,8 +1,6 @@
 type: object
 description: "Conjunto de informações referentes às parcelas / prestações da operação de crédito de financiamentos contratada"
 required:
-  - dueInstalments
-  - pastDueInstalments
   - typeContractRemaining
   - typeNumberOfInstalments
   - paidInstalments
@@ -43,12 +41,18 @@ properties:
   dueInstalments:
     type: number
     maximum: 999
-    description: "Quantidade de prestações a vencer.(No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)"
+    description: |
+      Quantidade de prestações a vencer.
+
+      [Restrição] Obrigatório para modalidades que possuam parcelas.
     example: 57
   pastDueInstalments:
     type: number
     maximum: 999
-    description: "Quantidade de prestações vencidas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)"
+    description: |
+      Quantidade de prestações vencidas.
+
+      [Restrição] Obrigatório para modalidades que possuam parcelas.
     example: 73
   balloonPayments:
     type: array

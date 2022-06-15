@@ -909,8 +909,6 @@ components:
       type: object
       description: Conjunto de informações referentes às parcelas / prestações da operação de crédito de financiamentos contratada
       required:
-        - dueInstalments
-        - pastDueInstalments
         - typeContractRemaining
         - typeNumberOfInstalments
         - paidInstalments
@@ -959,12 +957,18 @@ components:
         dueInstalments:
           type: number
           maximum: 999
-          description: 'Quantidade de prestações a vencer.(No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)'
+          description: |
+            Quantidade de prestações a vencer.
+
+            [Restrição] Obrigatório para modalidades que possuam parcelas.
           example: 57
         pastDueInstalments:
           type: number
           maximum: 999
-          description: 'Quantidade de prestações vencidas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)'
+          description: |
+            Quantidade de prestações vencidas.
+
+            [Restrição] Obrigatório para modalidades que possuam parcelas.
           example: 73
         balloonPayments:
           type: array
@@ -1047,7 +1051,6 @@ components:
       type: object
       description: Conjunto de informações referentes aos pagamentos realizados de uma operação de crédito de adiantamento a depositantes
       required:
-        - paidInstalments
         - contractOutstandingBalance
         - releases
       properties:
@@ -1055,7 +1058,10 @@ components:
           type: number
           maximum: 2147483647
           example: 73
-          description: Quantidade total de parcelas pagas do contrato referente à Modalidade de Crédito informada.
+          description: |
+            Quantidade total de parcelas pagas do contrato referente à Modalidade de Crédito informada.
+
+            [Restrição] Obrigatório para modalidades que possuam parcelas.
         contractOutstandingBalance:
           type: string
           format: double
@@ -1129,10 +1135,8 @@ components:
       type: object
       description: Conjunto de informações referentes à identificação da operação de crédito de financiamento.
       required:
-        - currency
         - warrantyType
         - warrantySubType
-        - warrantyAmount
       properties:
         currency:
           type: string
