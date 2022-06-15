@@ -84,7 +84,7 @@ properties:
     maxLength: 20
     minLength: 4
     example: '1000.0400'
-    description: Valor contratado da operação. Expresso em valor monetário com até 4 casas decimais
+    description: Valor contratado da operação.  Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
   currency:
     type: string
     maxLength: 3
@@ -171,4 +171,4 @@ properties:
     items:
       $ref: ./LoansFinanceCharge.yaml
     minItems: 0
-additionalProperties: true
+

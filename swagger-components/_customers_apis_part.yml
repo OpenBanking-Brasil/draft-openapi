@@ -90,6 +90,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -132,6 +134,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -174,6 +178,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -217,6 +223,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -259,6 +267,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -301,6 +311,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -386,9 +398,9 @@ components:
     InformedPatrimonyAmount:
       $ref: ./schemas/customers_apis/InformedPatrimonyAmount.yaml
     Links:
-      $ref: ./schemas/Links.yaml
+      $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaWithAbleAdditionalProperties.yaml
     Nationality:
       $ref: ./schemas/customers_apis/Nationality.yaml
     NationalityOtherDocument:
@@ -416,7 +428,7 @@ components:
     ResponseBusinessCustomersQualification:
       $ref: ./schemas/customers_apis/ResponseBusinessCustomersQualification.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorWithAbleAdditionalProperties.yaml
     ResponsePersonalCustomersFinancialRelation:
       $ref: ./schemas/customers_apis/ResponsePersonalCustomersFinancialRelation.yaml
     ResponsePersonalCustomersIdentification:
@@ -513,22 +525,24 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseBusinessCustomersFinancialRelation'
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/withAdditionalProperties/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/withAdditionalProperties/SiteIsOverloaded.yaml
     Locked:
-      $ref: ./responses/Locked.yaml
+      $ref: ./responses/withAdditionalProperties/Locked.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/withAdditionalProperties/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
     Default:
-      $ref: ./responses/Default.yaml
+      $ref: ./responses/withAdditionalProperties/Default.yaml

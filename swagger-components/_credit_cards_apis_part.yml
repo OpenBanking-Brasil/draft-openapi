@@ -110,6 +110,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -155,6 +157,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -208,6 +212,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -263,6 +269,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -308,6 +316,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -362,6 +372,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -414,6 +426,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -473,9 +487,9 @@ components:
     EnumCreditDebitIndicator:
       $ref: ./schemas/enum/EnumCreditDebitIndicator.yaml
     Links:
-      $ref: ./schemas/Links.yaml
+      $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaWithAbleAdditionalProperties.yaml
     MetaOnlyRequestDateTime:
       $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseCreditCardAccountsList:
@@ -651,6 +665,8 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/SiteIsOverloaded.yaml
     Default:
       description: Erro inesperado. 
       content:

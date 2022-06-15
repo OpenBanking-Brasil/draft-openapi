@@ -77,6 +77,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
       security:
@@ -90,7 +92,7 @@ components:
     ResponseResourceList:
       $ref: ./schemas/resources_apis/ResponseResourceList.yaml
     Links:
-      $ref: ./schemas/Links.yaml
+      $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     Meta:
       $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     ResponseError:
@@ -147,7 +149,7 @@ components:
     MethodNotAllowed:
       $ref: ./responses/unpaged/MethodNotAllowed.yaml
     Locked:
-      $ref: ./responses/Locked.yaml
+      $ref: ./responses/withAdditionalProperties/Locked.yaml
     NotAcceptable:
       $ref: ./responses/unpaged/NotAcceptable.yaml
     NotFound:
@@ -156,5 +158,8 @@ components:
       $ref: ./responses/unpaged/TooManyRequests.yaml
     Unauthorized:
       $ref: ./responses/unpaged/Unauthorized.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/withAdditionalProperties/SiteIsOverloaded.yaml
     Default:
       $ref: ./responses/unpaged/Default.yaml
+

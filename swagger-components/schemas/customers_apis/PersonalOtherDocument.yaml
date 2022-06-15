@@ -14,7 +14,7 @@ properties:
     description: Campo livre de preenchimento obrigatório se selecionada a opção OUTROS tipos de documentos
   number:
     type: string
-    maxLength: 11
+    maxLength: 40
     pattern: '[\w\W\s]*'
     example: "15291908"
     description: Identificação/Número do documento informado
@@ -39,4 +39,3 @@ properties:
     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: '2021-05-21'
     description: 'Data de validade do documento informado, conforme especificação RFC-3339.'
-additionalProperties: true

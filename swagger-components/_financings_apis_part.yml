@@ -17,6 +17,9 @@ info:
     Além disso as `permissions` necessárias deverão ter sido solicitadas quando da criação do consentimento relacionado (`consentId`).\
     Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.
 
+    ### Observação
+      - No endpoint `/contracts/{contratId}/payments` a paginação correrá sob os dados contidos no campo `releases` do tipo lista.
+
     ## Permissions necessárias para a API Financings
 
     Para cada um dos paths desta API, além dos escopos (`scopes`) indicados existem `permissions` que deverão ser observadas:
@@ -92,6 +95,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -137,6 +142,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -186,6 +193,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -235,6 +244,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -284,6 +295,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -341,7 +354,7 @@ components:
     Meta:
       $ref: ./schemas/MetaOnlyRequestDateTime.yaml
     Links:
-      $ref: ./schemas/Links.yaml
+      $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     ResponseError:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     XFapiInteractionId:
@@ -452,3 +465,5 @@ components:
       $ref: ./responses/unpaged/UnprocessableEntity.yaml
     Default:
       $ref: ./responses/unpaged/Default.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/SiteIsOverloaded.yaml

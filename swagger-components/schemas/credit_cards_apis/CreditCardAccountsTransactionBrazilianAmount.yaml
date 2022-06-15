@@ -1,5 +1,5 @@
 type: object
-description: 'Valor da transação expresso em valor monetário com 4 casas decimais, em moeda corrente do Brasil'
+description: 'Valor da transação expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais, em moeda corrente do Brasil'
 required:
   - amount
   - currency
@@ -18,4 +18,3 @@ properties:
     maxLength: 3
     description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
     example: BRL
-additionalProperties: true

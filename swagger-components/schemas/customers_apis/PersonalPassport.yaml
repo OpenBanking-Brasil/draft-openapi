@@ -12,7 +12,7 @@ properties:
   number:
     type: string
     maxLength: 20
-    pattern: '\w*\W*'
+    pattern: '^[\w\W]*$'
     example: "75253468744594820620"
     description: |
       Número do Passaporte. 
@@ -39,4 +39,4 @@ properties:
     example: "2021-05-21"
     description: | 
       Data de emissão do passaporte, conforme especificação RFC-3339.
-additionalProperties: true
+
