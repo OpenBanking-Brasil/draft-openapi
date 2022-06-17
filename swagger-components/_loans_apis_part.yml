@@ -15,8 +15,11 @@ info:
     Os dados serão devolvidos na consulta desde que o `consentId` relacionado corresponda a um consentimento válido e com o status `AUTHORISED`.\
     É também necessário que o recurso em questão (conta, contrato, etc) esteja disponível na instituição transmissora (ou seja, sem boqueios de qualquer natureza e com todas as autorizações/consentimentos já autorizados).\
     Além disso as `permissions` necessárias deverão ter sido solicitadas quando da criação do consentimento relacionado (`consentId`).\
-    Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.
-
+    Relacionamos a seguir as `permissions` necessárias para a consulta de dados em cada `endpoint` da presente API.   
+    <br>
+    ### Observação:
+      - No endpoint `/contracts/{contratId}/payments` a paginação correrá sob os dados contidos no campo `releases` do tipo lista.   
+    <br>
     ## Permissions necessárias para a API Loans
 
     Para cada um dos paths desta API, além dos escopos (`scopes`) indicados existem `permissions` que deverão ser observadas:
@@ -91,6 +94,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -136,6 +141,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -184,6 +191,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -232,6 +241,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -280,6 +291,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
@@ -321,7 +334,7 @@ components:
     EnumWarrantyType:
       $ref: ./schemas/enum/EnumWarrantyType.yaml
     Links:
-      $ref: ./schemas/Links.yaml
+      $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     LoansBalloonPayment:
       $ref: ./schemas/loans_apis/LoansBalloonPayment.yaml
     LoansContract:
@@ -467,6 +480,8 @@ components:
       $ref: ./responses/unpaged/Unauthorized.yaml
     UnprocessableEntity:
       $ref: ./responses/unpaged/UnprocessableEntity.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/SiteIsOverloaded.yaml
     Default:
       $ref: ./responses/unpaged/Default.yaml
 

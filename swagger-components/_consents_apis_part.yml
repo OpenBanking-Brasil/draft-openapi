@@ -141,6 +141,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'  
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:  
@@ -185,6 +187,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -228,6 +232,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'   
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -240,9 +246,9 @@ paths:
 components:
   schemas:
     Links:
-      $ref: ./schemas/Links.yaml
+      $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     Meta:
-      $ref: ./schemas/Meta.yaml
+      $ref: ./schemas/MetaWithAbleAdditionalProperties.yaml
     CreateConsent:
       $ref: ./schemas/consents_apis/CreateConsent.yaml
     EnumRejectedBy:
@@ -256,7 +262,7 @@ components:
     ResponseConsentRead:
       $ref: ./schemas/consents_apis/ResponseConsentRead.yaml
     ResponseError:
-      $ref: ./schemas/ResponseError.yaml
+      $ref: ./schemas/ResponseErrorWithAbleAdditionalProperties.yaml
     ResponseErrorMetaSingle:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     LoggedUser:
@@ -286,27 +292,29 @@ components:
             consents: Criação do consentimento.
   responses:
     UnsupportedMediaType:
-      $ref: ./responses/UnsupportedMediaType.yaml
+      $ref: ./responses/withAdditionalProperties/UnsupportedMediaType.yaml
     BadRequest:
-      $ref: ./responses/BadRequest.yaml
+      $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/Forbidden.yaml
+      $ref: ./responses/withAdditionalProperties/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/InternalServerError.yaml
+      $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
     Locked:
-      $ref: ./responses/Locked.yaml
+      $ref: ./responses/withAdditionalProperties/Locked.yaml
     MethodNotAllowed:
-      $ref: ./responses/MethodNotAllowed.yaml
+      $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
     NotAcceptable:
-      $ref: ./responses/NotAcceptable.yaml
+      $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/NotFound.yaml
+      $ref: ./responses/withAdditionalProperties/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/TooManyRequests.yaml
+      $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
     UnprocessableEntity:
-      $ref: ./responses/UnprocessableEntity.yaml
+      $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
     Unauthorized:
-      $ref: ./responses/Unauthorized.yaml
+      $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/SiteIsOverloaded.yaml
     201ConsentsCreated:
       description: "Consentimento criado com sucesso."
       headers:

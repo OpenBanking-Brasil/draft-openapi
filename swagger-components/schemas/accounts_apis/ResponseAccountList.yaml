@@ -7,11 +7,10 @@ properties:
   data:
     type: array
     description: Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+    minItems: 0
     items:
       $ref: ./AccountData.yaml
-    minItems: 0
   links:
-    $ref: ../Links.yaml
+    $ref: ../LinksWithAbleAdditionalProperties.yaml
   meta:
-    $ref: ../Meta.yaml
-additionalProperties: true
+    $ref: ../MetaWithAbleAdditionalProperties.yaml

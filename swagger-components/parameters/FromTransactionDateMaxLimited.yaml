@@ -1,5 +1,8 @@
 name: fromTransactionDate
-description: Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
+description: |
+  Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
+  
+  [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
 required: false
 in: query
 schema:

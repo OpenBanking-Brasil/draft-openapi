@@ -8,7 +8,7 @@ properties:
   civilName:
     type: string
     maxLength: 70 
-    pattern: '\w*\W*'
+    pattern: '^[\w\W]*$'
     example: Marcelo Cláudio Fernandes
     description: |
       Nome civil completo da pessoa relativa à filiação.
@@ -17,9 +17,8 @@ properties:
   socialName:
     type: string
     maxLength: 70
-    pattern: '\w*\W*'
+    pattern: '^[\w\W]*$'
     description: |
       Nome social da pessoa natural, se houver. 
       (aquele pelo qual travestis e transexuais se reconhecem, 
       bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local).
-additionalProperties: true
