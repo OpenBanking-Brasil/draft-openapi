@@ -135,8 +135,6 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
-        '423':
-          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -181,8 +179,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
-        '423':
-          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -226,8 +222,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
-        '423':
-          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -299,8 +293,6 @@ components:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
     InternalServerError:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
-    Locked:
-      $ref: ./responses/withAdditionalProperties/Locked.yaml
     MethodNotAllowed:
       $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
     NotAcceptable:
