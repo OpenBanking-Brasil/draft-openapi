@@ -1582,6 +1582,8 @@ components:
         - updateDateTime
         - startDate
         - productsServicesType
+        - accounts
+        - procurators
       properties:
         updateDateTime:
           type: string
@@ -1624,7 +1626,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PersonalAccount'
-          minItems: 1
+          minItems: 0
           description: |
             Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora.
     PersonalIdentificationData:
@@ -1664,7 +1666,7 @@ components:
         civilName:
           type: string
           maxLength: 70
-          pattern: '[\w\W\s]*'
+          pattern: '^[\w\W]*$'
           example: Juan Kaique Cláudio Fernandes
           description: 'Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)'
         socialName:
