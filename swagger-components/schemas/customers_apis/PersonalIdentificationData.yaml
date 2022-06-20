@@ -9,6 +9,7 @@ required:
   - documents
   - hasBrazilianNationality
   - contacts
+  - companiesCnpj
 properties:
   updateDateTime:
     type: string
@@ -65,7 +66,7 @@ properties:
     $ref: ../enum/EnumSex.yaml
   companiesCnpj:
     type: array
-    minItems: 0
+    minItems: 1
     items:
       type: string
       pattern: '^\d{14}$'
