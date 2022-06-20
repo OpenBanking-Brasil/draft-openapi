@@ -54,7 +54,7 @@ info:
       - permissions:
         - GET: **CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ**
 
-  version: 2.0.0-RC1.0
+  version: 2.0.0
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -456,6 +456,12 @@ components:
       $ref: ./schemas/credit_cards_apis/CreditCardAccountsLimitsData.yaml
     CreditCardsAccountPaymentMethod:
       $ref: ./schemas/credit_cards_apis/CreditCardsAccountsPaymentMethod.yaml
+    CreditCardsLimitAmount:
+      $ref: ./schemas/credit_cards_apis/CreditCardsLimitAmount.yaml
+    CreditCardsUsedAmount:
+     $ref: ./schemas/credit_cards_apis/CreditCardsUsedAmount.yaml
+    CreditCardsAvailableAmount:
+     $ref: ./schemas/credit_cards_apis/CreditCardsAvailableAmount.yaml
     CreditCardsBillTotalAmount:
       $ref: ./schemas/credit_cards_apis/CreditCardsBillTotalAmount.yaml
     CreditCardAccountsBillMinimumAmount:

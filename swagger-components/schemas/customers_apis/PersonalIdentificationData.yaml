@@ -9,6 +9,7 @@ required:
   - documents
   - hasBrazilianNationality
   - contacts
+  - companiesCnpj
 properties:
   updateDateTime:
     type: string
@@ -20,7 +21,7 @@ properties:
       Data e hora da atualização dos campos \<_endpoint_\>, conforme especificação RFC-3339, formato UTC. Quando não existente uma data vinculada especificamente ao bloco, assumir a data e hora de atualização do cadastro como um todo.
   personalId:
     type: string
-    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,100}$'
+    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
     maxLength: 100
     minLength: 1
     description: Um identificador único e imutável usado para identificar o recurso cliente pessoa natural. Este identificador não tem significado para o cliente que deu o consentimento
@@ -65,7 +66,7 @@ properties:
     $ref: ../enum/EnumSex.yaml
   companiesCnpj:
     type: array
-    minItems: 0
+    minItems: 1
     items:
       type: string
       pattern: '^\d{14}$'
@@ -87,7 +88,10 @@ properties:
     example: false
     description: Informa se o Cliente tem nacionalidade brasileira.
   nationality:
-    $ref: ./Nationality.yaml
+    type: array
+    minItems: 1
+    items:
+      $ref: ./Nationality.yaml
   filiation:
     type: array
     minItems: 1
