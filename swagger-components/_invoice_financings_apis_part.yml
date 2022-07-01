@@ -363,9 +363,13 @@ components:
     Links:
       $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     Meta:
+      $ref: ./schemas/Meta.yaml
+    MetaSingle:
       $ref: ./schemas/MetaOnlyRequestDateTime.yaml
-    ResponseError:
+    ResponseErrorMetaSingle:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    ResponseError:
+      $ref: ./schemas/ResponseError.yaml
     ResponseInvoiceFinancingsContract:
       $ref: ./schemas/invoice_financings_apis/ResponseInvoiceFinancingsContract.yaml
     ResponseInvoiceFinancingsInstalments:
@@ -462,27 +466,27 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseInvoiceFinancingsPayments'
     BadRequest:
-      $ref: ./responses/unpaged/BadRequest.yaml
+      $ref: ./responses/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/unpaged/Forbidden.yaml
+      $ref: ./responses/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/unpaged/InternalServerError.yaml
+      $ref: ./responses/InternalServerError.yaml
     MethodNotAllowed:
-      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+      $ref: ./responses/MethodNotAllowed.yaml
     Locked:
       $ref: ./responses/Locked.yaml
     NotAcceptable:
-      $ref: ./responses/unpaged/NotAcceptable.yaml
+      $ref: ./responses/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/unpaged/NotFound.yaml
+      $ref: ./responses/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/unpaged/TooManyRequests.yaml
+      $ref: ./responses/TooManyRequests.yaml
     UnprocessableEntity:
-      $ref: ./responses/unpaged/UnprocessableEntity.yaml
+      $ref: ./responses/UnprocessableEntity.yaml
     Unauthorized:
-      $ref: ./responses/unpaged/Unauthorized.yaml
+      $ref: ./responses/Unauthorized.yaml
     SiteIsOverloaded:
       $ref: ./responses/SiteIsOverloaded.yaml
     Default:
-      $ref: ./responses/unpaged/Default.yaml
+      $ref: ./responses/Default.yaml
 
