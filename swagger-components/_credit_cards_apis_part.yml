@@ -644,7 +644,11 @@ components:
           schema:
             $ref: ./schemas/ResponseErrorMetaSingle.yaml
     Locked:
-      $ref: ./responses/Locked.yaml
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
