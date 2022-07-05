@@ -307,6 +307,8 @@ paths:
             - 'financings'
 components:
   schemas:
+    ResponseErrorWithAbleAdditionalProperties:
+      $ref: ./schemas/ResponseErrorWithAbleAdditionalProperties.yaml
     ResponseFinancingsContractList:
       $ref: ./schemas/financings_apis/ResponseFinancingsContractList.yaml
     ResponseFinancingsContract:
@@ -352,7 +354,7 @@ components:
     FinancingsWarranties:
       $ref: ./schemas/financings_apis/FinancingsWarranties.yaml
     Meta:
-      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
+      $ref: ./schemas/MetaWithAbleAdditionalProperties.yaml
     Links:
       $ref: ./schemas/LinksWithAbleAdditionalProperties.yaml
     ResponseError:
@@ -444,26 +446,26 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseFinancingsPayments'
     BadRequest:
-      $ref: ./responses/unpaged/BadRequest.yaml
+      $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     Forbidden:
-      $ref: ./responses/unpaged/Forbidden.yaml
+      $ref: ./responses/withAdditionalProperties/Forbidden.yaml
     InternalServerError:
-      $ref: ./responses/unpaged/InternalServerError.yaml
+      $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
     MethodNotAllowed:
-      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+      $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
     Locked:
-      $ref: ./responses/Locked.yaml 
+      $ref: ./responses/withAdditionalProperties/Locked.yaml 
     NotAcceptable:
-      $ref: ./responses/unpaged/NotAcceptable.yaml
+      $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
     NotFound:
-      $ref: ./responses/unpaged/NotFound.yaml
+      $ref: ./responses/withAdditionalProperties/NotFound.yaml
     TooManyRequests:
-      $ref: ./responses/unpaged/TooManyRequests.yaml
+      $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
     Unauthorized:
-      $ref: ./responses/unpaged/Unauthorized.yaml
+      $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
     UnprocessableEntity:
-      $ref: ./responses/unpaged/UnprocessableEntity.yaml
+      $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
     Default:
-      $ref: ./responses/unpaged/Default.yaml
+      $ref: ./responses/withAdditionalProperties/Default.yaml
     SiteIsOverloaded:
-      $ref: ./responses/SiteIsOverloaded.yaml
+      $ref: ./responses/withAdditionalProperties/SiteIsOverloaded.yaml
