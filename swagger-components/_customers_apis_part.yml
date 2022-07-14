@@ -68,6 +68,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
@@ -84,6 +86,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
           $ref: '#/components/responses/Locked'
         '429':
@@ -448,6 +452,10 @@ components:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
       $ref: ./parameters/XFapiInteractionId.yaml
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
     pagination-key:
       $ref: ./parameters/PaginationKey.yaml
   securitySchemes:
@@ -544,5 +552,7 @@ components:
       $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
     Unauthorized:
       $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
+    UnprocessableEntity:
+      $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
     Default:
       $ref: ./responses/withAdditionalProperties/Default.yaml
