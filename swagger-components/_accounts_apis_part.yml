@@ -97,6 +97,8 @@ paths:
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -144,6 +146,8 @@ paths:
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -189,6 +193,8 @@ paths:
           $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
         '529':
@@ -245,6 +251,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -299,6 +307,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -346,6 +356,8 @@ paths:
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -515,6 +527,8 @@ components:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
       $ref: ./responses/unpaged/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/unpaged/GatewayTimeout.yaml
     InternalServerError:
       $ref: ./responses/unpaged/InternalServerError.yaml
     Locked:
@@ -547,6 +561,8 @@ components:
       $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     ForbiddenWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+    GatewayTimeoutWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     InternalServerErrorWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
     LockedWithAdditionalProperties:

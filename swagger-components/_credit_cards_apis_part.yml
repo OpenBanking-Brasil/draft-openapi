@@ -109,7 +109,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -156,7 +158,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -211,7 +215,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -268,7 +274,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -315,7 +323,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
@@ -371,7 +381,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/InternalServerError'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -425,7 +437,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerError'
+          $ref: '#/components/responses/InternalServerError'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -643,6 +657,8 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    GatewayTimeout:
+      $ref: ./responses/unpaged/GatewayTimeout.yaml
     Locked:
       description: Locked
       content:
@@ -701,6 +717,8 @@ components:
       $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     ForbiddenWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+    GatewayTimeoutWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     InternalServerErrorWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
     LockedWithAdditionalProperties:

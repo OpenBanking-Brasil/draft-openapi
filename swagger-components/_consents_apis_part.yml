@@ -140,6 +140,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -184,6 +186,9 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+            
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -226,7 +231,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerError'   
+          $ref: '#/components/responses/InternalServerError'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'   
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -292,6 +299,8 @@ components:
       $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     Forbidden:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     InternalServerError:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
     MethodNotAllowed:

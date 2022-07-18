@@ -74,6 +74,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -143,6 +145,8 @@ components:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
     InternalServerError:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
+    GatewayTimeout:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     MethodNotAllowed:
       $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
     NotAcceptable:
