@@ -553,9 +553,9 @@ components:
         preFixedRate:
           type: string
           format: double
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^[01]\.\d{6}$'
+          pattern: '^\d{1,2}\.\d{6}$'
           example: '0.600000'
           description: |
             Taxa pré fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500.   
@@ -563,9 +563,9 @@ components:
         postFixedRate:
           type: string
           format: double
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^[01]\.\d{6}$'
+          pattern: '^\d{1,2}\.\d{6}$'
           example: '0.550000'
           description: |
             Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500.   
@@ -779,9 +779,9 @@ components:
         CET:
           type: string
           format: double
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^[01]\.\d{6}$'
+          pattern: '^\d{1,2}\.\d{6}$'
           example: '0.290000'
           description: |
             CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).   
@@ -822,7 +822,7 @@ components:
           type: array
           minItems: 0
           description: |
-            Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
+            Lista que traz as informações das tarifas pactuadas no contrato.
           items:
             $ref: '#/components/schemas/FinancingsContractFee'
         contractedFinanceCharges:
@@ -1153,7 +1153,9 @@ components:
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: WGx0aExYcEJMVm93TFRsZFcyRXRla0V0V2pBdE9Wd3RYWH
-          description: 'Identificador de parcela, de responsabilidade de cada Instituição transmissora.'
+          description: |
+            Identificador de parcela, de responsabilidade de cada Instituição transmissora.  
+            [Restrição] Informação de envio obrigatório quando isOverParcelPayment tiver o valor FALSE.
         paidDate:
           type: string
           format: date
