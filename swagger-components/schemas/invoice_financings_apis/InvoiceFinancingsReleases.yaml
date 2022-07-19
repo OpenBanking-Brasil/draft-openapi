@@ -2,7 +2,6 @@ type: object
 description: Lista dos pagamentos realizados no período
 required:
   - isOverParcelPayment
-  - instalmentId
   - paidDate
   - currency
   - paidAmount
@@ -22,7 +21,9 @@ properties:
     maxLength: 100
     pattern: '[\w\W\s]*'
     example: "15"
-    description: Identificador de parcela, de responsabilidade de cada Instituição transmissora.
+    description: |
+      Identificador de parcela, de responsabilidade de cada Instituição transmissora.  
+      [Restrição] Informação de envio obrigatório quando isOverParcelPayment tiver o valor FALSE.
   paidDate:
     type: string
     format: date
