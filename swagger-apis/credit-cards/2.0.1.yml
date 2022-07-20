@@ -900,7 +900,6 @@ components:
         - transactionName
         - creditDebitType
         - transactionType
-        - paymentType
         - chargeIdentificator
         - brazilianAmount
         - amount
@@ -1005,12 +1004,7 @@ components:
     EnumCreditCardAccountFee:
       type: string
       description: |
-        Traz os tipos de Tarifas: (Vide Enum)
-        Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA.   
-
-        Para transmissora: quando não for do tipo TARIFA, preenche com OUTRA.
-
-        Para recebedora: ignorar o campo preenchido conforme esse cenário.
+        Traz os tipos de Tarifas: (Vide Enum) Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA.
 
         [Restrição] Preenchimento obrigatório se Tipo de Transação selecionada for 'TARIFA'.
       enum:
@@ -1100,12 +1094,9 @@ components:
     EnumCreditCardAccountsOtherCreditType:
       type: string
       description: |
-        Traz outros tipos de crédito contratados no cartão.   
+        Traz outros tipos de crédito contratados no cartão.
+
         [Restrição] Preenchimento obrigatório se o tipo transação selecionado for 'OPERACOES_CREDITO_CONTRATADAS_CARTAO'.
-
-        Para transmissora: Quando não for do tipo OPERACOES_CREDITO_CONTRATADAS_CARTAO, preencher com OUTROS.
-
-        Para recebedora: Ignorar o campo preenchido conforme esse cenário.
       enum:
         - CREDITO_ROTATIVO
         - PARCELAMENTO_FATURA
@@ -1128,11 +1119,9 @@ components:
     EnumCreditCardAccountsPaymentType:
       type: string
       description: |
-        Traz os tipos de pagamento. Preenchimento obrigatório se selecionado tipo de transação PAGAMENTO.
+        Traz os tipos de pagamento.
 
-        Para transmissora: preencher com qualquer opção.
-
-        Para recebedora: ignorar o campo preenchido quando não for uma transação do tipo pagamento.
+        [Restrição] Preenchimento obrigatório se Tipo de Transação selecionada for 'PAGAMENTO'.
       enum:
         - A_VISTA
         - A_PRAZO

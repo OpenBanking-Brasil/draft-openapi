@@ -15,18 +15,10 @@ ESTORNO
 CASHBACK 
 OUTROS";1;1;"";Não permitido;string;CASHBACK
 /data/transactionalAdditionalInfo;transactionalAdditionalInfo;Campo livre, de preenchimento obrigatório quando selecionado tipo de transação OUTROS;Texto;140;Opcional;^\S[\s\S]*$;;0;1;"";Não permitido;string;
-/data/paymentType;paymentType;"Traz os tipos de pagamento. Preenchimento obrigatório se selecionado tipo de transação PAGAMENTO.
-
-Para transmissora: preencher com qualquer opção.
-
-Para recebedora: ignorar o campo preenchido quando não for uma transação do tipo pagamento.";Texto;;Obrigatório;;"A_VISTA 
-A_PRAZO";1;1;"";Não permitido;string;A_VISTA
-/data/feeType;feeType;"Traz os tipos de Tarifas: (Vide Enum)
-Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA.   
-
-Para transmissora: quando não for do tipo TARIFA, preenche com OUTRA.
-
-Para recebedora: ignorar o campo preenchido conforme esse cenário.";Texto;;Condicional;;"ANUIDADE 
+/data/paymentType;paymentType;Traz os tipos de pagamento.;Texto;;Condicional;;"A_VISTA 
+A_PRAZO";0;1;" Preenchimento obrigatório se Tipo de Transação selecionada for 'PAGAMENTO'.
+";Não permitido;string;A_VISTA
+/data/feeType;feeType;Traz os tipos de Tarifas: (Vide Enum) Anuidade, Saque com cartão no Brasil, Saque com cartão no exterior, Avaliação emergencial de crédito, Emissão segunda via, Tarifa pagamento de contas, SMS, OUTRA.;Texto;;Condicional;;"ANUIDADE 
 SAQUE_CARTAO_BRASIL 
 SAQUE_CARTAO_EXTERIOR 
 AVALIACAO_EMERGENCIAL_CREDITO 
@@ -40,10 +32,6 @@ OUTRA";0;1;" Preenchimento obrigatório se Tipo de Transação selecionada for '
 PARCELAMENTO_FATURA 
 EMPRESTIMO 
 OUTROS";0;1;" Preenchimento obrigatório se o tipo transação selecionado for 'OPERACOES_CREDITO_CONTRATADAS_CARTAO'.
-
-Para transmissora: Quando não for do tipo OPERACOES_CREDITO_CONTRATADAS_CARTAO, preencher com OUTROS.
-
-Para recebedora: Ignorar o campo preenchido conforme esse cenário.
 ";Não permitido;string;CREDITO_ROTATIVO
 /data/otherCreditsAdditionalInfo;otherCreditsAdditionalInfo;Campo livre para preenchimento de dados adicionais de outros tipos de crédito contratados no cartão.;Texto;50;Condicional;^\S[\s\S]*$;;0;1;" Preenchimento obrigatório quando selecionado no campo outros tipos de crédito ""OUTROS"".
 ";Não permitido;string;
