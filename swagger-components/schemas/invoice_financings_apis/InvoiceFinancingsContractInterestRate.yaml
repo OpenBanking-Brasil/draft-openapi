@@ -34,10 +34,10 @@ properties:
       Taxa pré fixada aplicada sob o contrato da modalidade crédito.   
       p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. 
       Este valor representa 15%. O valor 1 representa 100%).
-    maxLength: 8
+    maxLength: 9
     minLength: 8
     example: '0.600000'
-    pattern: '^[01]\.\d{6}$'
+    pattern: '^\d{1,2}\.\d{6}$'
   postFixedRate:
     type: string
     format: double
@@ -45,10 +45,10 @@ properties:
       Taxa pós fixada aplicada sob o contrato da modalidade crédito.   
       p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. 
       Este valor representa 15%. O valor 1 representa 100%).
-    maxLength: 8
+    maxLength: 9
     minLength: 8
     example: '0.550000'
-    pattern: '^[01]\.\d{6}$'
+    pattern: '^\d{1,2}\.\d{6}$'
   additionalInfo:
     type: string
     maxLength: 1200

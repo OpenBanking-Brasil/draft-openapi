@@ -38,7 +38,7 @@ info:
     ### `/business/financial-relations`
       - permissions:
         - GET: **CUSTOMERS_BUSINESS_ADITTIONALINFO_READ**
-  version: 2.0.0
+  version: 2.0.1
   license:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0
@@ -68,6 +68,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
@@ -84,12 +86,16 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
           $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -134,6 +140,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -178,6 +186,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -201,6 +211,8 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
@@ -217,12 +229,16 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
           $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -267,6 +283,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -311,6 +329,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -448,6 +468,10 @@ components:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
       $ref: ./parameters/XFapiInteractionId.yaml
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
     pagination-key:
       $ref: ./parameters/PaginationKey.yaml
   securitySchemes:
@@ -528,6 +552,8 @@ components:
       $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     Forbidden:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     InternalServerError:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
     SiteIsOverloaded:
@@ -544,5 +570,7 @@ components:
       $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
     Unauthorized:
       $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
+    UnprocessableEntity:
+      $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
     Default:
       $ref: ./responses/withAdditionalProperties/Default.yaml

@@ -122,9 +122,9 @@ properties:
       Informação deve ser enviada caso ela exista.
   CET:
     type: string
-    pattern: '^[01]\.\d{6}$'
+    pattern: '^\d{1,2}\.\d{6}$'
     format: double
-    maxLength: 8
+    maxLength: 9
     minLength: 8
     example: '0.290000'
     description: |
@@ -154,13 +154,14 @@ properties:
   interestRates:
     type: array
     description: |
-      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
+      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.  
+      Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita.
     items:
       $ref: ./LoansFinancingsContractInterestRate.yaml
     minItems: 0
   contractedFees:
     type: array
-    description: Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
+    description: Lista que traz as informações das tarifas pactuadas no contrato.
     items:
       $ref: ./LoansFinancingsContractedFee.yaml
     minItems: 0

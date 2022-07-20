@@ -39,7 +39,7 @@ info:
     ### `/contracts/{contractId}/payments`
       - permissions:
         - GET: **INVOICE_FINANCINGS_PAYMENTS_READ**
-  version: 2.0.0
+  version: 2.0.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -94,6 +94,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -141,6 +143,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -192,6 +196,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -243,6 +249,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -294,6 +302,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         'default':
@@ -475,6 +485,8 @@ components:
       $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
     Locked:
       $ref: ./responses/withAdditionalProperties/Locked.yaml
+    GatewayTimeout:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     NotAcceptable:
       $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
     NotFound:

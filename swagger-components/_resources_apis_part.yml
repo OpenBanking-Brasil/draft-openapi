@@ -24,7 +24,7 @@ info:
     ### `/resources`
       - permissions:
         - GET: **RESOURCES_READ**
-  version: 2.0.0
+  version: 2.0.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -55,7 +55,6 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
-        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseResourceList'
@@ -71,12 +70,12 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
-        '423':
-          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -108,8 +107,6 @@ components:
       $ref: ./parameters/Page.yaml
     pageSize:
       $ref: ./parameters/PageSize.yaml
-    pagination-key:
-      $ref: ./parameters/PaginationKey.yaml
     xCustomerUserAgent:
       $ref: ./parameters/XCustomerUserAgent.yaml
     xFapiAuthDate:
@@ -148,10 +145,10 @@ components:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
     InternalServerError:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
+    GatewayTimeout:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     MethodNotAllowed:
       $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
-    Locked:
-      $ref: ./responses/withAdditionalProperties/Locked.yaml
     NotAcceptable:
       $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
     NotFound:

@@ -11,6 +11,7 @@ info:
     - Na chamada para a criação do consentimento deve-se utilizar um token gerado via `client_credentials`.
     - Após o `POST` de criação do consentimento, o `STATUS` devolvido na resposta deverá ser `AWAITING_AUTHORISATION`.
     - O `STATUS` será alterado para `AUTHORISED` somente após autenticação e confirmação por parte do usuário na instituição transmissora dos dados.
+    - Alteração obrigatória do status `AWAITING_AUTHORISATION` para `REVOKED` após 60 minutos.
     - Todas as datas trafegadas nesta API seguem o padrão da [RFC3339](https://tools.ietf.org/html/rfc3339) e formato "zulu".
     - A descrição do fluxo de consentimento encontra-se disponível no [Portal do desenvolvedor](https://openbanking-brasil.github.io/areadesenvolvedor/#em-revisao-fluxo-de-consentimento).
     - O arquivo com o mapeamento completo entre `Roles`, `scopes` e `permissions` está disponibilizado no Portal do desenvolvedor, no mesmo item acima - descrição do fluxo de consentimento.
@@ -79,7 +80,7 @@ info:
     - A instituição transmissora deve validar o preenchimento correto desses agrupamentos no momento da geração do consentimento.
     - Caso a instiuição receptora envie permissões divergentes ao agrupamento especificado na tabela, a transmissora deve rejeitar o pedido da receptora dando retorno HTTP Status Code 400.
     - A transmissora deve retornar, da lista de permissions requisitadas, apenas o subconjunto de permissions por ela suportada, removendo da lista as permissions de produtos não suportados e retornando HTTP Status Code 201. Caso não restem permissões funcionais, a instituição transmissora deve retornar o erro HTTP Code "422 Unprocessable Entity".
-  version: 2.0.0
+  version: 2.0.1
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0
@@ -139,6 +140,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -183,6 +186,9 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+            
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -225,7 +231,9 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerError'   
+          $ref: '#/components/responses/InternalServerError'  
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'   
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -291,6 +299,8 @@ components:
       $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     Forbidden:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     InternalServerError:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
     MethodNotAllowed:

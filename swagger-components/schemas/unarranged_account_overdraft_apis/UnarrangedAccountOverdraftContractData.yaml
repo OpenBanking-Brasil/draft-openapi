@@ -122,13 +122,13 @@ properties:
       Data de vencimento primeira parcela do principal
   CET:
     type: string
-    pattern: '^[01]\.\d{6}$'
+    pattern: '^\d{1,2}\.\d{6}$'
     format: double
     description: |
       CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas). 
       
       O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. sEste valor representa 15%. O valor 1 representa 100%).
-    maxLength: 8
+    maxLength: 9
     minLength: 8
     example: '0.290000'
   amortizationScheduled:
@@ -146,13 +146,14 @@ properties:
     items:
       $ref: ./UnarrangedAccountOverdraftContractInterestRate.yaml
     description: |
-      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.
+      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.  
+      Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita.
   contractedFees:
     type: array
     minItems: 0
     items:
       $ref: ./UnarrangedAccountOverdraftContractedFee.yaml
-    description: Lista que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
+    description: Lista que traz as informações das tarifas pactuadas no contrato.
   contractedFinanceCharges:
     type: array
     minItems: 0
