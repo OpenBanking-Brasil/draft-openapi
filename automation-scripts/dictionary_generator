@@ -32,7 +32,8 @@ headers = {
   'COLUMN_11' => 'Restrições',
   'COLUMN_12' => 'Nulidade',
   'COLUMN_13' => 'Tipo de Dado Json',
-  'COLUMN_14' => 'Exemplo'
+  'COLUMN_14' => 'Exemplo',
+  'COLUMN_15' => 'Tamanho mínimo'
 }
 
 def format_type(type)
@@ -180,7 +181,8 @@ oas['paths'].each_with_index do |(path, methods)|
           headers['COLUMN_11']  => restriction,
           headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
           headers['COLUMN_13']  => field['type'],
-          headers['COLUMN_14']  => field['example']
+          headers['COLUMN_14']  => field['example'],
+          headers['COLUMN_15']  => field['minLength']
         }
         rows.push row
       end
