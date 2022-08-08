@@ -1,11 +1,14 @@
 type: object
 description: Objeto contendo dados do pagamento e do recebedor (creditor).
 required:
+  - endToEndId
   - localInstrument
   - payment
   - creditorAccount
   - cnpjInitiator
 properties:
+  endToEndId:
+    $ref: ../business_commons/EndToEndId.yaml
   localInstrument:
     $ref: ./EnumLocalInstrument.yaml
   payment:
