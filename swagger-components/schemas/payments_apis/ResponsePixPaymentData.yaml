@@ -10,6 +10,7 @@ required:
   - payment
   - creditorAccount
   - cnpjInitiator
+  - debtorAccount
 properties:
   paymentId:
     type: string
@@ -119,4 +120,6 @@ properties:
       Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
   creditorAccount:
     $ref: ../business_commons/CreditorAccount.yaml
+  debtorAccount:
+    $ref: ../business_commons/DebtorAccount.yaml
 additionalProperties: false
