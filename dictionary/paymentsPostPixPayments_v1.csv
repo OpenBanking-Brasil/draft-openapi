@@ -149,7 +149,7 @@ Todos os valores monetários informados estão representados com a moeda vigente
 Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
 - Letras minúsculas, de ‘a’ a ‘z’
 - Letras maiúsculas, de ‘A’ a ‘z’
-- Dígitos decimais, de ‘0’ a ‘9’";Texto;25;Condicional;^[a-zA-Z0-9][a-zA-Z0-9]{0,24}$;;0;1;" Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
+- Dígitos decimais, de ‘0’ a ‘9’";Texto;35;Condicional;^[a-zA-Z0-9][a-zA-Z0-9]{0,24}$;;0;1;" Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
 Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
 A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
 ";Não permitido;string;E00038166201907261559y6j6;
