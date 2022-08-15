@@ -18,7 +18,7 @@ properties:
         title:
           type: string
           maxLength: 255
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           example: Forma de pagamento inválida.
           description: |
             Título específico do erro reportado, de acordo com o código enviado:  
@@ -29,7 +29,7 @@ properties:
         detail:
           type: string
           maxLength: 2048
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           example: Meio de pagamento inválido.
           description: |
             Descrição específica do erro de acordo com o código reportado:  

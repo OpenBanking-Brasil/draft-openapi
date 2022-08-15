@@ -18,7 +18,7 @@ properties:
         title:
           type: string
           maxLength: 255
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           example: Saldo insuficiente.
           description: |
             Título específico do erro reportado, de acordo com o código enviado:
@@ -49,7 +49,7 @@ properties:
         detail:
           type: string
           maxLength: 2048
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           example: A conta selecionada não possui saldo suficiente para realizar o pagamento.
           description: |
             Descrição específica do erro de acordo com o código reportado:

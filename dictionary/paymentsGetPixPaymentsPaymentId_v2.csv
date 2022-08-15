@@ -8,7 +8,7 @@ Este é o identificador que deverá ser utilizado na consulta ao status da inici
 • xxxxxxxx – identificação do agente que gerou o ´EndToEndId´, podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos";Texto;32;Condicional;^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$;;0;1;" O ´EndToEndId´ deve ser informado obrigatoriamente caso o status do pagamento seja ACCEPTED_SETTLEMENT_COMPLETED.
 ";Não permitido;string;E9040088820210128000800123873170;32
 /data/consentId;consentId;"Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
-Um URN, conforme definido na";Texto;256;Obrigatório;"^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;1;1;"";Não permitido;string;urn:bancoex:C1DD33123;
+Um URN, conforme definido na";Texto;256;Obrigatório;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;1;1;"";Não permitido;string;urn:bancoex:C1DD33123;
 /data/creationDateTime;creationDateTime;"Data e hora em que o recurso foi criado.
 Uma string com data e hora conforme especificação RFC-3339,
 sempre com a utilização de timezone UTC(UTC time format).";Date Hora;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
@@ -148,7 +148,7 @@ Todos os valores monetários informados estão representados com a moeda vigente
 Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
 - Letras minúsculas, de ‘a’ a ‘z’
 - Letras maiúsculas, de ‘A’ a ‘z’
-- Dígitos decimais, de ‘0’ a ‘9’";Texto;35;Condicional;^[a-zA-Z0-9][a-zA-Z0-9]{0,24}$;;0;1;" Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
+- Dígitos decimais, de ‘0’ a ‘9’";Texto;35;Condicional;^[a-zA-Z0-9]{1,35}$;;0;1;" Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
 Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
 A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
 ";Não permitido;string;E00038166201907261559y6j6;
