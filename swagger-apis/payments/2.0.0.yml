@@ -450,7 +450,6 @@ components:
         - payment
         - creditorAccount
         - cnpjInitiator
-        - debtorAccount
       properties:
         endToEndId:
           $ref: '#/components/schemas/EndToEndIdWithoutRestriction'
@@ -545,8 +544,6 @@ components:
             O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
 
             1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
-        debtorAccount:
-          $ref: '#/components/schemas/DebtorAccount'
     CreditorAccount:
       type: object
       description: |
