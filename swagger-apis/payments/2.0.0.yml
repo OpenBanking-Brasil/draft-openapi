@@ -298,10 +298,8 @@ components:
                   • DATA_PGTO_INVALIDA – Data de pagamento inválida no contexto, por exemplo, data no passado. Para pagamentos únicos deve ser informada a data atual, do dia corrente.  
                   • DETALHE_PGTO_INVALIDO: O campo [nome_campo] não atende os requisitos de preenchimento.  
                   • NAO_INFORMADO – Não reportado/identificado pela instituição detentora de conta.  
-            additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     422ResponseErrorCreatePixPayment:
       type: object
       required:
@@ -382,20 +380,16 @@ components:
                   • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
 
                   • PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-            additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     BusinessEntity:
       type: object
       description: 'Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).'
-      additionalProperties: false
       required:
         - document
       properties:
         document:
           type: object
-          additionalProperties: false
           required:
             - identification
             - rel
@@ -435,8 +429,6 @@ components:
               $ref: '#/components/schemas/PaymentConsent'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
-          additionalProperties: false
-      additionalProperties: false
     CreatePixPayment:
       type: object
       required:
@@ -444,7 +436,6 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/CreatePixPaymentData'
-      additionalProperties: false
     CreatePixPaymentData:
       type: object
       description: Objeto contendo dados do pagamento e do recebedor (creditor).
@@ -537,7 +528,6 @@ components:
             [Restrição] Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
             Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
             A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
-          additionalProperties: false
         ibgeTownCode:
           type: string
           minLength: 7
@@ -586,7 +576,6 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountPaymentsType'
-      additionalProperties: false
     DebtorAccount:
       type: object
       description: |
@@ -626,7 +615,6 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountPaymentsType'
-      additionalProperties: false
     Details:
       type: object
       description: |
@@ -672,7 +660,6 @@ components:
             Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
         creditorAccount:
           $ref: '#/components/schemas/CreditorAccount'
-      additionalProperties: false
     EndToEndId:
       type: string
       minLength: 32
@@ -966,17 +953,14 @@ components:
           description: |
             Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
             Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
-      additionalProperties: false
     LoggedUser:
       type: object
       description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
-      additionalProperties: false
       required:
         - document
       properties:
         document:
           type: object
-          additionalProperties: false
           required:
             - identification
             - rel
@@ -1005,7 +989,6 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-      additionalProperties: false
     PaymentConsent:
       type: object
       description: Objeto contendo dados de pagamento para consentimento.
@@ -1053,7 +1036,6 @@ components:
             1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         details:
           $ref: '#/components/schemas/Details'
-      additionalProperties: false
     PaymentPix:
       type: object
       description: Objeto contendo dados do pagameto como moeda e valor.
@@ -1077,7 +1059,6 @@ components:
           description: |
             Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.  
             Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
-      additionalProperties: false
     ResponseError:
       type: object
       required:
@@ -1194,12 +1175,10 @@ components:
               $ref: '#/components/schemas/PaymentConsent'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
-          additionalProperties: false
         links:
           $ref: '#/components/schemas/ResponsePixPayment/properties/links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     ResponsePixPayment:
       type: object
       required:
@@ -1222,10 +1201,8 @@ components:
               description: URI completo que gerou a resposta atual.
               example: 'https://api.banco.com.br/open-banking/api/v1/resource'
               pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-          additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     ResponsePixPaymentData:
       type: object
       description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
@@ -1351,7 +1328,6 @@ components:
           $ref: '#/components/schemas/CreditorAccount'
         debtorAccount:
           $ref: '#/components/schemas/DebtorAccount'
-      additionalProperties: false
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
