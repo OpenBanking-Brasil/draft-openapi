@@ -108,9 +108,15 @@ properties:
       - Letras maiúsculas, de ‘A’ a ‘z’
       - Dígitos decimais, de ‘0’ a ‘9’
 
-      [Restrição] Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
-      Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
-      A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
+      [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
+
+      – MANU - O campo transactionIdentification não deve ser preenchido.  
+      – DICT - O campo transactionIdentification não deve ser preenchido.  
+      – INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+      – QRES - Caso o QR Code estático possua o dado <TxId> preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o <TxId> o campo transactionIdentification não deverá ser preenchido. O <TxId> deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+      – QRDN - Será obrigatório seu preenchimento com o <TxId> do payload JSON do QR Code dinâmico. O <TxId> deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+
+      A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.  
   remittanceInformation:
     type: string
     maxLength: 140
