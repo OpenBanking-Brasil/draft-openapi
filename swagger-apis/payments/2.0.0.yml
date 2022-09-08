@@ -1309,21 +1309,9 @@ components:
           maxLength: 35
           example: E00038166201907261559y6j6
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador.
-            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
-            - Letras minúsculas, de ‘a’ a ‘z’
-            - Letras maiúsculas, de ‘A’ a ‘z’
-            - Dígitos decimais, de ‘0’ a ‘9’
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento.
 
-            [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
-
-            – MANU - O campo transactionIdentification não deve ser preenchido.  
-            – DICT - O campo transactionIdentification não deve ser preenchido.  
-            – INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
-            – QRES - Caso o QR Code estático possua o dado <i><<i/>TxId<i>><i/> preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o <i><<i/>TxId<i>><i/> o campo transactionIdentification não deverá ser preenchido. O <i><<i/>TxId<i>><i/> deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
-            – QRDN - Será obrigatório seu preenchimento com o <i><<i/>TxId<i>><i/> do payload JSON do QR Code dinâmico. O <i><<i/>TxId<i>><i/> deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-
-            A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.  
+            [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora, caso ele tenha sido enviado na requisição da iniciação do pagamento.
         remittanceInformation:
           type: string
           maxLength: 140
