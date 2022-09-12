@@ -6,7 +6,6 @@ required:
   - payment
   - creditorAccount
   - cnpjInitiator
-  - debtorAccount
 properties:
   endToEndId:
     $ref: ../business_commons/EndToEndIdWithoutRestriction.yaml
@@ -72,10 +71,15 @@ properties:
       - Letras maiúsculas, de ‘A’ a ‘z’
       - Dígitos decimais, de ‘0’ a ‘9’
 
-      [Restrição] Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
-      Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
-      A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
-    additionalProperties: false
+      [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
+
+      – MANU - O campo transactionIdentification não deve ser preenchido.  
+      – DICT - O campo transactionIdentification não deve ser preenchido.  
+      – INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+      – QRES - Caso o QR Code estático possua o dado <i><<i/>TxId<i>><i/> preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o <i><<i/>TxId<i>><i/> o campo transactionIdentification não deverá ser preenchido. O <i><<i/>TxId<i>><i/> deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+      – QRDN - Será obrigatório seu preenchimento com o <i><<i/>TxId<i>><i/> do payload JSON do QR Code dinâmico. O <i><<i/>TxId<i>><i/> deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+
+      A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.  
   ibgeTownCode:
     type: string
     minLength: 7
@@ -86,5 +90,3 @@ properties:
       O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
       
       1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
-  debtorAccount:
-    $ref: ../business_commons/DebtorAccount.yaml

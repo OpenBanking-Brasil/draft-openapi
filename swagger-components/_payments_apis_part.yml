@@ -7,11 +7,14 @@ info:
 
     # Orientações
     No diretório de participantes duas `Roles` estão relacionadas à presente API:
-    - `CONTA`, referente às instituições detentoras de conta participantes do Open Banking Brasil;
-    - `PAGTO`, referente às instituições iniciadoras de transação de pagamento de conta participantes do Open Banking Brasil.
-    Os tokens utilizados para consumo dos `endpoints` desta API devem possuir os `scopes` `openid` e `payments`.
-    Esta API não requer a implementação de `permissions` para sua utilização.
-    Todas as requisições e respostas devem ser assinadas seguindo o protocolo estabelecido na sessão <a href="https://openbanking-brasil.github.io/areadesenvolvedor/#assinaturas" target="_blank">Assinaturas</a> do guia de segurança.
+    - `CONTA`, referente às instituições detentoras de conta participantes do Open Finance Brasil;
+    - `PAGTO`, referente às instituições iniciadoras de transação de pagamento de conta participantes do Open Finance Brasil. 
+    Os tokens utilizados para consumo nos endpoints de consentimentos devem possuir o scope `payments` e os `endpoints` de pagamentos devem possuir os `scopes`, `openid` e `payments`. 
+    Esta API não requer a implementação de `permissions` para sua utilização. Todas as requisições e respostas devem ser assinadas seguindo o protocolo estabelecido na sessão <a href="https://openbanking-brasil.github.io/areadesenvolvedor/#assinaturas" target="_blank">Assinaturas</a> do guia de segurança.
+
+    ## Regras do arranjo Pix
+    A implementação e o uso da API de Pagamentos Pix devem seguir as regras do arranjo Pix do Banco Central, que podem ser encontradas no link abaixo:   
+    [https://www.bcb.gov.br/estabilidadefinanceira/pix?modalAberto=regulamentacao_pix](https://www.bcb.gov.br/estabilidadefinanceira/pix?modalAberto=regulamentacao_pix)
 
     ## Assinatura de payloads
 
@@ -96,9 +99,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseError"
       security:
-        - OpenId:
-            - openid
-          OAuth2ClientCredentials:
+        - OAuth2ClientCredentials:
             - payments
   /consents/{consentId}:
     get:
@@ -194,6 +195,7 @@ paths:
                 $ref: "#/components/schemas/ResponseError"
       security:
         - OAuth2AuthorizationCode:
+            - openid
             - "consent:consentId"
             - payments
   /pix/payments/{paymentId}:
@@ -237,6 +239,7 @@ paths:
                 $ref: "#/components/schemas/ResponseError"
       security:
         - OAuth2AuthorizationCode:
+            - openid
             - payments
         - OAuth2ClientCredentials:
             - payments

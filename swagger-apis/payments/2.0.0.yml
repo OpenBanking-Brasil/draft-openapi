@@ -7,11 +7,14 @@ info:
 
     # Orientações
     No diretório de participantes duas `Roles` estão relacionadas à presente API:
-    - `CONTA`, referente às instituições detentoras de conta participantes do Open Banking Brasil;
-    - `PAGTO`, referente às instituições iniciadoras de transação de pagamento de conta participantes do Open Banking Brasil.
-    Os tokens utilizados para consumo dos `endpoints` desta API devem possuir os `scopes` `openid` e `payments`.
-    Esta API não requer a implementação de `permissions` para sua utilização.
-    Todas as requisições e respostas devem ser assinadas seguindo o protocolo estabelecido na sessão <a href="https://openbanking-brasil.github.io/areadesenvolvedor/#assinaturas" target="_blank">Assinaturas</a> do guia de segurança.
+    - `CONTA`, referente às instituições detentoras de conta participantes do Open Finance Brasil;
+    - `PAGTO`, referente às instituições iniciadoras de transação de pagamento de conta participantes do Open Finance Brasil. 
+    Os tokens utilizados para consumo nos endpoints de consentimentos devem possuir o scope `payments` e os `endpoints` de pagamentos devem possuir os `scopes`, `openid` e `payments`. 
+    Esta API não requer a implementação de `permissions` para sua utilização. Todas as requisições e respostas devem ser assinadas seguindo o protocolo estabelecido na sessão <a href="https://openbanking-brasil.github.io/areadesenvolvedor/#assinaturas" target="_blank">Assinaturas</a> do guia de segurança.
+
+    ## Regras do arranjo Pix
+    A implementação e o uso da API de Pagamentos Pix devem seguir as regras do arranjo Pix do Banco Central, que podem ser encontradas no link abaixo:   
+    [https://www.bcb.gov.br/estabilidadefinanceira/pix?modalAberto=regulamentacao_pix](https://www.bcb.gov.br/estabilidadefinanceira/pix?modalAberto=regulamentacao_pix)
 
     ## Assinatura de payloads
 
@@ -95,9 +98,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResponseError'
       security:
-        - OpenId:
-            - openid
-          OAuth2ClientCredentials:
+        - OAuth2ClientCredentials:
             - payments
   '/consents/{consentId}':
     get:
@@ -193,6 +194,7 @@ paths:
                 $ref: '#/components/schemas/ResponseError'
       security:
         - OAuth2AuthorizationCode:
+            - openid
             - 'consent:consentId'
             - payments
   '/pix/payments/{paymentId}':
@@ -236,6 +238,7 @@ paths:
                 $ref: '#/components/schemas/ResponseError'
       security:
         - OAuth2AuthorizationCode:
+            - openid
             - payments
         - OAuth2ClientCredentials:
             - payments
@@ -294,10 +297,8 @@ components:
                   • DATA_PGTO_INVALIDA – Data de pagamento inválida no contexto, por exemplo, data no passado. Para pagamentos únicos deve ser informada a data atual, do dia corrente.  
                   • DETALHE_PGTO_INVALIDO: O campo [nome_campo] não atende os requisitos de preenchimento.  
                   • NAO_INFORMADO – Não reportado/identificado pela instituição detentora de conta.  
-            additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     422ResponseErrorCreatePixPayment:
       type: object
       required:
@@ -378,20 +379,16 @@ components:
                   • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
 
                   • PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-            additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     BusinessEntity:
       type: object
       description: 'Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).'
-      additionalProperties: false
       required:
         - document
       properties:
         document:
           type: object
-          additionalProperties: false
           required:
             - identification
             - rel
@@ -431,8 +428,6 @@ components:
               $ref: '#/components/schemas/PaymentConsent'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
-          additionalProperties: false
-      additionalProperties: false
     CreatePixPayment:
       type: object
       required:
@@ -440,7 +435,6 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/CreatePixPaymentData'
-      additionalProperties: false
     CreatePixPaymentData:
       type: object
       description: Objeto contendo dados do pagamento e do recebedor (creditor).
@@ -450,7 +444,6 @@ components:
         - payment
         - creditorAccount
         - cnpjInitiator
-        - debtorAccount
       properties:
         endToEndId:
           $ref: '#/components/schemas/EndToEndIdWithoutRestriction'
@@ -531,10 +524,15 @@ components:
             - Letras maiúsculas, de ‘A’ a ‘z’
             - Dígitos decimais, de ‘0’ a ‘9’
 
-            [Restrição] Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
-            Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
-            A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
-          additionalProperties: false
+            [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
+
+            – MANU - O campo transactionIdentification não deve ser preenchido.  
+            – DICT - O campo transactionIdentification não deve ser preenchido.  
+            – INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+            – QRES - Caso o QR Code estático possua o dado <i><<i/>TxId<i>><i/> preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o <i><<i/>TxId<i>><i/> o campo transactionIdentification não deverá ser preenchido. O <i><<i/>TxId<i>><i/> deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+            – QRDN - Será obrigatório seu preenchimento com o <i><<i/>TxId<i>><i/> do payload JSON do QR Code dinâmico. O <i><<i/>TxId<i>><i/> deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+
+            A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.  
         ibgeTownCode:
           type: string
           minLength: 7
@@ -545,8 +543,6 @@ components:
             O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
 
             1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
-        debtorAccount:
-          $ref: '#/components/schemas/DebtorAccount'
     CreditorAccount:
       type: object
       description: |
@@ -585,7 +581,6 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountPaymentsType'
-      additionalProperties: false
     DebtorAccount:
       type: object
       description: |
@@ -625,7 +620,6 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountPaymentsType'
-      additionalProperties: false
     Details:
       type: object
       description: |
@@ -671,7 +665,6 @@ components:
             Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
         creditorAccount:
           $ref: '#/components/schemas/CreditorAccount'
-      additionalProperties: false
     EndToEndId:
       type: string
       minLength: 32
@@ -679,14 +672,9 @@ components:
       pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
       example: E9040088820210128000800123873170
       description: |
-        Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
-        • “E” – fixo (1 caractere);  
-        • xxxxxxxx – identificação do agente que gerou o ´EndToEndId´, podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);  
-        • yyyyMMddHHmm – data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o ´EndToEndId´, com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;  
-        • kkkkkkkkkkk – sequencial criado pelo agente que gerou o ´EndToEndId´ (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”.  
-        Admite-se que o ´EndToEndId´ seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento.  
-        Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI.  
-        [Restrição] O ´EndToEndId´ deve ser informado obrigatoriamente caso o status do pagamento seja ACCEPTED_SETTLEMENT_COMPLETED.
+        Trata-se de um identificador único, gerado na instituição iniciadora de pagamento e recebido na instituição detentora de conta, permeando toda a jornada do pagamento Pix.
+
+        [Restrição] A detentora deve obrigatoriamente retornar o campo Com o mesmo valor recebido da iniciadora.
     EndToEndIdWithoutRestriction:
       type: string
       minLength: 32
@@ -965,17 +953,14 @@ components:
           description: |
             Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
             Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
-      additionalProperties: false
     LoggedUser:
       type: object
       description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
-      additionalProperties: false
       required:
         - document
       properties:
         document:
           type: object
-          additionalProperties: false
           required:
             - identification
             - rel
@@ -1004,7 +989,6 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-      additionalProperties: false
     PaymentConsent:
       type: object
       description: Objeto contendo dados de pagamento para consentimento.
@@ -1052,7 +1036,6 @@ components:
             1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         details:
           $ref: '#/components/schemas/Details'
-      additionalProperties: false
     PaymentPix:
       type: object
       description: Objeto contendo dados do pagameto como moeda e valor.
@@ -1076,7 +1059,6 @@ components:
           description: |
             Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.  
             Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
-      additionalProperties: false
     ResponseError:
       type: object
       required:
@@ -1193,12 +1175,10 @@ components:
               $ref: '#/components/schemas/PaymentConsent'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
-          additionalProperties: false
         links:
           $ref: '#/components/schemas/ResponsePixPayment/properties/links'
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     ResponsePixPayment:
       type: object
       required:
@@ -1221,15 +1201,14 @@ components:
               description: URI completo que gerou a resposta atual.
               example: 'https://api.banco.com.br/open-banking/api/v1/resource'
               pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-          additionalProperties: false
         meta:
           $ref: '#/components/schemas/Meta'
-      additionalProperties: false
     ResponsePixPaymentData:
       type: object
       description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
       required:
         - paymentId
+        - endToEndId
         - consentId
         - creationDateTime
         - statusUpdateDateTime
@@ -1330,15 +1309,9 @@ components:
           maxLength: 35
           example: E00038166201907261559y6j6
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador.
-            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
-            - Letras minúsculas, de ‘a’ a ‘z’
-            - Letras maiúsculas, de ‘A’ a ‘z’
-            - Dígitos decimais, de ‘0’ a ‘9’
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento.
 
-            [Restrição] Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
-            Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
-            A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
+            [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora, caso ele tenha sido enviado na requisição da iniciação do pagamento.
         remittanceInformation:
           type: string
           maxLength: 140
@@ -1350,7 +1323,6 @@ components:
           $ref: '#/components/schemas/CreditorAccount'
         debtorAccount:
           $ref: '#/components/schemas/DebtorAccount'
-      additionalProperties: false
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'

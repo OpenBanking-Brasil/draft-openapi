@@ -3,9 +3,7 @@
 /data/paymentId;paymentId;"Código ou identificador único informado pela instituição detentora da conta para representar
 a iniciação de pagamento individual. O `paymentId` deve ser diferente do `endToEndId`.
 Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.";Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;1;1;"";Não permitido;string;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;1
-/data/endToEndId;endToEndId;"Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
-• “E” – fixo (1 caractere);  
-• xxxxxxxx – identificação do agente que gerou o ´EndToEndId´, podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos";Texto;32;Condicional;^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$;;0;1;" O ´EndToEndId´ deve ser informado obrigatoriamente caso o status do pagamento seja ACCEPTED_SETTLEMENT_COMPLETED.
+/data/endToEndId;endToEndId;Trata-se de um identificador único, gerado na instituição iniciadora de pagamento e recebido na instituição detentora de conta, permeando toda a jornada do pagamento Pix.;Texto;32;Condicional;^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$;;1;1;" A detentora deve obrigatoriamente retornar o campo Com o mesmo valor recebido da iniciadora.
 ";Não permitido;string;E9040088820210128000800123873170;32
 /data/consentId;consentId;"Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
 Um URN, conforme definido na";Texto;256;Obrigatório;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;1;1;"";Não permitido;string;urn:bancoex:C1DD33123;
@@ -144,13 +142,7 @@ INIC";1;1;"";Não permitido;string;DICT;
 /data/payment/amount;amount;Valor da transação com 2 casas decimais.;Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
 /data/payment/currency;currency;"Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.  
 Todos os valores monetários informados estão representados com a moeda vigente do Brasil.";Texto;3;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
-/data/transactionIdentification;transactionIdentification;"Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador.
-Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
-- Letras minúsculas, de ‘a’ a ‘z’
-- Letras maiúsculas, de ‘A’ a ‘z’
-- Dígitos decimais, de ‘0’ a ‘9’";Texto;35;Condicional;^[a-zA-Z0-9]{1,35}$;;0;1;" Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
-Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
-A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
+/data/transactionIdentification;transactionIdentification;Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento.;Texto;35;Condicional;^[a-zA-Z0-9]{1,35}$;;0;1;" A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora, caso ele tenha sido enviado na requisição da iniciação do pagamento.
 ";Não permitido;string;E00038166201907261559y6j6;
 /data/remittanceInformation;remittanceInformation;Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.;Texto;140;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Pagamento da nota RSTO035-002.;
 /data/creditorAccount;creditorAccount;Objeto que contém a identificação da conta de destino do beneficiário/recebedor.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
