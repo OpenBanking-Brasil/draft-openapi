@@ -82,7 +82,9 @@ OVER_LIMIT - O valor (ou quantidade de transações) ultrapassa a faixa de limit
 INVALID_CONSENT - Consentimento inválido (status não é authorised ou está expirado) (OB03).  
 DENIED_MULTIPLE_AUTHORISATIONS - Um (ou mais) aprovadores na detentora recusaram a operação (OB04).  
 EXPIRED_MULTIPLE_AUTHORISATIONS - Um (ou mais) aprovadores na detentora não tomaram ação para aprovar a operação (OB05).  
-EXPIRED_BILL - O QR Code não é mais válido (OB06).";Texto;50;Condicional;;"ABORTED_SETTLEMENT_TIMEOUT 
+EXPIRED_BILL - O QR Code não é mais válido (OB06).   
+DETALHE_PGTO_INVALIDO - Parâmetro diverge do cadastrado no DICT.   
+NAO_INFORMADO - Não reportado/identificado pela instituição detentora de conta.";Texto;50;Condicional;;"ABORTED_SETTLEMENT_TIMEOUT 
 ERROR_CREDITOR_AGENT 
 TIMEOUT_DEBTOR_AGENT 
 INVALID_CREDITOR_ACCOUNT_NUMBER 
@@ -125,7 +127,9 @@ OVER_LIMIT
 INVALID_CONSENT 
 DENIED_MULTIPLE_AUTHORISATIONS 
 EXPIRED_MULTIPLE_AUTHORISATIONS 
-EXPIRED_BILL";0;1;" Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
+EXPIRED_BILL 
+DETALHE_PGTO_INVALIDO 
+NAO_INFORMADO";0;1;" Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
 ";Não permitido;string;USER_NOT_YET_ACTIVATED;
 /data/localInstrument;localInstrument;"Especifica a forma de iniciação do pagamento:
 - MANU - Inserção manual de dados da conta transacional

@@ -348,6 +348,8 @@ components:
                   • NAO_INFORMADO: Não informado.
 
                   • PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO: divergência entre pagamento e consentimento.
+
+                  • DETALHE_PGTO_INVALIDO: Detalhe do pagamento inválido.
               detail:
                 type: string
                 maxLength: 2048
@@ -379,6 +381,8 @@ components:
                   • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
 
                   • PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
+
+                  • DETALHE_PGTO_INVALIDO: Parâmetro [nome_campo] diverge do cadastrado no DICT.
         meta:
           $ref: '#/components/schemas/Meta'
     BusinessEntity:
@@ -748,6 +752,7 @@ components:
         - PARAMETRO_INVALIDO
         - NAO_INFORMADO
         - PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO
+        - DETALHE_PGTO_INVALIDO
       example: SALDO_INSUFICIENTE
       description: |
         Códigos de erros previstos na criação da iniciação de pagamento:
@@ -775,6 +780,8 @@ components:
         • NAO_INFORMADO – Não informada pela detentora de conta.
 
         • PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
+
+        • DETALHE_PGTO_INVALIDO: Parâmetro [nome_campo] diverge do cadastrado no DICT.
     EnumLocalInstrument:
       type: string
       maxLength: 4
@@ -876,6 +883,8 @@ components:
         - DENIED_MULTIPLE_AUTHORISATIONS
         - EXPIRED_MULTIPLE_AUTHORISATIONS
         - EXPIRED_BILL
+        - DETALHE_PGTO_INVALIDO
+        - NAO_INFORMADO
       example: USER_NOT_YET_ACTIVATED
       description: |
         Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.  
@@ -923,6 +932,9 @@ components:
         DENIED_MULTIPLE_AUTHORISATIONS - Um (ou mais) aprovadores na detentora recusaram a operação (OB04).  
         EXPIRED_MULTIPLE_AUTHORISATIONS - Um (ou mais) aprovadores na detentora não tomaram ação para aprovar a operação (OB05).  
         EXPIRED_BILL - O QR Code não é mais válido (OB06).   
+        DETALHE_PGTO_INVALIDO - Parâmetro diverge do cadastrado no DICT.   
+        NAO_INFORMADO - Não reportado/identificado pela instituição detentora de conta.   
+
         [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
     Identification:
       type: object
