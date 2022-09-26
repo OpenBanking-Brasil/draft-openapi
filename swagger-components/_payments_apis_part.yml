@@ -297,8 +297,12 @@ components:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponsePaymentConsent:
       $ref: ./schemas/payments_apis/ResponsePaymentConsent.yaml
+    ResponseCreatePaymentConsent:
+      $ref: ./schemas/payments_apis/ResponseCreatePaymentConsent.yaml
     ResponsePixPayment:
       $ref: ./schemas/payments_apis/ResponsePixPayment.yaml
+    ResponseCreatePixPayment:
+      $ref: ./schemas/payments_apis/ResponseCreatePixPayment.yaml
     ResponsePixPaymentData:
       $ref: ./schemas/payments_apis/ResponsePixPaymentData.yaml
     XFapiInteractionId:
@@ -375,7 +379,7 @@ components:
       content:
         application/jwt:
           schema:
-            $ref: "#/components/schemas/ResponsePaymentConsent"
+            $ref: "#/components/schemas/ResponseCreatePaymentConsent"
     200PaymentsConsentsConsentIdRead:
       description: Dados do consentimento de pagamento obtidos com sucesso.
       headers:
@@ -399,7 +403,7 @@ components:
       content:
         application/jwt:
           schema:
-            $ref: "#/components/schemas/ResponsePixPayment"
+            $ref: "#/components/schemas/ResponseCreatePixPayment"
     200PaymentsInitiationPixPaymentIdRead:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
