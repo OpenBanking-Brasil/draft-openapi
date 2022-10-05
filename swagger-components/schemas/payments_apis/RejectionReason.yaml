@@ -1,0 +1,14 @@
+type: object
+description: Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status
+
+  [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
+required:
+  - status
+properties:
+  code:
+    $ref: "../payments_apis/EnumRejectionReasonType.yaml"
+  detail:
+    type: string
+    pattern: '[\w\W\s]*'
+    maxLength: 2048
+    description: Contém informações adicionais ao pagamento rejeitado
