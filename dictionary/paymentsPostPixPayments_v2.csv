@@ -43,6 +43,8 @@ Esta validação é opcional caso o localInstrument for igual a INIC.";Texto;77;
 
 8.  PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
 
+9.  SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.
+
 Em caso insucesso: 
  
 RJCT (REJECTED) - Instrução de pagamento rejeitada.";Texto;;Obrigatório;;"RCVD 
@@ -52,7 +54,8 @@ ACCP
 ACPD 
 RJCT 
 ACSC 
-PDNG";1;1;"";Não permitido;string;PDNG;
+PDNG 
+SCHD";1;1;"";Não permitido;string;PDNG;
 /data/rejectionReason;rejectionReason;"Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.  
 ABORTED_SETTLEMENT_TIMEOUT - Liquidação da transação interrompida devido a timeout no SPI (AB03).  
 ERROR_CREDITOR_AGENT - Transação interrompida devido a erro no participante do usuário recebedor (AB09).  
