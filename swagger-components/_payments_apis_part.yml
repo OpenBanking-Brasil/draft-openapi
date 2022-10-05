@@ -32,6 +32,8 @@ info:
 
     Para evitar vazamento de informação, a detentora deve validar que o pagamento consultado pertence ao ClientId que o criou e, caso haja divergências, retorne um erro HTTP 400.
 
+    Para o caso de QR Code estático e dinâmico a detentora deverá obrigatoriamente realizar validações sobre o conteúdo dos campos recebidos. Entretanto, a escolha do momento desta validação na criação do consentimento ou no pagamento, fica a cargo da detentora.
+
   version: 2.0.0
   license:
     name: Apache 2.0
@@ -297,8 +299,12 @@ components:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponsePaymentConsent:
       $ref: ./schemas/payments_apis/ResponsePaymentConsent.yaml
+    ResponseCreatePaymentConsent:
+      $ref: ./schemas/payments_apis/ResponseCreatePaymentConsent.yaml
     ResponsePixPayment:
       $ref: ./schemas/payments_apis/ResponsePixPayment.yaml
+    ResponseCreatePixPayment:
+      $ref: ./schemas/payments_apis/ResponseCreatePixPayment.yaml
     ResponsePixPaymentData:
       $ref: ./schemas/payments_apis/ResponsePixPaymentData.yaml
     XFapiInteractionId:
@@ -375,7 +381,7 @@ components:
       content:
         application/jwt:
           schema:
-            $ref: "#/components/schemas/ResponsePaymentConsent"
+            $ref: "#/components/schemas/ResponseCreatePaymentConsent"
     200PaymentsConsentsConsentIdRead:
       description: Dados do consentimento de pagamento obtidos com sucesso.
       headers:
@@ -399,7 +405,7 @@ components:
       content:
         application/jwt:
           schema:
-            $ref: "#/components/schemas/ResponsePixPayment"
+            $ref: "#/components/schemas/ResponseCreatePixPayment"
     200PaymentsInitiationPixPaymentIdRead:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
