@@ -94,6 +94,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -136,6 +138,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -189,6 +193,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -233,6 +239,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -362,6 +370,8 @@ components:
       $ref: ./responses/payments_apis/NotAcceptable.yaml
     NotFound:
       $ref: ./responses/payments_apis/NotFound.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/payments_apis/SiteIsOverloaded.yaml
     TooManyRequests:
       $ref: ./responses/payments_apis/TooManyRequests.yaml
     UnprocessableEntityConsents:
