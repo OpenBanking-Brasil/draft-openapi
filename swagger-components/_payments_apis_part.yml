@@ -1,8 +1,8 @@
 openapi: "3.0.0"
 info:
-  title: API Payment Initiation - Open Banking Brasil
+  title: API Payment Initiation - Open Finance Brasil
   description: |
-    API de Iniciação de Pagamentos, responsável por viabilizar as operações de iniciação de pagamentos para o Open Banking Brasil.
+    API de Iniciação de Pagamentos, responsável por viabilizar as operações de iniciação de pagamentos para o Open Finance Brasil.
     Para cada uma das formas de pagamento previstas é necessário obter prévio consentimento do cliente através dos `endpoints` dedicados ao consentimento nesta API.
 
     # Orientações
@@ -22,7 +22,7 @@ info:
     de conta devem estar assinados. Para o processo de assinatura destes `payloads` as instituições devem seguir as especificações de segurança publicadas no Portal do desenvolvedor:
 
     - Certificados exigidos para assinatura de mensagens:
-    [Padrões de certificados digitais Open Banking Brasil](https://github.com/OpenBanking-Brasil/specs-seguranca/blob/main/open-banking-brasil-certificate-standards-1_ID1.md#certificado-de-assinatura-certificadoassinatura)
+    [Padrões de certificados digitais Open Finance Brasil](https://github.com/OpenBanking-Brasil/specs-seguranca/blob/main/open-banking-brasil-certificate-standards-1_ID1.md#certificado-de-assinatura-certificadoassinatura)
 
     - Como assinar o payload JWS: [https://openbanking-brasil.github.io/areadesenvolvedor/#como-assinar-o-payload](https://openbanking-brasil.github.io/areadesenvolvedor/#como-assinar-o-payload)
 
@@ -34,18 +34,23 @@ info:
 
     Para o caso de QR Code estático e dinâmico a detentora deverá obrigatoriamente realizar validações sobre o conteúdo dos campos recebidos. Entretanto, a escolha do momento desta validação na criação do consentimento ou no pagamento, fica a cargo da detentora.
 
-  version: 2.0.0
+    ## Aprovações de múltipla alçada
+
+    Para o caso de Pix imediato, todas as aprovações necessárias devem ser realizadas nos canais da detentora até às 23:59 (horário de Brasília) da data de solicitação do pagamento.
+    Já para o caso de Pix agendado, todas as aprovações devem ser realizadas até a data/hora limite suportada pela detentora.
+
+  version: 2.0.0-rc1.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
   contact:
-    name: Governança do Open Banking Brasil – Especificações
+    name: Governança do Open Finance Brasil – Especificações
     email: gt-interfaces@openbankingbr.org
     url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
 servers:
-  - url: "https://api.banco.com.br/open-banking/payments/v1"
+  - url: "https://api.banco.com.br/open-banking/payments/v2"
     description: Servidor de Produção
-  - url: "https://apih.banco.com.br/open-banking/payments/v1"
+  - url: "https://apih.banco.com.br/open-banking/payments/v2"
     description: Servidor de Homologação
 tags:
   - name: Pagamentos
@@ -94,6 +99,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -136,6 +143,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -189,6 +198,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -233,6 +244,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           description: Erro inesperado.
           content:
@@ -284,7 +297,9 @@ components:
     EnumPaymentType:
       $ref: ./schemas/enum/EnumPaymentType.yaml
     EnumRejectionReasonType:
-      $ref: ./schemas/enum/EnumRejectionReasonType.yaml
+      $ref: ./schemas/payments_apis/EnumRejectionReasonType.yaml
+    RejectionReason:
+      $ref: ./schemas/payments_apis/RejectionReason.yaml
     Identification:
       $ref: ./schemas/payments_apis/PaymentIdentification.yaml
     LoggedUser:
@@ -360,6 +375,8 @@ components:
       $ref: ./responses/payments_apis/NotAcceptable.yaml
     NotFound:
       $ref: ./responses/payments_apis/NotFound.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/payments_apis/SiteIsOverloaded.yaml
     TooManyRequests:
       $ref: ./responses/payments_apis/TooManyRequests.yaml
     UnprocessableEntityConsents:
