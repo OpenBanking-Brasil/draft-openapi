@@ -941,8 +941,8 @@ components:
             O CNPJ será utilizado com 14 números e deverá ser informado sem pontos ou traços.
         name:
           type: string
-          maxLength: 140
           pattern: '^([A-Za-zÀ-ÖØ-öø-ÿ'' -]+)$'
+          maxLength: 120
           example: Marco Antonio de Brito
           description: |
             Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
@@ -1623,8 +1623,11 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               example: '2021-01-01'
               description: |
-                Define a data alvo da liquidação do pagamento. O fuso horário de Brasilia deve ser utilizado para criação e racionalização sobre os dados deste campo.  
-                OBS:Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo um ano corrido a partir da data do consentimento considerando o fuso horário de Brasília.
+                Define a data alvo da liquidação do pagamento. 
+
+                O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+
+                Observação: Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo um ano corrido D+365 corridos a partir da data do consentimento considerando o fuso horário de Brasília
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
