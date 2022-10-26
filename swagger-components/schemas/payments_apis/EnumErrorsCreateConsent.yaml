@@ -1,14 +1,20 @@
 type: string
 maxLength: 21
 enum:
-  - FORMA_PGTO_INVALIDA
-  - DATA_PGTO_INVALIDA
+  - FORMA_PAGAMENTO_INVALIDA
+  - DATA_PAGAMENTO_INVALIDA
   - DETALHE_PGTO_INVALIDO
+  - PARAMETRO_NAO_INFORMADO
+  - PARAMETRO_INVALIDO
+  - ERRO_IDEMPOTENCIA
   - NAO_INFORMADO
-example: FORMA_PGTO_INVALIDA
+example: FORMA_PAGAMENTO_INVALIDA
 description: |
   Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:  
-  • FORMA_PGTO_INVALIDA: Forma de pagamento inválida.  
-  • DATA_PGTO_INVALIDA: Data de pagamento inválida.  
-  • DETALHE_PGTO_INVALIDO: Detalhe do pagamento inválido.  
+  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
+  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
+  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
+  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+  • PARAMETRO_INVALIDO: Parâmetro inválido.  
+  • ERRO_IDEMPOTENCIA: Erro idempotência.  
   • NAO_INFORMADO: Não informado.   
