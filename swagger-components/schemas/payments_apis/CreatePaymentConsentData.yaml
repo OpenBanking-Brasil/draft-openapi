@@ -24,7 +24,7 @@ properties:
         $ref: "../enum/EnumPaymentType.yaml"
       schedule:
         oneOf:
-          $ref: './Schedule.yaml'
+          - $ref: './Schedule.yaml'
       date:
         type: string
         format: date
@@ -32,7 +32,7 @@ properties:
         pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
         example: "2021-01-01"
         description: |
-         [Restrição] Mutuamente exclusivo com o objeto schedule. 
+         [Restrição] Mutuamente excludente com o objeto schedule. 
          
          Este campo é obrigatório no caso de pagamento único. 
          
