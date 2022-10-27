@@ -721,6 +721,7 @@ components:
             Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
         issuer:
           type: string
+          minLength: 1
           maxLength: 4
           pattern: '^[0-9]{1,4}$'
           example: '1774'
@@ -731,7 +732,7 @@ components:
             [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
         number:
           type: string
-          minLength: 3
+          minLength: 1
           maxLength: 20
           pattern: '^[0-9]{1,20}$'
           example: '1234567890'
@@ -760,6 +761,7 @@ components:
             Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
         issuer:
           type: string
+          minLength: 1
           maxLength: 4
           pattern: '^[0-9]{1,4}$'
           example: '1774'
@@ -770,7 +772,7 @@ components:
             [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
         number:
           type: string
-          minLength: 3
+          minLength: 1
           maxLength: 20
           pattern: '^[0-9]{1,20}$'
           example: '1234567890'
