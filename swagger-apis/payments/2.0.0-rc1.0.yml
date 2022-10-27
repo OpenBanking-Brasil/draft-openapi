@@ -991,7 +991,8 @@ components:
         Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status
         [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
       required:
-        - status
+        - code
+        - detail
       properties:
         code:
           $ref: '#/components/schemas/EnumRejectionReasonType'
