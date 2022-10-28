@@ -126,8 +126,7 @@ TRAN - TransactingAccount - Conta de Pagamento pré-paga.";Texto;;Obrigatório;;
 SLRY 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
-/data/cancellation;cancellation;Objeto que contém os dados referentes ao usuário pagador que solicitou o cancelamento, o canal utilizado por ele e o motivo.;Objeto;;Condicional;;;0;1;" O objeto cancellation será obrigatório apenas quando o valor do campo status for igual a CANC. 
-";Não permitido;object;;
+/data/cancellation;cancellation;Objeto que contém os dados referentes ao usuário pagador que solicitou o cancelamento, o canal utilizado por ele e o motivo.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/cancellation/reason;reason;"O preenchimento desse campo para retorno, deve ocorrer pela detentora de contas a partir do status em que o pagamento estiver no momento da solicitação do cancelamento (ex. Status de pagamento = PDNG, campo deve ser preenchido com enum CANCELADO_PENDENCIA)
 
 Valores possíveis:
