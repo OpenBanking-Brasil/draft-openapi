@@ -12,6 +12,7 @@ required:
   - creditorAccount
   - cnpjInitiator
   - debtorAccount
+  - cancellation
 properties:
   paymentId:
     type: string
@@ -116,6 +117,6 @@ properties:
   creditorAccount:
     $ref: ../business_commons/CreditorAccount.yaml
   cancellation:
-    $ref: ./PixPaymentCancellation.yaml
+    $ref: ./PatchPixPaymentCancellation.yaml
   debtorAccount:
     $ref: ../business_commons/DebtorAccount.yaml
