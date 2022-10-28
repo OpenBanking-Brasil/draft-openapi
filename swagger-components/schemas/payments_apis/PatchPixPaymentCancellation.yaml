@@ -4,7 +4,13 @@ description: |
 required:
   - cancelledAt
   - cancelledBy
+  - reason
+  - cancelledFrom
 properties:
+  reason: 
+    $ref: "./EnumPaymentCancellationReasonType.yaml"
+  cancelledFrom:  
+    $ref: "./EnumPaymentCancellationFromType.yaml"
   cancelledAt:
     type: string
     description: Data e hora que foi realizado o cancelamento, conforme especificação RFC-3339, formato UTC.
