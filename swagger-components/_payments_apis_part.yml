@@ -343,6 +343,68 @@ paths:
             - payments
         - OAuth2ClientCredentials:
             - payments
+    patch:
+      tags:
+        - Pagamentos
+      summary: Cancelar iniciação de pagamento.
+      operationId: paymentsPatchPixPaymentsPaymentId
+      description: |
+        
+        Esse endpoint deve ser usado para cancelar, a pedido do cliente pagador, as transações que estejam em uma das seguintes situações: Agendada com sucesso (SCHD), retida para análise (PDNG) ou aguardando autorização de múltiplas alçadas (PATC).  
+
+        - Caso a requisição seja bem sucedida, a transação vai para a situação CANC.
+
+        - Caso o status do pagamento seja diferente de SCHD/PDNG/PATC ou alguma outra regra de negócio impeça o cancelamento, a requisição PATCH retorna HTTP Status 422 com o code PAGAMENTO_NAO_PERMITE_CANCELAMENTO.
+
+        - Caso receba um 422, a iniciadora deve fazer uma requisição GET no pagamento para verificar a situação atual dele, bem como detalhes associados.  
+
+        O cancelamento de pagamento deve ser enviado até 23:59 (Horário de Brasília) do dia anterior à data de efetivação do pagamento.  
+      parameters:
+        - $ref: "#/components/parameters/paymentId"
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/xFapiAuthDate"
+        - $ref: "#/components/parameters/xFapiCustomerIpAddress"
+        - $ref: "#/components/parameters/xFapiInteractionId"
+        - $ref: "#/components/parameters/xCustomerUserAgent"
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: '#/components/schemas/PatchPixPayment'
+        description: Payload para cancelamento do pagamento.
+        required: true
+      responses:
+        "200":
+          $ref: "#/components/responses/200PatchPixPayments"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "405":
+          $ref: "#/components/responses/MethodNotAllowed"
+        "406":
+          $ref: "#/components/responses/NotAcceptable"
+        "422":
+          $ref: "#/components/responses/UnprocessableEntityPixPayments"
+        "429":
+          $ref: "#/components/responses/TooManyRequests"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          description: Erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseError"
+      security:
+        - OAuth2ClientCredentials:
+            - payments
 components:
   schemas:
     422ResponseErrorCreateConsent:
@@ -375,6 +437,8 @@ components:
       $ref: ./schemas/enum/EnumErrorsCreatePayment.yaml
     EnumLocalInstrument:
       $ref: ./schemas/payments_apis/EnumLocalInstrument.yaml
+    EnumPaymentCancellationStatusType:
+      $ref: ./schemas/payments_apis/EnumPaymentCancellationStatusType.yaml
     EnumPaymentPersonType:
       $ref: ./schemas/enum/EnumPaymentPersonType.yaml
     EnumPaymentStatusType:
@@ -383,6 +447,10 @@ components:
       $ref: ./schemas/enum/EnumPaymentType.yaml
     EnumRejectionReasonType:
       $ref: ./schemas/payments_apis/EnumRejectionReasonType.yaml
+    EnumPaymentCancellationReasonType:
+      $ref: ./schemas/payments_apis/EnumPaymentCancellationReasonType.yaml
+    EnumPaymentCancellationFromType:
+      $ref: ./schemas/payments_apis/EnumPaymentCancellationFromType.yaml
     RejectionReason:
       $ref: ./schemas/payments_apis/RejectionReason.yaml
     Identification:
@@ -397,6 +465,10 @@ components:
       $ref: ./schemas/payments_apis/PaymentConsent.yaml
     PaymentPix:
       $ref: ./schemas/payments_apis/PaymentPix.yaml
+    PatchPixPayment:
+      $ref: ./schemas/payments_apis/PatchPixPayment.yaml
+    PatchPixPaymentData:
+      $ref: ./schemas/payments_apis/PatchPixPaymentData.yaml
     ResponseError:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponsePaymentConsent:
@@ -405,6 +477,10 @@ components:
       $ref: ./schemas/payments_apis/ResponseCreatePaymentConsent.yaml
     ResponsePixPayment:
       $ref: ./schemas/payments_apis/ResponsePixPayment.yaml
+    ResponsePatchPixPayment:
+      $ref: ./schemas/payments_apis/ResponsePatchPixPayment.yaml 
+    ResponsePatchPixPaymentData:
+      $ref: ./schemas/payments_apis/ResponsePatchPixPaymentData.yaml
     ResponseCreatePixPayment:
       $ref: ./schemas/payments_apis/ResponseCreatePixPayment.yaml
     ResponsePixPaymentData:
@@ -436,7 +512,9 @@ components:
       openIdConnectUrl: "https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration"
     OAuth2ClientCredentials:
       type: oauth2
-      description: Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.
+      description: |
+        Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.  
+        Apenas pagamentos iniciados pela mesma iniciadora de pagamentos podem ser consultados ou cancelados através de modelo client credentials.
       flows:
         clientCredentials:
           tokenUrl: "https://authserver.example/token"
@@ -524,4 +602,16 @@ components:
         application/jwt:
           schema:
             $ref: "#/components/schemas/ResponsePixPayment"
+    200PatchPixPayments:
+      description: Iniciação de pagamento Pix cancelada com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID RFC4122 usado como um ID de correlação. O transmissor deve usar o mesmo valor recebido na requisição para o cabeçalho de resposta recebido na requisição, caso não tenha sido fornecido, deve se usar um UUID RFC4122.
+          schema:
+            $ref: "#/components/schemas/XFapiInteractionId"
+      content:
+        application/jwt:
+          schema:
+            $ref: "#/components/schemas/ResponsePatchPixPayment"
             
