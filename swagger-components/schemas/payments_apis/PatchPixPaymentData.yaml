@@ -12,13 +12,7 @@ properties:
       Observação: este campo é necessário porque, em casos de múltiplas alçadas de autorização, é possível que o pagamento seja solicitado por um usuário pagador e cancelado por outro.
     required:
       - cancelledBy
-      - reason
-      - cancelledFrom
     properties:
-      reason: 
-        $ref: "./EnumPaymentCancellationReasonType.yaml"
-      cancelledFrom:  
-        $ref: "./EnumPaymentCancellationFromType.yaml"
       cancelledBy:
         type: object
         description: Informação relacionada ao usuário pagador que solicitou o cancelamento do pagamento.
