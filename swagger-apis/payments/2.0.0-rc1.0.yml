@@ -1125,6 +1125,37 @@ components:
         PAGAMENTO_RECUSADO_SPI
 
         FALHA_INFRAESTRUTURA
+    EnumPaymentCancellationReasonType:
+      type: string
+      enum:
+        - CANCELADO_PENDENCIA
+        - CANCELADO_AGENDAMENTO
+        - CANCELADO_MULTIPLAS_ALCADAS
+      example: CANCELADO_PENDENCIA
+      description: |
+        O preenchimento desse campo para retorno, deve ocorrer pela detentora de contas a partir do status em que o pagamento estiver no momento da solicitação do cancelamento (ex. Status de pagamento = PDNG, campo deve ser preenchido com enum CANCELADO_PENDENCIA)
+
+        Valores possíveis:
+
+        CANCELADO_PENDENCIA - Pagamento cancelado enquanto estava na situação PDNG
+
+        CANCELADO_AGENDAMENTO - Pagamento cancelado enquanto estava na situação SCHD
+
+        CANCELADO_MULTIPLAS_ALCADAS - Pagamento cancelado enquanto estava na situação PATC
+    EnumPaymentCancellationFromType:
+      type: string
+      enum:
+        - INICIADORA
+        - DETENTORA
+      example: INICIADORA
+      description: |
+        Campo utilizado para informar o meio pelo qual foi realizado o cancelamento.
+
+        Valores possíveis:
+
+        INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
+
+        DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
     RejectionReason:
       type: object
       description: |-
@@ -1319,7 +1350,13 @@ components:
             Observação: este campo é necessário porque, em casos de múltiplas alçadas de autorização, é possível que o pagamento seja solicitado por um usuário pagador e cancelado por outro.
           required:
             - cancelledBy
+            - reason
+            - cancelledFrom
           properties:
+            reason:
+              $ref: '#/components/schemas/EnumPaymentCancellationReasonType'
+            cancelledFrom:
+              $ref: '#/components/schemas/EnumPaymentCancellationFromType'
             cancelledBy:
               type: object
               description: Informação relacionada ao usuário pagador que solicitou o cancelamento do pagamento.
@@ -2067,7 +2104,13 @@ components:
           required:
             - cancelledAt
             - cancelledBy
+            - reason
+            - cancelledFrom
           properties:
+            reason:
+              $ref: '#/components/schemas/EnumPaymentCancellationReasonType'
+            cancelledFrom:
+              $ref: '#/components/schemas/EnumPaymentCancellationFromType'
             cancelledAt:
               type: string
               description: 'Data e hora que foi realizado o cancelamento, conforme especificação RFC-3339, formato UTC.'
