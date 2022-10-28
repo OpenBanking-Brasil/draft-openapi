@@ -22,20 +22,26 @@ properties:
           example: Forma de pagamento inválida.
           description: |
             Título específico do erro reportado, de acordo com o código enviado:  
-            • FORMA_PGTO_INVALIDA: Forma de pagamento inválida.  
-            • DATA_PGTO_INVALIDA: Data de pagamento inválida. 
-            • DETALHE_PGTO_INVALIDO: Detalhe do pagamento inválido.
+            • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
+            • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
+            • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
+            • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+            • PARAMETRO_INVALIDO: Parâmetro inválido.  
+            • ERRO_IDEMPOTENCIA: Erro idempotência.  
             • NAO_INFORMADO: Não informado.    
         detail:
           type: string
           maxLength: 2048
           pattern: '[\w\W\s]*'
-          example: Meio de pagamento inválido.
+          example: Forma de pagamento [Modalidade] não suportada.
           description: |
             Descrição específica do erro de acordo com o código reportado:  
-            • FORMA_PGTO_INVALIDA – Meio de pagamento inválido.  
-            • DATA_PGTO_INVALIDA – Data de pagamento inválida no contexto, por exemplo, data no passado. Para pagamentos únicos deve ser informada a data atual, do dia corrente.  
-            • DETALHE_PGTO_INVALIDO: O campo [nome_campo] não atende os requisitos de preenchimento.  
-            • NAO_INFORMADO – Não reportado/identificado pela instituição detentora de conta.  
+            • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento [Modalidade] não suportada.  
+            • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.  
+            • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.  
+            • PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.  
+            • PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.  
+            • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).  
+            • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
   meta:
     $ref: ../MetaSingle.yaml

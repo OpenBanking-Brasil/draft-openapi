@@ -77,7 +77,7 @@ PAGAMENTO_RECUSADO_DETENTORA
 
 PAGAMENTO_RECUSADO_SPI
 
-FALHA_INFRAESTRUTURA";Texto;;Opcional;;"SALDO_INSUFICIENTE 
+FALHA_INFRAESTRUTURA";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
 VALOR_ACIMA_LIMITE 
 VALOR_INVALIDO 
 COBRANCA_INVALIDA 
@@ -86,14 +86,14 @@ PAGAMENTO_DIVERGENTE_CONSENTIMENTO
 DETALHE_PAGAMENTO_INVALIDO 
 PAGAMENTO_RECUSADO_DETENTORA 
 PAGAMENTO_RECUSADO_SPI 
-FALHA_INFRAESTRUTURA";0;1;"";Não permitido;string;SALDO_INSUFICIENTE;
-/data/rejectionReason/detail;detail;Contém informações adicionais ao pagamento rejeitado;Texto;2048;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;;
+FALHA_INFRAESTRUTURA";1;1;"";Não permitido;string;SALDO_INSUFICIENTE;
+/data/rejectionReason/detail;detail;Contém informações adicionais ao pagamento rejeitado;Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/localInstrument;localInstrument;"Especifica a forma de iniciação do pagamento:
 - MANU - Inserção manual de dados da conta transacional
 - DICT - Inserção manual de chave Pix
 - QRDN - QR code dinâmico
 - QRES - QR code estático
-- INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.";Texto;4;Obrigatório;;"MANU 
+- INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.";Texto;;Obrigatório;;"MANU 
 DICT 
 QRDN 
 QRES 
@@ -122,7 +122,7 @@ Segue descrição de cada valor do ENUM para o escopo do Pix.
 CACC - Current - Conta Corrente.  
 SLRY - Salary - Conta-Salário.  
 SVGS - Savings - Conta de Poupança.  
-TRAN - TransactingAccount - Conta de Pagamento pré-paga.";Texto;4;Obrigatório;;"CACC 
+TRAN - TransactingAccount - Conta de Pagamento pré-paga.";Texto;;Obrigatório;;"CACC 
 SLRY 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
@@ -142,7 +142,7 @@ Segue descrição de cada valor do ENUM para o escopo do Pix.
 CACC - Current - Conta Corrente.  
 SLRY - Salary - Conta-Salário.  
 SVGS - Savings - Conta de Poupança.  
-TRAN - TransactingAccount - Conta de Pagamento pré-paga.";Texto;4;Obrigatório;;"CACC 
+TRAN - TransactingAccount - Conta de Pagamento pré-paga.";Texto;;Obrigatório;;"CACC 
 SLRY 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
