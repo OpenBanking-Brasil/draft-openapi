@@ -6,7 +6,7 @@ required:
   - creditorAccount
 properties:
   localInstrument:
-    $ref: ../enum/EnumLocalInstrument.yaml
+    $ref: ../payments_apis/EnumLocalInstrument.yaml
   qrCode:
     type: string
     maxLength: 512
@@ -42,4 +42,3 @@ properties:
       Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
   creditorAccount:
     $ref: ../business_commons/CreditorAccount.yaml
-additionalProperties: false

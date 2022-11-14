@@ -1,0 +1,16 @@
+type: string
+enum:
+  - CANCELADO_PENDENCIA
+  - CANCELADO_AGENDAMENTO
+  - CANCELADO_MULTIPLAS_ALCADAS
+example: CANCELADO_PENDENCIA
+description: |
+  O preenchimento desse campo para retorno, deve ocorrer pela detentora de contas a partir do status em que o pagamento estiver no momento da solicitação do cancelamento (ex. Status de pagamento = PDNG, campo deve ser preenchido com enum CANCELADO_PENDENCIA)
+  
+  Valores possíveis:
+  
+  CANCELADO_PENDENCIA - Pagamento cancelado enquanto estava na situação PDNG
+  
+  CANCELADO_AGENDAMENTO - Pagamento cancelado enquanto estava na situação SCHD
+  
+  CANCELADO_MULTIPLAS_ALCADAS - Pagamento cancelado enquanto estava na situação PATC

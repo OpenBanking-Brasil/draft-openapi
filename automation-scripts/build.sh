@@ -9,22 +9,22 @@ TEMP_GEN_DICTIONARY_DIR=$PROJECT_ROOT_DIR/temp-dict-dir
 chmod + $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator
 mkdir $TEMP_GEN_DICTIONARY_DIR
 APIS=(
-  "accounts"
-  "acquiring_services"
-  "capitalization_bonds"
-  "consents"
-  "credit_cards"
-  "customers"
-  "exchange"
-  "financings"
-  "insurances"
-  "investments"
-  "invoice_financings"
-  "loans"
+ # "accounts"
+ # "acquiring_services"
+ # "capitalization_bonds"
+ # "consents"
+ # "credit_cards"
+ # "customers"
+ # "exchange"
+ # "financings"
+ # "insurances"
+ # "investments"
+ # "invoice_financings"
+ # "loans"
   "payments"
-  "pension"
-  "resources"
-  "unarranged_accounts_overdraft"
+ # "pension"
+ # "resources"
+ # "unarranged_accounts_overdraft"
 )
 function genSwaggerFiles(){
     WITH_REF=$1

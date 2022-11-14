@@ -1,15 +1,10 @@
 type: object
-description: |
-  Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
-  [Restrição] Deve obrigatoriamente ser enviado quando a revogação for feita pelo usuário final, ou seja, se o campo revokedBy estiver com o valor 'USER'.
-additionalProperties: false
+description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
 required:
   - document
 properties:
   document:
     type: object
-    description: Objeto que contém os dados de identificação do usuário.
-    additionalProperties: false
     required:
       - identification
       - rel
