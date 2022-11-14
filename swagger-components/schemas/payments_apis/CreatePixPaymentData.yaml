@@ -1,11 +1,14 @@
 type: object
 description: Objeto contendo dados do pagamento e do recebedor (creditor).
 required:
+  - endToEndId
   - localInstrument
   - payment
   - creditorAccount
   - cnpjInitiator
 properties:
+  endToEndId:
+    $ref: ../business_commons/EndToEndIdWithoutRestriction.yaml
   localInstrument:
     $ref: ./EnumLocalInstrument.yaml
   payment:
@@ -58,8 +61,8 @@ properties:
     description: 'CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.'
   transactionIdentification:
     type: string
-    pattern: '^[a-zA-Z0-9][a-zA-Z0-9]{0,24}$'
-    maxLength: 25
+    pattern: '^[a-zA-Z0-9]{1,35}$'
+    maxLength: 35
     example: 'E00038166201907261559y6j6'
     description: |
       Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador.
@@ -68,10 +71,15 @@ properties:
       - Letras maiúsculas, de ‘A’ a ‘z’
       - Dígitos decimais, de ‘0’ a ‘9’
 
-      [Restrição] Se localInstrument for igual a INIC, o campo transactionIdentification deve ser preenchido obrigatoriamente.
-      Se localInstrument for igual a MANU ou DICT, o campo transactionIdentification não deve ser preenchido.
-      A detentora de conta deve validar se a condicionalidade do campo foi atendida pela iniciadora de pagamento.
-    additionalProperties: false
+      [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
+
+      – MANU - O campo transactionIdentification não deve ser preenchido.  
+      – DICT - O campo transactionIdentification não deve ser preenchido.  
+      – INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+      – QRES - Caso o QR Code estático possua o dado <i><<i/>TxId<i>><i/> preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o <i><<i/>TxId<i>><i/> o campo transactionIdentification não deverá ser preenchido. O <i><<i/>TxId<i>><i/> deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).  
+      – QRDN - Será obrigatório seu preenchimento com o <i><<i/>TxId<i>><i/> do payload JSON do QR Code dinâmico. O <i><<i/>TxId<i>><i/> deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+
+      A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.  
   ibgeTownCode:
     type: string
     minLength: 7
@@ -79,7 +87,6 @@ properties:
     pattern: ^\d{7}$
     example: '5300108'
     description: |
-      Traz o código da cidade segundo o IBGE (Instituto Brasileiro de Geografia e Estatística).
-      Para o preenchimento deste campo, o Iniciador de Pagamentos deve seguir a orientação do arranjo da forma de pagamento.
-      O preenchimento do campo tanto em pix/payments quanto /consents deve ser igual. Caso haja divergência dos valores, a instituição deve retornar HTTP 422 com o código de erro PAGAMENTO_DIVERGENTE_DO_CONSENTIMENTO.
-      Este campo faz referência ao campo CodMun do arranjo Pix.
+      O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
+      
+      1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;

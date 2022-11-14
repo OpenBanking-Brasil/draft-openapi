@@ -18,7 +18,7 @@ properties:
         title:
           type: string
           maxLength: 255
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           example: Motivo de revogação não permitido.
           description: |
             Título específico do erro reportado, de acordo com o código enviado:  
@@ -31,7 +31,7 @@ properties:
         detail:
           type: string
           maxLength: 2048
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           example: Operação não suportada pelo tipo de consentimento.
           description: |
             Descrição específica do erro de acordo com o código reportado:  
@@ -41,7 +41,5 @@ properties:
             • TEMPO_LIMITE_REVOGACAO_EXCEDIDO: Prazo limite para revogação excedido.  
             • MOTIVO_REVOGACAO_NAO_PERMITIDO: Motivo de revogação não permitido.  
             • INFORMACAO_ADICIONAL_REVOGACAO_REQUERIDA: Informação adicional requerida.
-      additionalProperties: false
   meta:
     $ref: ../Meta.yaml
-additionalProperties: false

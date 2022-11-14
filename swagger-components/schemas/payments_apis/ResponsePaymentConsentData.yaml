@@ -13,7 +13,7 @@ properties:
   consentId:
     type: string
     maxLength: 256
-    pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
+    pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
     example: urn:bancoex:C1DD33123
     description: |
       Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
@@ -53,8 +53,6 @@ properties:
        Data e hora em que o recurso foi atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
   status:
     $ref: '../enum/EnumAuthorisationStatusType.yaml'
-  revocation:
-    $ref: ./Revocation.yaml
   loggedUser:
     $ref: ./LoggedUser.yaml
   businessEntity:
@@ -65,4 +63,3 @@ properties:
     $ref: ./PaymentConsent.yaml
   debtorAccount:
     $ref: ../business_commons/DebtorAccount.yaml
-additionalProperties: false
