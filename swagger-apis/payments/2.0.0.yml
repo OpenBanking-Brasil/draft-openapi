@@ -123,7 +123,7 @@ info:
         &ensp;Status do Pagamento: RJCT (Rejected), com as seguintes opções rejectionReason:  
         &ensp;• Erro por dados inválidos: Conforme item **4.1.7**;  
         &ensp;• Erro por suspeita de fraude: Conforme item **4.1.8**.
-  version: 2.0.0-rc1.0
+  version: 2.0.0
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -654,7 +654,10 @@ components:
                   pattern: '^((\d{1,16}\.\d{2}))$'
                   example: '100000.12'
                   description: |
-                    Valor da transação com 2 casas decimais.
+                    Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
+
+                    Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
+                    Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
                 ibgeTownCode:
                   type: string
                   minLength: 7
@@ -1318,8 +1321,10 @@ components:
           pattern: '^((\d{1,16}\.\d{2}))$'
           example: '100000.12'
           description: |
-            Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. Caso seja preenchido com valor divergente, deve ser retornado um erro HTTP Status 422 com code xxx (a ser definido em proposta complementar).  
-            Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422 com code xxx (a ser definido em proposta complementar).
+            Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
+
+            Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
+            Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
         currency:
           type: string
           maxLength: 3
@@ -1700,10 +1705,10 @@ components:
                   pattern: '^((\d{1,16}\.\d{2}))$'
                   example: '100000.12'
                   description: |
-                    Valor da transação com 2 casas decimais.
+                    Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
 
                     Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
-                    Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422 com code xxx (a ser definido em proposta complementar).
+                    Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
                 ibgeTownCode:
                   type: string
                   minLength: 7
@@ -1991,10 +1996,9 @@ components:
                   example: '100000.12'
                   description: |
                     Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
-                    Caso seja preenchido com valor divergente, deve ser retornado um erro HTTP Status 422 com code xxx (a ser definido em proposta complementar).   
-                    Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: 
-                    O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
-                    Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422 com code xxx (a ser definido em proposta complementar).
+
+                    Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
+                    Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
                 currency:
                   type: string
                   maxLength: 3
