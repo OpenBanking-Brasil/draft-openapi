@@ -116,7 +116,7 @@ end
 
 def format_definition(text)
   return '' if !text
-  return text.match(/[^\[]*/)[0].strip.delete('\\\"')
+  return text.match(/^\*/)[0].strip.delete('\\\"')
 end
 
 # Analyse
@@ -167,14 +167,14 @@ oas['paths'].each_with_index do |(path, methods)|
           max_items = 'N'
         end
 
-        if restriction != '' && options[:conditional]
+        if restriction != '' && options[:conditional] && !field['isRequired']
           mandatory = 'Condicional'
         end
 
         row = {
           headers['COLUMN_1']   => field['path'],
           headers['COLUMN_2']   => field['name'],
-          headers['COLUMN_3']   => format_definition(field['description']),
+          headers['COLUMN_3']   => field['description'],
           headers['COLUMN_4']   => format_type(data_type),
           headers['COLUMN_5']   => field['maxLength'],
           headers['COLUMN_6']   => mandatory,
