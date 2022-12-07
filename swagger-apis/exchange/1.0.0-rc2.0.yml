@@ -242,7 +242,7 @@ components:
                 required:
                   - interval
                   - value
-                  - operationRate
+                  - customerRate
                 properties:
                   interval:
                     $ref: '#/components/schemas/VetValueFrequencyDistributionPrice/properties/interval'
@@ -252,9 +252,9 @@ components:
                     example: '0.020300'
                     maxLength: 8
                     pattern: '^\d{1}\.\d{1,6}$'
-                  operationRate:
+                  customerRate:
                     type: string
-                    description: Percentual de operação.
+                    description: Percentual de clientes na faixa.
                     example: '0.500000'
                     maxLength: 8
                     pattern: '^\d{1}\.\d{1,6}$'
