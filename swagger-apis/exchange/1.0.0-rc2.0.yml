@@ -225,7 +225,7 @@ components:
         rangeTransactionCategory:
           $ref: '#/components/schemas/EnumExchangeRangeTransactionCategory'
         targetAudience:
-          $ref: '#/components/schemas/EnumTargetAudience'
+          $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
         vetAmount:
           type: object
           description: Distribuição por frequência.
@@ -312,7 +312,7 @@ components:
         transactionCategory:
           $ref: '#/components/schemas/EnumExchangeTransactionCategory'
         targetAudience:
-          $ref: '#/components/schemas/EnumDistinctTargetAudience'
+          $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
         value:
           type: string
           maxLength: 7
@@ -432,13 +432,14 @@ components:
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
-    EnumDistinctTargetAudience:
+    EnumDistinctTargetAudienceExchange:
       type: string
-      description: Público alvo (PESSOA_NATURAL ou PESSOA_JURIDICA).
+      description: 'Público alvo. Em casos em que a instituição não possua taxas de câmbio diferenciadas para pessoa natural e jurídica utilizar a opção:PESSOA_NATURAL_JURIDICA.'
       maxLength: 15
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
+        - PESSOA_NATURAL_JURIDICA
       example: PESSOA_JURIDICA
     EnumTargetAudience:
       type: string
