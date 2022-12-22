@@ -40,14 +40,11 @@ function genSwaggerFiles(){
       --outfile "$API_FOLDER_BASE_PATH/$API_VERSION.yml" --type=yaml
     swagger-cli validate ${GENERATED_SWAGGERS_PATH}/$API_FOLDER_NAME/$API_VERSION.yml
 
-<<<<<<< HEAD
-=======
     echo '#### Validations ####'
     RETORNO=`python3 -m openapi_spec_validator "${GENERATED_SWAGGERS_PATH}/$API_FOLDER_NAME/$API_VERSION.yml"`
     echo $RETORNO
     echo '#### End Validations ####'
     
->>>>>>> 7c65763... Ajustando script de build - Adicionando validação de campo obrigatorio sem existir na propriedade
     sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $API_FOLDER_BASE_PATH/$API_VERSION.yml
 
     if [[ $RETORNO == "OK" ]]
@@ -68,10 +65,6 @@ for API in "${APIS[@]}"
 do
  genSwaggerFiles 0 $API
  genSwaggerFiles 1 $API '-c'
-<<<<<<< HEAD
-=======
-
->>>>>>> 7c65763... Ajustando script de build - Adicionando validação de campo obrigatorio sem existir na propriedade
 done
 rm -rf $TEMP_GEN_DICTIONARY_DIR
 sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $PROJECT_ROOT_DIR/dictionary/*.csv
