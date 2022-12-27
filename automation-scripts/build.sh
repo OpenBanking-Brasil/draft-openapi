@@ -21,7 +21,7 @@ APIS=(
   "investments"
  # "invoice_financings"
  # "loans"
-  "payments"
+  # "payments"
   "pension"
  # "resources"
  # "unarranged_accounts_overdraft"
