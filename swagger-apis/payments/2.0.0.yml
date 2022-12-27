@@ -54,7 +54,7 @@ info:
     1. **Validações na criação do consentimento (_POST /consents_)**  
       1.1 **Orientações Iniciais**  
         &ensp;1.1.1 Não devem ser retornadas informações associadas ao usuário/cliente (ex. insuficiência de saldo, conta inexistente/bloqueada), uma vez que o cliente ainda não autorizou o consentimento / consumo de seus dados para o pagamento.  
-        &ensp;1.1.2 Não devem ser executadas validações no DICT (Diretório de Identificadores de Contas Transacionais do Pix), à partir dos dados compartilhados nesse *endpoint*. Tais  validações podem ocorrer somente na criação do pagamento;  
+        &ensp;1.1.2 Não devem ser executadas validações no DICT (Diretório de Identificadores de Contas Transacionais do Pix), a partir dos dados compartilhados nesse *endpoint*. Tais  validações podem ocorrer somente na criação do pagamento;  
       1.2 **Casos de erro relacionados às permissões de segurança para acesso à API (ex. certificado, access_token, jwt, assinatura)**  
         &ensp;1.2.1 Validação de Certificado: Valida utilização de certificado correto durante processo de DCR - HTTP Code 401 (INVALID_CLIENT);  
         &ensp;1.2.2 Validação de Access_Token: Verifica se Access_Token utilizado está correto - HTTP Code 401 (UNAUTHORIZED);  
