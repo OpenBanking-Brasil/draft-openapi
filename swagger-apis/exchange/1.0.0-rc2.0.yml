@@ -52,7 +52,7 @@ paths:
         - Exchange VET Value
       summary: Conjunto de informações de Câmbio para valor do VET.
       operationId: exchangeGetVetValue
-      description: 'Método para disponibilizar o valor VET.<br>O retorno, embora não especificado, deve abranger a classificação do tipo de operação, conforme a circular BCB n&#186; 3690 de 16/12/2013 com os seguintes items&#58;<br><ol><li>Comércio exterior</li><li>Transporte</li><li>Seguros</li><li>Viagens internacionais</li><li>Transferências unilaterais</li><li>Serviços diversos</li><li>Rendas de capitais</li><li>Capitais brasileiros</li><li>Capitais estrangeiros</li><li>Prestação de serviço de pagamento ou transferência internacional - EFX</li></ol>'
+      description: 'Método para disponibilizar os VETs praticados pela instituição nas operações de câmbio, agrupados por tipo de operação (compra ou venda), moeda, forma de entrega, faixas de valores e público-alvo (pessoa física, pessoa jurídica ou ambos).'
       parameters:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
@@ -225,7 +225,7 @@ components:
         rangeTransactionCategory:
           $ref: '#/components/schemas/EnumExchangeRangeTransactionCategory'
         targetAudience:
-          $ref: '#/components/schemas/EnumTargetAudience'
+          $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
         vetAmount:
           type: object
           description: Distribuição por frequência.
@@ -242,7 +242,7 @@ components:
                 required:
                   - interval
                   - value
-                  - operationRate
+                  - customerRate
                 properties:
                   interval:
                     $ref: '#/components/schemas/VetValueFrequencyDistributionPrice/properties/interval'
@@ -252,9 +252,9 @@ components:
                     example: '0.020300'
                     maxLength: 8
                     pattern: '^\d{1}\.\d{1,6}$'
-                  operationRate:
+                  customerRate:
                     type: string
-                    description: Percentual de operação.
+                    description: Percentual de clientes na faixa.
                     example: '0.500000'
                     maxLength: 8
                     pattern: '^\d{1}\.\d{1,6}$'
@@ -312,7 +312,7 @@ components:
         transactionCategory:
           $ref: '#/components/schemas/EnumExchangeTransactionCategory'
         targetAudience:
-          $ref: '#/components/schemas/EnumDistinctTargetAudience'
+          $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
         value:
           type: string
           maxLength: 7
@@ -361,7 +361,10 @@ components:
       example: CARTAO_PRE_PAGO
     EnumExchangeRangeTransactionCategory:
       type: string
-      description: A classificação conforme a circular BCB nº 4015.
+      description: |
+        Faixa de valor da operação (equivalente em USD), conforme Instrução
+
+        Normativa BCB 184, de 12 Novembro de 2021.
       maxLength: 17
       enum:
         - '0,01_200'
@@ -429,13 +432,13 @@ components:
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
-    EnumDistinctTargetAudience:
+    EnumDistinctTargetAudienceExchange:
       type: string
-      description: Público alvo (PESSOA_NATURAL ou PESSOA_JURIDICA).
-      maxLength: 15
+      description: 'Público alvo. Em casos em que a instituição não possua taxas de câmbio diferenciadas para pessoa natural e jurídica utilizar a opção:PESSOA_NATURAL_JURIDICA.'
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
+        - PESSOA_NATURAL_JURIDICA
       example: PESSOA_JURIDICA
     EnumTargetAudience:
       type: string
