@@ -2,7 +2,7 @@ type: object
 required:
   - interval
   - value
-  - customerRate
+  - operationRate
 properties:
   interval:
     $ref: EnumInterval.yaml
@@ -12,9 +12,9 @@ properties:
     example: '0.020300'
     maxLength: 8
     pattern: '^\d{1}\.\d{1,6}$'
-  customerRate:
+  operationRate:
     type: string
-    description: Percentual de clientes na faixa.
+    description: Percentual de Operação.
     example: '0.500000'
     maxLength: 8
     pattern: '^\d{1}\.\d{1,6}$'
