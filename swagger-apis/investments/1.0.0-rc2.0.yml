@@ -387,7 +387,7 @@ components:
         - targetAudience
       properties:
         participant:
-          $ref: '#/components/schemas/Participant'
+          $ref: '#/components/schemas/InvestmentsFund/properties/participant'
         issuerInstitutionCnpjNumber:
           type: string
           description: CNPJ da instituição emissora.
@@ -420,9 +420,13 @@ components:
           $ref: '#/components/schemas/EnumInvestmentsFixedIncomeBankIndexer'
         indexerAdditionalInfo:
           type: string
-          description: Campo a ser preenchido pelas participantes quando houver ‘Outros’ no campo ‘Indexador’.
-          maxLength: 50
-          example: Dólar
+          description: |
+            Campo livre para preenchimento das informações adicionais referente ao encargo.
+
+            [Restrição] Obrigatório quando Indexador for igual 'OUTROS'.
+          maxLength: 140
+          example: Informações adicionais
+          pattern: '[\w\W\s]'
         issueRemunerationRate:
           $ref: '#/components/schemas/NoIdentificationFrequencyDistribution'
       additionalProperties: false
