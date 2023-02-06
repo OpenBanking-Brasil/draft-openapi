@@ -346,6 +346,74 @@ components:
           pattern: '^\d{1}\.\d{1,6}$'
           example: '0.300000'
       additionalProperties: false
+    InvestmentsNoIdentificationFrequencyDistribution:
+      type: object
+      description: Distribuição por frequência.
+      required:
+        - prices
+        - minimum
+        - maximum
+      properties:
+        prices:
+          type: array
+          description: Distribuição dos preços.
+          items:
+            type: object
+            required:
+              - interval
+              - value
+              - operationRate
+            properties:
+              interval:
+                type: string
+                description: Faixas de frequência
+                enum:
+                  - 1_FAIXA
+                  - 2_FAIXA
+                  - 3_FAIXA
+                  - 4_FAIXA
+                example: 1_FAIXA
+              value:
+                type: string
+                description: Mediana.
+                example: '0.020300'
+                maxLength: 8
+                pattern: '^\d{1}\.\d{1,6}$'
+              operationRate:
+                type: string
+                description: Percentual de operação.
+                example: '0.500000'
+                maxLength: 8
+                pattern: '^\d{1}\.\d{1,6}$'
+            additionalProperties: false
+          minItems: 4
+          maxItems: 4
+          example:
+            - interval: 1_FAIXA
+              value: '0.020300'
+              operationRate: '0.500000'
+            - interval: 2_FAIXA
+              value: '0.030600'
+              operationRate: '0.100000'
+            - interval: 3_FAIXA
+              value: '0.034300'
+              operationRate: '0.300000'
+            - interval: 4_FAIXA
+              value: '0.246800'
+              operationRate: '0.100000'
+        minimum:
+          type: string
+          description: Valor mínimo.
+          maxLength: 8
+          pattern: '^\d{1}\.\d{1,6}$'
+          example: '0.010000'
+        maximum:
+          type: string
+          description: Valor máximo.
+          maxLength: 8
+          pattern: '^\d{1}\.\d{1,6}$'
+          example: '0.300000'
+      additionalProperties: false
     DistributionFrequencyPrice:
       type: object
       required:
@@ -387,7 +455,7 @@ components:
         - targetAudience
       properties:
         participant:
-          $ref: '#/components/schemas/Participant'
+          $ref: '#/components/schemas/InvestmentsFund/properties/participant'
         issuerInstitutionCnpjNumber:
           type: string
           description: CNPJ da instituição emissora.
@@ -420,11 +488,15 @@ components:
           $ref: '#/components/schemas/EnumInvestmentsFixedIncomeBankIndexer'
         indexerAdditionalInfo:
           type: string
-          description: Campo a ser preenchido pelas participantes quando houver ‘Outros’ no campo ‘Indexador’.
-          maxLength: 50
-          example: Dólar
+          description: |
+            Campo livre para preenchimento das informações adicionais referente ao encargo.
+
+            [Restrição] Obrigatório quando Indexador for igual 'OUTROS'.
+          maxLength: 140
+          example: Informações adicionais
+          pattern: '[\w\W\s]'
         issueRemunerationRate:
-          $ref: '#/components/schemas/NoIdentificationFrequencyDistribution'
+          $ref: '#/components/schemas/InvestmentsNoIdentificationFrequencyDistribution'
       additionalProperties: false
     InvestmentFundMinimumAmount:
       type: object
@@ -486,11 +558,50 @@ components:
         - targetAudience
       properties:
         participant:
-          $ref: '#/components/schemas/Participant'
+          $ref: '#/components/schemas/InvestmentsFund/properties/participant'
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentsFixedIncomeCreditInvestmentType'
         custodyFee:
-          $ref: '#/components/schemas/InvestmentsVariableIncome/properties/custodyFee'
+          type: object
+          description: Distribuição por frequência.
+          required:
+            - prices
+            - minimum
+            - maximum
+          properties:
+            prices:
+              type: array
+              description: Distribuição dos preços.
+              items:
+                $ref: '#/components/schemas/InvestmentsNoIdentificationFrequencyDistribution/properties/prices/items'
+              minItems: 4
+              maxItems: 4
+              example:
+                - interval: 1_FAIXA
+                  value: '0.020300'
+                  operationRate: '0.500000'
+                - interval: 2_FAIXA
+                  value: '0.030600'
+                  operationRate: '0.100000'
+                - interval: 3_FAIXA
+                  value: '0.034300'
+                  operationRate: '0.300000'
+                - interval: 4_FAIXA
+                  value: '0.246800'
+                  operationRate: '0.100000'
+            minimum:
+              type: string
+              description: Valor mínimo.
+              maxLength: 8
+              pattern: '^\d{1}\.\d{1,6}$'
+              example: '0.010000'
+            maximum:
+              type: string
+              description: Valor máximo.
+              maxLength: 8
+              pattern: '^\d{1}\.\d{1,6}$'
+              example: '0.300000'
+          additionalProperties: false
         loadingRate:
           $ref: '#/components/schemas/InvestmentsVariableIncome/properties/custodyFee'
         targetAudience:
@@ -864,7 +975,6 @@ components:
     EnumInvestmentsFixedIncomeBankProductType:
       type: string
       description: Especificação do ativo em questão.<br><ol><li>CDB</li><li>RDB</li><li>LCI</li><li>LCA</li></ol>
-      maxLength: 3
       enum:
         - CDB
         - RDB
@@ -874,7 +984,6 @@ components:
     EnumInvestmentsFixedIncomeBankRedemptionTerm:
       type: string
       description: Capacidade de conversão do título em dinheiro (resgate ou recompra).<br><br><ol><li>diária</li><li>na data de vencimento</li><li>diária após prazo de carência</li></ol>
-      maxLength: 29
       enum:
         - DIARIA
         - DATA_VENCIMENTO
