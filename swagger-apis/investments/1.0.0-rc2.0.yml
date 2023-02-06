@@ -562,48 +562,9 @@ components:
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentsFixedIncomeCreditInvestmentType'
         custodyFee:
-          type: object
-          description: Distribuição por frequência.
-          required:
-            - prices
-            - minimum
-            - maximum
-          properties:
-            prices:
-              type: array
-              description: Distribuição dos preços.
-              items:
-                $ref: '#/components/schemas/InvestmentsNoIdentificationFrequencyDistribution/properties/prices/items'
-              minItems: 4
-              maxItems: 4
-              example:
-                - interval: 1_FAIXA
-                  value: '0.020300'
-                  operationRate: '0.500000'
-                - interval: 2_FAIXA
-                  value: '0.030600'
-                  operationRate: '0.100000'
-                - interval: 3_FAIXA
-                  value: '0.034300'
-                  operationRate: '0.300000'
-                - interval: 4_FAIXA
-                  value: '0.246800'
-                  operationRate: '0.100000'
-            minimum:
-              type: string
-              description: Valor mínimo.
-              maxLength: 8
-              pattern: '^\d{1}\.\d{1,6}$'
-              example: '0.010000'
-            maximum:
-              type: string
-              description: Valor máximo.
-              maxLength: 8
-              pattern: '^\d{1}\.\d{1,6}$'
-              example: '0.300000'
-          additionalProperties: false
+          $ref: '#/components/schemas/InvestmentsTreasure/properties/custodyFee'
         loadingRate:
-          $ref: '#/components/schemas/InvestmentsFixedIncomeCredit/properties/custodyFee'
+          $ref: '#/components/schemas/InvestmentsTreasure/properties/custodyFee'
         targetAudience:
           $ref: '#/components/schemas/EnumDistinctTargetAudience'
       additionalProperties: false
@@ -865,9 +826,48 @@ components:
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentsTreasureInvestmentType'
         custodyFee:
-          $ref: '#/components/schemas/NoIdentificationFrequencyDistribution'
+          type: object
+          description: Distribuição por frequência.
+          required:
+            - prices
+            - minimum
+            - maximum
+          properties:
+            prices:
+              type: array
+              description: Distribuição dos preços.
+              items:
+                $ref: '#/components/schemas/InvestmentsNoIdentificationFrequencyDistribution/properties/prices/items'
+              minItems: 4
+              maxItems: 4
+              example:
+                - interval: 1_FAIXA
+                  value: '0.020300'
+                  operationRate: '0.500000'
+                - interval: 2_FAIXA
+                  value: '0.030600'
+                  operationRate: '0.100000'
+                - interval: 3_FAIXA
+                  value: '0.034300'
+                  operationRate: '0.300000'
+                - interval: 4_FAIXA
+                  value: '0.246800'
+                  operationRate: '0.100000'
+            minimum:
+              type: string
+              description: Valor mínimo.
+              maxLength: 8
+              pattern: '^\d{1}\.\d{1,6}$'
+              example: '0.010000'
+            maximum:
+              type: string
+              description: Valor máximo.
+              maxLength: 8
+              pattern: '^\d{1}\.\d{1,6}$'
+              example: '0.300000'
+          additionalProperties: false
         loadingRate:
-          $ref: '#/components/schemas/NoIdentificationFrequencyDistribution'
+          $ref: '#/components/schemas/InvestmentsTreasure/properties/custodyFee'
       additionalProperties: false
     InvestmentsVariableIncome:
       type: object
@@ -1015,7 +1015,6 @@ components:
     EnumInvestmentsTreasureInvestmentType:
       type: string
       description: Especifica o tipo de ativo negociado&#58;<br><br><ol><li>Tesouro direto</li></ol>
-      maxLength: 14
       enum:
         - TESOURO_DIRETO
       example: TESOURO_DIRETO
