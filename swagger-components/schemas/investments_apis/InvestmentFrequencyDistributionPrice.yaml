@@ -1,0 +1,21 @@
+type: object
+required:
+  - interval
+  - value
+  - operationRate
+properties:
+  interval:
+    $ref: EnumInterval.yaml
+  value:
+    type: string
+    description: Mediana.
+    example: '0.020300'
+    maxLength: 8
+    pattern: '^\d{1}\.\d{1,6}$'
+  operationRate:
+    type: string
+    description: Percentual de operação.
+    example: '0.500000'
+    maxLength: 8
+    pattern: '^\d{1}\.\d{1,6}$'
+additionalProperties: false
