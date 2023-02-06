@@ -865,9 +865,9 @@ components:
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentsTreasureInvestmentType'
         custodyFee:
-          $ref: '#/components/schemas/NoIdentificationFrequencyDistribution'
+          $ref: '#/components/schemas/InvestmentsNoIdentificationFrequencyDistribution'
         loadingRate:
-          $ref: '#/components/schemas/NoIdentificationFrequencyDistribution'
+          $ref: '#/components/schemas/InvestmentsNoIdentificationFrequencyDistribution'
       additionalProperties: false
     InvestmentsVariableIncome:
       type: object
@@ -1015,7 +1015,6 @@ components:
     EnumInvestmentsTreasureInvestmentType:
       type: string
       description: Especifica o tipo de ativo negociado&#58;<br><br><ol><li>Tesouro direto</li></ol>
-      maxLength: 14
       enum:
         - TESOURO_DIRETO
       example: TESOURO_DIRETO
