@@ -2,45 +2,41 @@ type: object
 description: "Conjunto de informações referentes às informações de câmbio"
 required:
   - participant
-  - values
-  - timestamp
+  - foreignCurrency
+  - deliveryForeignCurrency
+  - transactionType
+  - transactionCategory
+  - value
+  - targetAudience
+  - valueUpdateDateTime
   - disclaimer
 properties:
   participant:
     $ref: ./Participant.yaml
-  values:
-    type: array
-    minItems: 0
-    items:
-      $ref: ./OnlineRate.yaml
-    example:
-      [
-        {
-          foreignCurrency: USD,
-          deliveryForeignCurrency: ESPECIE,
-          transactionType: COMPRA,
-          transactionCategory: COMERCIO_EXTERIOR,
-          targetAudience: PESSOA_NATURAL,
-          value: "5.5023",
-          valueUpdateDateTime: '2017-07-21T17:32:28Z'
-        },
-        {
-          foreignCurrency: EUR,
-          deliveryForeignCurrency: CARTAO_PRE_PAGO,
-          transactionType: VENDA,
-          transactionCategory: TRANSPORTE,
-          targetAudience: PESSOA_JURIDICA,
-          value: "2.7045",
-          valueUpdateDateTime: '2017-07-21T17:32:28Z'
-        }
-      ]
-  timestamp:
+  foreignCurrency:
+    $ref: ../business_commons/CurrencyCode.yaml
+  deliveryForeignCurrency:
+    $ref: ../enum/EnumExchangeDeliveryForeignCurrency.yaml
+  transactionType:
+    $ref: ../enum/EnumExchangeTransactionType.yaml
+  transactionCategory:
+    $ref: ../enum/EnumExchangeTransactionCategory.yaml
+  targetAudience:
+    $ref: ./EnumDistinctTargetAudienceExchange.yaml
+  value:
+    type: string
+    maxLength: 7
+    minLength: 3
+    pattern: '^\d{1}\.\d{1,5}$'
+    example: "5.5023"
+    description: Valor da operação.
+  valueUpdateDateTime:
     type: string
     format: date-time
-    description: "Data e hora da consulta, conforme especificação RFC-3339, formato UTC."
-    pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
     maxLength: 20
-    example: "2017-07-21T17:32:28Z"
+    example: '2017-07-21T17:32:28Z'
+    description: Data e hora da última atualização da cotação.
+    pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
   disclaimer:
     type: string
     description: Disclaimer informando que a taxa apresentada é somente informativa, para a contratação de uma operação, deverá ser consultado o canal correspondente de cada instituição.
