@@ -994,7 +994,7 @@ components:
           pattern: '[\w\W\s]*'
           example: Organização A1
         cnpjNumber:
-          $ref: '#/components/schemas/InvestmentsCnpjNumber'
+          $ref: '#/components/schemas/CnpjNumber'
         urlComplementaryList:
           type: string
           maxLength: 1024
@@ -1011,7 +1011,7 @@ components:
         - 3_FAIXA
         - 4_FAIXA
       example: 1_FAIXA
-    InvestmentsCnpjNumber:
+    CnpjNumber:
       type: string
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
       maxLength: 14
