@@ -455,7 +455,7 @@ components:
         - targetAudience
       properties:
         participant:
-          $ref: '#/components/schemas/InvestmentsVariableIncome/properties/participant'
+          $ref: '#/components/schemas/InvestmentsParticipant'
         issuerInstitutionCnpjNumber:
           type: string
           description: CNPJ da instituição emissora.
@@ -557,7 +557,7 @@ components:
         - targetAudience
       properties:
         participant:
-          $ref: '#/components/schemas/InvestmentsVariableIncome/properties/participant'
+          $ref: '#/components/schemas/InvestmentsParticipant'
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentsFixedIncomeCreditInvestmentType'
         custodyFee:
@@ -581,33 +581,7 @@ components:
         - fees
       properties:
         participant:
-          type: object
-          description: Conjunto de informações relativas ao participante do produto de Open Finance
-          required:
-            - brand
-            - name
-            - cnpjNumber
-          properties:
-            brand:
-              type: string
-              description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
-              pattern: '[\w\W\s]*'
-              maxLength: 80
-              example: Organização
-            name:
-              type: string
-              description: Nome do participante do Open Finance.
-              pattern: '[\w\W\s]*'
-              maxLength: 80
-              example: Organização A1
-            cnpjNumber:
-              $ref: '#/components/schemas/CnpjNumber'
-            urlComplementaryList:
-              type: string
-              maxLength: 1024
-              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-              example: 'https://empresaa1.com/companies'
-          additionalProperties: false
+          $ref: '#/components/schemas/InvestmentsParticipant'
         name:
           type: string
           description: Nome oficial do fundo de investimento.
@@ -801,33 +775,7 @@ components:
         - participant
       properties:
         participant:
-          type: object
-          description: Conjunto de informações relativas ao participante do produto de Open Finance
-          required:
-            - brand
-            - name
-            - cnpjNumber
-          properties:
-            brand:
-              type: string
-              description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
-              maxLength: 80
-              pattern: '[\w\W\s]*'
-              example: Organização
-            name:
-              type: string
-              description: Nome do participante do Open Finance.
-              maxLength: 80
-              pattern: '[\w\W\s]*'
-              example: Organização A1
-            cnpjNumber:
-              $ref: '#/components/schemas/CnpjNumber'
-            urlComplementaryList:
-              type: string
-              maxLength: 1024
-              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-              example: 'https://empresaa1.com/companies'
-          additionalProperties: false
+          $ref: '#/components/schemas/InvestmentsParticipant'
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentsTreasureInvestmentType'
         custodyFee:
@@ -845,33 +793,7 @@ components:
         - targetAudience
       properties:
         participant:
-          type: object
-          description: Conjunto de informações relativas ao participante do produto de Open Finance
-          required:
-            - brand
-            - name
-            - cnpjNumber
-          properties:
-            brand:
-              type: string
-              description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
-              pattern: '[\w\W\s]*'
-              maxLength: 80
-              example: Organização
-            name:
-              type: string
-              description: Nome do participante do Open Finance.
-              pattern: '[\w\W\s]*'
-              maxLength: 80
-              example: Organização A1
-            cnpjNumber:
-              $ref: '#/components/schemas/CnpjNumber'
-            urlComplementaryList:
-              type: string
-              maxLength: 1024
-              pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-              example: 'https://empresaa1.com/companies'
-          additionalProperties: false
+          $ref: '#/components/schemas/InvestmentsParticipant'
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentsVariableIncomeInvestmentType'
         custodyFee:
@@ -1056,7 +978,7 @@ components:
         - ACOES
         - FUNDO_INDICES
       example: ACOES
-    Participant:
+    InvestmentsParticipant:
       type: object
       description: Conjunto de informações relativas ao participante do produto de Open Finance
       required:
@@ -1068,17 +990,16 @@ components:
           type: string
           description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
           maxLength: 80
+          pattern: '[\w\W\s]*'
           example: Organização
         name:
           type: string
           description: Nome do participante do Open Finance.
           maxLength: 80
+          pattern: '[\w\W\s]*'
           example: Organização A1
         cnpjNumber:
-          type: string
-          description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
-          pattern: '^\d{14}$'
-          example: '13456789000112'
+          $ref: '#/components/schemas/CnpjNumber'
         urlComplementaryList:
           type: string
           maxLength: 1024
