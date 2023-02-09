@@ -9,7 +9,7 @@ required:
   - targetAudience
 properties:
   participant:
-    $ref: ../business_commons/Participant.yaml
+    $ref: ./InvestmentsParticipant.yaml
   issuerInstitutionCnpjNumber:
     type: string
     description: CNPJ da instituição emissora.
@@ -24,7 +24,7 @@ properties:
     example: 'Organização A1'
     description: 'Nome da instituição emissora.'
   investmentType:
-    $ref: ../enum/EnumInvestmentsFixedIncomeBankProductType.yaml
+    $ref: ./EnumInvestmentsFixedIncomeBankProductType.yaml
   index:
     $ref: ./InvestmentsFixedIncomeBankIndex.yaml
   investmentConditions:

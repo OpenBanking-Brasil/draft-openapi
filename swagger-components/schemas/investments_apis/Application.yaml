@@ -7,8 +7,9 @@ properties:
     type: integer
     format: int32
     description: Prazo em dias indicado no regulamento do fundo para a conversão do dinheiro em cotas do fundo.
-    minimum: 0
     example: 60
+    minimum: 0
+    maximum: 2147483647
   quotationTerm:
     $ref: ../enum/EnumInvestmentsFundGeneralConditionsTermType.yaml
 additionalProperties: false
