@@ -21,6 +21,14 @@ properties:
     $ref: ./CnpjNumber.yaml
   urlComplementaryList:
     type: string
+    description: |
+      - 'name' com o valor contido no campo ‘LegalEntityName’ conforme cadastro no diretório;
+
+      - 'cnpjNumber' com o valor contido no campo CNPJ (‘RegistrationNumber’) correspondente a esta instituição;
+
+      - Ambos do tipo string;
+
+      - Ambos obrigatórios. 
     maxLength: 1024
     pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     example: "https://empresaa1.com/companies"
