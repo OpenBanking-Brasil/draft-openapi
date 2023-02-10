@@ -378,13 +378,15 @@ components:
           type: string
           description: Valor mínimo.
           maxLength: 8
-          pattern: '^\d{1}\.\d{1,6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           example: '0.010000'
         maximum:
           type: string
           description: Valor máximo.
           maxLength: 8
-          pattern: '^\d{1}\.\d{1,6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           example: '0.300000'
       additionalProperties: false
     DistributionFrequencyPrice:
@@ -401,13 +403,15 @@ components:
           description: Mediana.
           example: '0.020300'
           maxLength: 8
-          pattern: '^\d{1}\.\d{1,6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
         operationRate:
           type: string
           description: Percentual de operação.
           example: '0.500000'
           maxLength: 8
-          pattern: '^\d{1}\.\d{1,6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
       additionalProperties: false
     EnumDistinctTargetAudience:
       type: string
