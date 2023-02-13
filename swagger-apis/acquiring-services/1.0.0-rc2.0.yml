@@ -229,8 +229,9 @@ components:
         customerRate:
           type: string
           example: '0.5000'
-          maxLength: 6
-          pattern: '^\d{1}\.\d{1,4}$'
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Percentual de cliente em cada intervalo.
       additionalProperties: false
     AcquiringServicesContractData:
@@ -279,16 +280,16 @@ components:
             Descrição do Fator gerador de cobrança que incide sobre o serviço de credenciamento.
         minimum:
           type: string
-          minLength: 1
-          maxLength: 999999
-          pattern: '^\d{1}\.\d{1,4}$'
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Valor mínimo
           example: '2.0'
         maximum:
           type: string
-          minLength: 1
-          maxLength: 999999
-          pattern: '^\d{1}\.\d{1,4}$'
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Valor máximo
           example: '5.0'
       additionalProperties: false
