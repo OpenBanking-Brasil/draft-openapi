@@ -16,12 +16,12 @@
 TAXA_DESCONTO_MODALIDADE_DEBITO";1;1;"";Não permitido;string;TAXA_DESCONTO_MODALIDADE_CREDITO;
 /data/code;code;Sigla da Tarifa cobrada sobre o Serviço de Credenciamento informado.;Texto;;Obrigatório;;"MDR_CREDITO 
 MDR_DEBITO";1;1;"";Não permitido;string;MDR_CREDITO;
-/data/prices;prices;;Lista;;Obrigatório;;;4;4;"";Não permitido;array;"[{""interval""=>""1_FAIXA"", ""value""=>""0.0203"", ""customerRate""=>""0.5000""}, {""interval""=>""2_FAIXA"", ""value""=>""0.0306"", ""customerRate""=>""0.1000""}, {""interval""=>""3_FAIXA"", ""value""=>""0.0343"", ""customerRate""=>""0.3000""}, {""interval""=>""4_FAIXA"", ""value""=>""0.2468"", ""customerRate""=>""0.1000""}]";
+/data/prices;prices;;Lista;;Obrigatório;;;4;4;"";Não permitido;array;"[{""interval""=>""1_FAIXA"", ""value""=>""0.020300"", ""customerRate""=>""0.5000""}, {""interval""=>""2_FAIXA"", ""value""=>""0.030600"", ""customerRate""=>""0.1000""}, {""interval""=>""3_FAIXA"", ""value""=>""0.034300"", ""customerRate""=>""0.3000""}, {""interval""=>""4_FAIXA"", ""value""=>""0.246800"", ""customerRate""=>""0.1000""}]";
 /data/prices/interval;interval;Identificação do intervalo a ser exibido.;Texto;;Obrigatório;;"1_FAIXA 
 2_FAIXA 
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
-/data/prices/value;value;Mediana referente a cada intervalo.;Texto;6;Obrigatório;^\d{1}\.\d{1,4}$;;1;1;"";Não permitido;string;0.0203;
+/data/prices/value;value;Mediana referente a taxa de desconto de débito ou crédito a cada intervalo.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.019800;8
 /data/prices/customerRate;customerRate;Percentual de cliente em cada intervalo.;Texto;6;Obrigatório;^\d{1}\.\d{1,4}$;;1;1;"";Não permitido;string;0.5000;
 /data/chargingTriggerInfo;chargingTriggerInfo;"""Descrição do Fator gerador de cobrança que incide sobre o serviço de credenciamento.""
 ";Texto;200;Obrigatório;;;1;1;"";Não permitido;string;Recebimento através de transação de cartão.;1
