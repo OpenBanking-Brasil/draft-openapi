@@ -35,8 +35,8 @@ ACOES
 MULTIMERCADO 
 CAMBIAL";1;1;"";Não permitido;string;MULTIMERCADO;
 /data/fees;fees;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/fees/maxAdminFee;maxAdminFee;Taxa máxima cobrada para remunerar o administrador e os demais prestadores de serviços do fundo. Caso não haja a difererença de Máximo e Mínimo, considerar a taxa de administração do fundo.;Texto;8;Obrigatório;^\d{1}\.\d{1,6}$;;1;1;"";Não permitido;string;0.020000;3
-/data/fees/entryFee;entryFee;Taxa cobrada no momento da aplicação, que incide sobre o valor investido no fundo.;Texto;8;Opcional;^\d{1}\.\d{1,6}$;;0;1;"";Não permitido;string;0.010000;3
+/data/fees/maxAdminFee;maxAdminFee;Taxa máxima cobrada para remunerar o administrador e os demais prestadores de serviços do fundo. Caso não haja a difererença de Máximo e Mínimo, considerar a taxa de administração do fundo.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.020000;8
+/data/fees/entryFee;entryFee;Taxa cobrada no momento da aplicação, que incide sobre o valor investido no fundo.;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.010000;8
 /data/fees/performanceFee;performanceFee;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/fees/performanceFee/method;method;Metodologia do campo para taxa de performance.<br><ol><li>Passivo</li><li>Ativo</li><li>Ajuste</li></ol>;Texto;;Opcional;;"PASSIVO 
 ATIVO 
@@ -71,7 +71,7 @@ IRF_M_1_PLUS
 OUTROS";0;1;"";Não permitido;string;CDI;
 /data/fees/performanceFee/benchmarkAdditionalInfo;benchmarkAdditionalInfo;Campo a ser preenchido pelas participantes quando houver ‘Outros’ no campo ‘Taxa de Performance - Benchmark’.;Texto;;Opcional;;;0;1;"";Não permitido;string;;
 /data/fees/performanceFee/amount;amount;Taxa cobrada do fundo em função de resultado conforme regras dispostas no regulamento do fundo.;Texto;8;Opcional;^\d{1}\.\d{1,6}$;;0;1;"";Não permitido;string;0.050000;3
-/data/fees/exitFee;exitFee;Taxa paga pelo cotista ao resgatar recursos de um fundo.;Texto;8;Opcional;^\d{1}\.\d{1,6}$;;0;1;"";Não permitido;string;0.030000;3
+/data/fees/exitFee;exitFee;Taxa paga pelo cotista ao resgatar recursos de um fundo.;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.030000;8
 /data/generalConditions;generalConditions;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/generalConditions/minimumAmount;minimumAmount;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/generalConditions/minimumAmount/value;value;Valor mínimo do primeiro aporte.;Texto;19;Obrigatório;^\d{1,16}\.\d{2}$;;1;1;"";Não permitido;string;100000.12;4
