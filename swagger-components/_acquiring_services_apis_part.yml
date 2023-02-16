@@ -4,7 +4,7 @@ info:
   description: |
     API de Credenciamento do Open Finance Brasil – Fase 4.
     API que retorna informações de Credenciamento.
-  version: 1.0.0-rc1.0
+  version: 1.0.0-rc2.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
@@ -77,8 +77,8 @@ components:
       $ref: "./schemas/Links.yaml"
     OpenDataMeta:
       $ref: "./schemas/OpenDataMeta.yaml"
-    Participant:
-      $ref: ./schemas/business_commons/Participant.yaml
+    AcquiringParticipant:
+      $ref: ./schemas/acquiring_services_apis/AcquiringParticipant.yaml
     EnumAcquiringServicesFeeName:
       $ref: ./schemas/enum/EnumAcquiringServicesFeeName.yaml
     EnumAcquiringServicesCode:
@@ -89,6 +89,8 @@ components:
       $ref: ./schemas/acquiring_services_apis/Price.yaml
     AcquiringServicesContractData:
       $ref: ./schemas/acquiring_services_apis/AcquiringServicesContractData.yaml
+    OpenDataResponseError:
+      $ref: ./schemas/OpenDataResponseError.yaml
   parameters:
     page:
       $ref: ./parameters/Page.yaml

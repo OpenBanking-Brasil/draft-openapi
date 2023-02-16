@@ -4,7 +4,7 @@ info:
   description: |
     Estas APIs visam o compartilhamento de dados sobre Investimentos e suas
     características entre as Instituições Financeiras participantes do Open Finance Brasil
-  version: 1.0.0-rc1.0
+  version: 1.0.0-rc2.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
@@ -157,11 +157,13 @@ components:
     OKResponseInvestmentsTreasure:
       $ref: ./schemas/investments_apis/ResponseInvestmentsTreasure.yaml
     NoIdentificationFrequencyDistribution:
-      $ref: ./schemas/business_commons/NoIdentificationFrequencyDistribution.yaml
+      $ref: ./schemas/investments_apis/NoIdentificationFrequencyDistribution.yaml
+    InvestmentsNoIdentificationFrequencyDistribution:
+      $ref: ./schemas/investments_apis/InvestmentsNoIdentificationFrequencyDistribution.yaml
     DistributionFrequencyPrice:
-      $ref: ./schemas/business_commons/InvestmentFrequencyDistributionPrice.yaml
+      $ref: ./schemas/investments_apis/InvestmentFrequencyDistributionPrice.yaml
     EnumDistinctTargetAudience:
-     $ref: ./schemas/business_commons/EnumDistinctTargetAudience.yaml
+      $ref: ./schemas/business_commons/EnumDistinctTargetAudience.yaml
     InvestmentsFixedIncomeBank:
       $ref: ./schemas/investments_apis/InvestmentsFixedIncomeBank.yaml
     InvestmentsFixedIncomeBankIndex:
@@ -195,9 +197,9 @@ components:
     EnumInvestmentsFixedIncomeBankIndexer:
       $ref: ./schemas/enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
     EnumInvestmentsFixedIncomeBankProductType:
-      $ref: ./schemas/enum/EnumInvestmentsFixedIncomeBankProductType.yaml
+      $ref: ./schemas/investments_apis/EnumInvestmentsFixedIncomeBankProductType.yaml
     EnumInvestmentsFixedIncomeBankRedemptionTerm:
-      $ref: ./schemas/enum/EnumInvestmentsFixedIncomeBankRedemptionTerm.yaml
+      $ref: ./schemas/investments_apis/EnumInvestmentsFixedIncomeBankRedemptionTerm.yaml
     EnumInvestmentsFixedIncomeCreditInvestmentType:
       $ref: ./schemas/enum/EnumInvestmentsFixedIncomeCreditInvestmentType.yaml
     EnumInvestmentsFundFeesPerformanceFeeBenchmark:
@@ -216,14 +218,22 @@ components:
       $ref: ./schemas/enum/EnumInvestmentsTreasureInvestmentType.yaml
     EnumInvestmentsVariableIncomeInvestmentType:
       $ref: ./schemas/enum/EnumInvestmentsVariableIncomeInvestmentType.yaml
-    Participant:
-      $ref: ./schemas/business_commons/Participant.yaml
+    InvestmentsParticipant:
+      $ref: ./schemas/investments_apis/InvestmentsParticipant.yaml
     EnumInterval:
-      $ref: ./schemas/business_commons/EnumInterval.yaml
+      $ref: ./schemas/investments_apis/EnumInterval.yaml
+    CnpjNumber:
+      $ref: ./schemas/investments_apis/CnpjNumber.yaml
     Links:
       $ref: ./schemas/Links.yaml
     OpenDataMeta:
-      $ref: "./schemas/OpenDataMeta.yaml"
+      $ref: ./schemas/OpenDataMeta.yaml
+    OpenDataMeta2Records:
+      $ref: ./schemas/OpenDataMeta2Records.yaml
+    OpenDataResponseError:
+      $ref: ./schemas/OpenDataResponseError.yaml
+    EnumExpirationGracePeriod:
+      $ref: ./schemas/investments_apis/EnumExpirationGracePeriod.yaml
   parameters:
     page:
       $ref: ./parameters/Page.yaml

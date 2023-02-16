@@ -4,7 +4,7 @@ info:
   description: |
     API de Câmbio do Open Finance Brasil – Fase 4.
     API que retorna informações de Câmbio.
-  version: 1.0.0-rc1.0
+  version: 1.0.0-rc2.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
@@ -30,7 +30,10 @@ paths:
         - Exchange Online Rate
       summary: Conjunto de informações de Câmbio para taxa online.
       operationId: exchangeGetOnlineRate
-      description: Método para disponibilizar a taxa online.
+      description: As instituições autorizadas a operar em câmbio que disponibilizam em seus canais digitais a possibilidade de contratação ou a informação de taxa de câmbio devem retornar as condições no momento da consulta, sendo admitida uma defasagem máxima de atualização de 5 minutos em relação a seus canais digitais.
+
+
+        Já as demais instituições participantes do Open Finance autorizadas a operar em câmbio podem adotar as janelas de consulta da PTAX como frequência mínima de atualização das informações retornadas neste serviço.
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
@@ -53,7 +56,7 @@ paths:
         - Exchange VET Value
       summary: Conjunto de informações de Câmbio para valor do VET.
       operationId: exchangeGetVetValue
-      description: Método para disponibilizar o valor VET.<br>O retorno, embora não especificado, deve abranger a classificação do tipo de operação, conforme a circular BCB n&#186; 3690 de 16/12/2013 com os seguintes items&#58;<br><ol><li>Comércio exterior</li><li>Transporte</li><li>Seguros</li><li>Viagens internacionais</li><li>Transferências unilaterais</li><li>Serviços diversos</li><li>Rendas de capitais</li><li>Capitais brasileiros</li><li>Capitais estrangeiros</li><li>Prestação de serviço de pagamento ou transferência internacional - EFX</li></ol>
+      description: Método para disponibilizar os VETs praticados pela instituição nas operações de câmbio, agrupados por tipo de operação (compra ou venda), moeda, forma de entrega, faixas de valores e público-alvo (pessoa física, pessoa jurídica ou ambos).
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
@@ -84,24 +87,32 @@ components:
       $ref: ./schemas/exchange_apis/ExchangeOnlineRate.yaml
     ExchangeVetValue:
       $ref: ./schemas/exchange_apis/ExchangeVetValue.yaml
+    ExchangeNoIdentificationFrequencyDistribution:
+      $ref: ./schemas/exchange_apis/ExchangeNoIdentificationFrequencyDistribution.yaml
+    ExchangeFrequencyDistributionPrice:
+      $ref: ./schemas/exchange_apis/ExchangeFrequencyDistributionPrice.yaml
     OnlineRate:
       $ref: ./schemas/exchange_apis/OnlineRate.yaml
-    VetValueFrequencyDistributionPrice:
-      $ref: ./schemas/business_commons/FrequencyDistributionPrice.yaml
     EnumExchangeDeliveryForeignCurrency:
       $ref: ./schemas/enum/EnumExchangeDeliveryForeignCurrency.yaml
     EnumExchangeRangeTransactionCategory:
-      $ref: ./schemas/enum/EnumExchangeRangeTransactionCategory.yaml
+      $ref: ./schemas/exchange_apis/EnumExchangeRangeTransactionCategory.yaml
     EnumExchangeTransactionCategory:
       $ref: ./schemas/enum/EnumExchangeTransactionCategory.yaml
     EnumExchangeTransactionType:
       $ref: ./schemas/enum/EnumExchangeTransactionType.yaml
+    EnumDistinctTargetAudienceExchange:
+      $ref: ./schemas/exchange_apis/EnumDistinctTargetAudienceExchange.yaml
+    EnumInterval:
+      $ref: ./schemas/exchange_apis/EnumInterval.yaml
+    CnpjNumber:
+      $ref: ./schemas/exchange_apis/CnpjNumber.yaml
     Participant:
-      $ref: ./schemas/business_commons/Participant.yaml
-    EnumDistinctTargetAudience:
-      $ref: ./schemas/business_commons/EnumDistinctTargetAudience.yaml
-    EnumTargetAudience:
-      $ref: ./schemas/business_commons/EnumTargetAudience.yaml
+      $ref: ./schemas/exchange_apis/Participant.yaml
+    CurrencyCode:
+      $ref: ./schemas/business_commons/CurrencyCode.yaml
+    OpenDataResponseError:
+      $ref: ./schemas/OpenDataResponseError.yaml
   parameters:
     page:
       $ref: ./parameters/Page.yaml
