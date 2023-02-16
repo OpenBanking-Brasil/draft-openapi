@@ -46,7 +46,7 @@ paths:
        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseAccountList'
+          $ref: '#/components/responses/OKResponseBankFixedIncomesProductList'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -209,84 +209,8 @@ paths:
 
 components:
   schemas:
-    OKResponseInvestmentsFund:
-      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFund.yaml
-    OKResponseInvestmentsFixedIncomeBank:
-      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFixedIncomeBank.yaml
-    OKResponseInvestmentsFixedIncomeCredit:
-      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFixedIncomeCredit.yaml
-    OKResponseInvestmentsVariableIncome:
-      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsVariableIncome.yaml
-    OKResponseInvestmentsTreasure:
-      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsTreasure.yaml
-    NoIdentificationFrequencyDistribution:
-      $ref: ./schemas/bank_fixed_incomes_apis/NoIdentificationFrequencyDistribution.yaml
-    InvestmentsNoIdentificationFrequencyDistribution:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsNoIdentificationFrequencyDistribution.yaml
-    DistributionFrequencyPrice:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentFrequencyDistributionPrice.yaml
-    EnumDistinctTargetAudience:
-      $ref: ./schemas/business_commons/EnumDistinctTargetAudience.yaml
-    InvestmentsFixedIncomeBank:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeBank.yaml
-    InvestmentsFixedIncomeBankIndex:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeBankIndex.yaml
-    InvestmentFundMinimumAmount:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentFundMinimumAmount.yaml
-    InvestmentsFixedIncomeBankInvestmentConditions:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeBankInvestmentConditions.yaml
-    InvestmentsFixedIncomeCredit:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeCredit.yaml
-    InvestmentsFund:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFund.yaml
-    InvestmentsFundAdmin:
-      $ref: ./schemas/bank_fixed_incomes_apis/Admin.yaml
-    InvestmentsFundFundManager:
-      $ref: ./schemas/bank_fixed_incomes_apis/FundManager.yaml
-    InvestmentsFundFees:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFundFees.yaml
-    InvestmentsFundFeesPerformanceFee:
-      $ref: ./schemas/bank_fixed_incomes_apis/PerformanceFee.yaml
-    InvestmentsFundGeneralConditionsRedemption:
-      $ref: ./schemas/bank_fixed_incomes_apis/Redemption.yaml
-    InvestmentsFundGeneralConditionsApplication:
-      $ref: ./schemas/bank_fixed_incomes_apis/Application.yaml
-    InvestmentsFundGeneralConditions:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFundGeneralConditions.yaml
-    InvestmentsTreasure:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsTreasure.yaml
-    InvestmentsVariableIncome:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsVariableIncome.yaml
-    EnumInvestmentsFixedIncomeBankIndexer:
-      $ref: ./schemas/enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
-    EnumInvestmentsFixedIncomeBankProductType:
-      $ref: ./schemas/bank_fixed_incomes_apis/EnumInvestmentsFixedIncomeBankProductType.yaml
-    EnumInvestmentsFixedIncomeBankRedemptionTerm:
-      $ref: ./schemas/bank_fixed_incomes_apis/EnumInvestmentsFixedIncomeBankRedemptionTerm.yaml
-    EnumInvestmentsFixedIncomeCreditInvestmentType:
-      $ref: ./schemas/enum/EnumInvestmentsFixedIncomeCreditInvestmentType.yaml
-    EnumInvestmentsFundFeesPerformanceFeeBenchmark:
-      $ref: ./schemas/enum/EnumInvestmentsFundFeesPerformanceFeeBenchmark.yaml
-    EnumInvestmentsFundFeesPerformanceFeeMethod:
-      $ref: ./schemas/enum/EnumInvestmentsFundFeesPerformanceFeeMethod.yaml
-    EnumInvestmentsFundGeneralConditionsFundQuotaType:
-      $ref: ./schemas/enum/EnumInvestmentsFundGeneralConditionsFundQuotaType.yaml
-    EnumInvestmentsFundGeneralConditionsTermType:
-      $ref: ./schemas/enum/EnumInvestmentsFundGeneralConditionsTermType.yaml
-    EnumInvestmentsFundProductAnbimaCategory:
-      $ref: ./schemas/enum/EnumInvestmentsFundProductAnbimaCategory.yaml
-    EnumInvestmentsFundTaxation:
-      $ref: ./schemas/enum/EnumInvestmentsFundTaxation.yaml
-    EnumInvestmentsTreasureInvestmentType:
-      $ref: ./schemas/enum/EnumInvestmentsTreasureInvestmentType.yaml
-    EnumInvestmentsVariableIncomeInvestmentType:
-      $ref: ./schemas/enum/EnumInvestmentsVariableIncomeInvestmentType.yaml
-    InvestmentsParticipant:
-      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsParticipant.yaml
-    EnumInterval:
-      $ref: ./schemas/bank_fixed_incomes_apis/EnumInterval.yaml
-    CnpjNumber:
-      $ref: ./schemas/bank_fixed_incomes_apis/CnpjNumber.yaml
+    OKResponseBankFixedIncomesProductList:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeListProduct.yaml
     Links:
       $ref: ./schemas/Links.yaml
     OpenDataMeta:
