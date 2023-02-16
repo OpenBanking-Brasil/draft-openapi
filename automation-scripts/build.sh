@@ -23,7 +23,7 @@ APIS=(
   #"invoice_financings"
   #"loans"
   # "payments"
- # "pension"
+  "pension"
  # "resources"
  # "unarranged_accounts_overdraft"
 )
