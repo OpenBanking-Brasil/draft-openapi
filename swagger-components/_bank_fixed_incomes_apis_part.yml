@@ -1,0 +1,365 @@
+openapi: 3.0.0
+info:
+  title: API Renda Fixa Bancária - Open Finance Brasil
+  description: |
+    Estas APIs visam o compartilhamento de dados sobre produtos, movimentacão de clientes e suas
+    características entre as Instituições Financeiras participantes do Open Finance Brasil
+  version: 1.0.0-rc1.0
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+  contact:
+    name: Governança do Open Finance Brasil – Especificações
+    email: gt-interfaces@openbankingbr.org
+    url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
+servers:
+  - url: "https://api.banco.com.br/open-banking/opendata-investments/v1"
+    description: Servidor de Produção
+  - url: "https://apih.banco.com.br/open-banking/opendata-investments/v1"
+    description: Servidor de Homologação
+tags:
+  - name: List Products
+    description: Método para obter a lista de Fundos de Investimentos
+  - name: Identify Product
+    description: Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
+  - name: Customer Position
+    description: Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
+  - name: Product Movement
+    description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+  
+paths:
+  /list-products:
+    get:
+      tags:
+        - List Products
+      summary: Conjunto de informações dos Fundos de Investimentos
+      operationId: investmentsGetFunds
+      description: Método para obter a lista de Fundos de Investimentos
+      parameters:
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAccountList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  
+  /identify-product:
+    get:
+      tags:
+        - Identify Product
+      summary: Conjunto de informações de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
+      operationId: investmentsGetFixedIncomeBank
+      description: Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
+      parameters:
+       - $ref: '#/components/parameters/investmentId'
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAccountList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  /customer-position:
+    get:
+      tags:
+        - Customer Position
+      summary: Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
+      operationId: investmentsGetFixedIncomeCredit
+      description: Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
+      parameters:
+       - $ref: '#/components/parameters/investmentId'
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAccountList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+  /product-movement:
+    get:
+      tags:
+        - Product Movement
+      summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      operationId: investmentsGetVariableIncome
+      description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      parameters:
+       - $ref: '#/components/parameters/investmentId'
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAccountList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+
+components:
+  schemas:
+    OKResponseInvestmentsFund:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFund.yaml
+    OKResponseInvestmentsFixedIncomeBank:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFixedIncomeBank.yaml
+    OKResponseInvestmentsFixedIncomeCredit:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFixedIncomeCredit.yaml
+    OKResponseInvestmentsVariableIncome:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsVariableIncome.yaml
+    OKResponseInvestmentsTreasure:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsTreasure.yaml
+    NoIdentificationFrequencyDistribution:
+      $ref: ./schemas/bank_fixed_incomes_apis/NoIdentificationFrequencyDistribution.yaml
+    InvestmentsNoIdentificationFrequencyDistribution:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsNoIdentificationFrequencyDistribution.yaml
+    DistributionFrequencyPrice:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentFrequencyDistributionPrice.yaml
+    EnumDistinctTargetAudience:
+      $ref: ./schemas/business_commons/EnumDistinctTargetAudience.yaml
+    InvestmentsFixedIncomeBank:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeBank.yaml
+    InvestmentsFixedIncomeBankIndex:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeBankIndex.yaml
+    InvestmentFundMinimumAmount:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentFundMinimumAmount.yaml
+    InvestmentsFixedIncomeBankInvestmentConditions:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeBankInvestmentConditions.yaml
+    InvestmentsFixedIncomeCredit:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFixedIncomeCredit.yaml
+    InvestmentsFund:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFund.yaml
+    InvestmentsFundAdmin:
+      $ref: ./schemas/bank_fixed_incomes_apis/Admin.yaml
+    InvestmentsFundFundManager:
+      $ref: ./schemas/bank_fixed_incomes_apis/FundManager.yaml
+    InvestmentsFundFees:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFundFees.yaml
+    InvestmentsFundFeesPerformanceFee:
+      $ref: ./schemas/bank_fixed_incomes_apis/PerformanceFee.yaml
+    InvestmentsFundGeneralConditionsRedemption:
+      $ref: ./schemas/bank_fixed_incomes_apis/Redemption.yaml
+    InvestmentsFundGeneralConditionsApplication:
+      $ref: ./schemas/bank_fixed_incomes_apis/Application.yaml
+    InvestmentsFundGeneralConditions:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsFundGeneralConditions.yaml
+    InvestmentsTreasure:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsTreasure.yaml
+    InvestmentsVariableIncome:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsVariableIncome.yaml
+    EnumInvestmentsFixedIncomeBankIndexer:
+      $ref: ./schemas/enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
+    EnumInvestmentsFixedIncomeBankProductType:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumInvestmentsFixedIncomeBankProductType.yaml
+    EnumInvestmentsFixedIncomeBankRedemptionTerm:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumInvestmentsFixedIncomeBankRedemptionTerm.yaml
+    EnumInvestmentsFixedIncomeCreditInvestmentType:
+      $ref: ./schemas/enum/EnumInvestmentsFixedIncomeCreditInvestmentType.yaml
+    EnumInvestmentsFundFeesPerformanceFeeBenchmark:
+      $ref: ./schemas/enum/EnumInvestmentsFundFeesPerformanceFeeBenchmark.yaml
+    EnumInvestmentsFundFeesPerformanceFeeMethod:
+      $ref: ./schemas/enum/EnumInvestmentsFundFeesPerformanceFeeMethod.yaml
+    EnumInvestmentsFundGeneralConditionsFundQuotaType:
+      $ref: ./schemas/enum/EnumInvestmentsFundGeneralConditionsFundQuotaType.yaml
+    EnumInvestmentsFundGeneralConditionsTermType:
+      $ref: ./schemas/enum/EnumInvestmentsFundGeneralConditionsTermType.yaml
+    EnumInvestmentsFundProductAnbimaCategory:
+      $ref: ./schemas/enum/EnumInvestmentsFundProductAnbimaCategory.yaml
+    EnumInvestmentsFundTaxation:
+      $ref: ./schemas/enum/EnumInvestmentsFundTaxation.yaml
+    EnumInvestmentsTreasureInvestmentType:
+      $ref: ./schemas/enum/EnumInvestmentsTreasureInvestmentType.yaml
+    EnumInvestmentsVariableIncomeInvestmentType:
+      $ref: ./schemas/enum/EnumInvestmentsVariableIncomeInvestmentType.yaml
+    InvestmentsParticipant:
+      $ref: ./schemas/bank_fixed_incomes_apis/InvestmentsParticipant.yaml
+    EnumInterval:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumInterval.yaml
+    CnpjNumber:
+      $ref: ./schemas/bank_fixed_incomes_apis/CnpjNumber.yaml
+    Links:
+      $ref: ./schemas/Links.yaml
+    OpenDataMeta:
+      $ref: ./schemas/OpenDataMeta.yaml
+    OpenDataMeta2Records:
+      $ref: ./schemas/OpenDataMeta2Records.yaml
+    OpenDataResponseError:
+      $ref: ./schemas/OpenDataResponseError.yaml
+    EnumExpirationGracePeriod:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumExpirationGracePeriod.yaml
+  parameters:
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
+  responses:
+    OKResponseInvestmentsFund:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeListProduct.yaml
+    OKResponseInvestmentsFixedIncomeBank:
+      description: Dados de produtos de renda fixa bancária obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFixedIncomeBank.yaml
+    OKResponseInvestmentsFixedIncomeCredit:
+      description: Dados de produtos de renda fixa crédito obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsFixedIncomeCredit.yaml
+    OKResponseInvestmentsVariableIncome:
+      description: Dados de produtos de renda variável obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsVariableIncome.yaml
+    OKResponseInvestmentsTreasure:
+      description: Dados de títulos do tesouro direto obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseInvestmentsTreasure.yaml
+    BadRequest:
+      description: "A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/OpenDataResponseError.yaml
+    InternalServerError:
+      description: Ocorreu um erro no gateway da API ou no microsserviço
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/OpenDataResponseError.yaml
+    MethodNotAllowed:
+      description: O consumidor tentou acessar o recurso com um método não suportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/OpenDataResponseError.yaml
+    NotFound:
+      description: O recurso solicitado não existe ou não foi implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/OpenDataResponseError.yaml
+    TooManyRequests:
+      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido"
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/OpenDataResponseError.yaml
