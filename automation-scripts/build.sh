@@ -8,6 +8,7 @@ GENERATED_SWAGGERS_TO_GEN_DICTIONARIES_PATH=
 TEMP_GEN_DICTIONARY_DIR=$PROJECT_ROOT_DIR/temp-dict-dir
 chmod + $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator
 mkdir $TEMP_GEN_DICTIONARY_DIR
+
 APIS=(
   "accounts"
  # "acquiring_services"
@@ -26,6 +27,7 @@ APIS=(
   "resources"
   "unarranged_accounts_overdraft"
 )
+
 function genSwaggerFiles(){
     WITH_REF=$1
     API=$2
@@ -61,6 +63,7 @@ function genSwaggerFiles(){
       fi
     fi
 }
+
 for API in "${APIS[@]}"
 do
  genSwaggerFiles 0 $API

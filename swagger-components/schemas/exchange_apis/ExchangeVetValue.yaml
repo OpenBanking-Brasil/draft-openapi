@@ -10,7 +10,7 @@ required:
   - targetAudience
 properties:
   participant:
-    $ref: ../business_commons/Participant.yaml
+    $ref: ./Participant.yaml
   transactionType:
     $ref: ../enum/EnumExchangeTransactionType.yaml
   foreignCurrency:
@@ -18,9 +18,9 @@ properties:
   deliveryForeignCurrency:
     $ref: ../enum/EnumExchangeDeliveryForeignCurrency.yaml
   rangeTransactionCategory:
-    $ref: ../enum/EnumExchangeRangeTransactionCategory.yaml
+    $ref: ./EnumExchangeRangeTransactionCategory.yaml
   targetAudience:
-    $ref: ../business_commons/EnumTargetAudience.yaml
+    $ref: ./EnumDistinctTargetAudienceExchange.yaml
   vetAmount:
-    $ref: ../business_commons/NoIdentificationFrequencyDistribution.yaml
+    $ref: ./ExchangeNoIdentificationFrequencyDistribution.yaml
 additionalProperties: false
