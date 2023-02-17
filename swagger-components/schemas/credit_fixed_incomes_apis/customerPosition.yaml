@@ -1,0 +1,50 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: object
+    items:
+      $ref: ./CreditFixedLista.yaml
+    required:
+      - referenceDate
+      - updatedUnitPrice
+      - grossAmount
+      - netAmount
+      - incomeTax
+      - financialTransactionTax
+      - blockedBalance
+      - purchaseUnitPrice
+      - fine
+      - latePayment
+    properties:
+      referenceDate:
+        $ref: ./referenceDate.yaml
+      updatedUnitPrice:
+        $ref: ./updatedUnitPrice.yaml
+      grossAmount:
+        $ref: ./grossAmount.yaml
+      netAmount:
+        $ref: ./netAmount.yaml
+      incomeTax:
+        $ref: ./incomeTax.yaml
+      financialTransactionTax:
+        $ref: ./financialTransactionTax.yaml
+      blockedBalance:
+        $ref: ./blockedBalance.yaml
+      purchaseUnitPrice:
+        $ref: ./purchaseUnitPrice.yaml
+      preFixedRate:
+        $ref: ./preFixedRate.yaml
+      postFixedIndexerPercentage:
+        $ref: ./postFixedIndexerPercentage.yaml
+      fine:
+        $ref: ./fine.yaml
+      latePayment:
+        $ref: ./latePayment.yaml
+  links:
+    $ref: ../Links.yaml
+  meta:
+    $ref: ../OpenDataMeta.yaml
