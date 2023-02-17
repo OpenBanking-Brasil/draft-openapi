@@ -46,7 +46,7 @@ paths:
        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseAccountList'
+          $ref: '#/components/responses/OKResponseBankFixedIncomesProductList:'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -209,6 +209,8 @@ paths:
 
 components:
   schemas:
+    ResponseBankFixedIncomesProductList:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeListProduct.yaml
     IdentiftProduct:
       $ref: ./schemas/bank_fixed_incomes_apis/IdentiftProduct.yaml
     EnumInvestmentType:
@@ -245,6 +247,12 @@ components:
     xFapiInteractionId:
       $ref: ./parameters/XFapiInteractionId.yaml
   responses:
+    OKResponseBankFixedIncomesProductList:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeListProduct.yaml
     ResponseIdentifyProduct:
       description: Dados de fundos de investimentos obtidos com sucesso.
       content:
