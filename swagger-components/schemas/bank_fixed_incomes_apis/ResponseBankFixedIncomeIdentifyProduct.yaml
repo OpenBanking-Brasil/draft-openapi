@@ -1,0 +1,15 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    $ref: ./IdentiftProduct.yaml
+  links:
+    schema:
+      $ref: ./BankFixedIncomesTransactionsLinks.yaml
+  meta:
+    schema:
+      $ref: ./BankFixedIncomesMeta.yaml
+additionalProperties: false

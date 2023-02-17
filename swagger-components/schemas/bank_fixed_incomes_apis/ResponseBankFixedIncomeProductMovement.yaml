@@ -1,0 +1,17 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: array
+    items:
+      $ref: ./BankFixedIncomeProductMovement.yaml
+  links:
+    schema:
+      $ref: ./BankFixedIncomesTransactionsLinks.yaml
+  meta:
+    schema:
+      $ref: ./BankFixedIncomesMeta.yaml
+additionalProperties: false
