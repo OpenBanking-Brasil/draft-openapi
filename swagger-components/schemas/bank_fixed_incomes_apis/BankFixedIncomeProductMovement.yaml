@@ -1,0 +1,80 @@
+type: object
+required:
+  - type
+  - transactionType
+  - transactionDate
+  - transactionUnitePrice
+  - transactionQuantity
+  - transactionGrossValue
+  - incomeTax
+  - financialTransactionTax
+  - transactionId
+properties:
+  type:
+    $ref: ./EnumBankFixedIncomeMovementType.yaml
+  transactionType:
+    $ref: ./EnumBankFixedIncomeTransactionType.yaml
+  typeAdditionalInfo:
+    type: string
+    maxLength: 100
+    pattern: '[\w\W\s]*'
+    description: |
+      Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
+
+      Campo a ser preenchido pelas participantes quando o campo "transactionType" for preenchido de forma diferente de "OUTROS"
+  transactionDate:
+    type: string
+    format: date
+    maxLength: 10
+    minLength: 10
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+    example: "2018-02-15"
+    description: Data da movimentação.
+  transactionUnitePrice:
+    description: Preço unitário bruto negociado na transação.
+    $ref: ./BankFixedIncomePrice.yaml
+  transactionQuantity:
+    type: string
+    maxLength: 25
+    pattern: '^\d{1,15}\.\d{2,9}$'
+    example: "42.25"
+    description: Quantidade de títulos envolvidos na movimentação.
+  transactionGrossValue:
+    description: Valor bruto da transação (Preço unitário da movimentação x Quantidade).
+    $ref: ./BankFixedIncomePrice.yaml
+  incomeTax:
+    description: Valor do imposto de renda recolhido na transação.
+    $ref: ./BankFixedIncomePrice.yaml
+  financialTransactionTax:
+    description: Valor do IOF recolhido na transação.
+    $ref: ./BankFixedIncomePrice.yaml
+  transactionNetValue:
+    description: Valor líquido da transação.
+    $ref: ./BankFixedIncomePrice.yaml
+  TransactionRate:
+    type: string
+    maxLength: 8
+    minLength: 3
+    pattern: '^\d{1}\.\d{1,6}$'
+    example: '0.300000'
+    description: |
+      Taxa de remuneração da transação.
+
+      Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
+  IndexerPercentage:
+    type: string
+    maxLength: 8
+    minLength: 3
+    pattern: '^\d{1}\.\d{1,6}$'
+    example: '1.100000'
+    description: |
+      Percentual máximo do indexador acordado com o cliente na contratação.
+
+      Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
+  transactionId:
+    type: string
+    maxLength: 100
+    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+    example: 'ABCD2126019929279212650822221989319253344'
+    description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.
+additionalProperties: false
