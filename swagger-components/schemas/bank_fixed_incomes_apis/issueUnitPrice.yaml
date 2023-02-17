@@ -1,0 +1,14 @@
+type: object
+description: preço unitário de emissão do título.
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    type: string
+    maxLength: 23
+    pattern: '^-?\d{1,15}\.\d{2,6}$'
+    example: '1000.000004'
+  currency:
+    $ref: ../business_commons/CurrencyCode.yaml
+additionalProperties: false
