@@ -18,7 +18,10 @@ properties:
     type: string
     maxLength: 100
     pattern: '[\w\W\s]*'
-    description: Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
+    description: |
+      Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
+
+      Campo a ser preenchido pelas participantes quando o campo "transactionType" for preenchido de forma diferente de "OUTROS"
   transactionDate:
     type: string
     format: date
@@ -54,14 +57,20 @@ properties:
     minLength: 3
     pattern: '^\d{1}\.\d{1,6}$'
     example: '0.300000'
-    description: Taxa de remuneração da transação.
+    description: |
+      Taxa de remuneração da transação.
+
+      Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
   IndexerPercentage:
     type: string
     maxLength: 8
     minLength: 3
     pattern: '^\d{1}\.\d{1,6}$'
     example: '1.100000'
-    description: Percentual máximo do indexador acordado com o cliente na contratação.
+    description: |
+      Percentual máximo do indexador acordado com o cliente na contratação.
+
+      Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
   transactionId:
     type: string
     maxLength: 100
