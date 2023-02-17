@@ -1,0 +1,15 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: array
+    items:
+      $ref: ./ResponseBankFixedIncomeBalancesData.yaml
+  links:
+    $ref: ./BankFixedIncomesTransactionsLinks.yaml
+  meta:
+    $ref: ./BankFixedIncomesMeta.yaml
+additionalProperties: false
