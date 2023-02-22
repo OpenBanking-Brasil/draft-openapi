@@ -247,6 +247,9 @@ components:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesCurrency.yaml
     BalanceAmount:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesAmount.yaml
+    ResponseBankFixedIncomeBalances:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml
+    
   parameters:
     InvestmentId:
       $ref: ./parameters/InvestmentId.yaml
@@ -272,7 +275,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalancesData.yaml
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml
     OkResponseBankFixedIncomesProductList:
       description: Dados obtidos com sucesso
       content:
