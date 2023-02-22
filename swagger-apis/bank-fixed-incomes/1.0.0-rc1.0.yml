@@ -72,6 +72,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - bank_fixed_incomes
   '/identify-product/{investmentId}':
     get:
       tags:
@@ -115,6 +121,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - bank_fixed_incomes
   '/{investmentId}/balances':
     get:
       tags:
@@ -164,6 +176,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - bank_fixed_incomes
   '/{investmentId}/product-movement':
     get:
       tags:
@@ -210,6 +228,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - bank_fixed_incomes
 components:
   schemas:
     ResponseBankFixedIncomeListProduct:
@@ -792,6 +816,19 @@ components:
         meta:
           $ref: '#/components/schemas/BankFixedIncomeMeta'
       additionalProperties: false
+  securitySchemes:
+    OpenId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
+    OAuth2Security:
+      type: oauth2
+      description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://authserver.example/authorization'
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            accounts: Escopo necessário para acesso à API Bank Fixed Incomes. O controle dos endpoints específicos é feito via permissions.
   parameters:
     InvestmentId:
       name: investmentId
