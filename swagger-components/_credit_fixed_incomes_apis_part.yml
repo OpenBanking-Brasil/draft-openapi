@@ -177,7 +177,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/OKResponseCustomerMovement'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -209,7 +209,7 @@ components:
     OKResponseListagem:
       $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedLista.yaml
     OKResponseCustomerPosition:
-      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedLista.yaml
+      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedLista.yaml    
   parameters:
     investmentId:
       $ref: ./parameters/InvestmentId.yaml
@@ -236,6 +236,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedLista.yaml
+    OKResponseCustomerMovement:
+      description: Lista de títulos de renda fixa crédito mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerMovement.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
