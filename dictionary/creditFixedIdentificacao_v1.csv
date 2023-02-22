@@ -1,0 +1,85 @@
+﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
+/data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/cnpjNumber;cnpjNumber;CNPJ da instituição emissora;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;11225860000140;
+/data/isinCode;isinCode;"Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional) código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166;";Texto;12;Opcional;^[A-Z]{2}([A-Z0-9]){9}\d{1}$;;0;1;"";Não permitido;string;BRCST4CTF001;
+/data/investmentType;investmentType;"Denominação do produto 
+  1. Debêntures
+  2. CRI
+  3. CRA
+";Texto;;Obrigatório;;"DEBENTURES 
+CRI 
+CRA";1;1;"";Não permitido;string;CRI;
+/data/debtorCnpjnNumber;debtorCnpjnNumber;CNPJ do devedor (condicional para CRI e CRA);Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;11225860000140;
+/data/debtorName;debtorName;Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Roberto Marino;
+/data/incentivizedProductIndicator;incentivizedProductIndicator;Indicador de um produto incentivado;Texto;;Obrigatório;;"SIM 
+NAO";1;1;"";Não permitido;string;SIM;
+/data/indexer;indexer;"Índice utilizado como referência para a correção da rentabilidade e/ou rendimentos do ativo 
+1. CDI
+2. DI 
+3. TR
+4. IPCA
+5. IGP_M
+6. IGP_DI
+7. INPC
+8. BCP
+10. TLC
+11. SELIC
+12. PRE_FIXADO
+13. OUTROS
+";Texto;;Obrigatório;;"CDI 
+DI 
+TR 
+IPCA 
+IGP_M 
+IGP_DI 
+INPC 
+BCP 
+TLC 
+SELIC 
+PRE_FIXADO 
+OUTROS";1;1;"";Não permitido;string;CDI;
+/data/indexerAdditionalInfo;indexerAdditionalInfo;Informações adicionais do indexador;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Dólar;
+/data/remuneration;remuneration;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/remuneration/preFixedRate;preFixedRate;Valor da taxa de emissão do contrato;Texto;8;Opcional;^\d{1}\.\d{1,6}$;;0;1;"";Não permitido;string;0.300000;
+/data/remuneration/postFixedIndexerPercentage;postFixedIndexerPercentage;Percentual do indexador de emissão do contrato;Texto;8;Opcional;^\d{1}\.\d{1,6}$;;0;1;"";Não permitido;string;1.100000;
+/data/remuneration/rateType;rateType;"Tipo da taxa de remuneração
+  1. LINEAR
+  2. EXPONENCIAL
+";Texto;;Obrigatório;;"LINEAR 
+EXPONENCIAL";1;1;"";Não permitido;string;LINEAR;
+/data/remuneration/ratePeriodicity;ratePeriodicity;"Periodicidade da taxa de remuneração
+  1. MENSAL
+  2. ANUAL
+";Texto;;Obrigatório;;"MENSAL 
+ANUAL";1;1;"";Não permitido;string;MENSAL;
+/data/remuneration/calculation;calculation;"Base de cálculo
+  1. dias úteis
+  2. dias corridos
+";Texto;;Obrigatório;;"DIAS UTEIS 
+DIAS CORRIDOS";1;1;"";Não permitido;string;DIAS CORRIDOS;
+/data/issueUnitPrice;issueUnitPrice;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/issueUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/issueUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/issueUnitPrice/issueDate;issueDate;Data de emissão do título;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;
+/data/issueUnitPrice/dueDate;dueDate;Data de vencimento do contrato;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
+/data/issueUnitPrice/voucherPaymentIndicator;voucherPaymentIndicator;"Indicativo se há pagamento de cupom
+  1. Sim
+  2. Nao
+";Texto;;Obrigatório;;"SIM 
+NAO";1;1;"";Não permitido;string;SIM;
+/data/issueUnitPrice/voucherPaymentPeriodicity;voucherPaymentPeriodicity;"Em caso de haver pagamento de cupom, descrever a periodicidade (mensal, trimestral, semestral, anual, irregular e outros)
+  1. Mensal
+  2. Trimestral
+  3. Semestral
+  4. Anual
+  5. Irregular
+  6. Outros
+";Texto;;Obrigatório;;"MENSAL 
+TRIMESTRAL 
+SEMESTRAL 
+ANUAL 
+IRREGULAR 
+OUTROS";1;1;"";Não permitido;string;MENSAL;
+/data/issueUnitPrice/voucherPaymentPeriodicityAdditionalInfo;voucherPaymentPeriodicityAdditionalInfo;Informações adicionais da periodicidade de pagamento de cupom;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Diária;
+/data/issueUnitPrice/purchaseDate;purchaseDate;Data de aquisição do cliente;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
+/data/issueUnitPrice/gracePeriodDate;gracePeriodDate;Data até a qual o cliente não poderá resgatar antecipadamente seu investimento;Data;11;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;
