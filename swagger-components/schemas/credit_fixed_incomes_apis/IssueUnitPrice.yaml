@@ -1,0 +1,61 @@
+type: object
+required:
+  - amount
+  - currency
+  - issueDate
+  - dueDate
+  - voucherPaymentIndicator
+  - voucherPaymentPeriodicity
+  - purchaseDate
+  - gracePeriodDate
+properties:
+  amount:
+    type: string
+    description: Valor relacionado ao objeto.  
+    maxLength: 23
+    pattern: '^-?\d{1,15}\.\d{2,6}$'
+    example: '1000.000004'
+  currency:
+    type: string
+    description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+    maxLength: 3
+    pattern: '^[A-Z]{3}$'
+    example: 'BRL'
+  issueDate:
+    type: string
+    format: date
+    description: Data de emissão do título
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-16'
+  dueDate:
+    type: string
+    format: date
+    description: Data de vencimento do contrato
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-15'
+  voucherPaymentIndicator:
+    $ref: VoucherPaymentIndicator.yaml
+  voucherPaymentPeriodicity:
+    $ref: VoucherPaymentPeriodicity.yaml
+  voucherPaymentPeriodicityAdditionalInfo:
+    type: string
+    description: Informações adicionais da periodicidade de pagamento de cupom
+    maxLength: 50
+    pattern: '[\w\W\s]*'
+    example: 'Diária'
+  purchaseDate:
+    type: string
+    format: date
+    description: Data de aquisição do cliente
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-15'
+  gracePeriodDate:
+    type: string
+    format: date
+    description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
+    maxLength: 11
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-16'
