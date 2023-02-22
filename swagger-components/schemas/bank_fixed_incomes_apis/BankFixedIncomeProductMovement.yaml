@@ -31,8 +31,19 @@ properties:
     example: "2018-02-15"
     description: Data da movimentação.
   transactionUnitePrice:
+    type: object
     description: Preço unitário bruto negociado na transação.
-    $ref: ./BankFixedIncomePrice.yaml
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        maxLength: 23
+        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        example: '1000.000004'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
   transactionQuantity:
     type: string
     maxLength: 25
@@ -40,17 +51,61 @@ properties:
     example: "42.25"
     description: Quantidade de títulos envolvidos na movimentação.
   transactionGrossValue:
+    type: object
     description: Valor bruto da transação (Preço unitário da movimentação x Quantidade).
-    $ref: ./BankFixedIncomePrice.yaml
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        maxLength: 23
+        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        example: '1000.000004'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
   incomeTax:
+    type: object
     description: Valor do imposto de renda recolhido na transação.
-    $ref: ./BankFixedIncomePrice.yaml
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        maxLength: 23
+        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        example: '1000.000004'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
   financialTransactionTax:
+    type: object
     description: Valor do IOF recolhido na transação.
-    $ref: ./BankFixedIncomePrice.yaml
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        maxLength: 23
+        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        example: '1000.000004'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
   transactionNetValue:
+    type: object
     description: Valor líquido da transação.
-    $ref: ./BankFixedIncomePrice.yaml
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        maxLength: 23
+        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        example: '1000.000004'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
   TransactionRate:
     type: string
     maxLength: 8
