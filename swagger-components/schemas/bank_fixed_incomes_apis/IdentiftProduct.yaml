@@ -37,8 +37,19 @@ properties:
   remuneration:
     $ref: ./Remuneration.yaml
   issueUnitPrice:
+    type: object
     description: Preço unitário de emissão do título.
-    $ref: ./BankFixedIncomePrice.yaml
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        maxLength: 23
+        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        example: '1000.000004'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
   dueDate:
     type: string
     format: date

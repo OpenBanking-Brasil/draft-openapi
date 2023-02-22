@@ -22,7 +22,7 @@ tags:
     description: Método para obter a lista de Fundos de Investimentos
   - name: Identify Product
     description: Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
-  - name: Customer Position
+  - name: Balances
     description: Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
   - name: Product Movement
     description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
@@ -33,9 +33,9 @@ paths:
       tags:
         - List Products
       summary: Conjunto de informações dos Fundos de Investimentos
-      operationId: investmentsGetFunds
+      operationId: bankFixedIncomesListProduct
       description: Método para obter a lista de Fundos de Investimentos
-      parameters: #VERIFICAR NECESSIDADE DE investmentId
+      parameters:
        - $ref: '#/components/parameters/Authorization'
        - $ref: '#/components/parameters/xFapiAuthDate'
        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -79,7 +79,7 @@ paths:
       tags:
         - Identify Product
       summary: Conjunto de informações de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
-      operationId: investmentsGetFixedIncomeBank
+      operationId: bankFixedIncomesIdentifyProduct
       description: Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -120,9 +120,9 @@ paths:
   /{investmentId}/balances:
     get:
       tags:
-        - Customer Position
+        - Balances
       summary: Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
-      operationId: investmentsGetFixedIncomeCredit
+      operationId: bankFixedIncomesBalances
       description: Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
       parameters:
         - name: investmentId
@@ -166,12 +166,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
-  /product-movement:
+  /{investmentId}/product-movement:
     get:
       tags:
         - Product Movement
       summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
-      operationId: investmentsGetVariableIncome
+      operationId: bankFixedIncomesProductMovement
       description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       parameters:
        - $ref: '#/components/parameters/InvestmentId'
@@ -231,14 +231,10 @@ components:
       $ref: ./schemas/bank_fixed_incomes_apis/EnumRatePeriodicity.yaml
     EnumCalculation:
       $ref: ./schemas/bank_fixed_incomes_apis/EnumCalculation.yaml
-    issueUnitPrice:
-      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomePrice.yaml
     BankFixedIncomeMeta:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesMeta.yaml
     BankFixedIncomeLinks:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsLinks.yaml
-    BankFixedIncomePrice:
-      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomePrice.yaml
     BankFixedIncomeProductMovement:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomeProductMovement.yaml
     EnumBankFixedIncomeMovementType:
@@ -247,6 +243,10 @@ components:
       $ref: ./schemas/bank_fixed_incomes_apis/EnumBankFixedIncomeTransactionType.yaml
     CurrencyCode:
       $ref: ./schemas/business_commons/CurrencyCode.yaml
+    BalanceCurrency:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesCurrency.yaml
+    BalanceAmount:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesAmount.yaml
   parameters:
     InvestmentId:
       $ref: ./parameters/InvestmentId.yaml
