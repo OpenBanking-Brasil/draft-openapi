@@ -1,26 +1,27 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/referenceDate;referenceDate;"Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos;";Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-03-07;
-/updatedUnitPrice;updatedUnitPrice;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/updatedUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
-/updatedUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/updatedUnitPrice/quantity;quantity;Quantidade de títulos detidos na data da posição do cliente;Texto;15;Opcional;^\d{1,15};;0;1;"";Não permitido;string;15;
-/grossAmount;grossAmount;"Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/grossAmount/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
-/grossAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/netAmount;netAmount;Valor do investimento atualizado na data de referência, posterior a dedução de impostos (IOF e IR).;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/netAmount/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
-/netAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/incomeTax;incomeTax;Valor do imposto considerando a alíquota vigente na data de referência.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/incomeTax/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
-/incomeTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/financialTransactionTax;financialTransactionTax;Valor do imposto considerando a alíquota vigente na data de referência.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/financialTransactionTax/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
-/financialTransactionTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/blockedBalance;blockedBalance;Valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/blockedBalance/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
-/blockedBalance/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/purchaseUnitPrice;purchaseUnitPrice;Valor unitário negociado com o cliente na data de aquisição;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/purchaseUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
-/purchaseUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/preFixedRate;preFixedRate;Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.300000;8
-/postFixedIndexerPercentage;postFixedIndexerPercentage;Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;1.000000;8
+/data;data;Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/referenceDate;referenceDate;"Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos;";Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-03-07;
+/data/updatedUnitPrice;updatedUnitPrice;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/updatedUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/updatedUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/updatedUnitPrice/quantity;quantity;Quantidade de títulos detidos na data da posição do cliente;Texto;15;Opcional;^\d{1,15};;0;1;"";Não permitido;string;15;
+/data/grossAmount;grossAmount;"Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/grossAmount/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/grossAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/netAmount;netAmount;Valor do investimento atualizado na data de referência, posterior a dedução de impostos (IOF e IR).;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/netAmount/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/netAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/incomeTax;incomeTax;Valor do imposto considerando a alíquota vigente na data de referência.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/incomeTax/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/incomeTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/financialTransactionTax;financialTransactionTax;Valor do imposto considerando a alíquota vigente na data de referência.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/financialTransactionTax/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/financialTransactionTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/blockedBalance;blockedBalance;Valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/blockedBalance/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/blockedBalance/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/purchaseUnitPrice;purchaseUnitPrice;Valor unitário negociado com o cliente na data de aquisição;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/purchaseUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/purchaseUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/preFixedRate;preFixedRate;Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.300000;8
+/data/postFixedIndexerPercentage;postFixedIndexerPercentage;Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;1.000000;8

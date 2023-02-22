@@ -296,8 +296,19 @@ components:
         remuneration:
           $ref: '#/components/schemas/Remuneration'
         issueUnitPrice:
+          type: object
           description: Preço unitário de emissão do título.
-          $ref: '#/components/schemas/issueUnitPrice'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              maxLength: 23
+              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              example: '1000.000004'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
         dueDate:
           type: string
           format: date
@@ -419,20 +430,6 @@ components:
         - DIAS_UTEIS
         - DIAS_CORRIDOS
       example: DIAS_CORRIDOS
-    issueUnitPrice:
-      type: object
-      required:
-        - amount
-        - currency
-      properties:
-        amount:
-          type: string
-          maxLength: 23
-          pattern: '^-?\d{1,15}\.\d{2,6}$'
-          example: '1000.000004'
-        currency:
-          $ref: '#/components/schemas/CurrencyCode'
-      additionalProperties: false
     BankFixedIncomeMeta:
       type: object
       description: Meta informações referente a API requisitada.
@@ -492,8 +489,6 @@ components:
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-    BankFixedIncomePrice:
-      $ref: '#/components/schemas/issueUnitPrice'
     BankFixedIncomeProductMovement:
       type: object
       required:
@@ -528,8 +523,19 @@ components:
           example: '2018-02-15'
           description: Data da movimentação.
         transactionUnitePrice:
+          type: object
           description: Preço unitário bruto negociado na transação.
-          $ref: '#/components/schemas/issueUnitPrice'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              maxLength: 23
+              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              example: '1000.000004'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
         transactionQuantity:
           type: string
           maxLength: 25
@@ -537,17 +543,61 @@ components:
           example: '42.25'
           description: Quantidade de títulos envolvidos na movimentação.
         transactionGrossValue:
+          type: object
           description: Valor bruto da transação (Preço unitário da movimentação x Quantidade).
-          $ref: '#/components/schemas/issueUnitPrice'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              maxLength: 23
+              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              example: '1000.000004'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
         incomeTax:
+          type: object
           description: Valor do imposto de renda recolhido na transação.
-          $ref: '#/components/schemas/issueUnitPrice'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              maxLength: 23
+              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              example: '1000.000004'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
         financialTransactionTax:
+          type: object
           description: Valor do IOF recolhido na transação.
-          $ref: '#/components/schemas/issueUnitPrice'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              maxLength: 23
+              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              example: '1000.000004'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
         transactionNetValue:
+          type: object
           description: Valor líquido da transação.
-          $ref: '#/components/schemas/issueUnitPrice'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              maxLength: 23
+              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              example: '1000.000004'
+            currency:
+              $ref: '#/components/schemas/CurrencyCode'
         TransactionRate:
           type: string
           maxLength: 8
@@ -613,6 +663,135 @@ components:
       maxLength: 23
       pattern: '^-?\d{1,15}\.\d{2,6}$'
       example: '1000.000004'
+    ResponseBankFixedIncomeBalances:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+          required:
+            - referenceDate
+            - updatedUnitPrice
+            - grossAmount
+            - netAmount
+            - incomeTax
+            - financialTransactionTax
+            - blockedBalance
+            - purchaseUnitPrice
+          properties:
+            referenceDate:
+              type: string
+              format: date
+              description: Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos;
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2023-03-07'
+              maxLength: 10
+            updatedUnitPrice:
+              type: object
+              required:
+                - amount
+                - currency
+              description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+                quantity:
+                  type: string
+                  description: Quantidade de títulos detidos na data da posição do cliente
+                  maxLength: 15
+                  pattern: '^\d{1,15}'
+                  example: '15'
+            grossAmount:
+              description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
+              type: object
+              required:
+                - amount
+                - currency
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            netAmount:
+              description: 'Valor do investimento atualizado na data de referência, posterior a dedução de impostos (IOF e IR).'
+              type: object
+              required:
+                - amount
+                - currency
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            incomeTax:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Valor do imposto considerando a alíquota vigente na data de referência.
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            financialTransactionTax:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Valor do imposto considerando a alíquota vigente na data de referência.
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            blockedBalance:
+              type: object
+              required:
+                - amount
+                - currency
+              description: 'Valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            purchaseUnitPrice:
+              type: object
+              required:
+                - amount
+                - currency
+              description: Valor unitário negociado com o cliente na data de aquisição
+              properties:
+                amount:
+                  $ref: '#/components/schemas/BalanceAmount'
+                currency:
+                  $ref: '#/components/schemas/BalanceCurrency'
+            preFixedRate:
+              type: string
+              description: 'Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
+              pattern: '^\d{1}\.\d{6}$'
+              maxLength: 8
+              minLength: 8
+              example: '0.300000'
+            postFixedIndexerPercentage:
+              type: string
+              description: 'Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
+              pattern: '^\d{1}\.\d{6}$'
+              maxLength: 8
+              minLength: 8
+              example: '1.000000'
+        links:
+          $ref: '#/components/schemas/BankFixedIncomeLinks'
+        meta:
+          $ref: '#/components/schemas/BankFixedIncomeMeta'
+      additionalProperties: false
   parameters:
     InvestmentId:
       name: investmentId
@@ -706,122 +885,7 @@ components:
       content:
         application/json:
           schema:
-            type: object
-            description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
-            required:
-              - referenceDate
-              - updatedUnitPrice
-              - grossAmount
-              - netAmount
-              - incomeTax
-              - financialTransactionTax
-              - blockedBalance
-              - purchaseUnitPrice
-            properties:
-              referenceDate:
-                type: string
-                format: date
-                description: Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos;
-                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-                example: '2023-03-07'
-                maxLength: 10
-              updatedUnitPrice:
-                type: object
-                required:
-                  - amount
-                  - currency
-                description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
-                properties:
-                  amount:
-                    $ref: '#/components/schemas/BalanceAmount'
-                  currency:
-                    $ref: '#/components/schemas/BalanceCurrency'
-                  quantity:
-                    type: string
-                    description: Quantidade de títulos detidos na data da posição do cliente
-                    maxLength: 15
-                    pattern: '^\d{1,15}'
-                    example: '15'
-              grossAmount:
-                description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
-                type: object
-                required:
-                  - amount
-                  - currency
-                properties:
-                  amount:
-                    $ref: '#/components/schemas/BalanceAmount'
-                  currency:
-                    $ref: '#/components/schemas/BalanceCurrency'
-              netAmount:
-                description: 'Valor do investimento atualizado na data de referência, posterior a dedução de impostos (IOF e IR).'
-                type: object
-                required:
-                  - amount
-                  - currency
-                properties:
-                  amount:
-                    $ref: '#/components/schemas/BalanceAmount'
-                  currency:
-                    $ref: '#/components/schemas/BalanceCurrency'
-              incomeTax:
-                type: object
-                required:
-                  - amount
-                  - currency
-                description: Valor do imposto considerando a alíquota vigente na data de referência.
-                properties:
-                  amount:
-                    $ref: '#/components/schemas/BalanceAmount'
-                  currency:
-                    $ref: '#/components/schemas/BalanceCurrency'
-              financialTransactionTax:
-                type: object
-                required:
-                  - amount
-                  - currency
-                description: Valor do imposto considerando a alíquota vigente na data de referência.
-                properties:
-                  amount:
-                    $ref: '#/components/schemas/BalanceAmount'
-                  currency:
-                    $ref: '#/components/schemas/BalanceCurrency'
-              blockedBalance:
-                type: object
-                required:
-                  - amount
-                  - currency
-                description: 'Valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
-                properties:
-                  amount:
-                    $ref: '#/components/schemas/BalanceAmount'
-                  currency:
-                    $ref: '#/components/schemas/BalanceCurrency'
-              purchaseUnitPrice:
-                type: object
-                required:
-                  - amount
-                  - currency
-                description: Valor unitário negociado com o cliente na data de aquisição
-                properties:
-                  amount:
-                    $ref: '#/components/schemas/BalanceAmount'
-                  currency:
-                    $ref: '#/components/schemas/BalanceCurrency'
-              preFixedRate:
-                type: string
-                description: 'Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
-                pattern: '^\d{1}\.\d{6}$'
-                maxLength: 8
-                minLength: 8
-                example: '0.300000'
-              postFixedIndexerPercentage:
-                type: string
-                description: 'Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
-                pattern: '^\d{1}\.\d{6}$'
-                maxLength: 8
-                minLength: 8
-                example: '1.000000'
+            $ref: '#/components/schemas/ResponseBankFixedIncomeBalances'
     OkResponseBankFixedIncomesProductList:
       description: Dados obtidos com sucesso
       content:
