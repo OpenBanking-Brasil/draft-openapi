@@ -79,6 +79,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'bank_fixed_incomes' 
+
   /identify-product/{investmentId}:
     get:
       tags:
@@ -128,6 +129,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'bank_fixed_incomes' 
+
   /{investmentId}/balances:
     get:
       tags:
@@ -183,6 +185,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'bank_fixed_incomes'        
+            
   /{investmentId}/product-movement:
     get:
       tags:
@@ -270,7 +273,7 @@ components:
     BalanceAmount:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesAmount.yaml
     ResponseBankFixedIncomeBalances:
-      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml  
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml
   securitySchemes:
     OpenId:
       type: openIdConnect
@@ -283,7 +286,7 @@ components:
           authorizationUrl: "https://authserver.example/authorization"
           tokenUrl: "https://authserver.example/token"
           scopes:
-            accounts: "Escopo necessário para acesso à API Bank Fixed Incomes. O controle dos endpoints específicos é feito via permissions."        
+            bank_fixed_incomes: "Escopo necessário para acesso à API Bank Fixed Incomes. O controle dos endpoints específicos é feito via permissions."        
   parameters:
     InvestmentId:
       $ref: ./parameters/InvestmentId.yaml
@@ -303,7 +306,6 @@ components:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
       $ref: ./parameters/XFapiInteractionId.yaml
-    
   responses:
     OkResponseBankFixedIncomesBalances:
       description: Dados obtidos com sucesso
@@ -362,28 +364,28 @@ components:
           schema:
             $ref: ./schemas/ResponseErrorMetaSingle.yaml
     BadRequestWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/BadRequest.yaml
+      $ref: "./schemas/bank_fixed_incomes_apis/BankFixedIncomesBadRequest.yaml"
     ForbiddenWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesForbidden.yaml
     GatewayTimeoutWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesGatewayTimeout.yaml
     InternalServerErrorWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesInternalServerError.yaml
     LockedWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/Locked.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesLocked.yaml
     MethodNotAllowedWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesMethodNotAllowed.yaml
     NotAcceptableWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesNotAcceptable.yaml
     NotFoundWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/NotFound.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesNotFound.yaml
     TooManyRequestsWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTooManyRequests.yaml
     UnauthorizedWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesUnauthorized.yaml
     UnprocessableEntityWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesUnprocessableEntity.yaml
     DefaultWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/Default.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesDefault.yaml
     SiteIsOverloadedWithAdditionalProperties:
-      $ref: ./responses/withAdditionalProperties/SiteIsOverloaded.yaml
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesSiteIsOverloaded.yaml
