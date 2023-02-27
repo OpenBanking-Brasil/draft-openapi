@@ -72,6 +72,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'credit-fixed-incomes'
   /identificacaodoproduto:
     get:
       tags:
@@ -114,7 +120,13 @@ paths:
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
-          $ref: '#/components/responses/DefaultWithAdditionalProperties' 
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'credit-fixed-incomes'
   /customer-position:
     get:
       tags:
@@ -158,6 +170,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties' 
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'credit-fixed-incomes'
   /customer-movement:
     get:
       tags:
@@ -204,6 +222,12 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'credit-fixed-incomes'
 components:
   schemas:
     OKResponseListagem:
@@ -294,6 +318,10 @@ components:
       $ref: ./schemas/credit_fixed_incomes_apis/VoucherPaymentIndicator.yaml
     VoucherPaymentPeriodicity:
       $ref: ./schemas/credit_fixed_incomes_apis/VoucherPaymentPeriodicity.yaml
+    ResponseErrorMetaSingle:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    ResponseError:
+      $ref: ./schemas/ResponseErrorWithAbleAdditionalProperties.yaml
   parameters:
     investmentId:
       $ref: ./parameters/InvestmentId.yaml
@@ -313,6 +341,19 @@ components:
       $ref: ./parameters/PageSize.yaml
     pagination-key:
       $ref: ./parameters/PaginationKey.yaml
+  securitySchemes:
+    OpenId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
+    OAuth2Security:
+      type: oauth2
+      description: "Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados."
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            credit-fixed-incomes: "Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions."
   responses:
     OKResponseListagem:
       description: Lista de títulos de renda fixa crédito mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
