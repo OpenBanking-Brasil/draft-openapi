@@ -79,6 +79,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'bank_fixed_incomes' 
+
   /identify-product/{investmentId}:
     get:
       tags:
@@ -128,6 +129,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'bank_fixed_incomes' 
+
   /{investmentId}/balances:
     get:
       tags:
@@ -183,6 +185,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'bank_fixed_incomes'        
+            
   /{investmentId}/product-movement:
     get:
       tags:
@@ -303,7 +306,6 @@ components:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
       $ref: ./parameters/XFapiInteractionId.yaml
-    
   responses:
     OkResponseBankFixedIncomesBalances:
       description: Dados obtidos com sucesso
