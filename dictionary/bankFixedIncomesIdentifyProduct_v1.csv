@@ -7,19 +7,6 @@
 RDB 
 LCI 
 LCA";1;1;"";Não permitido;string;CDB;
-/data/indexer;indexer;Índice utilizado como referência para a correção da rentabilidade e/ou rendimentos do ativo (CDI, DI , TR, IPCA, IGP_M, IGP_DI, INPC, BCP, TLC, SELIC, PRE_FIXADO e OUTROS);Texto;;Obrigatório;;"CDI 
-DI 
-TR 
-IPCA 
-IGP_M 
-IGP_DI 
-INPC 
-BCP 
-TLC 
-SELIC 
-PRE_FIXADO 
-OUTROS";1;1;"";Não permitido;string;CDI;
-/data/indexerAdditionalInfo;indexerAdditionalInfo;Informações adicionais do indexador;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Dólar;
 /data/remuneration;remuneration;Distribuição por frequência.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/remuneration/preFixedRate;preFixedRate;"Taxa de remuneração pré fixada de emissão do título.  p.ex. 0.014500.
 
@@ -32,14 +19,29 @@ O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas
 /data/remuneration/rateType;rateType;"""Tipo da taxa de remuneração (linear ou exponencial)""
 ";Texto;;Obrigatório;;"LINEAR 
 EXPONENCIAL";1;1;"";Não permitido;string;LINEAR;
-/data/remuneration/ratePeriodicity;ratePeriodicity;"""Periodicidade da taxa de remuneração (mensal, anual)""
+/data/remuneration/ratePeriodicity;ratePeriodicity;"Descrição deve ser substituída para: Periodicidade da taxa de remuneração (mensal, anual, diário, semestral)
 ";Texto;;Obrigatório;;"MENSAL 
-ANUAL";1;1;"";Não permitido;string;MENSAL;
+ANUAL 
+DIÁRIO 
+SEMESTRAL";1;1;"";Não permitido;string;MENSAL;
 /data/remuneration/calculation;calculation;"""Base de cálculo (dias úteis ou dias corridos)""
 ";Texto;;Obrigatório;;"DIAS_UTEIS 
 DIAS_CORRIDOS";1;1;"";Não permitido;string;DIAS_CORRIDOS;
+/data/remuneration/indexer;indexer;Índice utilizado como referência para a correção da rentabilidade e/ou rendimentos do ativo (CDI, DI , TR, IPCA, IGP_M, IGP_DI, INPC, BCP, TLC, SELIC, PRE_FIXADO e OUTROS);Texto;;Obrigatório;;"CDI 
+DI 
+TR 
+IPCA 
+IGP_M 
+IGP_DI 
+INPC 
+BCP 
+TLC 
+SELIC 
+PRE_FIXADO 
+OUTROS";1;1;"";Não permitido;string;CDI;
+/data/remuneration/indexerAdditionalInfo;indexerAdditionalInfo;Informações adicionais do indexador;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Dólar;
 /data/issueUnitPrice;issueUnitPrice;Preço unitário de emissão do título.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/issueUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/issueUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.000004;
 /data/issueUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/dueDate;dueDate;Data de vencimento do título.;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;10
 /data/issueDate;issueDate;Data de emissão do título.;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;10

@@ -4,6 +4,7 @@ required:
   - rateType
   - ratePeriodicity
   - calculation
+  - indexer
 properties:
   preFixedRate:
     type: string
@@ -31,4 +32,12 @@ properties:
     $ref: ./EnumRatePeriodicity.yaml
   calculation:
     $ref: ./EnumCalculation.yaml
+  indexer:
+    $ref: ../enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
+  indexerAdditionalInfo:
+    type: string
+    description: Informações adicionais do indexador
+    maxLength: 50
+    example: 'Dólar'
+    pattern: '[\w\W\s]*'
 additionalProperties: false

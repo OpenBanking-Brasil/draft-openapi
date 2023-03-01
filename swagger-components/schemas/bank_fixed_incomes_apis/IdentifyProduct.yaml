@@ -2,7 +2,6 @@ type: object
 required:
   - issuerInstitutionCnpjNumber
   - investmentType
-  - indexer
   - remuneration
   - issueUnitPrice
   - dueDate
@@ -26,14 +25,6 @@ properties:
     example: 'BRCST4CTF001'
   investmentType:
     $ref: ./EnumInvestmentType.yaml
-  indexer:
-    $ref: ../enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
-  indexerAdditionalInfo:
-    type: string
-    description: Informações adicionais do indexador
-    maxLength: 50
-    example: 'Dólar'
-    pattern: '[\w\W\s]*'
   remuneration:
     $ref: ./Remuneration.yaml
   issueUnitPrice:
@@ -46,7 +37,7 @@ properties:
       amount:
         type: string
         maxLength: 23
-        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        pattern: '^-?\d{1,15}\.\d{2,8}$'
         example: '1000.000004'
         description: Valor relacionado ao objeto.
       currency:
