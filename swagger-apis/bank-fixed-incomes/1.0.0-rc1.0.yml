@@ -19,21 +19,21 @@ servers:
     description: Servidor de Homologação
 tags:
   - name: List Products
-    description: Método para obter a lista de Fundos de Investimentos
+    description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
   - name: Identify Product
-    description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+    description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
   - name: Balances
-    description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
-  - name: Product Movement
-    description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+    description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
+  - name: Transactions
+    description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
 paths:
-  /list-products:
+  /:
     get:
       tags:
         - List Products
       summary: Conjunto de informações dos Fundos de Investimentos
       operationId: bankFixedIncomesListProduct
-      description: Método para obter a lista de Fundos de Investimentos
+      description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -78,13 +78,13 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank_fixed_incomes
-  '/identify-product/{investmentId}':
+  '/{investmentId}':
     get:
       tags:
         - Identify Product
       summary: 'Conjunto de informações de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
       operationId: bankFixedIncomesIdentifyProduct
-      description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+      description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -133,7 +133,7 @@ paths:
         - Balances
       summary: 'Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
       operationId: bankFixedIncomesBalances
-      description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
+      description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - name: investmentId
           in: path
@@ -182,13 +182,13 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank_fixed_incomes
-  '/{investmentId}/product-movement':
+  '/{investmentId}/transactions':
     get:
       tags:
-        - Product Movement
+        - Transactions
       summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       operationId: bankFixedIncomesProductMovement
-      description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
