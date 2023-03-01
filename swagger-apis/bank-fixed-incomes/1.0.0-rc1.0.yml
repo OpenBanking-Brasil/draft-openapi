@@ -201,7 +201,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseBankFixedIncomeProductMovement'
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -407,7 +407,7 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
 
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver ‘PRE FIXADO’ no campo ‘Indexador’.
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
         postFixedIndexerPercentage:
           type: string
           pattern: '^\d{1}\.\d{1,6}$'
@@ -419,7 +419,7 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo ‘Indexador’ for preenchido de forma diferente de 'PRE FIXADO'.
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
         ratePeriodicity:
@@ -433,7 +433,7 @@ components:
           description: |
             Informações adicionais do indexador
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver ‘Outros’ no campo ‘Indexador’.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
           maxLength: 50
           example: Dólar
           pattern: '[\w\W\s]*'
@@ -523,7 +523,7 @@ components:
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-    BankFixedIncomeProductMovement:
+    BankFixedIncomesProductMovement:
       type: object
       required:
         - type
@@ -545,7 +545,7 @@ components:
           description: |
             Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver ‘Outros’ no campo Motivo da movimentação.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo Motivo da movimentação.
         transactionDate:
           type: string
           format: date
@@ -593,7 +593,7 @@ components:
           description: |
             Valor do imposto de renda recolhido na transação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo ‘tipo da movimentação’ for preenchido com o valor  'SAIDA'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
           required:
             - amount
             - currency
@@ -610,7 +610,7 @@ components:
           description: |
             Valor do IOF recolhido na transação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo ‘tipo da movimentação’ for preenchido com o valor  'SAIDA'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
           required:
             - amount
             - currency
@@ -645,7 +645,7 @@ components:
           description: |
             Taxa de remuneração da transação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo ‘tipo da movimentação’ for preenchido com o valor  ‘ENTRADA’.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
         IndexerPercentage:
           type: string
           maxLength: 8
@@ -655,7 +655,7 @@ components:
           description: |
             Percentual máximo do indexador na transação acordado com o cliente na contratação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo ‘tipo da movimentação’ for preenchido com o valor  ‘ENTRADA’.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
         transactionId:
           type: string
           maxLength: 100
@@ -821,7 +821,7 @@ components:
                 Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
                 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver ‘PRE FIXADO’ no campo ‘Indexador’.
+                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
@@ -832,7 +832,7 @@ components:
                 Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
                 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de 'PRE FIXADO'.
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
@@ -973,7 +973,7 @@ components:
               meta:
                 $ref: '#/components/schemas/BankFixedIncomeMeta'
             additionalProperties: false
-    ResponseBankFixedIncomeProductMovement:
+    ResponseBankFixedIncomesProductMovement:
       description: Dados obtidos com sucesso.
       content:
         application/json:
@@ -987,7 +987,7 @@ components:
               data:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BankFixedIncomeProductMovement'
+                  $ref: '#/components/schemas/BankFixedIncomesProductMovement'
               links:
                 $ref: '#/components/schemas/BankFixedIncomeLinks'
               meta:
