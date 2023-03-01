@@ -285,7 +285,6 @@ components:
       required:
         - issuerInstitutionCnpjNumber
         - investmentType
-        - indexer
         - remuneration
         - issueUnitPrice
         - dueDate
@@ -309,14 +308,6 @@ components:
           example: BRCST4CTF001
         investmentType:
           $ref: '#/components/schemas/EnumInvestmentType'
-        indexer:
-          $ref: '#/components/schemas/EnumInvestmentsFixedIncomeBankIndexer'
-        indexerAdditionalInfo:
-          type: string
-          description: Informações adicionais do indexador
-          maxLength: 50
-          example: Dólar
-          pattern: '[\w\W\s]*'
         remuneration:
           $ref: '#/components/schemas/Remuneration'
         issueUnitPrice:
@@ -329,7 +320,7 @@ components:
             amount:
               type: string
               maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              pattern: '^-?\d{1,15}\.\d{2,8}$'
               example: '1000.000004'
               description: Valor relacionado ao objeto.
             currency:
@@ -405,6 +396,7 @@ components:
         - rateType
         - ratePeriodicity
         - calculation
+        - indexer
       properties:
         preFixedRate:
           type: string
@@ -432,6 +424,14 @@ components:
           $ref: '#/components/schemas/EnumRatePeriodicity'
         calculation:
           $ref: '#/components/schemas/EnumCalculation'
+        indexer:
+          $ref: '#/components/schemas/EnumInvestmentsFixedIncomeBankIndexer'
+        indexerAdditionalInfo:
+          type: string
+          description: Informações adicionais do indexador
+          maxLength: 50
+          example: Dólar
+          pattern: '[\w\W\s]*'
       additionalProperties: false
     EnumRateType:
       type: string
@@ -444,10 +444,12 @@ components:
     EnumRatePeriodicity:
       type: string
       description: |
-        "Periodicidade da taxa de remuneração (mensal, anual)"
+        Periodicidade da taxa de remuneração (mensal, anual, diário, semestral)
       enum:
         - MENSAL
         - ANUAL
+        - DIÁRIO
+        - SEMESTRAL
       example: MENSAL
     EnumCalculation:
       type: string
@@ -525,8 +527,6 @@ components:
         - transactionUnitePrice
         - transactionQuantity
         - transactionGrossValue
-        - incomeTax
-        - financialTransactionTax
         - transactionId
       properties:
         type:
@@ -559,7 +559,7 @@ components:
             amount:
               type: string
               maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
+              pattern: '^-?\d{1,15}\.\d{2,8}$'
               example: '1000.000004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
@@ -642,7 +642,7 @@ components:
           pattern: '^\d{1}\.\d{1,6}$'
           example: '1.100000'
           description: |
-            Percentual máximo do indexador acordado com o cliente na contratação.
+            Percentual máximo do indexador na transação acordado com o cliente na contratação.
 
             Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
         transactionId:
@@ -654,14 +654,14 @@ components:
       additionalProperties: false
     EnumBankFixedIncomeMovementType:
       type: string
-      description: Tipo de movimentação na visão de investimento (entrada ou saída).
+      description: 'Tipo de movimentação na visão de investimento (entrada ou saída) . (Nos casos de motivo de pagamento  "pagamento de juros" e "amortização", fica convencionado que será considerado que o tipo de movimento será saída).'
       enum:
         - ENTRADA
         - SAÍDA
       example: ENTRADA
     EnumBankFixedIncomeTransactionType:
       type: string
-      description: 'Aplicação, resgate, cancelamento, vencimento, pagamento de juros/amortização, transferência de titularidade, transferência de custódia'
+      description: 'Aplicação, resgate, cancelamento, vencimento, pagamento de juros/amortização, transferência de titularidade, transferência de custódia e outros.'
       enum:
         - APLICACAO
         - RESGATE
@@ -710,13 +710,13 @@ components:
             - blockedBalance
             - purchaseUnitPrice
           properties:
-            referenceDate:
+            referenceDateTime:
               type: string
-              format: date
-              description: Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos;
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-              example: '2023-03-07'
-              maxLength: 10
+              format: date-time
+              description: 'data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2022-07-21T17:32:00Z'
+              maxLength: 20
             updatedUnitPrice:
               type: object
               required:
@@ -797,7 +797,11 @@ components:
               description: Valor unitário negociado com o cliente na data de aquisição
               properties:
                 amount:
-                  $ref: '#/components/schemas/BalanceAmount'
+                  description: Valor relacionado ao objeto.
+                  type: string
+                  maxLength: 23
+                  pattern: '^-?\d{1,15}\.\d{2,8}$'
+                  example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
             preFixedRate:

@@ -6,8 +6,6 @@ required:
   - transactionUnitePrice
   - transactionQuantity
   - transactionGrossValue
-  - incomeTax
-  - financialTransactionTax
   - transactionId
 properties:
   type:
@@ -40,7 +38,7 @@ properties:
       amount:
         type: string
         maxLength: 23
-        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        pattern: '^-?\d{1,15}\.\d{2,8}$'
         example: '1000.000004'
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
@@ -123,7 +121,7 @@ properties:
     pattern: '^\d{1}\.\d{1,6}$'
     example: '1.100000'
     description: |
-      Percentual máximo do indexador acordado com o cliente na contratação.
+      Percentual máximo do indexador na transação acordado com o cliente na contratação.
 
       Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
   transactionId:
