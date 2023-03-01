@@ -16,6 +16,8 @@ properties:
       Taxa de remuneração pré fixada de emissão do título.  p.ex. 0.014500.
 
       O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
+
+      [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver ‘PRE FIXADO’ no campo ‘Indexador’.
   postFixedIndexerPercentage:
     type: string
     pattern: '^\d{1}\.\d{1,6}$'
@@ -26,6 +28,8 @@ properties:
       Percentual do indexador pós fixado de emissão do  título.  p.ex. 0.014500.
 
       O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+
+      [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo ‘Indexador’ for preenchido de forma diferente de 'PRE FIXADO'.
   rateType:
     $ref: ./EnumRateType.yaml
   ratePeriodicity:
@@ -36,7 +40,10 @@ properties:
     $ref: ../enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
   indexerAdditionalInfo:
     type: string
-    description: Informações adicionais do indexador
+    description: | 
+      Informações adicionais do indexador
+
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver ‘Outros’ no campo ‘Indexador’.
     maxLength: 50
     example: 'Dólar'
     pattern: '[\w\W\s]*'

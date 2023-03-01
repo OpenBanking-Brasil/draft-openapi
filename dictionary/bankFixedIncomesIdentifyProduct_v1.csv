@@ -11,11 +11,17 @@ LCA";1;1;"";Não permitido;string;CDB;
 /data/remuneration/preFixedRate;preFixedRate;"Taxa de remuneração pré fixada de emissão do título.  p.ex. 0.014500.
 
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
-";Texto;8;Opcional;^\d{1}\.\d{1,6}$;;0;1;"";Não permitido;string;0.300000;8
+
+[Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver ‘PRE FIXADO’ no campo ‘Indexador’.
+";Texto;8;Condicional;^\d{1}\.\d{1,6}$;;0;1;" Campo de preenchimento obrigatório pelas  participantes quando houver ‘PRE FIXADO’ no campo ‘Indexador’.
+";Não permitido;string;0.300000;8
 /data/remuneration/postFixedIndexerPercentage;postFixedIndexerPercentage;"Percentual do indexador pós fixado de emissão do  título.  p.ex. 0.014500.
 
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
-";Texto;8;Opcional;^\d{1}\.\d{1,6}$;;0;1;"";Não permitido;string;1.100000;8
+
+[Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo ‘Indexador’ for preenchido de forma diferente de 'PRE FIXADO'.
+";Texto;8;Condicional;^\d{1}\.\d{1,6}$;;0;1;" Campo de preenchimento obrigatório pelas  participantes quando o campo ‘Indexador’ for preenchido de forma diferente de 'PRE FIXADO'.
+";Não permitido;string;1.100000;8
 /data/remuneration/rateType;rateType;"""Tipo da taxa de remuneração (linear ou exponencial)""
 ";Texto;;Obrigatório;;"LINEAR 
 EXPONENCIAL";1;1;"";Não permitido;string;LINEAR;
@@ -39,7 +45,11 @@ TLC
 SELIC 
 PRE_FIXADO 
 OUTROS";1;1;"";Não permitido;string;CDI;
-/data/remuneration/indexerAdditionalInfo;indexerAdditionalInfo;Informações adicionais do indexador;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Dólar;
+/data/remuneration/indexerAdditionalInfo;indexerAdditionalInfo;"Informações adicionais do indexador
+
+[Restrição] Campo de preenchimento obrigatório pelas participantes quando houver ‘Outros’ no campo ‘Indexador’.
+";Texto;50;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando houver ‘Outros’ no campo ‘Indexador’.
+";Não permitido;string;Dólar;
 /data/issueUnitPrice;issueUnitPrice;Preço unitário de emissão do título.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/issueUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.000004;
 /data/issueUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
