@@ -388,15 +388,21 @@ components:
     CreditFixedIdentificacao:
       type: object
       required:
-        - cnpjNumber
+        - issuerInstitutionCnpjNumber
         - investmentType
         - debtorCnpjnNumber
         - incentivizedProductIndicator
         - indexer
         - remuneration
         - issueUnitPrice
+        - issueDate
+        - dueDate
+        - voucherPaymentIndicator
+        - voucherPaymentPeriodicity
+        - purchaseDate
+        - gracePeriodDate
       properties:
-        cnpjNumber:
+        issuerInstitutionCnpjNumber:
           type: string
           description: CNPJ da instituição emissora
           maxLength: 14
@@ -436,6 +442,49 @@ components:
           $ref: '#/components/schemas/Remuneration'
         issueUnitPrice:
           $ref: '#/components/schemas/IssueUnitPrice'
+        issueDate:
+          type: string
+          format: date
+          description: Data de emissão do título
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-16'
+        dueDate:
+          type: string
+          format: date
+          description: Data de vencimento do contrato
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+        voucherPaymentIndicator:
+          $ref: '#/components/schemas/VoucherPaymentIndicator'
+        voucherPaymentPeriodicity:
+          $ref: '#/components/schemas/VoucherPaymentPeriodicity'
+        voucherPaymentPeriodicityAdditionalInfo:
+          type: string
+          description: Informações adicionais da periodicidade de pagamento de cupom
+          maxLength: 50
+          pattern: '[\w\W\s]*'
+          example: Diária
+        clearingCode:
+          type: string
+          description: Código de registro do ativo na clearing
+          maxLength: 30
+          pattern: ' [\w\W-]*'
+        purchaseDate:
+          type: string
+          format: date
+          description: Data de aquisição do cliente
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+        gracePeriodDate:
+          type: string
+          format: date
+          description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
+          maxLength: 11
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-16'
     CreditFixedIncomesLinks:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -662,12 +711,6 @@ components:
       required:
         - amount
         - currency
-        - issueDate
-        - dueDate
-        - voucherPaymentIndicator
-        - voucherPaymentPeriodicity
-        - purchaseDate
-        - gracePeriodDate
       properties:
         amount:
           type: string
@@ -681,44 +724,6 @@ components:
           maxLength: 3
           pattern: '^[A-Z]{3}$'
           example: BRL
-        issueDate:
-          type: string
-          format: date
-          description: Data de emissão do título
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-16'
-        dueDate:
-          type: string
-          format: date
-          description: Data de vencimento do contrato
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-15'
-        voucherPaymentIndicator:
-          $ref: '#/components/schemas/VoucherPaymentIndicator'
-        voucherPaymentPeriodicity:
-          $ref: '#/components/schemas/VoucherPaymentPeriodicity'
-        voucherPaymentPeriodicityAdditionalInfo:
-          type: string
-          description: Informações adicionais da periodicidade de pagamento de cupom
-          maxLength: 50
-          pattern: '[\w\W\s]*'
-          example: Diária
-        purchaseDate:
-          type: string
-          format: date
-          description: Data de aquisição do cliente
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-15'
-        gracePeriodDate:
-          type: string
-          format: date
-          description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
-          maxLength: 11
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-16'
     LatePayment:
       type: object
       description: valor de mora devido ao atraso do pagamento acordado em contrato
