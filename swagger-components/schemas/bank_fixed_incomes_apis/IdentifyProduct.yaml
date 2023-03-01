@@ -69,6 +69,8 @@ properties:
     description: Data de emissão do título.
   clearingCode:
     type: string
+    maxLength: 30
+    pattern: '[\w\W-]*'
     description: Código de registro do ativo na clearing.
   purchaseDate:
     type: string
