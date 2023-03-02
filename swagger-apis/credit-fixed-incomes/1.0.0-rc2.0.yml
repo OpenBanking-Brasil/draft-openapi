@@ -22,9 +22,9 @@ tags:
     description: Método para obter a lista de Fundos de Investimentos
   - name: Identificação do produto
     description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
-  - name: Customer Position
+  - name: Posição do cliente
     description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
-  - name: Customer Movement
+  - name: Movimentação do cliente
     description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
 paths:
   /list-products:
@@ -127,10 +127,10 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - credit-fixed-incomes
-  /customer-position:
+  '/credit-fixed-incomes/{investmentId}/balances':
     get:
       tags:
-        - Customer Position
+        - Posição do cliente
       summary: 'Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
       operationId: creditFixedPosition
       description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
@@ -176,10 +176,10 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - credit-fixed-incomes
-  /customer-movement:
+  '/credit-fixed-incomes/{investmentId}/transactions':
     get:
       tags:
-        - Customer Movement
+        - Movimentação do cliente
       summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       operationId: creditFixedMovement
       description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
