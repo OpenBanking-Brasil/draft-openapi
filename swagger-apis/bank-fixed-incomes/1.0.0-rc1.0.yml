@@ -2,8 +2,12 @@
 info:
   title: API Renda Fixa Bancária - Open Finance Brasil
   description: |
-    Estas APIs visam o compartilhamento de dados sobre produtos, movimentacão de clientes e suas
-    características entre as Instituições Financeiras participantes do Open Finance Brasil
+    API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4).  
+    API que retorna informações de operações de investimento do tipo Renda Fixa Bancária 
+    (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes,  
+    incluindo dados como denominação do produto, rentabilidade, quantidade, prazos,  
+    saldos em posição do cliente e movimentações financeiras. Não possui segregação entre  
+    pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints.
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -13,9 +17,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/opendata-investments/v1'
+  - url: 'https://api.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/opendata-investments/v1'
+  - url: 'https://apih.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1'
     description: Servidor de Homologação
 tags:
   - name: List Products
@@ -31,7 +35,7 @@ paths:
     get:
       tags:
         - List Products
-      summary: Conjunto de informações dos Fundos de Investimentos
+      summary: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       operationId: bankFixedIncomesListProduct
       description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
@@ -82,7 +86,7 @@ paths:
     get:
       tags:
         - Identify Product
-      summary: 'Conjunto de informações de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+      summary: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesIdentifyProduct
       description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
@@ -131,7 +135,7 @@ paths:
     get:
       tags:
         - Balances
-      summary: 'Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
+      summary: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesBalances
       description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
@@ -186,7 +190,7 @@ paths:
     get:
       tags:
         - Transactions
-      summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      summary: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesProductMovement
       description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
