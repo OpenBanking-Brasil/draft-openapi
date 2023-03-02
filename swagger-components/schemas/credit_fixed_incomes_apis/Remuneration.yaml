@@ -3,6 +3,7 @@ required:
   - rateType
   - ratePeriodicity
   - calculation
+  - indexer
 properties:
   preFixedRate:
     type: string
@@ -22,3 +23,11 @@ properties:
     $ref: EnumRatePeriodicity.yaml
   calculation:
     $ref: EnumCalculation.yaml
+  indexer:
+    $ref: EnumIndexer.yaml
+  indexerAdditionalInfo:
+    type: string
+    description: Informações adicionais do indexador
+    pattern: '[\w\W\s]*'
+    maxLength: 50
+    example: 'Dólar'
