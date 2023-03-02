@@ -201,7 +201,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseBankFixedIncomeProductMovement'
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -408,6 +408,8 @@ components:
             Taxa de remuneração pré fixada de emissão do título.  p.ex. 0.014500.
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
+
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
         postFixedIndexerPercentage:
           type: string
           pattern: '^\d{1}\.\d{1,6}$'
@@ -418,6 +420,8 @@ components:
             Percentual do indexador pós fixado de emissão do  título.  p.ex. 0.014500.
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
         ratePeriodicity:
@@ -428,7 +432,10 @@ components:
           $ref: '#/components/schemas/EnumInvestmentsFixedIncomeBankIndexer'
         indexerAdditionalInfo:
           type: string
-          description: Informações adicionais do indexador
+          description: |
+            Informações adicionais do indexador
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
           maxLength: 50
           example: Dólar
           pattern: '[\w\W\s]*'
@@ -518,7 +525,7 @@ components:
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-    BankFixedIncomeProductMovement:
+    BankFixedIncomesProductMovement:
       type: object
       required:
         - type
@@ -540,7 +547,7 @@ components:
           description: |
             Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
 
-            Campo a ser preenchido pelas participantes quando o campo "transactionType" for preenchido de forma diferente de "OUTROS"
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo Motivo da movimentação.
         transactionDate:
           type: string
           format: date
@@ -585,7 +592,10 @@ components:
               $ref: '#/components/schemas/CurrencyCode'
         incomeTax:
           type: object
-          description: Valor do imposto de renda recolhido na transação.
+          description: |
+            Valor do imposto de renda recolhido na transação.
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
           required:
             - amount
             - currency
@@ -599,7 +609,10 @@ components:
               $ref: '#/components/schemas/CurrencyCode'
         financialTransactionTax:
           type: object
-          description: Valor do IOF recolhido na transação.
+          description: |
+            Valor do IOF recolhido na transação.
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
           required:
             - amount
             - currency
@@ -634,7 +647,7 @@ components:
           description: |
             Taxa de remuneração da transação.
 
-            Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
         IndexerPercentage:
           type: string
           maxLength: 8
@@ -644,7 +657,7 @@ components:
           description: |
             Percentual máximo do indexador na transação acordado com o cliente na contratação.
 
-            Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
         transactionId:
           type: string
           maxLength: 100
@@ -806,14 +819,22 @@ components:
                   $ref: '#/components/schemas/BalanceCurrency'
             preFixedRate:
               type: string
-              description: 'Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
+              description: |
+                Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
+                O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+
+                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
               example: '0.300000'
             postFixedIndexerPercentage:
               type: string
-              description: 'Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
+              description: |
+                Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
+                O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
@@ -954,7 +975,7 @@ components:
               meta:
                 $ref: '#/components/schemas/BankFixedIncomeMeta'
             additionalProperties: false
-    ResponseBankFixedIncomeProductMovement:
+    ResponseBankFixedIncomesProductMovement:
       description: Dados obtidos com sucesso.
       content:
         application/json:
@@ -968,7 +989,7 @@ components:
               data:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BankFixedIncomeProductMovement'
+                  $ref: '#/components/schemas/BankFixedIncomesProductMovement'
               links:
                 $ref: '#/components/schemas/BankFixedIncomeLinks'
               meta:

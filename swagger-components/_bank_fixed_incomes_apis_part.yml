@@ -205,7 +205,7 @@ paths:
        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseBankFixedIncomeProductMovement'
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -260,8 +260,8 @@ components:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesMeta.yaml
     BankFixedIncomeLinks:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsLinks.yaml
-    BankFixedIncomeProductMovement:
-      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomeProductMovement.yaml
+    BankFixedIncomesProductMovement:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesProductMovement.yaml
     EnumBankFixedIncomeMovementType:
       $ref: ./schemas/bank_fixed_incomes_apis/EnumBankFixedIncomeMovementType.yaml
     EnumBankFixedIncomeTransactionType:
@@ -325,12 +325,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeIdentifyProduct.yaml
-    ResponseBankFixedIncomeProductMovement:
+    ResponseBankFixedIncomesProductMovement:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeProductMovement.yaml
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductMovement.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
