@@ -471,6 +471,7 @@ components:
           description: Código de registro do ativo na clearing
           maxLength: 30
           pattern: ' [\w\W-]*'
+          example: CDB421GPXXX
         purchaseDate:
           type: string
           format: date
@@ -839,8 +840,8 @@ components:
     TransactionQuantity:
       type: string
       description: Quantidade de títulos envolvidos na movimentação
-      maxLength: 25
-      pattern: '^\d{1,15}\.\d{2,9}$'
+      maxLength: 24
+      pattern: '^\d{1,15}\.\d{2,8}$'
       example: '42.25'
     TransactionType:
       $ref: '#/components/schemas/ReferenceDate'
@@ -870,11 +871,23 @@ components:
         - quantity
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
         quantity:
-          $ref: '#/components/schemas/Quantity'
+          type: string
+          format: double
+          description: 'quantidade de títulos detidos na data da posição do cliente '
+          maxLength: 24
+          minLength: 4
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '15.00'
     VoucherPaymentIndicator:
       type: string
       description: |
