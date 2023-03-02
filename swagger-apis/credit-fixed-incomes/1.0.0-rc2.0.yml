@@ -18,7 +18,7 @@ servers:
   - url: 'https://apih.banco.com.br/open-banking/opendata-investments/v1'
     description: Servidor de Homologação
 tags:
-  - name: Listagem de produtos
+  - name: Listagem de produto
     description: Método para obter a lista de Fundos de Investimentos
   - name: Identificação do produto
     description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
@@ -27,10 +27,10 @@ tags:
   - name: Customer Movement
     description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
 paths:
-  /listagemdeprodutos:
+  /list-products:
     get:
       tags:
-        - Listagem de produtos
+        - Listagem de produto
       summary: Conjunto de informações dos Fundos de Investimentos
       operationId: creditFixedLista
       description: Método para obter a lista de Fundos de Investimentos
@@ -45,7 +45,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseListagem'
+          $ref: '#/components/responses/OKResponseCreditFixedIncomesProductList'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -78,7 +78,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - credit-fixed-incomes
-  /identificacaodoproduto:
+  '/identify-product/{investmentId}':
     get:
       tags:
         - Identificação do produto
@@ -86,7 +86,7 @@ paths:
       operationId: creditFixedIdentificacao
       description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
       parameters:
-        - $ref: '#/components/parameters/investmentId'
+        - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -94,7 +94,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCreditFixedIdentificacao'
+          $ref: '#/components/responses/OKResponseCreditFixedIncomesIdentifyProduct'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -135,7 +135,7 @@ paths:
       operationId: creditFixedPosition
       description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
       parameters:
-        - $ref: '#/components/parameters/investmentId'
+        - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -184,7 +184,7 @@ paths:
       operationId: creditFixedMovement
       description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       parameters:
-        - $ref: '#/components/parameters/investmentId'
+        - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -230,7 +230,7 @@ paths:
             - credit-fixed-incomes
 components:
   schemas:
-    OKResponseListagem:
+    OKResponseCreditFixedIncomesProductList:
       type: object
       required:
         - data
@@ -873,8 +873,8 @@ components:
         amount:
           type: string
           format: double
-          pattern: '^\d{1,15}\.\d{2,8}$'
-          maxLength: 24
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 25
           minLength: 4
           example: '1000.0400'
           description: Valor relacionado ao objeto.
@@ -1015,7 +1015,7 @@ components:
               format: date-time
               example: '2021-05-21T08:30:00Z'
   parameters:
-    investmentId:
+    InvestmentId:
       name: investmentId
       in: path
       description: Identificador.
@@ -1115,13 +1115,13 @@ components:
           scopes:
             credit-fixed-incomes: Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions.
   responses:
-    OKResponseListagem:
+    OKResponseCreditFixedIncomesProductList:
       description: Lista de títulos de renda fixa crédito mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OKResponseListagem'
-    OKResponseCreditFixedIdentificacao:
+            $ref: '#/components/schemas/OKResponseCreditFixedIncomesProductList'
+    OKResponseCreditFixedIncomesIdentifyProduct:
       description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
       content:
         application/json:
