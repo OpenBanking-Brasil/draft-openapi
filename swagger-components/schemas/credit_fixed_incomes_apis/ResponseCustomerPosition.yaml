@@ -1,0 +1,48 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: object
+    required:
+      - referenceDate
+      - updatedUnitPrice
+      - grossAmount
+      - netAmount
+      - incomeTax
+      - financialTransactionTax
+      - blockedBalance
+      - purchaseUnitPrice
+      - fine
+      - latePayment
+    properties:
+      referenceDate:
+        $ref: ./ReferenceDate.yaml
+      updatedUnitPrice:
+        $ref: ./UpdatedUnitPrice.yaml
+      grossAmount:
+        $ref: ./GrossAmount.yaml
+      netAmount:
+        $ref: ./NetAmount.yaml
+      incomeTax:
+        $ref: ./IncomeTax.yaml
+      financialTransactionTax:
+        $ref: ./FinancialTransactionTax.yaml
+      blockedBalance:
+        $ref: ./BlockedBalance.yaml
+      purchaseUnitPrice:
+        $ref: ./PurchaseUnitPrice.yaml
+      preFixedRate:
+        $ref: ./PreFixedRate.yaml
+      postFixedIndexerPercentage:
+        $ref: ./PostFixedIndexerPercentage.yaml
+      fine:
+        $ref: ./Fine.yaml
+      latePayment:
+        $ref: ./LatePayment.yaml
+  links:
+    $ref: ./CreditFixedIncomesLinks.yaml
+  meta:
+    $ref: ./CreditFixedIncomesMeta.yaml

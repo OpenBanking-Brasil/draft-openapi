@@ -1,0 +1,24 @@
+type: object
+required:
+  - rateType
+  - ratePeriodicity
+  - calculation
+properties:
+  preFixedRate:
+    type: string
+    description: Valor da taxa de emissão do contrato  
+    maxLength: 8
+    pattern: '^\d{1}\.\d{1,6}$'
+    example: '0.300000'
+  postFixedIndexerPercentage:
+    type: string
+    description: Percentual do indexador de emissão do contrato
+    maxLength: 8
+    pattern: '^\d{1}\.\d{1,6}$'
+    example: '1.100000'
+  rateType:
+    $ref: EnumRateType.yaml
+  ratePeriodicity:
+    $ref: EnumRatePeriodicity.yaml
+  calculation:
+    $ref: EnumCalculation.yaml

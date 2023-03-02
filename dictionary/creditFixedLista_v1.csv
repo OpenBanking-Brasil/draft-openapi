@@ -1,0 +1,12 @@
+﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
+/data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brandName;brandName;Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
+/data/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;21128159000166;
+/data/investmentType;investmentType;"Denominação do produto 
+  1. Debêntures
+  2. CRI
+  3. CRA
+";Texto;;Obrigatório;;"DEBENTURES 
+CRI 
+CRA";1;1;"";Não permitido;string;CRI;
+/data/investmentId;investmentId;"Código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.<br><br>DEFINIÇÃO&#58;O ISIN (International Securities Identification Number) é um código que identifica um valor mobiliário, conforme a norma ISO 6166.<br>ESTRUTURA<br>O ISIN é um código alfanumérico que possui 12 caracteres com a seguinte estrutura&#58;<ul><li>um prefixo, composto de 2 caracteres alfa, que identifica o código do país (Norma ISO 3166);</li><li>o número básico, composto de 9 caracteres alfabéticos ou numéricos em sua extensão;</li><li>um dígito numérico de controle.</li></ul>";Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;1;1;"";Não permitido;string;9.27921E+40;
