@@ -1,14 +1,20 @@
 type: object
 required:
-  - cnpjNumber
+  - issuerInstitutionCnpjNumber
   - investmentType
   - debtorCnpjnNumber
   - incentivizedProductIndicator
   - indexer
   - remuneration
   - issueUnitPrice
+  - issueDate
+  - dueDate
+  - voucherPaymentIndicator
+  - voucherPaymentPeriodicity
+  - purchaseDate
+  - gracePeriodDate
 properties:
-  cnpjNumber:
+  issuerInstitutionCnpjNumber:
     type: string
     description: CNPJ da instituição emissora
     maxLength: 14
@@ -48,3 +54,46 @@ properties:
     $ref: Remuneration.yaml
   issueUnitPrice:
     $ref: IssueUnitPrice.yaml
+  issueDate:
+    type: string
+    format: date
+    description: Data de emissão do título
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-16'
+  dueDate:
+    type: string
+    format: date
+    description: Data de vencimento do contrato
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-15'
+  voucherPaymentIndicator:
+    $ref: VoucherPaymentIndicator.yaml
+  voucherPaymentPeriodicity:
+    $ref: VoucherPaymentPeriodicity.yaml
+  voucherPaymentPeriodicityAdditionalInfo:
+    type: string
+    description: Informações adicionais da periodicidade de pagamento de cupom
+    maxLength: 50
+    pattern: '[\w\W\s]*'
+    example: 'Diária'
+  clearingCode:
+    type: string
+    description: Código de registro do ativo na clearing
+    maxLength: 30
+    pattern: ' [\w\W-]*'
+  purchaseDate:
+    type: string
+    format: date
+    description: Data de aquisição do cliente
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-15'
+  gracePeriodDate:
+    type: string
+    format: date
+    description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
+    maxLength: 11
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-16'
