@@ -585,9 +585,9 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         incomeTax:
@@ -602,9 +602,9 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         financialTransactionTax:
@@ -619,9 +619,9 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         transactionNetValue:
@@ -633,9 +633,9 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         TransactionRate:
