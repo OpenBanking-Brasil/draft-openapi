@@ -20,16 +20,16 @@ Campo a ser preenchido pelas participantes quando o campo ""transactionType"" fo
 /data/transactionUnitePrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/transactionQuantity;transactionQuantity;Quantidade de títulos envolvidos na movimentação.;Texto;25;Obrigatório;^\d{1,15}\.\d{2,9}$;;1;1;"";Não permitido;string;42.25;
 /data/transactionGrossValue;transactionGrossValue;Valor bruto da transação (Preço unitário da movimentação x Quantidade).;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/transactionGrossValue/amount;amount;;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/transactionGrossValue/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0004;
 /data/transactionGrossValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/incomeTax;incomeTax;Valor do imposto de renda recolhido na transação.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/incomeTax/amount;amount;;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/incomeTax/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0004;
 /data/incomeTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/financialTransactionTax;financialTransactionTax;Valor do IOF recolhido na transação.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/financialTransactionTax/amount;amount;;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/financialTransactionTax/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0004;
 /data/financialTransactionTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/transactionNetValue;transactionNetValue;Valor líquido da transação.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/transactionNetValue/amount;amount;;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,6}$;;1;1;"";Não permitido;string;1000.000004;
+/data/transactionNetValue/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0004;
 /data/transactionNetValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/TransactionRate;TransactionRate;"Taxa de remuneração da transação.
 
