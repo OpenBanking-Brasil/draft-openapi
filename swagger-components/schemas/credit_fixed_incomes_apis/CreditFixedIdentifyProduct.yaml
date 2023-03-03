@@ -2,7 +2,6 @@ type: object
 required:
   - issuerInstitutionCnpjNumber
   - investmentType
-  - debtorCnpjNumber
   - indexer
   - remuneration
   - issueUnitPrice
@@ -44,14 +43,8 @@ properties:
     pattern: '[\w\W\s]*'
     maxLength: 50
     example: 'Roberto Marino'
-  indexer:
-    $ref: EnumIndexer.yaml
-  indexerAdditionalInfo:
-    type: string
-    description: Informações adicionais do indexador
-    pattern: '[\w\W\s]*'
-    maxLength: 50
-    example: 'Dólar'
+  taxExemptProduct:
+    $ref: EnumTaxExemptProduct.yaml
   remuneration: 
     $ref: Remuneration.yaml
   issueUnitPrice:

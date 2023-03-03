@@ -394,7 +394,6 @@ components:
       required:
         - issuerInstitutionCnpjNumber
         - investmentType
-        - debtorCnpjNumber
         - indexer
         - remuneration
         - issueUnitPrice
@@ -436,14 +435,8 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: Roberto Marino
-        indexer:
-          $ref: '#/components/schemas/EnumIndexer'
-        indexerAdditionalInfo:
-          type: string
-          description: Informações adicionais do indexador
-          pattern: '[\w\W\s]*'
-          maxLength: 50
-          example: Dólar
+        taxExemptProduct:
+          $ref: '#/components/schemas/EnumTaxExemptProduct'
         remuneration:
           $ref: '#/components/schemas/Remuneration'
         issueUnitPrice:
@@ -648,7 +641,7 @@ components:
       enum:
         - MENSAL
         - ANUAL
-        - DIÁRIO
+        - DIARIO
         - SEMESTRAL
       example: MENSAL
     EnumRateType:
