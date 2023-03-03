@@ -270,7 +270,7 @@ components:
         data:
           type: object
           required:
-            - referenceDate
+            - referenceDateTime
             - updatedUnitPrice
             - grossAmount
             - netAmount
@@ -281,8 +281,8 @@ components:
             - fine
             - latePayment
           properties:
-            referenceDate:
-              $ref: '#/components/schemas/ReferenceDate'
+            referenceDateTime:
+              $ref: '#/components/schemas/ReferenceDateTime'
             updatedUnitPrice:
               $ref: '#/components/schemas/UpdatedUnitPrice'
             grossAmount:
@@ -299,7 +299,9 @@ components:
               $ref: '#/components/schemas/PurchaseUnitPrice'
             preFixedRate:
               type: string
-              description: 'Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente'
+              description: |
+                Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
+                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
               maxLength: 8
               pattern: '^\d{1}\.\d{1,6}$'
               example: '0.300000'
@@ -329,17 +331,13 @@ components:
             - transactionUnitePrice
             - transactionQuantity
             - transactionGrossValue
-            - incomeTax
-            - financialTransactionTax
             - transactionNetValue
             - transactionId
           properties:
             type:
               $ref: '#/components/schemas/Type'
             transactionType:
-              type: string
-              description: 'Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, prêmio, transferência de titularidade, transferência de custódia, multa, mora e outros'
-              example: Aplicação
+              $ref: '#/components/schemas/TransactionType'
             typeAdditionalInfo:
               $ref: '#/components/schemas/TypeAdditionalInfo'
             transactionDate:
@@ -369,7 +367,7 @@ components:
     Amount:
       type: string
       format: double
-      pattern: '^\d{1,15}\.\d{2,4}$'
+      pattern: '^-?\d{1,15}\.\d{2,8}$'
       maxLength: 20
       minLength: 4
       example: '1000.0400'
@@ -391,7 +389,6 @@ components:
         - issuerInstitutionCnpjNumber
         - investmentType
         - debtorCnpjnNumber
-        - incentivizedProductIndicator
         - indexer
         - remuneration
         - issueUnitPrice
@@ -418,18 +415,20 @@ components:
           $ref: '#/components/schemas/EnumInvestimentType'
         debtorCnpjnNumber:
           type: string
-          description: CNPJ do devedor (condicional para CRI e CRA)
+          description: |
+            CNPJ do devedor (condicional para CRI e CRA)  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
           maxLength: 14
           pattern: '^\d{14}$'
           example: '11225860000140'
         debtorName:
           type: string
-          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
+          description: |
+            Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: Roberto Marino
-        incentivizedProductIndicator:
-          $ref: '#/components/schemas/EnumIncentivizedProductIndicator'
         indexer:
           $ref: '#/components/schemas/EnumIndexer'
         indexerAdditionalInfo:
@@ -462,7 +461,9 @@ components:
           $ref: '#/components/schemas/VoucherPaymentPeriodicity'
         voucherPaymentPeriodicityAdditionalInfo:
           type: string
-          description: Informações adicionais da periodicidade de pagamento de cupom
+          description: |
+            Informações adicionais da periodicidade de pagamento de cupom  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Periodicidade de pagamento de cupom'.
           maxLength: 50
           pattern: '[\w\W\s]*'
           example: Diária
@@ -571,7 +572,7 @@ components:
           description: 'Código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.<br><br>DEFINIÇÃO&#58;O ISIN (International Securities Identification Number) é um código que identifica um valor mobiliário, conforme a norma ISO 6166.<br>ESTRUTURA<br>O ISIN é um código alfanumérico que possui 12 caracteres com a seguinte estrutura&#58;<ul><li>um prefixo, composto de 2 caracteres alfa, que identifica o código do país (Norma ISO 3166);</li><li>o número básico, composto de 9 caracteres alfabéticos ou numéricos em sua extensão;</li><li>um dígito numérico de controle.</li></ul>'
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
-          example: '9.27921E+40'
+          example: '92792126019929200000000000000000000000000'
     Currency:
       type: string
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
@@ -588,7 +589,7 @@ components:
         - DIAS UTEIS
         - DIAS CORRIDOS
       example: DIAS CORRIDOS
-    EnumIncentivizedProductIndicator:
+    EnumTaxExemptProduct:
       type: string
       description: Indicador de um produto incentivado
       enum:
@@ -627,11 +628,7 @@ components:
       example: CDI
     EnumInvestimentType:
       type: string
-      description: |
-        Denominação do produto 
-          1. Debêntures
-          2. CRI
-          3. CRA
+      description: 'Especificação do ativo em questão (Debêntures, CRI ou CRA).'
       enum:
         - DEBENTURES
         - CRI
@@ -639,13 +636,12 @@ components:
       example: CRI
     EnumRatePeriodicity:
       type: string
-      description: |
-        Periodicidade da taxa de remuneração
-          1. MENSAL
-          2. ANUAL
+      description: 'Periodicidade da taxa de remuneração (mensal, anual, diário, semestral)'
       enum:
         - MENSAL
         - ANUAL
+        - DIÁRIO
+        - SEMESTRAL
       example: MENSAL
     EnumRateType:
       type: string
@@ -659,7 +655,9 @@ components:
       example: LINEAR
     FinancialTransactionTax:
       type: object
-      description: valor do imposto considerando a alíquota vigente na data de referência
+      description: |
+        valor do imposto considerando a alíquota vigente na data de referência  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
         - currency
@@ -692,7 +690,9 @@ components:
           $ref: '#/components/schemas/Currency'
     IncomeTax:
       type: object
-      description: valor do imposto considerando a alíquota vigente na data de referência
+      description: |
+        valor do imposto considerando a alíquota vigente na data de referência  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
         - currency
@@ -703,7 +703,9 @@ components:
           $ref: '#/components/schemas/Currency'
     IndexerPercentage:
       type: string
-      description: Percentual do indexador acordado com o  cliente na contratação
+      description: |
+        Percentual máximo do indexador na transação acordado com o cliente na contratação.  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
       pattern: '^\d{1}\.\d{1,6}$'
       example: '1.100000'
@@ -717,7 +719,7 @@ components:
           type: string
           description: Valor relacionado ao objeto.
           maxLength: 23
-          pattern: '^-?\d{1,15}\.\d{2,6}$'
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
           example: '1000.000004'
         currency:
           type: string
@@ -749,7 +751,9 @@ components:
           $ref: '#/components/schemas/Currency'
     PostFixedIndexerPercentage:
       type: string
-      description: 'Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente'
+      description: |
+        Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
       maxLength: 8
       pattern: '^\d{1}\.\d{1,6}$'
       example: '1.100000'
@@ -772,28 +776,34 @@ components:
       maxLength: 15
       pattern: '^\d{1,15}'
       example: '15'
-    ReferenceDate:
+    ReferenceDateTime:
       type: string
-      description: data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos;
-      maxLength: 10
-      pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-      example: '2023-01-07'
+      format: date-time
+      description: 'data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z)'
+      maxLength: 20
+      pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+      example: '2022-07-21T17:32:00Z'
     Remuneration:
       type: object
       required:
         - rateType
         - ratePeriodicity
         - calculation
+        - indexer
       properties:
         preFixedRate:
           type: string
-          description: Valor da taxa de emissão do contrato
+          description: |
+            Valor da taxa de emissão do contrato  
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
           maxLength: 8
           pattern: '^\d{1}\.\d{1,6}$'
           example: '0.300000'
         postFixedIndexerPercentage:
           type: string
-          description: Percentual do indexador de emissão do contrato
+          description: |
+            Percentual do indexador de emissão do contrato  
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
           maxLength: 8
           pattern: '^\d{1}\.\d{1,6}$'
           example: '1.100000'
@@ -803,9 +813,21 @@ components:
           $ref: '#/components/schemas/EnumRatePeriodicity'
         calculation:
           $ref: '#/components/schemas/EnumCalculation'
+        indexer:
+          $ref: '#/components/schemas/EnumIndexer'
+        indexerAdditionalInfo:
+          type: string
+          description: |
+            Informações adicionais do indexador  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
+          pattern: '[\w\W\s]*'
+          maxLength: 50
+          example: Dólar
     RemunerationTransactionRate:
       type: string
-      description: Taxa de remuneração acordada com o cliente na contratação
+      description: |
+        Taxa de remuneração acordada com o cliente na contratação  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
       pattern: '^\d{1}\.\d{1,6}$'
       example: '0.300000'
@@ -844,7 +866,9 @@ components:
       pattern: '^\d{1,15}\.\d{2,8}$'
       example: '42.25'
     TransactionType:
-      $ref: '#/components/schemas/ReferenceDate'
+      type: string
+      description: 'Aplicação, resgate, cancelamento, vencimento, pagamento de juros/amortização, transferência de titularidade, transferência de custódia e outros.'
+      example: Aplicação
     TransactionUnitePrice:
       type: object
       description: 'Preço unitário bruto negociado na transação '
@@ -855,11 +879,13 @@ components:
           $ref: '#/components/schemas/Currency'
     Type:
       type: string
-      description: 'Tipo de movimentação na visão de investimento (Nos casos de pagamento de juros, amortização, prêmio, multa e mora, fica convencionado que será considerado que o tipo de movimento será saída)'
+      description: 'Tipo de movimentação na visão de investimento (Nos casos de motivo da movimentação  "pagamento de juros", "amortização", "prêmio", "multa" e "mora", fica convencionado que será considerado que o tipo de movimento será saída).'
       example: ENTRADA
     TypeAdditionalInfo:
       type: string
-      description: 'Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio'
+      description: |
+        Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Motivo da movimentação'.
       maxLength: 100
       pattern: '[\w\W\s]*'
     UpdatedUnitPrice:

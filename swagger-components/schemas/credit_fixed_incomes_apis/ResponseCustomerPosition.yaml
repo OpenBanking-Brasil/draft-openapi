@@ -7,7 +7,7 @@ properties:
   data:
     type: object
     required:
-      - referenceDate
+      - referenceDateTime
       - updatedUnitPrice
       - grossAmount
       - netAmount
@@ -18,8 +18,8 @@ properties:
       - fine
       - latePayment
     properties:
-      referenceDate:
-        $ref: ./ReferenceDate.yaml
+      referenceDateTime:
+        $ref: ./ReferenceDateTime.yaml
       updatedUnitPrice:
         $ref: ./UpdatedUnitPrice.yaml
       grossAmount:
