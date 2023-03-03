@@ -8,26 +8,26 @@
 ";Não permitido;string;;
 /data/transactionDate;transactionDate;Data da movimentação;Texto;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
 /data/transactionUnitePrice;transactionUnitePrice;Preço unitário bruto negociado na transação ;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/transactionUnitePrice/amount;amount;Valor relacionado ao objeto.;Texto;20;Opcional;^-?\d{1,15}\.\d{2,8}$;;0;1;"";Não permitido;string;1000.0400;4
+/data/transactionUnitePrice/amount;amount;Valor relacionado ao objeto.;Texto;21;Opcional;^-?\d{1,15}\.\d{2,8}$;;0;1;"";Não permitido;string;1000.04;4
 /data/transactionUnitePrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;^[A-Z]{3}$;;0;1;"";Não permitido;string;BRL;
 /data/transactionQuantity;transactionQuantity;Quantidade de títulos envolvidos na movimentação;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;42.25;
 /data/transactionGrossValue;transactionGrossValue;Valor bruto da transação (Preço unitário da movimentação x Quantidade) ;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/transactionGrossValue/amount;amount;Valor relacionado ao objeto.;Texto;20;Opcional;^-?\d{1,15}\.\d{2,8}$;;0;1;"";Não permitido;string;1000.0400;4
+/data/transactionGrossValue/amount;amount;Valor relacionado ao objeto.;Texto;21;Opcional;^-?\d{1,15}\.\d{2,4}$;;0;1;"";Não permitido;string;1000.04;4
 /data/transactionGrossValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;^[A-Z]{3}$;;0;1;"";Não permitido;string;BRL;
 /data/incomeTax;incomeTax;"valor do imposto considerando a alíquota vigente na data de referência  
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
 ";Objeto;;Condicional;;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
 ";Não permitido;object;;
-/data/incomeTax/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.0400;4
+/data/incomeTax/amount;amount;Valor relacionado ao objeto.;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;4
 /data/incomeTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/financialTransactionTax;financialTransactionTax;"valor do imposto considerando a alíquota vigente na data de referência  
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
 ";Objeto;;Condicional;;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
 ";Não permitido;object;;
-/data/financialTransactionTax/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.0400;4
+/data/financialTransactionTax/amount;amount;Valor relacionado ao objeto.;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;4
 /data/financialTransactionTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/transactionNetValue;transactionNetValue;Valor líquido da transação;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/transactionNetValue/amount;amount;Valor relacionado ao objeto.;Texto;20;Opcional;^-?\d{1,15}\.\d{2,8}$;;0;1;"";Não permitido;string;1000.0400;4
+/data/transactionNetValue/amount;amount;Valor relacionado ao objeto.;Texto;21;Opcional;^-?\d{1,15}\.\d{2,4}$;;0;1;"";Não permitido;string;1000.04;4
 /data/transactionNetValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;^[A-Z]{3}$;;0;1;"";Não permitido;string;BRL;
 /data/remunerationTransactionRate;remunerationTransactionRate;"Taxa de remuneração acordada com o cliente na contratação  
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.

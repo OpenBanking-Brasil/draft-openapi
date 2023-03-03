@@ -380,7 +380,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     CreditFixedIdentificacao:
@@ -665,7 +671,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     Fine:
@@ -676,7 +688,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     GrossAmount:
@@ -687,7 +705,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     IncomeTax:
@@ -700,7 +724,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     IndexerPercentage:
@@ -737,7 +767,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 23
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     NetAmount:
@@ -748,7 +784,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     PostFixedIndexerPercentage:
@@ -769,7 +811,13 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 23
+          minLength: 4
+          example: '1000.000004'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     Quantity:
@@ -844,7 +892,13 @@ components:
       description: 'Valor bruto da transação (Preço unitário da movimentação x Quantidade) '
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     TransactionId:
@@ -858,7 +912,13 @@ components:
       description: Valor líquido da transação
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     TransactionQuantity:
@@ -876,7 +936,13 @@ components:
       description: 'Preço unitário bruto negociado na transação '
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 21
+          minLength: 4
+          example: '1000.04'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
     Type:
@@ -901,8 +967,8 @@ components:
         amount:
           type: string
           format: double
-          pattern: '^-?\d{1,15}\.\d{2,8}$'
-          maxLength: 25
+          pattern: '^-?\d{1,15}\.\d{2,6}$ '
+          maxLength: 23
           minLength: 4
           example: '1000.0400'
           description: Valor relacionado ao objeto.
