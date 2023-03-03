@@ -2,8 +2,12 @@
 info:
   title: API Renda Fixa Bancária - Open Finance Brasil
   description: |
-    Estas APIs visam o compartilhamento de dados sobre produtos, movimentacão de clientes e suas
-    características entre as Instituições Financeiras participantes do Open Finance Brasil
+    API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4).  
+    API que retorna informações de operações de investimento do tipo Renda Fixa Bancária 
+    (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes,  
+    incluindo dados como denominação do produto, rentabilidade, quantidade, prazos,  
+    saldos em posição do cliente e movimentações financeiras. Não possui segregação entre  
+    pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints.
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -13,27 +17,27 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/opendata-investments/v1'
+  - url: 'https://api.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/opendata-investments/v1'
+  - url: 'https://apih.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1'
     description: Servidor de Homologação
 tags:
   - name: List Products
-    description: Método para obter a lista de Fundos de Investimentos
+    description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
   - name: Identify Product
-    description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+    description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
   - name: Balances
-    description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
-  - name: Product Movement
-    description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+    description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
+  - name: Transactions
+    description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
 paths:
-  /list-products:
+  /:
     get:
       tags:
         - List Products
-      summary: Conjunto de informações dos Fundos de Investimentos
+      summary: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       operationId: bankFixedIncomesListProduct
-      description: Método para obter a lista de Fundos de Investimentos
+      description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -78,13 +82,13 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank_fixed_incomes
-  '/identify-product/{investmentId}':
+  '/{investmentId}':
     get:
       tags:
         - Identify Product
-      summary: 'Conjunto de informações de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+      summary: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesIdentifyProduct
-      description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+      description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -131,9 +135,9 @@ paths:
     get:
       tags:
         - Balances
-      summary: 'Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
+      summary: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesBalances
-      description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
+      description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - name: investmentId
           in: path
@@ -182,13 +186,13 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank_fixed_incomes
-  '/{investmentId}/product-movement':
+  '/{investmentId}/transactions':
     get:
       tags:
-        - Product Movement
-      summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+        - Transactions
+      summary: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesProductMovement
-      description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -201,7 +205,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseBankFixedIncomeProductMovement'
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -409,6 +413,8 @@ components:
             Taxa de remuneração pré fixada de emissão do título.  p.ex. 0.014500.
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
+
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
         postFixedIndexerPercentage:
           type: string
           pattern: '^\d{1}\.\d{1,6}$'
@@ -419,6 +425,8 @@ components:
             Percentual do indexador pós fixado de emissão do  título.  p.ex. 0.014500.
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
         ratePeriodicity:
@@ -429,7 +437,10 @@ components:
           $ref: '#/components/schemas/EnumInvestmentsFixedIncomeBankIndexer'
         indexerAdditionalInfo:
           type: string
-          description: Informações adicionais do indexador
+          description: |
+            Informações adicionais do indexador
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
           maxLength: 50
           example: Dólar
           pattern: '[\w\W\s]*'
@@ -519,7 +530,7 @@ components:
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-    BankFixedIncomeProductMovement:
+    BankFixedIncomesProductMovement:
       type: object
       required:
         - type
@@ -541,7 +552,7 @@ components:
           description: |
             Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
 
-            Campo a ser preenchido pelas participantes quando o campo "transactionType" for preenchido de forma diferente de "OUTROS"
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo Motivo da movimentação.
         transactionDate:
           type: string
           format: date
@@ -579,37 +590,43 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         incomeTax:
           type: object
-          description: Valor do imposto de renda recolhido na transação.
+          description: |
+            Valor do imposto de renda recolhido na transação.
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
           required:
             - amount
             - currency
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         financialTransactionTax:
           type: object
-          description: Valor do IOF recolhido na transação.
+          description: |
+            Valor do IOF recolhido na transação.
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
           required:
             - amount
             - currency
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         transactionNetValue:
@@ -621,9 +638,9 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
-              pattern: '^-?\d{1,15}\.\d{2,6}$'
-              example: '1000.000004'
+              maxLength: 21
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         TransactionRate:
@@ -635,7 +652,7 @@ components:
           description: |
             Taxa de remuneração da transação.
 
-            Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
         IndexerPercentage:
           type: string
           maxLength: 8
@@ -645,7 +662,7 @@ components:
           description: |
             Percentual máximo do indexador na transação acordado com o cliente na contratação.
 
-            Campo a ser preenchido pelas participantes quando o campo ‘Indexador’ for preenchido de forma diferente de "PRE_FIXADO"
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
         transactionId:
           type: string
           maxLength: 100
@@ -811,14 +828,22 @@ components:
                   $ref: '#/components/schemas/BalanceCurrency'
             preFixedRate:
               type: string
-              description: 'Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
+              description: |
+                Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
+                O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+
+                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
               example: '0.300000'
             postFixedIndexerPercentage:
               type: string
-              description: 'Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, \  considerar taxa vigente.  p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que \  venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. \ O valor 1 representa 100%). Campo obrigatórioo ‘PRE FIXADO’ no campo ‘Indexador’.'
+              description: |
+                Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
+                O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
@@ -959,7 +984,7 @@ components:
               meta:
                 $ref: '#/components/schemas/BankFixedIncomeMeta'
             additionalProperties: false
-    ResponseBankFixedIncomeProductMovement:
+    ResponseBankFixedIncomesProductMovement:
       description: Dados obtidos com sucesso.
       content:
         application/json:
@@ -973,7 +998,7 @@ components:
               data:
                 type: array
                 items:
-                  $ref: '#/components/schemas/BankFixedIncomeProductMovement'
+                  $ref: '#/components/schemas/BankFixedIncomesProductMovement'
               links:
                 $ref: '#/components/schemas/BankFixedIncomeLinks'
               meta:
