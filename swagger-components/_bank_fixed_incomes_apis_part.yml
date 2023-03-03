@@ -244,6 +244,10 @@ paths:
             - 'bank_fixed_incomes' 
 components:
   schemas:
+    LockedWithAdditionalProperties:
+      $ref: ./schemas/ResponseError.yaml
+    ResponseError:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponseBankFixedIncomeListProduct:
       $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductList.yaml
     IdentifyProduct:
