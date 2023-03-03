@@ -2,8 +2,8 @@
 info:
   title: API Credit Fixed Incomes - Open Finance Brasil
   description: |
-    Estas APIs visam o compartilhamento de dados sobre Investimentos e suas
-    características entre as Instituições Financeiras participantes do Open Finance Brasil
+    API de informações de operações de Renda Fixa Crédito do Open Finance Brasil – Fase 4. API que retorna informações de operações de investimento do tipo Renda Fixa Crédito (Debêntures, CRI/CRA) mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, saldos em posição do cliente e movimentações financeiras. Não possui segregação entre pessoa natural e pessoa jurídica. 
+    Requer consentimento do cliente para todos os endpoints.
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -33,7 +33,7 @@ paths:
         - Listagem de produto
       summary: Conjunto de informações dos Fundos de Investimentos
       operationId: creditFixedLista
-      description: Método para obter a lista de Fundos de Investimentos
+      description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -84,7 +84,7 @@ paths:
         - Identificação do produto
       summary: 'Conjunto de informações de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
       operationId: creditFixedIdentificacao
-      description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+      description: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -133,7 +133,7 @@ paths:
         - Posição do cliente
       summary: 'Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
       operationId: creditFixedPosition
-      description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
+      description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -182,7 +182,7 @@ paths:
         - Movimentação do cliente
       summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       operationId: creditFixedMovement
-      description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
