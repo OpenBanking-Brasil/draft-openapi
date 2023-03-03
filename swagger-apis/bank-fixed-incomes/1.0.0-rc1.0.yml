@@ -144,8 +144,9 @@ paths:
           description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+            example: '92792126019929200000000000000000000000000'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -977,6 +978,7 @@ components:
         type: string
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
         maxLength: 100
+        example: '92792126019929200000000000000000000000000'
     Authorization:
       name: Authorization
       in: header
