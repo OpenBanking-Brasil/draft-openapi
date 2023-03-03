@@ -924,19 +924,19 @@ components:
       type: string
       description: 'Aplicação, resgate, cancelamento, vencimento, pagamento de juros/amortização, transferência de titularidade, transferência de custódia e outros.'
       enum:
-        - Compra
-        - venda
-        - cancelamento
-        - vencimento
-        - pagamento de juros
-        - amortização
-        - prêmio
-        - transferência de titularidade
-        - transferência de custódia
-        - multa
-        - mora
-        - outros
-      example: Aplicação
+        - COMPRA
+        - VENDA
+        - CANCELAMENTO
+        - VENCIMENTO
+        - PAGAMENTO_JUROS
+        - AMORTIZACAO
+        - PREMIO
+        - TRANSFERENCIA_TITULARIDADE
+        - TRANSFERENCIA_CUSTODIA
+        - MULTA
+        - MORA
+        - OUTROS
+      example: MORA
     TransactionUnitePrice:
       type: object
       description: 'Preço unitário bruto negociado na transação '
@@ -956,7 +956,7 @@ components:
       description: 'Tipo de movimentação na visão de investimento (Nos casos de motivo da movimentação  "pagamento de juros", "amortização", "prêmio", "multa" e "mora", fica convencionado que será considerado que o tipo de movimento será saída).'
       enum:
         - ENTRADA
-        - SAÍDA
+        - SAIDA
       example: ENTRADA
     TypeAdditionalInfo:
       type: string
@@ -976,10 +976,10 @@ components:
         amount:
           type: string
           format: double
-          pattern: '^-?\d{1,15}\.\d{2,6}$ '
+          pattern: '^-?\d{1,15}\.\d{2,6}$'
           maxLength: 23
           minLength: 4
-          example: '1000.0400'
+          example: '-1000.0400'
           description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
@@ -1002,10 +1002,10 @@ components:
         amount:
           type: string
           format: double
-          pattern: '^-?\d{1,15}\.\d{2,6}$ '
+          pattern: '^-?\d{1,15}\.\d{2,6}$'
           maxLength: 23
           minLength: 4
-          example: '1000.0400'
+          example: '-1000.0400'
           description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
