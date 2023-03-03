@@ -1,6 +1,6 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/cnpjNumber;cnpjNumber;CNPJ da instituição emissora;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;11225860000140;
+/data/issuerInstitutionCnpjNumber;issuerInstitutionCnpjNumber;CNPJ da instituição emissora;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;11225860000140;
 /data/isinCode;isinCode;"Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional) código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166;";Texto;12;Opcional;^[A-Z]{2}([A-Z0-9]){9}\d{1}$;;0;1;"";Não permitido;string;BRCST4CTF001;
 /data/investmentType;investmentType;Especificação do ativo em questão (Debêntures, CRI ou CRA).;Texto;;Obrigatório;;"DEBENTURES 
 CRI 
@@ -55,14 +55,14 @@ OUTROS";1;1;"";Não permitido;string;CDI;
 /data/issueUnitPrice;issueUnitPrice;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/issueUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.000004;
 /data/issueUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/issueUnitPrice/issueDate;issueDate;Data de emissão do título;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;
-/data/issueUnitPrice/dueDate;dueDate;Data de vencimento do contrato;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
-/data/issueUnitPrice/voucherPaymentIndicator;voucherPaymentIndicator;"Indicativo se há pagamento de cupom
+/data/issueDate;issueDate;Data de emissão do título;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;
+/data/dueDate;dueDate;Data de vencimento do contrato;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
+/data/voucherPaymentIndicator;voucherPaymentIndicator;"Indicativo se há pagamento de cupom
   1. Sim
   2. Nao
 ";Texto;;Obrigatório;;"SIM 
 NAO";1;1;"";Não permitido;string;SIM;
-/data/issueUnitPrice/voucherPaymentPeriodicity;voucherPaymentPeriodicity;"Em caso de haver pagamento de cupom, descrever a periodicidade (mensal, trimestral, semestral, anual, irregular e outros)
+/data/voucherPaymentPeriodicity;voucherPaymentPeriodicity;"Em caso de haver pagamento de cupom, descrever a periodicidade (mensal, trimestral, semestral, anual, irregular e outros)
   1. Mensal
   2. Trimestral
   3. Semestral
@@ -75,6 +75,7 @@ SEMESTRAL
 ANUAL 
 IRREGULAR 
 OUTROS";1;1;"";Não permitido;string;MENSAL;
-/data/issueUnitPrice/voucherPaymentPeriodicityAdditionalInfo;voucherPaymentPeriodicityAdditionalInfo;Informações adicionais da periodicidade de pagamento de cupom;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Diária;
-/data/issueUnitPrice/purchaseDate;purchaseDate;Data de aquisição do cliente;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
-/data/issueUnitPrice/gracePeriodDate;gracePeriodDate;Data até a qual o cliente não poderá resgatar antecipadamente seu investimento;Data;11;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;
+/data/voucherPaymentPeriodicityAdditionalInfo;voucherPaymentPeriodicityAdditionalInfo;Informações adicionais da periodicidade de pagamento de cupom;Texto;50;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Diária;
+/data/clearingCode;clearingCode;Código de registro do ativo na clearing;Texto;30;Opcional; [\w\W-]*;;0;1;"";Não permitido;string;CDB421GPXXX;
+/data/purchaseDate;purchaseDate;Data de aquisição do cliente;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
+/data/gracePeriodDate;gracePeriodDate;Data até a qual o cliente não poderá resgatar antecipadamente seu investimento;Data;11;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;

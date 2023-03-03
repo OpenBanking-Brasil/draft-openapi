@@ -6,8 +6,20 @@ required:
   - quantity
 properties:
   amount:
-    $ref: ./Amount.yaml
+    type: string
+    format: double
+    pattern: '^-?\d{1,15}\.\d{2,8}$'
+    maxLength: 25
+    minLength: 4
+    example: '1000.0400'
+    description: 'Valor relacionado ao objeto.'
   currency:
     $ref: ./Currency.yaml
   quantity:
-    $ref: ./Quantity.yaml
+    type: string
+    format: double
+    description: "quantidade de títulos detidos na data da posição do cliente "
+    maxLength: 24
+    minLength: 4
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    example: '15.00'

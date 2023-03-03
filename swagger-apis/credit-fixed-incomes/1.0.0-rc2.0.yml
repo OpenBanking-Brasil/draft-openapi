@@ -18,19 +18,19 @@ servers:
   - url: 'https://apih.banco.com.br/open-banking/opendata-investments/v1'
     description: Servidor de Homologação
 tags:
-  - name: Listagem de produtos
+  - name: Listagem de produto
     description: Método para obter a lista de Fundos de Investimentos
   - name: Identificação do produto
     description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
-  - name: Customer Position
+  - name: Posição do cliente
     description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
-  - name: Customer Movement
+  - name: Movimentação do cliente
     description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
 paths:
-  /listagemdeprodutos:
+  /list-products:
     get:
       tags:
-        - Listagem de produtos
+        - Listagem de produto
       summary: Conjunto de informações dos Fundos de Investimentos
       operationId: creditFixedLista
       description: Método para obter a lista de Fundos de Investimentos
@@ -45,7 +45,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseListagem'
+          $ref: '#/components/responses/OKResponseCreditFixedIncomesProductList'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -78,7 +78,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - credit-fixed-incomes
-  /identificacaodoproduto:
+  '/identify-product/{investmentId}':
     get:
       tags:
         - Identificação do produto
@@ -86,7 +86,7 @@ paths:
       operationId: creditFixedIdentificacao
       description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
       parameters:
-        - $ref: '#/components/parameters/investmentId'
+        - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -94,7 +94,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCreditFixedIdentificacao'
+          $ref: '#/components/responses/OKResponseCreditFixedIncomesIdentifyProduct'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -127,15 +127,15 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - credit-fixed-incomes
-  /customer-position:
+  '/credit-fixed-incomes/{investmentId}/balances':
     get:
       tags:
-        - Customer Position
+        - Posição do cliente
       summary: 'Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
       operationId: creditFixedPosition
       description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
       parameters:
-        - $ref: '#/components/parameters/investmentId'
+        - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -176,15 +176,15 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - credit-fixed-incomes
-  /customer-movement:
+  '/credit-fixed-incomes/{investmentId}/transactions':
     get:
       tags:
-        - Customer Movement
+        - Movimentação do cliente
       summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       operationId: creditFixedMovement
       description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       parameters:
-        - $ref: '#/components/parameters/investmentId'
+        - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -230,7 +230,7 @@ paths:
             - credit-fixed-incomes
 components:
   schemas:
-    OKResponseListagem:
+    OKResponseCreditFixedIncomesProductList:
       type: object
       required:
         - data
@@ -384,13 +384,19 @@ components:
     CreditFixedIdentificacao:
       type: object
       required:
-        - cnpjNumber
+        - issuerInstitutionCnpjNumber
         - investmentType
         - incentivizedProductIndicator
         - remuneration
         - issueUnitPrice
+        - issueDate
+        - dueDate
+        - voucherPaymentIndicator
+        - voucherPaymentPeriodicity
+        - purchaseDate
+        - gracePeriodDate
       properties:
-        cnpjNumber:
+        issuerInstitutionCnpjNumber:
           type: string
           description: CNPJ da instituição emissora
           maxLength: 14
@@ -422,6 +428,50 @@ components:
           $ref: '#/components/schemas/Remuneration'
         issueUnitPrice:
           $ref: '#/components/schemas/IssueUnitPrice'
+        issueDate:
+          type: string
+          format: date
+          description: Data de emissão do título
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-16'
+        dueDate:
+          type: string
+          format: date
+          description: Data de vencimento do contrato
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+        voucherPaymentIndicator:
+          $ref: '#/components/schemas/VoucherPaymentIndicator'
+        voucherPaymentPeriodicity:
+          $ref: '#/components/schemas/VoucherPaymentPeriodicity'
+        voucherPaymentPeriodicityAdditionalInfo:
+          type: string
+          description: Informações adicionais da periodicidade de pagamento de cupom
+          maxLength: 50
+          pattern: '[\w\W\s]*'
+          example: Diária
+        clearingCode:
+          type: string
+          description: Código de registro do ativo na clearing
+          maxLength: 30
+          pattern: ' [\w\W-]*'
+          example: CDB421GPXXX
+        purchaseDate:
+          type: string
+          format: date
+          description: Data de aquisição do cliente
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+        gracePeriodDate:
+          type: string
+          format: date
+          description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
+          maxLength: 11
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-16'
     CreditFixedIncomesLinks:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -643,12 +693,6 @@ components:
       required:
         - amount
         - currency
-        - issueDate
-        - dueDate
-        - voucherPaymentIndicator
-        - voucherPaymentPeriodicity
-        - purchaseDate
-        - gracePeriodDate
       properties:
         amount:
           type: string
@@ -662,44 +706,6 @@ components:
           maxLength: 3
           pattern: '^[A-Z]{3}$'
           example: BRL
-        issueDate:
-          type: string
-          format: date
-          description: Data de emissão do título
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-16'
-        dueDate:
-          type: string
-          format: date
-          description: Data de vencimento do contrato
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-15'
-        voucherPaymentIndicator:
-          $ref: '#/components/schemas/VoucherPaymentIndicator'
-        voucherPaymentPeriodicity:
-          $ref: '#/components/schemas/VoucherPaymentPeriodicity'
-        voucherPaymentPeriodicityAdditionalInfo:
-          type: string
-          description: Informações adicionais da periodicidade de pagamento de cupom
-          maxLength: 50
-          pattern: '[\w\W\s]*'
-          example: Diária
-        purchaseDate:
-          type: string
-          format: date
-          description: Data de aquisição do cliente
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-15'
-        gracePeriodDate:
-          type: string
-          format: date
-          description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
-          maxLength: 11
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2018-02-16'
     LatePayment:
       type: object
       description: valor de mora devido ao atraso do pagamento acordado em contrato
@@ -825,8 +831,8 @@ components:
     TransactionQuantity:
       type: string
       description: Quantidade de títulos envolvidos na movimentação
-      maxLength: 25
-      pattern: '^\d{1,15}\.\d{2,9}$'
+      maxLength: 24
+      pattern: '^\d{1,15}\.\d{2,8}$'
       example: '42.25'
     TransactionType:
       type: string
@@ -858,11 +864,23 @@ components:
         - quantity
       properties:
         amount:
-          $ref: '#/components/schemas/Amount'
+          type: string
+          format: double
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 25
+          minLength: 4
+          example: '1000.0400'
+          description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
         quantity:
-          $ref: '#/components/schemas/Quantity'
+          type: string
+          format: double
+          description: 'quantidade de títulos detidos na data da posição do cliente '
+          maxLength: 24
+          minLength: 4
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '15.00'
     VoucherPaymentIndicator:
       type: string
       description: |
@@ -990,7 +1008,7 @@ components:
               format: date-time
               example: '2021-05-21T08:30:00Z'
   parameters:
-    investmentId:
+    InvestmentId:
       name: investmentId
       in: path
       description: Identificador.
@@ -1090,13 +1108,13 @@ components:
           scopes:
             credit-fixed-incomes: Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions.
   responses:
-    OKResponseListagem:
+    OKResponseCreditFixedIncomesProductList:
       description: Lista de títulos de renda fixa crédito mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OKResponseListagem'
-    OKResponseCreditFixedIdentificacao:
+            $ref: '#/components/schemas/OKResponseCreditFixedIncomesProductList'
+    OKResponseCreditFixedIncomesIdentifyProduct:
       description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
       content:
         application/json:
