@@ -113,6 +113,12 @@ components:
           $ref: '#/components/schemas/CnpjNumber'
         urlComplementaryList:
           type: string
+          description: |
+            Espera-se que valor de retorno, após acesso ao link 'urlComplementaryList', deve ser array de objeto com a estrutura abaixo:
+            - 'name' com o valor contido no campo 'LegalEntityName' conforme cadastro no diretório;
+            - 'cnpjNumber' com o valor contido no campo CNPJ ('RegistrationNumber') correspondente a esta instituição;
+            - Ambos do tipo string;
+            - Ambos obrigatórios. 
           maxLength: 1024
           pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://empresaa1.com/companies'
@@ -1907,7 +1913,7 @@ components:
       additionalProperties: false
     Meta:
       type: object
-      description: Meta informações referente à API requisitada.
+      description: Meta informações referente a API requisitada.
       required:
         - totalRecords
         - totalPages
