@@ -388,7 +388,7 @@ components:
       required:
         - issuerInstitutionCnpjNumber
         - investmentType
-        - debtorCnpjnNumber
+        - debtorCnpjNumber
         - indexer
         - remuneration
         - issueUnitPrice
@@ -407,13 +407,14 @@ components:
           example: '11225860000140'
         isinCode:
           type: string
-          description: 'Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional) código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166;'
+          description: |
+            Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional): código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.
           maxLength: 12
           pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
           example: BRCST4CTF001
         investmentType:
           $ref: '#/components/schemas/EnumInvestimentType'
-        debtorCnpjnNumber:
+        debtorCnpjNumber:
           type: string
           description: |
             CNPJ do devedor (condicional para CRI e CRA)  
@@ -471,7 +472,7 @@ components:
           type: string
           description: Código de registro do ativo na clearing
           maxLength: 30
-          pattern: ' [\w\W-]*'
+          pattern: '[\w\W-]*'
           example: CDB421GPXXX
         purchaseDate:
           type: string
@@ -484,7 +485,7 @@ components:
           type: string
           format: date
           description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
-          maxLength: 11
+          maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-02-16'
     CreditFixedIncomesLinks:
