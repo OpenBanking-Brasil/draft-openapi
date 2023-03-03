@@ -127,7 +127,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
-  '/credit-fixed-incomes/{investmentId}/balances':
+  '/{investmentId}/balances':
     get:
       tags:
         - Posição do cliente
@@ -176,7 +176,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
-  '/credit-fixed-incomes/{investmentId}/transactions':
+  '/{investmentId}/transactions':
     get:
       tags:
         - Movimentação do cliente
