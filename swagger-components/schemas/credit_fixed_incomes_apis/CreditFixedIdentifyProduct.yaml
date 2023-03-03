@@ -3,7 +3,6 @@ required:
   - issuerInstitutionCnpjNumber
   - investmentType
   - debtorCnpjnNumber
-  - incentivizedProductIndicator
   - indexer
   - remuneration
   - issueUnitPrice
@@ -30,18 +29,20 @@ properties:
     $ref: EnumInvestimentType.yaml
   debtorCnpjnNumber:
     type: string
-    description: CNPJ do devedor (condicional para CRI e CRA)
+    description: |
+      CNPJ do devedor (condicional para CRI e CRA)  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
     maxLength: 14
     pattern: '^\d{14}$'
     example: '11225860000140'
   debtorName:
     type: string
-    description: Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).
+    description: |
+      Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
     pattern: '[\w\W\s]*'
     maxLength: 50
     example: 'Roberto Marino'
-  incentivizedProductIndicator:
-    $ref: EnumIncentivizedProductIndicator.yaml
   indexer:
     $ref: EnumIndexer.yaml
   indexerAdditionalInfo:
@@ -74,7 +75,9 @@ properties:
     $ref: VoucherPaymentPeriodicity.yaml
   voucherPaymentPeriodicityAdditionalInfo:
     type: string
-    description: Informações adicionais da periodicidade de pagamento de cupom
+    description: |
+      Informações adicionais da periodicidade de pagamento de cupom  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Periodicidade de pagamento de cupom'.
     maxLength: 50
     pattern: '[\w\W\s]*'
     example: 'Diária'

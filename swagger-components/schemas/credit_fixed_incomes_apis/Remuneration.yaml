@@ -7,13 +7,17 @@ required:
 properties:
   preFixedRate:
     type: string
-    description: Valor da taxa de emissão do contrato  
+    description: |
+      Valor da taxa de emissão do contrato  
+      [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE FIXADO' no campo 'Indexador'.
     maxLength: 8
     pattern: '^\d{1}\.\d{1,6}$'
     example: '0.300000'
   postFixedIndexerPercentage:
     type: string
-    description: Percentual do indexador de emissão do contrato
+    description: |
+      Percentual do indexador de emissão do contrato  
+      [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE FIXADO'.
     maxLength: 8
     pattern: '^\d{1}\.\d{1,6}$'
     example: '1.100000'
@@ -27,7 +31,9 @@ properties:
     $ref: EnumIndexer.yaml
   indexerAdditionalInfo:
     type: string
-    description: Informações adicionais do indexador
+    description: |
+      Informações adicionais do indexador  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
     pattern: '[\w\W\s]*'
     maxLength: 50
     example: 'Dólar'
