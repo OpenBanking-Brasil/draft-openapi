@@ -349,6 +349,7 @@ components:
           type: string
           maxLength: 30
           pattern: '[\w\W-]*'
+          example: CDB421GPXXX
           description: Código de registro do ativo na clearing.
         purchaseDate:
           type: string
@@ -576,8 +577,8 @@ components:
               $ref: '#/components/schemas/CurrencyCode'
         transactionQuantity:
           type: string
-          maxLength: 25
-          pattern: '^\d{1,15}\.\d{2,9}$'
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
           example: '42.25'
           description: Quantidade de títulos envolvidos na movimentação.
         transactionGrossValue:
@@ -742,15 +743,19 @@ components:
               description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
               properties:
                 amount:
-                  $ref: '#/components/schemas/BalanceAmount'
+                  description: Valor relacionado ao objeto.
+                  type: string
+                  maxLength: 25
+                  pattern: '^-?\d{1,15}\.\d{2,8}$'
+                  example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
                 quantity:
                   type: string
                   description: Quantidade de títulos detidos na data da posição do cliente
-                  maxLength: 15
-                  pattern: '^\d{1,15}'
-                  example: '15'
+                  maxLength: 24
+                  pattern: '^\d{1,15}\.\d{2,8}$'
+                  example: '15.00'
             grossAmount:
               description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
               type: object

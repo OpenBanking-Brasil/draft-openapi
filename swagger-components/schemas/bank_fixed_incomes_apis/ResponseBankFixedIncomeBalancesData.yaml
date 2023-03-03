@@ -25,11 +25,19 @@ properties:
     description: Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.
     properties:
       amount:
-        $ref: ./BankFixedIncomesBalancesAmount.yaml
+        description: Valor relacionado ao objeto.
+        type: string
+        maxLength: 25
+        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        example: '1000.000004'
       currency:
         $ref: ./BankFixedIncomesBalancesCurrency.yaml
       quantity:
-        $ref: ./BankFixedIncomesBalancesQuantity.yaml
+        type: string
+        description: Quantidade de títulos detidos na data da posição do cliente
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
+        example: '15.00'
   grossAmount:
     description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
     type: object
