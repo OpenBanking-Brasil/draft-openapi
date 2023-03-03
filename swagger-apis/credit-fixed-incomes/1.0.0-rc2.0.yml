@@ -299,7 +299,9 @@ components:
               $ref: '#/components/schemas/PurchaseUnitPrice'
             preFixedRate:
               type: string
-              description: 'Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente'
+              description: |
+                Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
+                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
               maxLength: 8
               pattern: '^\d{1}\.\d{1,6}$'
               example: '0.300000'
@@ -386,7 +388,8 @@ components:
       required:
         - issuerInstitutionCnpjNumber
         - investmentType
-        - incentivizedProductIndicator
+        - debtorCnpjnNumber
+        - indexer
         - remuneration
         - issueUnitPrice
         - issueDate
@@ -412,18 +415,28 @@ components:
           $ref: '#/components/schemas/EnumInvestimentType'
         debtorCnpjnNumber:
           type: string
-          description: CNPJ do devedor (condicional para CRI e CRA)
+          description: |
+            CNPJ do devedor (condicional para CRI e CRA)  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
           maxLength: 14
           pattern: '^\d{14}$'
           example: '11225860000140'
         debtorName:
           type: string
-          description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
+          description: |
+            Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: Roberto Marino
-        taxExemptProduct:
-          $ref: '#/components/schemas/EnumTaxExemptProduct'
+        indexer:
+          $ref: '#/components/schemas/EnumIndexer'
+        indexerAdditionalInfo:
+          type: string
+          description: Informações adicionais do indexador
+          pattern: '[\w\W\s]*'
+          maxLength: 50
+          example: Dólar
         remuneration:
           $ref: '#/components/schemas/Remuneration'
         issueUnitPrice:
@@ -448,7 +461,9 @@ components:
           $ref: '#/components/schemas/VoucherPaymentPeriodicity'
         voucherPaymentPeriodicityAdditionalInfo:
           type: string
-          description: Informações adicionais da periodicidade de pagamento de cupom
+          description: |
+            Informações adicionais da periodicidade de pagamento de cupom  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Periodicidade de pagamento de cupom'.
           maxLength: 50
           pattern: '[\w\W\s]*'
           example: Diária
@@ -640,7 +655,9 @@ components:
       example: LINEAR
     FinancialTransactionTax:
       type: object
-      description: valor do imposto considerando a alíquota vigente na data de referência
+      description: |
+        valor do imposto considerando a alíquota vigente na data de referência  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
         - currency
@@ -673,7 +690,9 @@ components:
           $ref: '#/components/schemas/Currency'
     IncomeTax:
       type: object
-      description: valor do imposto considerando a alíquota vigente na data de referência
+      description: |
+        valor do imposto considerando a alíquota vigente na data de referência  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
         - currency
@@ -684,7 +703,9 @@ components:
           $ref: '#/components/schemas/Currency'
     IndexerPercentage:
       type: string
-      description: Percentual máximo do indexador na transação acordado com o cliente na contratação.
+      description: |
+        Percentual máximo do indexador na transação acordado com o cliente na contratação.  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
       pattern: '^\d{1}\.\d{1,6}$'
       example: '1.100000'
@@ -730,7 +751,9 @@ components:
           $ref: '#/components/schemas/Currency'
     PostFixedIndexerPercentage:
       type: string
-      description: 'Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente'
+      description: |
+        Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
       maxLength: 8
       pattern: '^\d{1}\.\d{1,6}$'
       example: '1.100000'
@@ -770,13 +793,17 @@ components:
       properties:
         preFixedRate:
           type: string
-          description: Valor da taxa de emissão do contrato
+          description: |
+            Valor da taxa de emissão do contrato  
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
           maxLength: 8
           pattern: '^\d{1}\.\d{1,6}$'
           example: '0.300000'
         postFixedIndexerPercentage:
           type: string
-          description: Percentual do indexador de emissão do contrato
+          description: |
+            Percentual do indexador de emissão do contrato  
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
           maxLength: 8
           pattern: '^\d{1}\.\d{1,6}$'
           example: '1.100000'
@@ -790,13 +817,17 @@ components:
           $ref: '#/components/schemas/EnumIndexer'
         indexerAdditionalInfo:
           type: string
-          description: Informações adicionais do indexador
+          description: |
+            Informações adicionais do indexador  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: Dólar
     RemunerationTransactionRate:
       type: string
-      description: Taxa de remuneração acordada com o cliente na contratação
+      description: |
+        Taxa de remuneração acordada com o cliente na contratação  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
       pattern: '^\d{1}\.\d{1,6}$'
       example: '0.300000'
@@ -852,7 +883,9 @@ components:
       example: ENTRADA
     TypeAdditionalInfo:
       type: string
-      description: 'Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio'
+      description: |
+        Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio  
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Motivo da movimentação'.
       maxLength: 100
       pattern: '[\w\W\s]*'
     UpdatedUnitPrice:
