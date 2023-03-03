@@ -9,7 +9,7 @@ required:
 properties:
   interestRate:
     type: string
-    pattern: '^[0-1]\.[\d]{6}$'
+    pattern: '^\d{1}\.\d{6}$'
     description: Taxa que remunera a parte da mensalidade destinada a formar o Capital, ou seja, a Provisão Matemática de Resgate, também chamada de saldo de capitalização. Em porcentagem ao mês (% a.m.).
     maxLength: 8
     example: '0.251231'
@@ -33,8 +33,8 @@ properties:
   redemptionPercentageEndTerm:
     type: string
     description: Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.
-    maxLength: 7
-    pattern: '^[0-1]\.\d{5}$'
+    maxLength: 8
+    pattern: '^\d{1}\.\d{6}$'
     example: '1.00002'
   gracePeriodRedemption:
     type: number
