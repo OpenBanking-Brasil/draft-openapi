@@ -370,7 +370,7 @@ components:
           type: string
           pattern: '^\d{1,16}\.\d{4}$'
           description: Taxa de juros para capitalização da PMBaC
-          example: '14.2521'
+          example: '0.019800'
         updateIndexes:
           type: array
           items:
@@ -481,7 +481,7 @@ components:
           pattern: '^\d\.\d{4}$'
           description: Percentual de faixa de resgate.
           maxLength: 6
-          example: '0.5000'
+          example: '0.019800'
       additionalProperties: false
     EnumPersonalIndemnifiablePeriodType:
       type: string
@@ -614,11 +614,11 @@ components:
         min:
           type: string
           pattern: '^\d\.\d{2}$'
-          example: '0.20'
+          example: '0.019800'
         max:
           type: string
           pattern: '^\d\.\d{2}$'
-          example: '1.00'
+          example: '0.019800'
       additionalProperties: false
     AutomotiveCoverageItem:
       type: object
@@ -731,7 +731,7 @@ components:
           description: 'Será caracterizada a indenização integral quando os prejuízos resultantes de um mesmo sinistro, atingirem ou ultrapassarem a quantia apurada a partir da aplicação de percentual previamente determinado sobre o valor contratado. (Circular 269/2004).'
           pattern: '^\d\.\d{2}$'
           maxLength: 4
-          example: '0.75'
+          example: '0.019800'
         deductibleTypes:
           description: Listagem de tipo de franquia para cada tipo de cobertura do produto.
           type: array
@@ -756,7 +756,7 @@ components:
           pattern: '^\d\.\d{2}$'
           description: Percentual de Franquia
           maxLength: 4
-          example: '0.75'
+          example: '0.019800'
         mandatoryParticipation:
           type: string
           maxLength: 300
@@ -1260,7 +1260,7 @@ components:
           pattern: '^\d\.\d{6}$'
           description: 'Participação Obrigatória é o valor ou percentual definido na apólice referente à responsabilidade do Segurado nos prejuízos indenizáveis decorrentes de sinistros cobertos. (Circular SUSEP 347/07). Listagem de percentual de franquia e/ou Percentual Participação Obrigatória do Segurado estabelecida pela sociedade para cada tipo de cobertura do produto. Observação: Sugestão de Criação do campo em substituição ao campo abaixo ‘Valor Máximo de Franquia’.'
           maxLength: 8
-          example: '0.000002'
+          example: '0.019800'
       additionalProperties: false
     HomePropertyCharacteristics:
       type: object
