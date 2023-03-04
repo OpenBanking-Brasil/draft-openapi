@@ -192,11 +192,11 @@ NAO_APLICA";0;1;"";Não permitido;string;DIRETAMENTE;
 /data/grantPeriodBenefit/investmentFunds/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;^[A-Z]{3}$;;0;1;"";Não permitido;string;BRL;
 /data/costs;costs;Custos;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/costs/loadingAntecipated;loadingAntecipated;Carregamento antecipado.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/costs/loadingAntecipated/minValue;minValue;Percentual mínimo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.;Texto;8;Obrigatório;^[0-1]\.\d{6}$;;1;1;"";Não permitido;string;0.000000;
-/data/costs/loadingAntecipated/maxValue;maxValue;Percentual máximo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.;Texto;8;Obrigatório;^[0-1]\.\d{6}$;;1;1;"";Não permitido;string;0.100000;
+/data/costs/loadingAntecipated/minValue;minValue;Percentual mínimo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.000000;8
+/data/costs/loadingAntecipated/maxValue;maxValue;Percentual máximo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.100000;8
 /data/costs/loadingLate;loadingLate;Carregamento postecipado.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/costs/loadingLate/minValue;minValue;Percentual mínimo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.;Texto;8;Obrigatório;^[0-1]\.\d{6}$;;1;1;"";Não permitido;string;0.000000;
-/data/costs/loadingLate/maxValue;maxValue;Percentual máximo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.;Texto;8;Obrigatório;^[0-1]\.\d{6}$;;1;1;"";Não permitido;string;0.100000;
+/data/costs/loadingLate/minValue;minValue;Percentual mínimo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.000000;8
+/data/costs/loadingLate/maxValue;maxValue;Percentual máximo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.100000;8
 /data/minimumRequirement;minimumRequirement;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/minimumRequirement/contractType;contractType;"O tipo de serviço contratado. A considerar os domínios abaixo:
 1. Coletivo Averbado;
