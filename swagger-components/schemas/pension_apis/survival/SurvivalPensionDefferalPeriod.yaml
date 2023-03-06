@@ -6,7 +6,8 @@ properties:
   interestRate:
     type: string
     maxLength: 8
-    pattern: '^[0-1]\.\d{6}$'
+    minLength: 8
+    pattern: '^\d{1}\.\d{6}$'
     description: Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.
     example: '0.251231'
   updateIndex:
@@ -19,7 +20,8 @@ properties:
   reversalFinancialResults:
     type: string
     maxLength: 8
-    pattern: '^[0-1]\.\d{6}$'
+    minLength: 8
+    pattern: '^\d{1}\.\d{6}$'
     description: Percentual de reversão de excedente financeiro na concessão. Em %.
     example: '0.051230'
   minimumPremiums:

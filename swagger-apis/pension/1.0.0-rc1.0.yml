@@ -305,12 +305,13 @@ components:
           example: EMPRESAAPREV
         maximumAdministrationFee:
           type: string
-          pattern: '^[0-1]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
               - Taxa Máxima de Administração - em %
           example: '0.201000'
           maxLength: 8
+          minLength: 8
         typePerformanceFee:
           type: string
           enum:
@@ -324,11 +325,12 @@ components:
           maxLength: 13
         maximumPerformanceFee:
           type: string
-          pattern: '^[0-1]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Taxa Máxima de Performance - em %
           maxLength: 8
+          minLength: 8
           example: '0.201000'
         eligibilityRule:
           type: boolean
@@ -407,7 +409,8 @@ components:
         interestRate:
           type: string
           maxLength: 8
-          pattern: '^[0-1]\.\d{6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.
           example: '0.251231'
         updateIndex:
@@ -420,7 +423,8 @@ components:
         reversalFinancialResults:
           type: string
           maxLength: 8
-          pattern: '^[0-1]\.\d{6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Percentual de reversão de excedente financeiro na concessão. Em %.
           example: '0.051230'
         minimumPremiums:
@@ -560,14 +564,16 @@ components:
       properties:
         minValue:
           type: string
-          pattern: '^[0-1]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           maxLength: 8
+          minLength: 8
           description: Percentual mínimo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.
           example: '0.000000'
         maxValue:
           type: string
-          pattern: '^[0-1]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           maxLength: 8
+          minLength: 8
           description: Percentual máximo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.
           example: '0.100000'
       additionalProperties: false
@@ -580,14 +586,16 @@ components:
       properties:
         minValue:
           type: string
-          pattern: '^[0-1]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           maxLength: 8
+          minLength: 8
           description: Percentual mínimo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.
           example: '0.000000'
         maxValue:
           type: string
-          pattern: '^[0-1]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           maxLength: 8
+          minLength: 8
           description: Percentual máximo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.
           example: '0.100000'
       additionalProperties: false
@@ -685,7 +693,8 @@ components:
         interestRate:
           type: string
           maxLength: 8
-          pattern: '^[0-1]\.\d{6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Taxa de juros garantida utilizada para conversão em renda. Em %
           example: '0.225222'
         updateIndex:
@@ -693,7 +702,8 @@ components:
         reversalFinancialResults:
           type: string
           maxLength: 8
-          pattern: '^[0-1]\.\d{6}$'
+          minLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Percentual de reversão de excedente financeiro na concessão. Em %.
           example: '1.252111'
         investmentFunds:
@@ -1020,9 +1030,10 @@ components:
           example: 12
         percentage:
           type: string
-          pattern: '^\d\.\d{4}$'
+          pattern: '^\d{1}\.\d{6}$'
           description: Percentual de faixa de resgate.
-          maxLength: 6
+          maxLength: 8
+          minLength: 8
           example: '0.5000'
       additionalProperties: false
     InsurancePensionEnumPmbacRemuneration:
@@ -1030,9 +1041,11 @@ components:
       properties:
         interestRate:
           type: string
-          pattern: '^\d{1,16}\.\d{4}$'
+          pattern: '^\d{1}\.\d{6}$'
           description: Taxa de juros para capitalização da PMBaC
           example: '14.2521'
+          maxLength: 8
+          minLength: 8
         updateIndexes:
           type: array
           items:
