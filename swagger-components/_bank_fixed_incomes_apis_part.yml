@@ -32,7 +32,7 @@ tags:
     description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
   
 paths:
-  /:
+  /investments:
     get:
       tags:
         - List Products
@@ -84,7 +84,7 @@ paths:
             - 'consent:consentId'
             - 'bank_fixed_incomes' 
 
-  /{investmentId}:
+  /investments/{investmentId}:
     get:
       tags:
         - Identify Product
@@ -134,7 +134,7 @@ paths:
             - 'consent:consentId'
             - 'bank_fixed_incomes' 
 
-  /{investmentId}/balances:
+  /investments/{investmentId}/balances:
     get:
       tags:
         - Balances
@@ -191,7 +191,7 @@ paths:
             - 'consent:consentId'
             - 'bank_fixed_incomes'        
             
-  /{investmentId}/transactions:
+  /investments/{investmentId}/transactions:
     get:
       tags:
         - Transactions
