@@ -23,7 +23,7 @@ PREVIDENCIA";1;1;"";Não permitido;string;PREVIDENCIA;
 BENEFICIO_DEFINIDO";0;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
 /data/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL);Texto;1024;Opcional;;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/termsAndConditions;termsAndConditions;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
-/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^\d{5}\.\d{6}/\d{4}-\d{2}$;;1;1;"";Não permitido;string;15414.622222/2222-22;
+/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2}$;;1;1;"";Não permitido;string;15414.622222/2222-22;
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/type;type;"1.  PGBL
 2.  PRGP
@@ -52,6 +52,7 @@ VRI
 VDR 
 DEMAIS_PRODUTOS_PREVIDENCIA";1;1;"";Não permitido;string;;
 /data/defferalPeriod;defferalPeriod;Período de Diferimento;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+
 /data/defferalPeriod/interestRate;interestRate;Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.;Texto;8;Opcional;^[0-1]\.\d{6}$;;0;1;"";Não permitido;string;0.019800;
 /data/defferalPeriod/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
 1. IPCA (IBGE);
@@ -155,7 +156,7 @@ AT_83_MALE_FEMALE
 BR_EMSSB_MALE 
 BR_EMSSB_FEMALE 
 BR_EMSSB_MALE_FEMALE";0;N;"";Não permitido;array;AT_2000_MALE;
-/data/grantPeriodBenefit/interestRate;interestRate;Taxa de juros garantida utilizada para conversão em renda. Em %;Texto;8;Opcional;^[0-1]\.\d{6}$;;0;1;"";Não permitido;string;0.225222;
+/data/grantPeriodBenefit/interestRate;interestRate;Taxa de juros garantida utilizada para conversão em renda. Em %;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.225222;8
 /data/grantPeriodBenefit/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
 1. IPCA (IBGE);
 2. IGP-M (FGV);
@@ -163,7 +164,7 @@ BR_EMSSB_MALE_FEMALE";0;N;"";Não permitido;array;AT_2000_MALE;
 ";Texto;5;Opcional;;"IPCA 
 IGP_M 
 INPC";0;1;"";Não permitido;string;IPCA;
-/data/grantPeriodBenefit/reversalFinancialResults;reversalFinancialResults;Percentual de reversão de excedente financeiro na concessão. Em %.;Texto;8;Opcional;^[0-1]\.\d{6}$;;0;1;"";Não permitido;string;1.252111;
+/data/grantPeriodBenefit/reversalFinancialResults;reversalFinancialResults;Percentual de reversão de excedente financeiro na concessão. Em %.;Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;1.252111;8
 /data/grantPeriodBenefit/investmentFunds;investmentFunds;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
 /data/grantPeriodBenefit/investmentFunds/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Opcional;^\d{14}$;;0;1;"";Não permitido;string;13456789000112;
 /data/grantPeriodBenefit/investmentFunds/name;name;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
