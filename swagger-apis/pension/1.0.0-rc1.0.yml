@@ -416,7 +416,7 @@ components:
       type: string
       description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
       maxLength: 20
-      pattern: '^\d{5}\.\d{6}/\d{4}-\d{2}$'
+      pattern: '^\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2}$'
       example: 15414.622222/2222-22
     CnpjNumber:
       type: string
@@ -719,7 +719,7 @@ components:
           minLength: 8
           pattern: '^\d{1}\.\d{6}$'
           description: Taxa de juros garantida utilizada para conversão em renda. Em %
-          example: '0.225222'
+          example: '0.019800'
         updateIndex:
           $ref: '#/components/schemas/UpdateIndex'
         reversalFinancialResults:
@@ -728,7 +728,7 @@ components:
           minLength: 8
           pattern: '^\d{1}\.\d{6}$'
           description: Percentual de reversão de excedente financeiro na concessão. Em %.
-          example: '1.252111'
+          example: '0.019800'
         investmentFunds:
           type: array
           items:
@@ -1067,8 +1067,9 @@ components:
         percentage:
           type: string
           pattern: '^\d{1}\.\d{6}$'
+          maxLength: 8
+          minLength: 8
           description: Percentual de faixa de resgate.
-          maxLength: 6
           example: '0.019800'
       additionalProperties: false
     InsurancePensionEnumPmbacRemuneration:
