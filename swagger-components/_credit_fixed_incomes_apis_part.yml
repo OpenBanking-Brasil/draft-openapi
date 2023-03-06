@@ -27,7 +27,7 @@ tags:
   - name: Movimentação do cliente
     description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
 paths:
-  /list-products:
+  /investments:
     get:
       tags:
         - Listagem de produto
@@ -78,7 +78,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
-  /identify-product/{investmentId}:
+  /investments/{investmentId}:
     get:
       tags:
         - Identificação do produto
@@ -127,7 +127,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
-  '/{investmentId}/balances':
+  /investments/{investmentId}/balances:
     get:
       tags:
         - Posição do cliente
@@ -176,7 +176,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
-  '/{investmentId}/transactions':
+  /investments/{investmentId}/transactions:
     get:
       tags:
         - Movimentação do cliente
@@ -374,7 +374,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerPosition.yaml   
+            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerPosition.yaml
     OKResponseCustomerMovement:
       description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       content:
