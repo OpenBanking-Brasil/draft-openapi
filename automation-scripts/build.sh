@@ -11,22 +11,22 @@ mkdir $TEMP_GEN_DICTIONARY_DIR
 
 APIS=(
  # "accounts"
-  "acquiring_services"
-  "capitalization_bonds"
+ # "acquiring_services"
+ # "capitalization_bonds"
  # "consents"
  # "credit_cards"
  # "customers"
-  "exchange"
+ # "exchange"
  # "financings"
-  "insurances"
-  "investments"
+ # "insurances"
+ # "investments"
   #"invoice_financings"
   #"loans"
   # "payments"
  # "pension"
   #"resources"
   #"unarranged_accounts_overdraft"
-  "credit_fixed_incomes"
+ # "credit_fixed_incomes"
   "bank_fixed_incomes"
 )
 
