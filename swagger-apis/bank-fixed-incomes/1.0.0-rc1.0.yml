@@ -31,7 +31,7 @@ tags:
   - name: Transactions
     description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
 paths:
-  /:
+  /investments:
     get:
       tags:
         - List Products
@@ -82,7 +82,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank_fixed_incomes
-  '/{investmentId}':
+  '/investments/{investmentId}':
     get:
       tags:
         - Identify Product
@@ -131,7 +131,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank_fixed_incomes
-  '/{investmentId}/balances':
+  '/investments/{investmentId}/balances':
     get:
       tags:
         - Balances
@@ -187,7 +187,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank_fixed_incomes
-  '/{investmentId}/transactions':
+  '/investments/{investmentId}/transactions':
     get:
       tags:
         - Transactions
@@ -777,7 +777,7 @@ components:
       description: 'Tipo de movimentação na visão de investimento (entrada ou saída) . (Nos casos de motivo de pagamento  "pagamento de juros" e "amortização", fica convencionado que será considerado que o tipo de movimento será saída).'
       enum:
         - ENTRADA
-        - SAÍDA
+        - SAIDA
       example: ENTRADA
     EnumBankFixedIncomeTransactionType:
       type: string
