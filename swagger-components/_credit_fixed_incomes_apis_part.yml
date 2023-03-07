@@ -31,7 +31,7 @@ paths:
     get:
       tags:
         - Listagem de produto
-      summary: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      summary: Conjunto de informações dos Fundos de Investimentos
       operationId: creditFixedLista
       description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
@@ -82,7 +82,7 @@ paths:
     get:
       tags:
         - Identificação do produto
-      summary: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
+      summary: Conjunto de informações de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
       operationId: creditFixedIdentificacao
       description: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
@@ -131,7 +131,7 @@ paths:
     get:
       tags:
         - Posição do cliente
-      summary: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
+      summary: Conjunto de informações de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
       operationId: creditFixedPosition
       description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
@@ -180,7 +180,7 @@ paths:
     get:
       tags:
         - Movimentação do cliente
-      summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
+      summary: Conjunto de informações de produtos de Renda Variável (Ações e Fundos de Índices)
       operationId: creditFixedMovement
       description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
