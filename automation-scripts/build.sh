@@ -26,7 +26,7 @@ APIS=(
  # "pension"
   #"resources"
   #"unarranged_accounts_overdraft"
-  "credit_fixed_incomes"
+ # "credit_fixed_incomes"
   "bank_fixed_incomes"
 )
 
