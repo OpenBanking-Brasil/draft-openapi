@@ -26,9 +26,9 @@ tags:
     description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
   - name: Product Identification
     description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
-  - name: Balances
+  - name: Customer Balances
     description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
-  - name: Transactions
+  - name: Customer Transactions
     description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
   
 paths:
@@ -137,7 +137,7 @@ paths:
   /investments/{investmentId}/balances:
     get:
       tags:
-        - Balances
+        - Customer Balances
       summary: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesBalances
       description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
@@ -194,7 +194,7 @@ paths:
   /investments/{investmentId}/transactions:
     get:
       tags:
-        - Transactions
+        - Customer Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesTransactions
       description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
