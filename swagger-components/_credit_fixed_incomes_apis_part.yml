@@ -19,13 +19,13 @@ servers:
     description: Servidor de Homologação
 tags:
   - name: Listagem de produto
-    description: Método para obter a lista de Fundos de Investimentos
+    description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
   - name: Identificação do produto
-    description: Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
+    description: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
   - name: Posição do cliente
-    description: Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
+    description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
   - name: Movimentação do cliente
-    description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+    description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
 paths:
   /investments:
     get:
