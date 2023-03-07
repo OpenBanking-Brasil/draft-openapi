@@ -22,9 +22,9 @@ tags:
     description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
   - name: Product Identification
     description: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
-  - name: Customer Balances
+  - name: Balances
     description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
-  - name: Customer Transactions
+  - name: Transactions
     description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
 paths:
   /investments:
@@ -32,7 +32,7 @@ paths:
       tags:
         - Product List
       summary: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-      operationId: creditFixedLista
+      operationId: creditFixedIncomesProductList
       description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
          - $ref: '#/components/parameters/Authorization'
@@ -83,7 +83,7 @@ paths:
       tags:
         - Product Identification
       summary: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedIdentificacao
+      operationId: creditFixedIncomesProductIdentification
       description: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
          - $ref: '#/components/parameters/InvestmentId'
@@ -130,9 +130,9 @@ paths:
   /investments/{investmentId}/balances:
     get:
       tags:
-        - Customer Balances
+        - Balances
       summary: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedPosition
+      operationId: creditFixedIncomesBalances
       description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -179,9 +179,9 @@ paths:
   /investments/{investmentId}/transactions:
     get:
       tags:
-        - Customer Transactions
+        - Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedMovement
+      operationId: creditFixedIncomesTransactions
       description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
