@@ -22,19 +22,19 @@ servers:
   - url: 'https://apih.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1'
     description: Servidor de Homologação
 tags:
-  - name: List Products
+  - name: Product List
     description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-  - name: Identify Product
+  - name: Product Identification
     description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
-  - name: Balances
+  - name: Customer Balances
     description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
-  - name: Transactions
+  - name: Customer Transactions
     description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
 paths:
   /investments:
     get:
       tags:
-        - List Products
+        - Product List
       summary: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       operationId: bankFixedIncomesListProduct
       description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
@@ -85,7 +85,7 @@ paths:
   '/investments/{investmentId}':
     get:
       tags:
-        - Identify Product
+        - Product Identification
       summary: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesIdentifyProduct
       description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
@@ -134,7 +134,7 @@ paths:
   '/investments/{investmentId}/balances':
     get:
       tags:
-        - Balances
+        - Customer Balances
       summary: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesBalances
       description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
@@ -190,7 +190,7 @@ paths:
   '/investments/{investmentId}/transactions':
     get:
       tags:
-        - Transactions
+        - Customer Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: bankFixedIncomesProductMovement
       description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
