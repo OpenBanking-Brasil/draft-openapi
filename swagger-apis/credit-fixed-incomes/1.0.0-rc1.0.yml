@@ -143,7 +143,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCustomerPosition'
+          $ref: '#/components/responses/OKResponseCustomerBalances'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -195,7 +195,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCustomerMovement'
+          $ref: '#/components/responses/OKResponseCustomerTransactions'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -240,12 +240,12 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/CreditFixedLista'
+            $ref: '#/components/schemas/CreditFixedList'
         links:
           $ref: '#/components/schemas/CreditFixedIncomesLinks'
         meta:
           $ref: '#/components/schemas/CreditFixedIncomesMeta'
-    OKResponseCreditFixedIdentificacao:
+    OKResponseCreditFixedIdentification:
       type: object
       required:
         - data
@@ -255,12 +255,12 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/CreditFixedIdentificacao'
+            $ref: '#/components/schemas/CreditFixedIdentification'
         links:
           $ref: '#/components/schemas/CreditFixedIncomesLinks'
         meta:
           $ref: '#/components/schemas/CreditFixedIncomesMeta'
-    OKResponseCustomerPosition:
+    OKResponseCustomerBalances:
       type: object
       required:
         - data
@@ -303,7 +303,7 @@ components:
                 Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
                 [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
               maxLength: 8
-              pattern: '^\d{1}\.\d{1,6}$'
+              pattern: '^\d{1}\.\d{6}$'
               example: '0.300000'
             postFixedIndexerPercentage:
               $ref: '#/components/schemas/PostFixedIndexerPercentage'
@@ -315,7 +315,7 @@ components:
           $ref: '#/components/schemas/CreditFixedIncomesLinks'
         meta:
           $ref: '#/components/schemas/CreditFixedIncomesMeta'
-    OKResponseCustomerMovement:
+    OKResponseCustomerTransactions:
       type: object
       required:
         - data
@@ -389,7 +389,7 @@ components:
           description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
-    CreditFixedIdentificacao:
+    CreditFixedIdentification:
       type: object
       required:
         - issuerInstitutionCnpjNumber
@@ -450,7 +450,7 @@ components:
         dueDate:
           type: string
           format: date
-          description: Data de vencimento do contrato
+          description: Data de vencimento do título
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-02-15'
@@ -544,7 +544,7 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-    CreditFixedLista:
+    CreditFixedList:
       type: object
       description: Lista de títulos de renda fixa crédito mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
       required:
@@ -731,7 +731,7 @@ components:
         Percentual máximo do indexador na transação acordado com o cliente na contratação.  
         [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
-      pattern: '^\d{1}\.\d{1,6}$'
+      pattern: '^\d{1}\.\d{6}$'
       example: '1.100000'
     IssueUnitPrice:
       type: object
@@ -791,7 +791,7 @@ components:
         Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
         [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
       maxLength: 8
-      pattern: '^\d{1}\.\d{1,6}$'
+      pattern: '^\d{1}\.\d{6}$'
       example: '1.100000'
     PreFixedRate:
       $ref: '#/components/schemas/Currency'
@@ -839,7 +839,7 @@ components:
             Valor da taxa de emissão do contrato  
             [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
           maxLength: 8
-          pattern: '^\d{1}\.\d{1,6}$'
+          pattern: '^\d{1}\.\d{6}$'
           example: '0.300000'
         postFixedIndexerPercentage:
           type: string
@@ -847,7 +847,7 @@ components:
             Percentual do indexador de emissão do contrato  
             [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
           maxLength: 8
-          pattern: '^\d{1}\.\d{1,6}$'
+          pattern: '^\d{1}\.\d{6}$'
           example: '1.100000'
         rateType:
           $ref: '#/components/schemas/EnumRateType'
@@ -871,7 +871,7 @@ components:
         Taxa de remuneração acordada com o cliente na contratação  
         [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
-      pattern: '^\d{1}\.\d{1,6}$'
+      pattern: '^\d{1}\.\d{6}$'
       example: '0.300000'
     TransactionDate:
       type: string
@@ -1185,7 +1185,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
+      description: Campo de envio obrigatório pela receptora (client) e o seu valor deve ser reproduzido pela transmissora (server) na resposta.
       required: true
       schema:
         type: string
@@ -1255,19 +1255,19 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OKResponseCreditFixedIdentificacao'
-    OKResponseCustomerPosition:
+            $ref: '#/components/schemas/OKResponseCreditFixedIdentification'
+    OKResponseCustomerBalances:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OKResponseCustomerPosition'
-    OKResponseCustomerMovement:
+            $ref: '#/components/schemas/OKResponseCustomerBalances'
+    OKResponseCustomerTransactions:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OKResponseCustomerMovement'
+            $ref: '#/components/schemas/OKResponseCustomerTransactions'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:

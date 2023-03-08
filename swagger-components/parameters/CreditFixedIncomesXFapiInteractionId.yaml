@@ -1,0 +1,9 @@
+name: x-fapi-interaction-id
+in: header
+description: 'Campo de envio obrigatório pela receptora (client) e o seu valor deve ser reproduzido pela transmissora (server) na resposta.'
+required: true
+schema:
+  type: string   
+  pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+  minLength: 1
+  maxLength: 100
