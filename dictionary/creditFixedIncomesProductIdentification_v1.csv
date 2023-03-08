@@ -19,11 +19,11 @@ NAO";1;1;"";Não permitido;string;SIM;
 /data/remuneration;remuneration;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/remuneration/preFixedRate;preFixedRate;"Valor da taxa de emissão do contrato  
 [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
-";Texto;8;Condicional;^\d{1}\.\d{1,6}$;;0;1;" Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
+";Texto;8;Condicional;^\d{1}\.\d{6}$;;0;1;" Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
 ";Não permitido;string;0.300000;
 /data/remuneration/postFixedIndexerPercentage;postFixedIndexerPercentage;"Percentual do indexador de emissão do contrato  
 [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
-";Texto;8;Condicional;^\d{1}\.\d{1,6}$;;0;1;" Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
+";Texto;8;Condicional;^\d{1}\.\d{6}$;;0;1;" Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
 ";Não permitido;string;1.100000;
 /data/remuneration/rateType;rateType;"Tipo da taxa de remuneração
   1. LINEAR
@@ -72,7 +72,7 @@ OUTROS";1;1;"";Não permitido;string;CDI;
 /data/issueUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;25;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.000004;
 /data/issueUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/issueDate;issueDate;Data de emissão do título;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-16;
-/data/dueDate;dueDate;Data de vencimento do contrato;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
+/data/dueDate;dueDate;Data de vencimento do título;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
 /data/voucherPaymentIndicator;voucherPaymentIndicator;"Indicativo se há pagamento de cupom
   1. Sim
   2. Nao
