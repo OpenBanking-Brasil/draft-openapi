@@ -1,0 +1,48 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: object
+    required:
+      - type
+      - transactionType
+      - transactionDate
+      - transactionUnitePrice
+      - transactionQuantity
+      - transactionGrossValue
+      - transactionNetValue
+      - transactionId
+    properties:
+      type:
+        $ref: ./EnumType.yaml
+      transactionType:
+        $ref: ./EnumTransactionType.yaml
+      typeAdditionalInfo:
+        $ref: ./TypeAdditionalInfo.yaml
+      transactionDate:
+        $ref: ./TransactionDate.yaml
+      transactionUnitePrice:
+        $ref: ./TransactionUnitePrice.yaml
+      transactionQuantity:
+        $ref: ./TransactionQuantity.yaml
+      transactionGrossValue:
+        $ref: ./TransactionGrossValue.yaml
+      incomeTax:
+        $ref: ./IncomeTax.yaml
+      financialTransactionTax:
+        $ref: ./FinancialTransactionTax.yaml
+      transactionNetValue:
+        $ref: ./TransactionNetValue.yaml
+      remunerationTransactionRate:
+        $ref: ./RemunerationTransactionRate.yaml
+      indexerPercentage:
+        $ref: ./IndexerPercentage.yaml
+      transactionId:
+        $ref: ./TransactionId.yaml
+  links:
+    $ref: ./CreditFixedIncomesLinks.yaml
+  meta:
+    $ref: ./CreditFixedIncomesMeta.yaml
