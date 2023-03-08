@@ -11,7 +11,7 @@ properties:
       Valor da taxa de emissão do contrato  
       [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
     maxLength: 8
-    pattern: '^\d{1}\.\d{1,6}$'
+    pattern: '^\d{1}\.\d{6}$'
     example: '0.300000'
   postFixedIndexerPercentage:
     type: string
@@ -19,7 +19,7 @@ properties:
       Percentual do indexador de emissão do contrato  
       [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
     maxLength: 8
-    pattern: '^\d{1}\.\d{1,6}$'
+    pattern: '^\d{1}\.\d{6}$'
     example: '1.100000'
   rateType:
     $ref: EnumRateType.yaml
