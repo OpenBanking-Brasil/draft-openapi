@@ -33,7 +33,7 @@ paths:
         - Product List
       summary: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       operationId: creditFixedIncomesProductList
-      description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.        -
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -399,9 +399,9 @@ components:
         - issueDate
         - dueDate
         - voucherPaymentIndicator
-        - voucherPaymentPeriodicity
         - purchaseDate
         - gracePeriodDate
+        - taxExemptProduct
       properties:
         issuerInstitutionCnpjNumber:
           type: string
@@ -432,7 +432,7 @@ components:
             Nome do devedor (condicional para CRI e CRA)
             [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
           pattern: '[\w\W\s]*'
-          maxLength: 50
+          maxLength: 70
           example: Roberto Marino
         taxExemptProduct:
           $ref: '#/components/schemas/EnumTaxExemptProduct'
@@ -586,9 +586,9 @@ components:
           1. dias úteis
           2. dias corridos
       enum:
-        - DIAS UTEIS
-        - DIAS CORRIDOS
-      example: DIAS CORRIDOS
+        - DIAS_UTEIS
+        - DIAS_CORRIDOS
+      example: DIAS_CORRIDOS
     EnumTaxExemptProduct:
       type: string
       description: Indicador de um produto incentivado
@@ -742,7 +742,7 @@ components:
         amount:
           type: string
           description: Valor relacionado ao objeto.
-          maxLength: 23
+          maxLength: 25
           pattern: '^-?\d{1,15}\.\d{2,8}$'
           example: '1000.000004'
         currency:
@@ -1186,7 +1186,7 @@ components:
       name: x-fapi-interaction-id
       in: header
       description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
-      required: false
+      required: true
       schema:
         type: string
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
@@ -1245,25 +1245,25 @@ components:
             credit-fixed-incomes: Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions.
   responses:
     OKResponseCreditFixedIncomesProductList:
-      description: Lista de títulos de renda fixa crédito mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponseCreditFixedIncomesProductList'
     OKResponseCreditFixedIncomesIdentifyProduct:
-      description: 'Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)'
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponseCreditFixedIdentificacao'
     OKResponseCustomerPosition:
-      description: 'Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)'
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponseCustomerPosition'
     OKResponseCustomerMovement:
-      description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:

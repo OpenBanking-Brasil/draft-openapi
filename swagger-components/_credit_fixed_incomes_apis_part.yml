@@ -33,7 +33,7 @@ paths:
         - Product List
       summary: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       operationId: creditFixedIncomesProductList
-      description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.        -
       parameters:
          - $ref: '#/components/parameters/Authorization'
          - $ref: '#/components/parameters/xFapiAuthDate'
@@ -358,25 +358,25 @@ components:
             credit-fixed-incomes: "Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions."
   responses:
     OKResponseCreditFixedIncomesProductList:
-      description: Lista de títulos de renda fixa crédito mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesProductList.yaml
     OKResponseCreditFixedIncomesIdentifyProduct:
-      description: Método para obter a lista de produtos de Renda Fixa Bancária (CDB, RDB, LCI e LCA)
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesIdentifyProduct.yaml
     OKResponseCustomerPosition:
-      description: Método para obter a lista de produtos de Renda Fixa Crédito (Debênture, CRI e CRA)
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerPosition.yaml
     OKResponseCustomerMovement:
-      description: Método para obter a lista de informações de produtos de Renda Variável (Ações e Fundos de Índices)
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
