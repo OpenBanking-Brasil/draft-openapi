@@ -7,9 +7,9 @@ required:
   - issueDate
   - dueDate
   - voucherPaymentIndicator
-  - voucherPaymentPeriodicity
   - purchaseDate
   - gracePeriodDate
+  - taxExemptProduct
 properties:
   issuerInstitutionCnpjNumber:
     type: string
@@ -40,7 +40,7 @@ properties:
       Nome do devedor (condicional para CRI e CRA)
       [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
     pattern: '[\w\W\s]*'
-    maxLength: 50
+    maxLength: 70
     example: 'Roberto Marino'
   taxExemptProduct:
     $ref: EnumTaxExemptProduct.yaml
