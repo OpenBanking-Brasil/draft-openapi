@@ -272,6 +272,7 @@ components:
           required:
             - referenceDateTime
             - updatedUnitPrice
+            - quantity
             - grossAmount
             - netAmount
             - incomeTax
@@ -285,6 +286,14 @@ components:
               $ref: '#/components/schemas/ReferenceDateTime'
             updatedUnitPrice:
               $ref: '#/components/schemas/UpdatedUnitPriceunit'
+            quantity:
+              type: string
+              format: double
+              description: quantidade de títulos detidos na data da posição do cliente
+              maxLength: 24
+              minLength: 1
+              pattern: '^-?\d{1,15}\.\d{2,8}$'
+              example: '15.00'
             grossAmount:
               $ref: '#/components/schemas/GrossAmount'
             netAmount:
@@ -582,7 +591,7 @@ components:
     EnumCalculation:
       type: string
       description: |
-        Base de cálculo
+        Base de cálculo (dias úteis ou dias corridos).
           1. dias úteis
           2. dias corridos
       enum:
@@ -656,7 +665,7 @@ components:
     FinancialTransactionTax:
       type: object
       description: |
-        valor do imposto considerando a alíquota vigente na data de referência  
+        Valor do IOF recolhido na transação. 
         [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
@@ -709,7 +718,7 @@ components:
     IncomeTax:
       type: object
       description: |
-        valor do imposto considerando a alíquota vigente na data de referência  
+        Valor do imposto de renda recolhido na transação.  
         [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
@@ -762,7 +771,7 @@ components:
           type: string
           format: double
           pattern: '^-?\d{1,15}\.\d{2,4}$'
-          maxLength: 23
+          maxLength: 21
           minLength: 4
           example: '1000.04'
           description: Valor relacionado ao objeto.
@@ -944,7 +953,7 @@ components:
           type: string
           format: double
           pattern: '^-?\d{1,15}\.\d{2,8}$'
-          maxLength: 21
+          maxLength: 25
           minLength: 4
           example: '1000.04'
           description: Valor relacionado ao objeto.
@@ -996,26 +1005,17 @@ components:
       required:
         - amount
         - currency
-        - quantity
       properties:
         amount:
           type: string
           format: double
           pattern: '^-?\d{1,15}\.\d{2,6}$'
-          maxLength: 23
+          maxLength: 25
           minLength: 4
           example: '-1000.0400'
           description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
-        quantity:
-          type: string
-          format: double
-          description: 'quantidade de títulos detidos na data da posição do cliente '
-          maxLength: 15
-          minLength: 1
-          pattern: '^-?\d{1,15}\.\d{2,8}$'
-          example: '15.00'
     VoucherPaymentIndicator:
       type: string
       description: |
@@ -1036,6 +1036,7 @@ components:
           4. Anual
           5. Irregular
           6. Outros
+        [Restrição] Campo de preenchimento obrigatório pelos participantes quando houver 'SIM' no campo indicativo de pagamento de cupom 'voucherPaymentIndicator'.
       enum:
         - MENSAL
         - TRIMESTRAL

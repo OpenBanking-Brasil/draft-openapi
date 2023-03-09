@@ -34,7 +34,7 @@ EXPONENCIAL";1;1;"";Não permitido;string;LINEAR;
 ANUAL 
 DIARIO 
 SEMESTRAL";1;1;"";Não permitido;string;MENSAL;
-/data/remuneration/calculation;calculation;"Base de cálculo
+/data/remuneration/calculation;calculation;"Base de cálculo (dias úteis ou dias corridos).
   1. dias úteis
   2. dias corridos
 ";Texto;;Obrigatório;;"DIAS_UTEIS 
@@ -85,12 +85,14 @@ NAO";1;1;"";Não permitido;string;SIM;
   4. Anual
   5. Irregular
   6. Outros
-";Texto;;Opcional;;"MENSAL 
+[Restrição] Campo de preenchimento obrigatório pelos participantes quando houver 'SIM' no campo indicativo de pagamento de cupom 'voucherPaymentIndicator'.
+";Texto;;Condicional;;"MENSAL 
 TRIMESTRAL 
 SEMESTRAL 
 ANUAL 
 IRREGULAR 
-OUTROS";0;1;"";Não permitido;string;MENSAL;
+OUTROS";0;1;" Campo de preenchimento obrigatório pelos participantes quando houver 'SIM' no campo indicativo de pagamento de cupom 'voucherPaymentIndicator'.
+";Não permitido;string;MENSAL;
 /data/voucherPaymentPeriodicityAdditionalInfo;voucherPaymentPeriodicityAdditionalInfo;"Informações adicionais da periodicidade de pagamento de cupom  
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Periodicidade de pagamento de cupom'.
 ";Texto;50;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Periodicidade de pagamento de cupom'.
