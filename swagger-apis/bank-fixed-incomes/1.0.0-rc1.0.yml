@@ -4,10 +4,11 @@ info:
   description: |
     API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4).  
     API que retorna informações de operações de investimento do tipo Renda Fixa Bancária 
-    (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes,  
-    incluindo dados como denominação do produto, rentabilidade, quantidade, prazos,  
-    saldos em posição do cliente e movimentações financeiras. Não possui segregação entre  
-    pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints.
+    (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes, 
+    incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, 
+    saldos em posição do cliente e movimentações financeiras. Não possui segregação entre 
+    pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints.  
+    A exposição se dará por cada operação de renda fixa contratada pelo cliente.
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -81,8 +82,8 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
-            - bank_fixed_incomes
-  '/{investmentId}':
+            - bank-fixed-incomes
+  '/investments/{investmentId}':
     get:
       tags:
         - Identify Product
@@ -130,8 +131,8 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
-            - bank_fixed_incomes
-  '/{investmentId}/balances':
+            - bank-fixed-incomes
+  '/investments/{investmentId}/balances':
     get:
       tags:
         - Balances
@@ -185,8 +186,8 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
-            - bank_fixed_incomes
-  '/{investmentId}/transactions':
+            - bank-fixed-incomes
+  '/investments/{investmentId}/transactions':
     get:
       tags:
         - Transactions
@@ -237,7 +238,7 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
-            - bank_fixed_incomes
+            - bank-fixed-incomes
 components:
   schemas:
     ResponseBankFixedIncomeListProduct:
@@ -323,7 +324,8 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
+              format: double
+              maxLength: 25
               pattern: '^-?\d{1,15}\.\d{2,8}$'
               example: '1000.000004'
               description: Valor relacionado ao objeto.
@@ -369,7 +371,7 @@ components:
       additionalProperties: false
     EnumInvestmentType:
       type: string
-      description: 'Especificação do ativo em questão (CDB/RDB, LCI ou LCA)'
+      description: 'Especificação do ativo em questão (CDB, RDB, LCI ou LCA)'
       enum:
         - CDB
         - RDB
@@ -395,7 +397,7 @@ components:
       example: CDI
     Remuneration:
       type: object
-      description: Distribuição por frequência.
+      description: Objeto para detalhamento de remuneração do titulo.
       required:
         - rateType
         - ratePeriodicity
@@ -404,7 +406,8 @@ components:
       properties:
         preFixedRate:
           type: string
-          pattern: '^\d{1}\.\d{1,6}$'
+          format: double
+          pattern: '^\d{1}\.\d{6}$'
           maxLength: 8
           minLength: 8
           example: '0.300000'
@@ -413,10 +416,11 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
 
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
         postFixedIndexerPercentage:
           type: string
-          pattern: '^\d{1}\.\d{1,6}$'
+          format: double
+          pattern: '^\d{1}\.\d{6}$'
           maxLength: 8
           minLength: 8
           example: '1.100000'
@@ -425,7 +429,7 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
+            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
         ratePeriodicity:
@@ -439,7 +443,7 @@ components:
           description: |
             Informações adicionais do indexador
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'indexer'.
           maxLength: 50
           example: Dólar
           pattern: '[\w\W\s]*'
@@ -459,7 +463,7 @@ components:
       enum:
         - MENSAL
         - ANUAL
-        - DIÁRIO
+        - DIARIO
         - SEMESTRAL
       example: MENSAL
     EnumCalculation:
@@ -569,15 +573,17 @@ components:
           properties:
             amount:
               type: string
-              maxLength: 23
+              format: double
+              maxLength: 25
               pattern: '^-?\d{1,15}\.\d{2,8}$'
-              example: '1000.000004'
+              example: '1000.04'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         transactionQuantity:
           type: string
-          maxLength: 25
-          pattern: '^\d{1,15}\.\d{2,9}$'
+          format: double
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
           example: '42.25'
           description: Quantidade de títulos envolvidos na movimentação.
         transactionGrossValue:
@@ -589,9 +595,10 @@ components:
           properties:
             amount:
               type: string
+              format: double
               maxLength: 21
               pattern: '^-?\d{1,15}\.\d{2,4}$'
-              example: '1000.0004'
+              example: '1000.04'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         incomeTax:
@@ -606,9 +613,10 @@ components:
           properties:
             amount:
               type: string
+              format: double
               maxLength: 21
               pattern: '^-?\d{1,15}\.\d{2,4}$'
-              example: '1000.0004'
+              example: '1000.04'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         financialTransactionTax:
@@ -623,9 +631,11 @@ components:
           properties:
             amount:
               type: string
+              format: double
               maxLength: 21
               pattern: '^-?\d{1,15}\.\d{2,4}$'
-              example: '1000.0004'
+              example: '1000.04'
+              description: Valor relacionado ao objeto.
             currency:
               $ref: '#/components/schemas/CurrencyCode'
         transactionNetValue:
@@ -637,13 +647,16 @@ components:
           properties:
             amount:
               type: string
+              format: double
               maxLength: 21
               pattern: '^-?\d{1,15}\.\d{2,4}$'
-              example: '1000.0004'
+              example: '1000.04'
+              description: Valor relacionado ao objeto.
             currency:
               $ref: '#/components/schemas/CurrencyCode'
-        TransactionRate:
+        remunerationTransactionRate:
           type: string
+          format: double
           maxLength: 8
           minLength: 3
           pattern: '^\d{1}\.\d{1,6}$'
@@ -652,14 +665,15 @@ components:
             Taxa de remuneração da transação.
 
             [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
-        IndexerPercentage:
+        indexerPercentage:
           type: string
+          format: double
           maxLength: 8
           minLength: 3
           pattern: '^\d{1}\.\d{1,6}$'
           example: '1.100000'
           description: |
-            Percentual máximo do indexador na transação acordado com o cliente na contratação.
+            Percentual máximo do indexador acordado com o cliente na contratação.
 
             [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
         transactionId:
@@ -704,9 +718,10 @@ components:
     BalanceAmount:
       description: Valor relacionado ao objeto.
       type: string
-      maxLength: 23
-      pattern: '^-?\d{1,15}\.\d{2,6}$'
-      example: '1000.000004'
+      format: double
+      maxLength: 21
+      pattern: '^-?\d{1,15}\.\d{2,4}$'
+      example: '1000.0004'
     ResponseBankFixedIncomeBalances:
       type: object
       required:
@@ -734,23 +749,29 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               example: '2022-07-21T17:32:00Z'
               maxLength: 20
+            quantity:
+              type: string
+              format: double
+              description: Quantidade de títulos detidos na data da posição do cliente
+              maxLength: 24
+              pattern: '^\d{1,15}\.\d{2,8}$'
+              example: '1000.0004'
             updatedUnitPrice:
               type: object
               required:
                 - amount
                 - currency
-              description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+              description: Valor bruto unitário atualizado na data de referência.
               properties:
                 amount:
-                  $ref: '#/components/schemas/BalanceAmount'
+                  description: Valor relacionado ao objeto.
+                  type: string
+                  format: double
+                  maxLength: 25
+                  pattern: '^-?\d{1,15}\.\d{2,8}$'
+                  example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
-                quantity:
-                  type: string
-                  description: Quantidade de títulos detidos na data da posição do cliente
-                  maxLength: 15
-                  pattern: '^\d{1,15}'
-                  example: '15'
             grossAmount:
               description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
               type: object
@@ -789,7 +810,7 @@ components:
               required:
                 - amount
                 - currency
-              description: Valor do imposto considerando a alíquota vigente na data de referência.
+              description: Valor do imposto (IOF) considerando a alíquota vigente na data de referência.
               properties:
                 amount:
                   $ref: '#/components/schemas/BalanceAmount'
@@ -816,29 +837,32 @@ components:
                 amount:
                   description: Valor relacionado ao objeto.
                   type: string
-                  maxLength: 23
+                  format: double
+                  maxLength: 25
                   pattern: '^-?\d{1,15}\.\d{2,8}$'
                   example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
             preFixedRate:
               type: string
+              format: double
               description: |
                 Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
                 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
+                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
               example: '0.300000'
             postFixedIndexerPercentage:
               type: string
+              format: double
               description: |
                 Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
                 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
@@ -941,8 +965,8 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
-      required: false
+      description: Campo de envio obrigatório pela receptora (client) e o seu valor deve ser reproduzido pela transmissora (server) na resposta. Deve ser um UUID RFC4122 usado como um ID de correlação.
+      required: true
       schema:
         type: string
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'

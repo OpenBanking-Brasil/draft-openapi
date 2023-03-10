@@ -11,6 +11,7 @@ mkdir $TEMP_GEN_DICTIONARY_DIR
 
 APIS=(
   #"accounts"
+<<<<<<< HEAD
  # "acquiring_services"
  # "capitalization_bonds"
   #"consents"
@@ -20,12 +21,27 @@ APIS=(
   #"financings"
  # "insurances"
  # "investments"
+=======
+  #"acquiring_services"
+  #"capitalization_bonds"
+  #"consents"
+  #"credit_cards"
+  #"customers"
+  #"exchange"
+  #"financings"
+  #"insurances"
+  #"investments"
+>>>>>>> 63bffc1 (fix(Bank Fixed Incomes): ORB-2337 - SA13 - SPA17 - Ajustes pós Homologação)
   #"invoice_financings"
   #"loans"
-  # "payments"
- # "pension"
+  #"payments"
+  #"pension"
   #"resources"
   #"unarranged_accounts_overdraft"
+<<<<<<< HEAD
+=======
+  #"credit_fixed_incomes"
+>>>>>>> 63bffc1 (fix(Bank Fixed Incomes): ORB-2337 - SA13 - SPA17 - Ajustes pós Homologação)
   "bank_fixed_incomes"
 )
 

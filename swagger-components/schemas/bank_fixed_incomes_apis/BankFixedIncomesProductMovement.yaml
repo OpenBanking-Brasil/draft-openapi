@@ -37,15 +37,17 @@ properties:
     properties:
       amount:
         type: string
-        maxLength: 23
+        format: double
+        maxLength: 25
         pattern: '^-?\d{1,15}\.\d{2,8}$'
-        example: '1000.000004'
+        example: '1000.04'
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
   transactionQuantity:
     type: string
-    maxLength: 25
-    pattern: '^\d{1,15}\.\d{2,9}$'
+    format: double
+    maxLength: 24
+    pattern: '^\d{1,15}\.\d{2,8}$'
     example: "42.25"
     description: Quantidade de títulos envolvidos na movimentação.
   transactionGrossValue:
@@ -57,9 +59,10 @@ properties:
     properties:
       amount:
         type: string
+        format: double
         maxLength: 21
         pattern: '^-?\d{1,15}\.\d{2,4}$'
-        example: '1000.0004'
+        example: '1000.04'
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
   incomeTax:
@@ -74,9 +77,10 @@ properties:
     properties:
       amount:
         type: string
+        format: double
         maxLength: 21
         pattern: '^-?\d{1,15}\.\d{2,4}$'
-        example: '1000.0004'
+        example: '1000.04'
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
   financialTransactionTax:
@@ -91,9 +95,11 @@ properties:
     properties:
       amount:
         type: string
+        format: double
         maxLength: 21
         pattern: '^-?\d{1,15}\.\d{2,4}$'
-        example: '1000.0004'
+        example: '1000.04'
+        description: Valor relacionado ao objeto.
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
   transactionNetValue:
@@ -105,13 +111,16 @@ properties:
     properties:
       amount:
         type: string
+        format: double
         maxLength: 21
         pattern: '^-?\d{1,15}\.\d{2,4}$'
-        example: '1000.0004'
+        example: '1000.04'
+        description: Valor relacionado ao objeto.
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
-  TransactionRate:
+  remunerationTransactionRate:
     type: string
+    format: double
     maxLength: 8
     minLength: 3
     pattern: '^\d{1}\.\d{1,6}$'
@@ -120,14 +129,15 @@ properties:
       Taxa de remuneração da transação.
 
       [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
-  IndexerPercentage:
+  indexerPercentage:
     type: string
+    format: double
     maxLength: 8
     minLength: 3
     pattern: '^\d{1}\.\d{1,6}$'
     example: '1.100000'
     description: |
-      Percentual máximo do indexador na transação acordado com o cliente na contratação.
+      Percentual máximo do indexador acordado com o cliente na contratação.
 
       [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
   transactionId:
