@@ -4,10 +4,11 @@ info:
   description: |
     API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4).  
     API que retorna informações de operações de investimento do tipo Renda Fixa Bancária 
-    (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes,  
-    incluindo dados como denominação do produto, rentabilidade, quantidade, prazos,  
-    saldos em posição do cliente e movimentações financeiras. Não possui segregação entre  
-    pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints.
+    (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes, 
+    incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, 
+    saldos em posição do cliente e movimentações financeiras. Não possui segregação entre 
+    pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints.  
+    A exposição se dará por cada operação de renda fixa contratada pelo cliente.
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -82,7 +83,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'bank_fixed_incomes' 
+            - 'bank-fixed-incomes' 
 
   /investments/{investmentId}:
     get:
@@ -132,7 +133,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'bank_fixed_incomes' 
+            - 'bank-fixed-incomes' 
 
   /investments/{investmentId}/balances:
     get:
@@ -189,7 +190,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'bank_fixed_incomes'        
+            - 'bank-fixed-incomes'        
             
   /investments/{investmentId}/transactions:
     get:
@@ -242,7 +243,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'bank_fixed_incomes' 
+            - 'bank-fixed-incomes' 
 components:
   schemas:
     LockedWithAdditionalProperties:
@@ -314,7 +315,7 @@ components:
     xFapiCustomerIpAddress:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
-      $ref: ./parameters/XFapiInteractionId.yaml
+      $ref: ./parameters/BankFixedIncomesXFapiInteractionId.yaml
   responses:
     OkResponseBankFixedIncomesBalances:
       description: Dados obtidos com sucesso
