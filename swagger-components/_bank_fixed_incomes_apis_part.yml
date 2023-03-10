@@ -23,9 +23,9 @@ servers:
   - url: "https://apih.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1"
     description: Servidor de Homologação
 tags:
-  - name: List Products
+  - name: Product List
     description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-  - name: Identify Product
+  - name: Product Identification
     description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
   - name: Balances
     description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
@@ -33,10 +33,10 @@ tags:
     description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
   
 paths:
-  /:
+  /investments:
     get:
       tags:
-        - List Products
+        - Product List
       summary: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       operationId: banktFixedIncomesGetInvestments
       description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
@@ -85,10 +85,10 @@ paths:
             - 'consent:consentId'
             - 'bank-fixed-incomes' 
 
-  /{investmentId}:
+  /investments/{investmentId}:
     get:
       tags:
-        - Identify Product
+        - Product Identification
       summary: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       operationId: banktFixedIncomesGetInvestmentsInvestmentId
       description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
@@ -135,7 +135,7 @@ paths:
             - 'consent:consentId'
             - 'bank-fixed-incomes' 
 
-  /{investmentId}/balances:
+  /investments/{investmentId}/balances:
     get:
       tags:
         - Balances
@@ -148,8 +148,9 @@ paths:
           description: Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.
           required: true
           schema:
-            type: integer
-            format: int64
+            type: string
+            pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$
+            example: '92792126019929200000000000000000000000000'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -191,7 +192,7 @@ paths:
             - 'consent:consentId'
             - 'bank-fixed-incomes'        
             
-  /{investmentId}/transactions:
+  /investments/{investmentId}/transactions:
     get:
       tags:
         - Transactions
@@ -249,7 +250,7 @@ components:
       $ref: ./schemas/ResponseError.yaml
     ResponseError:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
-    ResponseBankFixedIncomesProductList:
+    ResponseBankFixedIncomeListProduct:
       $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductList.yaml
     ResponseBankFixedIncomesProductIdentification:
       $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeIdentifyProduct.yaml
