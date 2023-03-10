@@ -83,7 +83,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank-fixed-incomes
-  '/{investmentId}':
+  '/investments/{investmentId}':
     get:
       tags:
         - Product Identification
@@ -132,7 +132,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank-fixed-incomes
-  '/{investmentId}/balances':
+  '/investments/{investmentId}/balances':
     get:
       tags:
         - Balances
@@ -188,7 +188,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank-fixed-incomes
-  '/{investmentId}/transactions':
+  '/investments/{investmentId}/transactions':
     get:
       tags:
         - Transactions
@@ -412,7 +412,7 @@ components:
           type: object
           description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
           required:
-            - referenceDate
+            - referenceDateTime
             - updatedUnitPrice
             - grossAmount
             - netAmount
@@ -425,7 +425,7 @@ components:
               type: string
               format: date-time
               description: 'data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).'
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
               example: '2022-07-21T17:32:00Z'
               maxLength: 20
             quantity:
@@ -451,6 +451,12 @@ components:
                   example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
+                quantity:
+                  type: string
+                  description: Quantidade de títulos detidos na data da posição do cliente
+                  maxLength: 24
+                  pattern: '^\d{1,15}\.\d{2,8}$'
+                  example: '15.00'
             grossAmount:
               description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
               type: object
@@ -1118,7 +1124,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ResponseBankFixedIncomesProductList'
+            $ref: '#/components/schemas/ResponseBankFixedIncomeListProduct'
     ResponseBankFixedIncomeIdentifyProduct:
       description: Dados de fundos de investimentos obtidos com sucesso.
       content:
