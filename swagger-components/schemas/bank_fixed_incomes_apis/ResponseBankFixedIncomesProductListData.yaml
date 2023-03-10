@@ -6,7 +6,7 @@ required:
   - investmentType
   - investmentId
 properties:
-  brandName: #ALTERAR PATTERN E POR EXEMPLO
+  brandName:
     type: string
     description: Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).
     pattern: '[\w\W\s]*'
@@ -18,9 +18,9 @@ properties:
     maxLength: 14
     pattern: '^\d{14}$'
     example: '21281590001660'
-  investmentType: #ALTERAR PATTERN E POR EXEMPLO
+  investmentType:
     $ref: ./EnumInvestmentType.yaml
-  investmentId: #ALTERAR PATTERN E POR EXEMPLO
+  investmentId:
     type: string
     description: Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.
     maxLength: 100
