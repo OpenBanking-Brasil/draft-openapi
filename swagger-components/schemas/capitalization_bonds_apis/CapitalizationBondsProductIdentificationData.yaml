@@ -18,7 +18,7 @@ required:
   - targetAudience
 properties:
   participant:
-    $ref: ../business_commons/Participant.yaml
+    $ref: ./CapitalizationBondsParticipant.yaml
   society:
     $ref: ../business_commons/Society.yaml
   name:
@@ -63,15 +63,17 @@ properties:
   redemptionPercentageEndTerm:
     type: string
     description: Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.
-    maxLength: 7
-    pattern: '^[0-1]\.\d{5}$'
-    example: '1.00002'
+    maxLength: 8
+    minLength: 8
+    pattern: '^\d{1}\.\d{6}$'
+    example: '0.019800'
   finalRedemptionRate:
     type: string
     description: Valor percentual (%) de resgate final permitido.
-    pattern: '^[0-9]\.\d{2}$'
-    maxLength: 4
-    example: '1.51'
+    pattern: '^\d{1}\.\d{6}$'
+    maxLength: 8
+    minLength: 8
+    example: '0.019800'
   draws:
     type: array
     description: Informações relativas aos Sorteios

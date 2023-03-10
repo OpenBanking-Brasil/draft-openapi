@@ -3,7 +3,7 @@ info:
   title: API Seguros - Open Finance Brasil
   description: |
     As APIs descritas neste documento são referentes a API de Seguros da fase OpenInsurance do Open Finance Brasil.
-  version: 1.0.0-rc1.0
+  version: 1.0.0-rc2.0
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -93,7 +93,7 @@ components:
   schemas:
     # Início schemas comuns
     Participant:
-      $ref: ./schemas/business_commons/Participant.yaml
+      $ref: ./schemas/insurances_apis/Participant.yaml
     Society:
       $ref: ./schemas/business_commons/Society.yaml
     CnpjNumber:
@@ -244,7 +244,6 @@ components:
     EnumPersonalInsurancePremiumPaymentFrequency:
       $ref: ./schemas/enum/EnumPersonalInsurancePremiumPaymentFrequency.yaml
     # Fim personal schemas
-
     Links:
       $ref: ./schemas/Links.yaml
     Meta:
