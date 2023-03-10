@@ -310,7 +310,7 @@ components:
               type: string
               description: |
                 Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
-                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
               maxLength: 8
               pattern: '^\d{1}\.\d{6}$'
               example: '0.300000'
@@ -376,7 +376,7 @@ components:
               type: object
               description: |
                 Valor do imposto de renda recolhido na transação.
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
               required:
                 - amount
                 - currency
@@ -395,7 +395,7 @@ components:
               type: object
               description: |
                 Valor do IOF recolhido na transação.
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
               required:
                 - amount
                 - currency
@@ -480,7 +480,7 @@ components:
           type: string
           description: |
             CNPJ do devedor (condicional para CRI e CRA)  
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
           maxLength: 14
           pattern: '^\d{14}$'
           example: '11225860000140'
@@ -488,7 +488,7 @@ components:
           type: string
           description: |
             Nome do devedor (condicional para CRI e CRA)
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
           pattern: '[\w\W\s]*'
           maxLength: 70
           example: Roberto Marino
@@ -520,7 +520,7 @@ components:
           type: string
           description: |
             Informações adicionais da periodicidade de pagamento de cupom  
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Periodicidade de pagamento de cupom'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'voucherPaymentPeriodicity'.
           maxLength: 50
           pattern: '[\w\W\s]*'
           example: Diária
@@ -787,7 +787,7 @@ components:
       type: string
       description: |
         Percentual máximo do indexador na transação acordado com o cliente na contratação.  
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'ENTRADA'.
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
       pattern: '^\d{1}\.\d{6}$'
       example: '1.100000'
@@ -847,7 +847,7 @@ components:
       type: string
       description: |
         Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
       maxLength: 8
       pattern: '^\d{1}\.\d{6}$'
       example: '1.100000'
@@ -895,7 +895,7 @@ components:
           type: string
           description: |
             Valor da taxa de emissão do contrato  
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
           maxLength: 8
           pattern: '^\d{1}\.\d{6}$'
           example: '0.300000'
@@ -903,7 +903,7 @@ components:
           type: string
           description: |
             Percentual do indexador de emissão do contrato  
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
           maxLength: 8
           pattern: '^\d{1}\.\d{6}$'
           example: '1.100000'
@@ -919,7 +919,7 @@ components:
           type: string
           description: |
             Informações adicionais do indexador  
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Indexador'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'indexer'.
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: Dólar
@@ -953,7 +953,9 @@ components:
           $ref: '#/components/schemas/Currency'
     TransactionId:
       type: string
-      description: Código ou identificador único prestado pela instituição para individualizar o movimento
+      description: |
+        Código ou identificador único prestado pela instituição para individualizar o movimento
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
       maxLength: 100
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
       example: ABCD2126019929279212650822221989319253344
@@ -1019,7 +1021,7 @@ components:
       type: string
       description: |
         Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio  
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Motivo da movimentação'.
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'OUTROS' no campo 'transactionType'.
       maxLength: 100
       pattern: '[\w\W\s]*'
     UpdatedUnitPrice:
