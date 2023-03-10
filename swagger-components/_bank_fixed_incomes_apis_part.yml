@@ -250,8 +250,14 @@ components:
       $ref: ./schemas/ResponseError.yaml
     ResponseError:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
-    ResponseBankFixedIncomeListProduct:
+    ResponseBankFixedIncomesProductList:
       $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductList.yaml
+    ResponseBankFixedIncomesProductIdentification:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeIdentifyProduct.yaml
+    ResponseBankFixedIncomesBalances:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml
+    ResponseBAnkFixedIncomesTransactions:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductMovement.yaml
     IdentifyProduct:
       $ref: ./schemas/bank_fixed_incomes_apis/IdentifyProduct.yaml
     EnumInvestmentType:
@@ -282,8 +288,6 @@ components:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesCurrency.yaml
     BalanceAmount:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesAmount.yaml
-    ResponseBankFixedIncomeBalances:
-      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml
   securitySchemes:
     OpenId:
       type: openIdConnect
