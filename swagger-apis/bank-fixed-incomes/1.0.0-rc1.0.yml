@@ -37,7 +37,7 @@ paths:
       tags:
         - List Products
       summary: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-      operationId: bankFixedIncomesListProduct
+      operationId: banktFixedIncomesGetInvestments
       description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -83,12 +83,12 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank-fixed-incomes
-  '/investments/{investmentId}':
+  '/{investmentId}':
     get:
       tags:
         - Identify Product
       summary: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
-      operationId: bankFixedIncomesIdentifyProduct
+      operationId: banktFixedIncomesGetInvestmentsInvestmentId
       description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -132,12 +132,12 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank-fixed-incomes
-  '/investments/{investmentId}/balances':
+  '/{investmentId}/balances':
     get:
       tags:
         - Balances
       summary: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
-      operationId: bankFixedIncomesBalances
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdBalances
       description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - name: investmentId
@@ -187,12 +187,12 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - bank-fixed-incomes
-  '/investments/{investmentId}/transactions':
+  '/{investmentId}/transactions':
     get:
       tags:
         - Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
-      operationId: bankFixedIncomesProductMovement
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdTransactions
       description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -411,7 +411,7 @@ components:
           type: object
           description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
           required:
-            - referenceDateTime
+            - referenceDate
             - updatedUnitPrice
             - grossAmount
             - netAmount
@@ -424,7 +424,7 @@ components:
               type: string
               format: date-time
               description: 'data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).'
-              pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               example: '2022-07-21T17:32:00Z'
               maxLength: 20
             quantity:
@@ -1133,245 +1133,148 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     GatewayTimeout:
       description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     Locked:
       description: Locked
       content:
         application/json; charset=utf-8:
           schema:
-            type: object
-            required:
-              - errors
-            properties:
-              errors:
-                type: array
-                minItems: 1
-                maxItems: 13
-                items:
-                  type: object
-                  required:
-                    - code
-                    - title
-                    - detail
-                  properties:
-                    code:
-                      description: Código de erro específico do endpoint
-                      type: string
-                      pattern: '[\w\W\s]*'
-                      maxLength: 255
-                    title:
-                      description: Título legível por humanos deste erro específico
-                      type: string
-                      pattern: '[\w\W\s]*'
-                      maxLength: 255
-                    detail:
-                      description: Descrição legível por humanos deste erro específico
-                      type: string
-                      pattern: '[\w\W\s]*'
-                      maxLength: 2048
-              meta:
-                type: object
-                description: Meta informações referente à API requisitada.
-                required:
-                  - requestDateTime
-                properties:
-                  requestDateTime:
-                    description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
-                    type: string
-                    maxLength: 20
-                    format: date-time
-                    example: '2021-05-21T08:30:00Z'
+            $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     NotAcceptable:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     TooManyRequests:
       description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     UnprocessableEntity:
       description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     SiteIsOverloaded:
       description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/Locked/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/ResponseError'
     BadRequestWithAdditionalProperties:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     ForbiddenWithAdditionalProperties:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     GatewayTimeoutWithAdditionalProperties:
       description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     InternalServerErrorWithAdditionalProperties:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     LockedWithAdditionalProperties:
       description: Locked
       content:
         application/json; charset=utf-8:
           schema:
-            type: object
-            required:
-              - errors
-            properties:
-              errors:
-                type: array
-                minItems: 1
-                maxItems: 13
-                items:
-                  type: object
-                  required:
-                    - code
-                    - title
-                    - detail
-                  properties:
-                    code:
-                      description: Código de erro específico do endpoint
-                      type: string
-                      pattern: '[\w\W\s]*'
-                      maxLength: 255
-                    title:
-                      description: Título legível por humanos deste erro específico
-                      type: string
-                      pattern: '[\w\W\s]*'
-                      maxLength: 255
-                    detail:
-                      description: Descrição legível por humanos deste erro específico
-                      type: string
-                      pattern: '[\w\W\s]*'
-                      maxLength: 2048
-                  additionalProperties: false
-              meta:
-                type: object
-                description: Meta informações referente a API requisitada.
-                required:
-                  - totalRecords
-                  - totalPages
-                  - requestDateTime
-                properties:
-                  totalRecords:
-                    type: integer
-                    format: int32
-                    description: Número total de registros no resultado
-                    example: 1
-                  totalPages:
-                    type: integer
-                    format: int32
-                    description: Número total de páginas no resultado
-                    example: 1
-                  requestDateTime:
-                    description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
-                    type: string
-                    maxLength: 20
-                    format: date-time
-                    example: '2021-05-21T08:30:00Z'
-                additionalProperties: false
-            additionalProperties: false
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     MethodNotAllowedWithAdditionalProperties:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     NotAcceptableWithAdditionalProperties:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     NotFoundWithAdditionalProperties:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     TooManyRequestsWithAdditionalProperties:
       description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     UnauthorizedWithAdditionalProperties:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     UnprocessableEntityWithAdditionalProperties:
       description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     DefaultWithAdditionalProperties:
       description: Erro inesperado.
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'
     SiteIsOverloadedWithAdditionalProperties:
       description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/responses/LockedWithAdditionalProperties/content/application~1json%3B%20charset%3Dutf-8/schema'
+            $ref: '#/components/schemas/LockedWithAdditionalProperties'

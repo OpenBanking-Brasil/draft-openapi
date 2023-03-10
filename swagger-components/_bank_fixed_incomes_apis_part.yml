@@ -38,7 +38,7 @@ paths:
       tags:
         - List Products
       summary: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-      operationId: bankFixedIncomesListProduct
+      operationId: banktFixedIncomesGetInvestments
       description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
        - $ref: '#/components/parameters/Authorization'
@@ -90,7 +90,7 @@ paths:
       tags:
         - Identify Product
       summary: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
-      operationId: bankFixedIncomesIdentifyProduct
+      operationId: banktFixedIncomesGetInvestmentsInvestmentId
       description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -140,7 +140,7 @@ paths:
       tags:
         - Balances
       summary: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
-      operationId: bankFixedIncomesBalances
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdBalances
       description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
         - name: investmentId
@@ -196,7 +196,7 @@ paths:
       tags:
         - Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
-      operationId: bankFixedIncomesProductMovement
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdTransactions
       description: Obtém as movimentações da operação de Renda Fixa Bancária identificada por investmentId.
       parameters:
        - $ref: '#/components/parameters/InvestmentId'
