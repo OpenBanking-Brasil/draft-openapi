@@ -17,28 +17,22 @@ OUTROS";1;1;"";Não permitido;string;APLICACAO;
 ";Não permitido;string;;
 /data/transactionDate;transactionDate;Data da movimentação.;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;10
 /data/transactionUnitePrice;transactionUnitePrice;Preço unitário bruto negociado na transação.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/transactionUnitePrice/amount;amount;;Texto;25;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.000004;
 /data/transactionUnitePrice/amount;amount;;Texto;25;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.04;
 /data/transactionUnitePrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/transactionQuantity;transactionQuantity;Quantidade de títulos envolvidos na movimentação.;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;42.25;
 /data/transactionQuantity;transactionQuantity;Quantidade de títulos envolvidos na movimentação.;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;42.25;
 /data/transactionGrossValue;transactionGrossValue;Valor bruto da transação (Preço unitário da movimentação x Quantidade).;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/transactionGrossValue/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;
 /data/transactionGrossValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/incomeTax;incomeTax;"Valor do imposto de renda recolhido na transação.
-
+/data/incomeTax;incomeTax;"Valor do imposto de renda recolhido na transação.  
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
 ";Objeto;;Condicional;;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
 ";Não permitido;object;;
-/data/incomeTax/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0004;
 /data/incomeTax/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;
 /data/incomeTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/financialTransactionTax;financialTransactionTax;"Valor do IOF recolhido na transação.
-
+/data/financialTransactionTax;financialTransactionTax;"Valor do IOF recolhido na transação.  
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
 ";Objeto;;Condicional;;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
 ";Não permitido;object;;
-/data/financialTransactionTax/amount;amount;;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0004;
 /data/financialTransactionTax/amount;amount;Valor relacionado ao objeto.;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;
 /data/financialTransactionTax/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/transactionNetValue;transactionNetValue;Valor líquido da transação.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
