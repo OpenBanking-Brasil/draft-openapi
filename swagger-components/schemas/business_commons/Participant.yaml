@@ -18,6 +18,16 @@ properties:
   cnpjNumber:
     $ref: ../business_commons/CnpjNumber.yaml
   urlComplementaryList:
+    description: |
+      Espera-se que valor de retorno, após acesso ao link ‘urlComplementaryList’, deve ser array de objeto com a estrutura abaixo:
+
+      - ‘name’ com o valor contido no campo ‘LegalEntityName’ conforme cadastro no diretório;
+
+      - ‘cnpjNumber’ com o valor contido no campo CNPJ (‘RegistrationNumber’) correspondente a esta instituição;
+
+      - Ambos do tipo string;
+
+      - Ambos obrigatórios.
     type: string
     maxLength: 1024
     pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
