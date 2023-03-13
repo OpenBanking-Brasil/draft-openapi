@@ -712,7 +712,7 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
         ratePeriodicity:
@@ -942,7 +942,7 @@ components:
           format: double
           maxLength: 8
           minLength: 3
-          pattern: '^\d{1}\.\d{1,6}$'
+          pattern: '^\d{1}\.\d{6}$'
           example: '0.300000'
           description: |
             Taxa de remuneração da transação.
@@ -953,7 +953,7 @@ components:
           format: double
           maxLength: 8
           minLength: 3
-          pattern: '^\d{1}\.\d{1,6}$'
+          pattern: '^\d{1}\.\d{6}$'
           example: '1.100000'
           description: |
             Percentual máximo do indexador acordado com o cliente na contratação.
