@@ -40,12 +40,6 @@ properties:
         example: '1000.000004'
       currency:
         $ref: ./BankFixedIncomesBalancesCurrency.yaml
-      quantity:
-        type: string
-        description: Quantidade de títulos detidos na data da posição do cliente
-        maxLength: 24
-        pattern: '^\d{1,15}\.\d{2,8}$'
-        example: '15.00'
   grossAmount:
     description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
     type: object
