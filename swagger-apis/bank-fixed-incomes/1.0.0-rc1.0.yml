@@ -1,14 +1,8 @@
 ﻿openapi: 3.0.0
 info:
-  title: API Renda Fixa Bancária - Open Finance Brasil
+  title: API Bank Fixed Incomes - Open Finance Brasil
   description: |
-    API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4).  
-    API que retorna informações de operações de investimento do tipo Renda Fixa Bancária 
-    (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes, 
-    incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, 
-    saldos em posição do cliente e movimentações financeiras. Não possui segregação entre 
-    pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints.  
-    A exposição se dará por cada operação de renda fixa contratada pelo cliente.
+    API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4). API que retorna informações de operações de investimento do tipo Renda Fixa Bancária (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, saldos em posição do cliente e movimentações financeiras. Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. A exposição se dará por cada operação de renda fixa contratada pelo cliente.
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -343,7 +337,7 @@ components:
               maxLength: 20
               format: date-time
               example: '2021-05-21T08:30:00Z'
-    ResponseBankFixedIncomeListProduct:
+    ResponseBankFixedIncomesProductList:
       type: object
       required:
         - data
@@ -451,12 +445,6 @@ components:
                   format: double
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
-                quantity:
-                  type: string
-                  description: Quantidade de títulos detidos na data da posição do cliente
-                  maxLength: 24
-                  pattern: '^\d{1,15}\.\d{2,8}$'
-                  example: '15.00'
             grossAmount:
               description: Valor do investimento que se refere a quantidade multiplicado pelo PU atualizado na data de referência;
               type: object
@@ -718,7 +706,7 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
         ratePeriodicity:
@@ -946,7 +934,7 @@ components:
           format: double
           maxLength: 8
           minLength: 3
-          pattern: '^\d{1}\.\d{1,6}$'
+          pattern: '^\d{1}\.\d{6}$'
           example: '0.300000'
           description: |
             Taxa de remuneração da transação.
@@ -957,7 +945,7 @@ components:
           format: double
           maxLength: 8
           minLength: 3
-          pattern: '^\d{1}\.\d{1,6}$'
+          pattern: '^\d{1}\.\d{6}$'
           example: '1.100000'
           description: |
             Percentual máximo do indexador acordado com o cliente na contratação.
@@ -1122,7 +1110,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ResponseBankFixedIncomeListProduct'
+            $ref: '#/components/schemas/ResponseBankFixedIncomesProductList'
     ResponseBankFixedIncomeIdentifyProduct:
       description: Dados de fundos de investimentos obtidos com sucesso.
       content:
