@@ -1,6 +1,6 @@
 name: x-fapi-interaction-id
 in: header
-description: 'Campo de envio obrigatório pela receptora (client) e o seu valor deve ser reproduzido pela transmissora (server) na resposta.'
+description: 'Um UUID RFC4122 usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser "espelhado" pela transmissora (server) no cabeçalho de resposta.'
 required: true
 schema:
   type: string   
