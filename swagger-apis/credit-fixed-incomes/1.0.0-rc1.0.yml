@@ -83,7 +83,7 @@ paths:
       tags:
         - Product Identification
       summary: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedIncomesProductIdentification
+      operationId: creditFixedIncomesGetInvestmentsInvestmentId
       description: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -132,7 +132,7 @@ paths:
       tags:
         - Balances
       summary: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedIncomesBalances
+      operationId: creditFixedIncomesGetInvestmentsInvestmentIdBalances
       description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -181,7 +181,7 @@ paths:
       tags:
         - Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedIncomesTransactions
+      operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactions
       description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -375,7 +375,7 @@ components:
             incomeTax:
               type: object
               description: |
-                Valor do imposto de renda recolhido na transação.  
+                Valor do imposto de renda recolhido na transação.               
                 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
               required:
                 - amount
@@ -394,7 +394,7 @@ components:
             financialTransactionTax:
               type: object
               description: |
-                Valor do IOF recolhido na transação.  
+                Valor do IOF recolhido na transação.                  
                 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'. 
               required:
                 - amount
@@ -1198,7 +1198,7 @@ components:
     InvestmentId:
       name: investmentId
       in: path
-      description: Identificador.
+      description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
       required: true
       schema:
         type: string
