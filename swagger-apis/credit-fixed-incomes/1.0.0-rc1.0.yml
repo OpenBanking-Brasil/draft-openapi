@@ -32,8 +32,8 @@ paths:
       tags:
         - Product List
       summary: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-      operationId: creditFixedIncomesProductList
-      description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      operationId: creditFixedIncomesGetInvestments
+      description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.        -
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -375,7 +375,7 @@ components:
             incomeTax:
               type: object
               description: |
-                Valor do imposto de renda recolhido na transação.
+                Valor do imposto de renda recolhido na transação.               
                 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
               required:
                 - amount
@@ -394,8 +394,8 @@ components:
             financialTransactionTax:
               type: object
               description: |
-                Valor do IOF recolhido na transação.
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+                Valor do IOF recolhido na transação.                  
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'. 
               required:
                 - amount
                 - currency
@@ -487,7 +487,7 @@ components:
         debtorName:
           type: string
           description: |
-            Nome do devedor (condicional para CRI e CRA)
+            Nome do devedor (condicional para CRI e CRA)  
             [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
           pattern: '[\w\W\s]*'
           maxLength: 70
@@ -954,7 +954,7 @@ components:
     TransactionId:
       type: string
       description: |
-        Código ou identificador único prestado pela instituição para individualizar o movimento
+        Código ou identificador único prestado pela instituição para individualizar o movimento.  
         [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
       maxLength: 100
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
