@@ -10,7 +10,7 @@ chmod + $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator
 mkdir $TEMP_GEN_DICTIONARY_DIR
 
 APIS=(
- # "accounts"
+# "accounts"
  # "acquiring_services"
  # "capitalization_bonds"
  # "consents"
@@ -22,12 +22,12 @@ APIS=(
  # "investments"
   #"invoice_financings"
   #"loans"
-  # "payments"
- # "pension"
+  #"payments"
+  #"pension"
   #"resources"
   #"unarranged_accounts_overdraft"
-  "credit_fixed_incomes"
-  #"bank_fixed_incomes"
+ # "credit_fixed_incomes"
+  "bank_fixed_incomes"
 )
 
 function genSwaggerFiles(){
