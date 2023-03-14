@@ -30,12 +30,12 @@
 /data/purchaseUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;23;Obrigatório;^-?\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.000004;4
 /data/purchaseUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/preFixedRate;preFixedRate;"Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
-[Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
-";Texto;8;Condicional;^\d{1}\.\d{1,6}$;;0;1;" Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'Indexador'.
+[Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
+";Texto;8;Condicional;^\d{1}\.\d{6}$;;0;1;" Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
 ";Não permitido;string;0.300000;
 /data/postFixedIndexerPercentage;postFixedIndexerPercentage;"Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente  
-[Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
-";Texto;8;Condicional;^\d{1}\.\d{1,6}$;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'Indexador' for preenchido de forma diferente de 'PRE_FIXADO'.
+[Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
+";Texto;8;Condicional;^\d{1}\.\d{6}$;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
 ";Não permitido;string;1.100000;
 /data/fine;fine;valor de multa devido ao atraso do pagamento acordado em contrato;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fine/amount;amount;Valor relacionado ao objeto.;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;4

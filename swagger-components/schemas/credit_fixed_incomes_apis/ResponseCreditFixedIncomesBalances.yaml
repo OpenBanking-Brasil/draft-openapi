@@ -9,6 +9,7 @@ properties:
     required:
       - referenceDateTime
       - updatedUnitPrice
+      - quantity
       - grossAmount
       - netAmount
       - incomeTax
@@ -22,6 +23,14 @@ properties:
         $ref: ./ReferenceDateTime.yaml
       updatedUnitPrice:
         $ref: ./UpdatedUnitPriceUnit.yaml
+      quantity:
+        type: string
+        format: double
+        description: "quantidade de títulos detidos na data da posição do cliente"
+        maxLength: 24
+        minLength: 1
+        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        example: '15.00'
       grossAmount:
         $ref: ./GrossAmount.yaml
       netAmount:

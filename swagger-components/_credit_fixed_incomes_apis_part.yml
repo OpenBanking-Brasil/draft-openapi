@@ -32,7 +32,7 @@ paths:
       tags:
         - Product List
       summary: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-      operationId: creditFixedIncomesProductList
+      operationId: creditFixedIncomesGetInvestments
       description: Obtém a lista de operações de Renda Fixa Crédito mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.        -
       parameters:
          - $ref: '#/components/parameters/Authorization'
@@ -45,7 +45,7 @@ paths:
          - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCreditFixedIncomesProductList'
+          $ref: '#/components/responses/ResponseCreditFixedIncomesProductList'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -94,7 +94,7 @@ paths:
          - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCreditFixedIncomesIdentifyProduct'
+          $ref: '#/components/responses/ResponseCreditFixedIncomesProductIdentification'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -143,7 +143,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCustomerBalances'
+          $ref: '#/components/responses/ResponseCreditFixedIncomesBalances'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -195,7 +195,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseCustomerTransactions'
+          $ref: '#/components/responses/ResponseCreditFixedIncomesTransactions'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -230,14 +230,14 @@ paths:
             - 'credit-fixed-incomes'
 components:
   schemas:
-    OKResponseCreditFixedIncomesProductList:
+    ResponseCreditFixedIncomesProductList:
       $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesProductList.yaml
-    OKResponseCreditFixedIdentification:
-      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesIdentifyProduct.yaml
-    OKResponseCustomerBalances:
-      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerBalances.yaml
-    OKResponseCustomerTransactions:
-      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerTransactions.yaml
+    ResponseCreditFixedIncomesProductIdentification:
+      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesProductIdentification.yaml
+    ResponseCreditFixedIncomesBalances:
+      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesBalances.yaml
+    ResponseCreditFixedIncomesTransactions:
+      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesTransactions.yaml
     Amount:
       $ref: ./schemas/credit_fixed_incomes_apis/Amount.yaml
     BlockedBalance:
@@ -357,30 +357,30 @@ components:
           scopes:
             credit-fixed-incomes: "Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions."
   responses:
-    OKResponseCreditFixedIncomesProductList:
+    ResponseCreditFixedIncomesProductList:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesProductList.yaml
-    OKResponseCreditFixedIncomesIdentifyProduct:
+    ResponseCreditFixedIncomesProductIdentification:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesIdentifyProduct.yaml
-    OKResponseCustomerBalances:
+            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesProductIdentification.yaml
+    ResponseCreditFixedIncomesBalances:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerBalances.yaml
-    OKResponseCustomerTransactions:
+            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesBalances.yaml
+    ResponseCreditFixedIncomesTransactions:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCustomerTransactions.yaml
+            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesTransactions.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:

@@ -30,15 +30,15 @@ properties:
     type: string
     description: |
       CNPJ do devedor (condicional para CRI e CRA)  
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
     maxLength: 14
     pattern: '^\d{14}$'
     example: '11225860000140'
   debtorName:
     type: string
     description: |
-      Nome do devedor (condicional para CRI e CRA)
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o tipo do investimento for igual a "CRI" ou "CRA".
+      Nome do devedor (condicional para CRI e CRA)  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
     pattern: '[\w\W\s]*'
     maxLength: 70
     example: 'Roberto Marino'
@@ -70,7 +70,7 @@ properties:
     type: string
     description: |
       Informações adicionais da periodicidade de pagamento de cupom  
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'Periodicidade de pagamento de cupom'.
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'voucherPaymentPeriodicity'.
     maxLength: 50
     pattern: '[\w\W\s]*'
     example: 'Diária'
