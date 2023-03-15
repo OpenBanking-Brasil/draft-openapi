@@ -2,6 +2,7 @@ type: object
 description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
 required:
   - referenceDateTime
+  - quantity
   - updatedUnitPrice
   - grossAmount
   - netAmount
@@ -35,8 +36,8 @@ properties:
         description: Valor relacionado ao objeto.
         type: string
         format: double
-        maxLength: 25
-        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
         example: '1000.000004'
       currency:
         $ref: ./BankFixedIncomesBalancesCurrency.yaml
@@ -106,8 +107,8 @@ properties:
         description: Valor relacionado ao objeto.
         type: string
         format: double
-        maxLength: 25
-        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
         example: '1000.000004'
       currency:
         $ref: ./BankFixedIncomesBalancesCurrency.yaml
