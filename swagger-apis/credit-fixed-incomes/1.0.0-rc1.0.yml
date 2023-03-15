@@ -253,9 +253,7 @@ components:
         - meta
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreditFixedIdentification'
+          $ref: '#/components/schemas/CreditFixedIdentification'
         links:
           $ref: '#/components/schemas/CreditFixedIncomesLinks'
         meta:
@@ -332,92 +330,9 @@ components:
         - meta
       properties:
         data:
-          type: object
-          required:
-            - type
-            - transactionType
-            - transactionDate
-            - transactionUnitePrice
-            - transactionQuantity
-            - transactionGrossValue
-            - transactionNetValue
-            - transactionId
-          properties:
-            type:
-              $ref: '#/components/schemas/Type'
-            transactionType:
-              $ref: '#/components/schemas/TransactionType'
-            typeAdditionalInfo:
-              $ref: '#/components/schemas/TypeAdditionalInfo'
-            transactionDate:
-              $ref: '#/components/schemas/TransactionDate'
-            transactionUnitePrice:
-              type: object
-              description: valor unitário negociado com o cliente na data de aquisição
-              required:
-                - amount
-                - currency
-              properties:
-                amount:
-                  type: string
-                  format: double
-                  pattern: '^\d{1,15}\.\d{2,8}$'
-                  maxLength: 24
-                  minLength: 4
-                  example: '1000.000004'
-                  description: Valor relacionado ao objeto.
-                currency:
-                  $ref: '#/components/schemas/Currency'
-            transactionQuantity:
-              $ref: '#/components/schemas/TransactionQuantity'
-            transactionGrossValue:
-              $ref: '#/components/schemas/TransactionGrossValue'
-            incomeTax:
-              type: object
-              description: |
-                Valor do imposto de renda recolhido na transação.               
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
-              required:
-                - amount
-                - currency
-              properties:
-                amount:
-                  type: string
-                  format: double
-                  pattern: '^\d{1,15}\.\d{2,4}$'
-                  maxLength: 20
-                  minLength: 4
-                  example: '1000.04'
-                  description: Valor relacionado ao objeto.
-                currency:
-                  $ref: '#/components/schemas/Currency'
-            financialTransactionTax:
-              type: object
-              description: |
-                Valor do IOF recolhido na transação.                  
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'. 
-              required:
-                - amount
-                - currency
-              properties:
-                amount:
-                  type: string
-                  format: double
-                  pattern: '^\d{1,15}\.\d{2,4}$'
-                  maxLength: 20
-                  minLength: 4
-                  example: '1000.04'
-                  description: Valor relacionado ao objeto.
-                currency:
-                  $ref: '#/components/schemas/Currency'
-            transactionNetValue:
-              $ref: '#/components/schemas/TransactionNetValue'
-            remunerationTransactionRate:
-              $ref: '#/components/schemas/RemunerationTransactionRate'
-            indexerPercentage:
-              $ref: '#/components/schemas/IndexerPercentage'
-            transactionId:
-              $ref: '#/components/schemas/TransactionId'
+          type: array
+          items:
+            $ref: '#/components/schemas/CreditFixedIncomesTransactions'
         links:
           $ref: '#/components/schemas/CreditFixedIncomesLinks'
         meta:
@@ -923,6 +838,93 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 50
           example: Dólar
+    CreditFixedIncomesTransactions:
+      type: object
+      required:
+        - type
+        - transactionType
+        - transactionDate
+        - transactionUnitePrice
+        - transactionQuantity
+        - transactionGrossValue
+        - transactionNetValue
+        - transactionId
+      properties:
+        type:
+          $ref: '#/components/schemas/Type'
+        transactionType:
+          $ref: '#/components/schemas/TransactionType'
+        typeAdditionalInfo:
+          $ref: '#/components/schemas/TypeAdditionalInfo'
+        transactionDate:
+          $ref: '#/components/schemas/TransactionDate'
+        transactionUnitePrice:
+          type: object
+          description: valor unitário negociado com o cliente na data de aquisição
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              pattern: '^\d{1,15}\.\d{2,8}$'
+              maxLength: 24
+              minLength: 4
+              example: '1000.000004'
+              description: Valor relacionado ao objeto.
+            currency:
+              $ref: '#/components/schemas/Currency'
+        transactionQuantity:
+          $ref: '#/components/schemas/TransactionQuantity'
+        transactionGrossValue:
+          $ref: '#/components/schemas/TransactionGrossValue'
+        incomeTax:
+          type: object
+          description: |
+            Valor do imposto de renda recolhido na transação.               
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              maxLength: 20
+              minLength: 4
+              example: '1000.04'
+              description: Valor relacionado ao objeto.
+            currency:
+              $ref: '#/components/schemas/Currency'
+        financialTransactionTax:
+          type: object
+          description: |
+            Valor do IOF recolhido na transação.                  
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'. 
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              maxLength: 20
+              minLength: 4
+              example: '1000.04'
+              description: Valor relacionado ao objeto.
+            currency:
+              $ref: '#/components/schemas/Currency'
+        transactionNetValue:
+          $ref: '#/components/schemas/TransactionNetValue'
+        remunerationTransactionRate:
+          $ref: '#/components/schemas/RemunerationTransactionRate'
+        indexerPercentage:
+          $ref: '#/components/schemas/IndexerPercentage'
+        transactionId:
+          $ref: '#/components/schemas/TransactionId'
     RemunerationTransactionRate:
       type: string
       description: |
