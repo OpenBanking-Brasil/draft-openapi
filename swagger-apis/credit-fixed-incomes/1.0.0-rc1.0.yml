@@ -664,7 +664,7 @@ components:
           $ref: '#/components/schemas/Currency'
     GrossAmount:
       type: object
-      description: valor do investimento que se refere a quantidade x PU atualizado na data de referência;
+      description: valor do investimento que se refere a quantidade x PU atualizado na data de referência
       required:
         - amount
         - currency
@@ -935,12 +935,16 @@ components:
       example: '0.300000'
     TransactionDate:
       type: string
+      format: date
       description: Data da movimentação
       maxLength: 10
       pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
       example: '2018-02-15'
     TransactionGrossValue:
       type: object
+      required:
+        - amount
+        - currency
       description: 'Valor bruto da transação (Preço unitário da movimentação x Quantidade) '
       properties:
         amount:
@@ -1067,7 +1071,7 @@ components:
           pattern: '^\d{1,15}\.\d{2,8}$'
           maxLength: 24
           minLength: 4
-          example: '-1000.0400'
+          example: '1000.0400'
           description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
@@ -1247,7 +1251,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: Campo de envio obrigatório pela receptora (client) e o seu valor deve ser reproduzido pela transmissora (server) na resposta.
+      description: Um UUID RFC4122 usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser "espelhado" pela transmissora (server) no cabeçalho de resposta.
       required: true
       schema:
         type: string
