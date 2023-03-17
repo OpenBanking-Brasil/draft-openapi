@@ -2,8 +2,8 @@ openapi: 3.0.0
 info:
   title: API Credit Fixed Incomes - Open Finance Brasil
   description: |
-    API de informações de operações de Renda Fixa Crédito do Open Finance Brasil – Fase 4. API que retorna informações de operações de investimento do tipo Renda Fixa Crédito (Debêntures, CRI/CRA) mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, saldos em posição do cliente e movimentações financeiras. Não possui segregação entre pessoa natural e pessoa jurídica. 
-    Requer consentimento do cliente para todos os endpoints.
+    API de informações de operações de Renda Fixa Crédito do Open Finance Brasil – Fase 4. API que retorna informações de operações de investimento do tipo Renda Fixa Crédito (Debêntures, CRI/CRA) mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, saldos em posição do cliente e movimentações financeiras.
+    Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. A exposição se dará por cada operação de renda fixa contratada pelo cliente.
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -83,7 +83,7 @@ paths:
       tags:
         - Product Identification
       summary: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedIncomesProductIdentification
+      operationId: creditFixedIncomesGetInvestmentsInvestmentId
       description: Obtém os dados da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
          - $ref: '#/components/parameters/InvestmentId'
@@ -132,7 +132,7 @@ paths:
       tags:
         - Balances
       summary: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedIncomesBalances
+      operationId: creditFixedIncomesGetInvestmentsInvestmentIdBalances
       description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -181,7 +181,7 @@ paths:
       tags:
         - Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
-      operationId: creditFixedIncomesTransactions
+      operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactions
       description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -292,6 +292,8 @@ components:
       $ref: ./schemas/credit_fixed_incomes_apis/ReferenceDateTime.yaml
     Remuneration:
       $ref: ./schemas/credit_fixed_incomes_apis/Remuneration.yaml
+    CreditFixedIncomesTransactions:
+      $ref: ./schemas/credit_fixed_incomes_apis/CreditFixedIncomesTransactions.yaml
     RemunerationTransactionRate:
       $ref: ./schemas/credit_fixed_incomes_apis/RemunerationTransactionRate.yaml
     TransactionDate:
@@ -330,7 +332,7 @@ components:
     Authorization:
       $ref: ./parameters/Authorization.yaml
     xFapiAuthDate:
-      $ref: ./parameters/XFapiAuthDate.yaml
+      $ref: ./parameters/CreditFixedIncomeXFapiAuthDate.yaml
     xFapiCustomerIpAddress:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
