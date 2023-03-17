@@ -844,7 +844,7 @@ components:
         - type
         - transactionType
         - transactionDate
-        - transactionUnitePrice
+        - transactionUnitPrice
         - transactionQuantity
         - transactionGrossValue
         - transactionNetValue
@@ -858,7 +858,7 @@ components:
           $ref: '#/components/schemas/TypeAdditionalInfo'
         transactionDate:
           $ref: '#/components/schemas/TransactionDate'
-        transactionUnitePrice:
+        transactionUnitPrice:
           type: object
           description: valor unitário negociado com o cliente na data de aquisição
           required:
@@ -1004,7 +1004,7 @@ components:
         - MORA
         - OUTROS
       example: COMPRA
-    TransactionUnitePrice:
+    TransactionUnitPrice:
       type: object
       description: 'Preço unitário bruto negociado na transação '
       properties:
