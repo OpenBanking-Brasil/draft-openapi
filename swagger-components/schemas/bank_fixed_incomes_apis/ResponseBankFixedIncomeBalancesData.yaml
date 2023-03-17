@@ -2,6 +2,7 @@ type: object
 description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
 required:
   - referenceDateTime
+  - quantity
   - updatedUnitPrice
   - grossAmount
   - netAmount
@@ -35,8 +36,8 @@ properties:
         description: Valor relacionado ao objeto.
         type: string
         format: double
-        maxLength: 25
-        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
         example: '1000.000004'
       currency:
         $ref: ./BankFixedIncomesBalancesCurrency.yaml
@@ -106,8 +107,8 @@ properties:
         description: Valor relacionado ao objeto.
         type: string
         format: double
-        maxLength: 25
-        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
         example: '1000.000004'
       currency:
         $ref: ./BankFixedIncomesBalancesCurrency.yaml
@@ -118,7 +119,7 @@ properties:
       Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
       O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-      [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer' ou quando se tratar de produto com remuneração híbrida.
     pattern: '^\d{1}\.\d{6}$'
     maxLength: 8
     minLength: 8
@@ -130,7 +131,7 @@ properties:
       Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
       O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO' ou quando se tratar de produto com remuneração híbrida.
     pattern: '^\d{1}\.\d{6}$'
     maxLength: 8
     minLength: 8

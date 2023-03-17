@@ -6,6 +6,7 @@ required:
   - transactionUnitePrice
   - transactionQuantity
   - transactionGrossValue
+  - transactionNetValue
   - transactionId
 properties:
   type:
@@ -38,8 +39,8 @@ properties:
       amount:
         type: string
         format: double
-        maxLength: 25
-        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
         example: '1000.04'
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
@@ -60,8 +61,8 @@ properties:
       amount:
         type: string
         format: double
-        maxLength: 21
-        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
         example: '1000.04'
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
@@ -70,7 +71,7 @@ properties:
     description: |
       Valor do imposto de renda recolhido na transação.
 
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
     required:
       - amount
       - currency
@@ -78,8 +79,8 @@ properties:
       amount:
         type: string
         format: double
-        maxLength: 21
-        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
         example: '1000.04'
       currency:
         $ref: ../business_commons/CurrencyCode.yaml
@@ -88,7 +89,7 @@ properties:
     description: |
       Valor do IOF recolhido na transação.
 
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
     required:
       - amount
       - currency
@@ -96,8 +97,8 @@ properties:
       amount:
         type: string
         format: double
-        maxLength: 21
-        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
         example: '1000.04'
         description: Valor relacionado ao objeto.
       currency:
@@ -112,8 +113,8 @@ properties:
       amount:
         type: string
         format: double
-        maxLength: 21
-        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
         example: '1000.04'
         description: Valor relacionado ao objeto.
       currency:
@@ -128,7 +129,7 @@ properties:
     description: |
       Taxa de remuneração da transação.
 
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
   indexerPercentage:
     type: string
     format: double
@@ -139,7 +140,7 @@ properties:
     description: |
       Percentual máximo do indexador acordado com o cliente na contratação.
 
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
   transactionId:
     type: string
     maxLength: 100

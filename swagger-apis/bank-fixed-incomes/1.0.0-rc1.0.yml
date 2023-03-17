@@ -407,6 +407,7 @@ components:
           description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
           required:
             - referenceDateTime
+            - quantity
             - updatedUnitPrice
             - grossAmount
             - netAmount
@@ -440,8 +441,8 @@ components:
                   description: Valor relacionado ao objeto.
                   type: string
                   format: double
-                  maxLength: 25
-                  pattern: '^-?\d{1,15}\.\d{2,8}$'
+                  maxLength: 24
+                  pattern: '^\d{1,15}\.\d{2,8}$'
                   example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
@@ -511,8 +512,8 @@ components:
                   description: Valor relacionado ao objeto.
                   type: string
                   format: double
-                  maxLength: 25
-                  pattern: '^-?\d{1,15}\.\d{2,8}$'
+                  maxLength: 24
+                  pattern: '^\d{1,15}\.\d{2,8}$'
                   example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
@@ -523,7 +524,7 @@ components:
                 Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
                 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-                [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer' ou quando se tratar de produto com remuneração híbrida.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
@@ -535,7 +536,7 @@ components:
                 Percentual do indexador acordado com o  cliente na contratação. Em casos de produtos progressivos, considerar taxa vigente.  p.ex. 0.014500.
                 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
+                [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO' ou quando se tratar de produto com remuneração híbrida.
               pattern: '^\d{1}\.\d{6}$'
               maxLength: 8
               minLength: 8
@@ -601,8 +602,8 @@ components:
             amount:
               type: string
               format: double
-              maxLength: 25
-              pattern: '^-?\d{1,15}\.\d{2,8}$'
+              maxLength: 24
+              pattern: '^\d{1,15}\.\d{2,8}$'
               example: '1000.000004'
               description: Valor relacionado ao objeto.
             currency:
@@ -693,7 +694,7 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
 
-            [Restrição] Campo de preenchimento obrigatório pelas  participantes quando houver 'PRE_FIXADO' no campo 'indexer'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer' ou quando se tratar de produto com remuneração híbrida.
         postFixedIndexerPercentage:
           type: string
           format: double
@@ -706,7 +707,7 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO' ou quando se tratar de produto com remuneração híbrida.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
         ratePeriodicity:
@@ -819,6 +820,7 @@ components:
         - transactionUnitePrice
         - transactionQuantity
         - transactionGrossValue
+        - transactionNetValue
         - transactionId
       properties:
         type:
@@ -851,8 +853,8 @@ components:
             amount:
               type: string
               format: double
-              maxLength: 25
-              pattern: '^-?\d{1,15}\.\d{2,8}$'
+              maxLength: 24
+              pattern: '^\d{1,15}\.\d{2,8}$'
               example: '1000.04'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
@@ -873,8 +875,8 @@ components:
             amount:
               type: string
               format: double
-              maxLength: 21
-              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
               example: '1000.04'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
@@ -883,7 +885,7 @@ components:
           description: |
             Valor do imposto de renda recolhido na transação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
           required:
             - amount
             - currency
@@ -891,8 +893,8 @@ components:
             amount:
               type: string
               format: double
-              maxLength: 21
-              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
               example: '1000.04'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
@@ -901,7 +903,7 @@ components:
           description: |
             Valor do IOF recolhido na transação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'SAIDA'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
           required:
             - amount
             - currency
@@ -909,8 +911,8 @@ components:
             amount:
               type: string
               format: double
-              maxLength: 21
-              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
               example: '1000.04'
               description: Valor relacionado ao objeto.
             currency:
@@ -925,8 +927,8 @@ components:
             amount:
               type: string
               format: double
-              maxLength: 21
-              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
               example: '1000.04'
               description: Valor relacionado ao objeto.
             currency:
@@ -941,7 +943,7 @@ components:
           description: |
             Taxa de remuneração da transação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
         indexerPercentage:
           type: string
           format: double
@@ -952,7 +954,7 @@ components:
           description: |
             Percentual máximo do indexador acordado com o cliente na contratação.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor  'ENTRADA'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
         transactionId:
           type: string
           maxLength: 100
@@ -996,8 +998,8 @@ components:
       description: Valor relacionado ao objeto.
       type: string
       format: double
-      maxLength: 21
-      pattern: '^-?\d{1,15}\.\d{2,4}$'
+      maxLength: 20
+      pattern: '^\d{1,15}\.\d{2,4}$'
       example: '1000.0004'
   securitySchemes:
     OpenId:
@@ -1073,7 +1075,7 @@ components:
     xFapiAuthDate:
       name: x-fapi-auth-date
       in: header
-      description: 'Data em que o usuário logou pela última vez com o receptor. Representada de acordo com a [RFC7231](https://tools.ietf.org/html/rfc7231).Exemplo: Sun, 10 Sep 2017 19:43:31 UTC'
+      description: 'Data em que o usuário logou pela última vez com o receptor. Representada de acordo com a RFC7231. Exemplo: Sun, 10 Sep 2017 19:43:31 UTC.'
       required: false
       schema:
         type: string
