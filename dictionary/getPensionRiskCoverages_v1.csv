@@ -153,6 +153,51 @@ Exemplo: Cobertura X: a partir de 25 meses = 100%
 /data/otherGuaranteedValues;otherGuaranteedValues;;Lista;20;Obrigatório;;"SALDAMENTO 
 BENEFICIO_PROLONGADO 
 NAO_APLICA";1;N;"";Não permitido;array;SALDAMENTO;
+/data/contributionPayment;contributionPayment;Pagamento da contribuição.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/contributionPayment/contributionPaymentMethod;contributionPaymentMethod;"Método utilizado para o pagamento da contribuição.
+ - CARTAO_CREDITO
+ - DEBITO_CONTA
+ - DEBITO_CONTA_POUPANCA
+ - BOLETO_BANCARIO
+ - PIX
+ - TED_DOC
+ - CONSIGNACAO_FOLHA_PAGAMENTO
+ - PONTOS_PROGRAMA_BENEFICIO
+ - OUTROS
+";Texto;;Obrigatório;;"CARTAO_CREDITO 
+DEBITO_CONTA 
+DEBITO_CONTA_POUPANCA 
+BOLETO_BANCARIO 
+PIX 
+TED_DOC 
+CONSIGNACAO_FOLHA_PAGAMENTO 
+PONTOS_PROGRAMA_BENEFICIO 
+OUTROS";1;1;"";Não permitido;string;CARTAO_CREDITO;
+/data/contributionPayment/contributionPaymentMethodAdditionalInfo;contributionPaymentMethodAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
+
+[Restrição] Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
+";Não permitido;string;Informações adicionais;
+/data/contributionPayment/contributionPeriodicity;contributionPeriodicity;"Método utilizado para o pagamento da contribuição.
+- MENSAL
+- UNICA
+- ANUAL
+- TRIMESTRAL
+- SEMESTRAL
+- BIMESTRAL
+- OUTROS
+";Texto;;Obrigatório;;"MENSAL 
+UNICA 
+ANUAL 
+TRIMESTRAL 
+SEMESTRAL 
+BIMESTRAL 
+OUTROS";1;1;"";Não permitido;string;MENSAL;
+/data/contributionPayment/contributionPeriodicityAdditionalInfo;contributionPeriodicityAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
+
+[Restrição] Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
+";Não permitido;string;Informações adicionais;
 /data/indemnityPaymentMethods;indemnityPaymentMethods;;Lista;18;Obrigatório;;"UNICO 
 SOB_FORMA_RENDA";1;N;"";Não permitido;array;UNICO;
 /data/minimumRequirement;minimumRequirement;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
