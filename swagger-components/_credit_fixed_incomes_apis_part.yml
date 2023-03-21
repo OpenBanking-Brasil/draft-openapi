@@ -13,9 +13,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
 servers:
-  - url: "https://api.banco.com.br/open-banking/opendata-investments/v1"
+  - url: "https://api.banco.com.br/open-banking/credit-fixed-incomes/v1"
     description: Servidor de Produção
-  - url: "https://apih.banco.com.br/open-banking/opendata-investments/v1"
+  - url: "https://apih.banco.com.br/open-banking/credit-fixed-incomes/v1"
     description: Servidor de Homologação
 tags:
   - name: Product List
@@ -308,8 +308,8 @@ components:
       $ref: ./schemas/credit_fixed_incomes_apis/TransactionQuantity.yaml
     TransactionType:
       $ref: ./schemas/credit_fixed_incomes_apis/EnumTransactionType.yaml
-    TransactionUnitePrice:
-      $ref: ./schemas/credit_fixed_incomes_apis/TransactionUnitePrice.yaml
+    TransactionUnitPrice:
+      $ref: ./schemas/credit_fixed_incomes_apis/TransactionUnitPrice.yaml
     Type:
       $ref: ./schemas/credit_fixed_incomes_apis/EnumType.yaml
     TypeAdditionalInfo:
