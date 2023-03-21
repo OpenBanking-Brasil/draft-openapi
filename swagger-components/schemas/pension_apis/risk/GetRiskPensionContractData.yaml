@@ -4,10 +4,14 @@ required:
   - society
   - name
   - code
+  - modality
   - coverages
-  - assistanceTypes
-  - additionals
   - termsAndConditions
+  - premiumUpdateIndex
+  - otherGuaranteedValues
+  - contributionPayment
+  - indemnityPaymentMethods
+  - minimumRequirement
   - targetAudience
 properties:
   participant:
@@ -52,7 +56,9 @@ properties:
       $ref: ../../business_commons/TermsAndConditionsItem.yaml
     minItems: 1
   pmbacRemuneration:
-    $ref: ../../business_commons/InsurancePensionEnumPmbacRemuneration.yaml
+    $ref: ./RiskPensionEnumPmbacRemuneration.yaml
+  premiumUpdateIndex:
+    $ref: ./RiskPensionEnumPremiumUpdateIndex.yaml
   ageAdjustment:
     $ref: ../../business_commons/InsurancePensionAgeAdjustment.yaml
   financialRegimeContractTypes:
@@ -60,11 +66,13 @@ properties:
     items:
       $ref: ../../business_commons/InsurancePensionEnumFinancialRegime.yaml
   reclaim:
-    $ref: ../../business_commons/InsurancePensionReclaim.yaml
+    $ref: ./RiskPensionReclaim.yaml
   otherGuaranteedValues:
     type: array
     items:
       $ref: ../../enum/EnumPersonalInsuranceOtherGuaranteedValues.yaml
+  contributionPayment:
+    $ref: ./RiskPensionEnumContributionPayment.yaml
   indemnityPaymentMethods:
     type: array
     items:

@@ -194,9 +194,9 @@ components:
           $ref: '#/components/schemas/EnumDistinctTargetAudienceExchange'
         value:
           type: string
-          maxLength: 8
+          maxLength: 22
           minLength: 8
-          pattern: '^\d{1}\.\d{6}$'
+          pattern: '^\d{1,15}\.\d{6}$'
           example: '0.019800'
           description: Valor da operação.
         valueUpdateDateTime:
@@ -358,7 +358,7 @@ components:
       additionalProperties: false
     EnumExchangeDeliveryForeignCurrency:
       type: string
-      description: 'A classificação da forma de operação, conforme a circular BCB nº 3690 de 16/12/2013. (Vide Enum)<br><ul><li>ESPECIE</li><li>CARTAO_PRE_PAGO</li><li>TELETRANSMISSAO_SWIFT</li></ul>'
+      description: 'A classificação da forma de operação, conforme Resolução BCB nº 277 de 31/12/2022 ou outro normativo que a revogue. (Vide Enum)<br><ul><li>ESPECIE</li><li>CARTAO_PRE_PAGO</li><li>TELETRANSMISSAO_SWIFT</li></ul>'
       enum:
         - ESPECIE
         - CARTAO_PRE_PAGO
@@ -381,7 +381,7 @@ components:
       example: '0,01_200'
     EnumExchangeTransactionCategory:
       type: string
-      description: 'A classificação do tipo de operação, conforme a circular BCB nº 3690 de 16/12/2013.'
+      description: 'A classificação do tipo de operação, conforme Resolução BCB nº 277 de 31/12/2022 ou outro normativo que a revogue.'
       enum:
         - COMERCIO_EXTERIOR
         - TRANSPORTE
