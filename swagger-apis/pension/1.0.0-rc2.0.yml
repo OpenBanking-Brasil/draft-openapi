@@ -197,6 +197,8 @@ components:
           minItems: 1
         pmbacRemuneration:
           $ref: '#/components/schemas/RiskPensionEnumPmbacRemuneration'
+        premiumUpdateIndex:
+          $ref: '#/components/schemas/RiskPensionEnumPremiumUpdateIndex'
         ageAdjustment:
           $ref: '#/components/schemas/AgeAdjustment'
         financialRegimeContractTypes:
@@ -1262,6 +1264,14 @@ components:
         - REPARTICAO_SIMPLES
         - REPARTICAO_CAPITAIS
         - CAPITALIZACAO
+    RiskPensionEnumPremiumUpdateIndex:
+      type: string
+      description: Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício
+      enum:
+        - IPCA
+        - IGPM
+        - INPC
+      example: IPCA
   parameters:
     page:
       name: page
