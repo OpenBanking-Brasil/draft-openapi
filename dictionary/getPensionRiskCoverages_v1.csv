@@ -34,7 +34,7 @@ OUTROS";1;1;"";Não permitido;string;MORTE;
 /data/coverages/typeAdditionalInfos;typeAdditionalInfos;"Lista de textos para complementar informação relativa ao campo type, quando for selecionada a opção 'OUTROS'.
 Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a opção 'OUTROS'
 ";Lista;100;Opcional;;;0;N;"";Não permitido;array;;
-/data/coverages/attributes;attributes;Atributos da cobertura;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/coverages/attributes;attributes;Atributos da cobertura;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/coverages/attributes/minValue;minValue;Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/coverages/attributes/minValue/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
 /data/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
@@ -54,7 +54,7 @@ SUICIDIO
 ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR 
 OUTROS";1;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
 /data/coverages/attributes/excludedRisksURL;excludedRisksURL;Campo aberto (possibilidade de incluir URL).;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
-/data/assistanceTypes;assistanceTypes;;Lista;43;Obrigatório;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
+/data/assistanceTypes;assistanceTypes;;Lista;43;Opcional;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
 ARQUITETO_VIRTUAL 
 ASSESSORIA_FINANCEIRA 
 AUTOMOVEL 
@@ -109,13 +109,13 @@ SUSTENTAVEL_DESCARTE_ECOLOGICO
 TELEMEDICINA 
 VIAGEM 
 VITIMA 
-OUTROS";1;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
+OUTROS";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 /data/assistanceTypesAdditionalInfos;assistanceTypesAdditionalInfos;Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.;Lista;;Opcional;;;0;N;"";Não permitido;array;;
-/data/additionals;additionals;;Lista;44;Obrigatório;;"SORTEIO 
+/data/additionals;additionals;;Lista;44;Opcional;;"SORTEIO 
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
 SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO 
 OUTROS 
-NAO_HA";1;N;"";Não permitido;array;SORTEIO;
+NAO_HA";0;N;"";Não permitido;array;SORTEIO;
 /data/termsAndConditions;termsAndConditions;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^\d{5}\.\d{6}/\d{4}-\d{2}$;;1;1;"";Não permitido;string;15414.622222/2222-22;
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
