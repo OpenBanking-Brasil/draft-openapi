@@ -1,0 +1,96 @@
+type: object
+required:
+  - issuerInstitutionCnpjNumber
+  - investmentType
+  - remuneration
+  - issueUnitPrice
+  - issueDate
+  - dueDate
+  - voucherPaymentIndicator
+  - purchaseDate
+  - gracePeriodDate
+  - taxExemptProduct
+properties:
+  issuerInstitutionCnpjNumber:
+    type: string
+    description: CNPJ da instituição emissora
+    maxLength: 14
+    pattern: '^\d{14}$'
+    example: '11225860000140'
+  isinCode:
+    type: string
+    description: |
+      Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional): código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.
+    maxLength: 12
+    pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
+    example: 'BRCST4CTF001'
+  investmentType:
+    $ref: EnumInvestimentType.yaml
+  debtorCnpjNumber:
+    type: string
+    description: |
+      CNPJ do devedor (condicional para CRI e CRA)  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
+    maxLength: 14
+    pattern: '^\d{14}$'
+    example: '11225860000140'
+  debtorName:
+    type: string
+    description: |
+      Nome do devedor (condicional para CRI e CRA)  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
+    pattern: '[\w\W\s]*'
+    maxLength: 70
+    example: 'Roberto Marino'
+  taxExemptProduct:
+    $ref: EnumTaxExemptProduct.yaml
+  remuneration: 
+    $ref: Remuneration.yaml
+  issueUnitPrice:
+    $ref: IssueUnitPrice.yaml
+  issueDate:
+    type: string
+    format: date
+    description: Data de emissão do título
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-16'
+  dueDate:
+    type: string
+    format: date
+    description: Data de vencimento do título
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-15'
+  voucherPaymentIndicator:
+    $ref: VoucherPaymentIndicator.yaml
+  voucherPaymentPeriodicity:
+    $ref: VoucherPaymentPeriodicity.yaml
+  voucherPaymentPeriodicityAdditionalInfo:
+    type: string
+    description: |
+      Informações adicionais da periodicidade de pagamento de cupom  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'voucherPaymentPeriodicity'.
+    maxLength: 50
+    pattern: '[\w\W\s]*'
+    example: 'Diária'
+  clearingCode:
+    type: string
+    description: Código de registro do ativo na clearing
+    maxLength: 30
+    pattern: '[\w\W-]*'
+    example: 'CDB421GPXXX'
+  purchaseDate:
+    type: string
+    format: date
+    description: Data de aquisição do cliente
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-15'
+  gracePeriodDate:
+    type: string
+    format: date
+    description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2018-02-16'
