@@ -94,10 +94,12 @@ components:
         - society
         - name
         - code
+        - modality
         - coverages
-        - assistanceTypes
-        - additionals
         - termsAndConditions
+        - otherGuaranteedValues
+        - indemnityPaymentMethods
+        - minimumRequirement
         - targetAudience
       properties:
         participant:
@@ -194,7 +196,7 @@ components:
             $ref: '#/components/schemas/TermsAndConditions'
           minItems: 1
         pmbacRemuneration:
-          $ref: '#/components/schemas/InsurancePensionEnumPmbacRemuneration'
+          $ref: '#/components/schemas/RiskPensionEnumPmbacRemuneration'
         premiumUpdateIndex:
           $ref: '#/components/schemas/RiskPensionEnumPremiumUpdateIndex'
         ageAdjustment:
@@ -204,7 +206,7 @@ components:
           items:
             $ref: '#/components/schemas/InsurancePensionEnumFinancialRegime'
         reclaim:
-          $ref: '#/components/schemas/InsurancePensionReclaim'
+          $ref: '#/components/schemas/RiskPensionReclaim'
         otherGuaranteedValues:
           type: array
           items:
@@ -896,7 +898,6 @@ components:
       type: object
       required:
         - type
-        - attributes
       properties:
         type:
           $ref: '#/components/schemas/EnumRiskPensionCoverageType'
@@ -930,6 +931,8 @@ components:
       required:
         - minValue
         - maxValue
+        - excludedRisks
+        - excludedRisksURL
       properties:
         minValue:
           $ref: '#/components/schemas/InsurancePensionMinValue'
@@ -996,13 +999,15 @@ components:
         - IGP_M
         - INPC
       example: IPCA
-    InsurancePensionReclaim:
+    RiskPensionReclaim:
       type: object
+      required:
+        - gracePeriod
       properties:
         table:
           type: array
           items:
-            $ref: '#/components/schemas/InsurancePensionReclaimTableItem'
+            $ref: '#/components/schemas/RiskPensionReclaimTableItem'
           minItems: 1
         gracePeriod:
           $ref: '#/components/schemas/GracePeriod'
@@ -1048,6 +1053,7 @@ components:
       type: object
       required:
         - contractType
+        - contractingMinRequirement
       properties:
         contractType:
           type: string
@@ -1063,8 +1069,12 @@ components:
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
-    InsurancePensionReclaimTableItem:
+    RiskPensionReclaimTableItem:
       type: object
+      required:
+        - initialMonthRange
+        - finalMonthRange
+        - percentage
       properties:
         initialMonthRange:
           type: integer
@@ -1082,8 +1092,10 @@ components:
           description: Percentual de faixa de resgate.
           example: '0.019800'
       additionalProperties: false
-    InsurancePensionEnumPmbacRemuneration:
+    RiskPensionEnumPmbacRemuneration:
       type: object
+      required:
+        - interestRate
       properties:
         interestRate:
           type: string
