@@ -249,8 +249,8 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pagination-key'
-        - $ref: '#/components/parameters/fromTransactionDate'
-        - $ref: '#/components/parameters/toTransactionDate'
+        - $ref: '#/components/parameters/fromTransactionDateCurrent'
+        - $ref: '#/components/parameters/toTransactionDateCurrent'
       responses:
         '200':
           $ref: '#/components/responses/ResponseCreditFixedIncomesTransactionsCurrent'
@@ -297,6 +297,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/CreditFixedList'
         links:
@@ -389,6 +390,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/CreditFixedIncomesTransactions'
         links:
@@ -404,6 +406,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             type: object
             required:
@@ -1518,9 +1521,29 @@ components:
         format: date
         example: '2022-12-31'
     fromTransactionDateCurrent:
-      $ref: '#/components/parameters/fromTransactionDate'
+      name: fromTransactionDate
+      description: |
+        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).       
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2023-02-01'
     toTransactionDateCurrent:
-      $ref: '#/components/parameters/toTransactionDate'
+      name: toTransactionDate
+      description: |
+        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).       
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2023-02-01'
   securitySchemes:
     OpenId:
       type: openIdConnect
