@@ -25,7 +25,9 @@ tags:
   - name: Balances
     description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
   - name: Transactions
-    description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
+    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+  - name: Transactions Current
+    description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
 paths:
   /investments:
     get:
@@ -182,7 +184,7 @@ paths:
         - Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactions
-      description: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
+      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -193,9 +195,65 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDate'
+        - $ref: '#/components/parameters/toTransactionDate'
       responses:
         '200':
           $ref: '#/components/responses/ResponseCreditFixedIncomesTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'credit-fixed-incomes'
+  /investments/{investmentId}/transactions-current:
+    get:
+      tags:
+        - Transactions Current
+      summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
+      operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactionsCurrent
+      description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDateCurrent'
+        - $ref: '#/components/parameters/toTransactionDateCurrent'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseCreditFixedIncomesTransactionsCurrent'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -238,6 +296,8 @@ components:
       $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesBalances.yaml
     ResponseCreditFixedIncomesTransactions:
       $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesTransactions.yaml
+    ResponseCreditFixedIncomesTransactionsCurrent:
+      $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesTransactionsCurrent.yaml
     Amount:
       $ref: ./schemas/credit_fixed_incomes_apis/Amount.yaml
     BlockedBalance:
@@ -248,6 +308,8 @@ components:
       $ref: ./schemas/credit_fixed_incomes_apis/CreditFixedIncomesLinks.yaml
     CreditFixedIncomesMeta:
       $ref: ./schemas/credit_fixed_incomes_apis/CreditFixedIncomesMeta.yaml
+    CreditFixedIncomesMetaTransactions:
+      $ref: ./schemas/credit_fixed_incomes_apis/CreditFixedIncomesMetaTransactions.yaml
     CreditFixedList:
       $ref: ./schemas/credit_fixed_incomes_apis/CreditFixedProductList.yaml
     Currency:
@@ -345,6 +407,14 @@ components:
       $ref: ./parameters/PageSize.yaml
     pagination-key:
       $ref: ./parameters/PaginationKey.yaml
+    fromTransactionDate:
+      $ref: ./parameters/CreditFixedIncomesFromTransactionDate.yaml
+    toTransactionDate:
+      $ref: ./parameters/CreditFixedIncomesToTransactionDate.yaml
+    fromTransactionDateCurrent:
+      $ref: ./parameters/CreditFixedIncomesFromTransactionDateCurrent.yaml
+    toTransactionDateCurrent:
+      $ref: ./parameters/CreditFixedIncomesToTransactionDateCurrent.yaml
   securitySchemes:
     OpenId:
       type: openIdConnect
@@ -383,6 +453,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesTransactions.yaml
+    ResponseCreditFixedIncomesTransactionsCurrent:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/credit_fixed_incomes_apis/ResponseCreditFixedIncomesTransactionsCurrent.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
