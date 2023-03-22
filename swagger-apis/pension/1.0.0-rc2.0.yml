@@ -94,10 +94,14 @@ components:
         - society
         - name
         - code
+        - modality
         - coverages
-        - assistanceTypes
-        - additionals
         - termsAndConditions
+        - premiumUpdateIndex
+        - otherGuaranteedValues
+        - contributionPayment
+        - indemnityPaymentMethods
+        - minimumRequirement
         - targetAudience
       properties:
         participant:
@@ -121,6 +125,16 @@ components:
             cnpjNumber:
               $ref: '#/components/schemas/CnpjNumber'
             urlComplementaryList:
+              description: |
+                Espera-se que valor de retorno, após acesso ao link ‘urlComplementaryList’, deve ser array de objeto com a estrutura abaixo:
+
+                - ‘name’ com o valor contido no campo ‘LegalEntityName’ conforme cadastro no diretório;
+
+                - ‘cnpjNumber’ com o valor contido no campo CNPJ (‘RegistrationNumber’) correspondente a esta instituição;
+
+                - Ambos do tipo string;
+
+                - Ambos obrigatórios.
               type: string
               maxLength: 1024
               pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
@@ -184,7 +198,9 @@ components:
             $ref: '#/components/schemas/TermsAndConditions'
           minItems: 1
         pmbacRemuneration:
-          $ref: '#/components/schemas/InsurancePensionEnumPmbacRemuneration'
+          $ref: '#/components/schemas/RiskPensionEnumPmbacRemuneration'
+        premiumUpdateIndex:
+          $ref: '#/components/schemas/RiskPensionEnumPremiumUpdateIndex'
         ageAdjustment:
           $ref: '#/components/schemas/AgeAdjustment'
         financialRegimeContractTypes:
@@ -192,7 +208,7 @@ components:
           items:
             $ref: '#/components/schemas/InsurancePensionEnumFinancialRegime'
         reclaim:
-          $ref: '#/components/schemas/InsurancePensionReclaim'
+          $ref: '#/components/schemas/RiskPensionReclaim'
         otherGuaranteedValues:
           type: array
           items:
@@ -207,6 +223,8 @@ components:
               - BENEFICIO_PROLONGADO
               - NAO_APLICA
             example: SALDAMENTO
+        contributionPayment:
+          $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
         indemnityPaymentMethods:
           type: array
           items:
@@ -884,7 +902,6 @@ components:
       type: object
       required:
         - type
-        - attributes
       properties:
         type:
           $ref: '#/components/schemas/EnumRiskPensionCoverageType'
@@ -918,6 +935,8 @@ components:
       required:
         - minValue
         - maxValue
+        - excludedRisks
+        - excludedRisksURL
       properties:
         minValue:
           $ref: '#/components/schemas/InsurancePensionMinValue'
@@ -984,13 +1003,15 @@ components:
         - IGP_M
         - INPC
       example: IPCA
-    InsurancePensionReclaim:
+    RiskPensionReclaim:
       type: object
+      required:
+        - gracePeriod
       properties:
         table:
           type: array
           items:
-            $ref: '#/components/schemas/InsurancePensionReclaimTableItem'
+            $ref: '#/components/schemas/RiskPensionReclaimTableItem'
           minItems: 1
         gracePeriod:
           $ref: '#/components/schemas/GracePeriod'
@@ -1036,6 +1057,7 @@ components:
       type: object
       required:
         - contractType
+        - contractingMinRequirement
       properties:
         contractType:
           type: string
@@ -1051,8 +1073,12 @@ components:
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
-    InsurancePensionReclaimTableItem:
+    RiskPensionReclaimTableItem:
       type: object
+      required:
+        - initialMonthRange
+        - finalMonthRange
+        - percentage
       properties:
         initialMonthRange:
           type: integer
@@ -1070,8 +1096,10 @@ components:
           description: Percentual de faixa de resgate.
           example: '0.019800'
       additionalProperties: false
-    InsurancePensionEnumPmbacRemuneration:
+    RiskPensionEnumPmbacRemuneration:
       type: object
+      required:
+        - interestRate
       properties:
         interestRate:
           type: string
@@ -1240,6 +1268,84 @@ components:
         - REPARTICAO_SIMPLES
         - REPARTICAO_CAPITAIS
         - CAPITALIZACAO
+    RiskPensionEnumPremiumUpdateIndex:
+      type: string
+      description: Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício
+      enum:
+        - IPCA
+        - IGPM
+        - INPC
+      example: IPCA
+    RiskPensionEnumContributionPayment:
+      type: object
+      description: Pagamento da contribuição.
+      required:
+        - contributionPaymentMethod
+        - contributionPeriodicity
+      properties:
+        contributionPaymentMethod:
+          type: string
+          example: CARTAO_CREDITO
+          description: |
+            Método utilizado para o pagamento da contribuição.
+             - CARTAO_CREDITO
+             - DEBITO_CONTA
+             - DEBITO_CONTA_POUPANCA
+             - BOLETO_BANCARIO
+             - PIX
+             - TED_DOC
+             - CONSIGNACAO_FOLHA_PAGAMENTO
+             - PONTOS_PROGRAMA_BENEFICIO
+             - OUTROS
+          enum:
+            - CARTAO_CREDITO
+            - DEBITO_CONTA
+            - DEBITO_CONTA_POUPANCA
+            - BOLETO_BANCARIO
+            - PIX
+            - TED_DOC
+            - CONSIGNACAO_FOLHA_PAGAMENTO
+            - PONTOS_PROGRAMA_BENEFICIO
+            - OUTROS
+        contributionPaymentMethodAdditionalInfo:
+          type: string
+          pattern: '[\w\W\s]*'
+          example: Informações adicionais
+          maxLength: 140
+          description: |
+            Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
+
+            [Restrição] Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
+        contributionPeriodicity:
+          type: string
+          example: MENSAL
+          description: |
+            Periodicidade de pagamento da contribuição.
+            - MENSAL
+            - UNICA
+            - ANUAL
+            - TRIMESTRAL
+            - SEMESTRAL
+            - BIMESTRAL
+            - OUTROS
+          enum:
+            - MENSAL
+            - UNICA
+            - ANUAL
+            - TRIMESTRAL
+            - SEMESTRAL
+            - BIMESTRAL
+            - OUTROS
+        contributionPeriodicityAdditionalInfo:
+          type: string
+          pattern: '[\w\W\s]*'
+          example: Informações adicionais
+          maxLength: 140
+          description: |
+            Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
+
+            [Restrição] Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
+      additionalProperties: false
   parameters:
     page:
       name: page

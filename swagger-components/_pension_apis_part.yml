@@ -127,18 +127,18 @@ components:
       $ref: ./schemas/business_commons/TermsAndConditionsItem.yaml
     UpdateIndex:
       $ref: ./schemas/enum/EnumPensionUpdateIndex.yaml
-    InsurancePensionReclaim:
-      $ref: ./schemas/business_commons/InsurancePensionReclaim.yaml
+    RiskPensionReclaim:
+      $ref: ./schemas/pension_apis/risk/RiskPensionReclaim.yaml
     InsurancePensionMinValue:
       $ref: ./schemas/business_commons/InsurancePensionMinValue.yaml
     InsurancePensionMaxValue:
       $ref: ./schemas/business_commons/InsurancePensionMaxValue.yaml
     RiskPensionMinimumRequirement:
       $ref: ./schemas/pension_apis/risk/RiskPensionMinimumRequirement.yaml
-    InsurancePensionReclaimTableItem:
-      $ref: ./schemas/business_commons/InsurancePensionReclaimTableItem.yaml
-    InsurancePensionEnumPmbacRemuneration:
-      $ref: ./schemas/business_commons/InsurancePensionEnumPmbacRemuneration.yaml
+    RiskPensionReclaimTableItem:
+      $ref: ./schemas/pension_apis/risk/RiskPensionReclaimTableItem.yaml
+    RiskPensionEnumPmbacRemuneration:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumPmbacRemuneration.yaml
     AgeAdjustment:
       $ref: ./schemas/business_commons/InsurancePensionAgeAdjustment.yaml
     CurrencyCode:
@@ -153,6 +153,10 @@ components:
       $ref: ./schemas/business_commons/EnumGracePeriodUnit.yaml
     InsurancePensionEnumFinancialRegime:
       $ref: ./schemas/business_commons/InsurancePensionEnumFinancialRegime.yaml
+    RiskPensionEnumPremiumUpdateIndex:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumPremiumUpdateIndex.yaml
+    RiskPensionEnumContributionPayment:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumContributionPayment.yaml
   parameters:
     page:
       $ref: ./parameters/Page.yaml
