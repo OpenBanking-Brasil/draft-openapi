@@ -1,0 +1,16 @@
+type: object
+description: valor unitário negociado com o cliente na data de aquisição
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    type: string
+    format: double
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    maxLength: 24
+    minLength: 4
+    example: '1000.000004'
+    description: 'Valor relacionado ao objeto.'
+  currency:
+    $ref: ./Currency.yaml
