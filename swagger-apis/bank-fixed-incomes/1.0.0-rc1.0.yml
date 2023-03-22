@@ -656,7 +656,7 @@ components:
         - LCI
         - LCA
       example: CDB
-    EnumInvestmentsFixedIncomeBankIndexer:
+    EnumBankFixedIncomeIndexer:
       type: string
       description: 'Índice utilizado como referência para a correção da rentabilidade e/ou rendimentos do ativo (CDI, DI , TR, IPCA, IGP_M, IGP_DI, INPC, BCP, TLC, SELIC, PRE_FIXADO e OUTROS)'
       enum:
@@ -715,7 +715,7 @@ components:
         calculation:
           $ref: '#/components/schemas/EnumCalculation'
         indexer:
-          $ref: '#/components/schemas/EnumInvestmentsFixedIncomeBankIndexer'
+          $ref: '#/components/schemas/EnumBankFixedIncomeIndexer'
         indexerAdditionalInfo:
           type: string
           description: |
