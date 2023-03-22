@@ -46,6 +46,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: "#/components/responses/SiteIsOverloaded"
   /survival-coverages:
     get:
       tags:
@@ -69,6 +71,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: "#/components/responses/SiteIsOverloaded"
 components:
   schemas:
     OKResponseRiskCoveragePension:
@@ -194,7 +198,7 @@ components:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
     TooManyRequests:
-      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido"
+      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido."
       content:
         application/json; charset=utf-8:
           schema:
@@ -205,3 +209,9 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
+    SiteIsOverloaded:
+      description: "O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
