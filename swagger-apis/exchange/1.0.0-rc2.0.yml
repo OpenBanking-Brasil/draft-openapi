@@ -289,14 +289,14 @@ components:
           description: Valor mínimo.
           minLength: 8
           maxLength: 22
-          pattern: '^\d{1,5}\.\d{6}$'
+          pattern: '^\d{1,15}\.\d{6}$'
           example: '0.010000'
         maximum:
           type: string
           description: Valor máximo.
           minLength: 8
           maxLength: 22
-          pattern: '^\d{1,5}\.\d{6}$'
+          pattern: '^\d{1,15}\.\d{6}$'
           example: '0.300000'
       additionalProperties: false
     ExchangeFrequencyDistributionPrice:
@@ -314,7 +314,7 @@ components:
           example: '0.020300'
           minLength: 8
           maxLength: 22
-          pattern: '^\d{1,5}\.\d{6}$'
+          pattern: '^\d{1,15}\.\d{6}$'
         operationRate:
           type: string
           description: Percentual de Operação.
