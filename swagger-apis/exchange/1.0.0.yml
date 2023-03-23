@@ -258,7 +258,9 @@ components:
       additionalProperties: false
     ExchangeNoIdentificationFrequencyDistribution:
       type: object
-      description: Distribuição por frequência.
+      description: |
+        Distribuição por frequência.  
+        É necessário que as Instituições Financeiras desconsiderem os valores de VET negativo no cálculo de vetAmount.
       required:
         - prices
         - minimum
