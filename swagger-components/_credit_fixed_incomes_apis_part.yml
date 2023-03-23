@@ -201,7 +201,7 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseCreditFixedIncomesTransactions'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequestTransactions'
         '401':
           $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
         '403':
@@ -219,13 +219,13 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorTransactions'
         '504':
           $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -255,7 +255,7 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseCreditFixedIncomesTransactionsCurrent'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequestTransactions'
         '401':
           $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
         '403':
@@ -273,13 +273,13 @@ paths:
         '429':
           $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorTransactions'
         '504':
           $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         'default':
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - 'openid'
@@ -495,12 +495,16 @@ components:
       $ref: ./responses/unpaged/Default.yaml
     BadRequestWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/BadRequest.yaml
+    BadRequestTransactions:
+      $ref: ./schemas/credit_fixed_incomes_apis/BadRequestTransactions.yaml
     ForbiddenWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/Forbidden.yaml
     GatewayTimeoutWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
     InternalServerErrorWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
+    InternalServerErrorTransactions:
+      $ref: ./schemas/credit_fixed_incomes_apis/InternalServerErrorTransactions.yaml
     LockedWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/Locked.yaml
     MethodNotAllowedWithAdditionalProperties:
