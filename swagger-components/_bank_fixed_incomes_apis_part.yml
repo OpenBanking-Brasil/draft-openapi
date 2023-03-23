@@ -211,31 +211,31 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsGatewayTimeoutWithAdditionalProperties'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsSiteIsOverloadedWithAdditionalProperties'
         'default':
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsDefaultWithAdditionalProperties'
       security:
         - OpenId:
             - 'openid'     
@@ -266,31 +266,31 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsGatewayTimeoutWithAdditionalProperties'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsSiteIsOverloadedWithAdditionalProperties'
         'default':
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/TransactionsDefaultWithAdditionalProperties'
       security:
         - OpenId:
             - 'openid'     
@@ -299,9 +299,11 @@ paths:
             - 'bank-fixed-incomes' 
 components:
   schemas:
-    LockedWithAdditionalProperties:
-      $ref: ./schemas/ResponseError.yaml
     ResponseError:
+      $ref: ./schemas/ResponseError.yaml
+    BankFixedIncomesResponseError:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesResponseError.yaml
+    ResponseErrorMetaSingle:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponseBankFixedIncomesProductList:
       $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductList.yaml
@@ -466,3 +468,29 @@ components:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesDefault.yaml
     SiteIsOverloadedWithAdditionalProperties:
       $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesSiteIsOverloaded.yaml
+    TransactionsBadRequestWithAdditionalProperties:
+      $ref: "./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsBadRequest.yaml"
+    TransactionsForbiddenWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsForbidden.yaml
+    TransactionsGatewayTimeoutWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsGatewayTimeout.yaml
+    TransactionsInternalServerErrorWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsInternalServerError.yaml
+    TransactionsLockedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsLocked.yaml
+    TransactionsMethodNotAllowedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsMethodNotAllowed.yaml
+    TransactionsNotAcceptableWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsNotAcceptable.yaml
+    TransactionsNotFoundWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsNotFound.yaml
+    TransactionsTooManyRequestsWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsTooManyRequests.yaml
+    TransactionsUnauthorizedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsUnauthorized.yaml
+    TransactionsUnprocessableEntityWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsUnprocessableEntity.yaml
+    TransactionsDefaultWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsDefault.yaml
+    TransactionsSiteIsOverloadedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsSiteIsOverloaded.yaml
