@@ -50,7 +50,7 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
 /data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;;Lista;31;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
+/data/coverages/attributes/indemnifiablePeriod;indemnifiablePeriod;;Lista;;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
 FIM_CICLO_DETERMINADO";0;N;"";Não permitido;array;QUANTIDADE_DETERMINADA_PARCELAS;
 /data/coverages/attributes/excludedRisks;excludedRisks;;Lista;40;Obrigatório;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
@@ -120,7 +120,7 @@ VIAGEM
 VITIMA 
 OUTROS";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 /data/assistanceTypesAdditionalInfos;assistanceTypesAdditionalInfos;Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.;Lista;;Opcional;;;0;N;"";Não permitido;array;;
-/data/additionals;additionals;;Lista;44;Opcional;;"SORTEIO 
+/data/additional;additional;;Lista;;Opcional;;"SORTEIO 
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
 SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO 
 OUTROS 
@@ -142,7 +142,7 @@ CADA_PERIODO_ANOS
 MUDANCA_FAIXA_ETARIA 
 NAO_APLICAVEL";1;N;"";Não permitido;array;APOS_PERIODO_ANOS;
 /data/ageAdjustment/frequency;frequency;Período em anos, caso critério de reenquadramento após ou a cada período em anos.;Inteiro;3;Obrigatório;;;1;1;"";Não permitido;integer;10;
-/data/financialRegimeContractTypes;financialRegimeContractTypes;;Lista;19;Opcional;;"REPARTICAO_SIMPLES 
+/data/financialRegimeContractType;financialRegimeContractType;;Lista;;Opcional;;"REPARTICAO_SIMPLES 
 REPARTICAO_CAPITAIS 
 CAPITALIZACAO";0;N;"";Não permitido;array;REPARTICAO_SIMPLES;
 /data/reclaim;reclaim;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
@@ -159,7 +159,7 @@ NAO_APLICA";1;1;"";Não permitido;string;MESES;
 Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL
 Exemplo: Cobertura X: a partir de 25 meses = 100%
 ";
-/data/otherGuaranteedValues;otherGuaranteedValues;;Lista;20;Obrigatório;;"SALDAMENTO 
+/data/otherGuaranteedValues;otherGuaranteedValues;;Lista;;Obrigatório;;"SALDAMENTO 
 BENEFICIO_PROLONGADO 
 NAO_APLICA";1;N;"";Não permitido;array;SALDAMENTO;
 /data/contributionPayment;contributionPayment;Pagamento da contribuição.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -207,7 +207,7 @@ OUTROS";1;1;"";Não permitido;string;MENSAL;
 [Restrição] Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
 ";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
 ";Não permitido;string;Informações adicionais;
-/data/indemnityPaymentMethods;indemnityPaymentMethods;;Lista;18;Obrigatório;;"UNICO 
+/data/indemnityPaymentMethod;indemnityPaymentMethod;;Lista;;Obrigatório;;"UNICO 
 SOB_FORMA_RENDA";1;N;"";Não permitido;array;UNICO;
 /data/minimumRequirement;minimumRequirement;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/minimumRequirement/contractType;contractType;"O tipo de serviço contratado. A considerar os domínios abaixo&#58;<br><ol><li>Coletivo Averbado</li><li>Coletivo Instituído</li><li>Individual</li></ol>";Texto;;Obrigatório;;"COLETIVO_AVERBADO 
