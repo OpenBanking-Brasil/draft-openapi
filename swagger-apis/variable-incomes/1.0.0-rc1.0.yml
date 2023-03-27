@@ -160,32 +160,30 @@ paths:
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/ResponseVariableIncomesBalances'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/Forbidden'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowed'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntity'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerError'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
-        '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeout'
         default:
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -321,6 +319,174 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
 components:
+  schemas:
+    ResponseVariableIncomesBalances:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseVariableIncomesBalanceData'
+        links:
+          $ref: '#/components/schemas/VariableIncomesBalancesLinks'
+        meta:
+          $ref: '#/components/schemas/VariableIncomesBalancesMeta'
+      additionalProperties: false
+    ResponseVariableIncomesBalanceData:
+      type: object
+      description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+      required:
+        - referenceDate
+        - priceFactor
+        - grossAmount
+        - blockedBalance
+        - quantity
+        - closingPrice
+      properties:
+        referenceDate:
+          type: string
+          format: date
+          description: Posição fechada para o ativo da data do dia anterior.
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+          maxLength: 10
+        priceFactor:
+          type: integer
+          format: integer
+          description: Fator que indica o número de ações utilizadas para a formação do preço.
+          pattern: '^(?=.*[1-9])\d{1,8}(?:\.\d{1,10})?$'
+          example: 100
+        grossAmount:
+          $ref: '#/components/schemas/VariableIncomesBalancesGrossAmount'
+        blockedBalance:
+          $ref: '#/components/schemas/VariableIncomesBalancesBlockedBalance'
+        quantity:
+          type: string
+          description: Quatidade total do ativo na data de referência.
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 15
+          example: '1000.000004'
+        closingPrice:
+          $ref: '#/components/schemas/VariableIncomesBalancesClosingPrice'
+    VariableIncomesBalancesBlockedBalance:
+      type: object
+      description: 'Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    VariableIncomesBalancesClosingPrice:
+      type: object
+      description: Preço de fechamento da data de referência.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,6}$'
+          maxLength: 23
+          example: '1000.00000004'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    VariableIncomesBalancesGrossAmount:
+      type: object
+      description: 'Valor do investimento anterior à dedução de impostos, taxas e tarifas (se houver), atualizado na data de referência.'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    VariableIncomesBalancesLinks:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI completo que gerou a resposta atual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    VariableIncomesBalancesMeta:
+      type: object
+      description: Meta informações referente a API requisitada.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros no resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas no resultado
+          example: 1
+        requestDateTime:
+          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
   parameters:
     InvestmentId:
       name: investmentId
@@ -471,6 +637,12 @@ components:
           scopes:
             variable-Incomes: Escopo necessário para acesso à API Variable-Incomes. O controle dos endpoints específicos é feito via permissions.
   responses:
+    ResponseVariableIncomesBalances:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseVariableIncomesBalances'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
