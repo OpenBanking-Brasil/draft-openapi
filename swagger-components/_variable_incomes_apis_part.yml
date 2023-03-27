@@ -68,37 +68,39 @@ paths:
          - $ref: '#/components/parameters/pageSize'
          - $ref: '#/components/parameters/pagination-key'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesProductList'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/Forbidden'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowed'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/Locked'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerError'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
-        - OpenId:
-            - 'openid'
-          OAuth2Security:
-            - 'consent:consentId'
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'variable-incomes'
   /investments/{investmentId}:
     get:
       tags:
@@ -322,6 +324,15 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
 components:
+  schemas:
+    ResponseVariableIncomesProductList:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductList.yaml
+    ResponseVariableIncomesProductListData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductListData.yaml
+    VariableIncomesMeta:
+      $ref: ./schemas/variable_incomes_apis/VariableIncomesMeta.yaml
+    VariableIncomesLinks:
+      $ref: ./schemas/variable_incomes_apis/VariableIncomesLinks.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/variable_incomes_apis/InvestmentId.yaml
@@ -363,6 +374,12 @@ components:
           scopes:
             variable-Incomes: "Escopo necessário para acesso à API Variable-Incomes. O controle dos endpoints específicos é feito via permissions."
   responses:
+    OKResponseVariableIncomesProductList:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductList.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
@@ -371,6 +388,8 @@ components:
       $ref: ./responses/unpaged/GatewayTimeout.yaml
     InternalServerError:
       $ref: ./responses/unpaged/InternalServerError.yaml
+    Locked:
+      $ref: ./responses/unpaged/Locked.yaml
     MethodNotAllowed:
       $ref: ./responses/unpaged/MethodNotAllowed.yaml
     NotAcceptable:
@@ -385,6 +404,8 @@ components:
       $ref: ./responses/unpaged/UnprocessableEntity.yaml
     Default:
       $ref: ./responses/unpaged/Default.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/unpaged/SiteIsOverloaded.yaml
     BadRequestWithAdditionalProperties:
       $ref: ./responses/withAdditionalProperties/BadRequest.yaml
     ForbiddenWithAdditionalProperties:
