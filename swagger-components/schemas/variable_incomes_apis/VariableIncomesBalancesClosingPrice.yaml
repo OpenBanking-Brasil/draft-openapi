@@ -1,0 +1,18 @@
+type: object
+description: Preço de fechamento da data de referência.
+required:
+    - amount
+    - currency
+properties:
+    amount:
+        type: string
+        description: Valor relacionado ao objeto.
+        pattern: '^-?\d{1,15}\.\d{2,6}$'
+        maxLength: 23
+        example: '1000.00000004'
+    currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
