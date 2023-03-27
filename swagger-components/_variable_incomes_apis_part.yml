@@ -215,6 +215,8 @@ paths:
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesTransactions'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -238,10 +240,10 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
-            - 'openid'
-          OAuth2Security:
-            - 'consent:consentId'
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'variable-incomes'
   /investments/{investmentId}/transactions-current:
     get:
       tags:
@@ -331,14 +333,22 @@ components:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductList.yaml
     ResponseVariableIncomesProductIdentification:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentification.yaml
+    ResponseVariableIncomesTransactions:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactions.yaml
     ResponseVariableIncomesProductListData:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductListData.yaml
     ResponseVariableIncomesProductIdentificationData:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentificationData.yaml
+    ResponseVariableIncomesTransactionsData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactionsData.yaml
     VariableIncomesMeta:
       $ref: ./schemas/variable_incomes_apis/VariableIncomesMeta.yaml
     VariableIncomesLinks:
       $ref: ./schemas/variable_incomes_apis/VariableIncomesLinks.yaml
+    EnumVariableIncomesTransactionsType:
+      $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsType.yaml
+    EnumVariableIncomesTransactionsTransactionType:
+      $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsTransactionType.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/variable_incomes_apis/InvestmentId.yaml
@@ -392,6 +402,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentification.yaml
+    OKResponseVariableIncomesTransactions:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactions.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:

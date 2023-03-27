@@ -215,6 +215,8 @@ paths:
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesTransactions'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -238,10 +240,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
+            - variable-incomes
   '/investments/{investmentId}/transactions-current':
     get:
       tags:
@@ -357,6 +359,23 @@ components:
         meta:
           $ref: '#/components/schemas/VariableIncomesMeta'
       additionalProperties: false
+    ResponseVariableIncomesTransactions:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseVariableIncomesTransactionsData'
+        links:
+          $ref: '#/components/schemas/VariableIncomesLinks'
+        meta:
+          $ref: '#/components/schemas/VariableIncomesMeta'
+      additionalProperties: false
     ResponseVariableIncomesProductListData:
       type: object
       description: Lista de ativos de renda variável mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
@@ -409,6 +428,105 @@ components:
           description: Código de negociação para identificação de ativos negociados em bolsa.
           maxLength: 35
           pattern: '[\w\W\s]*'
+      additionalProperties: false
+    ResponseVariableIncomesTransactionsData:
+      type: object
+      required:
+        - type
+        - transactionType
+        - transactionDate
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumVariableIncomesTransactionsType'
+        transactionType:
+          $ref: '#/components/schemas/EnumVariableIncomesTransactionsTransactionType'
+        typeAdditionalInfo:
+          type: string
+          description: |
+            Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
+
+            [Restrição] Campo a ser preenchido quando houve "OUTROS" em Motivo da movimentação.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+        transactionDate:
+          type: string
+          format: date
+          description: |
+            Data da movimentação.
+
+            [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+        priceFactor:
+          type: number
+          format: integer
+          description: |
+            Fator que indica o número de ações utilizadas para a formação.
+
+            [Restrição] Valor mínimo 1.
+          minimum: 1
+          example: 100
+        transactionUnitPrice:
+          type: object
+          description: |
+            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
+
+            [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
+            currency:
+              $ref: '#/components/schemas/ResponseVariableIncomesTransactionsData/properties/transactionValue/properties/currency'
+        transactionQuantity:
+          type: string
+          format: double
+          description: |
+            Quantidade de ativos movimentados.
+
+            [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.00000025'
+        transactionValue:
+          type: object
+          description: Valor da operação realizada pelo cliente.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              example: BRL
+        transactionId:
+          type: string
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: ABCD2126019929279212650822221989319253344
+          description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.
+        brokerNoteId:
+          type: string
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: XWYZ555019929279212650822221989319252233
+          description: Identificador da nota de negociação.
       additionalProperties: false
     VariableIncomesMeta:
       type: object
@@ -469,6 +587,29 @@ components:
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    EnumVariableIncomesTransactionsType:
+      type: string
+      description: |
+        Tipo de movimentação na visão de investimento: entrada ou saída. Nos casos de pagamento de dividendos, JCP e aluguéis, fica convencionado que será considerado que o tipo de movimento será saída.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumVariableIncomesTransactionsTransactionType:
+      type: string
+      description: |
+        O campo deve classificar a movimentação em um dos tipos descritos: compra, venda, dividendos, JCP, aluguéis, transferência de custódia, transferência de titularidade e outros. O transmissor deve classificar as movimentações disponíveis associando-a a um dos itens do Enum listado neste campo. A opção OUTROS só deve ser utilizada para os casos em que de fato a movimentação compartilhada não possa ser classificada como um dos itens deste Enum.
+      enum:
+        - COMPRA
+        - VENDA
+        - DIVIDENDOS
+        - JCP
+        - ALUGUEIS
+        - INPLIT
+        - SPLIT_TRANSFERENCIA_CUSTODIA
+        - TRANSFERENCIA_DE_TITULARIDADE
+        - OUTROS
+      example: DIVIDENDOS
   parameters:
     InvestmentId:
       name: investmentId
@@ -631,6 +772,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseVariableIncomesProductIdentification'
+    OKResponseVariableIncomesTransactions:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseVariableIncomesTransactions'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
