@@ -190,12 +190,7 @@ components:
           example:
             - Assistance additional info.
         additional:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnumAdditional'
-          example:
-            - SORTEIO
-            - OUTROS
+          $ref: '#/components/schemas/EnumAdditional'
         termsAndConditions:
           type: array
           items:
@@ -208,21 +203,15 @@ components:
         ageAdjustment:
           $ref: '#/components/schemas/AgeAdjustment'
         financialRegimeContractType:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskPensionEnumFinancialRegime'
+          $ref: '#/components/schemas/RiskPensionEnumFinancialRegime'
         reclaim:
           $ref: '#/components/schemas/RiskPensionReclaim'
         otherGuaranteedValues:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskPensionEnumOtherGuaranteedValues'
+          $ref: '#/components/schemas/RiskPensionEnumOtherGuaranteedValues'
         contributionPayment:
           $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
         indemnityPaymentMethod:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
+          $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
         minimumRequirement:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
@@ -927,9 +916,7 @@ components:
         maxValue:
           $ref: '#/components/schemas/InsurancePensionMaxValue'
         indemnifiablePeriod:
-          type: array
-          items:
-            $ref: '#/components/schemas/RiskPensionEnumIndemnifiablePeriodType'
+          $ref: '#/components/schemas/RiskPensionEnumIndemnifiablePeriodType'
         excludedRisks:
           type: array
           items:

@@ -46,10 +46,7 @@ properties:
     description: Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.
     example: [ 'Assistance additional info.' ]
   additional:
-    type: array
-    items:
-      $ref: ./RiskPensionEnumAdditional.yaml
-    example: [ SORTEIO, OUTROS ]
+    $ref: ./RiskPensionEnumAdditional.yaml
   termsAndConditions:
     type: array
     items:
@@ -62,21 +59,15 @@ properties:
   ageAdjustment:
     $ref: ../../business_commons/InsurancePensionAgeAdjustment.yaml
   financialRegimeContractType:
-    type: array
-    items:
-      $ref: ./RiskPensionEnumFinancialRegime.yaml
+    $ref: ./RiskPensionEnumFinancialRegime.yaml
   reclaim:
     $ref: ./RiskPensionReclaim.yaml
   otherGuaranteedValues:
-    type: array
-    items:
-      $ref: ./RiskPensionEnumOtherGuaranteedValues.yaml
+    $ref: ./RiskPensionEnumOtherGuaranteedValues.yaml
   contributionPayment:
     $ref: ./RiskPensionEnumContributionPayment.yaml
   indemnityPaymentMethod:
-    type: array
-    items:
-      $ref: ./RiskPensionEnumIndemnityPaymentMethod.yaml
+    $ref: ./RiskPensionEnumIndemnityPaymentMethod.yaml
   minimumRequirement:
     $ref: RiskPensionMinimumRequirement.yaml
   targetAudience:
