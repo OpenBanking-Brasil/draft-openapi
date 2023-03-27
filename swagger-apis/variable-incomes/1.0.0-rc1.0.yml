@@ -116,6 +116,8 @@ paths:
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesProductIdentification'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -178,12 +180,16 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
           $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
       security:
@@ -326,7 +332,6 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
-            - variable-incomes
 components:
   schemas:
     ResponseVariableIncomesBalances:
