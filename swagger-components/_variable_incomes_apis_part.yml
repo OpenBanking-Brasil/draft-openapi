@@ -1,0 +1,413 @@
+openapi: 3.0.0
+info:
+  title: API Variable Incomes - Open Finance Brasil
+  description: |
+   API de informações de operações de Renda Variável Open Finance Brasil – Fase 4. 
+   API que retorna informações de operações de investimento do tipo Renda Variável mantidas nas instituições transmissoras por seus clientes, incluindo dados como informações do produto, quantidade, saldos em posição do cliente, movimentações financeiras e detalhes da nota de negociação. 
+   Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. A granularidade de exposição de operações de renda variável se dá por cada ativo (ticker) da carteira do cliente. Segue abaixo tabela com o escopo de produtos a ser considerado para compartilhamento:
+    ```
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | CLASSE DE ATIVOS     | PRODUTO                       | SUBPRODUTO           | DENOMINAÇÃO                       |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | Renda Variável       | Fundos de Investimentos       |     -                | FIAGRO                            |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | Renda Variável       | Ações                         | Subscrição           | Bonus / Direito / Recibo          |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | Renda Variável       | Fundos de Investimentos       | Fundo imobiliario    | FII                               |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | Renda Variável       | Ações                         | À vista              | ON / PN / UNIT                    |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | Renda Variável       | Fundos de índices             | ETF                  | ETF de Renda Variável             |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | Renda Variável       | Fundos de índices             | ETF                  | ETF Internacional                 |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      | Renda Variável       | Fundos de índices             | ETF                  | Renda Fixa ETF Renda Fixa         |
+      |----------------------|-------------------------------|----------------------|-----------------------------------|
+      ```
+  version: 1.0.0-rc1.0
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+  contact:
+    name: Governança do Open Finance Brasil – Especificações
+    email: gt-interfaces@openbankingbr.org
+    url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
+servers:
+  - url: "https://api.banco.com.br/open-banking/variable-incomes/v1"
+    description: Servidor de Produção
+  - url: "https://apih.banco.com.br/open-banking/variable-incomes/v1"
+    description: Servidor de Homologação
+tags:
+  - name: Product List
+    description: Obtém a lista de operações de Renda Variável mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+  - name: Product Identification
+    description: Obtém os dados da operação de Renda Variável identificada por investmentId.
+  - name: Balances
+    description: Obtém a posição da operação de Renda Variável identificada por investmentId.
+  - name: Transactions
+    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Variável identificada por investmentId.
+  - name: Transactions Current
+    description: Obtém as movimentações recentes da operação de Renda Variável identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+  - name: Broker Note Details
+    description: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa.
+paths:
+  /investments:
+    get:
+      tags:
+        - Product List
+      summary: Obtém a lista de operações de Renda Variável mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      operationId: variableIncomesGetInvestments
+      description: Obtém a lista de operações de Renda Variável mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      parameters:
+         - $ref: '#/components/parameters/Authorization'
+         - $ref: '#/components/parameters/xFapiAuthDate'
+         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+         - $ref: '#/components/parameters/xFapiInteractionId'
+         - $ref: '#/components/parameters/xCustomerUserAgent'
+         - $ref: '#/components/parameters/page'
+         - $ref: '#/components/parameters/pageSize'
+         - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+  /investments/{investmentId}:
+    get:
+      tags:
+        - Product Identification
+      summary: Obtém os dados da operação de Renda Variável identificada por investmentId.
+      operationId: variableIncomesGetInvestmentsInvestmentId
+      description: Obtém os dados da operação de Renda Variável identificada por investmentId.
+      parameters:
+         - $ref: '#/components/parameters/InvestmentId'
+         - $ref: '#/components/parameters/Authorization'
+         - $ref: '#/components/parameters/xFapiAuthDate'
+         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+         - $ref: '#/components/parameters/xFapiInteractionId'
+         - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+  /investments/{investmentId}/balances:
+    get:
+      tags:
+        - Balances
+      summary: Obtém a posição da operação de Renda Variável identificada por investmentId.
+      operationId: variableIncomesGetInvestmentsInvestmentIdBalances
+      description: Obtém a posição da operação de Renda Variável identificada por investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties' 
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+  /investments/{investmentId}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Variável identificada por investmentId.
+      operationId: variableIncomesGetInvestmentsInvestmentIdTransactions
+      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Variável identificada por investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDate'
+        - $ref: '#/components/parameters/toTransactionDate'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+  /investments/{investmentId}/transactions-current:
+    get:
+      tags:
+        - Transactions Current
+      summary: Obtém as movimentações recentes da operação de Renda Variável identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      operationId: variableIncomesGetInvestmentsInvestmentIdTransactionsCurrent
+      description: Obtém as movimentações recentes da operação de Renda Variável identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDateCurrent'
+        - $ref: '#/components/parameters/toTransactionDateCurrent'
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+  /investments/{investmentId}/broker-notes/{brokerNoteId}:
+    get:
+      tags:
+        - Broker Note Details
+      summary: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
+      operationId: variableIncomesGetInvestmentsInvestmentIdBrokerNotesBrokerNodeID
+      description: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
+      responses:
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OpenId:
+            - 'openid'
+          OAuth2Security:
+            - 'consent:consentId'
+components:
+  parameters:
+    InvestmentId:
+      $ref: ./schemas/variable_incomes_apis/InvestmentId.yaml
+    Authorization:
+      $ref: ./parameters/Authorization.yaml
+    xFapiAuthDate:
+      $ref: ./schemas/variable_incomes_apis/XFapiAuthDate.yaml
+    xFapiCustomerIpAddress:
+      $ref: ./parameters/XFapiCustomerIpAddress.yaml
+    xFapiInteractionId:
+      $ref: ./schemas/variable_incomes_apis/XFapiInteractionId.yaml
+    xCustomerUserAgent:
+      $ref: ./parameters/XCustomerUserAgent.yaml
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
+    fromTransactionDate:
+      $ref: ./schemas/variable_incomes_apis/FromTransactionDate.yaml
+    toTransactionDate:
+      $ref: ./schemas/variable_incomes_apis/ToTransactionDate.yaml
+    fromTransactionDateCurrent:
+      $ref: ./schemas/variable_incomes_apis/FromTransactionDateCurrent.yaml
+    toTransactionDateCurrent:
+      $ref: ./schemas/variable_incomes_apis/ToTransactionDateCurrent.yaml
+  securitySchemes:
+    OpenId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
+    OAuth2Security:
+      type: oauth2
+      description: "Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados."
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            variable-Incomes: "Escopo necessário para acesso à API Variable-Incomes. O controle dos endpoints específicos é feito via permissions."
+  responses:
+    BadRequest:
+      $ref: ./responses/unpaged/BadRequest.yaml
+    Forbidden:
+      $ref: ./responses/unpaged/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/unpaged/GatewayTimeout.yaml
+    InternalServerError:
+      $ref: ./responses/unpaged/InternalServerError.yaml
+    MethodNotAllowed:
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+    NotAcceptable:
+      $ref: ./responses/unpaged/NotAcceptable.yaml
+    NotFound:
+      $ref: ./responses/unpaged/NotFound.yaml
+    TooManyRequests:
+      $ref: ./responses/unpaged/TooManyRequests.yaml
+    Unauthorized:
+      $ref: ./responses/unpaged/Unauthorized.yaml
+    UnprocessableEntity:
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
+    Default:
+      $ref: ./responses/unpaged/Default.yaml
+    BadRequestWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/BadRequest.yaml
+    ForbiddenWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+    GatewayTimeoutWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
+    InternalServerErrorWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
+    LockedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Locked.yaml
+    MethodNotAllowedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
+    NotAcceptableWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
+    NotFoundWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/NotFound.yaml
+    TooManyRequestsWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
+    UnauthorizedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
+    UnprocessableEntityWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
+    DefaultWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Default.yaml
+    SiteIsOverloadedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/SiteIsOverloaded.yaml
