@@ -270,6 +270,8 @@ paths:
         - $ref: '#/components/parameters/fromTransactionDateCurrent'
         - $ref: '#/components/parameters/toTransactionDateCurrent'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesTransactionsCurrent'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -284,19 +286,23 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
           $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
-            - 'openid'
-          OAuth2Security:
-            - 'consent:consentId'
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'variable-incomes'
   /investments/{investmentId}/broker-notes/{brokerNoteId}:
     get:
       tags:
@@ -334,10 +340,26 @@ paths:
           - 'consent:consentId'
 components:
   schemas:
+    ResponseVariableIncomesProductList:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductList.yaml
+    ResponseVariableIncomesProductIdentification:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentification.yaml
     ResponseVariableIncomesBalances:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesBalances.yaml
+    ResponseVariableIncomesTransactions:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactions.yaml
+    ResponseVariableIncomesTransactionsCurrent:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactionsCurrent.yaml
+    ResponseVariableIncomesProductListData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductListData.yaml
+    ResponseVariableIncomesProductIdentificationData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentificationData.yaml
     ResponseVariableIncomesBalanceData:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesBalanceData.yaml
+    ResponseVariableIncomesTransactionsData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactionsData.yaml
+    ResponseVariableIncomesTransactionsCurrentData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactionsCurrentData.yaml
     VariableIncomesBalancesBlockedBalance:
       $ref: ./schemas/variable_incomes_apis/VariableIncomesBalancesBlockedBalance.yaml
     VariableIncomesBalancesClosingPrice:
@@ -348,18 +370,6 @@ components:
       $ref: ./schemas/variable_incomes_apis/VariableIncomesBalancesLinks.yaml
     VariableIncomesBalancesMeta:
       $ref: ./schemas/variable_incomes_apis/VariableIncomesBalancesMeta.yaml
-    ResponseVariableIncomesProductList:
-      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductList.yaml
-    ResponseVariableIncomesProductIdentification:
-      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentification.yaml
-    ResponseVariableIncomesTransactions:
-      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactions.yaml
-    ResponseVariableIncomesProductListData:
-      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductListData.yaml
-    ResponseVariableIncomesProductIdentificationData:
-      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentificationData.yaml
-    ResponseVariableIncomesTransactionsData:
-      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactionsData.yaml
     VariableIncomesMeta:
       $ref: ./schemas/variable_incomes_apis/VariableIncomesMeta.yaml
     VariableIncomesLinks:
@@ -368,6 +378,10 @@ components:
       $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsType.yaml
     EnumVariableIncomesTransactionsTransactionType:
       $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsTransactionType.yaml
+    EnumVariableIncomesTransactionsCurrentType:
+      $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsCurrentType.yaml
+    EnumVariableIncomesTransactionsCurrentTransactionType:
+      $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsCurrentTransactionType.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/variable_incomes_apis/InvestmentId.yaml
@@ -433,6 +447,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactions.yaml
+    OKResponseVariableIncomesTransactionsCurrent:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactionsCurrent.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
