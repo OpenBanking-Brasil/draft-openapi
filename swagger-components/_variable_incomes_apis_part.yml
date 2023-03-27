@@ -116,37 +116,39 @@ paths:
          - $ref: '#/components/parameters/xFapiInteractionId'
          - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesProductIdentification'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/Forbidden'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowed'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/Locked'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerError'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
-        - OpenId:
-            - 'openid'
-          OAuth2Security:
-            - 'consent:consentId'
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'variable-incomes'
   /investments/{investmentId}/balances:
     get:
       tags:
@@ -327,8 +329,12 @@ components:
   schemas:
     ResponseVariableIncomesProductList:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductList.yaml
+    ResponseVariableIncomesProductIdentification:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentification.yaml
     ResponseVariableIncomesProductListData:
       $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductListData.yaml
+    ResponseVariableIncomesProductIdentificationData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentificationData.yaml
     VariableIncomesMeta:
       $ref: ./schemas/variable_incomes_apis/VariableIncomesMeta.yaml
     VariableIncomesLinks:
@@ -380,6 +386,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductList.yaml
+    OKResponseVariableIncomesProductIdentification:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesProductIdentification.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:

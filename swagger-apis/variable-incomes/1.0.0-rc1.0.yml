@@ -116,37 +116,39 @@ paths:
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesProductIdentification'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/Forbidden'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowed'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/Locked'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerError'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
+            - variable-incomes
   '/investments/{investmentId}/balances':
     get:
       tags:
@@ -341,6 +343,20 @@ components:
         meta:
           $ref: '#/components/schemas/VariableIncomesMeta'
       additionalProperties: false
+    ResponseVariableIncomesProductIdentification:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseVariableIncomesProductIdentificationData'
+        links:
+          $ref: '#/components/schemas/VariableIncomesLinks'
+        meta:
+          $ref: '#/components/schemas/VariableIncomesMeta'
+      additionalProperties: false
     ResponseVariableIncomesProductListData:
       type: object
       description: Lista de ativos de renda variável mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
@@ -367,6 +383,32 @@ components:
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: '92792126019929200000000000000000000000000'
+      additionalProperties: false
+    ResponseVariableIncomesProductIdentificationData:
+      type: object
+      required:
+        - issuerInstitutionCnpjNumber
+        - isinCode
+        - ticker
+      properties:
+        issuerInstitutionCnpjNumber:
+          type: string
+          description: CNPJ da instituição emissora.
+          maxLength: 14
+          pattern: '^\d{14}$'
+          example: '11225860000140'
+        isinCode:
+          type: string
+          description: |
+            Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional): código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166    maxLength: 12
+          maxLength: 12
+          pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
+          example: BRCST4CTF001
+        ticker:
+          type: string
+          description: Código de negociação para identificação de ativos negociados em bolsa.
+          maxLength: 35
+          pattern: '[\w\W\s]*'
       additionalProperties: false
     VariableIncomesMeta:
       type: object
@@ -583,6 +625,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseVariableIncomesProductList'
+    OKResponseVariableIncomesProductIdentification:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseVariableIncomesProductIdentification'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
