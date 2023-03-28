@@ -14,8 +14,7 @@ properties:
   typeAdditionalInfo:
     type: string
     description: |
-      Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
-
+      Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.               
       [Restrição] Campo a ser preenchido quando houve "OUTROS" em Motivo da movimentação.
     maxLength: 100
     pattern: '[\w\W\s]*'
@@ -23,8 +22,7 @@ properties:
     type: string
     format: date
     description: |
-      Data da movimentação.
-
+      Data da movimentação.              
       [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
     maxLength: 10
     minLength: 10
@@ -34,16 +32,14 @@ properties:
     type: number
     format: integer
     description: |
-      Fator que indica o número de ações utilizadas para a formação.
-
+      Fator que indica o número de ações utilizadas para a formação.               
       [Restrição] Valor mínimo 1.
     minimum: 1
     example: 100
   transactionUnitPrice:
     type: object
     description: |
-      Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
-
+      Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.             
       [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
     required:
       - amount
@@ -56,13 +52,16 @@ properties:
         pattern: '^\d{1,15}\.\d{2,4}$'
         example: '1000.0004'
       currency:
-        $ref: ../business_commons/CurrencyCode.yaml
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
   transactionQuantity:
     type: string
     format: double
     description: |
-      Quantidade de ativos movimentados.
-
+      Quantidade de ativos movimentados.              
       [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
     maxLength: 24
     pattern: '^\d{1,15}\.\d{2,8}$'
@@ -81,7 +80,11 @@ properties:
         pattern: '^\d{1,15}\.\d{2,4}$'
         example: '1000.04'
       currency:
-        $ref: ../business_commons/CurrencyCode.yaml
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
   transactionId:
     type: string
     maxLength: 100

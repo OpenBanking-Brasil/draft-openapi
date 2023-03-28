@@ -97,10 +97,11 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
-          - 'openid'
-          - 'consent:consentId'
-          - 'variable-incomes'
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'accounts' 
   /investments/{investmentId}:
     get:
       tags:
@@ -145,10 +146,11 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
-          - 'openid'
-          - 'consent:consentId'
-          - 'variable-incomes'
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'accounts' 
   /investments/{investmentId}/balances:
     get:
       tags:
@@ -194,9 +196,10 @@ paths:
           $ref: '#/components/responses/Default'
       security:
         - OpenId:
-          - 'openid'
+            - 'openid'     
           OAuth2Security:
-          - 'consent:consentId'
+            - 'consent:consentId'
+            - 'accounts' 
   /investments/{investmentId}/transactions:
     get:
       tags:
@@ -246,10 +249,11 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
-          - 'openid'
-          - 'consent:consentId'
-          - 'variable-incomes'
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'accounts' 
   /investments/{investmentId}/transactions-current:
     get:
       tags:
@@ -299,18 +303,29 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
-          - 'openid'
-          - 'consent:consentId'
-          - 'variable-incomes'
-  /investments/{investmentId}/broker-notes/{brokerNoteId}:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'accounts' 
+  /investments/{investmentId}/broker-notes{brokerNoteId}:
     get:
       tags:
         - Broker Note Details
       summary: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
       operationId: variableIncomesGetInvestmentsInvestmentIdBrokerNotesBrokerNodeID
       description: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/BrokerNoteId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/ResponseVariableIncomesBroker'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -325,19 +340,24 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
           $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         'default':
           $ref: '#/components/responses/Default'
       security:
         - OpenId:
-          - 'openid'
+            - 'openid'     
           OAuth2Security:
-          - 'consent:consentId'
+            - 'consent:consentId'
+            - 'accounts'  
 components:
   schemas:
     ResponseVariableIncomesProductList:
@@ -382,6 +402,10 @@ components:
       $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsCurrentType.yaml
     EnumVariableIncomesTransactionsCurrentTransactionType:
       $ref: ./schemas/variable_incomes_apis/EnumVariableIncomesTransactionsCurrentTransactionType.yaml
+    ResponseVariableIncomesBroker:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesBroker.yaml
+    ResponseVariableIncomesBrokerData:
+      $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesBrokerData.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/variable_incomes_apis/InvestmentId.yaml
@@ -409,6 +433,8 @@ components:
       $ref: ./schemas/variable_incomes_apis/FromTransactionDateCurrent.yaml
     toTransactionDateCurrent:
       $ref: ./schemas/variable_incomes_apis/ToTransactionDateCurrent.yaml
+    BrokerNoteId:
+      $ref: ./schemas/variable_incomes_apis/BrokerNoteId.yaml
   securitySchemes:
     OpenId:
       type: openIdConnect
@@ -453,6 +479,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesTransactionsCurrent.yaml
+    ResponseVariableIncomesBroker:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/variable_incomes_apis/ResponseVariableIncomesBroker.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
