@@ -20,12 +20,14 @@ APIS=(
  # "financings"
  # "insurances"
  # "investments"
- # "invoice_financings"
- # "loans"
-   "payments"
- # "pension"
- # "resources"
- # "unarranged_accounts_overdraft"
+  #"invoice_financings"
+  #"loans"
+  #"payments"
+  #"pension"
+  #"resources"
+  #"unarranged_accounts_overdraft"
+  "credit_fixed_incomes"
+ # "bank_fixed_incomes"
 )
 
 function genSwaggerFiles(){
