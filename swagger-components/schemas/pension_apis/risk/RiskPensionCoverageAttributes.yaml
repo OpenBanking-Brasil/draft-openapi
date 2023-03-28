@@ -6,6 +6,7 @@ required:
   - indemnifiableDeadline
   - excludedRisks
   - excludedRisksURL
+  - profitModality
 properties:
   minValue:
     $ref: ../../business_commons/InsurancePensionMinValue.yaml
@@ -25,4 +26,6 @@ properties:
     maxLength: 1024
     description: Campo aberto (possibilidade de incluir URL).
     example: 'https://openinsurance.com.br/aaa'
+  profitModality:
+    $ref: ./RiskPensionEnumProfitModality.yaml
 additionalProperties: false
