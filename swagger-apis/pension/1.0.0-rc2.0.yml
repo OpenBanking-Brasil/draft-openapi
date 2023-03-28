@@ -908,6 +908,7 @@ components:
       required:
         - minValue
         - maxValue
+        - indemnifiableDeadline
         - excludedRisks
         - excludedRisksURL
       properties:
@@ -917,6 +918,9 @@ components:
           $ref: '#/components/schemas/InsurancePensionMaxValue'
         indemnifiablePeriod:
           $ref: '#/components/schemas/RiskPensionEnumIndemnifiablePeriodType'
+        indemnifiableDeadline:
+          type: integer
+          description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
         excludedRisks:
           type: array
           items:
