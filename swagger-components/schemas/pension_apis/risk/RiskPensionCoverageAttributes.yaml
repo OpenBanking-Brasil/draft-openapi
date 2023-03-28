@@ -3,6 +3,7 @@ description: Atributos da cobertura
 required:
   - minValue
   - maxValue
+  - indemnifiableDeadline
   - excludedRisks
   - excludedRisksURL
 properties:
@@ -12,6 +13,9 @@ properties:
     $ref: ../../business_commons/InsurancePensionMaxValue.yaml
   indemnifiablePeriod:
     $ref: ./RiskPensionEnumIndemnifiablePeriodType.yaml
+  indemnifiableDeadline:
+    type: integer
+    description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
   excludedRisks:
     type: array
     items:
