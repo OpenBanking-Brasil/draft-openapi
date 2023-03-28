@@ -911,6 +911,7 @@ components:
         - indemnifiableDeadline
         - excludedRisks
         - excludedRisksURL
+        - profitModality
       properties:
         minValue:
           $ref: '#/components/schemas/InsurancePensionMinValue'
@@ -930,6 +931,8 @@ components:
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL).
           example: 'https://openinsurance.com.br/aaa'
+        profitModality:
+          $ref: '#/components/schemas/RiskPensionEnumProfitModality'
       additionalProperties: false
     GracePeriod:
       type: object
@@ -1340,6 +1343,14 @@ components:
         - BENEFICIO_PROLONGADO
         - NAO_APLICA
       example: SALDAMENTO
+    RiskPensionEnumProfitModality:
+      type: string
+      description: |
+        Modalidade de pagamento da indenização.
+      enum:
+        - PAGAMENTO_UNICO
+        - FORMA_RENDA
+      example: PAGAMENTO_UNICO
   parameters:
     page:
       name: page
