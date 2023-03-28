@@ -97,10 +97,11 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OpenId:
             - openid
+          OAuth2Security:
             - 'consent:consentId'
-            - variable-incomes
+            - accounts
   '/investments/{investmentId}':
     get:
       tags:
@@ -145,10 +146,11 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OpenId:
             - openid
+          OAuth2Security:
             - 'consent:consentId'
-            - variable-incomes
+            - accounts
   '/investments/{investmentId}/balances':
     get:
       tags:
@@ -164,37 +166,40 @@ paths:
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/ResponseVariableIncomesBalances'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/Forbidden'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowed'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/Locked'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerError'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
           OAuth2Security:
             - 'consent:consentId'
+            - accounts
   '/investments/{investmentId}/transactions':
     get:
       tags:
@@ -215,6 +220,8 @@ paths:
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesTransactions'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -229,12 +236,16 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
           $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
       security:
@@ -242,6 +253,7 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
+            - accounts
   '/investments/{investmentId}/transactions-current':
     get:
       tags:
@@ -262,6 +274,8 @@ paths:
         - $ref: '#/components/parameters/fromTransactionDateCurrent'
         - $ref: '#/components/parameters/toTransactionDateCurrent'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseVariableIncomesTransactionsCurrent'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -276,12 +290,16 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
           $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
       security:
@@ -289,14 +307,25 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
-  '/investments/{investmentId}/broker-notes/{brokerNoteId}':
+            - accounts
+  '/investments/{investmentId}/broker-notes{brokerNoteId}':
     get:
       tags:
         - Broker Note Details
       summary: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
       operationId: variableIncomesGetInvestmentsInvestmentIdBrokerNotesBrokerNodeID
       description: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/BrokerNoteId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/ResponseVariableIncomesBroker'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -311,12 +340,16 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
           $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
       security:
@@ -324,6 +357,7 @@ paths:
             - openid
           OAuth2Security:
             - 'consent:consentId'
+            - accounts
 components:
   schemas:
     ResponseVariableIncomesProductList:
@@ -352,6 +386,56 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/ResponseVariableIncomesProductIdentificationData'
+        links:
+          $ref: '#/components/schemas/VariableIncomesLinks'
+        meta:
+          $ref: '#/components/schemas/VariableIncomesMeta'
+      additionalProperties: false
+    ResponseVariableIncomesBalances:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseVariableIncomesBalanceData'
+        links:
+          $ref: '#/components/schemas/VariableIncomesBalancesLinks'
+        meta:
+          $ref: '#/components/schemas/VariableIncomesBalancesMeta'
+      additionalProperties: false
+    ResponseVariableIncomesTransactions:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseVariableIncomesTransactionsData'
+        links:
+          $ref: '#/components/schemas/VariableIncomesLinks'
+        meta:
+          $ref: '#/components/schemas/VariableIncomesMeta'
+      additionalProperties: false
+    ResponseVariableIncomesTransactionsCurrent:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/ResponseVariableIncomesTransactionsCurrentData'
         links:
           $ref: '#/components/schemas/VariableIncomesLinks'
         meta:
@@ -410,6 +494,358 @@ components:
           maxLength: 35
           pattern: '[\w\W\s]*'
       additionalProperties: false
+    ResponseVariableIncomesBalanceData:
+      type: object
+      description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+      required:
+        - referenceDate
+        - priceFactor
+        - grossAmount
+        - blockedBalance
+        - quantity
+        - closingPrice
+      properties:
+        referenceDate:
+          type: string
+          format: date
+          description: Posição fechada para o ativo da data do dia anterior.
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+          maxLength: 10
+        priceFactor:
+          type: integer
+          format: integer
+          description: Fator que indica o número de ações utilizadas para a formação do preço.
+          example: 100
+        grossAmount:
+          $ref: '#/components/schemas/VariableIncomesBalancesGrossAmount'
+        blockedBalance:
+          $ref: '#/components/schemas/VariableIncomesBalancesBlockedBalance'
+        quantity:
+          type: string
+          description: Quatidade total do ativo na data de referência.
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 15
+          example: '1000.000004'
+        closingPrice:
+          $ref: '#/components/schemas/VariableIncomesBalancesClosingPrice'
+    ResponseVariableIncomesTransactionsData:
+      type: object
+      required:
+        - type
+        - transactionType
+        - transactionDate
+        - transactionValue
+        - transactionId
+        - brokerNoteId
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumVariableIncomesTransactionsType'
+        transactionType:
+          $ref: '#/components/schemas/EnumVariableIncomesTransactionsTransactionType'
+        typeAdditionalInfo:
+          type: string
+          description: |
+            Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.            
+            [Restrição] Campo a ser preenchido quando houve "OUTROS" em Motivo da movimentação.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+        transactionDate:
+          type: string
+          format: date
+          description: |
+            Data da movimentação.         
+            [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+        priceFactor:
+          type: number
+          format: integer
+          description: |
+            Fator que indica o número de ações utilizadas para a formação.       
+            [Restrição] Valor mínimo 1.
+          minimum: 1
+          example: 100
+        transactionUnitPrice:
+          type: object
+          description: |
+            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.       
+            [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionQuantity:
+          type: string
+          format: double
+          description: |
+            Quantidade de ativos movimentados.          
+            [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.00000025'
+        transactionValue:
+          type: object
+          description: Valor da operação realizada pelo cliente.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionId:
+          type: string
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: ABCD2126019929279212650822221989319253344
+          description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.
+        brokerNoteId:
+          type: string
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: XWYZ555019929279212650822221989319252233
+          description: Identificador da nota de negociação.
+      additionalProperties: false
+    ResponseVariableIncomesTransactionsCurrentData:
+      type: object
+      required:
+        - type
+        - transactionType
+        - transactionDate
+        - transactionValue
+        - transactionId
+        - brokerNoteId
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumVariableIncomesTransactionsCurrentType'
+        transactionType:
+          $ref: '#/components/schemas/EnumVariableIncomesTransactionsCurrentTransactionType'
+        typeAdditionalInfo:
+          type: string
+          description: |
+            Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.               
+            [Restrição] Campo a ser preenchido quando houve "OUTROS" em Motivo da movimentação.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+        transactionDate:
+          type: string
+          format: date
+          description: |
+            Data da movimentação.              
+            [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
+          maxLength: 10
+          minLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2018-02-15'
+        priceFactor:
+          type: number
+          format: integer
+          description: |
+            Fator que indica o número de ações utilizadas para a formação.               
+            [Restrição] Valor mínimo 1.
+          minimum: 1
+          example: 100
+        transactionUnitPrice:
+          type: object
+          description: |
+            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.             
+            [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.0004'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionQuantity:
+          type: string
+          format: double
+          description: |
+            Quantidade de ativos movimentados.              
+            [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
+          maxLength: 24
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          example: '42.00000025'
+        transactionValue:
+          type: object
+          description: Valor da operação realizada pelo cliente.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              maxLength: 20
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        transactionId:
+          type: string
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: ABCD2126019929279212650822221989319253344
+          description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.
+        brokerNoteId:
+          type: string
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: XWYZ555019929279212650822221989319252233
+          description: Identificador da nota de negociação.
+      additionalProperties: false
+    VariableIncomesBalancesBlockedBalance:
+      type: object
+      description: 'Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    VariableIncomesBalancesClosingPrice:
+      type: object
+      description: Preço de fechamento da data de referência.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,6}$'
+          maxLength: 23
+          example: '1000.00000004'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    VariableIncomesBalancesGrossAmount:
+      type: object
+      description: 'Valor do investimento anterior à dedução de impostos, taxas e tarifas (se houver), atualizado na data de referência.'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    VariableIncomesBalancesLinks:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI completo que gerou a resposta atual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        first:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        prev:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+        next:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    VariableIncomesBalancesMeta:
+      type: object
+      description: Meta informações referente a API requisitada.
+      required:
+        - totalRecords
+        - totalPages
+        - requestDateTime
+      properties:
+        totalRecords:
+          type: integer
+          format: int32
+          description: Número total de registros no resultado
+          example: 1
+        totalPages:
+          type: integer
+          format: int32
+          description: Número total de páginas no resultado
+          example: 1
+        requestDateTime:
+          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
     VariableIncomesMeta:
       type: object
       description: Meta informações referente a API requisitada.
@@ -469,6 +905,280 @@ components:
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    EnumVariableIncomesTransactionsType:
+      type: string
+      description: |
+        Tipo de movimentação na visão de investimento: entrada ou saída. Nos casos de pagamento de dividendos, JCP e aluguéis, fica convencionado que será considerado que o tipo de movimento será saída.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumVariableIncomesTransactionsTransactionType:
+      type: string
+      description: |
+        O campo deve classificar a movimentação em um dos tipos descritos: compra, venda, dividendos, JCP, aluguéis, transferência de custódia, transferência de titularidade e outros. O transmissor deve classificar as movimentações disponíveis associando-a a um dos itens do Enum listado neste campo. A opção OUTROS só deve ser utilizada para os casos em que de fato a movimentação compartilhada não possa ser classificada como um dos itens deste Enum.
+      enum:
+        - COMPRA
+        - VENDA
+        - DIVIDENDOS
+        - JCP
+        - ALUGUEIS
+        - INPLIT
+        - SPLIT_TRANSFERENCIA_CUSTODIA
+        - TRANSFERENCIA_DE_TITULARIDADE
+        - OUTROS
+      example: DIVIDENDOS
+    EnumVariableIncomesTransactionsCurrentType:
+      type: string
+      description: |
+        Tipo de movimentação na visão de investimento: entrada ou saída. Nos casos de pagamento de dividendos, JCP e aluguéis, fica convencionado que será considerado que o tipo de movimento será saída.
+      enum:
+        - ENTRADA
+        - SAIDA
+      example: ENTRADA
+    EnumVariableIncomesTransactionsCurrentTransactionType:
+      type: string
+      description: |
+        O campo deve classificar a movimentação em um dos tipos descritos: compra, venda, dividendos, JCP, aluguéis, transferência de custódia, transferência de titularidade e outros. O transmissor deve classificar as movimentações disponíveis associando-a a um dos itens do Enum listado neste campo. A opção OUTROS só deve ser utilizada para os casos em que de fato a movimentação compartilhada não possa ser classificada como um dos itens deste Enum.
+      enum:
+        - COMPRA
+        - VENDA
+        - DIVIDENDOS
+        - JCP
+        - ALUGUEIS
+        - INPLIT
+        - SPLIT_TRANSFERENCIA_CUSTODIA
+        - TRANSFERENCIA_DE_TITULARIDADE
+        - OUTROS
+      example: DIVIDENDOS
+    ResponseVariableIncomesBroker:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseVariableIncomesBrokerData'
+        links:
+          $ref: '#/components/schemas/VariableIncomesLinks'
+        meta:
+          $ref: '#/components/schemas/VariableIncomesMeta'
+      additionalProperties: false
+    ResponseVariableIncomesBrokerData:
+      type: object
+      required:
+        - brokerNoteNumber
+        - grossValue
+        - brokerageFee
+        - clearingSettlementFee
+        - clearingRegistrationFee
+        - stockExchangeAssetTradeNoticeFee
+        - stockExchangeFee
+        - clearingCustodyFee
+        - taxes
+        - incomeTax
+        - netValue
+      properties:
+        brokerNoteNumber:
+          type: string
+          description: Identificador da nota de negociação.
+          maxLength: 16
+          pattern: '^\d{1,16}$'
+          example: XPTO1234
+        grossValue:
+          type: object
+          description: o valor da nota de negociação é o somatório das operações realizadas. Total de compra e venda do dia.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '5000,0024'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        brokerageFee:
+          type: object
+          description: |
+            a taxa de corretagem incide sobre o valor bruto da nota de negociação, e é livremente pactuada entre o investidor e o seu intermediário. 
+            Pode ser cobrada como um valor fixo por operação, ou um como um percentual sobre o valor negociado, ou ainda de forma mista, conforme guia CVM do investidor.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        clearingSettlementFee:
+          type: object
+          description: Valor cobrado para liquidação na custódia.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        clearingRegistrationFee:
+          type: object
+          description: Valor cobrado para registro na custódia.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        stockExchangeAssetTradeNoticeFee:
+          type: object
+          description: Valor cobrada pela bolsa pelo aviso de negociação de ativo.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        stockExchangeFee:
+          type: object
+          description: Valor cobrado pela bolsa para remunerar os serviços de registro prestados.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        clearingCustodyFee:
+          type: object
+          description: Taxa cobrada pelas IF para custódia.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        taxes:
+          type: object
+          description: 'Impostos cobrados na operação, exceto imposto de renda.'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        incomeTax:
+          type: object
+          description: Imposto de renda retido na fonte.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '13,8751'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        netValue:
+          type: object
+          description: 'Valor bruto da nota de negociação após despesas com taxa de corretagem, taxa de liquidação, taxa de registro, taxa A.N.A, emolumentos, taxa de custódia, impostos e IRRF.'
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              description: Valor relacionado ao objeto.
+              pattern: '^-?\d{1,15}\.\d{2,4}$'
+              maxLength: 21
+              example: '4889,0012'
+            currency:
+              type: string
+              description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+      additionalProperties: false
   parameters:
     InvestmentId:
       name: investmentId
@@ -605,6 +1315,16 @@ components:
         maxLength: 10
         format: date
         example: '2023-02-01'
+    BrokerNoteId:
+      name: brokerNoteId
+      in: path
+      description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        maxLength: 100
+        example: '92792126019929200000000000000000000000000'
   securitySchemes:
     OpenId:
       type: openIdConnect
@@ -619,6 +1339,12 @@ components:
           scopes:
             variable-Incomes: Escopo necessário para acesso à API Variable-Incomes. O controle dos endpoints específicos é feito via permissions.
   responses:
+    ResponseVariableIncomesBalances:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseVariableIncomesBalances'
     OKResponseVariableIncomesProductList:
       description: Dados de fundos de investimentos obtidos com sucesso.
       content:
@@ -631,6 +1357,24 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseVariableIncomesProductIdentification'
+    OKResponseVariableIncomesTransactions:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseVariableIncomesTransactions'
+    OKResponseVariableIncomesTransactionsCurrent:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseVariableIncomesTransactionsCurrent'
+    ResponseVariableIncomesBroker:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseVariableIncomesBroker'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
