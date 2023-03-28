@@ -97,11 +97,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
-            - accounts
+            - variable-incomes
   '/investments/{investmentId}':
     get:
       tags:
@@ -146,11 +145,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
-            - accounts
+            - variable-incomes
   '/investments/{investmentId}/balances':
     get:
       tags:
@@ -195,11 +193,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
-            - accounts
+            - variable-incomes
   '/investments/{investmentId}/transactions':
     get:
       tags:
@@ -249,11 +246,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
-            - accounts
+            - variable-incomes
   '/investments/{investmentId}/transactions-current':
     get:
       tags:
@@ -303,11 +299,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
-            - accounts
+            - variable-incomes
   '/investments/{investmentId}/broker-notes{brokerNoteId}':
     get:
       tags:
@@ -353,11 +348,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
-            - accounts
+            - variable-incomes
 components:
   schemas:
     ResponseVariableIncomesProductList:
