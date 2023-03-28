@@ -3,17 +3,20 @@ description: Atributos da cobertura
 required:
   - minValue
   - maxValue
+  - indemnifiableDeadline
   - excludedRisks
   - excludedRisksURL
+  - profitModality
 properties:
   minValue:
     $ref: ../../business_commons/InsurancePensionMinValue.yaml
   maxValue:
     $ref: ../../business_commons/InsurancePensionMaxValue.yaml
-  indemnifiablePeriods:
-    type: array
-    items:
-      $ref: ../../business_commons/InsurancePensionEnumIndemnifiablePeriodType.yaml
+  indemnifiablePeriod:
+    $ref: ./RiskPensionEnumIndemnifiablePeriodType.yaml
+  indemnifiableDeadline:
+    type: integer
+    description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
   excludedRisks:
     type: array
     items:
@@ -23,4 +26,6 @@ properties:
     maxLength: 1024
     description: Campo aberto (possibilidade de incluir URL).
     example: 'https://openinsurance.com.br/aaa'
+  profitModality:
+    $ref: ./RiskPensionEnumProfitModality.yaml
 additionalProperties: false
