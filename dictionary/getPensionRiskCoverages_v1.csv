@@ -57,6 +57,11 @@ Se for pagamento único, esse campo não se aplica (retorna vazio).
 ";Texto;;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
 FIM_CICLO_DETERMINADO";0;1;"";Não permitido;string;QUANTIDADE_DETERMINADA_PARCELAS;
 /data/coverages/attributes/indemnifiableDeadline;indemnifiableDeadline;Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
+/data/coverages/attributes/gracePeriod;gracePeriod;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;90;
+/data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Obrigatório;;"DIAS 
+MESES 
+NAO_APLICA";1;1;"";Não permitido;string;MESES;
 /data/coverages/attributes/excludedRisks;excludedRisks;;Lista;40;Obrigatório;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
 OPERACOES_GUERRA 
