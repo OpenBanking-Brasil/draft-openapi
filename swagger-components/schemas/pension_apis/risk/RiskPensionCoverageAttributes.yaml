@@ -4,6 +4,7 @@ required:
   - minValue
   - maxValue
   - indemnifiableDeadline
+  - indemnityPaymentMethod
   - excludedRisks
   - excludedRisksURL
   - profitModality
@@ -17,6 +18,8 @@ properties:
   indemnifiableDeadline:
     type: integer
     description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
+  indemnityPaymentMethod:
+    $ref: ./RiskPensionEnumIndemnityPaymentMethod.yaml
   gracePeriod:
     $ref: ../../business_commons/GracePeriod.yaml
   excludedRisks:

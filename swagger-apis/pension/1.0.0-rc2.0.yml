@@ -104,7 +104,6 @@ components:
         - premiumUpdateIndex
         - otherGuaranteedValues
         - contributionPayment
-        - indemnityPaymentMethod
         - minimumRequirement
         - targetAudience
       properties:
@@ -210,8 +209,6 @@ components:
           $ref: '#/components/schemas/RiskPensionEnumOtherGuaranteedValues'
         contributionPayment:
           $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
-        indemnityPaymentMethod:
-          $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
         minimumRequirement:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
@@ -937,6 +934,7 @@ components:
         - minValue
         - maxValue
         - indemnifiableDeadline
+        - indemnityPaymentMethod
         - excludedRisks
         - excludedRisksURL
         - profitModality
@@ -950,6 +948,8 @@ components:
         indemnifiableDeadline:
           type: integer
           description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
+        indemnityPaymentMethod:
+          $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
         gracePeriod:
           $ref: '#/components/schemas/GracePeriod'
         excludedRisks:
