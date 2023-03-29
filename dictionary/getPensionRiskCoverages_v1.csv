@@ -50,8 +50,13 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
 /data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;;Lista;31;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
-FIM_CICLO_DETERMINADO";0;N;"";Não permitido;array;QUANTIDADE_DETERMINADA_PARCELAS;
+/data/coverages/attributes/indemnifiablePeriod;indemnifiablePeriod;"Listagem do pagamento para cada benefício:
+  1. Quantidade determinada de parcelas;
+  2. Até o fim de ciclo determinado.
+Se for pagamento único, esse campo não se aplica (retorna vazio).
+";Texto;;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
+FIM_CICLO_DETERMINADO";0;1;"";Não permitido;string;QUANTIDADE_DETERMINADA_PARCELAS;
+/data/coverages/attributes/indemnifiableDeadline;indemnifiableDeadline;Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/coverages/attributes/excludedRisks;excludedRisks;;Lista;40;Obrigatório;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
 OPERACOES_GUERRA 
@@ -63,6 +68,9 @@ SUICIDIO
 ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR 
 OUTROS";1;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
 /data/coverages/attributes/excludedRisksURL;excludedRisksURL;Campo aberto (possibilidade de incluir URL).;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
+/data/coverages/attributes/profitModality;profitModality;"Modalidade de pagamento da indenização.
+";Texto;;Obrigatório;;"PAGAMENTO_UNICO 
+FORMA_RENDA";1;1;"";Não permitido;string;PAGAMENTO_UNICO;
 /data/assistanceTypes;assistanceTypes;;Lista;43;Opcional;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
 ARQUITETO_VIRTUAL 
 ASSESSORIA_FINANCEIRA 
@@ -120,11 +128,11 @@ VIAGEM
 VITIMA 
 OUTROS";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 /data/assistanceTypesAdditionalInfos;assistanceTypesAdditionalInfos;Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.;Lista;;Opcional;;;0;N;"";Não permitido;array;;
-/data/additionals;additionals;;Lista;44;Opcional;;"SORTEIO 
+/data/additional;additional;;Texto;;Opcional;;"SORTEIO 
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
 SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO 
 OUTROS 
-NAO_HA";0;N;"";Não permitido;array;SORTEIO;
+NAO_HA";0;1;"";Não permitido;string;SORTEIO;
 /data/termsAndConditions;termsAndConditions;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2}$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
@@ -142,9 +150,13 @@ CADA_PERIODO_ANOS
 MUDANCA_FAIXA_ETARIA 
 NAO_APLICAVEL";1;N;"";Não permitido;array;APOS_PERIODO_ANOS;
 /data/ageAdjustment/frequency;frequency;Período em anos, caso critério de reenquadramento após ou a cada período em anos.;Inteiro;3;Obrigatório;;;1;1;"";Não permitido;integer;10;
-/data/financialRegimeContractTypes;financialRegimeContractTypes;;Lista;19;Opcional;;"REPARTICAO_SIMPLES 
+/data/financialRegimeContractType;financialRegimeContractType;"Listagem de regime financeiro para cada combinação de modalidade/cobertura do produto indicando:
+  1. Repartição simples
+  2. Repartição Capitais Cobertura
+  3. Capitalização
+";Texto;;Opcional;;"REPARTICAO_SIMPLES 
 REPARTICAO_CAPITAIS 
-CAPITALIZACAO";0;N;"";Não permitido;array;REPARTICAO_SIMPLES;
+CAPITALIZACAO";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
 /data/reclaim;reclaim;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/reclaim/table;table;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/reclaim/table/initialMonthRange;initialMonthRange;;Inteiro;2;Obrigatório;;;1;1;"";Não permitido;integer;1;
@@ -159,9 +171,12 @@ NAO_APLICA";1;1;"";Não permitido;string;MESES;
 Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL
 Exemplo: Cobertura X: a partir de 25 meses = 100%
 ";
-/data/otherGuaranteedValues;otherGuaranteedValues;;Lista;20;Obrigatório;;"SALDAMENTO 
+/data/otherGuaranteedValues;otherGuaranteedValues;"1. Saldamento
+2. Benefício Prolongado
+3. Não se aplica
+";Texto;;Obrigatório;;"SALDAMENTO 
 BENEFICIO_PROLONGADO 
-NAO_APLICA";1;N;"";Não permitido;array;SALDAMENTO;
+NAO_APLICA";1;1;"";Não permitido;string;SALDAMENTO;
 /data/contributionPayment;contributionPayment;Pagamento da contribuição.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/contributionPayment/contributionPaymentMethod;contributionPaymentMethod;"Método utilizado para o pagamento da contribuição.
  - CARTAO_CREDITO
@@ -207,8 +222,11 @@ OUTROS";1;1;"";Não permitido;string;MENSAL;
 [Restrição] Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
 ";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
 ";Não permitido;string;Informações adicionais;
-/data/indemnityPaymentMethods;indemnityPaymentMethods;;Lista;18;Obrigatório;;"UNICO 
-SOB_FORMA_RENDA";1;N;"";Não permitido;array;UNICO;
+/data/indemnityPaymentMethod;indemnityPaymentMethod;"Modalidade de pagamento da indenização, a considerar os domínios abaixo:
+  1. Único
+  2. Sob a forma de renda
+";Texto;;Obrigatório;;"UNICO 
+SOB_FORMA_RENDA";1;1;"";Não permitido;string;UNICO;
 /data/minimumRequirement;minimumRequirement;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/minimumRequirement/contractType;contractType;"O tipo de serviço contratado. A considerar os domínios abaixo&#58;<br><ol><li>Coletivo Averbado</li><li>Coletivo Instituído</li><li>Individual</li></ol>";Texto;;Obrigatório;;"COLETIVO_AVERBADO 
 COLETIVO_INSTITUIDO 

@@ -10,7 +10,7 @@ required:
   - premiumUpdateIndex
   - otherGuaranteedValues
   - contributionPayment
-  - indemnityPaymentMethods
+  - indemnityPaymentMethod
   - minimumRequirement
   - targetAudience
 properties:
@@ -45,11 +45,8 @@ properties:
       type: string
     description: Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.
     example: [ 'Assistance additional info.' ]
-  additionals:
-    type: array
-    items:
-      $ref: ../../business_commons/EnumAdditional.yaml
-    example: [ SORTEIO, OUTROS ]
+  additional:
+    $ref: ./RiskPensionEnumAdditional.yaml
   termsAndConditions:
     type: array
     items:
@@ -61,22 +58,16 @@ properties:
     $ref: ./RiskPensionEnumPremiumUpdateIndex.yaml
   ageAdjustment:
     $ref: ../../business_commons/InsurancePensionAgeAdjustment.yaml
-  financialRegimeContractTypes:
-    type: array
-    items:
-      $ref: ../../business_commons/InsurancePensionEnumFinancialRegime.yaml
+  financialRegimeContractType:
+    $ref: ./RiskPensionEnumFinancialRegime.yaml
   reclaim:
     $ref: ./RiskPensionReclaim.yaml
   otherGuaranteedValues:
-    type: array
-    items:
-      $ref: ../../enum/EnumPersonalInsuranceOtherGuaranteedValues.yaml
+    $ref: ./RiskPensionEnumOtherGuaranteedValues.yaml
   contributionPayment:
     $ref: ./RiskPensionEnumContributionPayment.yaml
-  indemnityPaymentMethods:
-    type: array
-    items:
-      $ref: ../../enum/EnumPersonalInsuranceIndemnityPaymentMethod.yaml
+  indemnityPaymentMethod:
+    $ref: ./RiskPensionEnumIndemnityPaymentMethod.yaml
   minimumRequirement:
     $ref: RiskPensionMinimumRequirement.yaml
   targetAudience:
