@@ -215,7 +215,19 @@ components:
         minimumRequirement:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
-          $ref: '#/components/schemas/EnumTargetAudience'
+          type: string
+          description: |
+            A considerar os domínios abaixo:
+
+              1. Pessoa Natural
+              2. Pessoa Jurídica
+              3. Ambas (Pessoa Natural e Jurídica)
+          maxLength: 23
+          enum:
+            - PESSOA_NATURAL
+            - PESSOA_JURIDICA
+            - PESSOA_NATURAL_JURIDICA
+          example: PESSOA_NATURAL
       additionalProperties: false
     OKResponseSurvivalCoveragePension:
       type: object
@@ -303,7 +315,7 @@ components:
         minimumRequirement:
           $ref: '#/components/schemas/SurvivalPensionMinimumRequirements'
         targetAudience:
-          $ref: '#/components/schemas/EnumTargetAudience'
+          $ref: '#/components/schemas/SurvivalPensionEnumTargetAudience'
       additionalProperties: false
     SurvivalPensionInvestmentFund:
       type: object
@@ -851,19 +863,17 @@ components:
         - QUANTIDADE_DETERMINADA_PARCELAS
         - FIM_CICLO_DETERMINADO
       example: QUANTIDADE_DETERMINADA_PARCELAS
-    EnumTargetAudience:
+    SurvivalPensionEnumTargetAudience:
       type: string
       description: |
         A considerar os domínios abaixo:
 
           1. Pessoa Natural
           2. Pessoa Jurídica
-          3. Ambas (Pessoa Natural e Jurídica)
       maxLength: 23
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
-        - PESSOA_NATURAL_JURIDICA
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
@@ -951,7 +961,7 @@ components:
         profitModality:
           $ref: '#/components/schemas/RiskPensionEnumProfitModality'
       additionalProperties: false
-    GracePeriod:
+    RiskPensionGracePeriod:
       type: object
       required:
         - amount
@@ -964,7 +974,7 @@ components:
           example: 90
           maximum: 9999999999
         unit:
-          $ref: '#/components/schemas/EnumGracePeriodUnit'
+          $ref: '#/components/schemas/RiskPensionEnumGracePeriodUnit'
       additionalProperties: false
     TermsAndConditions:
       type: object
@@ -1010,7 +1020,7 @@ components:
             $ref: '#/components/schemas/RiskPensionReclaimTableItem'
           minItems: 1
         gracePeriod:
-          $ref: '#/components/schemas/GracePeriod'
+          $ref: '#/components/schemas/RiskPensionGracePeriod'
         differenciatedPercentage:
           description: Campo aberto (possibilidade de incluir URL)
           example: |
@@ -1243,10 +1253,13 @@ components:
         - OUTROS
         - NAO_HA
       example: SORTEIO
-    EnumGracePeriodUnit:
+    RiskPensionEnumGracePeriodUnit:
       type: string
-      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>
-      maxLength: 10
+      description: |
+        Informar o critério de carência para resgate:
+        1. Dias;
+        2. Meses;
+        3. Não se aplica.
       enum:
         - DIAS
         - MESES
