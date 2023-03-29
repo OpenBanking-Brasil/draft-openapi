@@ -1,5 +1,10 @@
 type: object
 description: Fundos de Investimento (por fundo).
+required:
+  - cnpjNumber
+  - name
+  - maximumAdministrationFee
+  - typePerformanceFee
 properties:
   cnpjNumber:
     $ref: ../../business_commons/CnpjNumber.yaml
