@@ -922,6 +922,8 @@ components:
         indemnifiableDeadline:
           type: integer
           description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
+        gracePeriod:
+          $ref: '#/components/schemas/GracePeriod'
         excludedRisks:
           type: array
           items:
@@ -933,6 +935,21 @@ components:
           example: 'https://openinsurance.com.br/aaa'
         profitModality:
           $ref: '#/components/schemas/RiskPensionEnumProfitModality'
+      additionalProperties: false
+    GracePeriod:
+      type: object
+      required:
+        - amount
+        - unit
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Informar o prazo de carência
+          example: 90
+          maximum: 9999999999
+        unit:
+          $ref: '#/components/schemas/EnumGracePeriodUnit'
       additionalProperties: false
     RiskPensionGracePeriod:
       type: object
@@ -1225,6 +1242,15 @@ components:
         - OUTROS
         - NAO_HA
       example: SORTEIO
+    EnumGracePeriodUnit:
+      type: string
+      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>
+      maxLength: 10
+      enum:
+        - DIAS
+        - MESES
+        - NAO_APLICA
+      example: MESES
     RiskPensionEnumGracePeriodUnit:
       type: string
       description: |
