@@ -47,7 +47,7 @@ BENEFICIO_DEFINIDO";0;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
 11. VRI
 12. VDR
 13. Demais produtos de Previdência.
-";Texto;27;Obrigatório;;"PGBL 
+";Texto;27;Opcional;;"PGBL 
 PRGP 
 PAGP 
 PRSA 
@@ -59,7 +59,7 @@ VAGP
 VRSA 
 VRI 
 VDR 
-DEMAIS_PRODUTOS_PREVIDENCIA";1;1;"";Não permitido;string;;
+DEMAIS_PRODUTOS_PREVIDENCIA";0;1;"";Não permitido;string;;
 /data/defferalPeriod;defferalPeriod;Período de Diferimento;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/defferalPeriod/interestRate;interestRate;Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.019800;8
 /data/defferalPeriod/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
@@ -83,7 +83,7 @@ SEMESTRAL
 ANUAL 
 UNICO";0;1;"";Não permitido;string;MENSAL;
 /data/defferalPeriod/minimumPremiums/amount;amount;Valor mínimo em R$ de prêmio/ contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único).;Texto;21;Opcional;^\d{1,16}\.\d{2,4}$;;0;1;"";Não permitido;string;250.00;
-/data/defferalPeriod/premiumPaymentMethods;premiumPaymentMethods;;Lista;27;Obrigatório;;"CARTAO_CREDITO 
+/data/defferalPeriod/premiumPaymentMethods;premiumPaymentMethods;;Lista;27;Opcional;;"CARTAO_CREDITO 
 DEBITO_CONTA 
 DEBITO_CONTA_POUPANCA 
 BOLETO_BANCARIO 
@@ -93,7 +93,7 @@ REGRA_PARCEIRO
 CONSIGNACAO_FOLHA_PAGAMENTO 
 PONTOS_PROGRAMA_BENEFICIO 
 TED_DOC 
-OUTROS";1;N;"";Não permitido;array;CARTAO_CREDITO;
+OUTROS";0;N;"";Não permitido;array;CARTAO_CREDITO;
 /data/defferalPeriod/permissionExtraordinaryContributions;permissionExtraordinaryContributions;"Se ficam permitidos aportes extraordinários. A considerar os seguintes domínios:
 1. true
 2. false
