@@ -935,6 +935,7 @@ components:
         - maxValue
         - indemnifiableDeadline
         - indemnityPaymentMethod
+        - gracePeriod
         - excludedRisks
         - excludedRisksURL
         - profitModality
@@ -951,7 +952,18 @@ components:
         indemnityPaymentMethod:
           $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
         gracePeriod:
-          $ref: '#/components/schemas/GracePeriod'
+          type: object
+          description: Período de carência da cobertura
+          properties:
+            amount:
+              type: integer
+              format: int64
+              description: Informar o prazo de carência
+              example: 90
+              maximum: 9999999999
+            unit:
+              $ref: '#/components/schemas/EnumGracePeriodUnit'
+          additionalProperties: false
         excludedRisks:
           type: array
           items:
@@ -963,21 +975,6 @@ components:
           example: 'https://openinsurance.com.br/aaa'
         profitModality:
           $ref: '#/components/schemas/RiskPensionEnumProfitModality'
-      additionalProperties: false
-    GracePeriod:
-      type: object
-      required:
-        - amount
-        - unit
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: Informar o prazo de carência
-          example: 90
-          maximum: 9999999999
-        unit:
-          $ref: '#/components/schemas/EnumGracePeriodUnit'
       additionalProperties: false
     RiskPensionGracePeriod:
       type: object
