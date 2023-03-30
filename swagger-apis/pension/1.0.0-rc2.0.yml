@@ -104,7 +104,6 @@ components:
         - premiumUpdateIndex
         - otherGuaranteedValues
         - contributionPayment
-        - indemnityPaymentMethod
         - minimumRequirement
         - targetAudience
       properties:
@@ -210,12 +209,22 @@ components:
           $ref: '#/components/schemas/RiskPensionEnumOtherGuaranteedValues'
         contributionPayment:
           $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
-        indemnityPaymentMethod:
-          $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
         minimumRequirement:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
-          $ref: '#/components/schemas/EnumTargetAudience'
+          type: string
+          description: |
+            A considerar os domínios abaixo:
+
+              1. Pessoa Natural
+              2. Pessoa Jurídica
+              3. Ambas (Pessoa Natural e Jurídica)
+          maxLength: 23
+          enum:
+            - PESSOA_NATURAL
+            - PESSOA_JURIDICA
+            - PESSOA_NATURAL_JURIDICA
+          example: PESSOA_NATURAL
       additionalProperties: false
     OKResponseSurvivalCoveragePension:
       type: object
@@ -240,7 +249,10 @@ components:
         - name
         - code
         - segment
-        - type
+        - modality
+        - defferalPeriod
+        - grantPeriodBenefit
+        - costs
         - targetAudience
       properties:
         participant:
@@ -301,11 +313,16 @@ components:
         minimumRequirement:
           $ref: '#/components/schemas/SurvivalPensionMinimumRequirements'
         targetAudience:
-          $ref: '#/components/schemas/EnumTargetAudience'
+          $ref: '#/components/schemas/SurvivalPensionEnumTargetAudience'
       additionalProperties: false
     SurvivalPensionInvestmentFund:
       type: object
       description: Fundos de Investimento (por fundo).
+      required:
+        - cnpjNumber
+        - name
+        - maximumAdministrationFee
+        - typePerformanceFee
       properties:
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
@@ -375,20 +392,21 @@ components:
       required:
         - contractType
         - participantQualified
+        - contractingMinRequirement
       properties:
         contractType:
           type: string
           maxLength: 27
           enum:
-            - COLETIVO
+            - COLETIVO_AVERBADO
+            - COLETIVO_INSTITUIDO
             - INDIVIDUAL
-            - AMBAS
           description: |
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo Averbado;
-            2. Individual.
-            3. Ambas
-          example: COLETIVO
+            2. Coletivo instituído;
+            3. Individual.
+          example: COLETIVO_AVERBADO
         participantQualified:
           type: boolean
           description: |
@@ -417,7 +435,13 @@ components:
       type: object
       description: Período de Diferimento
       required:
-        - premiumPaymentMethods
+        - interestRate
+        - updateIndex
+        - otherMinimumPerformanceGarantees
+        - reversalFinancialResults
+        - permissionScheduledFinancialPayments
+        - redemptionPaymentTerm
+        - portabilityPaymentTerm
       properties:
         interestRate:
           type: string
@@ -644,6 +668,9 @@ components:
       description: Período de concessão do benefício
       required:
         - incomeModalities
+        - interestRate
+        - updateIndex
+        - reversalFinancialResults
       properties:
         incomeModalities:
           type: array
@@ -834,19 +861,17 @@ components:
         - QUANTIDADE_DETERMINADA_PARCELAS
         - FIM_CICLO_DETERMINADO
       example: QUANTIDADE_DETERMINADA_PARCELAS
-    EnumTargetAudience:
+    SurvivalPensionEnumTargetAudience:
       type: string
       description: |
         A considerar os domínios abaixo:
 
           1. Pessoa Natural
           2. Pessoa Jurídica
-          3. Ambas (Pessoa Natural e Jurídica)
       maxLength: 23
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
-        - PESSOA_NATURAL_JURIDICA
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
@@ -909,6 +934,7 @@ components:
         - minValue
         - maxValue
         - indemnifiableDeadline
+        - indemnityPaymentMethod
         - excludedRisks
         - excludedRisksURL
         - profitModality
@@ -922,6 +948,10 @@ components:
         indemnifiableDeadline:
           type: integer
           description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
+        indemnityPaymentMethod:
+          $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
+        gracePeriod:
+          $ref: '#/components/schemas/GracePeriod'
         excludedRisks:
           type: array
           items:
@@ -948,6 +978,21 @@ components:
           maximum: 9999999999
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
+      additionalProperties: false
+    RiskPensionGracePeriod:
+      type: object
+      required:
+        - amount
+        - unit
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Informar o prazo de carência
+          example: 90
+          maximum: 9999999999
+        unit:
+          $ref: '#/components/schemas/RiskPensionEnumGracePeriodUnit'
       additionalProperties: false
     TermsAndConditions:
       type: object
@@ -980,6 +1025,7 @@ components:
         - IPCA
         - IGP_M
         - INPC
+        - NAO_SE_APLICA
       example: IPCA
     RiskPensionReclaim:
       type: object
@@ -992,7 +1038,7 @@ components:
             $ref: '#/components/schemas/RiskPensionReclaimTableItem'
           minItems: 1
         gracePeriod:
-          $ref: '#/components/schemas/GracePeriod'
+          $ref: '#/components/schemas/RiskPensionGracePeriod'
         differenciatedPercentage:
           description: Campo aberto (possibilidade de incluir URL)
           example: |
@@ -1039,12 +1085,14 @@ components:
       properties:
         contractType:
           type: string
-          description: O tipo de serviço contratado. A considerar os domínios abaixo&#58;<br><ol><li>Coletivo Averbado</li><li>Coletivo Instituído</li><li>Individual</li></ol>
+          description: |
+            O tipo de serviço contratado. A considerar os domínios abaixo:
+            1. Coletivo;
+            2. Individual.
           enum:
-            - COLETIVO_AVERBADO
-            - COLETIVO_INSTITUIDO
+            - COLETIVO
             - INDIVIDUAL
-          example: COLETIVO_AVERBADO
+          example: COLETIVO
         contractingMinRequirement:
           type: string
           description: Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).
@@ -1232,6 +1280,18 @@ components:
         - MESES
         - NAO_APLICA
       example: MESES
+    RiskPensionEnumGracePeriodUnit:
+      type: string
+      description: |
+        Informar o critério de carência para resgate:
+        1. Dias;
+        2. Meses;
+        3. Não se aplica.
+      enum:
+        - DIAS
+        - MESES
+        - NAO_APLICA
+      example: MESES
     RiskPensionEnumFinancialRegime:
       type: string
       description: |
@@ -1263,7 +1323,7 @@ components:
           type: string
           example: CARTAO_CREDITO
           description: |
-            Método utilizado para o pagamento da contribuição.
+            Forma de pagamento da contribuição.
              - CARTAO_CREDITO
              - DEBITO_CONTA
              - DEBITO_CONTA_POUPANCA
