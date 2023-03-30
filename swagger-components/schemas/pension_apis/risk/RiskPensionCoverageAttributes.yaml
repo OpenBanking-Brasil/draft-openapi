@@ -5,6 +5,7 @@ required:
   - maxValue
   - indemnifiableDeadline
   - indemnityPaymentMethod
+  - gracePeriod
   - excludedRisks
   - excludedRisksURL
   - profitModality
@@ -21,7 +22,18 @@ properties:
   indemnityPaymentMethod:
     $ref: ./RiskPensionEnumIndemnityPaymentMethod.yaml
   gracePeriod:
-    $ref: ../../business_commons/GracePeriod.yaml
+    type: object
+    description: Período de carência da cobertura
+    properties:
+      amount:
+        type: integer
+        format: int64
+        description: Informar o prazo de carência
+        example: 90
+        maximum: 9999999999
+      unit:
+        $ref: ../../business_commons/EnumGracePeriodUnit.yaml
+    additionalProperties: false
   excludedRisks:
     type: array
     items:
