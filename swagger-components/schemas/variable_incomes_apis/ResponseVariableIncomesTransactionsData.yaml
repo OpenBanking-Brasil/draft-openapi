@@ -23,7 +23,8 @@ properties:
     type: string
     format: date
     description: |
-      Data da movimentação.         
+      Data da movimentação.
+      
       [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
     maxLength: 10
     minLength: 10
@@ -33,14 +34,16 @@ properties:
     type: number
     format: integer
     description: |
-      Fator que indica o número de ações utilizadas para a formação.       
+      Fator que indica o número de ações utilizadas para a formação.
+      
       [Restrição] Valor mínimo 1.
     minimum: 1
     example: 100
   transactionUnitPrice:
     type: object
     description: |
-      Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.       
+      Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
+      
       [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
     required:
       - amount

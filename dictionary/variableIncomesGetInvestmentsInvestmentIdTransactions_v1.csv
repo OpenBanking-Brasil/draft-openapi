@@ -18,15 +18,18 @@ OUTROS";1;1;"";Não permitido;string;DIVIDENDOS;
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
 ";Texto;100;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
 ";Não permitido;string;;
-/data/transactionDate;transactionDate;"Data da movimentação.         
+/data/transactionDate;transactionDate;"Data da movimentação.
+
 [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
 ";Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;" Data do pregão: compartilhar movimentos até a data da posição.
 ";Não permitido;string;2018-02-15;10
-/data/priceFactor;priceFactor;"Fator que indica o número de ações utilizadas para a formação.       
+/data/priceFactor;priceFactor;"Fator que indica o número de ações utilizadas para a formação.
+
 [Restrição] Valor mínimo 1.
 ";Número;;Condicional;;;0;1;" Valor mínimo 1.
 ";Não permitido;number;100;
-/data/transactionUnitPrice;transactionUnitPrice;"Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.       
+/data/transactionUnitPrice;transactionUnitPrice;"Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
+
 [Restrição] De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
 ";Objeto;;Condicional;;;0;1;" De preenchimento obrigatório quando o motivo da movimentação for compra, venda e aluguéis.
 ";Não permitido;object;;
