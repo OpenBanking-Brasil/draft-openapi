@@ -7,9 +7,9 @@ properties:
     amount:
         type: string
         description: Valor relacionado ao objeto.
-        pattern: '^-?\d{1,15}\.\d{2,6}$'
-        maxLength: 23
-        example: '1000.00000004'
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        maxLength: 20
+        example: '1000.0004'
     currency:
         type: string
         description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
