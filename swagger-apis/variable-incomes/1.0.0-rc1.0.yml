@@ -531,7 +531,6 @@ components:
         - transactionDate
         - transactionValue
         - transactionId
-        - brokerNoteId
       properties:
         type:
           $ref: '#/components/schemas/EnumVariableIncomesTransactionsType'
@@ -626,10 +625,13 @@ components:
           description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.
         brokerNoteId:
           type: string
+          description: |
+            Identificador da nota de negociação.
+
+            [Restrição] Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: XWYZ555019929279212650822221989319252233
-          description: Identificador da nota de negociação.
       additionalProperties: false
     ResponseVariableIncomesTransactionsCurrentData:
       type: object
@@ -639,7 +641,6 @@ components:
         - transactionDate
         - transactionValue
         - transactionId
-        - brokerNoteId
       properties:
         type:
           $ref: '#/components/schemas/EnumVariableIncomesTransactionsCurrentType'
@@ -734,10 +735,13 @@ components:
           description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.
         brokerNoteId:
           type: string
+          description: |
+            Identificador da nota de negociação.
+
+            [Restrição] Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: XWYZ555019929279212650822221989319252233
-          description: Identificador da nota de negociação.
       additionalProperties: false
     VariableIncomesBalancesBlockedBalance:
       type: object

@@ -44,4 +44,8 @@ OUTROS";1;1;"";Não permitido;string;DIVIDENDOS;
 /data/transactionValue/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;
 /data/transactionValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/transactionId;transactionId;Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.;Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;1;1;"";Não permitido;string;ABCD2126019929279212650822221989319253344;
-/data/brokerNoteId;brokerNoteId;Identificador da nota de negociação.;Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;1;1;"";Não permitido;string;XWYZ555019929279212650822221989319252233;
+/data/brokerNoteId;brokerNoteId;"Identificador da nota de negociação.
+
+[Restrição] Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
+";Texto;100;Condicional;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;0;1;" Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
+";Não permitido;string;XWYZ555019929279212650822221989319252233;
