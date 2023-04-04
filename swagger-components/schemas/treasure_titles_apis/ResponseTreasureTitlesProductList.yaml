@@ -1,0 +1,15 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: array
+    items:
+      $ref: ./ResponseTreasureTitlesListProductData.yaml
+  links:
+    $ref: ./TreasureTitlesTransactionsLinks.yaml
+  meta:
+    $ref: ./TreasureTitlesMeta.yaml
+additionalProperties: false
