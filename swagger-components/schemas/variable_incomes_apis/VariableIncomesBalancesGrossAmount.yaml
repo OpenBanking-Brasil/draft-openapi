@@ -1,11 +1,12 @@
 type: object
-description: Valor do investimento anterior à dedução de impostos, taxas e tarifas (se houver), atualizado na data de referência.
+description: Valor do investimento anterior à dedução de impostos, taxas e tarifas (se houver), atualizado na data de referência. Quantidade de ativos dividido pelo Fator de cotação e multiplicado pelo pelo preço de fechamento da data de referência.
 required:
     - amount
     - currency
 properties:
     amount:
         type: string
+        format: double
         description: Valor relacionado ao objeto.
         pattern: '^-?\d{1,15}\.\d{2,4}$'
         maxLength: 21
