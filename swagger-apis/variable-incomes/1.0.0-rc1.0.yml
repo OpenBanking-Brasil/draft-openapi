@@ -21,7 +21,7 @@ info:
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        | Renda Variável       | Fundos de índices             | ETF                  | ETF Internacional                 |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
-       | Renda Variável       | Fundos de índices             | ETF                  | Renda Fixa ETF Renda Fixa         |
+       | Renda Variável       | Fundos de índices             | ETF Renda Fixa       | ETF Renda Fixa                    |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        ```
   version: 1.0.0-rc1.0
@@ -97,7 +97,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -145,7 +145,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -193,7 +193,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -246,7 +246,7 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -299,11 +299,11 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
-  '/investments/{investmentId}/broker-notes{brokerNoteId}':
+  '/investments/{investmentId}/broker-notes/{brokerNoteId}':
     get:
       tags:
         - Broker Note Details
@@ -348,7 +348,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -478,7 +478,7 @@ components:
         isinCode:
           type: string
           description: |
-            Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional): código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166    maxLength: 12
+            Código ISIN da emissão, Código ISIN do produto, Código da emissora: código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.
           maxLength: 12
           pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
           example: BRCST4CTF001
@@ -487,6 +487,7 @@ components:
           description: Código de negociação para identificação de ativos negociados em bolsa.
           maxLength: 35
           pattern: '[\w\W\s]*'
+          example: PETR4
       additionalProperties: false
     ResponseVariableIncomesBalanceData:
       type: object
@@ -507,20 +508,26 @@ components:
           example: '2023-01-07'
           maxLength: 10
         priceFactor:
-          type: integer
-          format: integer
-          description: Fator que indica o número de ações utilizadas para a formação do preço.
-          example: 100
+          type: string
+          format: double
+          description: |
+            Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
+
+            [Restrição] Valor mínimo 1.
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '100.0005'
         grossAmount:
           $ref: '#/components/schemas/VariableIncomesBalancesGrossAmount'
         blockedBalance:
           $ref: '#/components/schemas/VariableIncomesBalancesBlockedBalance'
         quantity:
           type: string
+          format: double
           description: Quatidade total do ativo na data de referência.
           pattern: '^\d{1,15}\.\d{2,8}$'
-          maxLength: 15
-          example: '1000.000004'
+          maxLength: 24
+          example: '1000.00000004'
         closingPrice:
           $ref: '#/components/schemas/VariableIncomesBalancesClosingPrice'
     ResponseVariableIncomesTransactionsData:
@@ -556,14 +563,15 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-02-15'
         priceFactor:
-          type: number
-          format: integer
+          type: string
+          format: double
           description: |
-            Fator que indica o número de ações utilizadas para a formação.
+            Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
 
             [Restrição] Valor mínimo 1.
-          minimum: 1
-          example: 100
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '100.0005'
         transactionUnitPrice:
           type: object
           description: |
@@ -666,14 +674,15 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-02-15'
         priceFactor:
-          type: number
-          format: integer
+          type: string
+          format: double
           description: |
-            Fator que indica o número de ações utilizadas para a formação.
+            Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
 
             [Restrição] Valor mínimo 1.
-          minimum: 1
-          example: 100
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '100.0005'
         transactionUnitPrice:
           type: object
           description: |
@@ -752,9 +761,10 @@ components:
       properties:
         amount:
           type: string
+          format: double
           description: Valor relacionado ao objeto.
-          pattern: '^-?\d{1,15}\.\d{2,4}$'
-          maxLength: 21
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
           example: '1000.04'
         currency:
           type: string
@@ -771,6 +781,7 @@ components:
       properties:
         amount:
           type: string
+          format: double
           description: Valor relacionado ao objeto.
           pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
@@ -783,13 +794,14 @@ components:
           example: BRL
     VariableIncomesBalancesGrossAmount:
       type: object
-      description: 'Valor do investimento anterior à dedução de impostos, taxas e tarifas (se houver), atualizado na data de referência.'
+      description: 'Valor do investimento anterior à dedução de impostos, taxas e tarifas (se houver), atualizado na data de referência. Quantidade de ativos dividido pelo Fator de cotação e multiplicado pelo pelo preço de fechamento da data de referência.'
       required:
         - amount
         - currency
       properties:
         amount:
           type: string
+          format: double
           description: Valor relacionado ao objeto.
           pattern: '^-?\d{1,15}\.\d{2,4}$'
           maxLength: 21
@@ -1009,7 +1021,7 @@ components:
           description: Identificador da nota de negociação.
           maxLength: 16
           pattern: '^\d{1,16}$'
-          example: '1854009930314354'
+          example: '1854009930314350'
         grossValue:
           type: object
           description: o valor da nota de negociação é o somatório das operações realizadas. Total de compra e venda do dia.
@@ -1019,6 +1031,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1040,6 +1053,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1059,6 +1073,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1078,6 +1093,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1097,6 +1113,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1116,6 +1133,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1135,6 +1153,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1154,6 +1173,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1173,6 +1193,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1192,6 +1213,7 @@ components:
           properties:
             amount:
               type: string
+              format: double
               description: Valor relacionado ao objeto.
               pattern: '^-?\d{1,15}\.\d{2,4}$'
               maxLength: 21
@@ -1300,8 +1322,8 @@ components:
       in: query
       schema:
         type: string
-        maxLength: 10
         format: date
+        maxLength: 10
         example: '2022-01-01'
     toTransactionDate:
       name: toTransactionDate
@@ -1312,8 +1334,8 @@ components:
       in: query
       schema:
         type: string
-        maxLength: 10
         format: date
+        maxLength: 10
         example: '2022-12-31'
     fromTransactionDateCurrent:
       name: fromTransactionDate
@@ -1324,8 +1346,8 @@ components:
       in: query
       schema:
         type: string
-        maxLength: 10
         format: date
+        maxLength: 10
         example: '2023-02-01'
     toTransactionDateCurrent:
       name: toTransactionDate
@@ -1336,8 +1358,8 @@ components:
       in: query
       schema:
         type: string
-        maxLength: 10
         format: date
+        maxLength: 10
         example: '2023-02-01'
     BrokerNoteId:
       name: brokerNoteId
@@ -1350,9 +1372,6 @@ components:
         maxLength: 100
         example: '92792126019929200000000000000000000000000'
   securitySchemes:
-    OpenId:
-      type: openIdConnect
-      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
     OAuth2Security:
       type: oauth2
       description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
