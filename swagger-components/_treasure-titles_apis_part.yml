@@ -246,7 +246,7 @@ paths:
       tags:
         - Transactions
       summary: Obtém as movimentações recentes da operação de Títulos do Tesouro Direto identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
-      operationId: treasureTitlesGetInvestmentsInvestmentIdTransactions
+      operationId: treasureTitlesGetInvestmentsInvestmentIdTransactionsCurrent
       description: Obtém as movimentações recentes da operação de Títulos do Tesouro Direto identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
       parameters:
        - $ref: '#/components/parameters/InvestmentId'
@@ -260,7 +260,7 @@ paths:
        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseTreasureTitlesProductMovement'
+          $ref: '#/components/responses/ResponseTreasureTitlesProductMovementCurrent'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -301,36 +301,14 @@ components:
       $ref: ./schemas/ResponseErrorMetaSingle.yaml
     ResponseTreasureTitlesListProduct:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductList.yaml
-    IdentifyProduct:
-      $ref: ./schemas/treasure_titles_apis/IdentifyProduct.yaml
-    EnumInvestmentType:
-      $ref: ./schemas/treasure_titles_apis/EnumInvestmentType.yaml
     EnumInvestmentsFixedIncomeBankIndexer:
       $ref: ./schemas/enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
-    Remuneration:
-      $ref: ./schemas/treasure_titles_apis/Remuneration.yaml
-    EnumRateType:
-      $ref: ./schemas/treasure_titles_apis/EnumRateType.yaml
-    EnumRatePeriodicity:
-      $ref: ./schemas/treasure_titles_apis/EnumRatePeriodicity.yaml
-    EnumCalculation:
-      $ref: ./schemas/treasure_titles_apis/EnumCalculation.yaml
     TreasureTitlesMeta:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesMeta.yaml
     TreasureTitlesLinks:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionsLinks.yaml
-    TreasureTitlesProductMovement:
-      $ref: ./schemas/treasure_titles_apis/TreasureTitlesProductMovement.yaml
-    EnumTreasureTitlesMovementType:
-      $ref: ./schemas/treasure_titles_apis/EnumTreasureTitlesMovementType.yaml
-    EnumTreasureTitlesTransactionType:
-      $ref: ./schemas/treasure_titles_apis/EnumTreasureTitlesTransactionType.yaml
     CurrencyCode:
       $ref: ./schemas/business_commons/CurrencyCode.yaml
-    BalanceCurrency:
-      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBalancesCurrency.yaml
-    BalanceAmount:
-      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBalancesAmount.yaml
     ResponseTreasureTitlesBalances:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesBalances.yaml
   securitySchemes:
@@ -390,6 +368,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovement.yaml
+    ResponseTreasureTitlesProductMovementCurrent:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovementCurrent.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
@@ -447,4 +431,4 @@ components:
     DefaultWithAdditionalProperties:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesDefault.yaml
     SiteIsOverloadedWithAdditionalProperties:
-      $ref: ./schemas/treasure_titles_apis/TreasureTitlesSiteIsOverloaded.yaml
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesSiteIsOverloaded.yaml 
