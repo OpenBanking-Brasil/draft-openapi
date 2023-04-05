@@ -1,29 +1,33 @@
 type: 'object'
 required:
-  - 'referenceDateTime'
-  - 'updatedUnitPrice'
-  - 'grossAmount'
-  - 'netAmount'
-  - 'incomeTax'
-  - 'blockedBalance'
-  - 'purchaseUnitPrice'
-  - 'quantity'
+  - 'type'
+  - 'transactionType'
+  - 'transactionDate'
+  - 'transactionUnitePrice'
+  - 'transactionQuantity'
+  - 'transactionGrossValue'
+  - 'transactionNetValue'
+  - 'transactionId'
 properties:
-  referenceDateTime:
-    $ref: './TreasureTitlesReferenceDateTime.yaml'
-  updatedUnitPrice:
-    $ref: './TreasureTitlesUpdatedUnitPrice.yaml'
-  grossAmount:
-    $ref: './TreasureTitlesGrossAmount.yaml'
-  netAmount:
-    $ref: './TreasureTitlesNetAmount.yaml'
+  type:
+    $ref: './TreasureTitlesType.yaml' 
+  transactionType:
+    $ref: './TreasureTitlesTransactionType.yaml'
+  transactionDate:
+    $ref: './TreasureTitlesTransactionDate.yaml'
+  transactionUnitePrice:
+    $ref: './TreasureTitlesTransactionUnitePrice.yaml'
+  transactionQuantity:
+    $ref: './TreasureTitlesTransactionQuantity.yaml'
+  transactionGrossValue:
+    $ref: './TreasureTitlesTransactionGrossValue.yaml'
   incomeTax:
     $ref: './TreasureTitlesIncomeTax.yaml'
   financialTransactionTax:
     $ref: './TreasureTitlesFinancialTransactionTax.yaml'
-  blockedBalance:
-    $ref: './TreasureTitlesBlockedBalance.yaml'
-  purchaseUnitPrice:
-    $ref: './TreasureTitlesPurchaseUnitPrice.yaml'
-  quantity:
-    $ref: './TreasureTitlesQuantity.yaml'
+  transactionNetValue:
+    $ref: './TreasureTitlesTransactionNetValue.yaml'
+  remunerationTransactionRate:
+    $ref: './TreasureTitlesRemunerationTransactionRate.yaml'
+  transactionId:
+    $ref: './TreasureTitlesTransactionId.yaml'

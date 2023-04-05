@@ -205,6 +205,8 @@ paths:
        - $ref: '#/components/parameters/page'
        - $ref: '#/components/parameters/pageSize'
        - $ref: '#/components/parameters/pagination-key'
+       - $ref: '#/components/parameters/fromTransactionDate'
+       - $ref: '#/components/parameters/toTransactionDate'
       responses:
         '200':
           $ref: '#/components/responses/ResponseTreasureTitlesProductMovement'
@@ -343,6 +345,14 @@ components:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
       $ref: ./parameters/XFapiInteractionId.yaml
+    fromTransactionDate:
+      $ref: ./parameters/FromTransactionDate.yaml
+    fromTransactionDateMaxLimited:
+      $ref: ./parameters/FromTransactionDateMaxLimited.yaml
+    toTransactionDate:
+      $ref: ./parameters/ToTransactionDate.yaml
+    toTransactionDateMaxLimited:
+      $ref: ./parameters/ToTransactionDateMaxLimited.yaml
   responses:
     OkResponseTreasureTitlesBalances:
       description: Dados obtidos com sucesso
@@ -373,7 +383,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovementCurrent.yaml
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovement.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
@@ -429,6 +439,6 @@ components:
     UnprocessableEntityWithAdditionalProperties:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesUnprocessableEntity.yaml
     DefaultWithAdditionalProperties:
-      $ref: ./schemas/treasure_titles_apis/TreasureTitlesDefault.yaml
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesDefault.yaml 
     SiteIsOverloadedWithAdditionalProperties:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesSiteIsOverloaded.yaml 
