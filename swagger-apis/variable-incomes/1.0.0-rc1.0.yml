@@ -21,7 +21,7 @@ info:
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        | Renda Variável       | Fundos de índices             | ETF                  | ETF Internacional                 |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
-       | Renda Variável       | Fundos de índices             | ETF                  | Renda Fixa ETF Renda Fixa         |
+       | Renda Variável       | Fundos de índices             | ETF Renda Fixa       | ETF Renda Fixa                    |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        ```
   version: 1.0.0-rc1.0
@@ -303,7 +303,7 @@ paths:
             - openid
             - 'consent:consentId'
             - variable-incomes
-  '/investments/{investmentId}/broker-notes{brokerNoteId}':
+  '/investments/{investmentId}/broker-notes/{brokerNoteId}':
     get:
       tags:
         - Broker Note Details
@@ -755,7 +755,7 @@ components:
           type: string
           format: double
           description: Valor relacionado ao objeto.
-          pattern: '^?\d{1,15}\.\d{2,4}$'
+          pattern: '^\d{1,15}\.\d{2,4}$'
           maxLength: 20
           example: '1000.04'
         currency:
