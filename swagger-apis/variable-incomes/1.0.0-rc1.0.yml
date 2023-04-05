@@ -487,6 +487,7 @@ components:
           description: Código de negociação para identificação de ativos negociados em bolsa.
           maxLength: 35
           pattern: '[\w\W\s]*'
+          example: PETR4
       additionalProperties: false
     ResponseVariableIncomesBalanceData:
       type: object
@@ -507,9 +508,11 @@ components:
           example: '2023-01-07'
           maxLength: 10
         priceFactor:
-          type: integer
-          format: integer
-          description: Fator que indica o número de ações utilizadas para a formação do preço.
+          type: string
+          format: double
+          description: Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
           example: 100
         grossAmount:
           $ref: '#/components/schemas/VariableIncomesBalancesGrossAmount'
@@ -557,14 +560,15 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-02-15'
         priceFactor:
-          type: number
-          format: integer
+          type: string
+          format: double
           description: |
-            Fator que indica o número de ações utilizadas para a formação.
+            Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
 
             [Restrição] Valor mínimo 1.
-          minimum: 1
-          example: 100
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '100.0005'
         transactionUnitPrice:
           type: object
           description: |
@@ -667,14 +671,15 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-02-15'
         priceFactor:
-          type: number
-          format: integer
+          type: string
+          format: double
           description: |
-            Fator que indica o número de ações utilizadas para a formação.
+            Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
 
             [Restrição] Valor mínimo 1.
-          minimum: 1
-          example: 100
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '100.0005'
         transactionUnitPrice:
           type: object
           description: |
@@ -1013,7 +1018,7 @@ components:
           description: Identificador da nota de negociação.
           maxLength: 16
           pattern: '^\d{1,16}$'
-          example: '1854009930314354'
+          example: '1854009930314350'
         grossValue:
           type: object
           description: o valor da nota de negociação é o somatório das operações realizadas. Total de compra e venda do dia.

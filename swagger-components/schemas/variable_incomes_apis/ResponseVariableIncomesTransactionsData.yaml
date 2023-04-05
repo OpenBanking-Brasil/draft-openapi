@@ -30,14 +30,15 @@ properties:
     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
     example: "2018-02-15"
   priceFactor:
-    type: number
-    format: integer
+    type: string
+    format: double
     description: |
-      Fator que indica o número de ações utilizadas para a formação.
+      Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
       
       [Restrição] Valor mínimo 1.
-    minimum: 1
-    example: 100
+    pattern: ^\d{1,15}\.\d{2,8}$
+    maxLength: 24
+    example: '100.0005'
   transactionUnitPrice:
     type: object
     description: |
