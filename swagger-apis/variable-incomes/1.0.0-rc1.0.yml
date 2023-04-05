@@ -97,7 +97,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -145,7 +145,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -193,7 +193,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -246,7 +246,7 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -299,7 +299,7 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -348,7 +348,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2Security:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -1364,9 +1364,6 @@ components:
         maxLength: 100
         example: '92792126019929200000000000000000000000000'
   securitySchemes:
-    OpenId:
-      type: openIdConnect
-      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
     OAuth2Security:
       type: oauth2
       description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
