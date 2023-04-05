@@ -1,29 +1,27 @@
-type: 'object'
+type: object
+description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
 required:
-  - 'referenceDateTime'
-  - 'updatedUnitPrice'
-  - 'grossAmount'
-  - 'netAmount'
-  - 'incomeTax'
-  - 'blockedBalance'
-  - 'purchaseUnitPrice'
-  - 'quantity'
+  - referenceDateTime
+  - updatedUnitPrice
+  - grossAmount
+  - incomeTax
+  - blockedBalance
+  - purchaseUnitPrice
 properties:
   referenceDateTime:
-    $ref: './TreasureTitlesReferenceDateTime.yaml'
+    $ref: ./TreasureTitlesReferenceDateTime.yaml
   updatedUnitPrice:
-    $ref: './TreasureTitlesUpdatedUnitPrice.yaml'
+    $ref: ./TreasureTitlesUpdatedUnitPrice.yaml
   grossAmount:
-    $ref: './TreasureTitlesGrossAmount.yaml'
+    $ref: ./TreasureTitlesGrossAmount.yaml
   netAmount:
-    $ref: './TreasureTitlesNetAmount.yaml'
+    $ref: ./TreasureTitlesNetAmount.yaml
   incomeTax:
-    $ref: './TreasureTitlesIncomeTax.yaml'
+    $ref: ./TreasureTitlesIncomeTax.yaml
   financialTransactionTax:
-    $ref: './TreasureTitlesFinancialTransactionTax.yaml'
+    $ref: ./TreasureTitlesFinancialTransactionTax.yaml
   blockedBalance:
-    $ref: './TreasureTitlesBlockedBalance.yaml'
+    $ref: ./TreasureTitlesBlockedBalance.yaml
   purchaseUnitPrice:
-    $ref: './TreasureTitlesPurchaseUnitPrice.yaml'
-  quantity:
-    $ref: './TreasureTitlesQuantity.yaml'
+    $ref: ./TreasureTitlesPurchaseUnitPrice.yaml
+additionalProperties: false
