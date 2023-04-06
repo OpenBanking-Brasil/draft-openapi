@@ -1,0 +1,15 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: array
+    items:
+      $ref: ./ResponseVariableIncomesBalanceData.yaml
+  links:
+    $ref: ./VariableIncomesBalancesLinks.yaml
+  meta:
+    $ref: ./VariableIncomesBalancesMeta.yaml
+additionalProperties: false
