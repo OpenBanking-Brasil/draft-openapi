@@ -12,9 +12,9 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
 servers:
-  - url: "https://api.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1"
+  - url: "https://api.banco.com.br/open-banking/opendata-treasure-titles/v1"
     description: Servidor de Produção
-  - url: "https://apih.banco.com.br/open-banking/opendata-bank-fixed-incomes/v1"
+  - url: "https://apih.banco.com.br/open-banking/opendata-treasure-titles/v1"
     description: Servidor de Homologação
 tags:
   - name: Product List
@@ -310,7 +310,7 @@ components:
       $ref: ./schemas/business_commons/CurrencyCode.yaml
     ResponseTreasureTitlesBalances:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesBalances.yaml
-    TreasureTitlesProductMovement:
+    TreasureTitlesProductTransaction:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesProductMovement.yaml
     ResponseTreasureTitlesIdentifyProduct:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProduct.yaml
@@ -318,9 +318,9 @@ components:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesListProductData.yaml
     ResponseTreasureTitlesProductList:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductList.yaml
-    ResponseTreasureTitlesProductMovement:
+    ResponseTreasureTitlesProductTransactions:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactions.yaml
-    ResponseTreasureTitlesProductMovementCurrent:
+    ResponseTreasureTitlesProductTransactionsCurrent:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactionsCurrent.yaml
     TreasureTitlesAmount:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesAmount.yaml
