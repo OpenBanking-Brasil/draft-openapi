@@ -1,0 +1,39 @@
+type: object
+required:
+  - rateType
+  - ratePeriodicity
+  - calculation
+  - indexer
+properties:
+  preFixedRate:
+    type: string
+    description: |
+      Valor da taxa de emissão do contrato.         
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'PRE_FIXADO' no campo 'indexer' ou quando se tratar de produto com remuneração híbrida.
+    maxLength: 8
+    pattern: '^\d{1}\.\d{6}$'
+    example: '0.300000'
+  postFixedIndexerPercentage:
+    type: string
+    description: |
+      Percentual do indexador de emissão do contrato.    
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO' ou quando se tratar de produto com remuneração híbrida.
+    maxLength: 8
+    pattern: '^\d{1}\.\d{6}$'
+    example: '1.100000'
+  rateType:
+    $ref: EnumRateType.yaml
+  ratePeriodicity:
+    $ref: EnumRatePeriodicity.yaml
+  calculation:
+    $ref: EnumCalculation.yaml
+  indexer:
+    $ref: EnumIndexer.yaml
+  indexerAdditionalInfo:
+    type: string
+    description: |
+      Informações adicionais do indexador  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo 'indexer'.
+    pattern: '[\w\W\s]*'
+    maxLength: 50
+    example: 'Dólar'

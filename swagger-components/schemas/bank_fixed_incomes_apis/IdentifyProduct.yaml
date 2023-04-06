@@ -1,0 +1,84 @@
+type: object
+required:
+  - issuerInstitutionCnpjNumber
+  - investmentType
+  - remuneration
+  - issueUnitPrice
+  - dueDate
+  - issueDate
+  - purchaseDate
+  - gracePeriodDate
+properties:
+  issuerInstitutionCnpjNumber:
+    type: string
+    description: CNPJ da instituição emissora.
+    maxLength: 14
+    pattern: '^\d{14}$'
+    example: '11225860000140'
+  isinCode:
+    type: string
+    description: |
+      Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional): código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166
+    maxLength: 12
+    minLength: 12
+    pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
+    example: 'BRCST4CTF001'
+  investmentType:
+    $ref: ./EnumInvestmentType.yaml
+  remuneration:
+    $ref: ./Remuneration.yaml
+  issueUnitPrice:
+    type: object
+    description: Preço unitário de emissão do título.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
+        example: '1000.000004'
+        description: Valor relacionado ao objeto.
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
+  dueDate:
+    type: string
+    format: date
+    maxLength: 10
+    minLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: "2018-02-15"
+    description: Data de vencimento do título.
+  issueDate:
+    type: string
+    format: date
+    maxLength: 10
+    minLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: "2018-02-16"
+    description: Data de emissão do título.
+  clearingCode:
+    type: string
+    maxLength: 30
+    pattern: '[\w\W-]*'
+    example: 'CDB421GPXXX'
+    description: Código de registro do ativo na clearing.
+  purchaseDate:
+    type: string
+    format: date
+    maxLength: 10
+    minLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: "2018-02-15"
+    description: Data de aquisição do cliente.
+  gracePeriodDate:
+    type: string
+    format: date
+    maxLength: 10
+    minLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: "2018-02-16"
+    description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento.
+additionalProperties: false

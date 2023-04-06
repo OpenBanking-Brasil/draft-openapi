@@ -1,0 +1,13 @@
+type: 'object'
+description: 'Preço unitário bruto negociado na transação '
+properties:
+  amount:
+    type: string
+    format: double
+    pattern: '^-?\d{1,15}\.\d{2,8}$'
+    maxLength: 25
+    minLength: 4
+    example: '1000.04'
+    description: 'Valor relacionado ao objeto.'
+  currency:
+    $ref: './Currency.yaml'

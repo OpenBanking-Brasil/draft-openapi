@@ -1,0 +1,11 @@
+name: toTransactionDate
+description: |
+  Data final de filtragem.      
+  [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+required: false
+in: query
+schema:
+  type: string
+  format: date
+  maxLength: 10
+  example: '2022-12-31'
