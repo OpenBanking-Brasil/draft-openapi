@@ -1,0 +1,33 @@
+type: 'object'
+required:
+  - 'type'
+  - 'transactionType'
+  - 'transactionDate'
+  - 'transactionUnitePrice'
+  - 'transactionQuantity'
+  - 'transactionGrossValue'
+  - 'transactionNetValue'
+  - 'transactionId'
+properties:
+  type:
+    $ref: './TreasureTitlesType.yaml' 
+  transactionType:
+    $ref: './TreasureTitlesTransactionType.yaml'
+  transactionDate:
+    $ref: './TreasureTitlesTransactionDate.yaml'
+  transactionUnitePrice:
+    $ref: './TreasureTitlesTransactionUnitePrice.yaml'
+  transactionQuantity:
+    $ref: './TreasureTitlesTransactionQuantity.yaml'
+  transactionGrossValue:
+    $ref: './TreasureTitlesTransactionGrossValue.yaml'
+  incomeTax:
+    $ref: './TreasureTitlesIncomeTax.yaml'
+  financialTransactionTax:
+    $ref: './TreasureTitlesFinancialTransactionTaxMovement.yaml'
+  transactionNetValue:
+    $ref: './TreasureTitlesTransactionNetValue.yaml'
+  remunerationTransactionRate:
+    $ref: './TreasureTitlesRemunerationTransactionRate.yaml'
+  transactionId:
+    $ref: './TreasureTitlesTransactionId.yaml'

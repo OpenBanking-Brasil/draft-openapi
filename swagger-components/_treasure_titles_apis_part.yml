@@ -79,7 +79,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'treasure_titles' 
+            - 'treasure-titles' 
 
   /investments/{investmentId}:
     get:
@@ -186,7 +186,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'treasure_titles'        
+            - 'treasure-titles'        
             
   /investments/{investmentId}/transactions:
     get:
@@ -205,6 +205,8 @@ paths:
        - $ref: '#/components/parameters/page'
        - $ref: '#/components/parameters/pageSize'
        - $ref: '#/components/parameters/pagination-key'
+       - $ref: '#/components/parameters/fromTransactionDate'
+       - $ref: '#/components/parameters/toTransactionDate'
       responses:
         '200':
           $ref: '#/components/responses/ResponseTreasureTitlesProductMovement'
@@ -239,7 +241,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'treasure_titles'
+            - 'treasure-titles'
 
   /investments/{investmentId}/transactions-current:
     get:
@@ -258,6 +260,8 @@ paths:
        - $ref: '#/components/parameters/page'
        - $ref: '#/components/parameters/pageSize'
        - $ref: '#/components/parameters/pagination-key'
+       - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
+       - $ref: '#/components/parameters/toTransactionDateMaxLimited'
       responses:
         '200':
           $ref: '#/components/responses/ResponseTreasureTitlesProductMovementCurrent'
@@ -292,7 +296,7 @@ paths:
             - 'openid'     
           OAuth2Security:
             - 'consent:consentId'
-            - 'treasure_titles' 
+            - 'treasure-titles' 
 components:
   schemas:
     LockedWithAdditionalProperties:
@@ -311,6 +315,130 @@ components:
       $ref: ./schemas/business_commons/CurrencyCode.yaml
     ResponseTreasureTitlesBalances:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesBalances.yaml
+    TreasureTitlesProductMovement:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesProductMovement.yaml
+    ResponseTreasureTitlesIdentifyProduct:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesIdentifyProduct.yaml
+    ResponseTreasureTitlesListProductData:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesListProductData.yaml
+    ResponseTreasureTitlesProductList:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductList.yaml
+    ResponseTreasureTitlesProductMovement:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovement.yaml
+    ResponseTreasureTitlesProductMovementCurrent:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovementCurrent.yaml
+    TreasureTitlesAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesAmount.yaml
+    TreasureTitlesBalances:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBalances.yaml
+    TreasureTitlesBlockedBalance:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBlockedBalance.yaml
+    TreasureTitlesBlockedBalanceAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBlockedBalanceAmount.yaml
+    TreasureTitlesBrandName:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBrandName.yaml
+    TreasureTitlesCalculation:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesCalculation.yaml
+    TreasureTitlesCompanyCnpj:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesCompanyCnpj.yaml
+    TreasureTitlesCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesCurrency.yaml
+    TreasureTitlesDueDate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesDueDate.yaml
+    TreasureTitlesFinancialTransactionTax:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTax.yaml
+    TreasureTitlesFinancialTransactionTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTaxAmount.yaml
+    TreasureTitlesFinancialTransactionTaxCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTaxCurrency.yaml
+    TreasureTitlesFinancialTransactionTaxFinancialTransactionTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTaxFinancialTransactionTaxAmount.yaml  
+    TreasureTitlesGrossAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesGrossAmount.yaml
+    TreasureTitlesGrossAmountAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesGrossAmountAmount.yaml   
+    TreasureTitlesIdentifyProduct:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIdentifyProduct.yaml     
+    TreasureTitlesIncomeTax:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTax.yaml
+    TreasureTitlesIncomeTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTaxAmount.yaml     
+    TreasureTitlesIncomeTaxCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTaxCurrency.yaml   
+    TreasureTitlesIncomeTaxIncomeTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTaxIncomeTaxAmount.yaml
+    TreasureTitlesIndexer:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIndexer.yaml
+    TreasureTitlesIndexerAdditionalInfo:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIndexerAdditionalInfo.yaml
+    TreasureTitlesInvestmentId:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesInvestmentId.yaml        
+    TreasureTitlesIsinCode:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIsinCode.yaml
+    TreasureTitlesMetaTransaction:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesMetaTransaction.yaml      
+    TreasureTitlesNetAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesNetAmount.yaml
+    TreasureTitlesNetAmountAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesNetAmountAmount.yaml
+    TreasureTitlesPostFixedIndexerPercentage:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPostFixedIndexerPercentage.yaml
+    TreasureTitlesPreFixedRate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPreFixedRate.yaml          
+    TreasureTitlesProductName:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesProductName.yaml
+    TreasureTitlesPurchaseDate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPurchaseDate.yaml        
+    TreasureTitlesPurchaseUnitPrice:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPurchaseUnitPrice.yaml   
+    TreasureTitlesQuantity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesQuantity.yaml
+    TreasureTitlesRatePeriodicity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesRatePeriodicity.yaml
+    TreasureTitlesReferenceDateTime:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesReferenceDateTime.yaml   
+    TreasureTitlesRemuneration:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesRemuneration.yaml        
+    TreasureTitlesRemunerationTransactionRate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesRemunerationTransactionRate.yaml   
+    TreasureTitlesTransactionDate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionDate.yaml     
+    TreasureTitlesTransactionGrossValue:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionGrossValue.yaml
+    TreasureTitlesTransactionGrossValueAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionGrossValueAmount.yaml
+    TreasureTitlesTransactionGrossValueCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionGrossValueCurrency.yaml
+    TreasureTitlesTransactionId:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionId.yaml       
+    TreasureTitlesTransactionNetValue:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionNetValue.yaml 
+    TreasureTitlesTransactionNetValueAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionNetValueAmount.yaml
+    TreasureTitlesTransactionNetValueCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionNetValueCurrency.yaml
+    TreasureTitlesTransactionQuantity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionQuantity.yaml 
+    TreasureTitlesTransactionsLinks:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionsLinks.yaml   
+    TreasureTitlesTransactionType:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionType.yaml     
+    TreasureTitlesTransactionUnitePrice:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionUnitePrice.yaml
+    TreasureTitlesTransactionUnitePriceAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionUnitePriceAmount.yaml
+    TreasureTitlesTransactionUnitePriceCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionUnitePriceCurrency.yaml
+    TreasureTitlesType:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesType.yaml
+    TreasureTitlesUpdatedUnitPrice:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesUpdatedUnitPrice.yaml    
+    TreasureTitlesVoucherPaymentIndicator:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesVoucherPaymentIndicator.yaml
+    TreasureTitlesVoucherPaymentPeriodicity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesVoucherPaymentPeriodicity.yaml
+    TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo.yaml
   securitySchemes:
     OpenId:
       type: openIdConnect
@@ -342,7 +470,15 @@ components:
     xFapiCustomerIpAddress:
       $ref: ./parameters/XFapiCustomerIpAddress.yaml
     xFapiInteractionId:
-      $ref: ./parameters/XFapiInteractionId.yaml
+      $ref: ./parameters/XFapiInteractionIdTrue.yaml
+    fromTransactionDate:
+      $ref: ./parameters/FromTransactionDate.yaml
+    fromTransactionDateMaxLimited:
+      $ref: ./parameters/FromTransactionDateMaxLimited.yaml
+    toTransactionDate:
+      $ref: ./parameters/ToTransactionDate.yaml
+    toTransactionDateMaxLimited:
+      $ref: ./parameters/ToTransactionDateMaxLimited.yaml
   responses:
     OkResponseTreasureTitlesBalances:
       description: Dados obtidos com sucesso
@@ -373,7 +509,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovementCurrent.yaml
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovement.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
@@ -429,6 +565,6 @@ components:
     UnprocessableEntityWithAdditionalProperties:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesUnprocessableEntity.yaml
     DefaultWithAdditionalProperties:
-      $ref: ./schemas/treasure_titles_apis/TreasureTitlesDefault.yaml
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesDefault.yaml 
     SiteIsOverloadedWithAdditionalProperties:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesSiteIsOverloaded.yaml 

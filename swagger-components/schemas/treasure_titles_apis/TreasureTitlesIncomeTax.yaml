@@ -1,0 +1,13 @@
+description: |
+  Valor do imposto provisionado considerando a alíquota vigente na data de referência
+  
+  [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+type: 'object'
+required:
+  - 'amount'
+  - 'currency'
+properties:
+  amount:
+    $ref: './TreasureTitlesIncomeTaxAmount.yaml'
+  currency:
+    $ref: './TreasureTitlesCurrency.yaml'
