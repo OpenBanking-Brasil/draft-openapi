@@ -1,0 +1,86 @@
+type: object
+required:
+  - type
+  - transactionType
+  - transactionDate
+  - transactionUnitPrice
+  - transactionQuantity
+  - transactionGrossValue
+  - transactionNetValue
+  - transactionId
+properties:
+  type:
+    $ref: ./EnumType.yaml
+  transactionType:
+    $ref: ./EnumTransactionType.yaml
+  typeAdditionalInfo:
+    $ref: ./TypeAdditionalInfo.yaml
+  transactionDate:
+    $ref: ./TransactionDate.yaml
+  transactionUnitPrice:
+    type: object
+    description: valor unitário negociado com o cliente na data de aquisição
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        pattern: '^\d{1,15}\.\d{2,8}$'
+        maxLength: 24
+        minLength: 4
+        example: '1000.000004'
+        description: 'Valor relacionado ao objeto.'
+      currency:
+        $ref: ./Currency.yaml
+  transactionQuantity:
+    $ref: ./TransactionQuantity.yaml
+  transactionGrossValue:
+    $ref: ./TransactionGrossValue.yaml
+  incomeTax:
+    type: object
+    description: |
+      Valor do imposto de renda recolhido na transação.               
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        maxLength: 20
+        minLength: 4
+        example: '1000.04'
+        description: 'Valor relacionado ao objeto.'
+      currency:
+        $ref: ./Currency.yaml
+  financialTransactionTax:
+    type: object
+    description: |
+      Valor do IOF recolhido na transação.                  
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'. 
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        maxLength: 20
+        minLength: 4
+        example: '1000.04'
+        description: 'Valor relacionado ao objeto.'
+      currency:
+        $ref: ./Currency.yaml
+  transactionNetValue:
+    $ref: ./TransactionNetValue.yaml
+  remunerationTransactionRate:
+    $ref: ./RemunerationTransactionRate.yaml
+  indexerPercentage:
+    $ref: ./IndexerPercentage.yaml
+  transactionId:
+    $ref: ./TransactionId.yaml

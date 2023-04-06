@@ -1,0 +1,25 @@
+type: object
+description: valor bruto unitário atualizado na data de referência;
+required:
+  - amount
+  - currency
+  - quantity
+properties:
+  amount:
+    type: string
+    format: double
+    pattern: '^-?\d{1,15}\.\d{2,6}$'
+    maxLength: 23
+    minLength: 4
+    example: '-1000.0400'
+    description: 'Valor relacionado ao objeto.'
+  currency:
+    $ref: ./Currency.yaml
+  quantity:
+    type: string
+    format: double
+    description: "quantidade de títulos detidos na data da posição do cliente "
+    maxLength: 24
+    minLength: 4
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    example: '15.00'
