@@ -2,6 +2,9 @@ type: object
 description: Período de concessão do benefício
 required:
   - incomeModalities
+  - interestRate
+  - updateIndex
+  - reversalFinancialResults
 properties:
   incomeModalities:
     type: array
@@ -16,17 +19,19 @@ properties:
   interestRate:
     type: string
     maxLength: 8
-    pattern: '^[0-1]\.\d{6}$'
+    minLength: 8
+    pattern: '^\d{1}\.\d{6}$'
     description: Taxa de juros garantida utilizada para conversão em renda. Em %
-    example: '0.225222'
+    example: '0.019800'
   updateIndex:
     $ref: ../../enum/EnumPensionUpdateIndex.yaml
   reversalFinancialResults:
     type: string
     maxLength: 8
-    pattern: '^[0-1]\.\d{6}$'
+    minLength: 8
+    pattern: '^\d{1}\.\d{6}$'
     description: Percentual de reversão de excedente financeiro na concessão. Em %.
-    example: '1.252111'
+    example: '0.019800'
   investmentFunds:
     type: array
     items:

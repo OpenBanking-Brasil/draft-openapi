@@ -9,14 +9,16 @@ properties:
     $ref: ../enum/EnumAcquiringServicesInterval.yaml
   value:
     type: string
-    example: "0.0203"
-    maxLength: 6
-    pattern: '^\d{1}\.\d{1,4}$'
-    description: Mediana referente a cada intervalo.
+    example: "0.019800"
+    minLength: 8
+    maxLength: 8
+    pattern: '^\d{1}\.\d{6}$'
+    description: Mediana referente a taxa de desconto de débito ou crédito a cada intervalo.
   customerRate:
     type: string
-    example: "0.5000"
-    maxLength: 6
-    pattern: '^\d{1}\.\d{1,4}$'
+    example: "0.019800"
+    minLength: 8
+    maxLength: 8
+    pattern: '^\d{1}\.\d{6}$'
     description: Percentual de cliente em cada intervalo.
 additionalProperties: false

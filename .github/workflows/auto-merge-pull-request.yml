@@ -1,0 +1,16 @@
+name: Auto merge em pull request na branch homologao-interno
+on:
+  pull_request:
+    branches:
+      - Homologacao-interno
+    types:
+      - opened
+jobs:
+  merge_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Realizando merge
+        env: 
+          GH_TOKEN: ${{ secrets.AREADEV_INTEGRATION }}
+        run: gh pr merge ${{ github.event.pull_request.number }} --merge

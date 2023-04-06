@@ -8,10 +8,11 @@ properties:
     $ref: ./MinDeductibleAmount.yaml
   insuredMandatoryParticipationPercentage:
     type: string
-    pattern: '^\d\.\d{6}$'
     description: "Participação Obrigatória é o valor ou percentual definido na apólice referente à responsabilidade do Segurado nos prejuízos indenizáveis decorrentes de sinistros cobertos. (Circular SUSEP 347/07). Listagem de percentual de franquia e/ou Percentual Participação Obrigatória do Segurado estabelecida pela sociedade para cada tipo de cobertura do produto. Observação: Sugestão de Criação do campo em substituição ao campo abaixo ‘Valor Máximo de Franquia’."
+    pattern: '^\d{1}\.\d{6}$'
     maxLength: 8
-    example: '0.000002'
+    minLength: 8
+    example: '0.019800'
 additionalProperties: false
 
 

@@ -43,6 +43,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
   /homes:
     get:
       tags:
@@ -66,6 +68,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
   /personals:
     get:
       tags:
@@ -89,11 +93,13 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
 components:
   schemas:
     # Início schemas comuns
     Participant:
-      $ref: ./schemas/business_commons/Participant.yaml
+      $ref: ./schemas/insurances_apis/Participant.yaml
     Society:
       $ref: ./schemas/business_commons/Society.yaml
     CnpjNumber:
@@ -244,7 +250,6 @@ components:
     EnumPersonalInsurancePremiumPaymentFrequency:
       $ref: ./schemas/enum/EnumPersonalInsurancePremiumPaymentFrequency.yaml
     # Fim personal schemas
-
     Links:
       $ref: ./schemas/Links.yaml
     Meta:
@@ -300,8 +305,14 @@ components:
           schema:
             $ref: ./schemas/ResponseError.yaml
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/ResponseError.yaml
+    SiteIsOverloaded:
+      description: "O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
