@@ -207,31 +207,31 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseTreasureTitlesProductMovement'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/Forbidden'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowed'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/Locked'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerError'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -241,7 +241,7 @@ paths:
   '/investments/{investmentId}/transactions-current':
     get:
       tags:
-        - Transactions
+        - Transactions Current
       summary: 'Obtém as movimentações recentes da operação de Títulos do Tesouro Direto identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).'
       operationId: treasureTitlesGetInvestmentsInvestmentIdTransactionsCurrent
       description: 'Obtém as movimentações recentes da operação de Títulos do Tesouro Direto identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).'
@@ -261,31 +261,31 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseTreasureTitlesProductMovementCurrent'
         '400':
-          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequest'
         '401':
-          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/Forbidden'
         '404':
-          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFound'
         '405':
-          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowed'
         '406':
-          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntity'
         '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
+          $ref: '#/components/responses/Locked'
         '429':
-          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequests'
         '500':
-          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerError'
         '504':
-          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeout'
         '529':
-          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloaded'
         default:
-          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+          $ref: '#/components/responses/Default'
       security:
         - OpenId:
             - openid
@@ -404,6 +404,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/ResponseTreasureTitlesListProductData'
         links:
@@ -413,7 +414,24 @@ components:
       additionalProperties: false
     EnumInvestmentsFixedIncomeBankIndexer:
       type: string
-      description: 'Índice utilizado como referência para a correção da rentabilidade e/ou rendimentos do ativo (p.ex. CDI).<br><br>Pré-fixado, em linha com padronização da B3&#58;<br><br><ol><li>CDI</li><li>DI</li><li>TR</li><li>IPCA</li><li>IGP-M</li><li>IGP-DI</li><li>INPC</li><li>BCP</li><li>TLC</li><li>Selic</li><li>PRE_FIXADO</li><li>Outros</li></ol>'
+      description: |
+        – Qualquer operação com taxa mista em CDI, DI, SELIC deverá ser ignorada - serão consideradas apenas taxas sem cupom  
+        – No caso do pré-fixado será utilizado apenas o cupom, mesmo que haja outro indexador misturado  
+        – No caso de TR, IPCA, IGP_M, IGP_DI, INPC, BCP, TLC E OUTROS, o cálculo será feito em cima do cupom (mesmo que ele seja zero), desconsiderando as operações que tenham indexador diferente de 100%
+
+        Regras de cálculo por indexador  
+        ▪ CDI = % DO CDI  
+        ▪ DI = % DO DI  
+        ▪ TR = TR + CUPOM  
+        ▪ IPCA = IPCA + CUPOM  
+        ▪ IGP_M = IGP_M + CUPOM  
+        ▪ IGP_DI = IGP_DI + CUPOM  
+        ▪ INPC = INPC + CUPOM  
+        ▪ BCP = BCP + CUPOM  
+        ▪ TLC = TLC + CUPOM  
+        ▪ SELIC = % DO SELIC  
+        ▪ PRE_FIXADO = CUPOM  
+        ▪ OUTROS = Indexador + Cupom
       enum:
         - CDI
         - DI
@@ -534,7 +552,19 @@ components:
         incomeTax:
           $ref: '#/components/schemas/TreasureTitlesIncomeTax'
         financialTransactionTax:
-          $ref: '#/components/schemas/TreasureTitlesFinancialTransactionTax'
+          description: |
+            IOF provisionado
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+          type: object
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              $ref: '#/components/schemas/TreasureTitlesFinancialTransactionTaxAmount'
+            currency:
+              $ref: '#/components/schemas/TreasureTitlesCurrency'
         transactionNetValue:
           $ref: '#/components/schemas/TreasureTitlesTransactionNetValue'
         remunerationTransactionRate:
@@ -580,7 +610,10 @@ components:
         - meta
       properties:
         data:
-          $ref: '#/components/schemas/TreasureTitlesProductMovement'
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/TreasureTitlesProductMovement'
         links:
           $ref: '#/components/schemas/TreasureTitlesLinks'
         meta:
@@ -594,7 +627,10 @@ components:
         - meta
       properties:
         data:
-          $ref: '#/components/schemas/TreasureTitlesProductMovement'
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/TreasureTitlesProductMovement'
         links:
           $ref: '#/components/schemas/TreasureTitlesLinks'
         meta:
@@ -661,7 +697,6 @@ components:
         Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no
         campo do diretório Customer Friendly Server Name (Authorisation Server).'
       maxLength: 80
-      minLength: 0
       pattern: '[\w\W\s]*'
       example: Organização A
       type: string
@@ -678,7 +713,6 @@ components:
         o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
         Deve-se ter apenas os números do CNPJ, sem máscara'
       maxLength: 14
-      minLength: 0
       pattern: '^\d{14}$'
       example: '21128159000166'
       type: string
@@ -776,7 +810,10 @@ components:
         voucherPaymentPeriodicityAdditionalInfo:
           $ref: '#/components/schemas/TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo'
     TreasureTitlesIncomeTax:
-      description: Valor do imposto provisionado considerando a alíquota vigente na data de referência
+      description: |
+        Valor do imposto provisionado considerando a alíquota vigente na data de referência
+
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
       type: object
       required:
         - amount
@@ -838,7 +875,6 @@ components:
         produto, mantendo as regras de imutabilidade dentro da instituição
         transmissora.'
       maxLength: 100
-      minLength: 0
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
       example: '92792126019929200000000000000000000000000'
       type: string
@@ -965,7 +1001,10 @@ components:
         calculation:
           $ref: '#/components/schemas/TreasureTitlesCalculation'
     TreasureTitlesRemunerationTransactionRate:
-      description: Taxa de remuneração da movimentação
+      description: |
+        Taxa de remuneração da movimentação
+
+        Preenchimento obrigatório nos eventos de entrada
       maxLength: 8
       pattern: '^\d{1}\.\d{6}$'
       example: '0.300000'
@@ -979,7 +1018,10 @@ components:
       type: string
       format: date
     TreasureTitlesTransactionGrossValue:
-      description: Valor bruto da movimentação
+      description: |
+        Valor bruto da movimentação
+
+        Nos casos em que se tratar de movimento de saída e a instituição não tiver a informação de IR recolhido na fonte, o valor bruto e o valor líquido expostos deverão ser iguais
       type: object
       required:
         - amount
@@ -1009,7 +1051,10 @@ components:
       example: ABCD2126019929279212650822221989319253344
       type: string
     TreasureTitlesTransactionNetValue:
-      description: Valor líquido da transação
+      description: |
+        Valor líquido da transação
+
+        Nos casos em que se tratar de movimento de saída e a instituição não tiver a informação de IR recolhido na fonte, o valor bruto e o valor líquido expostos deverão ser iguais
       type: object
       required:
         - amount
@@ -1145,7 +1190,7 @@ components:
     InvestmentId:
       name: investmentId
       in: path
-      description: Identificador.
+      description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
       required: true
       schema:
         type: string
@@ -1374,6 +1419,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntity:
       description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Default:
+      description: Erro inesperado.
       content:
         application/json; charset=utf-8:
           schema:
