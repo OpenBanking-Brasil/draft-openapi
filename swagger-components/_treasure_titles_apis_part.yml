@@ -75,9 +75,8 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - 'openid'     
-          OAuth2Security:
             - 'consent:consentId'
             - 'treasure-titles' 
 
@@ -125,10 +124,10 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-          - OAuth2AuthorizationCode:
-            - 'openid'     
-            - 'consent:consentId'
-            - 'treasure-titles' 
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles' 
 
   /investments/{investmentId}/balances:
     get:
@@ -181,10 +180,10 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-          - OAuth2AuthorizationCode:
-            - 'openid'     
-            - 'consent:consentId'
-            - 'treasure-titles'     
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles'     
             
   /investments/{investmentId}/transactions:
     get:
@@ -235,10 +234,10 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-          - OAuth2AuthorizationCode:
-            - 'openid'     
-            - 'consent:consentId'
-            - 'treasure-titles' 
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles' 
 
   /investments/{investmentId}/transactions-current:
     get:
@@ -289,10 +288,10 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-          - OAuth2AuthorizationCode:
-            - 'openid'     
-            - 'consent:consentId'
-            - 'treasure-titles' 
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles' 
 components:
   schemas:
     LockedWithAdditionalProperties:
@@ -436,9 +435,6 @@ components:
     TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo.yaml
   securitySchemes:
-    OpenId:
-      type: openIdConnect
-      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
     OAuth2AuthorizationCode:
       type: oauth2
       description: "Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados."
