@@ -1,0 +1,11 @@
+description: 'Valor não disponível para movimentação naquele momento por
+  qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros)'
+type: 'object'
+required:
+  - 'amount'
+  - 'currency'
+properties:
+  amount:
+    $ref: './TreasureTitlesBlockedBalanceAmount.yaml'
+  currency:
+    $ref: './TreasureTitlesCurrency.yaml'
