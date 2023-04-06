@@ -1,0 +1,19 @@
+description: 'Objeto para detalhamento de remuneração do titulo'
+type: 'object'
+required:
+  - 'indexer'
+  - 'ratePeriodicity'
+  - 'calculation'
+properties:
+  indexer:
+    $ref: './TreasureTitlesIndexer.yaml'
+  indexerAdditionalInfo:
+    $ref: './TreasureTitlesIndexerAdditionalInfo.yaml'
+  preFixedRate:
+    $ref: './TreasureTitlesPreFixedRate.yaml'
+  postFixedIndexerPercentage:
+    $ref: './TreasureTitlesPostFixedIndexerPercentage.yaml'
+  ratePeriodicity:
+    $ref: './TreasureTitlesRatePeriodicity.yaml'
+  calculation:
+    $ref: './TreasureTitlesCalculation.yaml'
