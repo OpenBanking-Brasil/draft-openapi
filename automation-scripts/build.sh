@@ -8,24 +8,29 @@ GENERATED_SWAGGERS_TO_GEN_DICTIONARIES_PATH=
 TEMP_GEN_DICTIONARY_DIR=$PROJECT_ROOT_DIR/temp-dict-dir
 chmod + $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator
 mkdir $TEMP_GEN_DICTIONARY_DIR
+
 APIS=(
  # "accounts"
-  "acquiring_services"
-  "capitalization_bonds"
+ # "acquiring_services"
+ # "capitalization_bonds"
  # "consents"
  # "credit_cards"
  # "customers"
-  "exchange"
+ # "exchange"
  # "financings"
-  "insurances"
-  "investments"
- # "invoice_financings"
- # "loans"
-  "payments"
-  "pension"
- # "resources"
- # "unarranged_accounts_overdraft"
+ # "insurances"
+ # "investments"
+  #"invoice_financings"
+  #"loans"
+  #"payments"
+  #"pension"
+  #"resources"
+  #"unarranged_accounts_overdraft"
+  #"credit_fixed_incomes"
+ # "bank_fixed_incomes"
+  "treasure_titles"
 )
+
 function genSwaggerFiles(){
     WITH_REF=$1
     API=$2
@@ -40,16 +45,28 @@ function genSwaggerFiles(){
       --outfile "$API_FOLDER_BASE_PATH/$API_VERSION.yml" --type=yaml
     swagger-cli validate ${GENERATED_SWAGGERS_PATH}/$API_FOLDER_NAME/$API_VERSION.yml
 
+    echo '#### Validations ####'
+    RETORNO=`python3 -m openapi_spec_validator "${GENERATED_SWAGGERS_PATH}/$API_FOLDER_NAME/$API_VERSION.yml"`
+    echo $RETORNO
+    echo '#### End Validations ####'
+    
     sed -i '1s/^\(\xef\xbb\xbf\)\?/\xef\xbb\xbf/' $API_FOLDER_BASE_PATH/$API_VERSION.yml
 
-    if [[ $WITH_REF == 1 ]]
+    if [[ $RETORNO == "OK" ]]
     then
-      ruby $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator ${OPTIONS- } \
-      -f "$API_FOLDER_BASE_PATH/$API_VERSION.yml" \
-      -o $DICT_PATH
-      echo $DICT_PATH
+
+      echo "Starting dictionary"
+
+      if [[ $WITH_REF == 1 ]]
+      then
+        ruby $PROJECT_ROOT_DIR/automation-scripts/dictionary_generator ${OPTIONS- } \
+        -f "$API_FOLDER_BASE_PATH/$API_VERSION.yml" \
+        -o $DICT_PATH
+        echo $DICT_PATH
+      fi
     fi
 }
+
 for API in "${APIS[@]}"
 do
  genSwaggerFiles 0 $API
