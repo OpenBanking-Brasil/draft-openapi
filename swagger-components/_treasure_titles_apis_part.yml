@@ -206,7 +206,7 @@ paths:
        - $ref: '#/components/parameters/toTransactionDate'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseTreasureTitlesProductMovement'
+          $ref: '#/components/responses/ResponseTreasureTitlesProductTransactions'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -260,7 +260,7 @@ paths:
        - $ref: '#/components/parameters/toTransactionDateMaxLimited'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseTreasureTitlesProductMovementCurrent'
+          $ref: '#/components/responses/ResponseTreasureTitlesProductTransactionsCurrent'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -313,15 +313,15 @@ components:
     TreasureTitlesProductMovement:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesProductMovement.yaml
     ResponseTreasureTitlesIdentifyProduct:
-      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesIdentifyProduct.yaml
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProduct.yaml
     ResponseTreasureTitlesListProductData:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesListProductData.yaml
     ResponseTreasureTitlesProductList:
       $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductList.yaml
     ResponseTreasureTitlesProductMovement:
-      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovement.yaml
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactions.yaml
     ResponseTreasureTitlesProductMovementCurrent:
-      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovementCurrent.yaml
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactionsCurrent.yaml
     TreasureTitlesAmount:
       $ref: ./schemas/treasure_titles_apis/TreasureTitlesAmount.yaml
     TreasureTitlesBalances:
@@ -489,19 +489,19 @@ components:
       content:
         application/json:
           schema:
-            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesIdentifyProduct.yaml
-    ResponseTreasureTitlesProductMovement:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProduct.yaml
+    ResponseTreasureTitlesProductTransactions:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovement.yaml
-    ResponseTreasureTitlesProductMovementCurrent:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactions.yaml
+    ResponseTreasureTitlesProductTransactionsCurrent:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductMovement.yaml
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactions.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:

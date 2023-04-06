@@ -202,7 +202,7 @@ paths:
         - $ref: '#/components/parameters/toTransactionDate'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseTreasureTitlesProductMovement'
+          $ref: '#/components/responses/ResponseTreasureTitlesProductTransactions'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -255,7 +255,7 @@ paths:
         - $ref: '#/components/parameters/toTransactionDateMaxLimited'
       responses:
         '200':
-          $ref: '#/components/responses/ResponseTreasureTitlesProductMovementCurrent'
+          $ref: '#/components/responses/ResponseTreasureTitlesProductTransactionsCurrent'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1130,7 +1130,10 @@ components:
       example: BRL
       type: string
     TreasureTitlesType:
-      description: Tipo de movimentação na visão de investimento (Nos casos de pagamento de juros e amortização) fica convencionado que será considerado que o tipo de movimento será saída)
+      description: |
+        Tipo de movimentação na visão de investimento (Nos casos de
+        pagamento de juros e amortização) fica convencionado que será considerado que
+        o tipo de movimento será saída
       example: ENTRADA
       enum:
         - ENTRADA
@@ -1347,13 +1350,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseTreasureTitlesIdentifyProduct'
-    ResponseTreasureTitlesProductMovement:
+    ResponseTreasureTitlesProductTransactions:
       description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseTreasureTitlesProductMovement'
-    ResponseTreasureTitlesProductMovementCurrent:
+    ResponseTreasureTitlesProductTransactionsCurrent:
       description: Dados obtidos com sucesso.
       content:
         application/json:
