@@ -123,9 +123,8 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
             - treasure-titles
   '/investments/{investmentId}/balances':
@@ -179,9 +178,8 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
             - treasure-titles
   '/investments/{investmentId}/transactions':
@@ -233,9 +231,8 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
             - treasure-titles
   '/investments/{investmentId}/transactions-current':
@@ -287,9 +284,8 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OpenId:
+        - OAuth2AuthorizationCode:
             - openid
-          OAuth2Security:
             - 'consent:consentId'
             - treasure-titles
 components:
@@ -550,10 +546,22 @@ components:
         transactionGrossValue:
           $ref: '#/components/schemas/TreasureTitlesTransactionGrossValue'
         incomeTax:
-          $ref: '#/components/schemas/TreasureTitlesIncomeTax'
+          description: |
+            Valor do imposto de renda recolhido na transação
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+          type: object
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              $ref: '#/components/schemas/TreasureTitlesIncomeTaxAmount'
+            currency:
+              $ref: '#/components/schemas/TreasureTitlesCurrency'
         financialTransactionTax:
           description: |
-            IOF provisionado
+            Valor do IOF recolhido na transação
 
             [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
           type: object
@@ -812,8 +820,6 @@ components:
     TreasureTitlesIncomeTax:
       description: |
         Valor do imposto provisionado considerando a alíquota vigente na data de referência
-
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
       type: object
       required:
         - amount
@@ -1177,7 +1183,7 @@ components:
     OpenId:
       type: openIdConnect
       openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
-    OAuth2Security:
+    OAuth2AuthorizationCode:
       type: oauth2
       description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
       flows:
