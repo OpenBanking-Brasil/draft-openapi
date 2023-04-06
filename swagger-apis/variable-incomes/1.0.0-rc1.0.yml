@@ -97,7 +97,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -145,7 +145,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -193,7 +193,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -246,7 +246,7 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -299,7 +299,7 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -348,7 +348,7 @@ paths:
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
             - openid
             - 'consent:consentId'
             - variable-incomes
@@ -512,8 +512,6 @@ components:
           format: double
           description: |
             Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
-
-            [Restrição] Valor mínimo 1.
           pattern: '^\d{1,15}\.\d{2,8}$'
           maxLength: 24
           example: '100.0005'
@@ -567,8 +565,6 @@ components:
           format: double
           description: |
             Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
-
-            [Restrição] Valor mínimo 1.
           pattern: '^\d{1,15}\.\d{2,8}$'
           maxLength: 24
           example: '100.0005'
@@ -678,8 +674,6 @@ components:
           format: double
           description: |
             Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
-
-            [Restrição] Valor mínimo 1.
           pattern: '^\d{1,15}\.\d{2,8}$'
           maxLength: 24
           example: '100.0005'
@@ -1372,7 +1366,7 @@ components:
         maxLength: 100
         example: '92792126019929200000000000000000000000000'
   securitySchemes:
-    OAuth2Security:
+    OAuth2AuthorizationCode:
       type: oauth2
       description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
       flows:
