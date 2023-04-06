@@ -5,7 +5,10 @@ required:
   - meta
 properties:
   data:
-    $ref: ./TreasureTitlesProductMovement.yaml
+    type: array
+    minItems: 0
+    items:
+      $ref: ./TreasureTitlesProductMovement.yaml
   links:
     $ref: ./TreasureTitlesTransactionsLinks.yaml
   meta:
