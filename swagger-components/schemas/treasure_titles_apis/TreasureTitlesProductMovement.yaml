@@ -13,6 +13,15 @@ properties:
     $ref: './TreasureTitlesType.yaml' 
   transactionType:
     $ref: './TreasureTitlesTransactionType.yaml'
+  typeAdditionalInfo:
+    description: |
+      Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações nãodelimitadas no domínio
+
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
+    maxLength: 100
+    pattern: '[\w\W\s]*'
+    example: ''
+    type: 'string'
   transactionDate:
     $ref: './TreasureTitlesTransactionDate.yaml'
   transactionUnitePrice:
@@ -31,13 +40,4 @@ properties:
     $ref: './TreasureTitlesRemunerationTransactionRate.yaml'
   transactionId:
     $ref: './TreasureTitlesTransactionId.yaml'
-  typeAdditionalInfo:
-    description: |
-      Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações nãodelimitadas no domínio
-
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
-    maxLength: 100
-    pattern: '[\w\W\s]*'
-    example: ''
-    type: 'string'
 

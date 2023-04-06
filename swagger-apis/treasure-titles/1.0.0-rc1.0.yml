@@ -536,6 +536,15 @@ components:
           $ref: '#/components/schemas/TreasureTitlesType'
         transactionType:
           $ref: '#/components/schemas/TreasureTitlesTransactionType'
+        typeAdditionalInfo:
+          description: |
+            Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações nãodelimitadas no domínio
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+          example: ''
+          type: string
         transactionDate:
           $ref: '#/components/schemas/TreasureTitlesTransactionDate'
         transactionUnitePrice:
@@ -578,15 +587,6 @@ components:
           $ref: '#/components/schemas/TreasureTitlesRemunerationTransactionRate'
         transactionId:
           $ref: '#/components/schemas/TreasureTitlesTransactionId'
-        typeAdditionalInfo:
-          description: |
-            Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações nãodelimitadas no domínio
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
-          maxLength: 100
-          pattern: '[\w\W\s]*'
-          example: ''
-          type: string
     ResponseTreasureTitlesIdentifyProduct:
       type: object
       required:

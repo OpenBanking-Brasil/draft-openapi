@@ -14,6 +14,11 @@ AMORTIZACAO
 TRANSFERENCIA_TITULARIDADE 
 TRANSFERENCIA_CUSTODIA 
 OUTROS";1;1;"";Não permitido;string;AMORTIZACAO;
+/data/typeAdditionalInfo;typeAdditionalInfo;"Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações nãodelimitadas no domínio
+
+[Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
+";Texto;100;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
+";Não permitido;string;"";
 /data/transactionDate;transactionDate;Data da movimentação;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
 /data/transactionUnitePrice;transactionUnitePrice;Preço unitário bruto negociado na transação ;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/transactionUnitePrice/amount;amount;Valor relacionado ao objeto;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.04;
@@ -48,8 +53,3 @@ Nos casos em que se tratar de movimento de saída e a instituição não tiver a
 /data/remunerationTransactionRate;remunerationTransactionRate;"Taxa de remuneração da movimentação
 ";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.300000;
 /data/transactionId;transactionId;Código ou identificador único prestado pela instituição para individualizar o movimento;Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;1;1;"";Não permitido;string;ABCD2126019929279212650822221989319253344;
-/data/typeAdditionalInfo;typeAdditionalInfo;"Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações nãodelimitadas no domínio
-
-[Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
-";Texto;100;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
-";Não permitido;string;"";
