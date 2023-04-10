@@ -50,6 +50,8 @@ paths:
          - $ref: '#/components/parameters/pageSize'
          - $ref: '#/components/parameters/pagination-key'
       responses:
+        '200':
+          $ref: '#/components/responses/OkResponseFundsProductList'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -77,10 +79,10 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
-          - 'variable-incomes'
+          - 'funds'
   /investments/{investmentId}:
     get:
       tags:
@@ -123,10 +125,10 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
-          - 'variable-incomes'
+          - 'funds'
   /investments/{investmentId}/balances:
     get:
       tags:
@@ -169,10 +171,10 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
-          - 'variable-incomes'
+          - 'funds'
   /investments/{investmentId}/transactions:
     get:
       tags:
@@ -220,10 +222,10 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
-          - 'variable-incomes'
+          - 'funds'
   /investments/{investmentId}/transactions-current:
     get:
       tags:
@@ -271,11 +273,20 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
-          - 'variable-incomes'
+          - 'funds'
 components:
+  schemas:
+    ResponseFundsProductList:
+      $ref: ./schemas/funds_apis/ResponseFundsProductList.yaml
+    ResponseFundsProductListData:
+      $ref: ./schemas/funds_apis/ResponseFundsProductListData.yaml
+    FundsMeta:
+      $ref: ./schemas/funds_apis/FundsMeta.yaml
+    FundsLinks:
+      $ref: ./schemas/funds_apis/FundsLinks.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/funds_apis/InvestmentId.yaml
@@ -304,7 +315,7 @@ components:
     toTransactionDateCurrent:
       $ref: ./parameters/ToTransactionDateMaxLimited.yaml
   securitySchemes:
-    OAuth2Security:
+    OAuth2AuthorizationCode:
       type: oauth2
       description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
       flows:
@@ -312,8 +323,14 @@ components:
           authorizationUrl: 'https://authserver.example/authorization'
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            variable-Incomes: Escopo necessário para acesso à API Variable-Incomes. O controle dos endpoints específicos é feito via permissions.
+            funds: Escopo necessário para acesso à API funds. O controle dos endpoints específicos é feito via permissions.
   responses:
+    OkResponseFundsProductList:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsProductList.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
