@@ -146,6 +146,8 @@ paths:
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/ResponseFundsBalances'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -285,14 +287,30 @@ components:
       $ref: ./schemas/funds_apis/ResponseFundsProductList.yaml
     ResponseFundsProductIdentification:
       $ref: ./schemas/funds_apis/ResponseFundsProductIdentification.yaml
+    ResponseFundsBalances:
+      $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
     ResponseFundsProductListData:
       $ref: ./schemas/funds_apis/ResponseFundsProductListData.yaml
     ResponseFundsProductIdentificationData:
       $ref: ./schemas/funds_apis/ResponseFundsProductIdentificationData.yaml
+    ResponseFundsBalanceData:
+      $ref: ./schemas/funds_apis/ResponseFundsBalanceData.yaml
     FundsMeta:
       $ref: ./schemas/funds_apis/FundsMeta.yaml
     FundsLinks:
       $ref: ./schemas/funds_apis/FundsLinks.yaml
+    FundsBalancesBlockedAmount:
+      $ref: ./schemas/funds_apis/FundsBalancesBlockedAmount.yaml
+    FundsBalancesFinancialTransactionTaxProvision:
+      $ref: ./schemas/funds_apis/FundsBalancesFinancialTransactionTaxProvision.yaml
+    FundsBalancesGrossAmount:
+      $ref: ./schemas/funds_apis/FundsBalancesGrossAmount.yaml
+    FundsBalancesIncomeTaxProvision:
+      $ref: ./schemas/funds_apis/FundsBalancesIncomeTaxProvision.yaml
+    FundsBalancesNetAmount:
+      $ref: ./schemas/funds_apis/FundsBalancesNetAmount.yaml
+    FundsBalancesQuotaGrossPriceValue:
+      $ref: ./schemas/funds_apis/FundsBalancesQuotaGrossPriceValue.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/funds_apis/InvestmentId.yaml
@@ -343,6 +361,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/funds_apis/ResponseFundsProductIdentification.yaml
+    ResponseFundsBalances:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
