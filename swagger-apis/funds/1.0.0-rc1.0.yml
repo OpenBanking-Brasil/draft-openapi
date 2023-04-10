@@ -146,6 +146,8 @@ paths:
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
+        '200':
+          $ref: '#/components/responses/ResponseFundsBalances'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -312,6 +314,22 @@ components:
         meta:
           $ref: '#/components/schemas/FundsMeta'
       additionalProperties: false
+    ResponseFundsBalances:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseFundsBalanceData'
+        links:
+          $ref: '#/components/schemas/FundsLinks'
+        meta:
+          $ref: '#/components/schemas/FundsMeta'
+      additionalProperties: false
     ResponseFundsProductListData:
       type: object
       description: Lista de fundos de investimento mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
@@ -433,6 +451,45 @@ components:
           maxLength: 70
           pattern: '[\w\W\s]*'
       additionalProperties: false
+    ResponseFundsBalanceData:
+      type: object
+      description: Informações da posição do fundo de investimento a que se refere investmentId.
+      required:
+        - referenceDate
+        - grossAmount
+        - netAmount
+        - incomeTaxProvision
+        - financialTransactionTaxProvision
+        - blockedAmount
+        - quotaQuantity
+        - quotaGrossPriceValue
+      properties:
+        referenceDate:
+          type: string
+          format: date
+          description: data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos.
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-01-07'
+        grossAmount:
+          $ref: '#/components/schemas/FundsBalancesGrossAmount'
+        netAmount:
+          $ref: '#/components/schemas/FundsBalancesNetAmount'
+        incomeTaxProvision:
+          $ref: '#/components/schemas/FundsBalancesIncomeTaxProvision'
+        financialTransactionTaxProvision:
+          $ref: '#/components/schemas/FundsBalancesFinancialTransactionTaxProvision'
+        blockedAmount:
+          $ref: '#/components/schemas/FundsBalancesBlockedAmount'
+        quotaQuantity:
+          type: string
+          format: double
+          description: Quantidade de cotas detidas em posição do cliente .
+          pattern: '^\d{1,15}\.\d{2,8}$'
+          maxLength: 24
+          example: '42.25'
+        quotaGrossPriceValue:
+          $ref: '#/components/schemas/FundsBalancesQuotaGrossPriceValue'
     FundsMeta:
       type: object
       description: Meta informações referente a API requisitada.
@@ -492,6 +549,126 @@ components:
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    FundsBalancesBlockedAmount:
+      type: object
+      description: 'Valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros);'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesFinancialTransactionTaxProvision:
+      type: object
+      description: Valor do imposto considerando a alíquota vigente na data de referência.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado ao objeto.
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          example: '50.02'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesGrossAmount:
+      type: object
+      description: 'Valor do investimento que se refere a quantidade da cota x valor da cota, atualizado na data de referência.'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesIncomeTaxProvision:
+      type: object
+      description: Valor do imposto considerando a alíquota vigente na data de referência.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado ao objeto.
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          example: '50.02'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesNetAmount:
+      type: object
+      description: 'Valor do investimento atualizado na data de referência, posterior a dedução de impostos (IOF e IR) e taxa de saída, caso a instituição considere este valor na composição do saldo líquido.'
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
+    FundsBalancesQuotaGrossPriceValue:
+      type: object
+      description: Valor bruto da cota atualizado na data de referência.
+      required:
+        - amount
+        - currency
+      properties:
+        amount:
+          type: string
+          format: double
+          description: Valor relacionado ao objeto.
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 25
+          example: '1000.04'
+        currency:
+          type: string
+          description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+          pattern: '^[A-Z]{3}$'
+          maxLength: 3
+          example: BRL
   parameters:
     InvestmentId:
       name: investmentId
@@ -655,6 +832,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsProductIdentification'
+    ResponseFundsBalances:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseFundsBalances'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
