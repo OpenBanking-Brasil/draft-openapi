@@ -3,7 +3,7 @@ required:
   - 'type'
   - 'transactionType'
   - 'transactionDate'
-  - 'transactionUnitePrice'
+  - transactionUnitPrice
   - 'transactionQuantity'
   - 'transactionGrossValue'
   - 'transactionNetValue'
@@ -13,7 +13,7 @@ properties:
     $ref: './TreasureTitlesType.yaml' 
   transactionType:
     $ref: './TreasureTitlesTransactionType.yaml'
-  typeAdditionalInfo:
+  transactionTypeAdditionalInfo:
     description: |
       Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não de limitadas no domínio.
 
@@ -24,8 +24,8 @@ properties:
     type: 'string'
   transactionDate:
     $ref: './TreasureTitlesTransactionDate.yaml'
-  transactionUnitePrice:
-    $ref: './TreasureTitlesTransactionUnitePrice.yaml'
+  transactionUnitPrice:
+    $ref: './TreasureTitlesTransactionUnitPrice.yaml'
   transactionQuantity:
     $ref: './TreasureTitlesTransactionQuantity.yaml'
   transactionGrossValue:
