@@ -14,15 +14,15 @@ AMORTIZACAO
 TRANSFERENCIA_TITULARIDADE 
 TRANSFERENCIA_CUSTODIA 
 OUTROS";1;1;"";Não permitido;string;AMORTIZACAO;
-/data/typeAdditionalInfo;typeAdditionalInfo;"Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não de limitadas no domínio.
+/data/transactionTypeAdditionalInfo;transactionTypeAdditionalInfo;"Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não de limitadas no domínio.
 
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
 ";Texto;100;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
 ";Não permitido;string;"";
 /data/transactionDate;transactionDate;Data da movimentação.;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2018-02-15;
-/data/transactionUnitePrice;transactionUnitePrice;Preço unitário bruto negociado na transação.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/transactionUnitePrice/amount;amount;Valor relacionado ao objeto;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.04;
-/data/transactionUnitePrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/transactionUnitPrice;transactionUnitPrice;Preço unitário bruto negociado na transação.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/transactionUnitPrice/amount;amount;Valor relacionado ao objeto;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.04;
+/data/transactionUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/transactionQuantity;transactionQuantity;Quantidade de títulos envolvidos na movimentação.;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;42.25;
 /data/transactionGrossValue;transactionGrossValue;"Valor bruto da movimentação
 

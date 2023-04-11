@@ -526,7 +526,7 @@ components:
         - type
         - transactionType
         - transactionDate
-        - transactionUnitePrice
+        - transactionUnitPrice
         - transactionQuantity
         - transactionGrossValue
         - transactionNetValue
@@ -536,7 +536,7 @@ components:
           $ref: '#/components/schemas/TreasureTitlesType'
         transactionType:
           $ref: '#/components/schemas/TreasureTitlesTransactionType'
-        typeAdditionalInfo:
+        transactionTypeAdditionalInfo:
           description: |
             Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não de limitadas no domínio.
 
@@ -547,7 +547,7 @@ components:
           type: string
         transactionDate:
           $ref: '#/components/schemas/TreasureTitlesTransactionDate'
-        transactionUnitePrice:
+        transactionUnitPrice:
           $ref: '#/components/schemas/TreasureTitlesTransactionUnitePrice'
         transactionQuantity:
           $ref: '#/components/schemas/TreasureTitlesTransactionQuantity'
