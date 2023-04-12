@@ -548,7 +548,7 @@ components:
         transactionDate:
           $ref: '#/components/schemas/TreasureTitlesTransactionDate'
         transactionUnitPrice:
-          $ref: '#/components/schemas/TreasureTitlesTransactionUnitePrice'
+          $ref: '#/components/schemas/TreasureTitlesTransactionUnitPrice'
         transactionQuantity:
           $ref: '#/components/schemas/TreasureTitlesTransactionQuantity'
         transactionGrossValue:
@@ -1119,7 +1119,7 @@ components:
         - TRANSFERENCIA_CUSTODIA
         - OUTROS
       type: string
-    TreasureTitlesTransactionUnitePrice:
+    TreasureTitlesTransactionUnitPrice:
       description: Preço unitário bruto negociado na transação.
       type: object
       required:
@@ -1127,17 +1127,17 @@ components:
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/TreasureTitlesTransactionUnitePriceAmount'
+          $ref: '#/components/schemas/TreasureTitlesTransactionUnitPriceAmount'
         currency:
-          $ref: '#/components/schemas/TreasureTitlesTransactionUnitePriceCurrency'
-    TreasureTitlesTransactionUnitePriceAmount:
+          $ref: '#/components/schemas/TreasureTitlesTransactionUnitPriceCurrency'
+    TreasureTitlesTransactionUnitPriceAmount:
       description: Valor relacionado ao objeto
       maxLength: 24
       pattern: '^\d{1,15}\.\d{2,8}$'
       example: '1000.04'
       type: string
       format: double
-    TreasureTitlesTransactionUnitePriceCurrency:
+    TreasureTitlesTransactionUnitPriceCurrency:
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217'
       maxLength: 3
       pattern: '^[A-Z]{3}$'
