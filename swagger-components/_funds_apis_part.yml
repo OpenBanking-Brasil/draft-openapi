@@ -252,6 +252,8 @@ paths:
         - $ref: '#/components/parameters/fromTransactionDateCurrent'
         - $ref: '#/components/parameters/toTransactionDateCurrent'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactionsCurrent'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -293,6 +295,8 @@ components:
       $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
     ResponseFundsTransactions:
       $ref: ./schemas/funds_apis/ResponseFundsTransactions.yaml
+    ResponseFundsTransactionsCurrent:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactionsCurrent.yaml
     ResponseFundsProductListData:
       $ref: ./schemas/funds_apis/ResponseFundsProductListData.yaml
     ResponseFundsProductIdentificationData:
@@ -301,6 +305,8 @@ components:
       $ref: ./schemas/funds_apis/ResponseFundsBalanceData.yaml
     ResponseFundsTransactionsData:
       $ref: ./schemas/funds_apis/ResponseFundsTransactionsData.yaml
+    ResponseFundsTransactionsCurrentData:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactionsCurrentData.yaml
     MetaSingle:
       $ref: ./schemas/MetaSingle.yaml
     FundsMeta:
@@ -323,6 +329,10 @@ components:
       $ref: ./schemas/funds_apis/EnumFundsTransactionsType.yaml
     EnumFundsTransactionsTransactionType:
       $ref: ./schemas/funds_apis/EnumFundsTransactionsTransactionType.yaml
+    EnumFundsTransactionsCurrentType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsCurrentType.yaml
+    EnumFundsTransactionsCurrentTransactionType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsCurrentTransactionType.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/funds_apis/InvestmentId.yaml
@@ -380,11 +390,17 @@ components:
           schema:
             $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
     OKResponseFundsTransactions:
-      description: Dados de fundos de investimentos obtidos com sucesso.
+      description: Dados obtidos com sucesso.
       content:
         application/json:
           schema:
             $ref: ./schemas/funds_apis/ResponseFundsTransactions.yaml
+    OKResponseFundsTransactionsCurrent:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsTransactionsCurrent.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
