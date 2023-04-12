@@ -199,6 +199,8 @@ paths:
         - $ref: '#/components/parameters/fromTransactionDate'
         - $ref: '#/components/parameters/toTransactionDate'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactions'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -289,12 +291,18 @@ components:
       $ref: ./schemas/funds_apis/ResponseFundsProductIdentification.yaml
     ResponseFundsBalances:
       $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
+    ResponseFundsTransactions:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactions.yaml
     ResponseFundsProductListData:
       $ref: ./schemas/funds_apis/ResponseFundsProductListData.yaml
     ResponseFundsProductIdentificationData:
       $ref: ./schemas/funds_apis/ResponseFundsProductIdentificationData.yaml
     ResponseFundsBalanceData:
       $ref: ./schemas/funds_apis/ResponseFundsBalanceData.yaml
+    ResponseFundsTransactionsData:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactionsData.yaml
+    MetaSingle:
+      $ref: ./schemas/MetaSingle.yaml
     FundsMeta:
       $ref: ./schemas/funds_apis/FundsMeta.yaml
     FundsLinks:
@@ -311,6 +319,10 @@ components:
       $ref: ./schemas/funds_apis/FundsBalancesNetAmount.yaml
     FundsBalancesQuotaGrossPriceValue:
       $ref: ./schemas/funds_apis/FundsBalancesQuotaGrossPriceValue.yaml
+    EnumFundsTransactionsType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsType.yaml
+    EnumFundsTransactionsTransactionType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsTransactionType.yaml
   parameters:
     InvestmentId:
       $ref: ./schemas/funds_apis/InvestmentId.yaml
@@ -367,6 +379,12 @@ components:
         application/json:
           schema:
             $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
+    OKResponseFundsTransactions:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsTransactions.yaml
     BadRequest:
       $ref: ./responses/unpaged/BadRequest.yaml
     Forbidden:
