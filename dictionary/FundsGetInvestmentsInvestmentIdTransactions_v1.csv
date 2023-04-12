@@ -55,6 +55,6 @@ OUTROS";1;1;"";Não permitido;string;AMORTIZACAO;
 ";Não permitido;object;;
 /data/transactionExitFee/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;
 /data/transactionExitFee/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/transactionNetValue;transactionNetValue;Valor líquido da movimentação.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/transactionNetValue;transactionNetValue;Valor líquido da movimentação posterior à dedução de impostos (IOF e IR) e taxa de saída.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/transactionNetValue/amount;amount;Valor relacionado ao objeto.;Texto;21;Obrigatório;^-?\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.04;
 /data/transactionNetValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
