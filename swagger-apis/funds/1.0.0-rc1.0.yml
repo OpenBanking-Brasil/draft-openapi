@@ -38,7 +38,7 @@ paths:
       tags:
         - Product List
       summary: Obtém a lista de operações de Fundos de Investimento mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-      operationId: FundsGetInvestments
+      operationId: fundsGetInvestments
       description: Obtém a lista de operações de Fundos de Investimento mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -88,7 +88,7 @@ paths:
       tags:
         - Product Identification
       summary: Obtém os dados da operação de Fundos de Investimento identificada por investmentId.
-      operationId: FundsGetInvestmentsInvestmentId
+      operationId: fundsGetInvestmentsInvestmentId
       description: Obtém os dados da operação de Fundos de Investimento identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -136,7 +136,7 @@ paths:
       tags:
         - Balances
       summary: Obtém a posição da operação de Fundos de Investimento identificada por investmentId.
-      operationId: FundsGetInvestmentsInvestmentIdBalances
+      operationId: fundsGetInvestmentsInvestmentIdBalances
       description: Obtém a posição da operação de Fundos de Investimento identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -184,7 +184,7 @@ paths:
       tags:
         - Transactions
       summary: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
-      operationId: FundsGetInvestmentsInvestmentIdTransactions
+      operationId: fundsGetInvestmentsInvestmentIdTransactions
       description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
@@ -237,7 +237,7 @@ paths:
       tags:
         - Transactions Current
       summary: 'Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).'
-      operationId: FundsGetInvestmentsInvestmentIdTransactionsCurrent
+      operationId: fundsGetInvestmentsInvestmentIdTransactionsCurrent
       description: 'Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).'
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
