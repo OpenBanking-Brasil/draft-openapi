@@ -1382,6 +1382,7 @@ components:
         - society
         - name
         - code
+        - modality
         - coverages
         - assistanceTypes
         - additionals
@@ -1588,7 +1589,7 @@ components:
         premiumPayment:
           $ref: '#/components/schemas/PersonalInsurancePremiumPayment'
         minimumRequirement:
-          $ref: '#/components/schemas/InsuranceMinimumRequirement'
+          $ref: '#/components/schemas/PersonalInsuranceMinimumRequirement'
         targetAudience:
           $ref: '#/components/schemas/EnumTargetAudience'
       additionalProperties: false
@@ -1671,7 +1672,13 @@ components:
       required:
         - minValue
         - maxValue
+        - indemnifiablePeriods
+        - maximumQtyIndemnifiableInstallments
         - gracePeriod
+        - deductibleDays
+        - deductible
+        - excludedRisks
+        - allowApartPurchase
       properties:
         indemnityPaymentMethods:
           description: Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.
@@ -1885,6 +1892,20 @@ components:
         - FRACIONADO
         - OUTRA
       example: DIARIA
+    PersonalInsuranceMinimumRequirement:
+      type: object
+      required:
+        - contractType
+        - contractingMinRequirement
+      properties:
+        contractType:
+          $ref: '#/components/schemas/InsuranceMinimumRequirement/properties/contractType'
+        contractingMinRequirement:
+          type: string
+          description: Campo aberto (possibilidade de incluir URL)
+          maxLength: 1024
+          example: 'https://openinsurance.com.br/aaa'
+      additionalProperties: false
     Links:
       type: object
       description: Referências para outros recusos da API requisitada.

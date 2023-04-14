@@ -4,6 +4,7 @@ required:
   - society
   - name
   - code
+  - modality
   - coverages
   - assistanceTypes
   - additionals
@@ -102,7 +103,7 @@ properties:
   premiumPayment:
     $ref: ./PersonalInsurancePremiumPayment.yaml
   minimumRequirement:
-    $ref: ../InsuranceMinimumRequirement.yaml
+    $ref: ./PersonalInsuranceMinimumRequirement.yaml
   targetAudience:
     $ref: ../../business_commons/EnumTargetAudience.yaml
 additionalProperties: false
