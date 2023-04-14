@@ -85,7 +85,7 @@ OUTROS";1;1;"";Não permitido;string;INVALIDEZ_PERMANENTE_TOTAL_PARCIAL;
 /data/coverages/typeAdditionalInfos;typeAdditionalInfos;"Lista de textos para complementar informação relativa ao campo type, quando for selecionada a opção 'OUTROS'.
 Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a opção 'OUTROS'
 ";Lista;100;Opcional;;;0;N;"";Não permitido;array;;
-/data/coverages/attributes;attributes;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/coverages/attributes;attributes;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/coverages/attributes/indemnityPaymentMethods;indemnityPaymentMethods;Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.;Lista;42;Opcional;;"PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO 
 REEMBOLSO_DESPESAS 
 PRESTACAO_SERVICOS";0;N;"";Não permitido;array;;
@@ -101,10 +101,10 @@ DIARIA_OU_PARCELA";0;N;"";Não permitido;array;INDENIZACAO_UNICA;
 FIM_CICLO_DETERMINADO";1;N;"";Não permitido;array;QUANTIDADE_DETERMINADA_PARCELAS;
 /data/coverages/attributes/maximumQtyIndemnifiableInstallments;maximumQtyIndemnifiableInstallments;Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.;Inteiro;10;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/coverages/attributes/gracePeriod;gracePeriod;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;90;
-/data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Obrigatório;;"DIAS 
+/data/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;90;
+/data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Opcional;;"DIAS 
 MESES 
-NAO_APLICA";1;1;"";Não permitido;string;MESES;
+NAO_APLICA";0;1;"";Não permitido;string;MESES;
 /data/coverages/attributes/differentiatedGracePeriod;differentiatedGracePeriod;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/coverages/attributes/differentiatedGracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;90;
 /data/coverages/attributes/differentiatedGracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Obrigatório;;"DIAS 
@@ -133,7 +133,7 @@ OUTROS";1;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
   1. true
   2. false
 ";Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;;
-/data/assistanceTypes;assistanceTypes;;Lista;43;Obrigatório;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
+/data/assistanceTypes;assistanceTypes;;Lista;43;Opcional;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
 ARQUITETO_VIRTUAL 
 ASSESSORIA_FINANCEIRA 
 AUTOMOVEL 
@@ -188,7 +188,7 @@ SUSTENTAVEL_DESCARTE_ECOLOGICO
 TELEMEDICINA 
 VIAGEM 
 VITIMA 
-OUTROS";1;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
+OUTROS";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 /data/assistanceTypesAdditionalInfos;assistanceTypesAdditionalInfos;Lista a ser preenchido pelas participantes quando houver ‘Outros’ no campo ‘Tipo de Assistência’;Lista;;Opcional;;;0;N;"";Não permitido;array;;
 /data/additionals;additionals;;Lista;44;Obrigatório;;"SORTEIO 
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
@@ -210,14 +210,14 @@ TEMPORARIA_INTERMITENTE";1;N;"";Não permitido;array;VITALICIA;
 /data/pmbacRemuneration/updateIndexes;updateIndexes;;Lista;;Opcional;;"IPCA 
 IGP_M 
 INPC";0;N;"";Não permitido;array;IPCA;
-/data/benefitRecalculation;benefitRecalculation;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/benefitRecalculation;benefitRecalculation;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/benefitRecalculation/criterias;criterias;;Lista;;Obrigatório;;"INDICE 
 VINCULADO_SALDO_DEVEDOR 
 VARIAVEL_ACORDO_CRITERIO_ESPECIFICO";1;N;"";Não permitido;array;;
-/data/benefitRecalculation/updateIndexes;updateIndexes;;Lista;10;Obrigatório;;"IPCA 
+/data/benefitRecalculation/updateIndexes;updateIndexes;;Lista;10;Opcional;;"IPCA 
 IGP_M 
 INPC 
-NAO_APLICA";1;N;"";Não permitido;array;IPCA;
+NAO_APLICA";0;N;"";Não permitido;array;IPCA;
 /data/ageAdjustment;ageAdjustment;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/ageAdjustment/criterias;criterias;;Lista;27;Obrigatório;;"APOS_PERIODO_ANOS 
 CADA_PERIODO_ANOS 
@@ -282,7 +282,7 @@ SEMESTRAL
 FRACIONADO 
 OUTRA";1;N;"";Não permitido;array;DIARIA;
 /data/premiumPayment/contributionTax;contributionTax;Distribuição de frequência relativa aos valores referentes às taxas cobradas, nos termos do Anexo III.;Texto;500;Opcional;;;0;1;"";Não permitido;string;;
-/data/minimumRequirement;minimumRequirement;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/minimumRequirement;minimumRequirement;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/minimumRequirement/contractType;contractType;"A considerar os domínios abaixo:
   1. Coletivo;
   2. Individual
