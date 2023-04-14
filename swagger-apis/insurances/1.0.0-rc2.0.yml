@@ -1384,14 +1384,11 @@ components:
         - code
         - modality
         - coverages
-        - assistanceTypes
         - additionals
         - termsAndConditions
         - terms
-        - benefitRecalculation
         - indemnityPaymentMethods
         - premiumPayment
-        - minimumRequirement
         - targetAudience
       properties:
         participant:
@@ -1535,7 +1532,6 @@ components:
           type: object
           required:
             - criterias
-            - updateIndexes
           properties:
             criterias:
               type: array
@@ -1597,7 +1593,6 @@ components:
       type: object
       required:
         - type
-        - attributes
       properties:
         type:
           type: string
@@ -1709,7 +1704,7 @@ components:
           maxLength: 10
           example: 10
         gracePeriod:
-          $ref: '#/components/schemas/GracePeriod'
+          $ref: '#/components/schemas/PersonalInsuranceGracePeriod'
         differentiatedGracePeriod:
           $ref: '#/components/schemas/GracePeriod'
         deductibleDays:
@@ -1905,6 +1900,18 @@ components:
           description: Campo aberto (possibilidade de incluir URL)
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
+      additionalProperties: false
+    PersonalInsuranceGracePeriod:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+          description: Informar o prazo de carência
+          example: 90
+          maximum: 9999999999
+        unit:
+          $ref: '#/components/schemas/EnumGracePeriodUnit'
       additionalProperties: false
     Links:
       type: object
