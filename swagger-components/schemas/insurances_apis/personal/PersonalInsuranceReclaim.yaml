@@ -1,12 +1,14 @@
 type: object
+required:
+  - gracePeriod
 properties:
   table:
     type: array
     items:
-      $ref: ./InsurancePensionReclaimTableItem.yaml
+      $ref: ./PersonalInsuranceReclaimTableItem.yaml
     minItems: 1
   gracePeriod:
-    $ref: ./GracePeriod.yaml
+    $ref: ../../business_commons/GracePeriod.yaml
   differenciatedPercentage:
     description: Campo aberto (possibilidade de incluir URL)
     example: |
