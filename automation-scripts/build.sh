@@ -26,7 +26,8 @@ APIS=(
   #"pension"
   #"resources"
   #"unarranged_accounts_overdraft"
-  "bank_fixed_incomes"
+  #"bank_fixed_incomes",
+  "treasure_titles"
 )
 
 function genSwaggerFiles(){
