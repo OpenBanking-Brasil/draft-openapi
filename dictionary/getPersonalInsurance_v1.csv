@@ -81,6 +81,8 @@ TRANSPLANTE_ORGAOS
 TRASLADO 
 TRANSLADO_CORPO 
 VERBA_RESCISORIA 
+DOENCA_GRAVE 
+TRANSLADO_MEDICO 
 OUTROS";1;1;"";Não permitido;string;INVALIDEZ_PERMANENTE_TOTAL_PARCIAL;
 /data/coverages/typeAdditionalInfos;typeAdditionalInfos;"Lista de textos para complementar informação relativa ao campo type, quando for selecionada a opção 'OUTROS'.
 Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a opção 'OUTROS'
@@ -271,8 +273,8 @@ DEBITO_CONTA_POUPANCA
 BOLETO_BANCARIO 
 PIX 
 CONSIGNACAO_FOLHA_PAGAMENTO 
-PONTOS_PROGRAMA_BENEFÍCIO 
-OUTROS";1;N;"";Não permitido;array;CARTAO_CREDITO;
+PONTOS_PROGRAMA_BENEFICIO 
+REGRA_PARCEIRO";1;N;"";Não permitido;array;CARTAO_CREDITO;
 /data/premiumPayment/frequencies;frequencies;;Lista;10;Obrigatório;;"DIARIA 
 MENSAL 
 UNICA 
@@ -286,10 +288,8 @@ OUTRA";1;N;"";Não permitido;array;DIARIA;
 /data/minimumRequirement/contractType;contractType;"A considerar os domínios abaixo:
   1. Coletivo;
   2. Individual
-  3. Ambas (Coletivo e Individual)
 ";Texto;10;Obrigatório;;"COLETIVO 
-INDIVIDUAL 
-AMBAS";1;1;"";Não permitido;string;COLETIVO;
+INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO;
 /data/minimumRequirement/contractingMinRequirement;contractingMinRequirement;Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/targetAudience;targetAudience;"A considerar os domínios abaixo:
 

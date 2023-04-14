@@ -1560,58 +1560,7 @@ components:
         - type
       properties:
         type:
-          type: string
-          description: 'É o conjunto dos riscos cobertos elencados na apólice. (RESOLUÇÃO CNSP Nº 341/2016). Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela Tipo de Cobertura '
-          maxLength: 62
-          enum:
-            - ADIANTAMENTO_DOENCA_ESTAGIO_TERMINAL
-            - AUXILIO_CESTA_BASICA
-            - AUXILIO_FINANCEIRO_IMEDIATO
-            - CANCELAMENTO_VIAGEM
-            - CIRURGIA
-            - COBERTURA_HERNIA
-            - COBERTURA_LER_DORT
-            - CUIDADOS_PROLONGADOS_ACIDENTE
-            - DESEMPREGO_PERDA_RENDA
-            - DESPESAS_EXTRA_INVALIDEZ_PERMANENTE_TOTAL_PARCIAL_ACIDENTE_DEI
-            - DESPESAS_EXTRA_MORTE_DEM
-            - DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS
-            - DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS_BRASIL
-            - DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS_EXTERIOR
-            - DIARIA_INCAPACIDADE_TOTAL_TEMPORARIA
-            - DIARIA_INTERNACAO_HOSPITALAR
-            - INTERNACAO_HOSPITALAR
-            - DIARIAS_INCAPACIDADE_PECUNIARIA_DIP
-            - DOENCA_CONGENITA_FILHOS_DCF
-            - FRATURA_OSSEA
-            - DOENCAS_TROPICAIS
-            - INCAPACIDADE_TOTAL_OU_TEMPORARIA
-            - INVALIDEZ_PERMANENTE_TOTAL_PARCIAL
-            - INVALIDEZ_TOTAL_ACIDENTE
-            - INVALIDEZ_PARCIAL_ACIDENTE
-            - INVALIDEZ_FUNCIONAL_PERMANENTE_DOENCA
-            - INVALIDEZ_LABORATIVA_DOENCA
-            - MORTE
-            - MORTE_ACIDENTAL
-            - MORTE_CONJUGE
-            - MORTE_FILHOS
-            - MORTE_ADIATAMENTO_DOENCA_ESTAGIO_TERMINAL
-            - PAGAMENTO_ANTECIPADO_ESPECIAL_DOENCA_PROFISSIONAL_PAED
-            - PERDA_AUTONOMIA_PESSOAL
-            - PERDA_INVOLUNTARIA_EMPREGO
-            - QUEIMADURA_GRAVE
-            - REGRESSO_ANTECIPADO_SANITARIO
-            - RENDA_INCAPACIDADE_TEMPORARIA
-            - RESCISAO_CONTRATUAL_CASO_MORTE_RCM
-            - RESCISAO_TRABALHISTA
-            - SERVICO_AUXILIO_FUNERAL
-            - SOBREVIVENCIA
-            - TRANSPLANTE_ORGAOS
-            - TRASLADO
-            - TRANSLADO_CORPO
-            - VERBA_RESCISORIA
-            - OUTROS
-          example: INVALIDEZ_PERMANENTE_TOTAL_PARCIAL
+          $ref: '#/components/schemas/EnumInsurancePersonalCoverageTypePersonal'
         typeAdditionalInfos:
           type: array
           description: |
@@ -1820,7 +1769,7 @@ components:
           type: array
           minItems: 1
           items:
-            $ref: '#/components/schemas/EnumPremiumPaymentMethodType'
+            $ref: '#/components/schemas/EnumPremiumPaymentMethodTypePersonal'
         frequencies:
           type: array
           minItems: 1
@@ -1861,7 +1810,7 @@ components:
         - contractingMinRequirement
       properties:
         contractType:
-          $ref: '#/components/schemas/InsuranceMinimumRequirement/properties/contractType'
+          $ref: '#/components/schemas/EnumContractTypePersonal'
         contractingMinRequirement:
           type: string
           description: Campo aberto (possibilidade de incluir URL)
@@ -1923,6 +1872,97 @@ components:
           description: Percentual de faixa de resgate.
           example: '0.019800'
       additionalProperties: false
+    EnumInsurancePersonalCoverageTypePersonal:
+      type: string
+      description: 'É o conjunto dos riscos cobertos elencados na apólice. (RESOLUÇÃO CNSP Nº 341/2016). Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela Tipo de Cobertura '
+      maxLength: 62
+      enum:
+        - ADIANTAMENTO_DOENCA_ESTAGIO_TERMINAL
+        - AUXILIO_CESTA_BASICA
+        - AUXILIO_FINANCEIRO_IMEDIATO
+        - CANCELAMENTO_VIAGEM
+        - CIRURGIA
+        - COBERTURA_HERNIA
+        - COBERTURA_LER_DORT
+        - CUIDADOS_PROLONGADOS_ACIDENTE
+        - DESEMPREGO_PERDA_RENDA
+        - DESPESAS_EXTRA_INVALIDEZ_PERMANENTE_TOTAL_PARCIAL_ACIDENTE_DEI
+        - DESPESAS_EXTRA_MORTE_DEM
+        - DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS
+        - DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS_BRASIL
+        - DESPESAS_MEDICAS_HOSPITALARES_ODONTOLOGICAS_EXTERIOR
+        - DIARIA_INCAPACIDADE_TOTAL_TEMPORARIA
+        - DIARIA_INTERNACAO_HOSPITALAR
+        - INTERNACAO_HOSPITALAR
+        - DIARIAS_INCAPACIDADE_PECUNIARIA_DIP
+        - DOENCA_CONGENITA_FILHOS_DCF
+        - FRATURA_OSSEA
+        - DOENCAS_TROPICAIS
+        - INCAPACIDADE_TOTAL_OU_TEMPORARIA
+        - INVALIDEZ_PERMANENTE_TOTAL_PARCIAL
+        - INVALIDEZ_TOTAL_ACIDENTE
+        - INVALIDEZ_PARCIAL_ACIDENTE
+        - INVALIDEZ_FUNCIONAL_PERMANENTE_DOENCA
+        - INVALIDEZ_LABORATIVA_DOENCA
+        - MORTE
+        - MORTE_ACIDENTAL
+        - MORTE_CONJUGE
+        - MORTE_FILHOS
+        - MORTE_ADIATAMENTO_DOENCA_ESTAGIO_TERMINAL
+        - PAGAMENTO_ANTECIPADO_ESPECIAL_DOENCA_PROFISSIONAL_PAED
+        - PERDA_AUTONOMIA_PESSOAL
+        - PERDA_INVOLUNTARIA_EMPREGO
+        - QUEIMADURA_GRAVE
+        - REGRESSO_ANTECIPADO_SANITARIO
+        - RENDA_INCAPACIDADE_TEMPORARIA
+        - RESCISAO_CONTRATUAL_CASO_MORTE_RCM
+        - RESCISAO_TRABALHISTA
+        - SERVICO_AUXILIO_FUNERAL
+        - SOBREVIVENCIA
+        - TRANSPLANTE_ORGAOS
+        - TRASLADO
+        - TRANSLADO_CORPO
+        - VERBA_RESCISORIA
+        - DOENCA_GRAVE
+        - TRANSLADO_MEDICO
+        - OUTROS
+      example: INVALIDEZ_PERMANENTE_TOTAL_PARCIAL
+    EnumPremiumPaymentMethodTypePersonal:
+      type: string
+      description: |
+        Meio de pagamento escolhido pelo segurado. A considerar os domínios abaixo:
+          1. Cartão de Crédito
+          2. Cartão de Débito
+          3. Débito em conta corrente
+          4. Débito em conta poupança
+          5. Boleto bancário
+          6. PIX
+          7. Consignação em Folha de Pagamento
+          8. Pontos de Programa de Benefício
+          9. Regra de Parceiro
+      maxLength: 27
+      enum:
+        - CARTAO_CREDITO
+        - CARTAO_DEBITO
+        - DEBITO_CONTA_CORRENTE
+        - DEBITO_CONTA_POUPANCA
+        - BOLETO_BANCARIO
+        - PIX
+        - CONSIGNACAO_FOLHA_PAGAMENTO
+        - PONTOS_PROGRAMA_BENEFICIO
+        - REGRA_PARCEIRO
+      example: CARTAO_CREDITO
+    EnumContractTypePersonal:
+      type: string
+      description: |
+        A considerar os domínios abaixo:
+          1. Coletivo;
+          2. Individual
+      maxLength: 10
+      enum:
+        - COLETIVO
+        - INDIVIDUAL
+      example: COLETIVO
     Links:
       type: object
       description: Referências para outros recusos da API requisitada.
