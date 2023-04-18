@@ -99,8 +99,7 @@ DIARIA_OU_PARCELA";1;N;"";Não permitido;array;INDENIZACAO_UNICA;
 /data/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
 /data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;;Lista;31;Obrigatório;;"QUANTIDADE_DETERMINADA_PARCELAS 
-FIM_CICLO_DETERMINADO";1;N;"";Não permitido;array;QUANTIDADE_DETERMINADA_PARCELAS;
+/data/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.;Texto;50;Obrigatório;;;1;1;"";Não permitido;string;ATE_FIM_CICLO_DETERMINADO;
 /data/coverages/attributes/maximumQtyIndemnifiableInstallments;maximumQtyIndemnifiableInstallments;Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.;Inteiro;10;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/coverages/attributes/gracePeriod;gracePeriod;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;90;
