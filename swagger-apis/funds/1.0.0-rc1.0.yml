@@ -326,9 +326,7 @@ components:
         - meta
       properties:
         data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResponseFundsBalanceData'
+          $ref: '#/components/schemas/ResponseFundsBalanceData'
         links:
           $ref: '#/components/schemas/FundsLinks'
         meta:
@@ -505,7 +503,7 @@ components:
         referenceDate:
           type: string
           format: date
-          description: data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos.
+          description: Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos.
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2023-01-07'
@@ -530,6 +528,7 @@ components:
           $ref: '#/components/schemas/FundsBalancesQuotaGrossPriceValue'
     ResponseFundsTransactionsData:
       type: object
+      description: Informações da posição do fundo de investimento a que se refere investmentId.
       required:
         - transactionId
         - type
@@ -551,7 +550,7 @@ components:
           $ref: '#/components/schemas/EnumFundsTransactionsType'
         transactionType:
           $ref: '#/components/schemas/EnumFundsTransactionsTransactionType'
-        typeAdditionalInfo:
+        transactionTypeAdditionalInfo:
           type: string
           description: |
             Informação adicional do tipo do motivo, para preenchimento no caso de movimentações não delimitadas no domínio.
@@ -562,10 +561,7 @@ components:
         transactionConversionDate:
           type: string
           format: date
-          description: |
-            Data da conversão da transação de movimentação do fundo de investimento.
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'OUTROS' no campo 'transactionType'.
+          description: Data da conversão da transação de movimentação do fundo de investimento.
           maxLength: 10
           minLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -732,6 +728,7 @@ components:
       additionalProperties: false
     ResponseFundsTransactionsCurrentData:
       type: object
+      description: Informações da posição do fundo de investimento a que se refere investmentId.
       required:
         - transactionId
         - type
@@ -753,7 +750,7 @@ components:
           $ref: '#/components/schemas/EnumFundsTransactionsCurrentType'
         transactionType:
           $ref: '#/components/schemas/EnumFundsTransactionsCurrentTransactionType'
-        typeAdditionalInfo:
+        transactionTypeAdditionalInfo:
           type: string
           description: |
             Informação adicional do tipo do motivo, para preenchimento no caso de movimentações não delimitadas no domínio.
@@ -764,10 +761,7 @@ components:
         transactionConversionDate:
           type: string
           format: date
-          description: |
-            Data da conversão da transação de movimentação do fundo de investimento.
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'OUTROS' no campo 'transactionType'.
+          description: Data da conversão da transação de movimentação do fundo de investimento.
           maxLength: 10
           minLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -1125,7 +1119,12 @@ components:
           example: BRL
     EnumFundsTransactionsType:
       type: string
-      description: Tipo de movimentação (Entrada ou Saída).
+      description: |
+        Tipo de movimentação (Entrada ou Saída).
+
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, OUTROS.
       enum:
         - ENTRADA
         - SAIDA
@@ -1137,7 +1136,7 @@ components:
         A opção OUTROS só deve ser utilizada para os casos em que de fato a transação compartilhada não possa ser classificada como um dos itens deste Enum, e nesse caso deve-se preencher informações adicionais.
       enum:
         - AMORTIZACAO
-        - TRANSFERENCIA_DE_COTAS
+        - TRANSFERENCIA_COTAS
         - APLICACAO
         - RESGATE
         - COME_COTAS
@@ -1145,7 +1144,12 @@ components:
       example: AMORTIZACAO
     EnumFundsTransactionsCurrentType:
       type: string
-      description: Tipo de movimentação (Entrada ou Saída).
+      description: |
+        Tipo de movimentação (Entrada ou Saída).
+
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, OUTROS.
       enum:
         - ENTRADA
         - SAIDA
@@ -1157,7 +1161,7 @@ components:
         A opção OUTROS só deve ser utilizada para os casos em que de fato a transação compartilhada não possa ser classificada como um dos itens deste Enum, e nesse caso deve-se preencher informações adicionais.
       enum:
         - AMORTIZACAO
-        - TRANSFERENCIA_DE_COTAS
+        - TRANSFERENCIA_COTAS
         - APLICACAO
         - RESGATE
         - COME_COTAS

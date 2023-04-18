@@ -1,4 +1,5 @@
 type: object
+description: Informações da posição do fundo de investimento a que se refere investmentId.
 required:
   - transactionId
   - type
@@ -20,7 +21,7 @@ properties:
     $ref: ./EnumFundsTransactionsType.yaml
   transactionType:
     $ref: ./EnumFundsTransactionsTransactionType.yaml
-  typeAdditionalInfo:
+  transactionTypeAdditionalInfo:
     type: string
     description: |
       Informação adicional do tipo do motivo, para preenchimento no caso de movimentações não delimitadas no domínio.
@@ -31,10 +32,7 @@ properties:
   transactionConversionDate:
     type: string
     format: date
-    description: |
-      Data da conversão da transação de movimentação do fundo de investimento.
-      
-      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'OUTROS' no campo 'transactionType'.
+    description: Data da conversão da transação de movimentação do fundo de investimento.
     maxLength: 10
     minLength: 10
     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
