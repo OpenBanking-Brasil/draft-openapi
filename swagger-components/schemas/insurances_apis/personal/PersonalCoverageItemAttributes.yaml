@@ -27,9 +27,10 @@ properties:
   maxValue:
     $ref: ../../business_commons/InsurancePensionMaxValue.yaml
   indemnifiablePeriods:
-    type: array
-    items:
-      $ref: ../../business_commons/InsurancePensionEnumIndemnifiablePeriodType.yaml
+    type: string
+    description: Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.
+    maxLength: 50
+    example: 'ATE_FIM_CICLO_DETERMINADO'
   maximumQtyIndemnifiableInstallments:
     type: integer
     description: 'Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.'
