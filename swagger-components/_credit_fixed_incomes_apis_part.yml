@@ -25,9 +25,9 @@ tags:
   - name: Balances
     description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
   - name: Transactions
-    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Fixa Crédito identificada por investmentId.
   - name: Transactions Current
-    description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+    description: Obtém as movimentações recentes da operação de Renda Fixa Crédito identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
 paths:
   /investments:
     get:
@@ -184,7 +184,7 @@ paths:
         - Transactions
       summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactions
-      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -238,7 +238,7 @@ paths:
         - Transactions Current
       summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactionsCurrent
-      description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      description: Obtém as movimentações recentes da operação de Renda Fixa Crédito identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
