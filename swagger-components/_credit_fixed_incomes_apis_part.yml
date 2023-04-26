@@ -179,7 +179,7 @@ paths:
     get:
       tags:
         - Transactions
-      summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
+      summary: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Fixa Crédito identificada por investmentId.
       operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactions
       description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Fixa Crédito identificada por investmentId.
       parameters:
@@ -232,7 +232,7 @@ paths:
     get:
       tags:
         - Transactions Current
-      summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
+      summary: Obtém as movimentações recentes da operação de Renda Fixa Crédito identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
       operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactionsCurrent
       description: Obtém as movimentações recentes da operação de Renda Fixa Crédito identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
       parameters:
