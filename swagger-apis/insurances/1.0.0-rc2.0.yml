@@ -1355,12 +1355,11 @@ components:
         - allowPortability
         - indemnityPaymentMethods
         - targetAudience
-        - brand.name
       properties:
         participant:
           $ref: '#/components/schemas/Participant'
         society:
-          $ref: '#/components/schemas/Society'
+          $ref: '#/components/schemas/PersonalInsuranceSociety'
         name:
           type: string
           description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
@@ -1548,11 +1547,6 @@ components:
           $ref: '#/components/schemas/PersonalInsuranceMinimumRequirement'
         targetAudience:
           $ref: '#/components/schemas/EnumTargetAudience'
-        brand.name:
-          type: string
-          description: 'Nome da marca reportada pela sociedade seguradora participante do Open Finance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
-          maxLength: 80
-          example: Marca
       additionalProperties: false
     PersonalCoverageItem:
       type: object
@@ -1968,6 +1962,27 @@ components:
         - COLETIVO
         - INDIVIDUAL
       example: COLETIVO
+    PersonalInsuranceSociety:
+      type: object
+      description: Conjunto de informações relativas à seguradora do produto de open insurance
+      required:
+        - name
+        - cnpjNumber
+        - brand
+      properties:
+        name:
+          type: string
+          description: Nome da Sociedade Seguradora.
+          maxLength: 80
+          example: Society A1
+        cnpjNumber:
+          $ref: '#/components/schemas/CnpjNumber'
+        brand:
+          type: string
+          description: 'Nome da marca reportada pela sociedade seguradora participante do Open Finance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          maxLength: 80
+          example: Marca
+      additionalProperties: false
     Links:
       type: object
       description: Referências para outros recusos da API requisitada.

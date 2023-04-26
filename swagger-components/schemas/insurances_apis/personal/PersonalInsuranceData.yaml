@@ -14,12 +14,11 @@ required:
   - allowPortability
   - indemnityPaymentMethods
   - targetAudience
-  - brand.name
 properties:
   participant:
     $ref: ../Participant.yaml
   society:
-    $ref: ../../business_commons/Society.yaml
+    $ref: ./PersonalInsuranceSociety.yaml
   name:
     type: string
     description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
@@ -106,9 +105,4 @@ properties:
     $ref: ./PersonalInsuranceMinimumRequirement.yaml
   targetAudience:
     $ref: ../../business_commons/EnumTargetAudience.yaml
-  brand.name:
-    type: string
-    description: 'Nome da marca reportada pela sociedade seguradora participante do Open Finance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
-    maxLength: 80
-    example: 'Marca'
 additionalProperties: false
