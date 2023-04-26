@@ -1605,10 +1605,12 @@ components:
         maxValue:
           $ref: '#/components/schemas/InsurancePensionMaxValue'
         indemnifiablePeriods:
-          type: string
           description: Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.
-          maxLength: 50
-          example: ATE_FIM_CICLO_DETERMINADO
+          type: array
+          items:
+            type: string
+            maxLength: 50
+            example: ATE_FIM_CICLO_DETERMINADO
         maximumQtyIndemnifiableInstallments:
           type: integer
           description: 'Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.'
