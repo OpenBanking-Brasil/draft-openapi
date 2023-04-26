@@ -1623,7 +1623,11 @@ components:
         gracePeriod:
           $ref: '#/components/schemas/PersonalInsuranceGracePeriod'
         differentiatedGracePeriod:
-          $ref: '#/components/schemas/GracePeriod'
+          type: string
+          description: 'Campo aberto para detalhamento de período de carência diferenciado, se houver.'
+          maxLength: 500
+          pattern: '[\w\W\s]*'
+          example: 90 DIAS
         deductibleDays:
           type: integer
           description: Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.

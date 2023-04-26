@@ -39,7 +39,11 @@ properties:
   gracePeriod:
     $ref: ./PersonalInsuranceGracePeriod.yaml
   differentiatedGracePeriod:
-    $ref: ../../business_commons/GracePeriod.yaml
+    type: string
+    description: Campo aberto para detalhamento de período de carência diferenciado, se houver.
+    maxLength: 500
+    pattern: '[\w\W\s]*'
+    example: '90 DIAS'
   deductibleDays:
     type: integer
     description: 'Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.'
