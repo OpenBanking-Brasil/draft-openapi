@@ -107,6 +107,7 @@ DIARIA_OU_PARCELA";1;N;"";Não permitido;array;INDENIZACAO_UNICA;
 /data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Opcional;;"DIAS 
 MESES 
 NAO_APLICA";0;1;"";Não permitido;string;MESES;
+/data/coverages/attributes/gracePeriod/details;details;;Texto;500;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Descrições adicionais do período de carência;
 /data/coverages/attributes/differentiatedGracePeriod;differentiatedGracePeriod;Campo aberto para detalhamento de período de carência diferenciado, se houver.;Texto;500;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;90 DIAS;
 /data/coverages/attributes/deductibleDays;deductibleDays;Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.;Inteiro;10;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/coverages/attributes/differentiatedDeductibleDays;differentiatedDeductibleDays;Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade. Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.;Inteiro;10;Opcional;;;0;1;"";Não permitido;integer;15;
@@ -249,6 +250,7 @@ NAO_APLICA";0;N;"";Não permitido;array;SALDAMENTO;
 /data/portabilityGraceTime/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Obrigatório;;"DIAS 
 MESES 
 NAO_APLICA";1;1;"";Não permitido;string;MESES;
+/data/portabilityGraceTime/details;details;;Texto;500;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Descrições adicionais do período de carência;
 /data/indemnityPaymentMethods;indemnityPaymentMethods;;Lista;18;Obrigatório;;"UNICO 
 SOB_FORMA_RENDA";1;N;"";Não permitido;array;UNICO;
 /data/indemnityPaymentIncomes;indemnityPaymentIncomes;;Lista;38;Opcional;;"CERTA 
