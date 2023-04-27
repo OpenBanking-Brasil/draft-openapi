@@ -293,6 +293,11 @@ components:
           maximum: 9999999999
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
+        details:
+          type: string
+          maxLength: 500
+          pattern: '[\w\W\s]*'
+          example: Descrições adicionais do período de carência
       additionalProperties: false
     TermsAndConditionsItem:
       type: object
@@ -1158,11 +1163,6 @@ components:
           maximum: 9999999999
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
-        details:
-          type: string
-          maxLength: 500
-          pattern: '[\w\W\s]*'
-          example: Descrições adicionais do período de carência
       additionalProperties: false
     BenefitRecalculation:
       type: object

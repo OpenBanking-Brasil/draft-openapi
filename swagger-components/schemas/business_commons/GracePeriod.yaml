@@ -11,4 +11,9 @@ properties:
     maximum: 9999999999
   unit:
     $ref: EnumGracePeriodUnit.yaml
+  details:
+    type: string
+    maxLength: 500
+    pattern: '[\w\W\s]*'
+    example: 'Descrições adicionais do período de carência'
 additionalProperties: false
