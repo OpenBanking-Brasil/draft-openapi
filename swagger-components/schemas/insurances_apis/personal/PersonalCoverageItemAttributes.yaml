@@ -1,8 +1,16 @@
 type: object
 required:
+  - indemnityPaymentMethods
+  - indemnityPaymentFrequencies
   - minValue
   - maxValue
+  - indemnifiablePeriods
+  - maximumQtyIndemnifiableInstallments
   - gracePeriod
+  - deductibleDays
+  - deductible
+  - excludedRisks
+  - allowApartPurchase
 properties:
   indemnityPaymentMethods:
     description: Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.
@@ -19,18 +27,25 @@ properties:
   maxValue:
     $ref: ../../business_commons/InsurancePensionMaxValue.yaml
   indemnifiablePeriods:
+    description: Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.
     type: array
     items:
-      $ref: ../../business_commons/InsurancePensionEnumIndemnifiablePeriodType.yaml
+      type: string
+      maxLength: 50
+      example: 'ATE_FIM_CICLO_DETERMINADO'
   maximumQtyIndemnifiableInstallments:
     type: integer
     description: 'Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.'
     maxLength: 10
     example: 10
   gracePeriod:
-    $ref: ../../business_commons/GracePeriod.yaml
+    $ref: ./PersonalInsuranceGracePeriod.yaml
   differentiatedGracePeriod:
-    $ref: ../../business_commons/GracePeriod.yaml
+    type: string
+    description: Campo aberto para detalhamento de período de carência diferenciado, se houver.
+    maxLength: 500
+    pattern: '[\w\W\s]*'
+    example: '90 DIAS'
   deductibleDays:
     type: integer
     description: 'Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.'

@@ -1,5 +1,7 @@
 type: object
-description: Distribuição por frequência.
+description: |
+  Distribuição por frequência.  
+  É necessário que as Instituições Financeiras desconsiderem os valores de VET negativo no cálculo de vetAmount.
 required:
   - prices
   - minimum
@@ -23,14 +25,14 @@ properties:
     type: string
     description: Valor mínimo.
     minLength: 8
-    maxLength: 8
-    pattern: '^\d{1}\.\d{6}$'
+    maxLength: 22
+    pattern: '^\d{1,15}\.\d{6}$'
     example: "0.010000"
   maximum:
     type: string
     description: Valor máximo.
     minLength: 8
-    maxLength: 8
-    pattern: '^\d{1}\.\d{6}$'
+    maxLength: 22
+    pattern: '^\d{1,15}\.\d{6}$'
     example: "0.300000"
 additionalProperties: false

@@ -3,7 +3,7 @@ info:
   title: API Capitalization-bonds - Open Finance Brasil
   description: |
     As APIs descritas neste documento é referente a API de Capitalização da fase OpenInsurance do Open Finance Brasil.
-  version: 1.0.0-rc1.0
+  version: 1.0.0-rc2.0
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -43,12 +43,14 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
 components:
   schemas:
     CapitalizationBondsProductIdentificationData:
       $ref: ./schemas/capitalization_bonds_apis/CapitalizationBondsProductIdentificationData.yaml
     Participant:
-      $ref: ./schemas/business_commons/Participant.yaml
+      $ref: ./schemas/capitalization_bonds_apis/CapitalizationBondsParticipant.yaml
     EnumCapitalizationBondsProductModality:
       $ref: ./schemas/enum/EnumCapitalizationBondsProductModality.yaml
     EnumCapitalizationBondsProductCostType:
@@ -112,8 +114,14 @@ components:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido.'
       content:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
+    SiteIsOverloaded:
+      description: "O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml

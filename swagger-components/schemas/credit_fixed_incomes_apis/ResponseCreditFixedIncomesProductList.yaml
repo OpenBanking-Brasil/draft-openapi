@@ -1,0 +1,15 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: array
+    minItems: 0
+    items:
+      $ref: ./CreditFixedProductList.yaml
+  links:
+    $ref: ./CreditFixedIncomesLinks.yaml
+  meta:
+    $ref: ./CreditFixedIncomesMeta.yaml

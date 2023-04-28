@@ -1,0 +1,463 @@
+openapi: 3.0.0
+info:
+  title: API Funds - Open Finance Brasil
+  description: |
+   API de informações de operações de Fundos de Investimento Open Finance Brasil – Fase 4. 
+   API que retorna informações de operações de investimento do tipo Fundos de Investimento mantidas nas instituições transmissoras por seus clientes, incluindo dados como informações do produto, quantidade, saldos em posição do cliente e movimentações financeiras. 
+   Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. 
+   Devem ser considerados como escopo de exposição todos os fundos de investimento classificados como: Renda Fixa, Ações, Multimercado e Cambial. 
+   Para identificação do produto e posição do cliente, a exposição será de forma consolidada por Fundo de Investimento. 
+   Para movimentações, a exposição se dará pela Ordem do Cliente, por exemplo, uma Ordem de Resgate é compartilhada como uma única movimentação, mesmo que esteja associada a diferentes Certificados (Cautelas).
+  version: 1.0.0-rc1.0
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+  contact:
+    name: Governança do Open Finance Brasil – Especificações
+    email: gt-interfaces@openbankingbr.org
+    url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
+servers:
+  - url: "https://api.banco.com.br/open-banking/funds/v1"
+    description: Servidor de Produção
+  - url: "https://apih.banco.com.br/open-banking/funds/v1"
+    description: Servidor de Homologação
+tags:
+  - name: Product List
+    description: Obtém a lista de operações de Fundos de Investimento mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+  - name: Product Identification
+    description: Obtém os dados da operação de Fundos de Investimento identificada por investmentId.
+  - name: Balances
+    description: Obtém a posição da operação de Fundos de Investimento identificada por investmentId.
+  - name: Transactions
+    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+  - name: Transactions Current
+    description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+paths:
+  /investments:
+    get:
+      tags:
+        - Product List
+      summary: Obtém a lista de operações de Fundos de Investimento mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      operationId: fundsGetInvestments
+      description: Obtém a lista de operações de Fundos de Investimento mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      parameters:
+         - $ref: '#/components/parameters/Authorization'
+         - $ref: '#/components/parameters/xFapiAuthDate'
+         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+         - $ref: '#/components/parameters/xFapiInteractionId'
+         - $ref: '#/components/parameters/xCustomerUserAgent'
+         - $ref: '#/components/parameters/page'
+         - $ref: '#/components/parameters/pageSize'
+         - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseFundsProductList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'funds'
+  /investments/{investmentId}:
+    get:
+      tags:
+        - Product Identification
+      summary: Obtém os dados da operação de Fundos de Investimento identificada por investmentId.
+      operationId: fundsGetInvestmentsInvestmentId
+      description: Obtém os dados da operação de Fundos de Investimento identificada por investmentId.
+      parameters:
+         - $ref: '#/components/parameters/InvestmentId'
+         - $ref: '#/components/parameters/Authorization'
+         - $ref: '#/components/parameters/xFapiAuthDate'
+         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+         - $ref: '#/components/parameters/xFapiInteractionId'
+         - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseFundsProductIdentification'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'funds'
+  /investments/{investmentId}/balances:
+    get:
+      tags:
+        - Balances
+      summary: Obtém a posição da operação de Fundos de Investimento identificada por investmentId.
+      operationId: fundsGetInvestmentsInvestmentIdBalances
+      description: Obtém a posição da operação de Fundos de Investimento identificada por investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseFundsBalances'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'funds'
+  /investments/{investmentId}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+      operationId: fundsGetInvestmentsInvestmentIdTransactions
+      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDate'
+        - $ref: '#/components/parameters/toTransactionDate'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'funds'
+  /investments/{investmentId}/transactions-current:
+    get:
+      tags:
+        - Transactions Current
+      summary: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      operationId: fundsGetInvestmentsInvestmentIdTransactionsCurrent
+      description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDateCurrent'
+        - $ref: '#/components/parameters/toTransactionDateCurrent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseFundsTransactionsCurrent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'funds'
+components:
+  schemas:
+    ResponseFundsProductList:
+      $ref: ./schemas/funds_apis/ResponseFundsProductList.yaml
+    ResponseFundsProductIdentification:
+      $ref: ./schemas/funds_apis/ResponseFundsProductIdentification.yaml
+    ResponseFundsBalances:
+      $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
+    ResponseFundsTransactions:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactions.yaml
+    ResponseFundsTransactionsCurrent:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactionsCurrent.yaml
+    ResponseFundsProductListData:
+      $ref: ./schemas/funds_apis/ResponseFundsProductListData.yaml
+    ResponseFundsProductIdentificationData:
+      $ref: ./schemas/funds_apis/ResponseFundsProductIdentificationData.yaml
+    ResponseFundsBalanceData:
+      $ref: ./schemas/funds_apis/ResponseFundsBalanceData.yaml
+    ResponseFundsTransactionsData:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactionsData.yaml
+    ResponseFundsTransactionsCurrentData:
+      $ref: ./schemas/funds_apis/ResponseFundsTransactionsCurrentData.yaml
+    MetaSingle:
+      $ref: ./schemas/MetaSingle.yaml
+    FundsMeta:
+      $ref: ./schemas/funds_apis/FundsMeta.yaml
+    FundsLinks:
+      $ref: ./schemas/funds_apis/FundsLinks.yaml
+    FundsBalancesBlockedAmount:
+      $ref: ./schemas/funds_apis/FundsBalancesBlockedAmount.yaml
+    FundsBalancesFinancialTransactionTaxProvision:
+      $ref: ./schemas/funds_apis/FundsBalancesFinancialTransactionTaxProvision.yaml
+    FundsBalancesGrossAmount:
+      $ref: ./schemas/funds_apis/FundsBalancesGrossAmount.yaml
+    FundsBalancesIncomeTaxProvision:
+      $ref: ./schemas/funds_apis/FundsBalancesIncomeTaxProvision.yaml
+    FundsBalancesNetAmount:
+      $ref: ./schemas/funds_apis/FundsBalancesNetAmount.yaml
+    FundsBalancesQuotaGrossPriceValue:
+      $ref: ./schemas/funds_apis/FundsBalancesQuotaGrossPriceValue.yaml
+    EnumFundsTransactionsType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsType.yaml
+    EnumFundsTransactionsTransactionType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsTransactionType.yaml
+    EnumFundsTransactionsCurrentType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsCurrentType.yaml
+    EnumFundsTransactionsCurrentTransactionType:
+      $ref: ./schemas/funds_apis/EnumFundsTransactionsCurrentTransactionType.yaml
+    ResponseErrorMetaSingle:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    MetaOnlyRequestDateTime:
+      $ref: ./schemas/MetaOnlyRequestDateTime.yaml
+    ResponseErrorWithAbleAdditionalProperties:
+      $ref: ./schemas/ResponseErrorWithAbleAdditionalProperties.yaml
+    MetaWithAbleAdditionalProperties:
+      $ref: ./schemas/MetaWithAbleAdditionalProperties.yaml
+  parameters:
+    InvestmentId:
+      $ref: ./schemas/funds_apis/InvestmentId.yaml
+    Authorization:
+      $ref: ./parameters/Authorization.yaml
+    xFapiAuthDate:
+      $ref: ./schemas/funds_apis/XFapiAuthDate.yaml
+    xFapiCustomerIpAddress:
+      $ref: ./parameters/XFapiCustomerIpAddress.yaml
+    xFapiInteractionId:
+      $ref: ./schemas/funds_apis/XFapiInteractionId.yaml
+    xCustomerUserAgent:
+      $ref: ./parameters/XCustomerUserAgent.yaml
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
+    fromTransactionDate:
+      $ref: ./parameters/FromTransactionDate.yaml
+    toTransactionDate:
+      $ref: ./parameters/ToTransactionDate.yaml
+    fromTransactionDateCurrent:
+      $ref: ./parameters/FromTransactionDateMaxLimited.yaml
+    toTransactionDateCurrent:
+      $ref: ./parameters/ToTransactionDateMaxLimited.yaml
+  securitySchemes:
+    OAuth2AuthorizationCode:
+      type: oauth2
+      description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://authserver.example/authorization'
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            funds: Escopo necessário para acesso à API funds. O controle dos endpoints específicos é feito via permissions.
+  responses:
+    OkResponseFundsProductList:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsProductList.yaml
+    OkResponseFundsProductIdentification:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsProductIdentification.yaml
+    ResponseFundsBalances:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsBalances.yaml
+    OKResponseFundsTransactions:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsTransactions.yaml
+    OKResponseFundsTransactionsCurrent:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/funds_apis/ResponseFundsTransactionsCurrent.yaml
+    BadRequest:
+      $ref: ./responses/unpaged/BadRequest.yaml
+    Forbidden:
+      $ref: ./responses/unpaged/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/unpaged/GatewayTimeout.yaml
+    InternalServerError:
+      $ref: ./responses/unpaged/InternalServerError.yaml
+    Locked:
+      $ref: ./responses/unpaged/Locked.yaml
+    MethodNotAllowed:
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+    NotAcceptable:
+      $ref: ./responses/unpaged/NotAcceptable.yaml
+    NotFound:
+      $ref: ./responses/unpaged/NotFound.yaml
+    TooManyRequests:
+      $ref: ./responses/unpaged/TooManyRequests.yaml
+    Unauthorized:
+      $ref: ./responses/unpaged/Unauthorized.yaml
+    UnprocessableEntity:
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
+    Default:
+      $ref: ./responses/unpaged/Default.yaml
+    SiteIsOverloaded:
+      $ref: ./responses/unpaged/SiteIsOverloaded.yaml
+    BadRequestWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/BadRequest.yaml
+    ForbiddenWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Forbidden.yaml
+    GatewayTimeoutWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/GatewayTimeout.yaml
+    InternalServerErrorWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/InternalServerError.yaml
+    LockedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Locked.yaml
+    MethodNotAllowedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/MethodNotAllowed.yaml
+    NotAcceptableWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/NotAcceptable.yaml
+    NotFoundWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/NotFound.yaml
+    TooManyRequestsWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/TooManyRequests.yaml
+    UnauthorizedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Unauthorized.yaml
+    UnprocessableEntityWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/UnprocessableEntity.yaml
+    DefaultWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/Default.yaml
+    SiteIsOverloadedWithAdditionalProperties:
+      $ref: ./responses/withAdditionalProperties/SiteIsOverloaded.yaml
