@@ -1,0 +1,16 @@
+type: object
+required:
+  - data
+  - links
+  - meta
+properties:
+  data:
+    type: array
+    minItems: 0
+    items:
+      $ref: ./ResponseFundsTransactionsCurrentData.yaml
+  links:
+    $ref: ./FundsLinks.yaml
+  meta:
+    $ref: ../MetaSingle.yaml
+additionalProperties: false

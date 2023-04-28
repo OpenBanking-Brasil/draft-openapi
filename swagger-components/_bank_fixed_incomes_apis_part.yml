@@ -1,0 +1,494 @@
+openapi: 3.0.0
+info:
+  title: API Bank Fixed Incomes - Open Finance Brasil
+  description: |
+    API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4). API que retorna informações de operações de investimento do tipo Renda Fixa Bancária (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, saldos em posição do cliente e movimentações financeiras. Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. A exposição se dará por cada operação de renda fixa contratada pelo cliente.
+  version: 1.0.0-rc1.0
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+  contact:
+    name: Governança do Open Finance Brasil – Especificações
+    email: gt-interfaces@openbankingbr.org
+    url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
+servers:
+  - url: "https://api.banco.com.br/open-banking/bank-fixed-incomes/v1"
+    description: Servidor de Produção
+  - url: "https://apih.banco.com.br/open-banking/bank-fixed-incomes/v1"
+    description: Servidor de Homologação
+tags:
+  - name: Product List
+    description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+  - name: Product Identification
+    description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
+  - name: Balances
+    description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
+  - name: Transactions
+    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+  - name: Transactions Current
+    description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+  
+paths:
+  /investments:
+    get:
+      tags:
+        - Product List
+      summary: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      operationId: banktFixedIncomesGetInvestments
+      description: Obtém a lista de operações de Renda Fixa Bancária mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      parameters:
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseBankFixedIncomesProductList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'bank-fixed-incomes' 
+
+  /investments/{investmentId}:
+    get:
+      tags:
+        - Product Identification
+      summary: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
+      operationId: banktFixedIncomesGetInvestmentsInvestmentId
+      description: Obtém os dados da operação de Renda Fixa Bancária identificada por investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseBankFixedIncomeIdentifyProduct'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'bank-fixed-incomes' 
+
+  /investments/{investmentId}/balances:
+    get:
+      tags:
+        - Balances
+      summary: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdBalances
+      description: Obtém a posição da operação de Renda Fixa Bancária identificada por investmentId.
+      parameters:
+        - name: investmentId
+          in: path
+          description: Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$
+            example: '92792126019929200000000000000000000000000'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseBankFixedIncomesBalances'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'bank-fixed-incomes'        
+            
+  /investments/{investmentId}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdTransactions
+      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
+      parameters:
+       - $ref: '#/components/parameters/InvestmentId'
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+       - $ref: '#/components/parameters/fromTransactionDate'
+       - $ref: '#/components/parameters/toTransactionDate'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
+        '400':
+          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/TransactionsGatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/TransactionsSiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/TransactionsDefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'bank-fixed-incomes' 
+
+  /investments/{investmentId}/transactions-current:
+    get:
+      tags:
+        - Transactions Current
+      summary: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      operationId: banktFixedIncomesGetInvestmentsInvestmentIdTransactionsCurrent
+      description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      parameters:
+       - $ref: '#/components/parameters/InvestmentId'
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+       - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
+       - $ref: '#/components/parameters/toTransactionDateMaxLimited'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
+        '400':
+          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/TransactionsGatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/TransactionsSiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/TransactionsDefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - 'openid'     
+          OAuth2Security:
+            - 'consent:consentId'
+            - 'bank-fixed-incomes' 
+components:
+  schemas:
+    ResponseError:
+      $ref: ./schemas/ResponseError.yaml
+    ResponseErrorMetaSingle:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    ResponseBankFixedIncomesProductList:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductList.yaml
+    ResponseBankFixedIncomesProductIdentification:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeIdentifyProduct.yaml
+    ResponseBankFixedIncomesBalances:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml
+    ResponseBankFixedIncomesTransactions:
+      $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductMovement.yaml
+    IdentifyProduct:
+      $ref: ./schemas/bank_fixed_incomes_apis/IdentifyProduct.yaml
+    EnumInvestmentType:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumInvestmentType.yaml
+    EnumInvestmentsFixedIncomeBankIndexer:
+      $ref: ./schemas/enum/EnumInvestmentsFixedIncomeBankIndexer.yaml
+    Remuneration:
+      $ref: ./schemas/bank_fixed_incomes_apis/Remuneration.yaml
+    EnumRateType:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumRateType.yaml
+    EnumRatePeriodicity:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumRatePeriodicity.yaml
+    EnumCalculation:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumCalculation.yaml
+    BankFixedIncomesMeta:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesMeta.yaml
+    BankFixedIncomesTransactionsMeta:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsMeta.yaml
+    BankFixedIncomeLinks:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsLinks.yaml
+    BankFixedIncomesProductMovement:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesProductMovement.yaml
+    EnumBankFixedIncomeMovementType:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumBankFixedIncomeMovementType.yaml
+    EnumBankFixedIncomeTransactionType:
+      $ref: ./schemas/bank_fixed_incomes_apis/EnumBankFixedIncomeTransactionType.yaml
+    CurrencyCode:
+      $ref: ./schemas/business_commons/CurrencyCode.yaml
+    BalanceCurrency:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesCurrency.yaml
+    BalanceAmount:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesBalancesAmount.yaml
+  securitySchemes:
+    OpenId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
+    OAuth2Security:
+      type: oauth2
+      description: "Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados."
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            bank_fixed_incomes: "Escopo necessário para acesso à API Bank Fixed Incomes. O controle dos endpoints específicos é feito via permissions."        
+  parameters:
+    InvestmentId:
+      $ref: ./parameters/InvestmentId.yaml
+    Authorization:
+      $ref: ./parameters/Authorization.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
+    xCustomerUserAgent:
+      $ref: ./parameters/XCustomerUserAgent.yaml
+    xFapiAuthDate:
+      $ref: ./parameters/XFapiAuthDate.yaml
+    xFapiCustomerIpAddress:
+      $ref: ./parameters/XFapiCustomerIpAddress.yaml
+    xFapiInteractionId:
+      $ref: ./parameters/BankFixedIncomesXFapiInteractionId.yaml
+    fromTransactionDate:
+      $ref: ./parameters/FromTransactionDate.yaml
+    fromTransactionDateMaxLimited:
+      $ref: ./parameters/FromTransactionDateMaxLimited.yaml
+    toTransactionDate:
+      $ref: ./parameters/ToTransactionDate.yaml
+    toTransactionDateMaxLimited:
+      $ref: ./parameters/ToTransactionDateMaxLimited.yaml
+  responses:
+    OkResponseBankFixedIncomesBalances:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeBalances.yaml
+    OkResponseBankFixedIncomesProductList:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductList.yaml
+    ResponseBankFixedIncomeIdentifyProduct:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomeIdentifyProduct.yaml
+    ResponseBankFixedIncomesProductMovement:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/bank_fixed_incomes_apis/ResponseBankFixedIncomesProductMovement.yaml
+    BadRequest:
+      $ref: ./responses/unpaged/BadRequest.yaml
+    Forbidden:
+      $ref: ./responses/unpaged/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/unpaged/GatewayTimeout.yaml
+    InternalServerError:
+      $ref: ./responses/unpaged/InternalServerError.yaml
+    Locked:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    MethodNotAllowed:
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+    NotAcceptable:
+      $ref: ./responses/unpaged/NotAcceptable.yaml
+    NotFound:
+      $ref: ./responses/unpaged/NotFound.yaml
+    TooManyRequests:
+      $ref: ./responses/unpaged/TooManyRequests.yaml
+    Unauthorized:
+      $ref: ./responses/unpaged/Unauthorized.yaml
+    UnprocessableEntity:
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
+    SiteIsOverloaded:
+      description: O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    BadRequestWithAdditionalProperties:
+      $ref: "./schemas/bank_fixed_incomes_apis/BankFixedIncomesBadRequest.yaml"
+    ForbiddenWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesForbidden.yaml
+    GatewayTimeoutWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesGatewayTimeout.yaml
+    InternalServerErrorWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesInternalServerError.yaml
+    LockedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesLocked.yaml
+    MethodNotAllowedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesMethodNotAllowed.yaml
+    NotAcceptableWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesNotAcceptable.yaml
+    NotFoundWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesNotFound.yaml
+    TooManyRequestsWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTooManyRequests.yaml
+    UnauthorizedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesUnauthorized.yaml
+    UnprocessableEntityWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesUnprocessableEntity.yaml
+    DefaultWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesDefault.yaml
+    SiteIsOverloadedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesSiteIsOverloaded.yaml
+    TransactionsBadRequestWithAdditionalProperties:
+      $ref: "./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsBadRequest.yaml"
+    TransactionsForbiddenWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsForbidden.yaml
+    TransactionsGatewayTimeoutWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsGatewayTimeout.yaml
+    TransactionsInternalServerErrorWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsInternalServerError.yaml
+    TransactionsLockedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsLocked.yaml
+    TransactionsMethodNotAllowedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsMethodNotAllowed.yaml
+    TransactionsNotAcceptableWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsNotAcceptable.yaml
+    TransactionsNotFoundWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsNotFound.yaml
+    TransactionsTooManyRequestsWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsTooManyRequests.yaml
+    TransactionsUnauthorizedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsUnauthorized.yaml
+    TransactionsUnprocessableEntityWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsUnprocessableEntity.yaml
+    TransactionsDefaultWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsDefault.yaml
+    TransactionsSiteIsOverloadedWithAdditionalProperties:
+      $ref: ./schemas/bank_fixed_incomes_apis/BankFixedIncomesTransactionsSiteIsOverloaded.yaml

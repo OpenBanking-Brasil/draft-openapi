@@ -4,7 +4,7 @@ info:
   description: |
     Estas APIs visam o compartilhamento de dados sobre Investimentos e suas
     características entre as Instituições Financeiras participantes do Open Finance Brasil
-  version: 1.0.0-rc2.0
+  version: 1.0.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
@@ -52,6 +52,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
   /bank-fixed-incomes:
     get:
       tags:
@@ -75,6 +77,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
   /credit-fixed-incomes:
     get:
       tags:
@@ -98,6 +102,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
   /variable-incomes:
     get:
       tags:
@@ -121,6 +127,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
   /treasure-titles:
     get:
       tags:
@@ -144,6 +152,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
 components:
   schemas:
     OKResponseInvestmentsFund:
@@ -295,8 +305,14 @@ components:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
     TooManyRequests:
-      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido"
+      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido."
       content:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
+    SiteIsOverloaded:
+      description: "O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml

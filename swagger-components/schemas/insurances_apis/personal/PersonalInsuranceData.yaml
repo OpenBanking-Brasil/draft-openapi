@@ -4,21 +4,21 @@ required:
   - society
   - name
   - code
+  - modality
   - coverages
-  - assistanceTypes
   - additionals
   - termsAndConditions
+  - globalCapital
   - terms
-  - benefitRecalculation
+  - financialRegimes
+  - allowPortability
   - indemnityPaymentMethods
-  - premiumPayment
-  - minimumRequirement
   - targetAudience
 properties:
   participant:
-    $ref: ../../business_commons/Participant.yaml
+    $ref: ../Participant.yaml
   society:
-    $ref: ../../business_commons/Society.yaml
+    $ref: ./PersonalInsuranceSociety.yaml
   name:
     type: string
     description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
@@ -79,7 +79,7 @@ properties:
     items:
       $ref: ../../business_commons/InsurancePensionEnumFinancialRegime.yaml
   reclaim:
-    $ref: ../../business_commons/InsurancePensionReclaim.yaml
+    $ref: ./PersonalInsuranceReclaim.yaml
   otherGuaranteedValues:
     type: array
     items:
@@ -90,7 +90,7 @@ properties:
       1. true
       2. false
   portabilityGraceTime:
-    $ref: ../../business_commons/GracePeriod.yaml
+    $ref: ./PersonalInsurancePortabilityGraceTime.yaml
   indemnityPaymentMethods:
     type: array
     items:
@@ -102,7 +102,7 @@ properties:
   premiumPayment:
     $ref: ./PersonalInsurancePremiumPayment.yaml
   minimumRequirement:
-    $ref: ../InsuranceMinimumRequirement.yaml
+    $ref: ./PersonalInsuranceMinimumRequirement.yaml
   targetAudience:
     $ref: ../../business_commons/EnumTargetAudience.yaml
 additionalProperties: false

@@ -1,0 +1,150 @@
+type: object
+required:
+  - type
+  - transactionType
+  - transactionDate
+  - transactionUnitPrice
+  - transactionQuantity
+  - transactionGrossValue
+  - transactionNetValue
+  - transactionId
+properties:
+  type:
+    $ref: ./EnumBankFixedIncomeMovementType.yaml
+  transactionType:
+    $ref: ./EnumBankFixedIncomeTransactionType.yaml
+  typeAdditionalInfo:
+    type: string
+    maxLength: 100
+    pattern: '[\w\W\s]*'
+    description: |
+      Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não delimitadas no domínio.
+
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver 'Outros' no campo Motivo da movimentação.
+  transactionDate:
+    type: string
+    format: date
+    maxLength: 10
+    minLength: 10
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+    example: "2018-02-15"
+    description: Data da movimentação.
+  transactionUnitPrice:
+    type: object
+    description: Preço unitário bruto negociado na transação.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        maxLength: 24
+        pattern: '^\d{1,15}\.\d{2,8}$'
+        example: '1000.04'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
+  transactionQuantity:
+    type: string
+    format: double
+    maxLength: 24
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    example: "42.25"
+    description: Quantidade de títulos envolvidos na movimentação.
+  transactionGrossValue:
+    type: object
+    description: Valor bruto da transação (Preço unitário da movimentação x Quantidade).
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
+  incomeTax:
+    type: object
+    description: |
+      Valor do imposto de renda recolhido na transação.
+
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
+  financialTransactionTax:
+    type: object
+    description: |
+      Valor do IOF recolhido na transação.
+
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+        description: Valor relacionado ao objeto.
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
+  transactionNetValue:
+    type: object
+    description: Valor líquido da transação.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+        description: Valor relacionado ao objeto.
+      currency:
+        $ref: ../business_commons/CurrencyCode.yaml
+  remunerationTransactionRate:
+    type: string
+    format: double
+    maxLength: 8
+    minLength: 3
+    pattern: '^\d{1}\.\d{6}$'
+    example: '0.300000'
+    description: |
+      Taxa de remuneração da transação.
+
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
+  indexerPercentage:
+    type: string
+    format: double
+    maxLength: 8
+    minLength: 3
+    pattern: '^\d{1}\.\d{6}$'
+    example: '1.100000'
+    description: |
+      Percentual máximo do indexador acordado com o cliente na contratação.
+
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
+  transactionId:
+    type: string
+    maxLength: 100
+    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+    example: 'ABCD2126019929279212650822221989319253344'
+    description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento.
+additionalProperties: false

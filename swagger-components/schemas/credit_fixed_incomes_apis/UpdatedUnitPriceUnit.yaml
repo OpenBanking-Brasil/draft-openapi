@@ -1,0 +1,17 @@
+type: object
+description: valor bruto unitário atualizado na data de referência;
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    type: string
+    format: double
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    maxLength: 24
+    minLength: 4
+    example: '-1000.0400'
+    description: 'Valor relacionado ao objeto.'
+  currency:
+    $ref: ./Currency.yaml
+  

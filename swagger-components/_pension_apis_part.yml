@@ -4,7 +4,7 @@ info:
   description: |
     API de Previdência do Open Finance Brasil – Fase 4.
     API que retorna informações de Previdência.
-  version: 1.0.0-rc1.0
+  version: 1.0.0-rc2.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
@@ -46,6 +46,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: "#/components/responses/SiteIsOverloaded"
   /survival-coverages:
     get:
       tags:
@@ -69,6 +71,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: "#/components/responses/SiteIsOverloaded"
 components:
   schemas:
     OKResponseRiskCoveragePension:
@@ -108,11 +112,11 @@ components:
     OpenDataMeta:
       $ref: ./schemas/OpenDataMeta.yaml
     Participant:
-      $ref: ./schemas/business_commons/Participant.yaml
-    InsurancePensionEnumIndemnifiablePeriodType:
-      $ref: ./schemas/business_commons/InsurancePensionEnumIndemnifiablePeriodType.yaml
-    EnumTargetAudience:
-      $ref: ./schemas/business_commons/EnumTargetAudience.yaml
+      $ref: ./schemas/pension_apis/risk/Participant.yaml
+    RiskPensionEnumIndemnifiablePeriodType:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumIndemnifiablePeriodType.yaml
+    SurvivalPensionEnumTargetAudience:
+      $ref: ./schemas/pension_apis/survival/SurvivalPensionEnumTargetAudience.yaml
     EnumProductModality:
       $ref: ./schemas/business_commons/EnumProductModality.yaml
     Coverage:
@@ -121,24 +125,24 @@ components:
       $ref: ./schemas/enum/EnumRiskPensionCoverageType.yaml
     CoverageAttributes:
       $ref: ./schemas/pension_apis/risk/RiskPensionCoverageAttributes.yaml
-    GracePeriod:
-      $ref: ./schemas/business_commons/GracePeriod.yaml
+    RiskPensionGracePeriod:
+      $ref: ./schemas/pension_apis/risk/RiskPensionGracePeriod.yaml
     TermsAndConditions:
       $ref: ./schemas/business_commons/TermsAndConditionsItem.yaml
     UpdateIndex:
       $ref: ./schemas/enum/EnumPensionUpdateIndex.yaml
-    InsurancePensionReclaim:
-      $ref: ./schemas/business_commons/InsurancePensionReclaim.yaml
+    RiskPensionReclaim:
+      $ref: ./schemas/pension_apis/risk/RiskPensionReclaim.yaml
     InsurancePensionMinValue:
       $ref: ./schemas/business_commons/InsurancePensionMinValue.yaml
     InsurancePensionMaxValue:
       $ref: ./schemas/business_commons/InsurancePensionMaxValue.yaml
     RiskPensionMinimumRequirement:
       $ref: ./schemas/pension_apis/risk/RiskPensionMinimumRequirement.yaml
-    InsurancePensionReclaimTableItem:
-      $ref: ./schemas/business_commons/InsurancePensionReclaimTableItem.yaml
-    InsurancePensionEnumPmbacRemuneration:
-      $ref: ./schemas/business_commons/InsurancePensionEnumPmbacRemuneration.yaml
+    RiskPensionReclaimTableItem:
+      $ref: ./schemas/pension_apis/risk/RiskPensionReclaimTableItem.yaml
+    RiskPensionEnumPmbacRemuneration:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumPmbacRemuneration.yaml
     AgeAdjustment:
       $ref: ./schemas/business_commons/InsurancePensionAgeAdjustment.yaml
     CurrencyCode:
@@ -148,11 +152,23 @@ components:
     EnumAssistanceType:
       $ref: ./schemas/business_commons/EnumAssistanceType.yaml
     EnumAdditional:
-      $ref: ./schemas/business_commons/EnumAdditional.yaml
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumAdditional.yaml
     EnumGracePeriodUnit:
       $ref: ./schemas/business_commons/EnumGracePeriodUnit.yaml
-    InsurancePensionEnumFinancialRegime:
-      $ref: ./schemas/business_commons/InsurancePensionEnumFinancialRegime.yaml
+    RiskPensionEnumGracePeriodUnit:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumGracePeriodUnit.yaml
+    RiskPensionEnumFinancialRegime:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumFinancialRegime.yaml
+    RiskPensionEnumPremiumUpdateIndex:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumPremiumUpdateIndex.yaml
+    RiskPensionEnumContributionPayment:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumContributionPayment.yaml
+    RiskPensionEnumIndemnityPaymentMethod:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumIndemnityPaymentMethod.yaml
+    RiskPensionEnumOtherGuaranteedValues:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumOtherGuaranteedValues.yaml
+    RiskPensionEnumProfitModality:
+      $ref: ./schemas/pension_apis/risk/RiskPensionEnumProfitModality.yaml
   parameters:
     page:
       $ref: ./parameters/Page.yaml
@@ -190,7 +206,7 @@ components:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
     TooManyRequests:
-      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido"
+      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido."
       content:
         application/json; charset=utf-8:
           schema:
@@ -201,3 +217,9 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
+    SiteIsOverloaded:
+      description: "O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
