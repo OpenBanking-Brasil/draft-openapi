@@ -6,18 +6,28 @@ Conta de pagamento pós-paga: corresponde ao creditCardAccountId;
 Empréstimos, Financiamentos, Direitos creditórios descontados e Adiantamento a depositantes: corresponde ao contractId.
 ";Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;1;1;"";Não permitido;string;25cac914-d8ae-6789-b215-650a6215820d;1
 /data/type;type;"Tipo de recurso (vide Enum):
-Account - Conta de depósito à vista, poupança ou pagamento pré-paga
-Credit Card Account - Conta de pagamento pós-paga (Cartão de Crédito)
-Loan - Empréstimo
-Financing - Financiamento
-Unarranged Account Overdraft - Cheque Especial
-Invoice Financing - Financiamento de Fatura
+  - Account - Conta de depósito à vista, poupança ou pagamento pré-paga
+  - Credit Card Account - Conta de pagamento pós-paga (Cartão de Crédito)
+  - Loan - Empréstimo
+  - Financing - Financiamento
+  - Unarranged Account Overdraft - Cheque Especial
+  - Invoice Financing - Financiamento de Fatura
+  - Bank Fixed Income - Renda Fixa Bancária
+  - Credit Fixed Income - Renda Fixa Crédito
+  - Variabel Income - Renda Variável
+  - Treasure Title - Título do Tesouro Direto
+  - Fund - Fundo de Investimento
 ";Texto;;Obrigatório;;"ACCOUNT 
 CREDIT_CARD_ACCOUNT 
 LOAN 
 FINANCING 
 UNARRANGED_ACCOUNT_OVERDRAFT 
-INVOICE_FINANCING";1;1;"";Não permitido;string;ACCOUNT;
+INVOICE_FINANCING 
+BANK_FIXED_INCOME 
+CREDIT_FIXED_INCOME 
+VARIABLE_INCOME 
+TREASURE_TITLE 
+FUND";1;1;"";Não permitido;string;ACCOUNT;
 /data/status;status;"Tipo de status de recurso (vide Enum):
 Available - Disponível
 Unavailable - Indisponível
