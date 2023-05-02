@@ -1,0 +1,199 @@
+type: object
+description: Informações da posição do fundo de investimento a que se refere investmentId.
+required:
+  - transactionId
+  - type
+  - transactionType
+  - transactionConversionDate
+  - transactionQuotaPrice
+  - transactionQuotaQuantity
+  - transactionValue
+  - transactionGrossValue
+  - transactionNetValue
+properties:  
+  transactionId:
+    type: string
+    description: Código ou identificador único prestado pela instituição que mantém a representação individual do movimento na posição do fundo.
+    maxLength: 100
+    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+    example: 'ABCD2126019929279212650822221989319253344'
+  type:
+    $ref: ./EnumFundsTransactionsCurrentType.yaml
+  transactionType:
+    $ref: ./EnumFundsTransactionsCurrentTransactionType.yaml
+  transactionTypeAdditionalInfo:
+    type: string
+    description: |
+      Informação adicional do tipo do motivo, para preenchimento no caso de movimentações não delimitadas no domínio.
+      
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
+    maxLength: 100
+    pattern: '[\w\W\s]*'
+  transactionConversionDate:
+    type: string
+    format: date
+    description: Data da conversão da transação de movimentação do fundo de investimento.
+    maxLength: 10
+    minLength: 10
+    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
+    example: "2023-01-07"
+  transactionQuotaPrice:
+    type: object
+    description: |
+      É o valor da cota utilizada na conversão para a realização da movimentação do cliente no fundo, conforme a regra prevista em regulamento - valor pode ser negativo.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        maxLength: 25
+        pattern: '^-?\d{1,15}\.\d{2,8}$'
+        example: '1000.04'
+      currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
+  transactionQuotaQuantity:
+    type: string
+    format: double
+    description: |
+      Número de cotas convertidas na data da movimentação.
+    maxLength: 24
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    example: "42.25"
+  transactionValue:
+    type: object
+    description: Valor da movimentação.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        maxLength: 21
+        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
+  transactionGrossValue:
+    type: object
+    description: |
+      Valor da movimentação que se refere a quantidade da cota x valor da cota da movimentação.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        maxLength: 21
+        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
+  incomeTax:
+    type: object
+    description: |
+      Valor do Imposto de Renda (IR) retido na fonte considerando a alíquota vigente na data da movimentação.
+      
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        maxLength: 21
+        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
+  financialTransactionTax:
+    type: object
+    description: |
+      Valor do Imposto sobre Operações Financeiras (IOF) retido na fonte considerando a alíquota vigente na data da movimentação.
+      
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        maxLength: 21
+        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
+  transactionExitFee:
+    type: object
+    description: |
+      Valor da taxa de saída considerado na movimentação.
+      
+      [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        maxLength: 20
+        pattern: '^\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
+  transactionNetValue:
+    type: object
+    description: Valor líquido da movimentação posterior à dedução de impostos (IOF e IR) e taxa de saída.
+    required:
+      - amount
+      - currency
+    properties:
+      amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        maxLength: 21
+        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        example: '1000.04'
+      currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
+additionalProperties: false

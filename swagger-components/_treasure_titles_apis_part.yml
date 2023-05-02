@@ -1,0 +1,562 @@
+openapi: 3.0.0
+info:
+  title: API Treasure Titles - Open Finance Brasil
+  description: |
+    API de informações de operações de Títulos do Tesouro Direto Open Finance Brasil – Fase 4. API que retorna informações de operações de investimento do tipo Títulos do Tesouro Direto mantidas nas instituições transmissoras por seus clientes, incluindo dados como informações do produto, quantidade, saldos em posição do cliente e movimentações financeiras. Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. Devem ser considerados como escopo de exposição todos os títulos ofertados pelo Tesouro Direto. A exposição se dará por cada operação de títulos do Tesouro Direto contratada pelo cliente.
+  version: 1.0.0-rc1.0
+  license:
+    name: Apache 2.0
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+  contact:
+    name: Governança do Open Finance Brasil – Especificações
+    email: gt-interfaces@openbankingbr.org
+    url: "https://openbanking-brasil.github.io/areadesenvolvedor/"
+servers:
+  - url: "https://api.banco.com.br/open-banking/treasure-titles/v1"
+    description: Servidor de Produção
+  - url: "https://apih.banco.com.br/open-banking/treasure-titles/v1"
+    description: Servidor de Homologação
+tags:
+  - name: Product List
+    description: Obtém a lista de operações de Títulos do Tesouro Direto mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+  - name: Product Identification
+    description: Obtém os dados da operação de Títulos do Tesouro Direto identificada por investmentId.
+  - name: Balances
+    description: Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+  - name: Transactions
+    description: Obtém as movimentações da operação (últimos 12 meses) de Títulos do Tesouro Direto identificada por investmentId.
+  - name: Transactions Current
+    description: Obtém as movimentações recentes da operação de Títulos do Tesouro Direto identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+  
+paths:
+  /investments:
+    get:
+      tags:
+        - Product List
+      summary: Obtém a lista de operações de Títulos do Tesouro Direto mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      operationId: treasureTitlesGetInvestments
+      description: Obtém a lista de operações de Títulos do Tesouro Direto mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
+      parameters:
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseTreasureTitlesProductList'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OAuth2AuthorizationCode:
+            - 'openid'     
+            - 'consent:consentId'
+            - 'treasure-titles' 
+
+  /investments/{investmentId}:
+    get:
+      tags:
+        - Product Identification
+      summary: Obtém os dados da operação de Títulos do Tesouro Direto identificada por investmentId.
+      operationId: treasureTitlesGetInvestmentsInvestmentId
+      description: Obtém os dados da operação de Títulos do Tesouro Direto identificada por investmentId.
+      parameters:
+        - $ref: '#/components/parameters/InvestmentId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseTreasureTitlesIdentifyProduct'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles' 
+
+  /investments/{investmentId}/balances:
+    get:
+      tags:
+        - Balances
+      summary: Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+      operationId: treasureTitlesGetInvestmentsInvestmentIdBalances
+      description: Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+      parameters:
+        - name: investmentId
+          in: path
+          description: Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.
+          required: true
+          schema:
+            type: string
+            pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$
+            example: '92792126019929200000000000000000000000000'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OkResponseTreasureTitlesBalances'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        'default':
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles'     
+            
+  /investments/{investmentId}/transactions:
+    get:
+      tags:
+        - Transactions
+      summary: Obtém as movimentações da operação (últimos 12 meses) de Títulos do Tesouro Direto identificada por investmentId.
+      operationId: treasureTitlesGetInvestmentsInvestmentIdTransactions
+      description: Obtém as movimentações da operação (últimos 12 meses) de Títulos do Tesouro Direto identificada por investmentId.
+      parameters:
+       - $ref: '#/components/parameters/InvestmentId'
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+       - $ref: '#/components/parameters/fromTransactionDate'
+       - $ref: '#/components/parameters/toTransactionDate'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseTreasureTitlesProductTransactions'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles' 
+
+  /investments/{investmentId}/transactions-current:
+    get:
+      tags:
+        - Transactions Current
+      summary: Obtém as movimentações recentes da operação de Títulos do Tesouro Direto identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      operationId: treasureTitlesGetInvestmentsInvestmentIdTransactionsCurrent
+      description: Obtém as movimentações recentes da operação de Títulos do Tesouro Direto identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      parameters:
+       - $ref: '#/components/parameters/InvestmentId'
+       - $ref: '#/components/parameters/Authorization'
+       - $ref: '#/components/parameters/xFapiAuthDate'
+       - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+       - $ref: '#/components/parameters/xFapiInteractionId'
+       - $ref: '#/components/parameters/xCustomerUserAgent'
+       - $ref: '#/components/parameters/page'
+       - $ref: '#/components/parameters/pageSize'
+       - $ref: '#/components/parameters/pagination-key'
+       - $ref: '#/components/parameters/fromTransactionDateMaxLimited'
+       - $ref: '#/components/parameters/toTransactionDateMaxLimited'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseTreasureTitlesProductTransactionsCurrent'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        'default':
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'     
+          - 'consent:consentId'
+          - 'treasure-titles' 
+components:
+  schemas:
+    LockedWithAdditionalProperties:
+      $ref: ./schemas/ResponseError.yaml
+    ResponseError:
+      $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    ResponseTreasureTitlesListProduct:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductList.yaml
+    TreasureTitlesMeta:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesMeta.yaml
+    TreasureTitlesLinks:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionsLinks.yaml
+    CurrencyCode:
+      $ref: ./schemas/business_commons/CurrencyCode.yaml
+    ResponseTreasureTitlesBalances:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesBalances.yaml
+    TreasureTitlesProductTransaction:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesProductMovement.yaml
+    ResponseTreasureTitlesIdentifyProduct:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProduct.yaml
+    ResponseTreasureTitlesListProductData:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesListProductData.yaml
+    ResponseTreasureTitlesProductList:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductList.yaml
+    ResponseTreasureTitlesProductTransactions:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactions.yaml
+    ResponseTreasureTitlesProductTransactionsCurrent:
+      $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactionsCurrent.yaml
+    TreasureTitlesAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesAmount.yaml
+    TreasureTitlesBalances:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBalances.yaml
+    TreasureTitlesBlockedBalance:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBlockedBalance.yaml
+    TreasureTitlesBlockedBalanceAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBlockedBalanceAmount.yaml
+    TreasureTitlesBrandName:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesBrandName.yaml
+    TreasureTitlesCalculation:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesCalculation.yaml
+    TreasureTitlesCompanyCnpj:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesCompanyCnpj.yaml
+    TreasureTitlesCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesCurrency.yaml
+    TreasureTitlesDueDate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesDueDate.yaml
+    TreasureTitlesFinancialTransactionTax:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTax.yaml
+    TreasureTitlesFinancialTransactionTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTaxAmount.yaml
+    TreasureTitlesFinancialTransactionTaxCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTaxCurrency.yaml
+    TreasureTitlesFinancialTransactionTaxFinancialTransactionTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesFinancialTransactionTaxFinancialTransactionTaxAmount.yaml  
+    TreasureTitlesGrossAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesGrossAmount.yaml
+    TreasureTitlesGrossAmountAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesGrossAmountAmount.yaml   
+    TreasureTitlesIdentifyProduct:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIdentifyProduct.yaml     
+    TreasureTitlesIncomeTax:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTax.yaml
+    TreasureTitlesIncomeTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTaxAmount.yaml     
+    TreasureTitlesIncomeTaxCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTaxCurrency.yaml   
+    TreasureTitlesIncomeTaxIncomeTaxAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIncomeTaxIncomeTaxAmount.yaml
+    TreasureTitlesIndexer:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIndexer.yaml
+    TreasureTitlesIndexerAdditionalInfo:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIndexerAdditionalInfo.yaml
+    TreasureTitlesInvestmentId:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesInvestmentId.yaml        
+    TreasureTitlesIsinCode:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesIsinCode.yaml
+    TreasureTitlesMetaTransaction:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesMetaTransaction.yaml      
+    TreasureTitlesNetAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesNetAmount.yaml
+    TreasureTitlesNetAmountAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesNetAmountAmount.yaml
+    TreasureTitlesPostFixedIndexerPercentage:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPostFixedIndexerPercentage.yaml
+    TreasureTitlesPreFixedRate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPreFixedRate.yaml          
+    TreasureTitlesProductName:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesProductName.yaml
+    TreasureTitlesPurchaseDate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPurchaseDate.yaml        
+    TreasureTitlesPurchaseUnitPrice:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesPurchaseUnitPrice.yaml   
+    TreasureTitlesQuantity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesQuantity.yaml
+    TreasureTitlesRatePeriodicity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesRatePeriodicity.yaml
+    TreasureTitlesReferenceDateTime:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesReferenceDateTime.yaml   
+    TreasureTitlesRemuneration:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesRemuneration.yaml        
+    TreasureTitlesRemunerationTransactionRate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesRemunerationTransactionRate.yaml   
+    TreasureTitlesTransactionDate:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionDate.yaml     
+    TreasureTitlesTransactionGrossValue:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionGrossValue.yaml
+    TreasureTitlesTransactionGrossValueAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionGrossValueAmount.yaml
+    TreasureTitlesTransactionGrossValueCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionGrossValueCurrency.yaml
+    TreasureTitlesTransactionId:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionId.yaml       
+    TreasureTitlesTransactionNetValue:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionNetValue.yaml 
+    TreasureTitlesTransactionNetValueAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionNetValueAmount.yaml
+    TreasureTitlesTransactionNetValueCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionNetValueCurrency.yaml
+    TreasureTitlesTransactionQuantity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionQuantity.yaml 
+    TreasureTitlesTransactionsLinks:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionsLinks.yaml   
+    TreasureTitlesTransactionType:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionType.yaml     
+    TreasureTitlesTransactionUnitPrice:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionUnitPrice.yaml
+    TreasureTitlesTransactionUnitPriceAmount:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionUnitPriceAmount.yaml
+    TreasureTitlesTransactionUnitPriceCurrency:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTransactionUnitPriceCurrency.yaml
+    TreasureTitlesType:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesType.yaml
+    TreasureTitlesUpdatedUnitPrice:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesUpdatedUnitPrice.yaml    
+    TreasureTitlesVoucherPaymentIndicator:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesVoucherPaymentIndicator.yaml
+    TreasureTitlesVoucherPaymentPeriodicity:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesVoucherPaymentPeriodicity.yaml
+    TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo.yaml
+  securitySchemes:
+    OAuth2AuthorizationCode:
+      type: oauth2
+      description: "Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados."
+      flows:
+        authorizationCode:
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
+          scopes:
+            treasure_titles: "Escopo necessário para acesso à API Treasure Titles - Open Finance Brasil. O controle dos endpoints específicos é feito via permissions."        
+  parameters:
+    InvestmentId:
+      $ref: ./parameters/InvestmentId.yaml
+    Authorization:
+      $ref: ./parameters/Authorization.yaml
+    pagination-key:
+      $ref: ./parameters/PaginationKey.yaml
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
+    xCustomerUserAgent:
+      $ref: ./parameters/XCustomerUserAgent.yaml
+    xFapiAuthDate:
+      $ref: ./parameters/XFapiAuthDate.yaml
+    xFapiCustomerIpAddress:
+      $ref: ./parameters/XFapiCustomerIpAddress.yaml
+    xFapiInteractionId:
+      $ref: ./schemas/treasure_titles_apis/XFapiInteractionIdTrue.yaml
+    fromTransactionDate:
+      $ref: ./parameters/FromTransactionDate.yaml
+    fromTransactionDateMaxLimited:
+      $ref: ./parameters/FromTransactionDateMaxLimited.yaml
+    toTransactionDate:
+      $ref: ./parameters/ToTransactionDate.yaml
+    toTransactionDateMaxLimited:
+      $ref: ./parameters/ToTransactionDateMaxLimited.yaml
+  responses:
+    OkResponseTreasureTitlesBalances:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesBalances.yaml
+    OkResponseTreasureTitlesProductList:
+      description: Dados obtidos com sucesso
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductList.yaml
+    ResponseTreasureTitlesIdentifyProduct:
+      description: Dados de fundos de investimentos obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProduct.yaml
+    ResponseTreasureTitlesProductTransactions:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactions.yaml
+    ResponseTreasureTitlesProductTransactionsCurrent:
+      description: Dados obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/treasure_titles_apis/ResponseTreasureTitlesProductTransactions.yaml
+    BadRequest:
+      $ref: ./responses/unpaged/BadRequest.yaml
+    Forbidden:
+      $ref: ./responses/unpaged/Forbidden.yaml
+    GatewayTimeout:
+      $ref: ./responses/unpaged/GatewayTimeout.yaml
+    InternalServerError:
+      $ref: ./responses/unpaged/InternalServerError.yaml
+    Locked:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    MethodNotAllowed:
+      $ref: ./responses/unpaged/MethodNotAllowed.yaml
+    NotAcceptable:
+      $ref: ./responses/unpaged/NotAcceptable.yaml
+    NotFound:
+      $ref: ./responses/unpaged/NotFound.yaml
+    TooManyRequests:
+      $ref: ./responses/unpaged/TooManyRequests.yaml
+    Unauthorized:
+      $ref: ./responses/unpaged/Unauthorized.yaml
+    UnprocessableEntity:
+      $ref: ./responses/unpaged/UnprocessableEntity.yaml
+    Default:
+      $ref: ./responses/unpaged/Default.yaml
+    SiteIsOverloaded:
+      description: O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
+    BadRequestWithAdditionalProperties:
+      $ref: "./schemas/treasure_titles_apis/TreasureTitlesBadRequest.yaml"
+    ForbiddenWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesForbidden.yaml
+    GatewayTimeoutWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesGatewayTimeout.yaml
+    InternalServerErrorWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesInternalServerError.yaml
+    LockedWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesLocked.yaml
+    MethodNotAllowedWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesMethodNotAllowed.yaml
+    NotAcceptableWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesNotAcceptable.yaml
+    NotFoundWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesNotFound.yaml
+    TooManyRequestsWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesTooManyRequests.yaml
+    UnauthorizedWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesUnauthorized.yaml
+    UnprocessableEntityWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesUnprocessableEntity.yaml
+    DefaultWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesDefault.yaml 
+    SiteIsOverloadedWithAdditionalProperties:
+      $ref: ./schemas/treasure_titles_apis/TreasureTitlesSiteIsOverloaded.yaml

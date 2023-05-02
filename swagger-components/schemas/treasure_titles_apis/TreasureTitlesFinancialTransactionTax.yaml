@@ -1,0 +1,13 @@
+description: |
+  IOF provisionado.
+
+  Caso seja um produto com alíquota zero esse objeto pode ser enviado sem valores (vazio).
+type: 'object'
+required:
+  - 'amount'
+  - 'currency'
+properties:
+  amount:
+    $ref: './TreasureTitlesFinancialTransactionTaxAmount.yaml'
+  currency:
+    $ref: './TreasureTitlesCurrency.yaml'

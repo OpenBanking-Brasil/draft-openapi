@@ -1,0 +1,13 @@
+description: |
+  Valor do IOF recolhido na transação
+
+  [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
+type: 'object'
+required:
+  - 'amount'
+  - 'currency'
+properties:
+  amount:
+    $ref: './TreasureTitlesFinancialTransactionTaxAmount.yaml'
+  currency:
+    $ref: './TreasureTitlesCurrency.yaml'

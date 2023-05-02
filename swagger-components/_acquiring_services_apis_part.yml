@@ -4,7 +4,7 @@ info:
   description: |
     API de Credenciamento do Open Finance Brasil – Fase 4.
     API que retorna informações de Credenciamento.
-  version: 1.0.0-rc2.0
+  version: 1.0.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
@@ -46,6 +46,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
   /businesses:
     get:
       tags:
@@ -69,6 +71,8 @@ paths:
           $ref: "#/components/responses/TooManyRequests"
         "500":
           $ref: "#/components/responses/InternalServerError"
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
 components:
   schemas:
     OKResponseAcquiringServices:
@@ -122,7 +126,7 @@ components:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
     TooManyRequests:
-      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido"
+      description: "A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido."
       content:
         application/json; charset=utf-8:
           schema:
@@ -133,3 +137,9 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: ./schemas/OpenDataResponseError.yaml
+    SiteIsOverloaded:
+      description: "O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml
