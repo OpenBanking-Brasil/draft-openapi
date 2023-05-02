@@ -24,10 +24,7 @@ OUTROS";1;1;"";Não permitido;string;DIVIDENDOS;
 ";Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;" Data do pregão: compartilhar movimentos até a data da posição.
 ";Não permitido;string;2018-02-15;10
 /data/priceFactor;priceFactor;"Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
-
-[Restrição] Valor mínimo 1.
-";Texto;24;Condicional;^\d{1,15}\.\d{2,8}$;;0;1;" Valor mínimo 1.
-";Não permitido;string;100.0005;
+";Texto;24;Opcional;^\d{1,15}\.\d{2,8}$;;0;1;"";Não permitido;string;100.0005;
 /data/transactionUnitPrice;transactionUnitPrice;"Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
 
 [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com os valores 'COMPRA', 'VENDA' ou 'ALUGUEIS'.

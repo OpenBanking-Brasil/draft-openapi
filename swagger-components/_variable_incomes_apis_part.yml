@@ -97,7 +97,7 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
           - 'variable-incomes'
@@ -145,7 +145,7 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
           - 'variable-incomes'
@@ -193,7 +193,7 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
           - 'variable-incomes'
@@ -246,7 +246,7 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
           - 'variable-incomes'
@@ -299,7 +299,7 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
           - 'variable-incomes'
@@ -348,7 +348,7 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2Security:
+        - OAuth2AuthorizationCode:
           - 'openid'
           - 'consent:consentId'
           - 'variable-incomes'
@@ -432,7 +432,7 @@ components:
     BrokerNoteId:
       $ref: ./schemas/variable_incomes_apis/BrokerNoteId.yaml
   securitySchemes:
-    OAuth2Security:
+    OAuth2AuthorizationCode:
       type: oauth2
       description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
       flows:

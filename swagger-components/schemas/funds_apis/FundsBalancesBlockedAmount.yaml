@@ -1,0 +1,19 @@
+type: object
+description: Valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros);
+required:
+    - amount
+    - currency
+properties:
+    amount:
+        type: string
+        format: double
+        description: Valor relacionado ao objeto.
+        pattern: '^-?\d{1,15}\.\d{2,4}$'
+        maxLength: 21
+        example: '1000.04'
+    currency:
+        type: string
+        description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+        pattern: '^[A-Z]{3}$'
+        maxLength: 3
+        example: 'BRL'
