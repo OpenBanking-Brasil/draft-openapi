@@ -1,0 +1,38 @@
+type: object
+description: Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+required:
+  - referenceDate
+  - priceFactor
+  - grossAmount
+  - blockedBalance
+  - quantity
+  - closingPrice
+properties:
+  referenceDate: 
+    type: string
+    format: date
+    description: Posição fechada para o ativo da data do dia anterior.
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2023-01-07'
+    maxLength: 10
+  priceFactor:
+    type: string
+    format: double
+    description: |
+      Fator que indica o número de ações utilizadas para a formação do preço. Valor informado deve ser maior que zero.
+    pattern: ^\d{1,15}\.\d{2,8}$
+    maxLength: 24
+    example: '100.0005'
+  grossAmount:
+    $ref: ./VariableIncomesBalancesGrossAmount.yaml
+  blockedBalance:
+    $ref: ./VariableIncomesBalancesBlockedBalance.yaml
+  quantity: 
+    type: string
+    format: double
+    description: Quatidade total do ativo na data de referência.
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    maxLength: 24
+    example: '1000.00000004'
+  closingPrice:
+    $ref: ./VariableIncomesBalancesClosingPrice.yaml

@@ -1,0 +1,26 @@
+type: object
+required:
+  - issuerInstitutionCnpjNumber
+  - isinCode
+  - ticker
+properties:
+  issuerInstitutionCnpjNumber:
+    type: string
+    description: CNPJ da instituição emissora.
+    maxLength: 14
+    pattern: '^\d{14}$'
+    example: '11225860000140'
+  isinCode:
+    type: string
+    description: |
+      Código ISIN da emissão, Código ISIN do produto, Código da emissora: código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.
+    maxLength: 12
+    pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
+    example: 'BRCST4CTF001'
+  ticker:
+    type: string
+    description: Código de negociação para identificação de ativos negociados em bolsa.
+    maxLength: 35
+    pattern: '[\w\W\s]*'
+    example: 'PETR4'
+additionalProperties: false
