@@ -1,0 +1,13 @@
+type: object
+required:
+  - contractType
+  - contractingMinRequirement
+properties:
+  contractType:
+    $ref: ../../enum/EnumContractTypePersonal.yaml
+  contractingMinRequirement:
+    type: string
+    description: Campo aberto (possibilidade de incluir URL)
+    maxLength: 1024
+    example: 'https://openinsurance.com.br/aaa'
+additionalProperties: false

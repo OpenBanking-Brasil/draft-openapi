@@ -1182,7 +1182,7 @@ components:
     TransactionQuantity:
       type: string
       description: Quantidade de títulos envolvidos na movimentação
-      maxLength: 25
+      maxLength: 24
       pattern: '^\d{1,15}\.\d{2,8}$'
       example: '42.25'
     TransactionType:
@@ -1269,7 +1269,7 @@ components:
           pattern: '^\d{1,15}\.\d{2,8}$'
           maxLength: 24
           minLength: 4
-          example: '-1000.0400'
+          example: '1000.0400'
           description: Valor relacionado ao objeto.
         currency:
           $ref: '#/components/schemas/Currency'
