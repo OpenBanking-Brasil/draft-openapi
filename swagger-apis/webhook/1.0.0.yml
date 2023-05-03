@@ -66,7 +66,7 @@ paths:
         description: Payload para criação do consentimento para iniciação do pagamento.
         required: true
       responses:
-        '201':
+        '202':
           $ref: '#/components/responses/202Webhook'
       security:
         - OAuth2ClientCredentials:
@@ -170,6 +170,7 @@ components:
     202Webhook:
       description: Consentimento de pagamento criado com sucesso.
       headers:
-        x-webhook-interaction-id:
+        x-webhook-interaction-id:      
+          description: Identificador único recebido da detentora de conta na notificação enviada pelo Webhook.
           schema:
             $ref: '#/components/schemas/xWebhookInteractionId'
