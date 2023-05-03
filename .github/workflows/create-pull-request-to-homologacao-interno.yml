@@ -10,8 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
      
-      - name: Creating pull request to Homologacao-interno
+      - name: Creating pull request to stage
         env: 
-          HOMOLOG_BRANCH: Homologacao-interno
+          HOMOLOG_BRANCH: stage
           GH_TOKEN: ${{ secrets.AREADEV_INTEGRATION }}
         run: gh pr create -B $HOMOLOG_BRANCH -H ${{ github.event.pull_request.base.ref }}  --title '${{ github.event.pull_request.title }}' --body ''
