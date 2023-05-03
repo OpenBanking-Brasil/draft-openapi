@@ -19,6 +19,9 @@ servers:
 tags:
   - name: Consent Notification
     description: Notificações de mudanças de estados de consentimentos da API de Iniciação de Pagamentos.
+  - name: Pix Payment Notification
+    description: 'Notificações de mudanças de estados do pagamento: Arranjo Pix da API de Iniciação de Pagamentos.'
+    
 paths:
   '/payments/{versionApi}/consents/{consentId}':
     post:
@@ -35,40 +38,42 @@ paths:
         content:
           application/jwt:
             schema:
-              $ref: '#/components/schemas/RequestBodyConsentNotification'
+              $ref: '#/components/schemas/RequestBodyWebhook'
         description: Payload para criação do consentimento para iniciação do pagamento.
         required: true
       responses:
         '202':
-          $ref: '#/components/responses/202ConsentNotification'
+          $ref: '#/components/responses/202Webhook'
       security:
         - OAuth2ClientCredentials:
             - payments  
-  '/pix/payments/{paymentId}':
+  '/payments/{versionApi}/pix/payments/{paymentId}':
     post:
       tags:
-        - Pagamentos
-      summary: Criar consentimento para a iniciação de pagamento.z``
-      operationId: paymentsPostConsentsTemp
-      description: Método de criação do consentimento para a iniciação de pagamento.
+        - Pix Payment Notification
+      summary: 'Notificações de mudanças de estados do pagamento: Arranjo Pix da API de Iniciação de Pagamentos.'
+      operationId: pixPaymentNotification
+      description: 'Notificações de mudanças de estados do pagamento: Arranjo Pix da API de Iniciação de Pagamentos.'
       parameters:
         - $ref: '#/components/parameters/paymentId'
+        - $ref: '#/components/parameters/versionApi'
+        - $ref: '#/components/parameters/xWebhookInteractionId'
       requestBody:
         content:
           application/jwt:
             schema:
-              $ref: '#/components/schemas/CreatePaymentConsent'
+              $ref: '#/components/schemas/RequestBodyWebhook'
         description: Payload para criação do consentimento para iniciação do pagamento.
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/201PaymentsConsentsConsentCreated'
+          $ref: '#/components/responses/202Webhook'
       security:
         - OAuth2ClientCredentials:
             - payments  
 components:
   schemas:
-    RequestBodyConsentNotification:
+    RequestBodyWebhook:
       type: object
       required:
         - data
@@ -131,7 +136,7 @@ components:
     xWebhookInteractionId:
       name: x-webhook-interaction-id
       in: header
-      description: Identificador único para cada tentativa de notificação realizada. O identificador deverá seguir o padrão UID RFC4122..
+      description: Identificador único para cada tentativa de notificação realizada. O identificador deverá seguir o padrão UID RFC4122.
       required: true
       schema:
         type: string
@@ -162,7 +167,7 @@ components:
           scopes:
             payments: Escopo necessário para acesso à API Payment Initiation.
   responses:
-    202ConsentNotification:
+    202Webhook:
       description: Consentimento de pagamento criado com sucesso.
       headers:
         x-webhook-interaction-id:
