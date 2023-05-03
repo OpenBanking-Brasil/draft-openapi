@@ -117,8 +117,7 @@ components:
     versionApi:
       name: versionApi
       in: path
-      description: |
-        temporario
+      description: Identifica a versão da API que deverá ser utilizada para recebimento da notificação via webhook
       required: true
       schema:
         type: string
@@ -168,7 +167,7 @@ components:
             payments: Escopo necessário para acesso à API Payment Initiation.
   responses:
     202Webhook:
-      description: Consentimento de pagamento criado com sucesso.
+      description: Requisição aceita para processamento posterior.
       headers:
         x-webhook-interaction-id:
           schema:
