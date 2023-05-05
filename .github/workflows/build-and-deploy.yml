@@ -4,19 +4,19 @@ on:
   push:
     branches:
       - "**"
-      - "!GT-*"
+      - "!release-*"
       - "!main"
   pull_request_target:
     types:
       - closed
     branches:
       - "main"
-      - "GT-*"
+      - "release-*"
 jobs:
   build:  
     env:
       ruby-version: 2.5
-      enable-openapi-integration: ${{ github.repository ==  'Sensedia/draft-openapi' &&  startsWith(github.ref_name,'GT-')}}
+      enable-openapi-integration: ${{ github.repository ==  'Sensedia/draft-openapi' &&  startsWith(github.ref_name,'release-')}}
     name: Build Github pages 
     runs-on: ubuntu-latest
     steps:
