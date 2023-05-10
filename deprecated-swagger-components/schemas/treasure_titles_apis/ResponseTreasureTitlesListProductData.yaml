@@ -1,0 +1,14 @@
+type: object
+description: Lista de títulos de tesouro direto mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento
+required:
+  - brandName
+  - companyCnpj
+  - investmentId
+properties:
+  brandName:
+    $ref: ./TreasureTitlesBrandName.yaml
+  companyCnpj:
+    $ref: ./TreasureTitlesCompanyCnpj.yaml
+  investmentId:
+    $ref: ./TreasureTitlesInvestmentId.yaml
+additionalProperties: false

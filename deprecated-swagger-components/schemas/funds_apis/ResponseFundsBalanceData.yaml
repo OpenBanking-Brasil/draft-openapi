@@ -1,0 +1,38 @@
+type: object
+description: Informações da posição do fundo de investimento a que se refere investmentId.
+required:
+  - referenceDate
+  - grossAmount
+  - netAmount
+  - incomeTaxProvision
+  - financialTransactionTaxProvision
+  - blockedAmount
+  - quotaQuantity
+  - quotaGrossPriceValue
+properties:
+  referenceDate: 
+    type: string
+    format: date
+    description: Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos.
+    maxLength: 10
+    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+    example: '2023-01-07'
+  grossAmount:
+    $ref: ./FundsBalancesGrossAmount.yaml
+  netAmount:
+    $ref: ./FundsBalancesNetAmount.yaml
+  incomeTaxProvision:
+    $ref: ./FundsBalancesIncomeTaxProvision.yaml
+  financialTransactionTaxProvision:
+    $ref: ./FundsBalancesFinancialTransactionTaxProvision.yaml
+  blockedAmount:
+    $ref: ./FundsBalancesBlockedAmount.yaml
+  quotaQuantity: 
+    type: string
+    format: double
+    description: Quantidade de cotas detidas em posição do cliente .
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    maxLength: 24
+    example: '42.25'
+  quotaGrossPriceValue:
+    $ref: ./FundsBalancesQuotaGrossPriceValue.yaml

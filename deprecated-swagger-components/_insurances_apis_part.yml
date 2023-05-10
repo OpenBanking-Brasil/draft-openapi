@@ -1,0 +1,201 @@
+openapi: 3.0.0
+info:
+  title: API Seguros - Open Finance Brasil
+  description: |
+    As APIs descritas neste documento são referentes a API de Seguros da fase OpenInsurance do Open Finance Brasil.
+  version: 1.0.0-rc2.0
+  license:
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+  contact:
+    name: Governança do Open Finance Brasil – Especificações
+    email: gt-interfaces@openbankingbr.org
+    url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
+servers:
+  - url: 'https://api.banco.com.br/open-banking/opendata-insurance/v1'
+    description: Servidor de Produção
+  - url: 'https://apih.banco.com.br/open-banking/opendata-insurance/v1'
+    description: Servidor de Homologação
+tags:
+  - name: Seguros
+    description: Operações para consulta de informações de seguros automotivos, residenciais e pessoais
+paths:
+  /personals:
+    get:
+      tags:
+        - Seguros
+      summary: Conjunto de informações referentes a seguros pessoais de uma instituição
+      operationId: getPersonalInsurance
+      description: Método para obter a lista de todos os seguros pessoais de uma instituição
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponsePersonalInsuranceList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+components:
+  schemas:
+    # Início schemas comuns
+    Participant:
+      $ref: ./schemas/insurances_apis/Participant.yaml
+    Society:
+      $ref: ./schemas/business_commons/Society.yaml
+    CnpjNumber:
+      $ref: ./schemas/business_commons/CnpjNumber.yaml
+    AssistanceServicesItem:
+      $ref: ./schemas/insurances_apis/AssistanceServicesItem.yaml
+    CoverageItemAttributesMinLMI:
+      $ref: ./schemas/insurances_apis/CoverageItemAttributesMinLMI.yaml
+    CoverageItemAttributesMaxLMI:
+      $ref: ./schemas/insurances_apis/CoverageItemAttributesMaxLMI.yaml
+    InsuranceMinimumRequirement:
+      $ref: ./schemas/insurances_apis/InsuranceMinimumRequirement.yaml
+    PremiumPayment:
+      $ref: ./schemas/insurances_apis/PremiumPayment.yaml
+    CurrencyCode:
+      $ref: ./schemas/business_commons/CurrencyCode.yaml
+    InsurancePensionMinValue:
+      $ref: ./schemas/business_commons/InsurancePensionMinValue.yaml
+    InsurancePensionMaxValue:
+      $ref: ./schemas/business_commons/InsurancePensionMaxValue.yaml
+    GracePeriod:
+      $ref: ./schemas/business_commons/GracePeriod.yaml
+    TermsAndConditionsItem:
+      $ref: ./schemas/business_commons/TermsAndConditionsItem.yaml
+    EnumProductModality:
+      $ref: ./schemas/business_commons/EnumProductModality.yaml
+    EnumGracePeriodUnit:
+      $ref: ./schemas/business_commons/EnumGracePeriodUnit.yaml
+    InsurancePensionCoverageDeductible:
+      $ref: ./schemas/business_commons/InsurancePensionCoverageDeductible.yaml
+    InsurancePensionCoverageDifferentiatedDeductible:
+      $ref: ./schemas/business_commons/InsurancePensionCoverageDifferentiatedDeductible.yaml
+    InsurancePensionEnumPmbacRemuneration:
+      $ref: ./schemas/business_commons/InsurancePensionEnumPmbacRemuneration.yaml
+    AgeAdjustment:
+      $ref: ./schemas/business_commons/InsurancePensionAgeAdjustment.yaml
+    InsurancePensionEnumFinancialRegime:
+      $ref: ./schemas/business_commons/InsurancePensionEnumFinancialRegime.yaml
+    EnumPersonalIndemnifiablePeriodType:
+      $ref: ./schemas/business_commons/InsurancePensionEnumIndemnifiablePeriodType.yaml
+    EnumInsurancePersonalBenefitRecalculationUpdateIndex:
+      $ref: ./schemas/enum/EnumInsurancePersonalBenefitRecalculationUpdateIndex.yaml
+    EnumPersonalUpdateIndex:
+      $ref: ./schemas/enum/EnumPersonalUpdateIndex.yaml
+    OpenDataMeta:
+      $ref: ./schemas/OpenDataMeta.yaml
+    # Fim schemas comuns
+
+    # Início personal schemas
+    OKResponsePersonalInsuranceList:
+      $ref: ./schemas/insurances_apis/personal/ResponsePersonalInsuranceList.yaml
+    PersonalInsuranceData:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsuranceData.yaml
+    PersonalCoverageItem:
+      $ref: ./schemas/insurances_apis/personal/PersonalCoverageItem.yaml
+    PersonalCoverageItemAttributes:
+      $ref: ./schemas/insurances_apis/personal/PersonalCoverageItemAttributes.yaml
+    EnumInsurancePensionCategory:
+      $ref: ./schemas/enum/EnumInsurancePensionCategory.yaml
+    EnumPersonalIndemnityPaymentFrequencyType:
+      $ref: ./schemas/enum/EnumPersonalIndemnityPaymentFrequencyType.yaml
+    EnumExcludedRisks:
+      $ref: ./schemas/business_commons/EnumExcludedRisks.yaml
+    EnumPersonalInsuranceOtherGuaranteedValues:
+      $ref: ./schemas/enum/EnumPersonalInsuranceOtherGuaranteedValues.yaml
+    EnumPersonalInsuranceIndemnityPaymentMethod:
+      $ref: ./schemas/enum/EnumPersonalInsuranceIndemnityPaymentMethod.yaml
+    EnumPersonalInsuranceIndemnityPaymentIncome:
+      $ref: ./schemas/enum/EnumPersonalInsuranceIndemnityPaymentIncome.yaml
+    PersonalInsurancePremiumPayment:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsurancePremiumPayment.yaml
+    EnumPersonalInsurancePremiumPaymentFrequency:
+      $ref: ./schemas/enum/EnumPersonalInsurancePremiumPaymentFrequency.yaml
+    PersonalInsuranceMinimumRequirement:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsuranceMinimumRequirement.yaml
+    PersonalInsuranceGracePeriod:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsuranceGracePeriod.yaml
+    PersonalInsuranceReclaim:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsuranceReclaim.yaml
+    PersonalInsuranceReclaimTableItem:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsuranceReclaimTableItem.yaml
+    EnumInsurancePersonalCoverageTypePersonal:
+      $ref: ./schemas/enum/EnumInsurancePersonalCoverageTypePersonal.yaml
+    EnumPremiumPaymentMethodTypePersonal:
+      $ref: ./schemas/enum/EnumPremiumPaymentMethodTypePersonal.yaml
+    EnumContractTypePersonal:
+      $ref: ./schemas/enum/EnumContractTypePersonal.yaml
+    PersonalInsuranceSociety:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsuranceSociety.yaml
+    PersonalInsurancePortabilityGraceTime:
+      $ref: ./schemas/insurances_apis/personal/PersonalInsurancePortabilityGraceTime.yaml
+    BenefitRecalculation:
+      $ref: ./schemas/insurances_apis/InsuranceBenefitRecalculation.yaml
+    # Fim personal schemas
+
+    Links:
+      $ref: ./schemas/Links.yaml
+    Meta:
+      $ref: ./schemas/Meta.yaml
+    ResponseError:
+      $ref: ./schemas/ResponseError.yaml
+  parameters:
+    page:
+      $ref: ./parameters/Page.yaml
+    pageSize:
+      $ref: ./parameters/PageSize.yaml
+  responses:
+    OKResponsePersonalInsuranceList:
+      description: Dados de seguro(s) pessoais obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: ./schemas/insurances_apis/personal/ResponsePersonalInsuranceList.yaml
+    BadRequest:
+      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerError:
+      description: Ocorreu um erro no gateway da API ou no microsserviço
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowed:
+      description: O consumidor tentou acessar o recurso com um método não suportado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotFound:
+      description: O recurso solicitado não existe ou não foi implementado
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TooManyRequests:
+      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite de requisições concorrentes foi atingido.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    SiteIsOverloaded:
+      description: "O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento."
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: ./schemas/ResponseErrorMetaSingle.yaml

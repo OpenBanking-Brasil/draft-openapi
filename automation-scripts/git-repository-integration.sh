@@ -12,7 +12,7 @@ TOKEN=$3
 BRANCH=$4
 REPOSITORY=$5
 COMMIT_MESSAGE=$6
-if [[ $BRANCH == GT-* ]]
+if [[ $BRANCH == release-* ]]
 then
     `git config --global user.email "$EMAIL"`
     `git config --global user.name "$NAME"`

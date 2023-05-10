@@ -1,0 +1,48 @@
+type: object
+description: Atributos da cobertura
+required:
+  - minValue
+  - maxValue
+  - indemnifiableDeadline
+  - indemnityPaymentMethod
+  - gracePeriod
+  - excludedRisks
+  - excludedRisksURL
+  - profitModality
+properties:
+  minValue:
+    $ref: ../../business_commons/InsurancePensionMinValue.yaml
+  maxValue:
+    $ref: ../../business_commons/InsurancePensionMaxValue.yaml
+  indemnifiablePeriod:
+    $ref: ./RiskPensionEnumIndemnifiablePeriodType.yaml
+  indemnifiableDeadline:
+    type: integer
+    description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
+  indemnityPaymentMethod:
+    $ref: ./RiskPensionEnumIndemnityPaymentMethod.yaml
+  gracePeriod:
+    type: object
+    description: Período de carência da cobertura
+    properties:
+      amount:
+        type: integer
+        format: int64
+        description: Informar o prazo de carência
+        example: 90
+        maximum: 9999999999
+      unit:
+        $ref: ../../business_commons/EnumGracePeriodUnit.yaml
+    additionalProperties: false
+  excludedRisks:
+    type: array
+    items:
+      $ref: ../../business_commons/EnumExcludedRisks.yaml
+  excludedRisksURL:
+    type: string
+    maxLength: 1024
+    description: Campo aberto (possibilidade de incluir URL).
+    example: 'https://openinsurance.com.br/aaa'
+  profitModality:
+    $ref: ./RiskPensionEnumProfitModality.yaml
+additionalProperties: false

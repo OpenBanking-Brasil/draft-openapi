@@ -1,0 +1,17 @@
+type: object
+required:
+  - amount
+  - currency
+properties:
+  amount:
+    type: string
+    description: Valor relacionado ao objeto.  
+    maxLength: 24
+    pattern: '^\d{1,15}\.\d{2,8}$'
+    example: '1000.000004'
+  currency:
+    type: string
+    description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+    maxLength: 3
+    pattern: '^[A-Z]{3}$'
+    example: 'BRL'
