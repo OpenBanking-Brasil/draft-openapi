@@ -169,6 +169,7 @@ components:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
+            - NA
           example: PESSOA_NATURAL
       additionalProperties: false
     Participant:
@@ -228,6 +229,7 @@ components:
         - POPULAR
         - INCENTIVO
         - FILANTROPIA_PREMIAVEL
+        - NA
       example: TRADICIONAL
     EnumCapitalizationBondsProductCostType:
       type: string
@@ -242,6 +244,7 @@ components:
         - PAGAMENTO_UNICO
         - PAGAMENTO_MENSAL
         - PAGAMENTO_PERIODICO
+        - NA
       example: PAGAMENTO_UNICO
     TermsAndConditions:
       type: object
@@ -374,6 +377,7 @@ components:
         - TR
         - INDICE_REMUNERACAO_DEPOSITOS_POUPANCA
         - OUTROS
+        - NA
       example: IPCA
       description: |
         Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
@@ -418,6 +422,7 @@ components:
             - SEMESTRAL
             - ANUAL
             - OUTROS
+            - NA
           example: UNICO
         periodicityAdditionalInfo:
           type: string
@@ -501,6 +506,7 @@ components:
         - CONSIGNACAO_FOLHA_PAGAMENTO
         - PAGAMENTO_PONTOS
         - OUTROS
+        - NA
       example: CARTAO_CREDITO
       description: |
         Meio de Pagamento utilizado para pagamento da contribuição. A considerar os domínios abaixo:
@@ -551,6 +557,7 @@ components:
             - SEMESTRAL
             - ANUAL
             - OUTROS
+            - NA
           example: UNICO
         timeIntervalAdditionalInfo:
           type: string
