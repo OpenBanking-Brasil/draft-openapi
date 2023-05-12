@@ -313,9 +313,9 @@ components:
       properties:
         interestRate:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: 'Taxa que remunera a parte da mensalidade destinada a formar o Capital, ou seja, a Provisão Matemática de Resgate, também chamada de saldo de capitalização. Em porcentagem ao mês (% a.m.).'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
           example: '0.019800'
         updateIndex:
@@ -348,9 +348,9 @@ components:
               rate:
                 type: string
                 description: Taxa relativa ao Resgate Antecipado
-                maxLength: 8
+                maxLength: 9
                 minLength: 8
-                pattern: '^(\d{1}\.\d{6})|(NA)$'
+                pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
                 example: '0.019800'
             additionalProperties: false
         redemptionPercentageEndTerm:
@@ -598,9 +598,9 @@ components:
           example: Sorteios próprios às terças-feiras Toda quarta-feira sorteios através da loteria federal.
         minimumContemplationProbability:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: 'Número representativo da probabilidade mínima de contemplação nos sorteios, em porcentagem (%).'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
           example: '0.019800'
       additionalProperties: false
