@@ -407,40 +407,6 @@ components:
         meta:
           $ref: '#/components/schemas/TreasureTitlesMeta'
       additionalProperties: false
-    EnumInvestmentsFixedIncomeBankIndexer:
-      type: string
-      description: |
-        – Qualquer operação com taxa mista em CDI, DI, SELIC deverá ser ignorada - serão consideradas apenas taxas sem cupom  
-        – No caso do pré-fixado será utilizado apenas o cupom, mesmo que haja outro indexador misturado  
-        – No caso de TR, IPCA, IGP_M, IGP_DI, INPC, BCP, TLC E OUTROS, o cálculo será feito em cima do cupom (mesmo que ele seja zero), desconsiderando as operações que tenham indexador diferente de 100%
-
-        Regras de cálculo por indexador  
-        ▪ CDI = % DO CDI  
-        ▪ DI = % DO DI  
-        ▪ TR = TR + CUPOM  
-        ▪ IPCA = IPCA + CUPOM  
-        ▪ IGP_M = IGP_M + CUPOM  
-        ▪ IGP_DI = IGP_DI + CUPOM  
-        ▪ INPC = INPC + CUPOM  
-        ▪ BCP = BCP + CUPOM  
-        ▪ TLC = TLC + CUPOM  
-        ▪ SELIC = % DO SELIC  
-        ▪ PRE_FIXADO = CUPOM  
-        ▪ OUTROS = Indexador + Cupom
-      enum:
-        - CDI
-        - DI
-        - TR
-        - IPCA
-        - IGP_M
-        - IGP_DI
-        - INPC
-        - BCP
-        - TLC
-        - SELIC
-        - PRE_FIXADO
-        - OUTROS
-      example: CDI
     TreasureTitlesMeta:
       type: object
       description: Meta informações referente a API requisitada.
@@ -526,7 +492,7 @@ components:
         - type
         - transactionType
         - transactionDate
-        - transactionUnitePrice
+        - transactionUnitPrice
         - transactionQuantity
         - transactionGrossValue
         - transactionNetValue
@@ -536,10 +502,19 @@ components:
           $ref: '#/components/schemas/TreasureTitlesType'
         transactionType:
           $ref: '#/components/schemas/TreasureTitlesTransactionType'
+        transactionTypeAdditionalInfo:
+          description: |
+            Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações não de limitadas no domínio.
+
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
+          maxLength: 100
+          pattern: '[\w\W\s]*'
+          example: ''
+          type: string
         transactionDate:
           $ref: '#/components/schemas/TreasureTitlesTransactionDate'
-        transactionUnitePrice:
-          $ref: '#/components/schemas/TreasureTitlesTransactionUnitePrice'
+        transactionUnitPrice:
+          $ref: '#/components/schemas/TreasureTitlesTransactionUnitPrice'
         transactionQuantity:
           $ref: '#/components/schemas/TreasureTitlesTransactionQuantity'
         transactionGrossValue:
@@ -578,15 +553,6 @@ components:
           $ref: '#/components/schemas/TreasureTitlesRemunerationTransactionRate'
         transactionId:
           $ref: '#/components/schemas/TreasureTitlesTransactionId'
-        typeAdditionalInfo:
-          description: |
-            Informação adicional do tipo de movimentação, para preenchimento no caso de movimentações nãodelimitadas no domínio
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com o valor 'OUTROS'.
-          maxLength: 100
-          pattern: '[\w\W\s]*'
-          example: ''
-          type: string
     ResponseTreasureTitlesIdentifyProduct:
       type: object
       required:
@@ -690,7 +656,7 @@ components:
         quantity:
           $ref: '#/components/schemas/TreasureTitlesQuantity'
     TreasureTitlesBlockedBalance:
-      description: 'Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros)'
+      description: 'Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
       type: object
       required:
         - amount
@@ -709,9 +675,9 @@ components:
       format: double
     TreasureTitlesBrandName:
       description: |
-        'Nome da Marca reportada pelo participante no Open Finance.
+        Nome da Marca reportada pelo participante no Open Finance.
         Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no
-        campo do diretório Customer Friendly Server Name (Authorisation Server).'
+        campo do diretório Customer Friendly Server Name (Authorisation Server).
       maxLength: 80
       pattern: '[\w\W\s]*'
       example: Organização A
@@ -725,9 +691,9 @@ components:
       type: string
     TreasureTitlesCompanyCnpj:
       description: |
-        'Número completo do CNPJ da instituição responsável pelo Cadastro -
+        Número completo do CNPJ da instituição responsável pelo Cadastro -
         o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
-        Deve-se ter apenas os números do CNPJ, sem máscara'
+        Deve-se ter apenas os números do CNPJ, sem máscara
       maxLength: 14
       pattern: '^\d{14}$'
       example: '21128159000166'
@@ -739,7 +705,7 @@ components:
       example: BRL
       type: string
     TreasureTitlesDueDate:
-      description: Data de vencimento do título
+      description: Data de vencimento do título.
       maxLength: 10
       pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
       example: '2018-02-15'
@@ -747,9 +713,9 @@ components:
       format: date
     TreasureTitlesFinancialTransactionTax:
       description: |
-        IOF provisionado
+        IOF provisionado.
 
-        Caso seja um produto com alíquota zero esse objeto pode ser enviado sem valores (vazio)
+        Caso seja um produto com alíquota zero esse objeto pode ser enviado sem valores (vazio).
       type: object
       required:
         - amount
@@ -782,7 +748,7 @@ components:
     TreasureTitlesGrossAmount:
       description: |
         Valor do investimento anterior à dedução de impostos, taxas e
-        tarifas (se houver), atualizado (a mercado) na data de referência;
+        tarifas (se houver), atualizado (a mercado) na data de referência.
       type: object
       required:
         - amount
@@ -827,7 +793,7 @@ components:
           $ref: '#/components/schemas/TreasureTitlesVoucherPaymentPeriodicityAdditionalInfo'
     TreasureTitlesIncomeTax:
       description: |
-        Valor do imposto provisionado considerando a alíquota vigente na data de referência
+        Valor do imposto provisionado considerando a alíquota vigente na data de referência.
       type: object
       required:
         - amount
@@ -885,15 +851,18 @@ components:
       type: string
     TreasureTitlesInvestmentId:
       description: |
-        'Identifica de forma única o relacionamento do cliente com o
+        Identifica de forma única o relacionamento do cliente com o
         produto, mantendo as regras de imutabilidade dentro da instituição
-        transmissora.'
+        transmissora.
       maxLength: 100
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
       example: '92792126019929200000000000000000000000000'
       type: string
     TreasureTitlesIsinCode:
-      description: 'Código ISIN da emissão, Código ISIN do produto, Código da emissora : código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166;'
+      description: |
+        Código ISIN da emissão, Código ISIN do produto, Código da emissora
+        : código universal que identifica cada valor mobiliário ou instrumento
+        financeiro, conforme Norma ISO 6166.
       maxLength: 12
       pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
       example: BRCST4CTF001
@@ -912,7 +881,7 @@ components:
           example: '2021-05-21T08:30:00Z'
       additionalProperties: false
     TreasureTitlesNetAmount:
-      description: 'Valor do investimento posterior a dedução de impostos, taxas e tarifas (se houver), atualizado (a mercado) na data de referência'
+      description: 'Valor do investimento posterior a dedução de impostos, taxas e tarifas (se houver), atualizado (a mercado) na data de referência.'
       type: object
       required:
         - amount
@@ -950,20 +919,20 @@ components:
       type: string
       format: double
     TreasureTitlesProductName:
-      description: Descrição do ativo em questão
+      description: Descrição do ativo em questão.
       maxLength: 70
       pattern: '[\w\W\s]*'
       example: TESOURODIRETO
       type: string
     TreasureTitlesPurchaseDate:
-      description: Data de aquisição do cliente
+      description: Data de aquisição do cliente.
       maxLength: 10
       pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
       example: '2018-02-15'
       type: string
       format: date
     TreasureTitlesPurchaseUnitPrice:
-      description: valor unitário negociado com o cliente na data de aquisição
+      description: Valor unitário negociado com o cliente na data de aquisição.
       type: object
       required:
         - amount
@@ -974,10 +943,12 @@ components:
         currency:
           $ref: '#/components/schemas/TreasureTitlesCurrency'
     TreasureTitlesQuantity:
-      description: Quantidade de títulos detidos na data da posição do cliente
+      description: Quantidade de títulos detidos na data da posição do cliente.
       maxLength: 24
       pattern: '^\d{1,15}\.\d{2,8}$ '
+      format: double
       type: string
+      example: '1000.015'
     TreasureTitlesRatePeriodicity:
       description: 'Periodicidade da taxa de remuneração (mensal, anual, diário e semestral)'
       example: DIARIO
@@ -988,14 +959,14 @@ components:
         - SEMESTRAL
       type: string
     TreasureTitlesReferenceDateTime:
-      description: data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos;
+      description: Data da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos.
       maxLength: 20
       pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
       example: '2022-07-21T17:32:00Z'
       type: string
       format: date-time
     TreasureTitlesRemuneration:
-      description: Objeto para detalhamento de remuneração do titulo
+      description: Objeto para detalhamento de remuneração do titulo.
       type: object
       required:
         - indexer
@@ -1016,14 +987,16 @@ components:
           $ref: '#/components/schemas/TreasureTitlesCalculation'
     TreasureTitlesRemunerationTransactionRate:
       description: |
-        Taxa de remuneração da movimentação
+        Taxa de remuneração da movimentação.  
+
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'ENTRADA'.
       maxLength: 8
       pattern: '^\d{1}\.\d{6}$'
       example: '0.300000'
       type: string
       format: double
     TreasureTitlesTransactionDate:
-      description: Data da movimentação
+      description: Data da movimentação.
       maxLength: 10
       pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
       example: '2018-02-15'
@@ -1033,7 +1006,7 @@ components:
       description: |
         Valor bruto da movimentação
 
-        Nos casos em que se tratar de movimento de saída e a instituição não tiver a informação de IR recolhido na fonte, o valor bruto e o valor líquido expostos deverão ser iguais
+        Nos casos em que se tratar de movimento de saída e a instituição não tiver a informação de IR recolhido na fonte, o valor bruto e o valor líquido expostos deverão ser iguais.
       type: object
       required:
         - amount
@@ -1057,7 +1030,7 @@ components:
       example: BRL
       type: string
     TreasureTitlesTransactionId:
-      description: Código ou identificador único prestado pela instituição para individualizar o movimento
+      description: Código ou identificador único prestado pela instituição para individualizar o movimento.
       maxLength: 100
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
       example: ABCD2126019929279212650822221989319253344
@@ -1066,7 +1039,7 @@ components:
       description: |
         Valor líquido da transação
 
-        Nos casos em que se tratar de movimento de saída e a instituição não tiver a informação de IR recolhido na fonte, o valor bruto e o valor líquido expostos deverão ser iguais
+        Nos casos em que se tratar de movimento de saída e a instituição não tiver a informação de IR recolhido na fonte, o valor bruto e o valor líquido expostos deverão ser iguais.
       type: object
       required:
         - amount
@@ -1090,7 +1063,7 @@ components:
       example: BRL
       type: string
     TreasureTitlesTransactionQuantity:
-      description: Quantidade de títulos envolvidos na movimentação
+      description: Quantidade de títulos envolvidos na movimentação.
       maxLength: 24
       pattern: '^\d{1,15}\.\d{2,8}$'
       example: '42.25'
@@ -1099,7 +1072,7 @@ components:
     TreasureTitlesTransactionsLinks:
       $ref: '#/components/schemas/TreasureTitlesLinks'
     TreasureTitlesTransactionType:
-      description: 'Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, transferência de titularidade, transferência de custódia e outros'
+      description: 'Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, transferência de titularidade, transferência de custódia e outros.'
       example: AMORTIZACAO
       enum:
         - COMPRA
@@ -1112,25 +1085,25 @@ components:
         - TRANSFERENCIA_CUSTODIA
         - OUTROS
       type: string
-    TreasureTitlesTransactionUnitePrice:
-      description: 'Preço unitário bruto negociado na transação '
+    TreasureTitlesTransactionUnitPrice:
+      description: Preço unitário bruto negociado na transação.
       type: object
       required:
         - amount
         - currency
       properties:
         amount:
-          $ref: '#/components/schemas/TreasureTitlesTransactionUnitePriceAmount'
+          $ref: '#/components/schemas/TreasureTitlesTransactionUnitPriceAmount'
         currency:
-          $ref: '#/components/schemas/TreasureTitlesTransactionUnitePriceCurrency'
-    TreasureTitlesTransactionUnitePriceAmount:
+          $ref: '#/components/schemas/TreasureTitlesTransactionUnitPriceCurrency'
+    TreasureTitlesTransactionUnitPriceAmount:
       description: Valor relacionado ao objeto
       maxLength: 24
       pattern: '^\d{1,15}\.\d{2,8}$'
       example: '1000.04'
       type: string
       format: double
-    TreasureTitlesTransactionUnitePriceCurrency:
+    TreasureTitlesTransactionUnitPriceCurrency:
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217'
       maxLength: 3
       pattern: '^[A-Z]{3}$'
@@ -1140,14 +1113,14 @@ components:
       description: |
         Tipo de movimentação na visão de investimento (Nos casos de
         pagamento de juros e amortização) fica convencionado que será considerado que
-        o tipo de movimento será saída
+        o tipo de movimento será saída.
       example: ENTRADA
       enum:
         - ENTRADA
         - SAIDA
       type: string
     TreasureTitlesUpdatedUnitPrice:
-      description: valor bruto unitário atualizado (a mercado) na data de referência;
+      description: Valor bruto unitário atualizado (a mercado) na data de referência.
       type: object
       required:
         - amount
@@ -1158,7 +1131,7 @@ components:
         currency:
           $ref: '#/components/schemas/TreasureTitlesCurrency'
     TreasureTitlesVoucherPaymentIndicator:
-      description: Indicativo se há pagamento de cupom (Sim ou não)
+      description: Indicativo se há pagamento de cupom (Sim ou não).
       example: SIM
       enum:
         - SIM
@@ -1169,7 +1142,7 @@ components:
         Em caso de haver pagamento de cupom, descrever a periodicidade
         (mensal, trimestral, semestral, anual, irregular e outros)
 
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'voucherPaymentPeriodicity' for preenchido com o valor 'OUTROS'.
+        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'voucherPaymentIndicator' for preenchido com o valor 'SIM'.
       example: MENSAL
       enum:
         - MENSAL
@@ -1279,7 +1252,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
+      description: Um UUID RFC4122 usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser "espelhado" pela transmissora (server) no cabeçalho de resposta.
       required: true
       schema:
         type: string
