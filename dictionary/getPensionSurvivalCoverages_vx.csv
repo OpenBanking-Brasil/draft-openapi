@@ -25,11 +25,13 @@
 1. Seguro de Pessoas
 2. Previdência
 ";Texto;20;Obrigatório;;"SEGURO_PESSOAS 
-PREVIDENCIA";1;1;"";Não permitido;string;PREVIDENCIA;
+PREVIDENCIA 
+NA";1;1;"";Não permitido;string;PREVIDENCIA;
 /data/modality;modality;"1. Contribuição Variável;
 2. Benefício Definido.
 ";Texto;21;Obrigatório;;"CONTRIBUICAO_VARIAVEL 
-BENEFICIO_DEFINIDO";1;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
+BENEFICIO_DEFINIDO 
+NA";1;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
 /data/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL);Texto;1024;Opcional;;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/termsAndConditions;termsAndConditions;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})|(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
@@ -59,7 +61,8 @@ VAGP
 VRSA 
 VRI 
 VDR 
-DEMAIS_PRODUTOS_PREVIDENCIA";0;1;"";Não permitido;string;;
+DEMAIS_PRODUTOS_PREVIDENCIA 
+NA";0;1;"";Não permitido;string;;
 /data/defferalPeriod;defferalPeriod;Período de Diferimento;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/defferalPeriod/interestRate;interestRate;Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.;Texto;8;Obrigatório;^(\d{1}\.\d{6})|(NA)$;;1;1;"";Não permitido;string;0.019800;8
 /data/defferalPeriod/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
@@ -82,7 +85,8 @@ BIMESTRAL
 TRIMESTRAL 
 SEMESTRAL 
 ANUAL 
-UNICO";0;1;"";Não permitido;string;MENSAL;
+UNICO 
+NA";0;1;"";Não permitido;string;MENSAL;
 /data/defferalPeriod/minimumPremiums/amount;amount;Valor mínimo em R$ de prêmio/ contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único).;Texto;21;Opcional;^(\d{1,16}\.\d{2,4})|(NA)$;;0;1;"";Não permitido;string;250.00;
 /data/defferalPeriod/premiumPaymentMethods;premiumPaymentMethods;;Lista;27;Opcional;;"CARTAO_CREDITO 
 DEBITO_CONTA 
@@ -94,7 +98,8 @@ REGRA_PARCEIRO
 CONSIGNACAO_FOLHA_PAGAMENTO 
 PONTOS_PROGRAMA_BENEFICIO 
 TED_DOC 
-OUTROS";0;N;"";Não permitido;array;CARTAO_CREDITO;
+OUTROS 
+NA";0;N;"";Não permitido;array;CARTAO_CREDITO;
 /data/defferalPeriod/permissionExtraordinaryContributions;permissionExtraordinaryContributions;"Se ficam permitidos aportes extraordinários. A considerar os seguintes domínios:
 1. true
 2. false
@@ -124,7 +129,8 @@ OUTROS";0;N;"";Não permitido;array;CARTAO_CREDITO;
    - Tipo de taxa de performance
 ";Texto;13;Obrigatório;;"DIRETAMENTE 
 INDIRETAMENTE 
-NAO_APLICA";1;1;"";Não permitido;string;DIRETAMENTE;
+NAO_APLICA 
+NA";1;1;"";Não permitido;string;DIRETAMENTE;
 /data/defferalPeriod/investmentFunds/maximumPerformanceFee;maximumPerformanceFee;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
   - Taxa Máxima de Performance - em %
 ";Texto;8;Opcional;^(\d{1}\.\d{6})|(NA)$;;0;1;"";Não permitido;string;0.019800;8
@@ -149,7 +155,8 @@ RENDA_VITALICIA
 RENDA_VITALICIA_REVERSIVEL_BENEFICIARIO_INDICADO 
 RENDA_VITALICIA_CONJUGE_CONTINUIDADE_MENORES 
 RENDA_VITALICIA_MINIMO_GARANTIDO 
-RENDA_VITALICIA_PRAZO_MINIMO_GRANTIDO";1;N;"";Não permitido;array;PAGAMENTO_UNICO;
+RENDA_VITALICIA_PRAZO_MINIMO_GRANTIDO 
+NA";1;N;"";Não permitido;array;PAGAMENTO_UNICO;
 /data/grantPeriodBenefit/biometricTable;biometricTable;;Lista;32;Opcional;;"AT_2000_MALE 
 AT_2000_FEMALE 
 AT_2000_MALE_FEMALE 
@@ -164,7 +171,8 @@ AT_83_FEMALE
 AT_83_MALE_FEMALE 
 BR_EMSSB_MALE 
 BR_EMSSB_FEMALE 
-BR_EMSSB_MALE_FEMALE";0;N;"";Não permitido;array;AT_2000_MALE;
+BR_EMSSB_MALE_FEMALE 
+NA";0;N;"";Não permitido;array;AT_2000_MALE;
 /data/grantPeriodBenefit/interestRate;interestRate;Taxa de juros garantida utilizada para conversão em renda. Em %;Texto;8;Obrigatório;^(\d{1}\.\d{6})|(NA)$;;1;1;"";Não permitido;string;0.019800;8
 /data/grantPeriodBenefit/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
 1. IPCA (IBGE);
@@ -187,7 +195,8 @@ NAO_SE_APLICA";1;1;"";Não permitido;string;IPCA;
    - Tipo de taxa de performance
 ";Texto;13;Obrigatório;;"DIRETAMENTE 
 INDIRETAMENTE 
-NAO_APLICA";1;1;"";Não permitido;string;DIRETAMENTE;
+NAO_APLICA 
+NA";1;1;"";Não permitido;string;DIRETAMENTE;
 /data/grantPeriodBenefit/investmentFunds/maximumPerformanceFee;maximumPerformanceFee;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
   - Taxa Máxima de Performance - em %
 ";Texto;8;Opcional;^(\d{1}\.\d{6})|(NA)$;;0;1;"";Não permitido;string;0.019800;8
@@ -215,7 +224,8 @@ NAO_APLICA";1;1;"";Não permitido;string;DIRETAMENTE;
 3. Individual.
 ";Texto;27;Obrigatório;;"COLETIVO_AVERBADO 
 COLETIVO_INSTITUIDO 
-INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO_AVERBADO;
+INDIVIDUAL 
+NA";1;1;"";Não permitido;string;COLETIVO_AVERBADO;
 /data/minimumRequirement/participantQualified;participantQualified;"Indicação se o plano é destinado para participante qualificado. A considerar os domínios abaixo:
 1. true
 2. false
@@ -226,4 +236,5 @@ INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO_AVERBADO;
   1. Pessoa Natural
   2. Pessoa Jurídica
 ";Texto;23;Obrigatório;;"PESSOA_NATURAL 
-PESSOA_JURIDICA";1;1;"";Não permitido;string;PESSOA_NATURAL;
+PESSOA_JURIDICA 
+NA";1;1;"";Não permitido;string;PESSOA_NATURAL;
