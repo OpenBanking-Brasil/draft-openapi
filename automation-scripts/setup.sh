@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+
 # Execute this script to setup your environment
 # This file must be allowed to be an executable. If it is still not executable, run the following command: sudo chmod 777 setup.sh
 # Usage: sudo ./setup.sh
