@@ -106,7 +106,7 @@ Lista com os valores permitidos de contribuição ao plano.
 /data/latePayment/periodExtensionOption;periodExtensionOption;"Alteração do prazo de vigência original, pela suspensão (não aplicável a pagamento único). A considerar os seguintes domínios:
 1. true
 2. false
-";Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;true;
+";Booleano;;Opcional;;;0;1;"";Não permitido;boolean;true;
 /data/contributionPayment;contributionPayment;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/contributionPayment/paymentMethod;paymentMethod;"Meio de Pagamento utilizado para pagamento da contribuição. A considerar os domínios abaixo:
   1. Cartão de Crédito
@@ -171,12 +171,12 @@ NA";1;1;"";Não permitido;string;UNICO;
 /data/draws/earlySettlementRaffle;earlySettlementRaffle;"Modelo de sorteio que acarreta, ao título contemplado, o seu resgate total obrigatório (Resolução Normativa 384/20). Conforme os domínios:
  1. true
  2. false
-";Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;true;
+";Booleano;;Opcional;;;0;1;"";Não permitido;boolean;true;
 /data/draws/mandatoryContemplation;mandatoryContemplation;"Possibilidade de realização de sorteio com previsão de que o título sorteado seja obrigatoriamente um título comercializado,
 desde que atingidos os requisitos definidos nas condições gerais do plano. Conforme os domínios:
   1. true
   2. false
-";Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;true;
+";Booleano;;Opcional;;;0;1;"";Não permitido;boolean;true;
 /data/draws/ruleDescription;ruleDescription;Campo aberto para complementar a regra dos sorteios do produto, a ser feita para cada participante.;Texto;200;Opcional;;;0;1;"";Não permitido;string;Sorteios próprios às terças-feiras Toda quarta-feira sorteios através da loteria federal.;
 /data/draws/minimumContemplationProbability;minimumContemplationProbability;Número representativo da probabilidade mínima de contemplação nos sorteios, em porcentagem (%).;Texto;9;Obrigatório;^(\d{1}\.\d{6})|(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL) Observação: As URLs são limitadas a 2048 caracteres mas, para o contexto do Open Insurance , foi adotado a metade deste tamanho (1024). tamanho p.ex.  ‘https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais.;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais;
