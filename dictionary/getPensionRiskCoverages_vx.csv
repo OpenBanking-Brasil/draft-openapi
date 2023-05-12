@@ -154,7 +154,7 @@ NAO_HA";0;1;"";Não permitido;string;SORTEIO;
 /data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})|(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/pmbacRemuneration;pmbacRemuneration;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;8;Obrigatório;^(\d{1}\.\d{6})|(NA)$;;1;1;"";Não permitido;string;0.019800;8
+/data/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;9;Obrigatório;^(\d{1}\.\d{6})|(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/pmbacRemuneration/updateIndexes;updateIndexes;;Lista;;Opcional;;"IPCA 
 IGP_M 
 INPC 
@@ -181,7 +181,7 @@ NA";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
 /data/reclaim/table;table;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/reclaim/table/initialMonthRange;initialMonthRange;;Inteiro;2;Obrigatório;;;1;1;"";Não permitido;integer;1;
 /data/reclaim/table/finalMonthRange;finalMonthRange;;Inteiro;2;Obrigatório;;;1;1;"";Não permitido;integer;12;
-/data/reclaim/table/percentage;percentage;Percentual de faixa de resgate.;Texto;8;Obrigatório;^(\d{1}\.\d{6})|(NA)$;;1;1;"";Não permitido;string;0.019800;8
+/data/reclaim/table/percentage;percentage;Percentual de faixa de resgate.;Texto;9;Obrigatório;^(\d{1}\.\d{6})|(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/reclaim/gracePeriod;gracePeriod;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/reclaim/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;90;
 /data/reclaim/gracePeriod/unit;unit;"Informar o critério de carência para resgate:
