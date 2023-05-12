@@ -1292,11 +1292,11 @@ components:
     pageSize:
       name: page-size
       in: query
-      description: Quantidade total de registros por páginas.
+      description: Quantidade total de registros por páginas. A transmissora deve considerar entrada como 25, caso seja informado algum valor menor pela receptora. Enquanto houver mais que 25 registros a enviar, a transmissora deve considerar o mínimo por página como 25. Somente a última página retornada (ou primeira, no caso de página única) pode conter menos de 25 registros. Mais informações, acesse Especificações de APIs > Padrões > Paginação.
       schema:
         type: integer
         default: 25
-        minimum: 1
+        minimum: 25
         format: int32
         maximum: 1000
     pagination-key:
