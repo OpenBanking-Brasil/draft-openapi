@@ -30,14 +30,16 @@ INSTRUMENTO_GARANTIA
 COMPRA_PROGRAMADA 
 POPULAR 
 INCENTIVO 
-FILANTROPIA_PREMIAVEL";1;1;"";Não permitido;string;TRADICIONAL;7
+FILANTROPIA_PREMIAVEL 
+NA";1;1;"";Não permitido;string;TRADICIONAL;7
 /data/costType;costType;"Pagamento efetuado ao subscritor à sociedade de capitalização para aquisição do título de capitalização, podendo ser única, periódica ou mensal.
 1. Pagamento Único
 2. Pagamento Mensal
 3. Pagamento Periódico
 ";Texto;19;Obrigatório;;"PAGAMENTO_UNICO 
 PAGAMENTO_MENSAL 
-PAGAMENTO_PERIODICO";1;1;"";Não permitido;string;PAGAMENTO_UNICO;15
+PAGAMENTO_PERIODICO 
+NA";1;1;"";Não permitido;string;PAGAMENTO_UNICO;15
 /data/termsAndConditions;termsAndConditions;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})|(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
@@ -56,7 +58,8 @@ IGPM
 INPC 
 TR 
 INDICE_REMUNERACAO_DEPOSITOS_POUPANCA 
-OUTROS";1;1;"";Não permitido;string;IPCA;
+OUTROS 
+NA";1;1;"";Não permitido;string;IPCA;
 /data/capitalizationPeriod/updateIndexAdditionalInfo;updateIndexAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
 /data/capitalizationPeriod/contributionAmount;contributionAmount;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/capitalizationPeriod/contributionAmount/periodicity;periodicity;"Intervalo de tempo regular previsto entre os sorteios. Conforme os domínios:
@@ -81,7 +84,8 @@ TRIMESTRAL
 QUADRIMESTRAL 
 SEMESTRAL 
 ANUAL 
-OUTROS";1;1;"";Não permitido;string;UNICO;
+OUTROS 
+NA";1;1;"";Não permitido;string;UNICO;
 /data/capitalizationPeriod/contributionAmount/periodicityAdditionalInfo;periodicityAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
 /data/capitalizationPeriod/contributionAmount/minimum;minimum;"Condicional: Quando modalidade for igual 'TRADICIONAL'
 Valor mínimo correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
@@ -122,7 +126,8 @@ BOLETO_BANCARIO
 PIX 
 CONSIGNACAO_FOLHA_PAGAMENTO 
 PAGAMENTO_PONTOS 
-OUTROS";1;1;"";Não permitido;string;CARTAO_CREDITO;
+OUTROS 
+NA";1;1;"";Não permitido;string;CARTAO_CREDITO;
 /data/contributionPayment/paymentMethodAdditionalInfo;paymentMethodAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
 /data/contributionPayment/updateIndex;updateIndex;"Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
 ";Texto;37;Obrigatório;;"IPCA 
@@ -130,7 +135,8 @@ IGPM
 INPC 
 TR 
 INDICE_REMUNERACAO_DEPOSITOS_POUPANCA 
-OUTROS";1;1;"";Não permitido;string;IPCA;
+OUTROS 
+NA";1;1;"";Não permitido;string;IPCA;
 /data/contributionPayment/updateIndexAdditionalInfo;updateIndexAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
 /data/redemptionPercentageEndTerm;redemptionPercentageEndTerm;Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.;Texto;8;Obrigatório;(^\d{1}\.\d{6})|(NA)$;;1;1;"";Não permitido;string;0.019800;8
 /data/finalRedemptionRate;finalRedemptionRate;Valor percentual (%) de resgate final permitido.;Texto;8;Obrigatório;(^\d{1}\.\d{6})|(NA)$;;1;1;"";Não permitido;string;0.019800;8
@@ -157,7 +163,8 @@ TRIMESTRAL
 QUADRIMESTRAL 
 SEMESTRAL 
 ANUAL 
-OUTROS";1;1;"";Não permitido;string;UNICO;
+OUTROS 
+NA";1;1;"";Não permitido;string;UNICO;
 /data/draws/timeIntervalAdditionalInfo;timeIntervalAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;5;
 /data/draws/quantity;quantity;Número da quantidade de sorteios previstos ao longo da vigência.;Número;5;Obrigatório;;;1;1;"";Não permitido;number;10000;
 /data/draws/prizeMultiplier;prizeMultiplier;Valor dos sorteios representado por múltiplo do valor de contribuição. Por exemplo: 5 vezes valor da contribuição;Número;6;Obrigatório;;;1;1;"";Não permitido;number;5;
@@ -184,4 +191,5 @@ tamanho. p.ex. ‘https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_g
   3. Ambas (Pessoa Natural e Jurídica)
 ";Texto;23;Obrigatório;;"PESSOA_NATURAL 
 PESSOA_JURIDICA 
-PESSOA_NATURAL_JURIDICA";1;1;"";Não permitido;string;PESSOA_NATURAL;
+PESSOA_NATURAL_JURIDICA 
+NA";1;1;"";Não permitido;string;PESSOA_NATURAL;
