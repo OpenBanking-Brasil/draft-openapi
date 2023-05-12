@@ -126,15 +126,15 @@ components:
         redemptionPercentageEndTerm:
           type: string
           description: 'Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '(^\d{1}\.\d{6})|(NA)$'
+          pattern: '(^\d{1}\.\d{6})|(-1.000000)$'
           example: '0.019800'
         finalRedemptionRate:
           type: string
           description: Valor percentual (%) de resgate final permitido.
-          pattern: '(^\d{1}\.\d{6})|(NA)$'
-          maxLength: 8
+          pattern: '(^\d{1}\.\d{6})|(-1.000000)$'
+          maxLength: 9
           minLength: 8
           example: '0.019800'
         draws:
@@ -282,23 +282,23 @@ components:
         capitalizationQuota:
           type: string
           description: Percentual da contribuição destinado à constituição de capital referente ao direito de resgate. (Resolução CNSP 384/20) Em porcentagem(%).
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           example: '0.019800'
         raffleQuota:
           type: string
           description: 'Percentual da contribuição destinado a custear os sorteios, se previstos no plano. (Resolução CNSP 384/20) Em porcentagem(%).'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '(^\d{1}\.\d{6})|(NA)$'
+          pattern: '(^\d{1}\.\d{6})|(-1.000000)$'
           example: '0.019800'
         chargingQuota:
           type: string
           description: 'Percentual da contribuição destinado aos custos de despesas com corretagem, colocação e administração do título de capitalização, emissão, divulgação, lucro da sociedade de capitalização e eventuais despesas relativas ao custeio da contemplação obrigatória e da distribuição de bônus. (Resolução CNSP 384/20) Em porcentagem(%).'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '(^\d{1}\.\d{6})|(NA)$'
+          pattern: '(^\d{1}\.\d{6})|(-1.000000)$'
           example: '0.019800'
       additionalProperties: false
     CapitalizationBondsProductCapitalizationPeriod:
@@ -313,9 +313,9 @@ components:
       properties:
         interestRate:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: 'Taxa que remunera a parte da mensalidade destinada a formar o Capital, ou seja, a Provisão Matemática de Resgate, também chamada de saldo de capitalização. Em porcentagem ao mês (% a.m.).'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
           example: '0.019800'
         updateIndex:
@@ -348,17 +348,17 @@ components:
               rate:
                 type: string
                 description: Taxa relativa ao Resgate Antecipado
-                maxLength: 8
+                maxLength: 9
                 minLength: 8
-                pattern: '^(\d{1}\.\d{6})|(NA)$'
+                pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
                 example: '0.019800'
             additionalProperties: false
         redemptionPercentageEndTerm:
           type: string
           description: 'Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           example: '0.019800'
         gracePeriodRedemption:
           type: number
@@ -598,9 +598,9 @@ components:
           example: Sorteios próprios às terças-feiras Toda quarta-feira sorteios através da loteria federal.
         minimumContemplationProbability:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: 'Número representativo da probabilidade mínima de contemplação nos sorteios, em porcentagem (%).'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
           example: '0.019800'
       additionalProperties: false
