@@ -291,12 +291,12 @@ components:
           example: EMPRESAAPREV
         maximumAdministrationFee:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
               - Taxa Máxima de Administração - em %
           example: '0.019800'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
         typePerformanceFee:
           type: string
@@ -312,11 +312,11 @@ components:
           maxLength: 13
         maximumPerformanceFee:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Taxa Máxima de Performance - em %
-          maxLength: 8
+          maxLength: 9
           minLength: 8
           example: '0.019800'
         eligibilityRule:
@@ -397,9 +397,9 @@ components:
       properties:
         interestRate:
           type: string
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.
           example: '0.019800'
         updateIndex:
@@ -411,9 +411,9 @@ components:
           maxLength: 12
         reversalFinancialResults:
           type: string
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: Percentual de reversão de excedente financeiro na concessão. Em %.
           example: '0.019800'
         minimumPremiums:
@@ -555,15 +555,15 @@ components:
       properties:
         minValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
-          maxLength: 8
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          maxLength: 9
           minLength: 8
           description: Percentual mínimo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.
           example: '0.019800'
         maxValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
-          maxLength: 8
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          maxLength: 9
           minLength: 8
           description: Percentual máximo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.
           example: '0.019800'
@@ -577,15 +577,15 @@ components:
       properties:
         minValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
-          maxLength: 8
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          maxLength: 9
           minLength: 8
           description: Percentual mínimo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.
           example: '0.019800'
         maxValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
-          maxLength: 8
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          maxLength: 9
           minLength: 8
           description: Percentual máximo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.
           example: '0.019800'
@@ -689,18 +689,18 @@ components:
             example: AT_2000_MALE
         interestRate:
           type: string
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: Taxa de juros garantida utilizada para conversão em renda. Em %
           example: '0.019800'
         updateIndex:
           $ref: '#/components/schemas/UpdateIndex'
         reversalFinancialResults:
           type: string
-          maxLength: 8
+          maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: Percentual de reversão de excedente financeiro na concessão. Em %.
           example: '0.019800'
         investmentFunds:
@@ -720,35 +720,35 @@ components:
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
           format: uri
           maxLength: 2000
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
           format: uri
           maxLength: 2000
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
           format: uri
           maxLength: 2000
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
           format: uri
           maxLength: 2000
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
+          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
       additionalProperties: false
     PensionParticipant:
       type: object
@@ -1069,8 +1069,8 @@ components:
           example: 12
         percentage:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
-          maxLength: 8
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          maxLength: 9
           minLength: 8
           description: Percentual de faixa de resgate.
           example: '0.019800'
@@ -1082,9 +1082,9 @@ components:
       properties:
         interestRate:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(NA)$'
+          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
           description: Taxa de juros para capitalização da PMBaC
-          maxLength: 8
+          maxLength: 9
           minLength: 8
           example: '0.019800'
         updateIndexes:
