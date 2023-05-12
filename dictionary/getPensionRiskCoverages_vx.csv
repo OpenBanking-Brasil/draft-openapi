@@ -35,11 +35,13 @@ PENSAO_PRAZO_CERTO
 PENSAO_MENORES_21 
 PENSAO_MENORES_24 
 PENSAO_CONJUGE_VITALICIA 
-PENSAO_CONJUGE_TEMPORARIA";1;1;"";Não permitido;string;FUNERAL;
+PENSAO_CONJUGE_TEMPORARIA 
+NA";1;1;"";Não permitido;string;FUNERAL;
 /data/coverages;coverages;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/coverages/type;type;É o conjunto dos riscos cobertos elencados na apólice. (RESOLUÇÃO CNSP Nº 341/2016). Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela Tipo de Cobertura.;Texto;9;Obrigatório;;"MORTE 
 INVALIDEZ 
-OUTROS";1;1;"";Não permitido;string;MORTE;
+OUTROS 
+NA";1;1;"";Não permitido;string;MORTE;
 /data/coverages/typeAdditionalInfos;typeAdditionalInfos;"Lista de textos para complementar informação relativa ao campo type, quando for selecionada a opção 'OUTROS'.
 Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a opção 'OUTROS'
 ";Lista;100;Opcional;;;0;N;"";Não permitido;array;;
@@ -55,13 +57,15 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
   2. Até o fim de ciclo determinado.
 Se for pagamento único, esse campo não se aplica (retorna vazio).
 ";Texto;;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
-FIM_CICLO_DETERMINADO";0;1;"";Não permitido;string;QUANTIDADE_DETERMINADA_PARCELAS;
+FIM_CICLO_DETERMINADO 
+NA";0;1;"";Não permitido;string;QUANTIDADE_DETERMINADA_PARCELAS;
 /data/coverages/attributes/indemnifiableDeadline;indemnifiableDeadline;Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/coverages/attributes/indemnityPaymentMethod;indemnityPaymentMethod;"Modalidade de pagamento da indenização, a considerar os domínios abaixo:
   1. Único
   2. Sob a forma de renda
 ";Texto;;Obrigatório;;"UNICO 
-SOB_FORMA_RENDA";1;1;"";Não permitido;string;UNICO;
+SOB_FORMA_RENDA 
+NA";1;1;"";Não permitido;string;UNICO;
 /data/coverages/attributes/gracePeriod;gracePeriod;Período de carência da cobertura;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;90;
 /data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Opcional;;"DIAS 
@@ -76,11 +80,13 @@ DOENCAS_LESOES_PREEXISTENTES
 EPIDEMIAS_PANDEMIAS 
 SUICIDIO 
 ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR 
-OUTROS";1;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
+OUTROS 
+NA";1;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
 /data/coverages/attributes/excludedRisksURL;excludedRisksURL;Campo aberto (possibilidade de incluir URL).;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/coverages/attributes/profitModality;profitModality;"Modalidade de pagamento da indenização.
 ";Texto;;Obrigatório;;"PAGAMENTO_UNICO 
-FORMA_RENDA";1;1;"";Não permitido;string;PAGAMENTO_UNICO;
+FORMA_RENDA 
+NA";1;1;"";Não permitido;string;PAGAMENTO_UNICO;
 /data/assistanceTypes;assistanceTypes;;Lista;43;Opcional;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
 ARQUITETO_VIRTUAL 
 ASSESSORIA_FINANCEIRA 
@@ -136,7 +142,8 @@ SUSTENTAVEL_DESCARTE_ECOLOGICO
 TELEMEDICINA 
 VIAGEM 
 VITIMA 
-OUTROS";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
+OUTROS 
+NA";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 /data/assistanceTypesAdditionalInfos;assistanceTypesAdditionalInfos;Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.;Lista;;Opcional;;;0;N;"";Não permitido;array;;
 /data/additional;additional;;Texto;;Opcional;;"SORTEIO 
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
@@ -150,10 +157,12 @@ NAO_HA";0;1;"";Não permitido;string;SORTEIO;
 /data/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;8;Obrigatório;^(\d{1}\.\d{6})|(NA)$;;1;1;"";Não permitido;string;0.019800;8
 /data/pmbacRemuneration/updateIndexes;updateIndexes;;Lista;;Opcional;;"IPCA 
 IGP_M 
-INPC";0;N;"";Não permitido;array;IPCA;
+INPC 
+NA";0;N;"";Não permitido;array;IPCA;
 /data/premiumUpdateIndex;premiumUpdateIndex;Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício;Texto;;Obrigatório;;"IPCA 
 IGPM 
-INPC";1;1;"";Não permitido;string;IPCA;
+INPC 
+NA";1;1;"";Não permitido;string;IPCA;
 /data/ageAdjustment;ageAdjustment;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/ageAdjustment/criterias;criterias;;Lista;27;Obrigatório;;"APOS_PERIODO_ANOS 
 CADA_PERIODO_ANOS 
@@ -166,7 +175,8 @@ NAO_APLICAVEL";1;N;"";Não permitido;array;APOS_PERIODO_ANOS;
   3. Capitalização
 ";Texto;;Opcional;;"REPARTICAO_SIMPLES 
 REPARTICAO_CAPITAIS 
-CAPITALIZACAO";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
+CAPITALIZACAO 
+NA";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
 /data/reclaim;reclaim;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/reclaim/table;table;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/reclaim/table/initialMonthRange;initialMonthRange;;Inteiro;2;Obrigatório;;;1;1;"";Não permitido;integer;1;
@@ -210,7 +220,8 @@ PIX
 TED_DOC 
 CONSIGNACAO_FOLHA_PAGAMENTO 
 PONTOS_PROGRAMA_BENEFICIO 
-OUTROS";1;1;"";Não permitido;string;CARTAO_CREDITO;
+OUTROS 
+NA";1;1;"";Não permitido;string;CARTAO_CREDITO;
 /data/contributionPayment/contributionPaymentMethodAdditionalInfo;contributionPaymentMethodAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
 
 [Restrição] Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
@@ -230,7 +241,8 @@ ANUAL
 TRIMESTRAL 
 SEMESTRAL 
 BIMESTRAL 
-OUTROS";1;1;"";Não permitido;string;MENSAL;
+OUTROS 
+NA";1;1;"";Não permitido;string;MENSAL;
 /data/contributionPayment/contributionPeriodicityAdditionalInfo;contributionPeriodicityAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
 
 [Restrição] Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
@@ -241,7 +253,8 @@ OUTROS";1;1;"";Não permitido;string;MENSAL;
 1. Coletivo;
 2. Individual.
 ";Texto;;Obrigatório;;"COLETIVO 
-INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO;
+INDIVIDUAL 
+NA";1;1;"";Não permitido;string;COLETIVO;
 /data/minimumRequirement/contractingMinRequirement;contractingMinRequirement;Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/targetAudience;targetAudience;"A considerar os domínios abaixo:
 
@@ -250,4 +263,5 @@ INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO;
   3. Ambas (Pessoa Natural e Jurídica)
 ";Texto;23;Obrigatório;;"PESSOA_NATURAL 
 PESSOA_JURIDICA 
-PESSOA_NATURAL_JURIDICA";1;1;"";Não permitido;string;PESSOA_NATURAL;
+PESSOA_NATURAL_JURIDICA 
+NA";1;1;"";Não permitido;string;PESSOA_NATURAL;

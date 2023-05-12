@@ -177,6 +177,7 @@ components:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
+            - NA
           example: PESSOA_NATURAL
       additionalProperties: false
     OKResponseSurvivalCoveragePension:
@@ -234,6 +235,7 @@ components:
           enum:
             - SEGURO_PESSOAS
             - PREVIDENCIA
+            - NA
           example: PREVIDENCIA
         modality:
           type: string
@@ -244,6 +246,7 @@ components:
           enum:
             - CONTRIBUICAO_VARIAVEL
             - BENEFICIO_DEFINIDO
+            - NA
           example: BENEFICIO_DEFINIDO
         additionalInfo:
           type: string
@@ -301,6 +304,7 @@ components:
             - DIRETAMENTE
             - INDIRETAMENTE
             - NAO_APLICA
+            - NA
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
                - Tipo de taxa de performance
@@ -354,6 +358,7 @@ components:
             - COLETIVO_AVERBADO
             - COLETIVO_INSTITUIDO
             - INDIVIDUAL
+            - NA
           description: |
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo Averbado;
@@ -432,6 +437,7 @@ components:
               - PONTOS_PROGRAMA_BENEFICIO
               - TED_DOC
               - OUTROS
+              - NA
             example: CARTAO_CREDITO
         permissionExtraordinaryContributions:
           description: |
@@ -495,6 +501,7 @@ components:
         - VRI
         - VDR
         - DEMAIS_PRODUTOS_PREVIDENCIA
+        - NA
     SurvivalPensionGracePeriod:
       type: object
       description: Prazo de carência
@@ -603,6 +610,7 @@ components:
             - SEMESTRAL
             - ANUAL
             - UNICO
+            - NA
         amount:
           type: string
           maxLength: 21
@@ -650,6 +658,7 @@ components:
               - RENDA_VITALICIA_CONJUGE_CONTINUIDADE_MENORES
               - RENDA_VITALICIA_MINIMO_GARANTIDO
               - RENDA_VITALICIA_PRAZO_MINIMO_GRANTIDO
+              - NA
             example: PAGAMENTO_UNICO
         biometricTable:
           type: array
@@ -676,6 +685,7 @@ components:
               - BR_EMSSB_MALE
               - BR_EMSSB_FEMALE
               - BR_EMSSB_MALE_FEMALE
+              - NA
             example: AT_2000_MALE
         interestRate:
           type: string
@@ -801,6 +811,7 @@ components:
       enum:
         - QUANTIDADE_DETERMINADA_PARCELAS
         - FIM_CICLO_DETERMINADO
+        - NA
       example: QUANTIDADE_DETERMINADA_PARCELAS
     SurvivalPensionEnumTargetAudience:
       type: string
@@ -813,6 +824,7 @@ components:
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
+        - NA
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
@@ -836,6 +848,7 @@ components:
         - PENSAO_MENORES_24
         - PENSAO_CONJUGE_VITALICIA
         - PENSAO_CONJUGE_TEMPORARIA
+        - NA
       example: FUNERAL
     Coverage:
       type: object
@@ -867,6 +880,7 @@ components:
         - MORTE
         - INVALIDEZ
         - OUTROS
+        - NA
       example: MORTE
     CoverageAttributes:
       type: object
@@ -1030,6 +1044,7 @@ components:
           enum:
             - COLETIVO
             - INDIVIDUAL
+            - NA
           example: COLETIVO
         contractingMinRequirement:
           type: string
@@ -1085,6 +1100,7 @@ components:
               - IPCA
               - IGP_M
               - INPC
+              - NA
             example: IPCA
       additionalProperties: false
     AgeAdjustment:
@@ -1137,6 +1153,7 @@ components:
         - SUICIDIO
         - ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR
         - OUTROS
+        - NA
       example: ATO_RECONHECIMENTO_PERIGOSO
     EnumAssistanceType:
       type: string
@@ -1199,6 +1216,7 @@ components:
         - VIAGEM
         - VITIMA
         - OUTROS
+        - NA
       example: ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
     EnumAdditional:
       type: string
@@ -1242,6 +1260,7 @@ components:
         - REPARTICAO_SIMPLES
         - REPARTICAO_CAPITAIS
         - CAPITALIZACAO
+        - NA
     RiskPensionEnumPremiumUpdateIndex:
       type: string
       description: Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício
@@ -1249,6 +1268,7 @@ components:
         - IPCA
         - IGPM
         - INPC
+        - NA
       example: IPCA
     RiskPensionEnumContributionPayment:
       type: object
@@ -1281,6 +1301,7 @@ components:
             - CONSIGNACAO_FOLHA_PAGAMENTO
             - PONTOS_PROGRAMA_BENEFICIO
             - OUTROS
+            - NA
         contributionPaymentMethodAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
@@ -1310,6 +1331,7 @@ components:
             - SEMESTRAL
             - BIMESTRAL
             - OUTROS
+            - NA
         contributionPeriodicityAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
@@ -1329,6 +1351,7 @@ components:
       enum:
         - UNICO
         - SOB_FORMA_RENDA
+        - NA
       example: UNICO
     RiskPensionEnumOtherGuaranteedValues:
       type: string
@@ -1348,6 +1371,7 @@ components:
       enum:
         - PAGAMENTO_UNICO
         - FORMA_RENDA
+        - NA
       example: PAGAMENTO_UNICO
     ResponseErrorMetaSingle:
       type: object
