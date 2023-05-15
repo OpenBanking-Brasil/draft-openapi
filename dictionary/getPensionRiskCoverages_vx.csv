@@ -3,7 +3,7 @@
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização;
 /data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;
-/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})|(NA)$;;1;1;"";Não permitido;string;13456789000112;
+/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})$|^(NA)$;;1;1;"";Não permitido;string;13456789000112;
 /data/participant/urlComplementaryList;urlComplementaryList;"Espera-se que valor de retorno, após acesso ao link ‘urlComplementaryList’, deve ser array de objeto com a estrutura abaixo:
 
 - ‘name’ com o valor contido no campo ‘LegalEntityName’ conforme cadastro no diretório;
@@ -16,7 +16,7 @@
 ";Texto;1024;Opcional;^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$;;0;1;"";Não permitido;string;https://empresaa1.com/companies;
 /data/society;society;Conjunto de informações relativas à seguradora do produto de open insurance;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/name;name;Nome da Sociedade Seguradora.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Society A1;
-/data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})|(NA)$;;1;1;"";Não permitido;string;13456789000112;
+/data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})$|^(NA)$;;1;1;"";Não permitido;string;13456789000112;
 /data/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Produto A;
 /data/code;code;Código único a ser definido pela sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;0001;
 /data/modality;modality;<ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>;Texto;33;Obrigatório;;"FUNERAL 
@@ -47,10 +47,10 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 ";Lista;100;Opcional;;;0;N;"";Não permitido;array;;
 /data/coverages/attributes;attributes;Atributos da cobertura;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/coverages/attributes/minValue;minValue;Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/coverages/attributes/minValue/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})|(NA)$;;1;1;"";Não permitido;string;0.01;
+/data/coverages/attributes/minValue/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})$|^(NA)$;;1;1;"";Não permitido;string;0.01;
 /data/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})|(NA)$;;1;1;"";Não permitido;string;BRL;
 /data/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})|(NA)$;;1;1;"";Não permitido;string;0.01;
+/data/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})$|^(NA)$;;1;1;"";Não permitido;string;0.01;
 /data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})|(NA)$;;1;1;"";Não permitido;string;BRL;
 /data/coverages/attributes/indemnifiablePeriod;indemnifiablePeriod;"Listagem do pagamento para cada benefício:
   1. Quantidade determinada de parcelas;
@@ -151,10 +151,10 @@ SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
 OUTROS 
 NAO_HA";0;1;"";Não permitido;string;SORTEIO;
 /data/termsAndConditions;termsAndConditions;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})|(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
+/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/pmbacRemuneration;pmbacRemuneration;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;9;Obrigatório;^(\d{1}\.\d{6})|(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
+/data/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/pmbacRemuneration/updateIndexes;updateIndexes;;Lista;;Opcional;;"IPCA 
 IGP_M 
 INPC 
@@ -181,7 +181,7 @@ NA";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
 /data/reclaim/table;table;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/reclaim/table/initialMonthRange;initialMonthRange;;Inteiro;2;Obrigatório;;;1;1;"";Não permitido;integer;1;
 /data/reclaim/table/finalMonthRange;finalMonthRange;;Inteiro;2;Obrigatório;;;1;1;"";Não permitido;integer;12;
-/data/reclaim/table/percentage;percentage;Percentual de faixa de resgate.;Texto;9;Obrigatório;^(\d{1}\.\d{6})|(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
+/data/reclaim/table/percentage;percentage;Percentual de faixa de resgate.;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/reclaim/gracePeriod;gracePeriod;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/reclaim/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;90;
 /data/reclaim/gracePeriod/unit;unit;"Informar o critério de carência para resgate:

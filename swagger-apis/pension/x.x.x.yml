@@ -291,7 +291,7 @@ components:
           example: EMPRESAAPREV
         maximumAdministrationFee:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
               - Taxa Máxima de Administração - em %
@@ -312,7 +312,7 @@ components:
           maxLength: 13
         maximumPerformanceFee:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Taxa Máxima de Performance - em %
@@ -330,7 +330,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo de Contribuição
-          pattern: '^(\d{1,16}\.\d{2,4})|(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
           example: '1000.00'
           maxLength: 21
         minimumMathematicalProvisionAmount:
@@ -338,7 +338,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo do Saldo Provisão matemática
-          pattern: '^(\d{1,16}\.\d{2,4})|(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
           example: '1000.00'
           maxLength: 21
         currency:
@@ -380,7 +380,7 @@ components:
     CnpjNumber:
       type: string
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
-      pattern: '^(\d{14})|(NA)$'
+      pattern: '^(\d{14})$|^(NA)$'
       example: '13456789000112'
     SurvivalPensionDefferalPeriod:
       type: object
@@ -397,7 +397,7 @@ components:
           type: string
           maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           description: Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.
           example: '0.019800'
         updateIndex:
@@ -411,7 +411,7 @@ components:
           type: string
           maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           description: Percentual de reversão de excedente financeiro na concessão. Em %.
           example: '0.019800'
         minimumPremiums:
@@ -553,14 +553,14 @@ components:
       properties:
         minValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           maxLength: 9
           minLength: 8
           description: Percentual mínimo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.
           example: '0.019800'
         maxValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           maxLength: 9
           minLength: 8
           description: Percentual máximo de carregamento cobrada quando do pagamento do prêmio/ contribuição. Em %.
@@ -575,14 +575,14 @@ components:
       properties:
         minValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           maxLength: 9
           minLength: 8
           description: Percentual mínimo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.
           example: '0.019800'
         maxValue:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           maxLength: 9
           minLength: 8
           description: Percentual máximo de taxa de carregamento cobrado quando da efetivação de resgate ou portabilidade.
@@ -612,7 +612,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})|(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
           description: Valor mínimo em R$ de prêmio/ contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único).
           example: '250.00'
       additionalProperties: false
@@ -689,7 +689,7 @@ components:
           type: string
           maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           description: Taxa de juros garantida utilizada para conversão em renda. Em %
           example: '0.019800'
         updateIndex:
@@ -698,7 +698,7 @@ components:
           type: string
           maxLength: 9
           minLength: 8
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           description: Percentual de reversão de excedente financeiro na concessão. Em %.
           example: '0.019800'
         investmentFunds:
@@ -955,7 +955,7 @@ components:
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
           minLength: 12
           maxLength: 20
-          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})|(NA)$'
+          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
           example: 15414.622222/2222-22
         detail:
           type: string
@@ -1007,7 +1007,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})|(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -1022,7 +1022,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})|(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -1067,7 +1067,7 @@ components:
           example: 12
         percentage:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           maxLength: 9
           minLength: 8
           description: Percentual de faixa de resgate.
@@ -1080,7 +1080,7 @@ components:
       properties:
         interestRate:
           type: string
-          pattern: '^(\d{1}\.\d{6})|(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
           description: Taxa de juros para capitalização da PMBaC
           maxLength: 9
           minLength: 8
