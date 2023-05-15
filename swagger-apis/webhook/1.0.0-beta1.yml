@@ -3,6 +3,14 @@ info:
   title: API Webhook - Open Finance Brasil
   description: |
     API de Webhook é responsável por notificar eventos definidos em cada uma das APIs que possuem a funcionalidade no Open Finance Brasil.
+    
+    <u>Endpoints que possuem a funcionalidade de Webhook</u>
+    <br/>
+    <br/>
+    Na versão atual, temos os seguintes endpoints:
+    API Payments v2:
+      - POST /pix/payments
+      - POST /consents
 
     # Orientações
     <u>Todos os endpoints nessa API utilizam-se de mTLS para autenticação, não possuem scopes e permissions específicos de segurança. Toda a segurança é feita via certificado(mTLS – BRCAC).</u>
@@ -16,10 +24,13 @@ info:
 
     <u>Exemplo de URI do consentimento:</u>
     <br/>
+    <br/>
     <img src="./img/image001.png" alt="Image Webhook"/>
+    <br/>
     <br/>
 
     <u>Exemplo de URI do pagamento:</u>
+    <br/>
     <br/>
     <img src="./img/image002.png" alt="Image Webhook"/>
     
