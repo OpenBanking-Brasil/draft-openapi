@@ -2,13 +2,24 @@
 info:
   title: API Webhook - Open Finance Brasil
   description: |
-    API de Webhook para notificações das mudanças de estados e eventos.
+    API de Webhook é responsável por notificar eventos definidos em cada uma das APIs que possuem a funcionalidade no Open Finance Brasil.
 
-    Exemplo de URI do consentimento:
+    # Orientações
+    <u>Todos os endpoints nessa API utilizam-se de mTLS para autenticação, não possuem scopes e permissions específicos de segurança. Toda a segurança é feita via certificado(mTLS – BRCAC).</u>
+
+    Dado que as URLs do ecossistema são formadas com a configuração abaixo:  
+    \<host> / \<string> / \<api> / \<versão> / \<recurso>
+
+    <u>Para a utilização desse recurso é necessário que:</u>
+    - Iniciadoras de pagamentos e/ou Receptora de dados: Precisam cadastrar a sua URI base (<host>) no diretório de participantes no campo `<CAMPO_A_DEFINIR>`,
+    - Detentoras de contas e/ou Transmissora de dados: Precisam construir a URI de notificação da seguinte forma:
+
+    <u>Exemplo de URI do consentimento:</u>
     <br/>
     <img src="./img/image001.png" alt="Image Webhook"/>
     <br/>
-    
+
+    <u>Exemplo de URI do pagamento:</u>
     <br/>
     <img src="./img/image002.png" alt="Image Webhook"/>
     
