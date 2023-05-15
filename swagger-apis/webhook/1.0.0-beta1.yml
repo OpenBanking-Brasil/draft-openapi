@@ -1,9 +1,29 @@
 ﻿openapi: 3.0.0
 info:
-  title: API Webhooks - Open Finance Brasil
+  title: API Webhook - Open Finance Brasil
   description: |
-    API de Webhook para notificações das mudanças de estados e eventos.
-  version: 1.0.0
+    API de Webhook é responsável por notificar eventos definidos em cada uma das APIs que possuem a funcionalidade no Open Finance Brasil.
+
+    # Orientações
+    <u>Todos os endpoints nessa API utilizam-se de mTLS para autenticação, não possuem scopes e permissions específicos de segurança. Toda a segurança é feita via certificado(mTLS – BRCAC).</u>
+
+    Dado que as URLs do ecossistema são formadas com a configuração abaixo:  
+    \<host> / \<string> / \<api> / \<versão> / \<recurso>
+
+    <u>Para a utilização desse recurso é necessário que:</u>
+    - Iniciadoras de pagamentos e/ou Receptora de dados: Precisam cadastrar a sua URI base (<host>) no diretório de participantes no campo `<CAMPO_A_DEFINIR>`,
+    - Detentoras de contas e/ou Transmissora de dados: Precisam construir a URI de notificação da seguinte forma:
+
+    <u>Exemplo de URI do consentimento:</u>
+    <br/>
+    <img src="./img/image001.png" alt="Image Webhook"/>
+    <br/>
+
+    <u>Exemplo de URI do pagamento:</u>
+    <br/>
+    <img src="./img/image002.png" alt="Image Webhook"/>
+    
+  version: '1.0.0-beta1'
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -85,11 +105,12 @@ components:
             - timestamp
           properties:
             timestamp:
-              description: Data e hora em que ocorreu o evento responsável pelo disparo da notificação via webhook, conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
               type: string
               format: date-time
-              maxLength: 100
+              description: Data e hora que foi realizado o cancelamento, conforme especificação RFC-3339, formato UTC.
+              maxLength: 20
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              example: '2021-05-21T08:30:00Z'
     xWebhookInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
@@ -135,7 +156,7 @@ components:
     xWebhookInteractionId:
       name: x-webhook-interaction-id
       in: header
-      description: Identificador único para cada tentativa de notificação realizada. O identificador deverá seguir o padrão UID RFC4122.
+      description: Identificador único para cada tentativa de notificação realizada. O identificador deverá seguir o padrão UID [RFC4122](https://tools.ietf.org/html/rfc4122).
       required: true
       schema:
         type: string
