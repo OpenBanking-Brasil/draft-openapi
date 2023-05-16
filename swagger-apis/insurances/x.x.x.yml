@@ -76,17 +76,17 @@ components:
             - Ambos do tipo string;
             - Ambos obrigatórios. 
           maxLength: 1024
-          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$|^(NA)$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
     CnpjNumber:
       type: string
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
-      pattern: '^\d{14}$'
+      pattern: '^(\d{14})$|^(NA)$'
       example: '13456789000112'
     CurrencyCode:
       type: string
-      pattern: '^[A-Z]{3}$'
+      pattern: '^([A-Z]{3})$|^(NA)$'
       maxLength: 3
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
       example: BRL
@@ -100,7 +100,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^\d{1,16}\.\d{2,4}$'
+          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -115,7 +115,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^\d{1,16}\.\d{2,4}$'
+          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -151,7 +151,7 @@ components:
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
           minLength: 12
           maxLength: 20
-          pattern: '^\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2}$'
+          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
           example: 15414.622222/2222-22
         detail:
           type: string
@@ -608,7 +608,7 @@ components:
             amount:
               type: string
               maxLength: 21
-              pattern: '^\d{1,16}\.\d{2,4}$'
+              pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
               example: '0.01'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
@@ -623,7 +623,7 @@ components:
             amount:
               type: string
               maxLength: 21
-              pattern: '^\d{1,16}\.\d{2,4}$'
+              pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
               example: '0.01'
             currency:
               $ref: '#/components/schemas/CurrencyCode'

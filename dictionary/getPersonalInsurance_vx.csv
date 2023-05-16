@@ -3,16 +3,16 @@
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização;
 /data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;
-/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
+/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})$|^(NA)$;;1;1;"";Não permitido;string;13456789000112;
 /data/participant/urlComplementaryList;urlComplementaryList;"Espera-se que valor de retorno, após acesso ao link 'urlComplementaryList', deve ser array de objeto com a estrutura abaixo:
 - 'name' com o valor contido no campo 'LegalEntityName' conforme cadastro no diretório;
 - 'cnpjNumber' com o valor contido no campo CNPJ ('RegistrationNumber') correspondente a esta instituição;
 - Ambos do tipo string;
 - Ambos obrigatórios. 
-";Texto;1024;Opcional;^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$;;0;1;"";Não permitido;string;https://empresaa1.com/companies;
+";Texto;1024;Opcional;^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$|^(NA)$;;0;1;"";Não permitido;string;https://empresaa1.com/companies;
 /data/society;society;Conjunto de informações relativas à seguradora do produto de open insurance;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/name;name;Nome da Sociedade Seguradora.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Society A1;
-/data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
+/data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})$|^(NA)$;;1;1;"";Não permitido;string;13456789000112;
 /data/society/brand;brand;Nome da marca reportada pela sociedade seguradora participante do Open Finance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Marca;
 /data/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Produto A;
 /data/code;code;Código único a ser definido pela sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;0001;
@@ -100,11 +100,11 @@ NA";1;N;"";Não permitido;array;;
 DIARIA_OU_PARCELA 
 NA";1;N;"";Não permitido;array;INDENIZACAO_UNICA;
 /data/coverages/attributes/minValue;minValue;Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/coverages/attributes/minValue/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
-/data/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/coverages/attributes/minValue/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})$|^(NA)$;;1;1;"";Não permitido;string;0.01;
+/data/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})$|^(NA)$;;1;1;"";Não permitido;string;BRL;
 /data/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
-/data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})$|^(NA)$;;1;1;"";Não permitido;string;0.01;
+/data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})$|^(NA)$;;1;1;"";Não permitido;string;BRL;
 /data/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.;Lista;50;Obrigatório;;;1;N;"";Não permitido;array;ATE_FIM_CICLO_DETERMINADO;
 /data/coverages/attributes/maximumQtyIndemnifiableInstallments;maximumQtyIndemnifiableInstallments;Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.;Inteiro;10;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/coverages/attributes/gracePeriod;gracePeriod;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -117,11 +117,11 @@ NAO_APLICA";0;1;"";Não permitido;string;MESES;
 /data/coverages/attributes/deductibleDays;deductibleDays;Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.;Inteiro;10;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/coverages/attributes/differentiatedDeductibleDays;differentiatedDeductibleDays;Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade. Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.;Inteiro;10;Opcional;;;0;1;"";Não permitido;integer;15;
 /data/coverages/attributes/deductible;deductible;Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/coverages/attributes/deductible/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
-/data/coverages/attributes/deductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/coverages/attributes/deductible/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})$|^(NA)$;;1;1;"";Não permitido;string;0.01;
+/data/coverages/attributes/deductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})$|^(NA)$;;1;1;"";Não permitido;string;BRL;
 /data/coverages/attributes/differentiatedDeductible;differentiatedDeductible;Detalhamento da franquia em reais diferentes para cada cobertura que exista alguma especificidade.<br>Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/coverages/attributes/differentiatedDeductible/amount;amount;;Texto;21;Obrigatório;^\d{1,16}\.\d{2,4}$;;1;1;"";Não permitido;string;0.01;
-/data/coverages/attributes/differentiatedDeductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
+/data/coverages/attributes/differentiatedDeductible/amount;amount;;Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})$|^(NA)$;;1;1;"";Não permitido;string;0.01;
+/data/coverages/attributes/differentiatedDeductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})$|^(NA)$;;1;1;"";Não permitido;string;BRL;
 /data/coverages/attributes/excludedRisks;excludedRisks;;Lista;40;Obrigatório;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
 OPERACOES_GUERRA 
@@ -202,7 +202,7 @@ SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
 OUTROS 
 NAO_HA";1;N;"";Não permitido;array;SORTEIO;
 /data/termsAndConditions;termsAndConditions;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2}$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
+/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;12
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/globalCapital;globalCapital;"A considerar os seguintes domínios:
   1. true
