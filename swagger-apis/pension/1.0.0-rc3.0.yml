@@ -172,6 +172,7 @@ components:
               1. Pessoa Natural
               2. Pessoa Jurídica
               3. Ambas (Pessoa Natural e Jurídica)
+              4. NA
           maxLength: 23
           enum:
             - PESSOA_NATURAL
@@ -231,6 +232,7 @@ components:
             Segmento do qual se trata o produto contratado
             1. Seguro de Pessoas
             2. Previdência
+            3. NA
           maxLength: 20
           enum:
             - SEGURO_PESSOAS
@@ -242,6 +244,7 @@ components:
           description: |
             1. Contribuição Variável;
             2. Benefício Definido.
+            3. NA
           maxLength: 21
           enum:
             - CONTRIBUICAO_VARIAVEL
@@ -363,6 +366,7 @@ components:
             1. Coletivo Averbado;
             2. Coletivo instituído;
             3. Individual.
+            4. NA
           example: COLETIVO_AVERBADO
         participantQualified:
           type: boolean
@@ -484,6 +488,7 @@ components:
         11. VRI
         12. VDR
         13. Demais produtos de Previdência.
+        14. NA
       maxLength: 27
       enum:
         - PGBL
@@ -644,6 +649,7 @@ components:
                 9. Renda Vitalícia Reversível ao Cônjuge com Continuidade de Menores
                 10. Renda Vitalícia com o Mínimo Garantido;
                 11. Renda Vitalícia com Prazo mínimo garantido.
+                12. NA
             enum:
               - PAGAMENTO_UNICO
               - RENDA_PRAZO_CERTO
@@ -805,6 +811,7 @@ components:
         Listagem do pagamento para cada benefício:
           1. Quantidade determinada de parcelas;
           2. Até o fim de ciclo determinado.
+          3. NA
         Se for pagamento único, esse campo não se aplica (retorna vazio).
       enum:
         - QUANTIDADE_DETERMINADA_PARCELAS
@@ -818,6 +825,7 @@ components:
 
           1. Pessoa Natural
           2. Pessoa Jurídica
+          3. NA
       maxLength: 23
       enum:
         - PESSOA_NATURAL
@@ -826,7 +834,7 @@ components:
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
-      description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>
+      description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li><li>NA</li></ol>
       maxLength: 33
       enum:
         - FUNERAL
@@ -1039,6 +1047,7 @@ components:
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo;
             2. Individual.
+            3. NA
           enum:
             - COLETIVO
             - INDIVIDUAL
@@ -1094,6 +1103,7 @@ components:
                 1. IPCA (IBGE)
                 2. IGP-M (FGV)
                 3. INPC (IBGE)
+                4. NA
             enum:
               - IPCA
               - IGP_M
@@ -1253,6 +1263,7 @@ components:
           1. Repartição simples
           2. Repartição Capitais Cobertura
           3. Capitalização
+          4. NA
       example: REPARTICAO_SIMPLES
       enum:
         - REPARTICAO_SIMPLES
@@ -1289,6 +1300,7 @@ components:
              - CONSIGNACAO_FOLHA_PAGAMENTO
              - PONTOS_PROGRAMA_BENEFICIO
              - OUTROS
+             - NA
           enum:
             - CARTAO_CREDITO
             - DEBITO_CONTA
@@ -1321,6 +1333,7 @@ components:
             - SEMESTRAL
             - BIMESTRAL
             - OUTROS
+            - NA
           enum:
             - MENSAL
             - UNICA
@@ -1346,6 +1359,7 @@ components:
         Modalidade de pagamento da indenização, a considerar os domínios abaixo:
           1. Único
           2. Sob a forma de renda
+          3. NA
       enum:
         - UNICO
         - SOB_FORMA_RENDA
