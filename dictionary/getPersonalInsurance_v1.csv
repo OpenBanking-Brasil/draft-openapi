@@ -16,10 +16,10 @@
 /data/society/brand;brand;Nome da marca reportada pela sociedade seguradora participante do Open Finance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Marca;
 /data/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Produto A;
 /data/code;code;Código único a ser definido pela sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;0001;
-/data/category;category;"Indicar a categoria do Produto&#58;<br><ol><li>Tradicional</li><li>Microsseguro</li></ol>";Texto;12;Opcional;;"TRADICIONAL 
+/data/category;category;"Indicar a categoria do Produto&#58;<br><ol><li>Tradicional</li><li>Microsseguro</li><li>NA</li></ol>";Texto;12;Opcional;;"TRADICIONAL 
 MICROSSEGURO 
 NA";0;1;"";Não permitido;string;TRADICIONAL;
-/data/modality;modality;<ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>;Texto;33;Obrigatório;;"FUNERAL 
+/data/modality;modality;<ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li><li>NA</li></ol>;Texto;33;Obrigatório;;"FUNERAL 
 PRESTAMISTA 
 VIAGEM 
 EDUCACIONAL 
@@ -301,6 +301,7 @@ NA";1;N;"";Não permitido;array;DIARIA;
 /data/minimumRequirement/contractType;contractType;"A considerar os domínios abaixo:
   1. Coletivo;
   2. Individual
+  3. NA
 ";Texto;10;Obrigatório;;"COLETIVO 
 INDIVIDUAL 
 NA";1;1;"";Não permitido;string;COLETIVO;
@@ -310,6 +311,7 @@ NA";1;1;"";Não permitido;string;COLETIVO;
   1. Pessoa Natural
   2. Pessoa Jurídica
   3. Ambas (Pessoa Natural e Jurídica)
+  4. NA
 ";Texto;23;Obrigatório;;"PESSOA_NATURAL 
 PESSOA_JURIDICA 
 PESSOA_NATURAL_JURIDICA 
