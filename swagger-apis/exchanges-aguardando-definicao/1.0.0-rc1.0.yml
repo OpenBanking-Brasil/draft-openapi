@@ -140,9 +140,19 @@ paths:
       description: Faltando receber a descrição do endpoint
       parameters:
         - $ref: '#/components/parameters/OperationId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/fromTransactionDate'
+        - $ref: '#/components/parameters/toTransactionDate'
       responses:
+        '200':
+          $ref: '#/components/responses/OKResponseEvents'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -169,6 +179,11 @@ paths:
           $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         default:
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OAuth2AuthorizationCode:
+          - 'openid'
+          - 'consent:consentId'
+          - 'exchanges'
 components:
   schemas:
     Links:
@@ -240,6 +255,7 @@ components:
       properties:
         data:
           type: array
+          minItems: 0
           items:
             $ref: '#/components/schemas/ProductList'
         links:
@@ -255,9 +271,23 @@ components:
         - meta
       properties:
         data:
+          $ref: '#/components/schemas/ProductIdentification'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/OpenDataMeta'
+    OKResponseEvents:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
           type: array
+          minItems: 0
           items:
-            $ref: '#/components/schemas/ProductIdentification'
+            $ref: '#/components/schemas/Events'
         links:
           $ref: '#/components/schemas/Links'
         meta:
@@ -499,6 +529,179 @@ components:
           pattern: '^[A-Z]{2}$'
           example: ZA
       additionalProperties: false
+    Events:
+      type: object
+      description: Detalhes dos eventos da operação de câmbio.
+      required:
+        - eventSequenceNumber
+        - eventType
+        - eventDate
+      properties:
+        eventSequenceNumber:
+          type: string
+          description: Número sequência do registro do evento de câmbio no Bacen.
+          maxLength: 12
+          pattern: '^\d{12}$'
+          example: '493874649457'
+        eventType:
+          $ref: '#/components/schemas/EnumExchangesEventType'
+        eventDate:
+          type: string
+          format: date-time
+          description: Data do evento relacionado com a operação.
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2023-03-07T08:30:00Z'
+        dueDate:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: Data em que a operação (compra ou venda), após evento, está prevista para ser liquidada.
+          maxLength: 10
+          example: "2018-02-15"
+        localCurrencyOperationTax:
+          type: object
+          description: Valor da taxa de câmbio aplicada à operação, em moeda nacional.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado ao objeto.
+              maxLength: 31
+              pattern: '^\d{1,15}\.\d{1,15}$'
+              example: '1.3'
+            currency:
+              type: string
+              description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        localCurrencyOperationValue:
+          type: object
+          description: Valor negociado em moeda nacional.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado ao objeto.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        foreignOperationValue:
+          type: object
+          description: Valor da operação em moeda estrangeira.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado ao objeto.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: USD
+        operationOutstandingBalance:
+          type: object
+          description: Valor do saldo da operação, após evento, a liquidar em moeda estrangeira. Objeto de envio obrigatório nos casos de operações de câmbio com liquidação futura.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado ao objeto.
+              maxLength: 20
+              pattern: '^\d{1,17}\.\d{2}$'
+              example: '1000.04'
+            currency:
+              type: string
+              description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        vetAmount:
+          type: object
+          description: Representa o custo de uma operação de câmbio em reais por moeda estrangeira, englobando a taxa de câmbio, as tarifas e tributos incidentes sobre essa operação. Campo de envio obrigatório nas operações de câmbio pronto que atingirem até o limite de US$100.000 ou equivalente em outras moedas.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              description: Valor relacionado ao objeto.
+              maxLength: 31
+              pattern: '\d{1,15}\.\d{1,15}$'
+              example: '1000.000004'
+            currency:
+              type: string
+              description: Moeda referente ao valor monetário, seguindo o modelo ISO-4217.
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              example: BRL
+        localCurrencyAdvancePercentage:
+          type: string
+          description: Percentual do valor de moeda nacional concedido ao cliente antecipadamente. p.ex. 0.014500.
+          pattern: '^\d{1}\.\d{1,6}$'
+          maxLength: 8
+          minLength: 4
+          example: '0.12'
+        deliveryForeignCurrency:
+          $ref: '#/components/schemas/EnumExchangesDeliveryForeignCurrency'
+        operationCategoryCode:
+          type: string
+          maxLength: 5
+          pattern: '^\d{5}$'
+          description: Código da natureza fato do fechamento da operação. Deve respeitar os códigos de natureza referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
+          example: '90302'
+        relationshipCode:
+          type: string
+          maxLength: 2
+          pattern: '^\d{2}$'
+          description: |
+            Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
+
+            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+          example: '50'
+        foreignPartieName:
+          type: string
+          description: |
+            Nome do pagador ou recebedor no exterior.
+
+            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+          maxLength: 80
+          pattern: '[\w\W\s]*'
+          example: José da Silva
+        foreignPartieCountryCode:
+          type: string
+          description: |
+            País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
+
+            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+          maxLength: 2
+          pattern: '^[A-Z]{2}$'
+          example: ZA
+      additionalProperties: false
     EnumExchangesOperationType:
       type: string
       description: Compra ou venda de moeda estrangeira.
@@ -506,6 +709,24 @@ components:
         - COMPRA
         - VENDA
       example: COMPRA
+    EnumExchangesEventType:
+      type: string
+      description: |
+        Para o campo domínio
+        1 - Contratação no Mercado Primário
+        2 - Alteração de Operação Cambial no Mercado Primário
+        3 - Cancelamento de Operação Cambial no Mercado Primário
+        4 - Liquidação de Operação Cambial no Mercado Primário
+        5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário
+        6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário   O evento está relacionado ao tipo de contratação. 
+      enum:
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+        - '5'
+        - '6'
+      example: '2'
     EnumExchangesDeliveryForeignCurrency:
       type: string
       description: Forma de entrega da moeda estrangeira.
@@ -669,6 +890,32 @@ components:
         type: string
         maxLength: 2048
         pattern: '[\w\W\s]*'
+    fromTransactionDate:
+      name: fromTransactionDate
+      description: |
+        Data inicial de filtragem.
+
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
+    toTransactionDate:
+      name: toTransactionDate
+      description: |
+        Data final de filtragem.
+
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+      required: false
+      in: query
+      schema:
+        type: string
+        maxLength: 10
+        format: date
+        example: '2021-05-21'
   securitySchemes:
     OAuth2AuthorizationCode:
       type: oauth2
@@ -692,6 +939,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponseProductIdentification'
+    OKResponseEvents:
+      description: Dados de operações de câmbio da instituição obtidos com sucesso.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/OKResponseEvents'
     BadRequestWithAdditionalProperties:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
