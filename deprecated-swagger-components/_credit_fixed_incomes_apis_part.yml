@@ -4,7 +4,7 @@ info:
   description: |
     API de informações de operações de Renda Fixa Crédito do Open Finance Brasil – Fase 4. API que retorna informações de operações de investimento do tipo Renda Fixa Crédito (Debêntures, CRI/CRA) mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, saldos em posição do cliente e movimentações financeiras.
     Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. A exposição se dará por cada operação de renda fixa contratada pelo cliente.
-  version: 1.0.0-rc2.0
+  version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
     url: "https://www.apache.org/licenses/LICENSE-2.0"
@@ -25,9 +25,9 @@ tags:
   - name: Balances
     description: Obtém a posição da operação de Renda Fixa Crédito identificada por investmentId.
   - name: Transactions
-    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Fixa Crédito identificada por investmentId.
+    description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
   - name: Transactions Current
-    description: Obtém as movimentações recentes da operação de Renda Fixa Crédito identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+    description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
 paths:
   /investments:
     get:
@@ -75,8 +75,9 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OpenId:
             - 'openid'
+          OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
   /investments/{investmentId}:
@@ -123,8 +124,9 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
-        - OAuth2AuthorizationCode:
+        - OpenId:
             - 'openid'
+          OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
   /investments/{investmentId}/balances:
@@ -171,17 +173,18 @@ paths:
         'default':
           $ref: '#/components/responses/DefaultWithAdditionalProperties' 
       security:
-        - OAuth2AuthorizationCode:
+        - OpenId:
             - 'openid'
+          OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
   /investments/{investmentId}/transactions:
     get:
       tags:
         - Transactions
-      summary: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Fixa Crédito identificada por investmentId.
+      summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactions
-      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Fixa Crédito identificada por investmentId.
+      description: Obtém as movimentações históricas (últimos 12 meses) da operação de Fundos de Investimento identificada por investmentId.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -224,17 +227,18 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OpenId:
             - 'openid'
+          OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
   /investments/{investmentId}/transactions-current:
     get:
       tags:
         - Transactions Current
-      summary: Obtém as movimentações recentes da operação de Renda Fixa Crédito identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      summary: Obtém as movimentações da operação de Renda Fixa Crédito identificada por investmentId.
       operationId: creditFixedIncomesGetInvestmentsInvestmentIdTransactionsCurrent
-      description: Obtém as movimentações recentes da operação de Renda Fixa Crédito identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
+      description: Obtém as movimentações recentes da operação de Fundos de Investimento identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
@@ -277,8 +281,9 @@ paths:
         'default':
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2AuthorizationCode:
+        - OpenId:
             - 'openid'
+          OAuth2Security:
             - 'consent:consentId'
             - 'credit-fixed-incomes'
 components:
@@ -411,15 +416,18 @@ components:
     toTransactionDateCurrent:
       $ref: ./parameters/CreditFixedIncomesToTransactionDateCurrent.yaml
   securitySchemes:
-    OAuth2AuthorizationCode:
+    OpenId:
+      type: openIdConnect
+      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
+    OAuth2Security:
       type: oauth2
-      description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
+      description: "Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados."
       flows:
         authorizationCode:
-          authorizationUrl: 'https://authserver.example/authorization'
-          tokenUrl: 'https://authserver.example/token'
+          authorizationUrl: "https://authserver.example/authorization"
+          tokenUrl: "https://authserver.example/token"
           scopes:
-            credit-fixed-incomes: Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions.
+            credit-fixed-incomes: "Escopo necessário para acesso à API Credit-Fixed-Incomes. O controle dos endpoints específicos é feito via permissions."
   responses:
     ResponseCreditFixedIncomesProductList:
       description: Dados obtidos com sucesso.
