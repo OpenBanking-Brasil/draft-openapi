@@ -812,6 +812,7 @@ components:
           1. Quantidade determinada de parcelas;
           2. Até o fim de ciclo determinado.
           3. NA
+
         Se for pagamento único, esse campo não se aplica (retorna vazio).
       enum:
         - QUANTIDADE_DETERMINADA_PARCELAS
@@ -961,7 +962,7 @@ components:
         susepProcessNumber:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
-          minLength: 12
+          minLength: 2
           maxLength: 20
           pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
           example: 15414.622222/2222-22
