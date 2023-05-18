@@ -27,19 +27,19 @@ servers:
     description: Servidor de Homologação
 tags:
   - name: Product List
-    description: Faltando receber a descrição do endpoint.
+    description: Obtém a lista de operações de Câmbio mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
   - name: Product Identification
-    description: Faltando receber a descrição do endpoint.
+    description: Obtém os dados da operação de Câmbio identificada por operationId.
   - name: Events
-    description: Faltando receber a descrição do endpoint.
+    description: Obtém os dados dos eventos da operação de Câmbio identificada por operationId.
 paths:
   /operations:
     get:
       tags:
         - Product List
-      summary: Faltando receber a descrição do endpoint.
+      summary: Obtém a lista de operações de Câmbio mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       operationId: exchangesGetProductList
-      description: Faltando receber a descrição do endpoint.
+      description: Obtém a lista de operações de Câmbio mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -87,9 +87,9 @@ paths:
     get:
       tags:
         - Product Identification
-      summary: Faltando receber a descrição do endpoint.
+      summary: Obtém os dados da operação de Câmbio identificada por operationId.
       operationId: exchangesGetProductIdentification
-      description: Faltando receber a descrição do endpoint
+      description: Obtém os dados da operação de Câmbio identificada por operationId.
       parameters:
         - $ref: '#/components/parameters/OperationId'
         - $ref: '#/components/parameters/Authorization'
@@ -135,9 +135,9 @@ paths:
     get:
       tags:
         - Events
-      summary: Faltando receber a descrição do endpoint.
+      summary: Obtém os dados dos eventos da operação de Câmbio identificada por operationId.
       operationId: exchangesGetEvents
-      description: Faltando receber a descrição do endpoint
+      description: Obtém os dados dos eventos da operação de Câmbio identificada por operationId.
       parameters:
         - $ref: '#/components/parameters/OperationId'
         - $ref: '#/components/parameters/Authorization'
