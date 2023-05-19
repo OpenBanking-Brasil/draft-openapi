@@ -54,10 +54,10 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})$|^(NA)$;;1;1;"";Não permitido;string;BRL;
 /data/coverages/attributes/indemnifiablePeriod;indemnifiablePeriod;"Listagem do pagamento para cada benefício:
   1. Quantidade determinada de parcelas;
-  2. Até o fim de ciclo determinado.
-  3. NA
+  2. Até o fim de ciclo determinado;
+  3. NA.
 
-Se for pagamento único, esse campo não se aplica (retorna vazio).
+Observação: Se for pagamento único, este campo não deve ser informado.
 ";Texto;;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
 FIM_CICLO_DETERMINADO 
 NA";0;1;"";Não permitido;string;QUANTIDADE_DETERMINADA_PARCELAS;
