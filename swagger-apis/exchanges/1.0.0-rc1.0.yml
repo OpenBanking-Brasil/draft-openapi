@@ -28,7 +28,7 @@ servers:
 tags:
   - name: Product List
     description: Obtém a lista de operações de Câmbio mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-  - name: Product Identification
+  - name: Operation Details
     description: Obtém os dados da operação de Câmbio identificada por operationId.
   - name: Events
     description: Obtém os dados dos eventos da operação de Câmbio identificada por operationId.
@@ -86,9 +86,9 @@ paths:
   /operations/{operationId}:
     get:
       tags:
-        - Product Identification
+        - Operation Details
       summary: Obtém os dados da operação de Câmbio identificada por operationId.
-      operationId: exchangesGetProductIdentification
+      operationId: exchangesGetOperationDetails
       description: Obtém os dados da operação de Câmbio identificada por operationId.
       parameters:
         - $ref: '#/components/parameters/OperationId'
@@ -99,7 +99,7 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseProductIdentification'
+          $ref: '#/components/responses/OKResponseOperationDetails'
         '400':
           $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
@@ -263,7 +263,7 @@ components:
         meta:
           $ref: '#/components/schemas/OpenDataMeta'
       additionalProperties: false
-    OKResponseProductIdentification:
+    OKResponseOperationDetails:
       type: object
       required:
         - data
@@ -271,7 +271,7 @@ components:
         - meta
       properties:
         data:
-          $ref: '#/components/schemas/ProductIdentification'
+          $ref: '#/components/schemas/OperationDetails'
         links:
           $ref: '#/components/schemas/Links'
         meta:
@@ -320,7 +320,7 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: '92792126019929240'
       additionalProperties: false
-    ProductIdentification:
+    OperationDetails:
       type: object
       description: Detalhes da operação de câmbio.
       required:
@@ -939,12 +939,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/OKResponseProductList'
-    OKResponseProductIdentification:
+    OKResponseOperationDetails:
       description: Dados de operações de câmbio da instituição obtidos com sucesso.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/OKResponseProductIdentification'
+            $ref: '#/components/schemas/OKResponseOperationDetails'
     OKResponseEvents:
       description: Dados de operações de câmbio da instituição obtidos com sucesso.
       content:
