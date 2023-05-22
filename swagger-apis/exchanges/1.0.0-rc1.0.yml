@@ -38,7 +38,7 @@ paths:
       tags:
         - Product List
       summary: Obtém a lista de operações de Câmbio mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
-      operationId: exchangesGetProductList
+      operationId: exchangesGetOperations
       description: Obtém a lista de operações de Câmbio mantidas pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -88,7 +88,7 @@ paths:
       tags:
         - Operation Details
       summary: Obtém os dados da operação de Câmbio identificada por operationId.
-      operationId: exchangesGetOperationDetails
+      operationId: exchangesGetOperationsOperationId
       description: Obtém os dados da operação de Câmbio identificada por operationId.
       parameters:
         - $ref: '#/components/parameters/OperationId'
@@ -136,7 +136,7 @@ paths:
       tags:
         - Events
       summary: Obtém os dados dos eventos da operação de Câmbio identificada por operationId.
-      operationId: exchangesGetEvents
+      operationId: exchangesGetOperationsOperationIdEvents
       description: Obtém os dados dos eventos da operação de Câmbio identificada por operationId.
       parameters:
         - $ref: '#/components/parameters/OperationId'
