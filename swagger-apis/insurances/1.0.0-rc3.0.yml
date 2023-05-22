@@ -149,7 +149,7 @@ components:
         susepProcessNumber:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
-          minLength: 12
+          minLength: 2
           maxLength: 20
           pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
           example: 15414.622222/2222-22
@@ -185,12 +185,13 @@ components:
       example: FUNERAL
     EnumGracePeriodUnit:
       type: string
-      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>
+      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li><li>NA</li></ol>
       maxLength: 10
       enum:
         - DIAS
         - MESES
         - NAO_APLICA
+        - NA
       example: MESES
     InsurancePensionEnumPmbacRemuneration:
       type: object
@@ -223,6 +224,7 @@ components:
                 2. A cada período em anos
                 3. Por mudança de faixa etária
                 4. Não aplicável
+                5. NA
             maxLength: 27
             example: APOS_PERIODO_ANOS
             enum:
@@ -230,6 +232,7 @@ components:
               - CADA_PERIODO_ANOS
               - MUDANCA_FAIXA_ETARIA
               - NAO_APLICAVEL
+              - NA
         frequency:
           type: integer
           description: 'Período em anos, caso critério de reenquadramento após ou a cada período em anos.'
@@ -438,6 +441,7 @@ components:
               - SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
               - OUTROS
               - NAO_HA
+              - NA
             example: SORTEIO
         termsAndConditions:
           type: array
@@ -679,11 +683,13 @@ components:
         1. Saldamento
         2. Benefício Prolongado
         3. Não se aplica
+        4. NA
       maxLength: 20
       enum:
         - SALDAMENTO
         - BENEFICIO_PROLONGADO
         - NAO_APLICA
+        - NA
       example: SALDAMENTO
     EnumPersonalInsuranceIndemnityPaymentMethod:
       type: string
@@ -840,7 +846,7 @@ components:
         percentage:
           type: string
           pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
-          maxLength: 8
+          maxLength: 9
           minLength: 8
           description: Percentual de faixa de resgate.
           example: '0.019800'
