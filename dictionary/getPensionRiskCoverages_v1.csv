@@ -71,9 +71,10 @@ SOB_FORMA_RENDA
 NA";1;1;"";Não permitido;string;UNICO;
 /data/coverages/attributes/gracePeriod;gracePeriod;Período de carência da cobertura;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;90;
-/data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>";Texto;10;Opcional;;"DIAS 
+/data/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li><li>NA</li></ol>";Texto;10;Opcional;;"DIAS 
 MESES 
-NAO_APLICA";0;1;"";Não permitido;string;MESES;
+NAO_APLICA 
+NA";0;1;"";Não permitido;string;MESES;
 /data/coverages/attributes/excludedRisks;excludedRisks;;Lista;40;Obrigatório;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
 OPERACOES_GUERRA 
@@ -152,7 +153,8 @@ NA";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
 SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO 
 OUTROS 
-NAO_HA";0;1;"";Não permitido;string;SORTEIO;
+NAO_HA 
+NA";0;1;"";Não permitido;string;SORTEIO;
 /data/termsAndConditions;termsAndConditions;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;2
 /data/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
@@ -170,7 +172,8 @@ NA";1;1;"";Não permitido;string;IPCA;
 /data/ageAdjustment/criterias;criterias;;Lista;27;Obrigatório;;"APOS_PERIODO_ANOS 
 CADA_PERIODO_ANOS 
 MUDANCA_FAIXA_ETARIA 
-NAO_APLICAVEL";1;N;"";Não permitido;array;APOS_PERIODO_ANOS;
+NAO_APLICAVEL 
+NA";1;N;"";Não permitido;array;APOS_PERIODO_ANOS;
 /data/ageAdjustment/frequency;frequency;Período em anos, caso critério de reenquadramento após ou a cada período em anos.;Inteiro;3;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/financialRegimeContractType;financialRegimeContractType;"Listagem de regime financeiro para cada combinação de modalidade/cobertura do produto indicando:
   1. Repartição simples
@@ -192,9 +195,11 @@ NA";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
 1. Dias;
 2. Meses;
 3. Não se aplica.
+4. NA
 ";Texto;;Obrigatório;;"DIAS 
 MESES 
-NAO_APLICA";1;1;"";Não permitido;string;MESES;
+NAO_APLICA 
+NA";1;1;"";Não permitido;string;MESES;
 /data/reclaim/differenciatedPercentage;differenciatedPercentage;Campo aberto (possibilidade de incluir URL);"";1024;Opcional;;;0;1;"";Não permitido;;"https://openinsurance.com.br/aaa’
 Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL
 Exemplo: Cobertura X: a partir de 25 meses = 100%
@@ -202,9 +207,11 @@ Exemplo: Cobertura X: a partir de 25 meses = 100%
 /data/otherGuaranteedValues;otherGuaranteedValues;"1. Saldamento
 2. Benefício Prolongado
 3. Não se aplica
+4. NA
 ";Texto;;Obrigatório;;"SALDAMENTO 
 BENEFICIO_PROLONGADO 
-NAO_APLICA";1;1;"";Não permitido;string;SALDAMENTO;
+NAO_APLICA 
+NA";1;1;"";Não permitido;string;SALDAMENTO;
 /data/contributionPayment;contributionPayment;Pagamento da contribuição.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/contributionPayment/contributionPaymentMethod;contributionPaymentMethod;"Forma de pagamento da contribuição.
  - CARTAO_CREDITO

@@ -980,11 +980,14 @@ components:
         1. IPCA (IBGE);
         2. IGP-M (FGV);
         3. INPC (IBGE).
+        4. Não se aplica
+        5. NA
       enum:
         - IPCA
         - IGP_M
         - INPC
         - NAO_SE_APLICA
+        - NA
       example: IPCA
     RiskPensionReclaim:
       type: object
@@ -1128,6 +1131,7 @@ components:
                 2. A cada período em anos
                 3. Por mudança de faixa etária
                 4. Não aplicável
+                5. NA
             maxLength: 27
             example: APOS_PERIODO_ANOS
             enum:
@@ -1135,6 +1139,7 @@ components:
               - CADA_PERIODO_ANOS
               - MUDANCA_FAIXA_ETARIA
               - NAO_APLICAVEL
+              - NA
         frequency:
           type: integer
           description: 'Período em anos, caso critério de reenquadramento após ou a cada período em anos.'
@@ -1235,15 +1240,17 @@ components:
         - SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
         - OUTROS
         - NAO_HA
+        - NA
       example: SORTEIO
     EnumGracePeriodUnit:
       type: string
-      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>
+      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li><li>NA</li></ol>
       maxLength: 10
       enum:
         - DIAS
         - MESES
         - NAO_APLICA
+        - NA
       example: MESES
     RiskPensionEnumGracePeriodUnit:
       type: string
@@ -1252,10 +1259,12 @@ components:
         1. Dias;
         2. Meses;
         3. Não se aplica.
+        4. NA
       enum:
         - DIAS
         - MESES
         - NAO_APLICA
+        - NA
       example: MESES
     RiskPensionEnumFinancialRegime:
       type: string
@@ -1372,10 +1381,12 @@ components:
         1. Saldamento
         2. Benefício Prolongado
         3. Não se aplica
+        4. NA
       enum:
         - SALDAMENTO
         - BENEFICIO_PROLONGADO
         - NAO_APLICA
+        - NA
       example: SALDAMENTO
     RiskPensionEnumProfitModality:
       type: string
