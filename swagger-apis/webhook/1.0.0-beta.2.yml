@@ -76,9 +76,6 @@ paths:
       responses:
         '202':
           $ref: '#/components/responses/202Webhook'
-      security:
-        - OAuth2ClientCredentials:
-            - payments  
   '/payments/{versionApi}/pix/payments/{paymentId}':
     post:
       tags:
@@ -100,9 +97,6 @@ paths:
       responses:
         '202':
           $ref: '#/components/responses/202Webhook'
-      security:
-        - OAuth2ClientCredentials:
-            - payments  
 components:
   schemas:
     RequestBodyWebhook:
@@ -175,29 +169,6 @@ components:
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
         minLength: 1
         maxLength: 100
-  securitySchemes:
-    OpenId:
-      type: openIdConnect
-      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
-    OAuth2ClientCredentials:
-      type: oauth2
-      description: |
-        Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.  
-        Apenas pagamentos iniciados pela mesma iniciadora de pagamentos podem ser consultados ou cancelados através de modelo client credentials.
-      flows:
-        clientCredentials:
-          tokenUrl: 'https://authserver.example/token'
-          scopes:
-            payments: Escopo necessário para acesso à API Payment Initiation.
-    OAuth2AuthorizationCode:
-      type: oauth2
-      description: Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.
-      flows:
-        authorizationCode:
-          authorizationUrl: 'https://authserver.example/token'
-          tokenUrl: 'https://authserver.example/token'
-          scopes:
-            payments: Escopo necessário para acesso à API Payment Initiation.
   responses:
     202Webhook:
       description: Requisição aceita para processamento posterior.
