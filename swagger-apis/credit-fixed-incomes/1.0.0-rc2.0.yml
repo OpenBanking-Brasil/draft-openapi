@@ -820,7 +820,6 @@ components:
       type: object
       description: |
         Valor do imposto considerando a alíquota vigente na data de referência.
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
         - currency
@@ -873,7 +872,6 @@ components:
       type: object
       description: |
         Valor do imposto considerando a alíquota vigente na data de referência.
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
       required:
         - amount
         - currency
@@ -1190,7 +1188,14 @@ components:
       example: COMPRA
     Type:
       type: string
-      description: 'Tipo de movimentação na visão de investimento (Nos casos de motivo da movimentação  "pagamento de juros", "amortização", "prêmio", "multa" e "mora", fica convencionado que será considerado que o tipo de movimento será saída).'
+      description: |
+        Tipo de movimentação na visão de investimento​:
+
+        ENTRADA: COMPRA, CANCELAMENTO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS​.
+
+        SAIDA: VENDA, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, PREMIO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, MULTA, MORA, OUTROS. ​
+
+        Por exemplo, para movimentação de CANCELAMENTO, tipicamente, será o type contrário ao evento originário. Ou seja, para cancelamento de COMPRA, considera-se type SAIDA; para cancelamento de VENDA, considera-se type ENTRADA.
       enum:
         - ENTRADA
         - SAIDA
