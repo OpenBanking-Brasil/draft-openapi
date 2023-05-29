@@ -1032,7 +1032,14 @@ components:
       additionalProperties: false
     EnumBankFixedIncomeMovementType:
       type: string
-      description: 'Tipo de movimentação na visão de investimento (entrada ou saída) . (Nos casos de motivo de pagamento  "pagamento de juros" e "amortização", fica convencionado que será considerado que o tipo de movimento será saída).'
+      description: |
+        Tipo de movimentação na visão de investimento
+
+        ENTRADA: APLICACAO, CANCELAMENTO,TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA,OUTROS.
+
+        SAIDA: RESGATE, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS.
+
+        Por exemplo, para movimentação de CANCELAMENTO, tipicamente, será o type contrário ao evento originário. Ou seja, para cancelamento de APLICACAO, considera-se type SAIDA; para cancelamento de RESGATE, considera-se typeENTRADA.
       enum:
         - ENTRADA
         - SAIDA
@@ -1245,78 +1252,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseBankFixedIncomesTransactions'
-    BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    Forbidden:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    GatewayTimeout:
-      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    Locked:
-      description: Locked
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    NotAcceptable:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    NotFound:
-      description: O recurso solicitado não existe ou não foi implementado
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    Unauthorized:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    UnprocessableEntity:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    SiteIsOverloaded:
-      description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     BadRequestWithAdditionalProperties:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
