@@ -356,7 +356,7 @@ components:
           description: |
             Nome da corretora interveniente autorizada a operar no mercado de câmbio.
 
-            [Restrição] Campo de envio obrigatório nos casos em que for informado o CNPJ da instituição intermediadora.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'intermediaryInstitutionCnpjNumber' for informado.
           maxLength: 250
           pattern: '[\w\W\s]*'
           example: AGENCIA CORRETORA
@@ -507,14 +507,14 @@ components:
           description: |
             Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           example: '50'
         foreignPartieName:
           type: string
           description: |
             Nome do pagador ou recebedor no exterior.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 80
           pattern: '[\w\W\s]*'
           example: José da Silva
@@ -523,7 +523,7 @@ components:
           description: |
             País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 2
           pattern: '^[A-Z]{2}$'
           example: ZA
@@ -683,14 +683,14 @@ components:
           description: |
             Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           example: '50'
         foreignPartieName:
           type: string
           description: |
             Nome do pagador ou recebedor no exterior.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 80
           pattern: '[\w\W\s]*'
           example: José da Silva
@@ -699,7 +699,7 @@ components:
           description: |
             País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 2
           pattern: '^[A-Z]{2}$'
           example: ZA
@@ -714,13 +714,16 @@ components:
     EnumExchangesEventType:
       type: string
       description: |
-        Para o campo domínio
-        1 - Contratação no Mercado Primário
-        2 - Alteração de Operação Cambial no Mercado Primário
-        3 - Cancelamento de Operação Cambial no Mercado Primário
-        4 - Liquidação de Operação Cambial no Mercado Primário
-        5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário
-        6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário   O evento está relacionado ao tipo de contratação. 
+        Para o campo domínio:
+
+        1 - Contratação no Mercado Primário.  
+        2 - Alteração de Operação Cambial no Mercado Primário.  
+        3 - Cancelamento de Operação Cambial no Mercado Primário.  
+        4 - Liquidação de Operação Cambial no Mercado Primário.  
+        5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+        6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+
+        O evento está relacionado ao tipo de contratação.
       enum:
         - '1'
         - '2'

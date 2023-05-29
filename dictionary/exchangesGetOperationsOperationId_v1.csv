@@ -7,8 +7,8 @@ Campo de envio obrigatório nos casos em que houver instituição intermediadora
 ";Texto;14;Opcional;^\d{14}$;;0;1;"";Não permitido;string;11225860000140;
 /data/intemediaryInstitutionName;intemediaryInstitutionName;"Nome da corretora interveniente autorizada a operar no mercado de câmbio.
 
-[Restrição] Campo de envio obrigatório nos casos em que for informado o CNPJ da instituição intermediadora.
-";Texto;250;Condicional;[\w\W\s]*;;0;1;" Campo de envio obrigatório nos casos em que for informado o CNPJ da instituição intermediadora.
+[Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'intermediaryInstitutionCnpjNumber' for informado.
+";Texto;250;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'intermediaryInstitutionCnpjNumber' for informado.
 ";Não permitido;string;AGENCIA CORRETORA;
 /data/operationNumber;operationNumber;Número do registro da operação no Bacen. Deve ser preenchido no compartilhamento, após registro no Sistema de Câmbio e número disponível na transmissora/detentora.;Texto;12;Opcional;^\d{12}$;;0;1;"";Não permitido;string;393874649456;
 /data/operationType;operationType;Compra ou venda de moeda estrangeira.;Texto;;Obrigatório;;"COMPRA 
@@ -50,16 +50,16 @@ SIMBOLICA";1;1;"";Não permitido;string;CARTA_CREDITO_A_PRAZO;
 /data/operationCategoryCode;operationCategoryCode;Código da natureza fato do fechamento da operação. Deve respeitar os códigos de natureza referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.;Texto;5;Obrigatório;^\d{5}$;;1;1;"";Não permitido;string;90302;
 /data/relationshipCode;relationshipCode;"Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
 
-[Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-";Texto;2;Condicional;^\d{2}$;;0;1;" Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+[Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+";Texto;2;Condicional;^\d{2}$;;0;1;" Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
 ";Não permitido;string;50;
 /data/foreignPartieName;foreignPartieName;"Nome do pagador ou recebedor no exterior.
 
-[Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-";Texto;80;Condicional;[\w\W\s]*;;0;1;" Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+[Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+";Texto;80;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
 ";Não permitido;string;José da Silva;
 /data/foreignPartieCountryCode;foreignPartieCountryCode;"País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
 
-[Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-";Texto;2;Condicional;^[A-Z]{2}$;;0;1;" Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+[Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+";Texto;2;Condicional;^[A-Z]{2}$;;0;1;" Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
 ";Não permitido;string;ZA;

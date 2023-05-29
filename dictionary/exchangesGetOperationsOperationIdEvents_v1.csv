@@ -1,13 +1,16 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/eventSequenceNumber;eventSequenceNumber;Número sequência do registro do evento de câmbio no Bacen.;Texto;12;Obrigatório;^\d{12}$;;1;1;"";Não permitido;string;493874649457;
-/data/eventType;eventType;"Para o campo domínio
-1 - Contratação no Mercado Primário
-2 - Alteração de Operação Cambial no Mercado Primário
-3 - Cancelamento de Operação Cambial no Mercado Primário
-4 - Liquidação de Operação Cambial no Mercado Primário
-5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário
-6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário   O evento está relacionado ao tipo de contratação. 
+/data/eventType;eventType;"Para o campo domínio:
+
+1 - Contratação no Mercado Primário.  
+2 - Alteração de Operação Cambial no Mercado Primário.  
+3 - Cancelamento de Operação Cambial no Mercado Primário.  
+4 - Liquidação de Operação Cambial no Mercado Primário.  
+5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+
+O evento está relacionado ao tipo de contratação.
 ";Texto;;Obrigatório;;"1 
 2 
 3 
@@ -51,16 +54,16 @@ SIMBOLICA";0;1;"";Não permitido;string;CARTA_CREDITO_A_PRAZO;
 /data/operationCategoryCode;operationCategoryCode;Código da natureza fato do fechamento da operação. Deve respeitar os códigos de natureza referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.;Texto;5;Opcional;^\d{5}$;;0;1;"";Não permitido;string;90302;
 /data/relationshipCode;relationshipCode;"Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
 
-[Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-";Texto;2;Condicional;^\d{2}$;;0;1;" Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+[Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+";Texto;2;Condicional;^\d{2}$;;0;1;" Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
 ";Não permitido;string;50;
 /data/foreignPartieName;foreignPartieName;"Nome do pagador ou recebedor no exterior.
 
-[Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-";Texto;80;Condicional;[\w\W\s]*;;0;1;" Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+[Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+";Texto;80;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
 ";Não permitido;string;José da Silva;
 /data/foreignPartieCountryCode;foreignPartieCountryCode;"País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
 
-[Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-";Texto;2;Condicional;^[A-Z]{2}$;;0;1;" Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+[Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+";Texto;2;Condicional;^[A-Z]{2}$;;0;1;" Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
 ";Não permitido;string;ZA;
