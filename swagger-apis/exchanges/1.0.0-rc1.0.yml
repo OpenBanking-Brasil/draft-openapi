@@ -2,16 +2,14 @@
 info:
   title: API Exchanges - Open Finance Brasil
   description: |
-    API de informações de operações de Câmbio Open Finance Brasil – Fase 4.
-    API que retorna informações de operações de Câmbio realizadas nas instituições transmissoras por seus clientes, incluindo dados como 
-    informações da operação contratada, valor da operação em moeda nacional e moeda estrangeira, classificação da operação, forma de entrega, 
-    VET e, quando aplicável, valor a liquidar. 
-
-    Também serão compartilhados os eventos de alteração da operação, caso existam, com as informações modificadas.
-    Não possui segregação entre pessoa natural e pessoa jurídica.
-    Requer consentimento do cliente para todos os endpoints.
-    Devem ser considerados como escopo todas as operações de câmbio de compra e venda de moeda estrangeira, inclusive com adiantamento (ACC/ACE).
-    A exposição se dará por cada operação de câmbio contratada pelo cliente.
+    API de informações de operações de Câmbio Open Finance Brasil – Fase 4. 
+    API que retorna informações de operações de Câmbio realizadas nas instituições transmissoras por seus clientes, incluindo dados como informações da operação contratada, valor da operação em moeda nacional e moeda estrangeira, classificação da operação, forma de entrega, VET e, quando aplicável, valor a liquidar. 
+    Também serão compartilhados os eventos de alteração da operação, caso existam, com as informações modificadas. 
+    Não possui segregação entre pessoa natural e pessoa jurídica. 
+    Requer consentimento do cliente para todos os endpoints. 
+    __São escopo de compartilhamento as operações de compra e venda de moeda estrangeira de liquidação pronta ou futura, inclusive com adiantamento. 
+    Operações de câmbio anuladas não são escopo de exposição, bem como eventos de vinculação de operações. 
+    A exposição se dará por cada operação de câmbio contratada pelo cliente.__
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
