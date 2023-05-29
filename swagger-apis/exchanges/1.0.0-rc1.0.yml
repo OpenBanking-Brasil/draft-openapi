@@ -146,8 +146,6 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pagination-key'
-        - $ref: '#/components/parameters/fromTransactionDate'
-        - $ref: '#/components/parameters/toTransactionDate'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseEvents'
@@ -492,7 +490,7 @@ components:
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). Campos de envio obrigatório no caso de operações de câmbio com liquidação futura.
           pattern: '^\d{1}\.\d{1,6}$'
           maxLength: 8
-          minLength: 4
+          minLength: 3
           example: '0.12'
         deliveryForeignCurrency:
           $ref: '#/components/schemas/EnumExchangesDeliveryForeignCurrency'
@@ -668,7 +666,7 @@ components:
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). Campos de envio obrigatório no caso de operações de câmbio com liquidação futura.
           pattern: '^\d{1}\.\d{1,6}$'
           maxLength: 8
-          minLength: 4
+          minLength: 3
           example: '0.12'
         deliveryForeignCurrency:
           $ref: '#/components/schemas/EnumExchangesDeliveryForeignCurrency'
@@ -894,32 +892,6 @@ components:
         type: string
         maxLength: 2048
         pattern: '[\w\W\s]*'
-    fromTransactionDate:
-      name: fromTransactionDate
-      description: |
-        Data inicial de filtragem.
-
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
-      required: false
-      in: query
-      schema:
-        type: string
-        maxLength: 10
-        format: date
-        example: '2021-05-21'
-    toTransactionDate:
-      name: toTransactionDate
-      description: |
-        Data final de filtragem.
-
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
-      required: false
-      in: query
-      schema:
-        type: string
-        maxLength: 10
-        format: date
-        example: '2021-05-21'
   securitySchemes:
     OAuth2AuthorizationCode:
       type: oauth2
