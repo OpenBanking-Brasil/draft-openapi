@@ -2,16 +2,14 @@
 info:
   title: API Exchanges - Open Finance Brasil
   description: |
-    API de informações de operações de Câmbio Open Finance Brasil – Fase 4.
-    API que retorna informações de operações de Câmbio realizadas nas instituições transmissoras por seus clientes, incluindo dados como 
-    informações da operação contratada, valor da operação em moeda nacional e moeda estrangeira, classificação da operação, forma de entrega, 
-    VET e, quando aplicável, valor a liquidar. 
-
-    Também serão compartilhados os eventos de alteração da operação, caso existam, com as informações modificadas.
-    Não possui segregação entre pessoa natural e pessoa jurídica.
-    Requer consentimento do cliente para todos os endpoints.
-    Devem ser considerados como escopo todas as operações de câmbio de compra e venda de moeda estrangeira, inclusive com adiantamento (ACC/ACE).
-    A exposição se dará por cada operação de câmbio contratada pelo cliente.
+    API de informações de operações de Câmbio Open Finance Brasil – Fase 4. 
+    API que retorna informações de operações de Câmbio realizadas nas instituições transmissoras por seus clientes, incluindo dados como informações da operação contratada, valor da operação em moeda nacional e moeda estrangeira, classificação da operação, forma de entrega, VET e, quando aplicável, valor a liquidar. 
+    Também serão compartilhados os eventos de alteração da operação, caso existam, com as informações modificadas. 
+    Não possui segregação entre pessoa natural e pessoa jurídica. 
+    Requer consentimento do cliente para todos os endpoints. 
+    __São escopo de compartilhamento as operações de compra e venda de moeda estrangeira de liquidação pronta ou futura, inclusive com adiantamento. 
+    Operações de câmbio anuladas não são escopo de exposição, bem como eventos de vinculação de operações. 
+    A exposição se dará por cada operação de câmbio contratada pelo cliente.__
   version: 1.0.0-rc1.0
   license:
     name: Apache 2.0
@@ -148,8 +146,6 @@ paths:
         - $ref: '#/components/parameters/page'
         - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/pagination-key'
-        - $ref: '#/components/parameters/fromTransactionDate'
-        - $ref: '#/components/parameters/toTransactionDate'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseEvents'
@@ -360,7 +356,7 @@ components:
           description: |
             Nome da corretora interveniente autorizada a operar no mercado de câmbio.
 
-            [Restrição] Campo de envio obrigatório nos casos em que for informado o CNPJ da instituição intermediadora.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'intermediaryInstitutionCnpjNumber' for informado.
           maxLength: 250
           pattern: '[\w\W\s]*'
           example: AGENCIA CORRETORA
@@ -494,7 +490,7 @@ components:
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). Campos de envio obrigatório no caso de operações de câmbio com liquidação futura.
           pattern: '^\d{1}\.\d{1,6}$'
           maxLength: 8
-          minLength: 4
+          minLength: 3
           example: '0.12'
         deliveryForeignCurrency:
           $ref: '#/components/schemas/EnumExchangesDeliveryForeignCurrency'
@@ -511,14 +507,14 @@ components:
           description: |
             Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           example: '50'
         foreignPartieName:
           type: string
           description: |
             Nome do pagador ou recebedor no exterior.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 80
           pattern: '[\w\W\s]*'
           example: José da Silva
@@ -527,7 +523,7 @@ components:
           description: |
             País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 2
           pattern: '^[A-Z]{2}$'
           example: ZA
@@ -670,7 +666,7 @@ components:
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). Campos de envio obrigatório no caso de operações de câmbio com liquidação futura.
           pattern: '^\d{1}\.\d{1,6}$'
           maxLength: 8
-          minLength: 4
+          minLength: 3
           example: '0.12'
         deliveryForeignCurrency:
           $ref: '#/components/schemas/EnumExchangesDeliveryForeignCurrency'
@@ -687,14 +683,14 @@ components:
           description: |
             Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           example: '50'
         foreignPartieName:
           type: string
           description: |
             Nome do pagador ou recebedor no exterior.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 80
           pattern: '[\w\W\s]*'
           example: José da Silva
@@ -703,7 +699,7 @@ components:
           description: |
             País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
 
-            [Restrição] Campo de envio opcional nos casos em que o campo deliveryForeignCurrency for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
+            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
           maxLength: 2
           pattern: '^[A-Z]{2}$'
           example: ZA
@@ -718,13 +714,16 @@ components:
     EnumExchangesEventType:
       type: string
       description: |
-        Para o campo domínio
-        1 - Contratação no Mercado Primário
-        2 - Alteração de Operação Cambial no Mercado Primário
-        3 - Cancelamento de Operação Cambial no Mercado Primário
-        4 - Liquidação de Operação Cambial no Mercado Primário
-        5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário
-        6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário   O evento está relacionado ao tipo de contratação. 
+        Para o campo domínio:
+
+        1 - Contratação no Mercado Primário.  
+        2 - Alteração de Operação Cambial no Mercado Primário.  
+        3 - Cancelamento de Operação Cambial no Mercado Primário.  
+        4 - Liquidação de Operação Cambial no Mercado Primário.  
+        5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+        6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+
+        O evento está relacionado ao tipo de contratação.
       enum:
         - '1'
         - '2'
@@ -896,32 +895,6 @@ components:
         type: string
         maxLength: 2048
         pattern: '[\w\W\s]*'
-    fromTransactionDate:
-      name: fromTransactionDate
-      description: |
-        Data inicial de filtragem.
-
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
-      required: false
-      in: query
-      schema:
-        type: string
-        maxLength: 10
-        format: date
-        example: '2021-05-21'
-    toTransactionDate:
-      name: toTransactionDate
-      description: |
-        Data final de filtragem.
-
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
-      required: false
-      in: query
-      schema:
-        type: string
-        maxLength: 10
-        format: date
-        example: '2021-05-21'
   securitySchemes:
     OAuth2AuthorizationCode:
       type: oauth2
