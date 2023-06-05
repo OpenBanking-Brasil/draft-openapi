@@ -6,14 +6,10 @@
 /data/investmentType;investmentType;Especificação do ativo em questão (Debêntures, CRI ou CRA).;Texto;;Obrigatório;;"DEBENTURES 
 CRI 
 CRA";1;1;"";Não permitido;string;CRI;
-/data/debtorCnpjNumber;debtorCnpjNumber;"CNPJ do devedor (condicional para CRI e CRA)  
-[Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a ""CRI"" ou ""CRA"".
-";Texto;14;Condicional;^\d{14}$;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a ""CRI"" ou ""CRA"".
-";Não permitido;string;11225860000140;
-/data/debtorName;debtorName;"Nome do devedor (condicional para CRI e CRA)  
-[Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a ""CRI"" ou ""CRA"".
-";Texto;70;Condicional;[\w\W\s]*;;0;1;" Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a ""CRI"" ou ""CRA"".
-";Não permitido;string;Roberto Marino;
+/data/debtorCnpjNumber;debtorCnpjNumber;"CNPJ do devedor. Caso a transmissora possua a informação para os produtos CRI e CRA, o envio deste campo é obrigatório.
+";Texto;14;Opcional;^\d{14}$;;0;1;"";Não permitido;string;11225860000140;
+/data/debtorName;debtorName;"Nome do devedor. Caso a transmissora possua a informação para os produtos CRI e CRA, o envio deste campo é obrigatório.
+";Texto;70;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Roberto Marino;
 /data/taxExemptProduct;taxExemptProduct;Indicador de um produto incentivado;Texto;;Obrigatório;;"SIM 
 NAO";1;1;"";Não permitido;string;SIM;
 /data/remuneration;remuneration;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
