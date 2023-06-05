@@ -563,7 +563,9 @@ components:
         isinCode:
           type: string
           description: |
-            Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional): código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.
+            Código ISIN é um código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166. Caso a transmissora possua a informação o envio deste campo é obrigatório.
+
+            [Restrição] Deve ser preenchido nos casos em que o 'clearingCode' não seja preenchido.
           maxLength: 12
           pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
           example: BRCST4CTF001
@@ -617,7 +619,10 @@ components:
           example: Diária
         clearingCode:
           type: string
-          description: Código de registro do ativo na clearing
+          description: |
+            Código de registro do ativo na Clearing. Caso a transmissora possua a informação o envio deste campo é obrigatório.
+
+            [Restrição] Deve ser preenchido nos casos em que o 'isinCode' não seja preenchido.
           maxLength: 30
           pattern: '[\w\W-]*'
           example: CDB421GPXXX
