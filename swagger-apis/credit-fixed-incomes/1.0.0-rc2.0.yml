@@ -572,16 +572,14 @@ components:
         debtorCnpjNumber:
           type: string
           description: |
-            CNPJ do devedor (condicional para CRI e CRA)  
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
+            CNPJ do devedor. Caso a transmissora possua a informação para os produtos CRI e CRA, o envio deste campo é obrigatório.
           maxLength: 14
           pattern: '^\d{14}$'
           example: '11225860000140'
         debtorName:
           type: string
           description: |
-            Nome do devedor (condicional para CRI e CRA)  
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
+            Nome do devedor. Caso a transmissora possua a informação para os produtos CRI e CRA, o envio deste campo é obrigatório.
           pattern: '[\w\W\s]*'
           maxLength: 70
           example: Roberto Marino
