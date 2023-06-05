@@ -529,8 +529,8 @@ components:
           type: string
           format: double
           description: Quatidade total do ativo na data de referência.
-          pattern: '^\d{1,15}\.\d{2,8}$'
-          maxLength: 24
+          pattern: '^-?\d{1,15}\.\d{2,8}$'
+          maxLength: 25
           example: '1000.00000004'
         closingPrice:
           $ref: '#/components/schemas/VariableIncomesBalancesClosingPrice'
@@ -1210,7 +1210,7 @@ components:
               example: BRL
         netValue:
           type: object
-          description: 'Valor bruto da nota de negociação após despesas com taxa de corretagem, taxa de liquidação, taxa de registro, taxa A.N.A, emolumentos, taxa de custódia, impostos e IRRF.'
+          description: Valor líquido da nota de negociação após despesas com taxa de corretagem, taxa de liquidação, taxa de registro, taxa A.N.A, emolumentos, taxa de custódia, impostos e IRRF.
           required:
             - amount
             - currency
