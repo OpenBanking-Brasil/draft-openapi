@@ -49,7 +49,9 @@ tags:
   - name: Transactions Current
     description: 'Obtém as movimentações recentes da operação de Renda Variável identificada por investmentId. O período a ser considerado para apresentação de movimentações será de até 7 dias - 7 dias anteriores da consulta, incluindo o dia da consulta (D-6).'
   - name: Broker Note Details
-    description: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa.
+    description: |
+      Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa.
+      O brokerNoteId é enviado nos movimentos de compra ou venda de ativos e deve ser passada como parâmetro de entrada no endpoint “Nota de Negociação”.Como conteúdo do campo brokerNoteId é esperado que a transmissora gere um identificar único, imutável, para cada número (natural) de nota de negociação.
 paths:
   /investments:
     get:
@@ -307,9 +309,13 @@ paths:
     get:
       tags:
         - Broker Note Details
-      summary: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
+      summary: |
+        Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa.
+        O brokerNoteId é enviado nos movimentos de compra ou venda de ativos e deve ser passada como parâmetro de entrada no endpoint “Nota de Negociação”.Como conteúdo do campo brokerNoteId é esperado que a transmissora gere um identificar único, imutável, para cada número (natural) de nota de negociação.
       operationId: variableIncomesGetInvestmentsInvestmentIdBrokerNotesBrokerNoteId
-      description: Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa
+      description: |
+        Obtém as informações da nota de negociação identificado nas movimentações de compra e venda de ativos em bolsa.
+        O brokerNoteId é enviado nos movimentos de compra ou venda de ativos e deve ser passada como parâmetro de entrada no endpoint “Nota de Negociação”.Como conteúdo do campo brokerNoteId é esperado que a transmissora gere um identificar único, imutável, para cada número (natural) de nota de negociação.
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/BrokerNoteId'
