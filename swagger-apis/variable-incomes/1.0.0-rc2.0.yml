@@ -4,7 +4,11 @@ info:
   description: |
     API de informações de operações de Renda Variável Open Finance Brasil – Fase 4. 
     API que retorna informações de operações de investimento do tipo Renda Variável mantidas nas instituições transmissoras por seus clientes, incluindo dados como informações do produto, quantidade, saldos em posição do cliente, movimentações financeiras e detalhes da nota de negociação. 
-    Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. A granularidade de exposição de operações de renda variável se dá por cada ativo (ticker) da carteira do cliente. Segue abaixo tabela com o escopo de produtos a ser considerado para compartilhamento:
+    Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. 
+    A granularidade de exposição de operações de renda variável se dá por cada ativo (ticker) da carteira do cliente. 
+    Ações escriturais não fazem parte do escopo do Open Finance Brasil. 
+    Operações de day trade devem ser incluídas nos endpoints. 
+    Segue abaixo tabela com o escopo de produtos a ser considerado para compartilhamento:
      ```
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        | CLASSE DE ATIVOS     | PRODUTO                       | SUBPRODUTO           | DENOMINAÇÃO                       |
