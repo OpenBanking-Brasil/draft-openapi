@@ -538,7 +538,6 @@ components:
         - transactionQuotaQuantity
         - transactionValue
         - transactionGrossValue
-        - transactionNetValue
       properties:
         transactionId:
           type: string
@@ -618,7 +617,8 @@ components:
         transactionGrossValue:
           type: object
           description: |
-            Valor da movimentação que se refere a quantidade da cota x valor da cota da movimentação.
+            Valor da movimentação que se refere a quantidade da cota x valor da cota da movimentação.   
+            Nos casos em que não houver movimentação de cotas, por exemplo: amortização, não considerar a regra descrita.
           required:
             - amount
             - currency
@@ -707,7 +707,9 @@ components:
               example: BRL
         transactionNetValue:
           type: object
-          description: Valor líquido da movimentação posterior à dedução de impostos (IOF e IR) e taxa de saída.
+          description: |
+            Valor líquido da movimentação posterior à dedução de impostos (IOF e IR) e taxa de saída.   
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
           required:
             - amount
             - currency
@@ -738,7 +740,6 @@ components:
         - transactionQuotaQuantity
         - transactionValue
         - transactionGrossValue
-        - transactionNetValue
       properties:
         transactionId:
           type: string
@@ -818,7 +819,8 @@ components:
         transactionGrossValue:
           type: object
           description: |
-            Valor da movimentação que se refere a quantidade da cota x valor da cota da movimentação.
+            Valor da movimentação que se refere a quantidade da cota x valor da cota da movimentação.   
+            Nos casos em que não houver movimentação de cotas, por exemplo: amortização, não considerar a regra descrita.
           required:
             - amount
             - currency
@@ -907,7 +909,9 @@ components:
               example: BRL
         transactionNetValue:
           type: object
-          description: Valor líquido da movimentação posterior à dedução de impostos (IOF e IR) e taxa de saída.
+          description: |
+            Valor líquido da movimentação posterior à dedução de impostos (IOF e IR) e taxa de saída.   
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'type' for preenchido com o valor 'SAIDA'.
           required:
             - amount
             - currency
@@ -1122,9 +1126,9 @@ components:
       description: |
         Tipo de movimentação (Entrada ou Saída).
 
-        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS,  OUTROS.
 
-        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, OUTROS.
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
       enum:
         - ENTRADA
         - SAIDA
@@ -1147,9 +1151,9 @@ components:
       description: |
         Tipo de movimentação (Entrada ou Saída).
 
-        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
+        ENTRADA: APLICACAO, TRANSFERENCIA_COTAS,  OUTROS.
 
-        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, OUTROS.
+        SAIDA: RESGATE, COME_COTAS, TRANSFERENCIA_COTAS, AMORTIZACAO, OUTROS.
       enum:
         - ENTRADA
         - SAIDA
