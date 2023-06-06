@@ -2721,21 +2721,26 @@ components:
         self:
           type: string
           description: URL da página atualmente requisitada
-          example: 'https://api.banco.com.br/open-banking/products-services/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
         first:
           type: string
           description: URL da primeira página de registros
-          example: 'https://api.banco.com.br/open-banking/products-services/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
         prev:
           type: string
           description: URL da página anterior de registros
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
           description: URL da próxima página de registros
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
           description: URL da última página de registros
-          example: 'https://api.banco.com.br/open-banking/products-services/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
     Meta:
       type: object
       properties:
