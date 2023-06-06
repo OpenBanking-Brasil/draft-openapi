@@ -1,6 +1,13 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
-/data/type;type;"Tipo de movimentação na visão de investimento (Nos casos de motivo da movimentação  ""pagamento de juros"", ""amortização"", ""prêmio"", ""multa"" e ""mora"", fica convencionado que será considerado que o tipo de movimento será saída).";Texto;;Obrigatório;;"ENTRADA 
+/data/type;type;"Tipo de movimentação na visão de investimento​:
+
+ENTRADA: COMPRA, CANCELAMENTO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS​.
+
+SAIDA: VENDA, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, PREMIO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, MULTA, MORA, OUTROS. ​
+
+Por exemplo, para movimentação de CANCELAMENTO, tipicamente, será o type contrário ao evento originário. Ou seja, para cancelamento de COMPRA, considera-se type SAIDA; para cancelamento de VENDA, considera-se type ENTRADA.
+";Texto;;Obrigatório;;"ENTRADA 
 SAIDA";1;1;"";Não permitido;string;ENTRADA;
 /data/transactionType;transactionType;Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, prêmio, transferência de titularidade, transferência de custódia, multa, mora e outros;Texto;;Obrigatório;;"COMPRA 
 VENDA 
