@@ -624,7 +624,6 @@ components:
           type: string
           maxLength: 2000
           pattern: \w*\W*
-          maxItems: 1
           description: |
             Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente.
             Restrição: De preenchimento obrigatório para CONTA_POUPANCA.
@@ -633,7 +632,6 @@ components:
           type: string
           maxLength: 2000
           pattern: \w*\W*
-          maxItems: 1
           description: Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga.
           example: '40% Rendimento a.m.'
     ResponseBusinessAccounts:
@@ -1161,7 +1159,6 @@ components:
         - 2_FAIXA
         - 3_FAIXA
         - 4_FAIXA
-      maxItems: 1
       description: |
         Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
       example: 1_FAIXA
