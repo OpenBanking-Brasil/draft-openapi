@@ -23,8 +23,8 @@ paths:
       description: Obtém dados das contas
       operationId: getPersonalAccounts
       parameters:
-        - $ref: "#/components/parameters/page"
-        - $ref: "#/components/parameters/pageSize"
+        - $ref: "#/components/parameters/PersonalAccountsPage"
+        - $ref: "#/components/parameters/PersonalAccountsPageSize"
       responses:
         '200':
           description: Dados sobre contas pessoa natural obtidos com sucesso.
@@ -2760,6 +2760,26 @@ components:
       type: apiKey
       in: query
   parameters:
+    PersonalAccountsPage:
+      name: page
+      in: query
+      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      schema:
+        type: integer
+        format: int32
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+    PersonalAccountsPageSize:
+      name: page-size
+      in: query
+      description: Quantidade total de registros por páginas.
+      schema:
+        type: integer
+        format: int32
+        default: 25
+        minimum: 1
+        maximum: 1000
     page:
       name: page
       in: query
