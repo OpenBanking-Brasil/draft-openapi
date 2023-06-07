@@ -42,7 +42,7 @@ paths:
           application/jwt:
             schema:
               $ref: '#/components/schemas/RequestBodyWebhook'
-        description: Payload para criação do consentimento para iniciação do pagamento.
+        description: Payload enviado para notificar a alteração no estado do consentimento.
         required: true
       responses:
         '202':
@@ -63,7 +63,7 @@ paths:
           application/jwt:
             schema:
               $ref: '#/components/schemas/RequestBodyWebhook'
-        description: Payload para criação do consentimento para iniciação do pagamento.
+        description: Payload enviado para notificar a alteração no estado do pagamento.
         required: true
       responses:
         '202':
