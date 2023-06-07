@@ -331,8 +331,6 @@ components:
             - financialTransactionTax
             - blockedBalance
             - purchaseUnitPrice
-            - fine
-            - latePayment
           properties:
             referenceDateTime:
               $ref: '#/components/schemas/ReferenceDateTime'
@@ -563,7 +561,9 @@ components:
         isinCode:
           type: string
           description: |
-            Código ISIN da emissão, Código ISIN do produto, Código da emissora (campo opcional): código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166.
+            Código ISIN é um código universal que identifica cada valor mobiliário ou instrumento financeiro, conforme Norma ISO 6166. Caso a transmissora possua a informação o envio deste campo é obrigatório.
+
+            [Restrição] Deve ser preenchido nos casos em que o 'clearingCode' não seja preenchido.
           maxLength: 12
           pattern: '^[A-Z]{2}([A-Z0-9]){9}\d{1}$'
           example: BRCST4CTF001
@@ -572,16 +572,14 @@ components:
         debtorCnpjNumber:
           type: string
           description: |
-            CNPJ do devedor (condicional para CRI e CRA)  
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
+            CNPJ do devedor. Caso a transmissora possua a informação para os produtos CRI e CRA, o envio deste campo é obrigatório.
           maxLength: 14
           pattern: '^\d{14}$'
           example: '11225860000140'
         debtorName:
           type: string
           description: |
-            Nome do devedor (condicional para CRI e CRA)  
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'investmentType' for igual a "CRI" ou "CRA".
+            Nome do devedor. Caso a transmissora possua a informação para os produtos CRI e CRA, o envio deste campo é obrigatório.
           pattern: '[\w\W\s]*'
           maxLength: 70
           example: Roberto Marino
@@ -619,7 +617,10 @@ components:
           example: Diária
         clearingCode:
           type: string
-          description: Código de registro do ativo na clearing
+          description: |
+            Código de registro do ativo na Clearing. Caso a transmissora possua a informação o envio deste campo é obrigatório.
+
+            [Restrição] Deve ser preenchido nos casos em que o 'isinCode' não seja preenchido.
           maxLength: 30
           pattern: '[\w\W-]*'
           example: CDB421GPXXX
@@ -819,8 +820,7 @@ components:
     FinancialTransactionTax:
       type: object
       description: |
-        Valor do imposto considerando a alíquota vigente na data de referência.
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
+        Valor do imposto (IOF) provisionado considerando a alíquota vigente na data de referência.
       required:
         - amount
         - currency
@@ -837,7 +837,9 @@ components:
           $ref: '#/components/schemas/Currency'
     Fine:
       type: object
-      description: valor de multa devido ao atraso do pagamento acordado em contrato
+      description: |
+        Valor de multa devido ao atraso do pagamento acordado em contrato.       
+        Caso a transmissora possua a informação, o envio deste campo é obrigatório.
       required:
         - amount
         - currency
@@ -872,8 +874,7 @@ components:
     IncomeTax:
       type: object
       description: |
-        Valor do imposto considerando a alíquota vigente na data de referência.
-        [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'tipo da movimentação' for preenchido com o valor 'SAIDA'.
+        Valor do imposto provisionado considerando a alíquota vigente na data de referência.
       required:
         - amount
         - currency
@@ -916,7 +917,9 @@ components:
           example: BRL
     LatePayment:
       type: object
-      description: valor de mora devido ao atraso do pagamento acordado em contrato
+      description: |
+        Valor de mora devido ao atraso do pagamento acordado em contrato.   
+        Caso a transmissora possua a informação, o envio deste campo é obrigatório.
       required:
         - amount
         - currency
@@ -1190,7 +1193,14 @@ components:
       example: COMPRA
     Type:
       type: string
-      description: 'Tipo de movimentação na visão de investimento (Nos casos de motivo da movimentação  "pagamento de juros", "amortização", "prêmio", "multa" e "mora", fica convencionado que será considerado que o tipo de movimento será saída).'
+      description: |
+        Tipo de movimentação na visão de investimento​:
+
+        ENTRADA: COMPRA, CANCELAMENTO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, OUTROS​.
+
+        SAIDA: VENDA, CANCELAMENTO, VENCIMENTO, PAGAMENTO_JUROS, AMORTIZACAO, PREMIO, TRANSFERENCIA_TITULARIDADE, TRANSFERENCIA_CUSTODIA, MULTA, MORA, OUTROS. ​
+
+        Por exemplo, para movimentação de CANCELAMENTO, tipicamente, será o type contrário ao evento originário. Ou seja, para cancelamento de COMPRA, considera-se type SAIDA; para cancelamento de VENDA, considera-se type ENTRADA.
       enum:
         - ENTRADA
         - SAIDA
