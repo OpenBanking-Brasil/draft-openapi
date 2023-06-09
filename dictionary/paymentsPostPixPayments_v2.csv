@@ -78,25 +78,23 @@ SCHD";1;1;"";Não permitido;string;PDNG;
 [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).";Objeto;;Condicional;;;0;1; Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).;Não permitido;object;;
 /data/rejectionReason/code;code;"Define o código da razão pela qual o pagamento foi rejeitado
 
-SALDO_INSUFICIENTE
+- SALDO_INSUFICIENTE - A conta selecionada não possui saldo suficiente para realizar o pagamento.
 
-VALOR_ACIMA_LIMITE
+- VALOR_ACIMA_LIMITE - O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
 
-VALOR_INVALIDO
+- VALOR_INVALIDO - O valor enviado não é válido para o QR Code informado.
 
-COBRANCA_INVALIDA
+- COBRANCA_INVALIDA - Validação de expiração, validação de vencimento ou Status Válido.
 
-NAO_INFORMADO
+- NAO_INFORMADO - Não reportado/identificado pela instituição detentora de conta.
 
-PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+- PAGAMENTO_DIVERGENTE_CONSENTIMENTO - Dados do pagamento divergentes dos dados do consentimento.
 
-DETALHE_PAGAMENTO_INVALIDO
+- DETALHE_PAGAMENTO_INVALIDO - Parâmetro [nome_campo] não obedecer às regras de negócio.
 
-PAGAMENTO_RECUSADO_DETENTORA
+- PAGAMENTO_RECUSADO_DETENTORA - [Descrição do motivo de recusa].
 
-PAGAMENTO_RECUSADO_SPI
-
-FALHA_INFRAESTRUTURA
+- PAGAMENTO_RECUSADO_SPI - [Código de erro conforme tabela de domínios reason PACS.002].
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
 VALOR_ACIMA_LIMITE 
 VALOR_INVALIDO 
