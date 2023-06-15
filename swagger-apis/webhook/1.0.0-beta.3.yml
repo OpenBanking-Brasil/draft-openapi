@@ -39,7 +39,7 @@ paths:
         - $ref: '#/components/parameters/xWebhookInteractionId'
       requestBody:
         content:
-          application/jwt:
+          application/json:
             schema:
               $ref: '#/components/schemas/RequestBodyWebhook'
         description: Payload enviado para notificar a alteração no estado do consentimento.
@@ -60,7 +60,7 @@ paths:
         - $ref: '#/components/parameters/xWebhookInteractionId'
       requestBody:
         content:
-          application/jwt:
+          application/json:
             schema:
               $ref: '#/components/schemas/RequestBodyWebhook'
         description: Payload enviado para notificar a alteração no estado do pagamento.
