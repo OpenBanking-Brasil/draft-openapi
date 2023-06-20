@@ -2445,13 +2445,13 @@ components:
           schema:
             $ref: '#/components/schemas/422ResponseErrorCreatePixPayment'
           examples:
-            Saldo insuficiente:
-              summary: Saldo insuficiente
+            Pagamento não permite cancelamento:
+              summary: Pagamento não permite cancelamento
               value:
                 errors:
-                  - code: SALDO_INSUFICIENTE
-                    title: Saldo insuficiente.
-                    detail: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                  - code: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                    title: Pagamento não permite cancelamento
+                    detail: Pagamento não permite cancelamento
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
       headers:
