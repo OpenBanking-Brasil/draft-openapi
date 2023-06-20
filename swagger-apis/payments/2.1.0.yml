@@ -164,7 +164,7 @@ paths:
         '201':
           $ref: '#/components/responses/201PaymentsConsentsConsentCreated'
         '400':
-          $ref: '#/components/responses/BadRequest'
+          $ref: '#/components/responses/BadRequestPayments'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -263,7 +263,7 @@ paths:
         '201':
           $ref: '#/components/responses/201PaymentsInitiationPixPaymentCreated'
         '400':
-          $ref: '#/components/responses/BadRequest'
+          $ref: '#/components/responses/BadRequestPixPayments'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -277,7 +277,7 @@ paths:
         '415':
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityPixPayments'
+          $ref: '#/components/responses/UnprocessableEntityPixPayment'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -2303,6 +2303,18 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
+    BadRequestPayments:
+      description: 'Seguir as orientações presentes na descrição da API, subitem 1.2.3'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    BadRequestPixPayments:
+      description: 'Seguir as orientações presentes na descrição da API, subitem 2.1.3.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
           description: |
@@ -2394,8 +2406,24 @@ components:
             description: |
               Cabeçalho que indica o tempo (em segundos) que o cliente deverá aguardar para realizar uma nova tentativa de chamada. Este cabeçalho deverá estar presente quando o código HTTP de retorno for 429 Too many requests.
             type: integer
+    UnprocessableEntityPixPayment:
+      description: 'Seguir as orientações presentes na descrição da API, itens 2.2 e 2.3 e seus subitens.'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/422ResponseErrorCreatePixPayment'
+          examples:
+            Saldo insuficiente:
+              summary: Saldo insuficiente
+              value:
+                errors:
+                  - code: SALDO_INSUFICIENTE
+                    title: Saldo insuficiente.
+                    detail: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                meta:
+                  requestDateTime: '2021-05-21T08:30:00Z'
     UnprocessableEntityConsents:
-      description: 'A solicitação foi bem formada, mas não pôde ser processada devido à lógica de negócios específica da solicitação.'
+      description: 'Seguir as orientações presentes na descrição da API, item 1.3 e seus subitens.'
       content:
         application/jwt:
           schema:
@@ -2417,7 +2445,7 @@ components:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
     UnprocessableEntityPixPayments:
-      description: 'A solicitação foi bem formada, mas não pôde ser processada devido à lógica de negócios específica da solicitação.'
+      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
         application/jwt:
           schema:
