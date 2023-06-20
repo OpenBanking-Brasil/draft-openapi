@@ -472,7 +472,7 @@ components:
                   • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
         meta:
           $ref: '#/components/schemas/Meta'
-    422ResponseErrorCreatePixPayment:
+    422ResponseErrorCreatePixPayments:
       type: object
       required:
         - errors
@@ -568,6 +568,44 @@ components:
                   • PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002].
 
                   • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+        meta:
+          $ref: '#/components/schemas/Meta'
+    422ResponseErrorCreatePixPayment:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 9
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                $ref: '#/components/schemas/EnumErrorsCreatePixPayment'
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Saldo insuficiente.
+                description: |
+                  Título específico do erro reportado, de acordo com o código enviado:
+
+                  • PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                description: |
+                  Descrição específica do erro de acordo com o código reportado:
+
+                  • PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
         meta:
           $ref: '#/components/schemas/Meta'
     BusinessEntity:
@@ -963,6 +1001,15 @@ components:
         AUTHORISED - Autorizado   
         REJECTED - Rejeitado  
         CONSUMED - Consumido 
+    EnumErrorsCreatePixPayment:
+      type: string
+      enum:
+        - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+      example: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+      description: |
+        Códigos de erros previstos na criação da iniciação de pagamento:
+
+        • PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
     EnumErrorsCreatePayment:
       type: string
       enum:
@@ -2411,7 +2458,7 @@ components:
       content:
         application/jwt:
           schema:
-            $ref: '#/components/schemas/422ResponseErrorCreatePixPayment'
+            $ref: '#/components/schemas/422ResponseErrorCreatePixPayments'
           examples:
             Saldo insuficiente:
               summary: Saldo insuficiente
@@ -2455,9 +2502,9 @@ components:
               summary: Saldo insuficiente
               value:
                 errors:
-                  - code: SALDO_INSUFICIENTE
-                    title: Saldo insuficiente.
-                    detail: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                  - code: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                    title: Pagamento não permite cancelamento
+                    detail: Pagamento não permite cancelamento
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
       headers:
