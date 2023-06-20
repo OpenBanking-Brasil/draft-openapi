@@ -475,13 +475,12 @@ components:
     ResponseVariableIncomesProductIdentificationData:
       type: object
       required:
-        - issuerInstitutionCnpjNumber
         - isinCode
         - ticker
       properties:
         issuerInstitutionCnpjNumber:
           type: string
-          description: CNPJ da instituição emissora.
+          description: CNPJ da instituição emissora. Caso a transmissora possua a informação o envio deste campo é obrigatório.
           maxLength: 14
           pattern: '^\d{14}$'
           example: '11225860000140'
