@@ -467,6 +467,7 @@ components:
           example: Organização A
         companies:
           type: array
+          maxItems: 20
           description: 'Companies traz uma lista de todas as instituições da Marca'
           items:
             $ref: '#/components/schemas/PersonalAccountCompany'
@@ -500,8 +501,9 @@ components:
         serviceBundles:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceBundle'
+            $ref: '#/components/schemas/PersonalAccountServiceBundle'
           minItems: 1
+          maxItems: 200
           description: Lista dos Pacotes de serviços
         openingClosingChannels:
           type: array
@@ -547,6 +549,7 @@ components:
           items:
             $ref: '#/components/schemas/AccountOtherService'
           minItems: 1
+          maxItems: 100
           description: Lista das Tarifas cobradas sobre outros Serviços, que não prioritários
     AccountPriorityService:
       type: object
@@ -760,6 +763,39 @@ components:
           items:
             $ref: '#/components/schemas/ServiceBundleServiceDetail'
           minItems: 1
+          description: Lista dos serviços que compõe o pacote de serviços
+        prices:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlyPrice"
+          minItems: 4
+          maxItems: 4
+          description: Lista distribuição preços tarifas de serviços
+        minimum:
+          $ref:  "#/components/schemas/MinimumPrice"
+        maximum:
+          $ref:  "#/components/schemas/MaximumPrice"
+    PersonalAccountServiceBundle:
+      type: object
+      required:
+        - name
+        - services
+        - prices
+        - minimum
+        - maximum
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: '[\w\W\s]*'
+          description: Nome do Pacote de Serviços dado pela instituição.
+          example: Conta de depósitos à vista Movimentação com cartão (sem cheque)
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceBundleServiceDetail'
+          minItems: 1
+          maxItems: 100
           description: Lista dos serviços que compõe o pacote de serviços
         prices:
           type: array
