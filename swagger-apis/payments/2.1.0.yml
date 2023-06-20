@@ -2298,7 +2298,7 @@ components:
             payments: Escopo necessário para acesso à API Payment Initiation.
   responses:
     BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: 'Seguir as orientações presentes na descrição da API, subitem 1.2.3'
       content:
         application/json; charset=utf-8:
           schema:
@@ -2417,7 +2417,7 @@ components:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
     UnprocessableEntityPixPayments:
-      description: 'A solicitação foi bem formada, mas não pôde ser processada devido à lógica de negócios específica da solicitação.'
+      description: 'Seguir as orientações presentes na descrição da API, item 1.3 e seus subitens.'
       content:
         application/jwt:
           schema:
