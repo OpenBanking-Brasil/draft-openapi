@@ -338,9 +338,6 @@ paths:
                 $ref: '#/components/schemas/ResponseError'
       security:
         - OAuth2AuthorizationCode:
-            - openid
-            - payments
-        - OAuth2ClientCredentials:
             - payments
     patch:
       tags:
