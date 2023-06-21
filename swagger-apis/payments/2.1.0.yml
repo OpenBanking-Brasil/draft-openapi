@@ -337,7 +337,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResponseError'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2ClientCredentials:
             - payments
     patch:
       tags:
@@ -807,6 +807,16 @@ components:
             O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
 
             1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     CreditorAccount:
       type: object
       description: |
@@ -851,6 +861,51 @@ components:
       description: |
         Objeto que contém a identificação da conta de origem do pagador.  
         As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.
+      required:
+        - ispb
+        - number
+        - accountType
+      properties:
+        ispb:
+          type: string
+          minLength: 8
+          maxLength: 8
+          pattern: '^[0-9]{8}$'
+          example: '12345678'
+          description: |
+            Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+        issuer:
+          type: string
+          minLength: 1
+          maxLength: 4
+          pattern: '^[0-9]{1,4}$'
+          example: '1774'
+          description: |
+            Código da Agência emissora da conta sem dígito.  
+            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,  
+            no exercício de atividades da instituição, não podendo ser móvel ou transitória).  
+            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
+        number:
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: '^[0-9]{1,20}$'
+          example: '1234567890'
+          description: |
+            Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
+            se houver valor alfanumérico, este deve ser convertido para 0.
+        accountType:
+          $ref: '#/components/schemas/EnumAccountPaymentsType'
+    ConsentsDebtorAccount:
+      type: object
+      description: |
+        Objeto que contém a identificação da conta de origem do pagador.
+        As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente.
+        No caso em que o cliente não preenche os dados na iniciadora, a detentora deverá persistir as informações da conta selecionada seguindo as condições abaixo.
+
+        [Restrição] 
+        - AUTHORISED e CONSUMED: Para esses dois status, o preenchimento do campo deverá ser obrigatório.
+        - REJECTED: Para este status o preenchimento é condicional, dado que há cenários em que a detentora também não terá conhecimento da conta origem, pois a mesma não foi selecionada pelo usuário. Nos casos em que houver seleção, a conta deve ser preenchida obrigatoriamente.
       required:
         - ispb
         - number
@@ -1425,6 +1480,16 @@ components:
                       description: Tipo do documento do usuário pagador responsável pelo cancelamento do pagamento.
                       example: CPF
                       pattern: '^[A-Z]{3}$'
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     PatchPixPaymentCancellation:
       type: object
       description: |
@@ -1634,7 +1699,7 @@ components:
             payment:
               $ref: '#/components/schemas/PaymentConsent'
             debtorAccount:
-              $ref: '#/components/schemas/DebtorAccount'
+              $ref: '#/components/schemas/ConsentsDebtorAccount'
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -1766,7 +1831,7 @@ components:
                 details:
                   $ref: '#/components/schemas/Details'
             debtorAccount:
-              $ref: '#/components/schemas/DebtorAccount'
+              $ref: '#/components/schemas/ConsentsDebtorAccount'
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -1920,6 +1985,16 @@ components:
           $ref: '#/components/schemas/PatchPixPaymentCancellation'
         debtorAccount:
           $ref: '#/components/schemas/DebtorAccount'
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     ResponseCreatePixPayment:
       type: object
       required:
@@ -2071,6 +2146,16 @@ components:
               $ref: '#/components/schemas/CreditorAccount'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
+            authorizationFlow:
+              type: string
+              enum:
+                - HYBRID_FLOW
+                - CIBA_FLOW
+              example: HYBRID_FLOW
+              description: |
+                Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+                
+                [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2197,6 +2282,16 @@ components:
           $ref: '#/components/schemas/PixPaymentCancellation'
         debtorAccount:
           $ref: '#/components/schemas/DebtorAccount'
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     Schedule:
       type: object
       description: |
