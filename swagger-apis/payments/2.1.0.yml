@@ -807,6 +807,16 @@ components:
             O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
 
             1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     CreditorAccount:
       type: object
       description: |
@@ -1470,6 +1480,16 @@ components:
                       description: Tipo do documento do usuário pagador responsável pelo cancelamento do pagamento.
                       example: CPF
                       pattern: '^[A-Z]{3}$'
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     PatchPixPaymentCancellation:
       type: object
       description: |
@@ -1965,6 +1985,16 @@ components:
           $ref: '#/components/schemas/PatchPixPaymentCancellation'
         debtorAccount:
           $ref: '#/components/schemas/DebtorAccount'
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     ResponseCreatePixPayment:
       type: object
       required:
@@ -2116,6 +2146,16 @@ components:
               $ref: '#/components/schemas/CreditorAccount'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
+            authorizationFlow:
+              type: string
+              enum:
+                - HYBRID_FLOW
+                - CIBA_FLOW
+              example: HYBRID_FLOW
+              description: |
+                Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+                
+                [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2242,6 +2282,16 @@ components:
           $ref: '#/components/schemas/PixPaymentCancellation'
         debtorAccount:
           $ref: '#/components/schemas/DebtorAccount'
+        authorizationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     Schedule:
       type: object
       description: |
