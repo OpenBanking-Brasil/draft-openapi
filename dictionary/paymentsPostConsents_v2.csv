@@ -160,9 +160,17 @@ TRAN - TransactingAccount - Conta de Pagamento pré-paga.
 SLRY 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
-/data/debtorAccount;debtorAccount;"Objeto que contém a identificação da conta de origem do pagador.  
-As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.
-";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/debtorAccount;debtorAccount;"Objeto que contém a identificação da conta de origem do pagador.
+As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente.
+No caso em que o cliente não preenche os dados na iniciadora, a detentora deverá persistir as informações da conta selecionada seguindo as condições abaixo.
+
+[Restrição] 
+- AUTHORISED e CONSUMED: Para esses dois status, o preenchimento do campo deverá ser obrigatório.
+- REJECTED: Para este status o preenchimento é condicional, dado que há cenários em que a detentora também não terá conhecimento da conta origem, pois a mesma não foi selecionada pelo usuário. Nos casos em que houver seleção, a conta deve ser preenchida obrigatoriamente.
+";Objeto;;Condicional;;;0;1;" 
+- AUTHORISED e CONSUMED: Para esses dois status, o preenchimento do campo deverá ser obrigatório.
+- REJECTED: Para este status o preenchimento é condicional, dado que há cenários em que a detentora também não terá conhecimento da conta origem, pois a mesma não foi selecionada pelo usuário. Nos casos em que houver seleção, a conta deve ser preenchida obrigatoriamente.
+";Não permitido;object;;
 /data/debtorAccount/ispb;ispb;"Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
 ";Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;12345678;8
 /data/debtorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito.  
