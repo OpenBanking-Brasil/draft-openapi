@@ -32,6 +32,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePersonalAccounts'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /business-accounts:
     get:
       tags:
@@ -49,6 +65,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseBusinessAccounts'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /personal-loans:
     get:
       tags:
@@ -66,6 +98,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePersonalLoans'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /business-loans:
     get:
       tags:
@@ -83,6 +131,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseBusinessLoans'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /personal-credit-cards:
     get:
       tags:
@@ -100,6 +164,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonalCreditCardResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /business-credit-cards:
     get:
       tags:
@@ -117,6 +197,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BusinessCreditCardResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /personal-financings:
     get:
       tags:
@@ -134,6 +230,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePersonalFinancings'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /business-financings:
     get:
       tags:
@@ -151,6 +263,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseBusinessFinancings'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /personal-invoice-financings:
     get:
       tags:
@@ -168,6 +296,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePersonalInvoiceFinancings'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /business-invoice-financings:
     get:
       tags:
@@ -185,6 +329,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseBusinessInvoiceFinancings'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /personal-unarranged-account-overdraft:
     get:
       tags:
@@ -202,6 +362,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponsePersonalUnarrangedAccountOverdraft'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
   /business-unarranged-account-overdraft:
     get:
       tags:
@@ -219,6 +395,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseBusinessUnarrangedAccountOverdraft'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
 components:
   schemas:
     AccountsTermsConditions:
@@ -234,13 +426,13 @@ components:
         elegibilityCriteriaInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto'
           example: 'https://example.com/mobile-banking'
         closingProcessInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. ''https://example.com/mobile-banking'' '
           example: 'https://example.com/mobile-banking'
     ResponsePersonalAccounts:
@@ -270,11 +462,12 @@ components:
         name:
           type: string
           maxLength: 80
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes'
           example: Organização A
         companies:
           type: array
+          maxItems: 20
           description: 'Companies traz uma lista de todas as instituições da Marca'
           items:
             $ref: '#/components/schemas/PersonalAccountCompany'
@@ -308,8 +501,9 @@ components:
         serviceBundles:
           type: array
           items:
-            $ref: '#/components/schemas/ServiceBundle'
+            $ref: '#/components/schemas/PersonalAccountServiceBundle'
           minItems: 1
+          maxItems: 200
           description: Lista dos Pacotes de serviços
         openingClosingChannels:
           type: array
@@ -321,7 +515,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 100
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: |
             Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
             Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
@@ -355,6 +549,7 @@ components:
           items:
             $ref: '#/components/schemas/AccountOtherService'
           minItems: 1
+          maxItems: 100
           description: Lista das Tarifas cobradas sobre outros Serviços, que não prioritários
     AccountPriorityService:
       type: object
@@ -373,7 +568,7 @@ components:
         chargingTriggerInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Fatos geradores de cobrança que incidem sobre os serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.'
           example: 'Fornecimento de extrato com a movimentação de um período em guichê de caixa ou por outras formas de atendimento pessoal, tal como atendimento telefônico realizado por atendente.'
         prices:
@@ -478,18 +673,19 @@ components:
         name:
           type: string
           maxLength: 250
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Nome do Serviço que incide sobre tipo de conta (Campo Livre)'
           example: Evento personalizado
         code:
           type: string
           maxLength: 100
+          pattern: '[\w\W\s]*'
           description: 'Siglas de identificação do Serviço (Campo Livre)'
           example: TALAO_DOMICILIO
         chargingTriggerInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: Fatos geradores de cobrança que incidem sobre outros serviços para pessoa natural. (Campo Livre)
           example: Cobrança devido a evento personalizado
         prices:
@@ -559,7 +755,40 @@ components:
         name:
           type: string
           maxLength: 250
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
+          description: Nome do Pacote de Serviços dado pela instituição.
+          example: Conta de depósitos à vista Movimentação com cartão (sem cheque)
+        services:
+          type: array
+          maxItems: 100
+          items:
+            $ref: '#/components/schemas/ServiceBundleServiceDetail'
+          minItems: 1
+          description: Lista dos serviços que compõe o pacote de serviços
+        prices:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlyPrice"
+          minItems: 4
+          maxItems: 4
+          description: Lista distribuição preços tarifas de serviços
+        minimum:
+          $ref:  "#/components/schemas/MinimumPrice"
+        maximum:
+          $ref:  "#/components/schemas/MaximumPrice"
+    PersonalAccountServiceBundle:
+      type: object
+      required:
+        - name
+        - services
+        - prices
+        - minimum
+        - maximum
+      properties:
+        name:
+          type: string
+          maxLength: 250
+          pattern: '[\w\W\s]*'
           description: Nome do Pacote de Serviços dado pela instituição.
           example: Conta de depósitos à vista Movimentação com cartão (sem cheque)
         services:
@@ -567,6 +796,7 @@ components:
           items:
             $ref: '#/components/schemas/ServiceBundleServiceDetail'
           minItems: 1
+          maxItems: 100
           description: Lista dos serviços que compõe o pacote de serviços
         prices:
           type: array
@@ -590,14 +820,14 @@ components:
         code:
           type: string
           maxLength: 100
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: |
             Código que identifica o Serviço que compõe o Pacote de Serviços, podendo ser da lista de Serviços Prioritários ou Outros Serviços. p.ex. segundo Resolução 3.919 do Bacen: 'SAQUE_TERMINAL'.
           example: SAQUE_TERMINAL
         chargingTriggerInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: |
             Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços.
           example: |
@@ -622,7 +852,7 @@ components:
         savingAccount:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: |
             Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente.
             Restrição: De preenchimento obrigatório para CONTA_POUPANCA.
@@ -630,7 +860,7 @@ components:
         prepaidPaymentAccount:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga.
           example: '40% Rendimento a.m.'
     ResponseBusinessAccounts:
@@ -660,11 +890,12 @@ components:
         name:
           type: string
           maxLength: 80
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Nome da Instituição, pertencente à marca, responsável pela comercialização dos produtos e serviços'
           example: Organização A
         companies:
           type: array
+          maxItems: 20
           items:
             $ref: '#/components/schemas/BusinessAccountsCompany'
           minItems: 1
@@ -705,12 +936,14 @@ components:
           properties:
             services:
               type: array
+              maxItems: 200
               items:
                 $ref: '#/components/schemas/BusinessAccountsService'
               minItems: 1
               description: Lista das Tarifas cobradas sobre Serviços
         serviceBundles:
           type: array
+          maxItems: 100
           items:
             $ref:  "#/components/schemas/ServiceBundle"
           minItems: 1
@@ -725,7 +958,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 100
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: |
             Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
             Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
@@ -754,17 +987,19 @@ components:
         name:
           type: string
           maxLength: 250
+          pattern: '[\w\W\s]*'
           description: 'Nome do Serviço que incide sobre tipo de conta selecionado para pessoa jurídica(Campo Livre)'
           example: Evento personalizado
         code:
           type: string
           maxLength: 100
+          pattern: '[\w\W\s]*'
           description: Sigla de identificação de Outros Serviços que incidem sobre os tipos de contas informados.
           example: EVENTO_PERSONALIZADO
         chargingTriggerInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços.
           example: Cobrança devido a evento personalizado
         prices:
@@ -804,7 +1039,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 80
           description: Nome da Marca.
           example: Organização A
@@ -823,13 +1058,13 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 80
           description: 'Nome da Instituição, pertencente à marca, responsável pela comercialização dos produtos e serviços'
           example: Empresa da Marca A
         urlComplementaryList:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 1024
           description: URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.
           example: 'https://example.com/mobile-banking'
@@ -868,7 +1103,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 80
           description: Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes
           example: Organização A
@@ -887,13 +1122,13 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 80
           description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
           example: Empresa A1
         urlComplementaryList:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 1024
           description: URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.
           example: 'https://example.com/mobile-banking'
@@ -950,7 +1185,7 @@ components:
           description: Lista das garantias exigidas
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_loans'
@@ -998,7 +1233,7 @@ components:
           description: Lista das garantias exigidas
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Empréstimo para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_loans'
@@ -1025,19 +1260,19 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 250
           description: Nomes das Tarifas cobradas sobre Serviços relacionados à Modalidade informada do Empréstimo para pessoa natural/jurídica.
           example: Taxa de Abertura
         code:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 100
           description: Sigla de identificação do serviço relacionado à Modalidade informada de Empréstimo para pessoa natural/jurídica.
           example: NA
         chargingTriggerInfo:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Fatores geradores de cobrança que incidem sobre as Modalidades informada de Empréstimos para pessoa natural/jurídica.
           example: 3% do valor do contrato
@@ -1146,8 +1381,6 @@ components:
         - 2_FAIXA
         - 3_FAIXA
         - 4_FAIXA
-      minItems: 1
-      maxItems: 1
       description: |
         Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
       example: 1_FAIXA
@@ -1245,7 +1478,7 @@ components:
             additionalInfo:
               type: string
               maxLength: 50
-              pattern: \w*\W*
+              pattern: '[\w\W\s]*'
               description: 'Informações complementares se tipo de Cartão ''OUTROS''. Campo deve ser obrigatoriamente preenchido se selecionado ''OUTROS'''
               example: 'NA'
         creditCard:
@@ -1271,7 +1504,7 @@ components:
             additionalInfo:
               type: string
               maxLength: 50
-              pattern: \w*\W*
+              pattern: '[\w\W\s]*'
               description: "Texto livre para especificar categoria de bandeira marcada como 'OUTRAS'. Campo deve ser obrigatoriamente preenchido se campo network vier selecionado como 'OUTROS'"
               example: 'NA'
     CreditCardRewardsProgram:
@@ -1286,7 +1519,7 @@ components:
         rewardProgramInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: Informações de termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Será de preenchimento obrigatório caso o campo hasRewardProgram esteja preenchido como true
           example: 'https://empresaa1.com/credit_cards_rewards'
     CreditCardTermsConditions:
@@ -1305,19 +1538,19 @@ components:
         additionalInfo:
           type: string
           maxLength: 500
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: Campo aberto para detalhamento de taxas de juros
           example: 'NA'
         elegibilityCriteriaInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Informação sobre as condições e critérios de elegibilidade do emissor do cartão. Pode ser informada a URL referente ao endereço onde constam as condições informadas.'
           example: 'https://empresaa1.com/creditcards_elegibility_criteria'
         closingProcessInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Descrição dos procedimentos para encerramento da conta de pagamento pós paga. Pode ser informada a URL referente ao endereço onde constam as condições informadas.'
           example: 'https://empresaa1.com/creditcards_closing_process'
     CreditCardInterest:
@@ -1364,7 +1597,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 50
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: Campo Texto para descrever outras operações de crédito marcadas como 'OUTROS'. Se o campo 'code' vier selecionado com 'OUTROS' é obrigatório o preenchimento do additionalInfo
           example: NA
     PersonalCreditCardResponse:
@@ -1499,7 +1732,7 @@ components:
         chargingTriggerInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Fatos geradores de cobrança que incidem sobre as Modalidades de Contas de Pagamento Pós-Pagas informada, para pessoa jurídica. (Campo Livre)'
           example: 'Disponibilização de rede de estabelecimentos afiliados, instalada no País, para pagamentos de bens e serviços, cobrada no máximo uma vez a cada doze meses, admitido o parcelamento da cobrança'
         prices:
@@ -1600,7 +1833,7 @@ components:
           maxItems: 14
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas ao produto ou serviço informado. Pode ser informada a URL referente ao endereço onde constam as condições informadas.
           example: 'https://empresaa1.com/personal_financing'
@@ -1619,20 +1852,20 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de Financiamento, para pessoa natural'
           maxLength: 250
           example: 'Avaliação, Reavaliação e Substituição de Bens Recebidos em Garantia'
         code:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Sigla de identificação do serviço relacionado à Modalidade de Financiamento informada, para pessoa natural. Campo aberto'
           maxLength: 100
           example: AQBAM009
         chargingTriggerInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Fatores geradores de cobrança que incidem sobre as Modalidades de Financiamentos, para pessoa natural. Campo Livre'
           example: 'R$ 570.00 Por solicitação'
         prices:
@@ -1787,7 +2020,7 @@ components:
           maxItems: 14
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_financing'
@@ -1828,7 +2061,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 80
           description: Nome da marca.
           example: Organização A
@@ -1890,7 +2123,7 @@ components:
           description: Lista das  garantias exigidas
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa natural informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_invoice_financings'
@@ -1918,19 +2151,19 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 250
           description: 'Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de direitos creditórios descontados, para pessoa natural. (Campo Livre)'
           example: 'Custódia de Duplicatas'
         code:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 100
           description: 'Sigla de identificação do serviço relacionado à Modalidade de direitos creditórios descontados, para pessoa natural. Campo aberto'
           example: 'NA'
         chargingTriggerInfo:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: 'Fatores geradores de cobrança que incidem sobre as Modalidades de direitos creditórios descontados, para pessoa natural. Campo Livre'
           example: '5% do valor do contrato'
@@ -2000,7 +2233,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 30
           description: Nome da marca.
           example: Marca A
@@ -2061,7 +2294,7 @@ components:
           maxItems: 14
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_invoice_financings'
@@ -2132,7 +2365,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 80
           description: Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
           example: "Organização A"
@@ -2172,7 +2405,7 @@ components:
           description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Adiantamento a depositante para pessoa natural. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/business_unarranged_account_overdraft'
@@ -2214,7 +2447,7 @@ components:
         chargingTriggerInfo:
           type: string
           maxLength: 2000
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: 'Fato gerador de cobrança que incide sobre a Modalidade de Adiantamento a depositante informada, para pessoa jurídica.'
         prices:
           type: array
@@ -2351,7 +2584,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 80
           description: Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
           example: "Organização A"
@@ -2391,7 +2624,7 @@ components:
           description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
         termsConditions:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Adiantamento a depositante para pessoa natural. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_unarranged_account_overdraft'
@@ -2608,7 +2841,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 50
           description: Denominação/Identificação do nome da conta (cartão de crédito)
           example: Cartão Universitário
@@ -2645,7 +2878,7 @@ components:
       properties:
         name:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 50
           description: Denominação/Identificação do nome da conta (cartão de crédito)
           example: Cartão Vantagens
@@ -2678,7 +2911,7 @@ components:
         name:
           type: string
           maxLength: 80
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           description: Nome da Marca selecionada pelas Organizações
           example: Organização A
     Company:
@@ -2693,11 +2926,11 @@ components:
           type: string
           description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
           maxLength: 80
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           example: 'Empresa A1'
         urlComplementaryList:
           type: string
-          pattern: \w*\W*
+          pattern: '[\w\W\s]*'
           maxLength: 1024
           description: |
             URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
@@ -2719,24 +2952,29 @@ components:
       properties:
         self:
           type: string
+          maxLength: 2000
           description: URL da página atualmente requisitada
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
         first:
           type: string
+          maxLength: 2000
           description: URL da primeira página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
         prev:
           type: string
+          maxLength: 2000
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
+          maxLength: 2000
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
+          maxLength: 2000
           description: URL da última página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
@@ -2754,6 +2992,98 @@ components:
       required:
         - totalRecords
         - totalPages
+    ResponseErrorMetaSingle:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de erro específico do endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          type: object
+          description: Meta informações referente à API requisitada.
+          required:
+            - requestDateTime
+          properties:
+            requestDateTime:
+              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+    ResponseError:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                description: Código de erro específico do endpoint
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          type: object
+          description: Meta informações referente à API requisitada.
+          required:
+            - totalRecords
+            - totalPages
+            - requestDateTime
+          properties:
+            totalRecords:
+              type: integer
+              format: int32
+              description: Número total de registros no resultado
+              example: 1
+            totalPages:
+              type: integer
+              format: int32
+              description: Número total de páginas no resultado
+              example: 1
   securitySchemes:
     APIKey1:
       name: API Key
@@ -2784,4 +3114,53 @@ components:
         default: 25
         minimum: 1
         maximum: 1000
+  responses:
+    BadRequest:
+      description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    NotFound:
+      description: O recurso solicitado não existe ou não foi implementado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    MethodNotAllowed:
+      description: O consumidor tentou acessar o recurso com um método não suportado.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    TooManyRequests:
+      description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    InternalServerError:
+      description: Ocorreu um erro no gateway da API ou no microsserviço.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    GatewayTimeout:
+      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    SiteIsOverloaded:
+      description: O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+    Default:
+      description: '-'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
         

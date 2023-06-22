@@ -1,0 +1,67 @@
+﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
+/data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies;companies;Lista de instituições pertencentes à marga;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessFinancings;businessFinancings;Lista de financiamentos;Lista;;Obrigatório;;;1;9;"";Não permitido;array;;
+/data/brand/companies/businessFinancings/type;type;Modalidades de financiamentos ofertados para pessoas jurídicas, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido;Texto;;Obrigatório;;"FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES 
+FINANCIAMENTO_AQUISICAO_BENS_OUTROS_BENS 
+FINANCIAMENTO_MICROCREDITO 
+FINANCIAMENTO_RURAL_CUSTEIO 
+FINANCIAMENTO_RURAL_INVESTIMENTO 
+FINANCIAMENTO_RURAL_COMERCIALIZACAO 
+FINANCIAMENTO_RURAL_INDUSTRIALIZACAO 
+FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO_SFH 
+FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO_SFI";1;1;"";Não permitido;string;FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES;
+/data/brand/companies/businessFinancings/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessFinancings/fees/services;services;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessFinancings/fees/services/name;name;Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de Financiamento, para pessoa natural;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Avaliação, Reavaliação e Substituição de Bens Recebidos em Garantia;
+/data/brand/companies/businessFinancings/fees/services/code;code;Sigla de identificação do serviço relacionado à Modalidade de Financiamento informada, para pessoa natural. Campo aberto;Texto;100;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;AQBAM009;
+/data/brand/companies/businessFinancings/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatores geradores de cobrança que incidem sobre as Modalidades de Financiamentos, para pessoa natural. Campo Livre;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;R$ 570.00 Por solicitação;
+/data/brand/companies/businessFinancings/fees/services/prices;prices;;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
+/data/brand/companies/businessFinancings/fees/services/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
+";Texto;;Obrigatório;;"1_FAIXA 
+2_FAIXA 
+3_FAIXA 
+4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
+/data/brand/companies/businessFinancings/fees/services/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
+";Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;2000.00;
+/data/brand/companies/businessFinancings/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/brand/companies/businessFinancings/fees/services/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessFinancings/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
+";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+/data/brand/companies/businessFinancings/fees/services/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessFinancings/fees/services/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
+/data/brand/companies/businessFinancings/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/brand/companies/businessFinancings/fees/services/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessFinancings/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
+/data/brand/companies/businessFinancings/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/brand/companies/businessFinancings/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessFinancings/interestRates/applications;applications;;Lista;;Obrigatório;;;4;4;"";Não permitido;array;"[{""interval""=>""1_FAIXA"", ""indexer""=>{""rate""=>""0.0987""}, ""customers""=>{""rate""=>""0.1500""}}, {""interval""=>""2_FAIXA"", ""indexer""=>{""rate""=>""0.1600""}, ""customers""=>{""rate""=>""0.3500""}}, {""interval""=>""3_FAIXA"", ""indexer""=>{""rate""=>""0.3600""}, ""customers""=>{""rate""=>""0.2000""}}, {""interval""=>""4_FAIXA"", ""indexer""=>{""rate""=>""0.5890""}, ""customers""=>{""rate""=>""0.3000""}}]";
+/data/brand/companies/businessFinancings/interestRates/applications/interval;interval;"Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
+";Texto;;Obrigatório;;"1_FAIXA 
+2_FAIXA 
+3_FAIXA 
+4_FAIXA";1;1;"";Não permitido;string;;
+/data/brand/companies/businessFinancings/interestRates/applications/indexer;indexer;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessFinancings/interestRates/applications/indexer/rate;rate;"Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+";Texto;6;Opcional;(^[0-9](\.[0-9]{4})$|^NA$);;0;1;"";Não permitido;string;0.8700;
+/data/brand/companies/businessFinancings/interestRates/applications/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessFinancings/interestRates/applications/customers/rate;rate;"Percentual de clientes em cada faixa.
+";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+/data/brand/companies/businessFinancings/interestRates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.0456;
+/data/brand/companies/businessFinancings/interestRates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.6865;
+/data/brand/companies/businessFinancings/requiredWarranties;requiredWarranties;;Lista;;Obrigatório;;"CESSAO_DIREITOS_CREDITORIOS 
+CAUCAO 
+PENHOR 
+ALIENACAO_FIDUCIARIA 
+HIPOTECA 
+OPERACOES_GARANTIDAS_PELO_GOVERNO 
+OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS 
+SEGUROS_ASSEMELHADOS 
+GARANTIA_FIDEJUSSORIA 
+BENS_ARRENDADOS 
+GARANTIAS_INTERNACIONAIS 
+OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES 
+ACORDOS_COMPENSACAO 
+NAO_APLICAVEL";1;14;"";Não permitido;array;CESSAO_DIREITOS_CREDITORIOS;
+/data/brand/companies/businessFinancings/termsConditions;termsConditions;Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://empresaa1.com/personal_financing;
