@@ -149,14 +149,14 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 /data/creditorAccount/number;number;"Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),  
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
-/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento via Pix.  
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
-conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
-Segue descrição de cada valor do ENUM para o escopo do Pix.  
-CACC - Current - Conta Corrente.  
-SLRY - Salary - Conta-Salário.  
-SVGS - Savings - Conta de Poupança.  
-TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
+Segue descrição de cada valor do ENUM.
+
+- CACC - Current - Conta Corrente.
+- SLRY - Salary - Conta-Salário.
+- SVGS - Savings - Conta de Poupança.
+- TRAN - TransactingAccount - Conta de Pagamento pré-paga.
 ";Texto;;Obrigatório;;"CACC 
 SLRY 
 SVGS 
@@ -175,14 +175,14 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 /data/debtorAccount/number;number;"Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
-/data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento via Pix.  
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
-conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
-Segue descrição de cada valor do ENUM para o escopo do Pix.  
-CACC - Current - Conta Corrente.  
-SLRY - Salary - Conta-Salário.  
-SVGS - Savings - Conta de Poupança.  
-TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+/data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
+Segue descrição de cada valor do ENUM.
+
+- CACC - Current - Conta Corrente.
+- SLRY - Salary - Conta-Salário.
+- SVGS - Savings - Conta de Poupança.
+- TRAN - TransactingAccount - Conta de Pagamento pré-paga.
 ";Texto;;Obrigatório;;"CACC 
 SLRY 
 SVGS 
