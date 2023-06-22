@@ -78,25 +78,25 @@ SCHD";1;1;"";Não permitido;string;PDNG;
 [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).";Objeto;;Condicional;;;0;1; Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).;Não permitido;object;;
 /data/rejectionReason/code;code;"Define o código da razão pela qual o pagamento foi rejeitado
 
-- SALDO_INSUFICIENTE - A conta selecionada não possui saldo suficiente para realizar o pagamento.
+SALDO_INSUFICIENTE
 
-- VALOR_ACIMA_LIMITE - O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+VALOR_ACIMA_LIMITE
 
-- VALOR_INVALIDO - O valor enviado não é válido para o QR Code informado.
+VALOR_INVALIDO
 
-- COBRANCA_INVALIDA - Validação de expiração, validação de vencimento ou Status Válido.
+COBRANCA_INVALIDA
 
-- NAO_INFORMADO - Não reportado/identificado pela instituição detentora de conta.
+NAO_INFORMADO
 
-- PAGAMENTO_DIVERGENTE_CONSENTIMENTO - Dados do pagamento divergentes dos dados do consentimento.
+PAGAMENTO_DIVERGENTE_CONSENTIMENTO
 
-- DETALHE_PAGAMENTO_INVALIDO - Parâmetro [nome_campo] não obedecer às regras de negócio.
+DETALHE_PAGAMENTO_INVALIDO
 
-- PAGAMENTO_RECUSADO_DETENTORA - [Descrição do motivo de recusa].
+PAGAMENTO_RECUSADO_DETENTORA
 
-- PAGAMENTO_RECUSADO_SPI - [Código de erro conforme tabela de domínios reason PACS.002].
+PAGAMENTO_RECUSADO_SPI
 
-- FALHA_INFRAESTRUTURA - [Descrição de qual falha na infraestrutura inviabilizou o processamento].
+FALHA_INFRAESTRUTURA
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
 VALOR_ACIMA_LIMITE 
 VALOR_INVALIDO 
@@ -149,14 +149,14 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 /data/creditorAccount/number;number;"Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),  
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
-/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-Segue descrição de cada valor do ENUM.
-
-- CACC - Current - Conta Corrente.
-- SLRY - Salary - Conta-Salário.
-- SVGS - Savings - Conta de Poupança.
-- TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento via Pix.  
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
+conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
+Segue descrição de cada valor do ENUM para o escopo do Pix.  
+CACC - Current - Conta Corrente.  
+SLRY - Salary - Conta-Salário.  
+SVGS - Savings - Conta de Poupança.  
+TRAN - TransactingAccount - Conta de Pagamento pré-paga.
 ";Texto;;Obrigatório;;"CACC 
 SLRY 
 SVGS 
@@ -203,21 +203,15 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 /data/debtorAccount/number;number;"Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
-/data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-Segue descrição de cada valor do ENUM.
-
-- CACC - Current - Conta Corrente.
-- SLRY - Salary - Conta-Salário.
-- SVGS - Savings - Conta de Poupança.
-- TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+/data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento via Pix.  
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
+conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
+Segue descrição de cada valor do ENUM para o escopo do Pix.  
+CACC - Current - Conta Corrente.  
+SLRY - Salary - Conta-Salário.  
+SVGS - Savings - Conta de Poupança.  
+TRAN - TransactingAccount - Conta de Pagamento pré-paga.
 ";Texto;;Obrigatório;;"CACC 
 SLRY 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
-/data/authorizationFlow;authorizationFlow;"Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
-
-[Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
-";Texto;;Condicional;;"HYBRID_FLOW 
-CIBA_FLOW";0;1;" Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
-";Não permitido;string;HYBRID_FLOW;
