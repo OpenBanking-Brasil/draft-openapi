@@ -1,0 +1,74 @@
+﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
+/data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/name;name;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
+/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
+/data/brand/companies/urlComplementaryList;urlComplementaryList;URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.;Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
+/data/brand/companies/businessLoans;businessLoans;Lista de modalidades de empréstimos;Lista;;Obrigatório;;;1;6;"";Não permitido;array;;
+/data/brand/companies/businessLoans/type;type;"Modalidades de empréstimos ofertados para pessoas Jurídicas, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Empréstimo é um contrato entre o cliente e uma instituição financeira (banco, cooperativa de crédito, caixa econômica) pelo qual o cliente recebe uma quantia em dinheiro que deverá ser devolvida em prazo determinado, acrescida dos juros acertados. Os recursos obtidos no empréstimo não tem destinação específica.
+* Empréstimo-Microcrédito Produtivo Orientado - segundo PNMPO é o crédito concedido para financiamento das atividades produtivas, cuja metodologia será estabelecida em regulamento, observada a preferência do relacionamento direto com os empreendedores, admitido o uso de tecnologias digitais e eletrônicas que possam substituir o contato presencial
+* Empréstimo-Cheque especial - operações de crédito vinculadas à conta corrente, nas quais determinado limite de crédito é disponibilizado aos clientes para utilização de acordo com suas conveniências, sem necessidade de comunicação prévia à instituição financeira
+* Empréstimo-Conta garantida - operações de crédito rotativo, nas quais determinado limite de crédito é disponibilizado para utilização pelo cliente, através da simples movimentação da conta corrente e/ou solicitação formal à instituição financeira. As operações classificadas nessa modalidade não devem ter data definida para a amortização do saldo devedor, exceto a estabelecida para vigência do contrato
+* Empréstimo-Capital de giro com prazo de vencimento até 365 dias: operações de crédito voltadas para o financiamento de curto prazo (igual ou inferior a 365 dias) das pessoas jurídicas, vinculadas às necessidades de capital de giro e a um contrato específico que estabeleça prazos, taxas e garantias
+* Empréstimo-Capital de giro com prazo vencimento superior a 365 dias: operações de crédito voltadas para o financiamento de médio e longo prazo (superior a 365 dias) das pessoas jurídicas, vinculadas às necessidades de capital de giro e a um contrato específico que estabeleça prazos, taxas e garantias
+* Empréstimo-Capital de giro rotativo: operações de crédito voltadas para o financiamento de capital de giro, vinculadas a um contrato que estabeleça linha de crédito rotativo, de forma que, à medida que a empresa devedora amortize os empréstimos já tomados, o limite disponível para utilização seja restituído, e amortizações com datas predeterminadas, podendo ser facultado ao devedor repactuar o fluxo de pagamentos ao longo da vigência do contrato
+";Texto;;Obrigatório;;"EMPRESTIMO_MICROCREDITO_PRODUTIVO_ORIENTADO 
+EMPRESTIMO_CHEQUE_ESPECIAL 
+EMPRESTIMO_CONTA_GARANTIDA 
+EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS 
+EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_SUPERIOR_365_DIAS 
+EMPRESTIMO_CAPITAL_GIRO_ROTATIVO";1;1;"";Não permitido;string;EMPRESTIMO_MICROCREDITO_PRODUTIVO_ORIENTADO;
+/data/brand/companies/businessLoans/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessLoans/fees/services;services;Lista das Tarifas cobradas sobre Serviços;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessLoans/fees/services/name;name;Nomes das Tarifas cobradas sobre Serviços relacionados à Modalidade informada do Empréstimo para pessoa natural/jurídica.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Taxa de Abertura;
+/data/brand/companies/businessLoans/fees/services/code;code;Sigla de identificação do serviço relacionado à Modalidade informada de Empréstimo para pessoa natural/jurídica.;Texto;100;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;NA;
+/data/brand/companies/businessLoans/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatores geradores de cobrança que incidem sobre as Modalidades informada de Empréstimos para pessoa natural/jurídica.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;3% do valor do contrato;
+/data/brand/companies/businessLoans/fees/services/prices;prices;;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
+/data/brand/companies/businessLoans/fees/services/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
+";Texto;;Obrigatório;;"1_FAIXA 
+2_FAIXA 
+3_FAIXA 
+4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
+/data/brand/companies/businessLoans/fees/services/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
+";Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;2000.00;
+/data/brand/companies/businessLoans/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/brand/companies/businessLoans/fees/services/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessLoans/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
+";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+/data/brand/companies/businessLoans/fees/services/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessLoans/fees/services/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
+/data/brand/companies/businessLoans/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/brand/companies/businessLoans/fees/services/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessLoans/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
+/data/brand/companies/businessLoans/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/brand/companies/businessLoans/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessLoans/interestRates/applications;applications;Lista  das faixas de cobrança da taxa efetiva aplicada pela contratação de crédito;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
+/data/brand/companies/businessLoans/interestRates/applications/interval;interval;"Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
+";Texto;;Obrigatório;;"1_FAIXA 
+2_FAIXA 
+3_FAIXA 
+4_FAIXA";1;1;"";Não permitido;string;;
+/data/brand/companies/businessLoans/interestRates/applications/indexer;indexer;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessLoans/interestRates/applications/indexer/rate;rate;"Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+";Texto;6;Opcional;(^[0-9](\.[0-9]{4})$|^NA$);;0;1;"";Não permitido;string;0.8700;
+/data/brand/companies/businessLoans/interestRates/applications/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/companies/businessLoans/interestRates/applications/customers/rate;rate;"Percentual de clientes em cada faixa.
+";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+/data/brand/companies/businessLoans/interestRates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.0456;
+/data/brand/companies/businessLoans/interestRates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.6865;
+/data/brand/companies/businessLoans/requiredWarranties;requiredWarranties;Lista das garantias exigidas;Lista;;Obrigatório;;"CESSAO_DIREITOS_CREDITORIOS 
+CAUCAO 
+PENHOR 
+ALIENACAO_FIDUCIARIA 
+HIPOTECA 
+OPERACOES_GARANTIDAS_PELO_GOVERNO 
+OUTRAS_GARANTIAS_NAO_FIDEJUSSORIAS 
+SEGUROS_ASSEMELHADOS 
+GARANTIA_FIDEJUSSORIA 
+BENS_ARRENDADOS 
+GARANTIAS_INTERNACIONAIS 
+OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES 
+ACORDOS_COMPENSACAO 
+NAO_APLICAVEL";1;14;"";Não permitido;array;CESSAO_DIREITOS_CREDITORIOS;
+/data/brand/companies/businessLoans/termsConditions;termsConditions;Campo aberto para informar as condições contratuais relativas à Modalidade de Empréstimo para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://empresaa1.com/personal_loans;
