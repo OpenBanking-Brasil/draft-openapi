@@ -1183,6 +1183,32 @@ components:
       example: PIX
       description: |
         Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
+    EnumConsentRejectionReasonType:
+      type: string
+      enum:
+        - VALOR_INVALIDONAO_INFORMADO
+        - FALHA_INFRAESTRUTURA
+        - FALHA_INFRAESTRUTURA_DETENTORA
+        - TEMPO_EXPIRADO_AUTORIZACAO
+        - TEMPO_EXPIRADO_CONSUMOREJEITADO_USUARIO
+        - CONTAS_ORIGEM_DESTINO_IGUAIS
+        - CONTA_SALARIO
+        - SALDO_INSUFICIENTE
+        - VALOR_ACIMA_LIMITE
+        - QRCODE_INVALIDO
+      example: SALDO_INSUFICIENTE
+      description: |
+        Define o código da razão pela qual o consentimento foi rejeitado
+        - VALOR_INVALIDONAO_INFORMADO
+        - FALHA_INFRAESTRUTURA
+        - FALHA_INFRAESTRUTURA_DETENTORA
+        - TEMPO_EXPIRADO_AUTORIZACAO
+        - TEMPO_EXPIRADO_CONSUMOREJEITADO_USUARIO
+        - CONTAS_ORIGEM_DESTINO_IGUAIS
+        - CONTA_SALARIO
+        - SALDO_INSUFICIENTE
+        - VALOR_ACIMA_LIMITE
+        - QRCODE_INVALIDO
     EnumRejectionReasonType:
       type: string
       enum:
@@ -1270,6 +1296,20 @@ components:
         INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
 
         DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
+    ConsentRejectionReason:
+      type: object
+      description: Motivo da rejeição do consentimento. Informações complementares sobre o motivo do status
+      required:
+        - code
+        - detail
+      properties:
+        code:
+          $ref: '#/components/schemas/EnumConsentRejectionReasonType'
+        detail:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 2048
+          description: Contém informações adicionais ao consentimento rejeitado.
     RejectionReason:
       type: object
       description: |-
@@ -1712,6 +1752,8 @@ components:
               $ref: '#/components/schemas/PaymentConsent'
             debtorAccount:
               $ref: '#/components/schemas/ConsentsDebtorAccount'
+            rejectionReason:
+              $ref: '#/components/schemas/ConsentRejectionReason'
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
