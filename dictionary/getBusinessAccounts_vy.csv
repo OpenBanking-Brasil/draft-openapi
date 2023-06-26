@@ -27,7 +27,7 @@ CONTA_PAGAMENTO_PRE_PAGA";1;1;"";Não permitido;string;CONTA_DEPOSITO_A_VISTA;
 /data/brand/companies/businessAccounts/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/businessAccounts/fees/services/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessAccounts/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
-";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/businessAccounts/fees/services/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessAccounts/fees/services/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
 /data/brand/companies/businessAccounts/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
@@ -58,7 +58,7 @@ CONTA_PAGAMENTO_PRE_PAGA";1;1;"";Não permitido;string;CONTA_DEPOSITO_A_VISTA;
 /data/brand/companies/businessAccounts/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/businessAccounts/serviceBundles/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessAccounts/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
-";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/businessAccounts/serviceBundles/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessAccounts/serviceBundles/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
 /data/brand/companies/businessAccounts/serviceBundles/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;

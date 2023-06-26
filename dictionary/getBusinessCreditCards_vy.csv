@@ -1,8 +1,8 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/brand/companies/businessCreditCards;businessCreditCards;Lista dos nomes de conta de pagamento pós-paga;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;720;"";Não permitido;array;;
+/data/brand/companies/businessCreditCards;businessCreditCards;Lista dos nomes de conta de pagamento pós-paga;Lista;;Opcional;;;1;80;"";Não permitido;array;;
 /data/brand/companies/businessCreditCards/name;name;Denominação/Identificação do nome da conta (cartão de crédito);Texto;50;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Cartão Vantagens;
 /data/brand/companies/businessCreditCards/identification;identification;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/identification/product;product;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -74,7 +74,7 @@ SMS";1;1;"";Não permitido;string;ANUIDADE_NACIONAL;
 /data/brand/companies/businessCreditCards/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/businessCreditCards/fees/services/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
-";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/businessCreditCards/fees/services/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/fees/services/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
 /data/brand/companies/businessCreditCards/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
@@ -82,7 +82,7 @@ SMS";1;1;"";Não permitido;string;ANUIDADE_NACIONAL;
 /data/brand/companies/businessCreditCards/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/businessCreditCards/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/businessCreditCards/interest;interest;Informações sobre taxas de juros;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/businessCreditCards/interest/rates;rates;Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios para crédito rotativo;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessCreditCards/interest/rates;rates;Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios para crédito rotativo;Lista;;Obrigatório;;;1;20;"";Não permitido;array;;
 /data/brand/companies/businessCreditCards/interest/rates/referentialRateIndexer;referentialRateIndexer;"Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040
 ";Texto;;Obrigatório;;"SEM_INDEXADOR_TAXA 
 PRE_FIXADO 
@@ -104,7 +104,7 @@ CREDITO_RURAL_TRFC_PRE
 CREDITO_RURAL_TRFC_POS 
 OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 /data/brand/companies/businessCreditCards/interest/rates/rate;rate;"Percentual que incide sobre a composição das taxas de juros remuneratórios. (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%). A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-";Texto;;Obrigatório;(^[0-9](\.[0-9]{2})|NA)$;;1;1;"";Não permitido;string;0.15;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/businessCreditCards/interest/rates/applications;applications;Lista distribuição percentuais relativos à taxa de juros remuneratórios;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
 /data/brand/companies/businessCreditCards/interest/rates/applications/interval;interval;"Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
 ";Texto;;Obrigatório;;"1_FAIXA 
@@ -113,13 +113,13 @@ OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 4_FAIXA";1;1;"";Não permitido;string;;
 /data/brand/companies/businessCreditCards/interest/rates/applications/indexer;indexer;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/interest/rates/applications/indexer/rate;rate;"Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-";Texto;6;Opcional;(^[0-9](\.[0-9]{4})$|^NA$);;0;1;"";Não permitido;string;0.8700;
+";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.870000;8
 /data/brand/companies/businessCreditCards/interest/rates/applications/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/interest/rates/applications/customers/rate;rate;"Percentual de clientes em cada faixa.
-";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
-/data/brand/companies/businessCreditCards/interest/rates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.0456;
-/data/brand/companies/businessCreditCards/interest/rates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.6865;
-/data/brand/companies/businessCreditCards/interest/instalmentRates;instalmentRates;Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios para parcelamento do saldo devedor;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
+/data/brand/companies/businessCreditCards/interest/rates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.045600;8
+/data/brand/companies/businessCreditCards/interest/rates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.686500;8
+/data/brand/companies/businessCreditCards/interest/instalmentRates;instalmentRates;Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios para parcelamento do saldo devedor;Lista;;Obrigatório;;;1;20;"";Não permitido;array;;
 /data/brand/companies/businessCreditCards/interest/instalmentRates/referentialRateIndexer;referentialRateIndexer;"Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040
 ";Texto;;Obrigatório;;"SEM_INDEXADOR_TAXA 
 PRE_FIXADO 
@@ -141,7 +141,7 @@ CREDITO_RURAL_TRFC_PRE
 CREDITO_RURAL_TRFC_POS 
 OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 /data/brand/companies/businessCreditCards/interest/instalmentRates/rate;rate;"Percentual que incide sobre a composição das taxas de juros remuneratórios. (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%). A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-";Texto;;Obrigatório;(^[0-9](\.[0-9]{2})|NA)$;;1;1;"";Não permitido;string;0.15;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/businessCreditCards/interest/instalmentRates/applications;applications;Lista distribuição percentuais relativos à taxa de juros remuneratórios;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
 /data/brand/companies/businessCreditCards/interest/instalmentRates/applications/interval;interval;"Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
 ";Texto;;Obrigatório;;"1_FAIXA 
@@ -150,19 +150,19 @@ OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 4_FAIXA";1;1;"";Não permitido;string;;
 /data/brand/companies/businessCreditCards/interest/instalmentRates/applications/indexer;indexer;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/interest/instalmentRates/applications/indexer/rate;rate;"Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-";Texto;6;Opcional;(^[0-9](\.[0-9]{4})$|^NA$);;0;1;"";Não permitido;string;0.8700;
+";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.870000;8
 /data/brand/companies/businessCreditCards/interest/instalmentRates/applications/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/interest/instalmentRates/applications/customers/rate;rate;"Percentual de clientes em cada faixa.
-";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
-/data/brand/companies/businessCreditCards/interest/instalmentRates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.0456;
-/data/brand/companies/businessCreditCards/interest/instalmentRates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.6865;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
+/data/brand/companies/businessCreditCards/interest/instalmentRates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.045600;8
+/data/brand/companies/businessCreditCards/interest/instalmentRates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.686500;8
 /data/brand/companies/businessCreditCards/interest/otherCredits;otherCredits;Lista de outras operações de crédito;Lista;;Obrigatório;;;1;3;"";Não permitido;array;;
 /data/brand/companies/businessCreditCards/interest/otherCredits/code;code;Lista de outras operações de crédito;Texto;;Obrigatório;;"SAQUE_A_CREDITO 
 PAGAMENTOS_CONTAS 
 OUTROS";1;1;"";Não permitido;string;SAQUE_A_CREDITO;
 /data/brand/companies/businessCreditCards/interest/otherCredits/additionalInfo;additionalInfo;Campo Texto para descrever outras operações de crédito marcadas como 'OUTROS'. Se o campo 'code' vier selecionado com 'OUTROS' é obrigatório o preenchimento do additionalInfo;Texto;50;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;NA;
 /data/brand/companies/businessCreditCards/termsConditions;termsConditions;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/businessCreditCards/termsConditions/minimumFeeRate;minimumFeeRate;Percentual para pagamento mínimo sobre o saldo devedor da fatura.;Texto;4;Obrigatório;(^[0-9](\.[0-9]{2})$|^NA$);;1;1;"";Não permitido;string;0.25;
+/data/brand/companies/businessCreditCards/termsConditions/minimumFeeRate;minimumFeeRate;Percentual para pagamento mínimo sobre o saldo devedor da fatura.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.250000;8
 /data/brand/companies/businessCreditCards/termsConditions/additionalInfo;additionalInfo;Campo aberto para detalhamento de taxas de juros;Texto;500;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;NA;
 /data/brand/companies/businessCreditCards/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Informação sobre as condições e critérios de elegibilidade do emissor do cartão. Pode ser informada a URL referente ao endereço onde constam as condições informadas.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://empresaa1.com/creditcards_elegibility_criteria;
 /data/brand/companies/businessCreditCards/termsConditions/closingProcessInfo;closingProcessInfo;Descrição dos procedimentos para encerramento da conta de pagamento pós paga. Pode ser informada a URL referente ao endereço onde constam as condições informadas.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://empresaa1.com/creditcards_closing_process;
