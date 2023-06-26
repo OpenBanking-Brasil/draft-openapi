@@ -97,6 +97,18 @@ SCHD";1;1;"";Não permitido;string;PDNG;
 - PAGAMENTO_RECUSADO_SPI - [Código de erro conforme tabela de domínios reason PACS.002].
 
 - FALHA_INFRAESTRUTURA - [Descrição de qual falha na infraestrutura inviabilizou o processamento].
+
+- FALHA_INFRAESTRUTURA_SPI - Indica uma falha no Sistema de Pagamentos Instantâneos (SPI).
+
+- FALHA_INFRAESTRUTURA_DICT - Indica uma falha no Diretório de Identificadores de Contas Transacionais (DICT).
+
+- FALHA_INFRAESTRUTURA_ICP - Indica uma falha na Infraestrutura de Chaves Públicas (ICP).
+
+- FALHA_INFRAESTRUTURA_PSP_RECEBEDOR - Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento.
+
+- FALHA_INFRAESTRUTURA_DETENTORA - indica uma falha na infraestrutura da instituição detentora das informações ou recursos.
+
+O rejectionReason FALHA_INFRAESTRUTURA não será excluído, apenas deixará de ser utilizado, permitindo assim, retro compatibilidade e integridade entre os participantes.
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
 VALOR_ACIMA_LIMITE 
 VALOR_INVALIDO 
@@ -106,7 +118,12 @@ PAGAMENTO_DIVERGENTE_CONSENTIMENTO
 DETALHE_PAGAMENTO_INVALIDO 
 PAGAMENTO_RECUSADO_DETENTORA 
 PAGAMENTO_RECUSADO_SPI 
-FALHA_INFRAESTRUTURA";1;1;"";Não permitido;string;SALDO_INSUFICIENTE;
+FALHA_INFRAESTRUTURA 
+FALHA_INFRAESTRUTURA_SPI 
+FALHA_INFRAESTRUTURA_DICT 
+FALHA_INFRAESTRUTURA_ICP 
+FALHA_INFRAESTRUTURA_PSP_RECEBEDOR 
+FALHA_INFRAESTRUTURA_DETENTORA";1;1;"";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;Contém informações adicionais ao pagamento rejeitado;Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/localInstrument;localInstrument;"Especifica a forma de iniciação do pagamento:
 - MANU - Inserção manual de dados da conta transacional
