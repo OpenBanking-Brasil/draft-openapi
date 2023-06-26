@@ -1304,16 +1304,18 @@ components:
           description: Lista  das faixas de cobrança da taxa efetiva aplicada pela contratação de crédito
         minimumRate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          maxLength: 6
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
           description: 'Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
-          example: '0.0456'
+          example: '0.045600'
         maximumRate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          maxLength: 6
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
           description: 'Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
-          example: '0.6865'
+          example: '0.686500'
     ApplicationRate:
       type: object
       properties:
@@ -1332,11 +1334,12 @@ components:
       properties:
         rate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          maxLength: 6
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
           description: |
             Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-          example: '0.8700'
+          example: '0.870000'
     InterestRateFee:
       type: object
       properties:
@@ -1366,11 +1369,12 @@ components:
           example: PRE_FIXADO
         rate:
           type: string
-          pattern: '(^[0-1](\.[0-9]{2})$|^NA$)'
+          pattern: '^\d{1}\.\d{6}$'
           description: |
             Percentual que incide sobre a composição das taxas de juros remuneratórios. (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%) A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-          example: '0.15'
-          maxLength: 4
+          example: '0.150000'
+          minLength: 8
+          maxLength: 8
       required:
         - referentialRateIndexer
         - rate
@@ -1531,10 +1535,11 @@ components:
       properties:
         minimumFeeRate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{2})$|^NA$)'
+          pattern: '^\d{1}\.\d{6}$'
           description: Percentual para pagamento mínimo sobre o saldo devedor da fatura.
-          example: '0.25'
-          maxLength: 4
+          example: '0.250000'
+          minLength: 8
+          maxLength: 8
         additionalInfo:
           type: string
           maxLength: 500
@@ -1925,16 +1930,18 @@ components:
                 rate: '0.3000'
         minimumRate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
+          pattern: '^\d{1}\.\d{6}$'
           description: 'Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
-          example: '0.0456'
-          maxLength: 6
+          example: '0.045600'
+          minLength: 8
+          maxLength: 8
         maximumRate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
+          pattern: '^\d{1}\.\d{6}$'
           description: 'Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
-          example: '0.6865'
-          maxLength: 6
+          example: '0.686500'
+          minLength: 8
+          maxLength: 8
       required:
         - applications
         - minimumRate
@@ -2200,14 +2207,18 @@ components:
           type: string
           description: |
             Percentual mínimo cobrado (taxa efetiva) no mês de referência, para os Direitos Creditórios Descontados contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.15. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          example: '0.0889'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '0.088900'
         maximumRate:
           type: string
           description: |
             Percentual máximo cobrado (taxa efetiva) no mês de referência, para os Direitos Creditórios Descontados contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.15. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          example: '0.6865'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '0.686500'
       required:
         - applications
         - minimumRate
@@ -2332,14 +2343,18 @@ components:
           type: string
           description: |
             Percentual mínimo cobrado (taxa efetiva) no mês de referência, para os Direitos Creditórios Descontados contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.15. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          example: '0.1500'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '0.150000'
         maximumRate:
           type: string
           description: |
             Percentual máximo cobrado (taxa efetiva) no mês de referência, para os Direitos Creditórios Descontados contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.15. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          example: '0.6865'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '0.686500'
       required:
         - fees
         - applications
@@ -2517,12 +2532,16 @@ components:
           type: string
           description: |
             Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o crédito contratado A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{4})|NA)$'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
         maximumRate:
           type: string
           description: |
             Percentual máximo cobrado (taxa efetiva) no mês de referência, para o crédito contratado A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{4})|NA)$'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
       example:
           referentialRateIndexer: "SEM_INDEXADOR_TAXA"
           rate: "0.65"
@@ -2752,9 +2771,10 @@ components:
           type: string
           description: |
             Percentual de clientes em cada faixa.
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
-          example: '0.1500'
-          maxLength: 6
+          pattern: '^\d{1}\.\d{6}$'
+          example: '0.150000'
+          minLength: 8
+          maxLength: 8
     MinimumBalance:
       type: object
       required:
@@ -2791,8 +2811,10 @@ components:
           type: string
           description: |
             Percentual que incide sobre a composição das taxas de juros remuneratórios. (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%). A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{2})|NA)$'
-          example: '0.15'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '0.150000'
         applications:
           type: array
           description: Lista distribuição percentuais relativos à taxa de juros remuneratórios
@@ -2802,14 +2824,18 @@ components:
           maxItems: 4
         minimumRate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
+          pattern: '^\d{1}\.\d{6}$'
           description: 'Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
-          example: '0.0456'
+          minLength: 8
+          maxLength: 8
+          example: '0.045600'
         maximumRate:
           type: string
-          pattern: '(^[0-9](\.[0-9]{4})$|^NA$)'
+          pattern: '^\d{1}\.\d{6}$'
           description: 'Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)'
-          example: '0.6865'
+          minLength: 8
+          maxLength: 8
+          example: '0.686500'
     ReferentialRateIndexer:
       type: string
       description: |

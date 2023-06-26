@@ -35,7 +35,7 @@ EMPRESTIMO_CAPITAL_GIRO_ROTATIVO";1;1;"";Não permitido;string;EMPRESTIMO_MICROC
 /data/brand/companies/businessLoans/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/businessLoans/fees/services/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessLoans/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
-";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/businessLoans/fees/services/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessLoans/fees/services/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
 /data/brand/companies/businessLoans/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
@@ -51,12 +51,12 @@ EMPRESTIMO_CAPITAL_GIRO_ROTATIVO";1;1;"";Não permitido;string;EMPRESTIMO_MICROC
 4_FAIXA";1;1;"";Não permitido;string;;
 /data/brand/companies/businessLoans/interestRates/applications/indexer;indexer;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessLoans/interestRates/applications/indexer/rate;rate;"Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-";Texto;6;Opcional;(^[0-9](\.[0-9]{4})$|^NA$);;0;1;"";Não permitido;string;0.8700;
+";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.870000;8
 /data/brand/companies/businessLoans/interestRates/applications/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessLoans/interestRates/applications/customers/rate;rate;"Percentual de clientes em cada faixa.
-";Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.1500;
-/data/brand/companies/businessLoans/interestRates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.0456;
-/data/brand/companies/businessLoans/interestRates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;6;Obrigatório;(^[0-9](\.[0-9]{4})$|^NA$);;1;1;"";Não permitido;string;0.6865;
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
+/data/brand/companies/businessLoans/interestRates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.045600;8
+/data/brand/companies/businessLoans/interestRates/maximumRate;maximumRate;Percentual máximo cobrado (taxa efetiva) no mês de referência, para o Empréstimo contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.686500;8
 /data/brand/companies/businessLoans/requiredWarranties;requiredWarranties;Lista das garantias exigidas;Lista;;Obrigatório;;"CESSAO_DIREITOS_CREDITORIOS 
 CAUCAO 
 PENHOR 
