@@ -1566,12 +1566,14 @@ components:
           items:
             $ref: '#/components/schemas/InterestRate'
           minItems: 1
+          maxItems: 20
           description: Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios para crédito rotativo
         instalmentRates:
           type: array
           items:
             $ref: '#/components/schemas/InterestRate'
           minItems: 1
+          maxItems: 20
           description: Lista da representação que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios para parcelamento do saldo devedor
         otherCredits:
           type: array
@@ -1631,6 +1633,7 @@ components:
           items:
             $ref: '#/components/schemas/PersonalCreditCardCompany'
           minItems: 1
+          maxItems: 800
     PersonalCreditCardCompany:
       type: object
       required:
@@ -1646,6 +1649,7 @@ components:
           items:
             $ref: '#/components/schemas/PersonalCreditCard'
           minItems: 1
+          maxItems: 300
     BusinessCreditCardResponse:
       type: object
       required:
