@@ -1190,7 +1190,8 @@ components:
         - FALHA_INFRAESTRUTURA
         - FALHA_INFRAESTRUTURA_DETENTORA
         - TEMPO_EXPIRADO_AUTORIZACAO
-        - TEMPO_EXPIRADO_CONSUMOREJEITADO_USUARIO
+        - TEMPO_EXPIRADO_CONSUMO
+        - REJEITADO_USUARIO
         - CONTAS_ORIGEM_DESTINO_IGUAIS
         - CONTA_NAO_PERMITE_PAGAMENTO
         - SALDO_INSUFICIENTE
@@ -1200,14 +1201,15 @@ components:
       description: |
         Define o código da razão pela qual o consentimento foi rejeitado
         - VALOR_INVALIDONAO_INFORMADO
-        - FALHA_INFRAESTRUTURA
+        - FALHA_INFRAESTRUTURA - [Descrição de qual falha na infraestrutura inviabilizou o processamento].
         - FALHA_INFRAESTRUTURA_DETENTORA
-        - TEMPO_EXPIRADO_AUTORIZACAO
-        - TEMPO_EXPIRADO_CONSUMOREJEITADO_USUARIO
-        - CONTAS_ORIGEM_DESTINO_IGUAIS
-        - CONTA_NAO_PERMITE_PAGAMENTO
-        - SALDO_INSUFICIENTE
-        - VALOR_ACIMA_LIMITE
+        - TEMPO_EXPIRADO_AUTORIZACAO - Consentimento expirou antes que o usuário pudesse confirmá-lo.
+        - TEMPO_EXPIRADO_CONSUMO
+        - REJEITADO_USUARIO - O usuário rejeitou a autorização do consentimento
+        - CONTAS_ORIGEM_DESTINO_IGUAIS - A conta selecionada é igual à conta destino e não permite realizar esse pagamento.
+        - CONTA_NAO_PERMITE_PAGAMENTO - A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento.
+        - SALDO_INSUFICIENTE - A conta selecionada não possui saldo suficiente para realizar o pagamento.
+        - VALOR_ACIMA_LIMITE - O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outro] para permitir a realização de transações pelo cliente.
         - QRCODE_INVALIDO
     EnumRejectionReasonType:
       type: string
