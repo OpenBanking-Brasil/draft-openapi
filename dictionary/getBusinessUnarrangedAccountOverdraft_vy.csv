@@ -2,8 +2,8 @@
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/name;name;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
-/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/brand/companies/businessUnarrangedAccountOverdraft;businessUnarrangedAccountOverdraft;Lista de adiantamento a depositante;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;1;"";Não permitido;array;;
+/data/brand/companies/businessUnarrangedAccountOverdraft;businessUnarrangedAccountOverdraft;Lista de adiantamento a depositante;Lista;;Obrigatório;;;1;1;"";Não permitido;array;;
 /data/brand/companies/businessUnarrangedAccountOverdraft/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessUnarrangedAccountOverdraft/fees/services;services;Lista das Tarifas cobradas sobre Serviços Prioritários;Lista;;Obrigatório;;;1;31;"";Não permitido;array;;
 /data/brand/companies/businessUnarrangedAccountOverdraft/fees/services/name;name;Nome da Tarifa cobrada sobre Serviço que incide sobre Adiantamento a depositante, para pessoa jurídica.;Texto;;Obrigatório;;CONCESSAO_ADIANTAMENTO_DEPOSITANTE;1;1;"";Não permitido;string;;
@@ -27,7 +27,7 @@
 /data/brand/companies/businessUnarrangedAccountOverdraft/fees/services/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessUnarrangedAccountOverdraft/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/businessUnarrangedAccountOverdraft/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/brand/companies/businessUnarrangedAccountOverdraft/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessUnarrangedAccountOverdraft/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Opcional;;;1;20;"";Não permitido;array;;
 /data/brand/companies/businessUnarrangedAccountOverdraft/interestRates/applications;applications;Lista  das faixas de cobrança da taxa efetiva de remuneração.;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
 /data/brand/companies/businessUnarrangedAccountOverdraft/interestRates/applications/interval;interval;"Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
 ";Texto;;Obrigatório;;"1_FAIXA 
