@@ -489,7 +489,6 @@ components:
       required:
         - type
         - fees
-        - serviceBundles
         - openingClosingChannels
         - transactionMethods
         - termsConditions
@@ -504,7 +503,15 @@ components:
             $ref: '#/components/schemas/PersonalAccountServiceBundle'
           minItems: 1
           maxItems: 200
-          description: Lista dos Pacotes de serviços
+          description: |
+            Lista dos Pacotes de serviços
+
+            [Restrição]
+            - Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
+            atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+
+            - Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
+            existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
         openingClosingChannels:
           type: array
           items:
@@ -920,7 +927,6 @@ components:
       required:
         - type
         - fees
-        - serviceBundles
         - openingClosingChannels
         - transactionMethods
         - termsConditions
@@ -947,7 +953,15 @@ components:
           items:
             $ref:  "#/components/schemas/ServiceBundle"
           minItems: 1
-          description: Lista dos serviços que compõe o pacote de serviços
+          description: |
+            Lista dos serviços que compõe o pacote de serviços
+
+            [Restrição]
+            - Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
+            atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+
+            - Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
+            existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
         openingClosingChannels:
           type: array
           items:
