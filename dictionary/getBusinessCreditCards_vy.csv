@@ -1,7 +1,13 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/name;name;Nome da Marca selecionada pelas Organizações;Texto;80;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Organização A;
 /data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;720;"";Não permitido;array;;
+/data/brand/companies/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
+/data/brand/companies/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
+/data/brand/companies/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
+";Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
 /data/brand/companies/businessCreditCards;businessCreditCards;Lista dos nomes de conta de pagamento pós-paga;Lista;;Opcional;;;1;80;"";Não permitido;array;;
 /data/brand/companies/businessCreditCards/name;name;Denominação/Identificação do nome da conta (cartão de crédito);Texto;50;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Cartão Vantagens;
 /data/brand/companies/businessCreditCards/identification;identification;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
