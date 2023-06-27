@@ -2544,7 +2544,7 @@ components:
           maxLength: 8
       example:
           referentialRateIndexer: "SEM_INDEXADOR_TAXA"
-          rate: "0.65"
+          rate: "0.650000"
           applications:
               - interval: "1_FAIXA"
                 indexer:
@@ -2581,8 +2581,10 @@ components:
           type: string
           description: |
             Percentual que incide sobre a composição das taxas de juros remuneratórios. (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%). A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
-          pattern: '(^[0-9](\.[0-9]{2})|NA)$'
-          example: '0.15'
+          pattern: '^\d{1}\.\d{6}$'
+          minLength: 8
+          maxLength: 8
+          example: '0.150000'
     ResponsePersonalUnarrangedAccountOverdraft:
       type: object
       required:
