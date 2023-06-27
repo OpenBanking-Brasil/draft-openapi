@@ -2406,6 +2406,7 @@ components:
           example: "Organização A"
         companies:
           type: array
+          maxItems: 700
           items:
             $ref: '#/components/schemas/BusinessUnarrangedAccountOverdraftCompany'
           description: Companies traz uma lista de todas as instituições da Marca
@@ -2420,6 +2421,7 @@ components:
         properties:
           businessUnarrangedAccountOverdraft:
             type: array
+            maxItems: 20
             items:
               $ref: '#/components/schemas/BusinessUnarrangedAccountOverdraft'
             description: Lista de adiantamento a depositante
@@ -2434,6 +2436,7 @@ components:
           $ref: '#/components/schemas/BusinessUnarrangedAccountOverdraftFee'
         interestRates:
           type: array
+          maxItems: 20
           items:
             $ref: '#/components/schemas/UnarrangedAccountOverdraftRate'
           minItems: 1
