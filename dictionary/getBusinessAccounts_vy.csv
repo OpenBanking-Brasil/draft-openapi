@@ -34,7 +34,21 @@ CONTA_PAGAMENTO_PRE_PAGA";1;1;"";Não permitido;string;CONTA_DEPOSITO_A_VISTA;
 /data/brand/companies/businessAccounts/fees/services/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessAccounts/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/businessAccounts/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/brand/companies/businessAccounts/serviceBundles;serviceBundles;Lista dos serviços que compõe o pacote de serviços;Lista;;Obrigatório;;;1;100;"";Não permitido;array;;
+/data/brand/companies/businessAccounts/serviceBundles;serviceBundles;"Lista dos serviços que compõe o pacote de serviços
+
+[Restrição]
+- Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
+atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+
+- Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
+existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+";Lista;;Condicional;;;1;100;"
+- Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
+atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+
+- Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
+existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+";Não permitido;array;;
 /data/brand/companies/businessAccounts/serviceBundles/name;name;Nome do Pacote de Serviços dado pela instituição.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Conta de depósitos à vista Movimentação com cartão (sem cheque);
 /data/brand/companies/businessAccounts/serviceBundles/services;services;Lista dos serviços que compõe o pacote de serviços;Lista;;Obrigatório;;;1;100;"";Não permitido;array;;
 /data/brand/companies/businessAccounts/serviceBundles/services/code;code;"Código que identifica o Serviço que compõe o Pacote de Serviços, podendo ser da lista de Serviços Prioritários ou Outros Serviços. p.ex. segundo Resolução 3.919 do Bacen: 'SAQUE_TERMINAL'.
