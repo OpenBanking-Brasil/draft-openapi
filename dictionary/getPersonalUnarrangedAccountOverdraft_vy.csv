@@ -2,10 +2,10 @@
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/name;name;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
-/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/brand/companies/personalUnarrangedAccountOverdraft;personalUnarrangedAccountOverdraft;Lista de produtos e serviços referente adiantamento a depositante;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;1;"";Não permitido;array;;
+/data/brand/companies/personalUnarrangedAccountOverdraft;personalUnarrangedAccountOverdraft;Lista de produtos e serviços referente adiantamento a depositante;Lista;;Obrigatório;;;1;1;"";Não permitido;array;;
 /data/brand/companies/personalUnarrangedAccountOverdraft/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalUnarrangedAccountOverdraft/fees/priorityServices;priorityServices;Lista das Tarifas cobradas sobre Serviços Prioritários;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/personalUnarrangedAccountOverdraft/fees/priorityServices;priorityServices;Lista das Tarifas cobradas sobre Serviços Prioritários;Lista;;Obrigatório;;;1;700;"";Não permitido;array;;
 /data/brand/companies/personalUnarrangedAccountOverdraft/fees/priorityServices/name;name;Nome da Tarifa cobrada sobre Serviço que incide sobre Adiantamento a depositante, para pessoa jurídica.;Texto;;Obrigatório;;CONCESSAO_ADIANTAMENTO_DEPOSITANTE;1;1;"";Não permitido;string;;
 /data/brand/companies/personalUnarrangedAccountOverdraft/fees/priorityServices/code;code;Sigla de identificação do serviço relacionado à Modalidade de Adiantamento a depositante, para pessoa jurídica.;Texto;;Obrigatório;;ADIANT_DEPOSITANTE;1;1;"";Não permitido;string;;
 /data/brand/companies/personalUnarrangedAccountOverdraft/fees/priorityServices/chargingTriggerInfo;chargingTriggerInfo;Fato gerador de cobrança que incide sobre a Modalidade de Adiantamento a depositante informada, para pessoa jurídica.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
