@@ -1,7 +1,13 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/brand/name;name;Nome da Marca selecionada pelas Organizações;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
 /data/brand/companies;companies;Lista de instituições pertencentes à marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
+/data/brand/companies/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
+/data/brand/companies/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
+";Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
 /data/brand/companies/personalFinancings;personalFinancings;Lista de financiamentos;Lista;;Obrigatório;;;1;9;"";Não permitido;array;;
 /data/brand/companies/personalFinancings/type;type;Modalidades de financiamentos ofertados para pessoas naturais, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido;Texto;;Obrigatório;;"FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES 
 FINANCIAMENTO_AQUISICAO_BENS_OUTROS_BENS 
@@ -36,6 +42,27 @@ FINANCIAMENTO_IMOBILIARIO_SISTEMA_FINANCEIRO_HABITACAO_SFI";1;1;"";Não permitid
 /data/brand/companies/personalFinancings/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/personalFinancings/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalFinancings/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies/personalFinancings/interestRates/referentialRateIndexer;referentialRateIndexer;Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040;Texto;;Obrigatório;;"SEM_INDEXADOR_TAXA 
+PRE_FIXADO 
+POS_FIXADO_TR_TBF 
+POS_FIXADO_TJLP 
+POS_FIXADO_LIBOR 
+POS_FIXADO_TLP 
+OUTRAS_TAXAS_POS_FIXADAS 
+FLUTUANTES_CDI 
+FLUTUANTES_SELIC 
+OUTRAS_TAXAS_FLUTUANTES 
+INDICES_PRECOS_IGPM 
+INDICES_PRECOS_IPCA 
+INDICES_PRECOS_IPCC 
+OUTROS_INDICES_PRECO 
+CREDITO_RURAL_TCR_PRE 
+CREDITO_RURAL_TCR_POS 
+CREDITO_RURAL_TRFC_PRE 
+CREDITO_RURAL_TRFC_POS 
+OUTROS_INDEXADORES";1;1;"";Não permitido;string;PRE_FIXADO;
+/data/brand/companies/personalFinancings/interestRates/rate;rate;"Percentual que incide sobre a composição das taxas de juros remuneratórios. (representa uma porcentagem Ex: 0.15 (O valor ao lado representa 15%. O valor '1 'representa 100%) A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
+";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/personalFinancings/interestRates/applications;applications;;Lista;;Obrigatório;;;4;4;"";Não permitido;array;"[{""interval""=>""1_FAIXA"", ""indexer""=>{""rate""=>""0.098700""}, ""customers""=>{""rate""=>""0.150000""}}, {""interval""=>""2_FAIXA"", ""indexer""=>{""rate""=>""0.160000""}, ""customers""=>{""rate""=>""0.350000""}}, {""interval""=>""3_FAIXA"", ""indexer""=>{""rate""=>""0.360000""}, ""customers""=>{""rate""=>""0.200000""}}, {""interval""=>""4_FAIXA"", ""indexer""=>{""rate""=>""0.589000""}, ""customers""=>{""rate""=>""0.300000""}}]";
 /data/brand/companies/personalFinancings/interestRates/applications/interval;interval;"Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
 ";Texto;;Obrigatório;;"1_FAIXA 

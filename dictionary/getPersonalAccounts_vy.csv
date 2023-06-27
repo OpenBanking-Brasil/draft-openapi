@@ -3,6 +3,11 @@
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/name;name;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
 /data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;700;"";Não permitido;array;;
+/data/brand/companies/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
+/data/brand/companies/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
+/data/brand/companies/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
+";Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
 /data/brand/companies/personalAccounts;personalAccounts;Lista de tipos de conta;Lista;;Opcional;;;1;3;"";Não permitido;array;;
 /data/brand/companies/personalAccounts/type;type;"Tipos de contas ofertadas para pessoa natural ou jurídica, p.ex. 'CONTA_DEPOSITO_A_VISTA'.
 Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
