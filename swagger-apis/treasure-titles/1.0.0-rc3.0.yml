@@ -22,7 +22,14 @@ tags:
   - name: Product Identification
     description: Obtém os dados da operação de Títulos do Tesouro Direto identificada por investmentId.
   - name: Balances
-    description: Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+    description: |
+      Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+
+      Nos casos em que não houver posição para o investimento, ou seja, quantidade de ativos e valores monetários zerados, mas o mesmo ainda estiver no prazo de exposição (até 12 meses após a última movimentação), deve se retornar status code 200 e para o payload de retorno considerar os valores abaixo. Campos não obrigatórios não devem ser retornados: 
+
+      - Valores monetários: 0.00
+      - Quantidade de ativos: 0.00
+      - Data e hora da última posição: mesmo conteúdo do campo requestDateTime
   - name: Transactions
     description: Obtém as movimentações da operação (últimos 12 meses) de Títulos do Tesouro Direto identificada por investmentId.
   - name: Transactions Current
@@ -130,9 +137,23 @@ paths:
     get:
       tags:
         - Balances
-      summary: Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+      summary: |
+        Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+
+        Nos casos em que não houver posição para o investimento, ou seja, quantidade de ativos e valores monetários zerados, mas o mesmo ainda estiver no prazo de exposição (até 12 meses após a última movimentação), deve se retornar status code 200 e para o payload de retorno considerar os valores abaixo. Campos não obrigatórios não devem ser retornados: 
+
+        - Valores monetários: 0.00
+        - Quantidade de ativos: 0.00
+        - Data e hora da última posição: mesmo conteúdo do campo requestDateTime
       operationId: treasureTitlesGetInvestmentsInvestmentIdBalances
-      description: Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+      description: |
+        Obtém a posição da operação de Títulos do Tesouro Direto identificada por investmentId.
+
+        Nos casos em que não houver posição para o investimento, ou seja, quantidade de ativos e valores monetários zerados, mas o mesmo ainda estiver no prazo de exposição (até 12 meses após a última movimentação), deve se retornar status code 200 e para o payload de retorno considerar os valores abaixo. Campos não obrigatórios não devem ser retornados: 
+
+        - Valores monetários: 0.00
+        - Quantidade de ativos: 0.00
+        - Data e hora da última posição: mesmo conteúdo do campo requestDateTime
       parameters:
         - name: investmentId
           in: path
