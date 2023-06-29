@@ -55,6 +55,7 @@ tags:
       - Valores monetários: 0.00
       - Quantidade de ativos: 0.00
       - Data e hora da última posição: mesmo conteúdo do campo requestDateTime
+      - Fator de preço: 0.00
   - name: Transactions
     description: Obtém as movimentações históricas (últimos 12 meses) da operação de Renda Variável identificada por investmentId.
   - name: Transactions Current
@@ -174,6 +175,7 @@ paths:
         - Valores monetários: 0.00
         - Quantidade de ativos: 0.00
         - Data e hora da última posição: mesmo conteúdo do campo requestDateTime
+        - Fator de preço: 0.00
       operationId: variableIncomesGetInvestmentsInvestmentIdBalances
       description: |
         Obtém a posição da operação de Renda Variável identificada por investmentId.
@@ -183,6 +185,7 @@ paths:
         - Valores monetários: 0.00
         - Quantidade de ativos: 0.00
         - Data e hora da última posição: mesmo conteúdo do campo requestDateTime
+        - Fator de preço: 0.00
       parameters:
         - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
