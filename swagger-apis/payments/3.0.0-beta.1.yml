@@ -133,7 +133,35 @@ info:
         &ensp;5.1.5 - Tipo de conta inválida: A conta indicada não permite operações de pagamento (CONTA_NAO_PERMITE_PAGAMENTO);  
         &ensp;5.1.6 - Saldo do usuário: Valida se a conta selecionada possui saldo suficiente para realizar o pagamento (SALDO_INSUFICIENTE);  
         &ensp;5.1.7 - Limites da transação: Valida se o valor ultrapassa o limite estabelecido [na instituição/no arranjo/outro] para permitir a realização de transações pelo cliente (VALOR_ACIMA_LIMITE);  
-        &ensp;5.1.8 - QRCode inválido: O QRCode utilizado para a iniciação de pagamento não é válido (QRCODE_INVALIDO).
+        &ensp;5.1.8 - QRCode inválido: O QRCode utilizado para a iniciação de pagamento não é válido (QRCODE_INVALIDO).  
+      5.2 **Abaixo segue a tabela com os dados e como ela deve estar no header da API.**
+      ```
+      |----------------------------------|------------------------------|
+      | Etapas do funil de consentimento | RejectionReason/code         |
+      |----------------------------------|------------------------------|
+      | Início da autenticação           | FALHA_INFRAESTRUTURA         |
+      |                                  | TEMPO_EXPIRADO_AUTORIZACAO   |
+      |                                  | NAO_INFORMADO                |
+      |----------------------------------|------------------------------|
+      | Conclusão da autenticação        | FALHA_INFRAESTRUTURA         |
+      |                                  | TEMPO_EXPIRADO_AUTORIZACAO   |
+      |                                  | REJEITADO_USUARIO            |
+      |                                  | NAO_INFORMADO                |
+      |----------------------------------|------------------------------|
+      | Autorização do cliente           | FALHA_INFRAESTRUTURA         |
+      |                                  | CONTAS_ORIGEM_DESTINO_IGUAIS |
+      |                                  | CONTA_SALARIO                |
+      |                                  | SALDO_INSUFICIENTE           |
+      |                                  | VALOR_ACIMA_LIMITE           |
+      |                                  | QRCODE_INVALIDO              |
+      |                                  | VALOR_INVALIDO               |
+      |                                  | NAO_INFORMADO                |
+      |----------------------------------|------------------------------|
+      | Authorisation code emitido       | FALHA_INFRAESTRUTURA         |
+      |                                  | TEMPO_EXPIRADO_CONSUMO       |
+      |                                  | NAO_INFORMADO                |
+      |----------------------------------|------------------------------|
+      ```
   version: '3.0.0-beta.1'
   license:
     name: Apache 2.0
