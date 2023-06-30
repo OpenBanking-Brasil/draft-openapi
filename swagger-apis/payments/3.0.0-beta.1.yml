@@ -47,7 +47,8 @@ info:
     1. Na criação do consentimento (*POST /consents*); 
     2. Na criação do pagamento - Síncrono (*POST /payments*); 
     3. Validações na consulta do pagamento (*GET /pix/payments/{paymentId}*);
-    4. Demais validações executadas durante o processamento assíncrono pela detentora (consultadas pela iniciadora através do endpoint *GET  /pix/payments/{paymentId}*).
+    4. Demais validações executadas durante o processamento assíncrono do pagamento pela detentora, poderão ser consultados pela iniciadora através do endpoint (*GET /pix/payments/{paymentId}*) previstos com retorno HTTP Code 200 - OK com status RJCT (Rejected) e rejectionReason;
+    5. Demais validações executadas durante o processamento assíncrono do consentimento pela detentora poderão ser consultados pela iniciadora através do endpoint (*GET /consents/{consentId}*) previstos com retorno HTTP Code 200 – OK com status REJECTED e rejectionReason
 
     **Os tipos de validações dispostas abaixo não determinam a ordem em que as instituições devem implementá-las**
 
