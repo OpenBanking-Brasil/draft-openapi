@@ -134,7 +134,7 @@ info:
         &ensp;5.1.6 - Saldo do usuário: Valida se a conta selecionada possui saldo suficiente para realizar o pagamento (SALDO_INSUFICIENTE);  
         &ensp;5.1.7 - Limites da transação: Valida se o valor ultrapassa o limite estabelecido [na instituição/no arranjo/outro] para permitir a realização de transações pelo cliente (VALOR_ACIMA_LIMITE);  
         &ensp;5.1.8 - QRCode inválido: O QRCode utilizado para a iniciação de pagamento não é válido (QRCODE_INVALIDO).  
-      5.2 **Abaixo segue a tabela com os dados e como ela deve estar no header da API.**
+      5.2 **Momentos de validação dos rejectionReasons de acordo com o funil de consentimentos.**
       ```
       |----------------------------------|------------------------------|
       | Etapas do funil de consentimento | RejectionReason/code         |
