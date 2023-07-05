@@ -110,7 +110,7 @@ SCHD";1;1;"";Não permitido;string;PDNG;
 
 - CONTAS_ORIGEM_DESTINO_IGUAIS - Indica uma tentativa de pagamento onde a conta origem e a conta de destino são iguais.
 
-O rejectionReason FALHA_INFRAESTRUTURA não será excluído, apenas deixará de ser utilizado, permitindo assim, retro compatibilidade e integridade entre os participantes.
+O rejectionReason FALHA_INFRAESTRUTURA não será excluído, apenas deixará de ser utilizado, permitindo assim, retrocompatibilidade e integridade entre os participantes.
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
 VALOR_ACIMA_LIMITE 
 VALOR_INVALIDO 
@@ -205,7 +205,7 @@ Segue descrição de cada valor do ENUM.
 ";Texto;;Obrigatório;;"CACC 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
-/data/authorizationFlow;authorizationFlow;"Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+/data/authorisationFlow;authorisationFlow;"Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
 
 [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
 ";Texto;;Condicional;;"HYBRID_FLOW 
