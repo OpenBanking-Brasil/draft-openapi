@@ -869,10 +869,11 @@ components:
           pattern: '^[0-9]{1,4}$'
           example: '1774'
           description: |
-            Código da Agência emissora da conta sem dígito.  
-            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,  
-            no exercício de atividades da instituição, não podendo ser móvel ou transitória).  
-            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
+            Código da Agência emissora da conta sem dígito. 
+            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+            
+            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
         number:
           type: string
           minLength: 1
@@ -922,7 +923,7 @@ components:
             Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),  
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
-          $ref: '#/components/schemas/EnumPaymentsAccountPaymentsType'
+          $ref: '#/components/schemas/EnumAccountPaymentsType'
     DebtorAccount:
       type: object
       description: |
@@ -988,10 +989,11 @@ components:
           pattern: '^[0-9]{1,4}$'
           example: '1774'
           description: |
-            Código da Agência emissora da conta sem dígito.  
-            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,  
-            no exercício de atividades da instituição, não podendo ser móvel ou transitória).  
-            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
+            Código da Agência emissora da conta sem dígito. 
+            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+            
+            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
         number:
           type: string
           minLength: 1
@@ -1002,7 +1004,7 @@ components:
             Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
-          $ref: '#/components/schemas/EnumPaymentsAccountPaymentsType'
+          $ref: '#/components/schemas/EnumAccountPaymentsType'
     ConsentsDebtorAccount:
       type: object
       description: |
@@ -1033,10 +1035,11 @@ components:
           pattern: '^[0-9]{1,4}$'
           example: '1774'
           description: |
-            Código da Agência emissora da conta sem dígito.  
-            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito,  
-            no exercício de atividades da instituição, não podendo ser móvel ou transitória).  
-            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA), SVGS (CONTA_POUPANCA) e SLRY (CONTA_SALARIO).
+            Código da Agência emissora da conta sem dígito. 
+            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+            
+            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
         number:
           type: string
           minLength: 1
@@ -1129,30 +1132,12 @@ components:
       type: string
       enum:
         - CACC
-        - SLRY
         - SVGS
         - TRAN
       example: CACC
       description: |
         Tipos de contas usadas para pagamento.
-        Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
-        conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-        Segue descrição de cada valor do ENUM.
-
-        - CACC - Current - Conta Corrente.
-        - SLRY - Salary - Conta-Salário.
-        - SVGS - Savings - Conta de Poupança.
-        - TRAN - TransactingAccount - Conta de Pagamento pré-paga.
-    EnumPaymentsAccountPaymentsType:
-      type: string
-      enum:
-        - CACC
-        - SVGS
-        - TRAN
-      example: CACC
-      description: |
-        Tipos de contas usadas para pagamento.
-        Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
+        Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
         conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
         Segue descrição de cada valor do ENUM.
 
@@ -2163,7 +2148,7 @@ components:
         cancellation:
           $ref: '#/components/schemas/PatchPixPaymentCancellation'
         debtorAccount:
-          $ref: '#/components/schemas/DebtorAccount'
+          $ref: '#/components/schemas/PaymentsDebtorAccount'
         authorisationFlow:
           type: string
           enum:
@@ -2324,7 +2309,7 @@ components:
             creditorAccount:
               $ref: '#/components/schemas/PaymentsCreditorAccount'
             debtorAccount:
-              $ref: '#/components/schemas/PaymentsDebtorAccount' 
+              $ref: '#/components/schemas/DebtorAccount' 
             authorisationFlow:
               type: string
               enum:
@@ -2460,7 +2445,7 @@ components:
         cancellation:
           $ref: '#/components/schemas/PixPaymentCancellation'
         debtorAccount:
-          $ref: '#/components/schemas/PaymentsDebtorAccount' 
+          $ref: '#/components/schemas/DebtorAccount' 
         authorisationFlow:
           type: string
           enum:
