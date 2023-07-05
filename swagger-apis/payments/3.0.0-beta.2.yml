@@ -840,11 +840,12 @@ components:
           enum:
             - HYBRID_FLOW
             - CIBA_FLOW
+            - FIDO_FLOW
           example: HYBRID_FLOW
           description: |
             Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
             
-            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     CreditorAccount:
       type: object
       description: |
@@ -2154,11 +2155,12 @@ components:
           enum:
             - HYBRID_FLOW
             - CIBA_FLOW
+            - FIDO_FLOW
           example: HYBRID_FLOW
           description: |
             Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
             
-            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     ResponseCreatePixPayment:
       type: object
       required:
@@ -2315,11 +2317,12 @@ components:
               enum:
                 - HYBRID_FLOW
                 - CIBA_FLOW
+                - FIDO_FLOW
               example: HYBRID_FLOW
               description: |
                 Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
                 
-                [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+                [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2451,11 +2454,12 @@ components:
           enum:
             - HYBRID_FLOW
             - CIBA_FLOW
+            - FIDO_FLOW
           example: HYBRID_FLOW
           description: |
             Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
             
-            [Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     Schedule:
       type: object
       description: |
