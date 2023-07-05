@@ -237,7 +237,8 @@ SVGS
 TRAN";1;1;"";Não permitido;string;CACC;
 /data/authorisationFlow;authorisationFlow;"Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
 
-[Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+[Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
 ";Texto;;Condicional;;"HYBRID_FLOW 
-CIBA_FLOW";0;1;" Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+CIBA_FLOW 
+FIDO_FLOW";0;1;" Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
 ";Não permitido;string;HYBRID_FLOW;
