@@ -170,7 +170,7 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
 /data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
 conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
 Segue descrição de cada valor do ENUM.
 
@@ -226,7 +226,7 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
 /data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,  
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
 conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
 Segue descrição de cada valor do ENUM.
 
@@ -238,7 +238,8 @@ SVGS
 TRAN";1;1;"";Não permitido;string;CACC;
 /data/authorisationFlow;authorisationFlow;"Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
 
-[Restrição] Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+[Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
 ";Texto;;Condicional;;"HYBRID_FLOW 
-CIBA_FLOW";0;1;" Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+CIBA_FLOW 
+FIDO_FLOW";0;1;" Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
 ";Não permitido;string;HYBRID_FLOW;
