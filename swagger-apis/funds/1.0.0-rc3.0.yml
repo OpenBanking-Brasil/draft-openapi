@@ -431,7 +431,7 @@ components:
           pattern: '[\w\W\s]*'
         investmentId:
           type: string
-          description: 'Identifica de forma única  o relacionamento do cliente com o fundo, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+          description: Identifica de forma única o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora. Nos casos em que o cliente, após completar 12 meses da última movimentação e com quantidade de ativos zerada (cliente não tem mais posse do produto sob custódia da transmissora), compre novamente o ativo que já investiu em períodos passados, manter o mesmo investmentId anteriormente utilizado.
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: '92792126019929200000000000000000000000000'
@@ -1290,7 +1290,7 @@ components:
     InvestmentId:
       name: investmentId
       in: path
-      description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+      description: Identifica de forma única o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora. Nos casos em que o cliente, após completar 12 meses da última movimentação e com quantidade de ativos zerada (cliente não tem mais posse do produto sob custódia da transmissora), compre novamente o ativo que já investiu em períodos passados, manter o mesmo investmentId anteriormente utilizado.
       required: true
       schema:
         type: string
