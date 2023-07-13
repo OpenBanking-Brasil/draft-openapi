@@ -60,6 +60,7 @@ components:
           properties:
             status:
               type: array
+              maxItems: 1000
               items:
                 $ref: '#/components/schemas/Status'
         links:
@@ -75,6 +76,7 @@ components:
       properties:
         data:
           type: array
+          maxItems: 1000
           items:
             required:
               - outageTime
@@ -184,6 +186,7 @@ components:
         unavailableEndpoints:
           type: array
           description: Endpoints com indisponibilidade
+          maxItems: 1000
           items:
             type: string
             maxLength: 2000
