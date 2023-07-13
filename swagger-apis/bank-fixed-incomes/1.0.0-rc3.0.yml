@@ -1053,7 +1053,7 @@ components:
       example: ENTRADA
     EnumBankFixedIncomeTransactionType:
       type: string
-      description: 'Aplicação, resgate, cancelamento, vencimento, pagamento de juros, amortização, transferência de titularidade, transferência de custódia e outros.'
+      description: Aplicação, resgate, cancelamento, vencimento, pagamento de juros, amortização, transferência de titularidade, transferência de custódia e outros. Para movimentos de transferência (titularidade ou custódia) deve ser considerado o preço unitário (transactionUnitPrice) da aquisição do título.
       enum:
         - APLICACAO
         - RESGATE
