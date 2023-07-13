@@ -1194,7 +1194,7 @@ components:
       example: '42.25'
     TransactionType:
       type: string
-      description: 'Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, prêmio, transferência de titularidade, transferência de custódia, multa, mora e outros'
+      description: Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, prêmio, transferência de titularidade, transferência de custódia, multa, mora e outros. Para movimentos de transferência (titularidade ou custódia) deve ser considerado o preço unitário (transactionUnitPrice) da aquisição do título.
       enum:
         - COMPRA
         - VENDA
