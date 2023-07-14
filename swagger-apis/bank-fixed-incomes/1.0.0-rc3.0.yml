@@ -534,7 +534,7 @@ components:
               required:
                 - amount
                 - currency
-              description: Valor do imposto provisionado considerando a alíquota vigente na data de referência.
+              description: Valor do imposto de renda provisionado considerando a alíquota vigente na data de referência.
               properties:
                 amount:
                   $ref: '#/components/schemas/BalanceAmount'
@@ -556,7 +556,7 @@ components:
               required:
                 - amount
                 - currency
-              description: 'Valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
+              description: Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).
               properties:
                 amount:
                   $ref: '#/components/schemas/BalanceAmount'
@@ -1053,7 +1053,7 @@ components:
       example: ENTRADA
     EnumBankFixedIncomeTransactionType:
       type: string
-      description: 'Aplicação, resgate, cancelamento, vencimento, pagamento de juros, amortização, transferência de titularidade, transferência de custódia e outros.'
+      description: Aplicação, resgate, cancelamento, vencimento, pagamento de juros, amortização, transferência de titularidade, transferência de custódia e outros. Para movimentos de transferência (titularidade ou custódia) deve ser considerado o preço unitário (transactionUnitPrice) da aquisição do título.
       enum:
         - APLICACAO
         - RESGATE
