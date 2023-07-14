@@ -530,7 +530,7 @@ components:
           $ref: '#/components/schemas/CreditFixedIncomesMetaTransactions'
     BlockedBalance:
       type: object
-      description: 'valor líquido não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros)'
+      description: Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).
       required:
         - amount
         - currency
@@ -548,7 +548,6 @@ components:
     CreditFixedIdentification:
       type: object
       required:
-        - issuerInstitutionCnpjNumber
         - investmentType
         - remuneration
         - issueUnitPrice
@@ -556,12 +555,14 @@ components:
         - dueDate
         - voucherPaymentIndicator
         - purchaseDate
-        - gracePeriodDate
         - taxExemptProduct
       properties:
         issuerInstitutionCnpjNumber:
           type: string
-          description: CNPJ da instituição emissora
+          description: |
+            CNPJ da instituição emissora.
+
+            Caso a instituição tenha a informação, o envio será obrigatório.
           maxLength: 14
           pattern: '^\d{14}$'
           example: '11225860000140'
@@ -641,7 +642,10 @@ components:
         gracePeriodDate:
           type: string
           format: date
-          description: Data até a qual o cliente não poderá resgatar antecipadamente seu investimento
+          description: |
+            Data até a qual o cliente não poderá resgatar antecipadamente seu investimento.
+
+            Caso a instituição tenha a informação, o envio será obrigatório.
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-02-16'
@@ -755,7 +759,9 @@ components:
       description: |
         Base de cálculo (dias úteis ou dias corridos).
           1. dias úteis
-          2. dias corridos
+          2. dias corridos.
+
+        Caso a instituição tenha a informação, o envio será obrigatório.
       enum:
         - DIAS_UTEIS
         - DIAS_CORRIDOS
@@ -807,7 +813,10 @@ components:
       example: CRI
     EnumRatePeriodicity:
       type: string
-      description: 'Periodicidade da taxa de remuneração (mensal, anual, diário, semestral)'
+      description: |
+        Periodicidade da taxa de remuneração (mensal, anual, diário, semestral).
+
+        Caso a instituição tenha a informação, o envio será obrigatório.
       enum:
         - MENSAL
         - ANUAL
@@ -820,6 +829,8 @@ components:
         Tipo da taxa de remuneração
           1. LINEAR
           2. EXPONENCIAL
+
+        Caso a instituição tenha a informação, o envio será obrigatório.
       enum:
         - LINEAR
         - EXPONENCIAL
@@ -881,7 +892,7 @@ components:
     IncomeTax:
       type: object
       description: |
-        Valor do imposto provisionado considerando a alíquota vigente na data de referência.
+        Valor do imposto de renda provisionado considerando a alíquota vigente na data de referência.
       required:
         - amount
         - currency
@@ -994,9 +1005,6 @@ components:
     Remuneration:
       type: object
       required:
-        - rateType
-        - ratePeriodicity
-        - calculation
         - indexer
       properties:
         preFixedRate:
@@ -1186,7 +1194,7 @@ components:
       example: '42.25'
     TransactionType:
       type: string
-      description: 'Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, prêmio, transferência de titularidade, transferência de custódia, multa, mora e outros'
+      description: Compra, venda, cancelamento, vencimento, pagamento de juros, amortização, prêmio, transferência de titularidade, transferência de custódia, multa, mora e outros. Para movimentos de transferência (titularidade ou custódia) deve ser considerado o preço unitário (transactionUnitPrice) da aquisição do título.
       enum:
         - COMPRA
         - VENDA
