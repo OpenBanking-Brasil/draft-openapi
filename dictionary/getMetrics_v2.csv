@@ -3,15 +3,15 @@
 /data/requestTime;requestTime;Data e hora que as métricas foram requisitadas.;Date Hora;20;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/availability;availability;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/availability/uptime;uptime;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/availability/uptime/generalUptimeRate;generalUptimeRate;Taxa de disponibilidade (considerando todos os serviços ativos ao mesmo tempo).;Texto;2000;Obrigatório;;;1;1;"";Não permitido;string;;
+/data/availability/uptime/generalUptimeRate;generalUptimeRate;Taxa de disponibilidade (considerando todos os serviços ativos ao mesmo tempo).;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;;8
 /data/availability/uptime/endpoints;endpoints;Tempos de uptime por endpoint.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/availability/uptime/endpoints/url;url;URL do endpoint;Texto;2000;Obrigatório;;;1;1;"";Não permitido;string;;
-/data/availability/uptime/endpoints/uptimeRate;uptimeRate;Taxa de disponibilidade do endpoint.;Texto;2000;Obrigatório;;;1;1;"";Não permitido;string;;
+/data/availability/uptime/endpoints/url;url;URL do endpoint;Texto;2000;Obrigatório;^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$;;1;1;"";Não permitido;string;;
+/data/availability/uptime/endpoints/uptimeRate;uptimeRate;Taxa de disponibilidade do endpoint.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;;8
 /data/availability/downtime;downtime;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/availability/downtime/generalDowntime;generalDowntime;Quantidade de segundos de downtime (considerando qualquer api em downtime).;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/availability/downtime/scheduledOutage;scheduledOutage;Quantidade de segundos de indisponibilidade agendada.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/availability/downtime/endpoints;endpoints;Tempos de downtime por endpoint.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/availability/downtime/endpoints/url;url;URL do endpoint;Texto;2000;Obrigatório;;;1;1;"";Não permitido;string;;
+/data/availability/downtime/endpoints/url;url;URL do endpoint;Texto;2000;Obrigatório;^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$;;1;1;"";Não permitido;string;;
 /data/availability/downtime/endpoints/partialDowntime;partialDowntime;Quantidade de segundos de indisponibilidade do endpoint.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/invocations;invocations;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/invocations/unauthenticated;unauthenticated;Número de chamadas não autenticadas.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;

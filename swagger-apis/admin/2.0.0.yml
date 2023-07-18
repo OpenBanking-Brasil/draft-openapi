@@ -112,7 +112,9 @@ components:
           properties:
             generalUptimeRate:
               type: string
-              maxLength: 2000
+              minLength: 8
+              maxLength: 8
+              pattern: '^\d{1}\.\d{6}$'
               description: Taxa de disponibilidade (considerando todos os serviços ativos ao mesmo tempo).
             endpoints:
               $ref: '#/components/schemas/EndpointUptime'
@@ -141,10 +143,13 @@ components:
         url:
           type: string
           maxLength: 2000
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           description: URL do endpoint
         uptimeRate:
           type: string
-          maxLength: 2000
+          minLength: 8
+          maxLength: 8
+          pattern: '^\d{1}\.\d{6}$'
           description: Taxa de disponibilidade do endpoint.
     EndpointDowntime:
       type: object
@@ -156,6 +161,7 @@ components:
         url:
           type: string
           maxLength: 2000
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           description: URL do endpoint
         partialDowntime:
           type: integer
@@ -371,24 +377,30 @@ components:
           type: string
           description: URL da página atualmente requisitada
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/admin/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/admin/v1/resource'
         first:
           type: string
           description: URL da primeira página de registros
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/admin/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/admin/v1/resource'
         prev:
           type: string
           description: URL da página anterior de registros
+          maxLength: 2000
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
-          maxLength: 2000
           description: URL da próxima página de registros
+          maxLength: 2000
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
           description: URL da última página de registros
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/admin/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/admin/v1/resource'
     Meta:
       type: object
       properties:
