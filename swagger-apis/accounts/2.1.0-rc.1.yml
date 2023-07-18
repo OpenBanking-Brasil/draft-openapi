@@ -677,7 +677,7 @@ components:
           maxLength: 14
           pattern: '^\d{11}$|^\d{14}$'
           description: |
-            Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação)
+            Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação). Exceção a obrigatoriedade de envio: Tipo de transação TED quando se tratar de Transferência entre Reservas (STR0004).
           example: '43908445778'
         partiePersonType:
           $ref: '#/components/schemas/EnumPartiePersonType'
