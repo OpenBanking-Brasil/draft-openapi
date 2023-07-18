@@ -142,25 +142,31 @@ components:
         self:
           type: string
           description: URL da página atualmente requisitada
-          example: 'https://api.banco.com.br/open-banking/channels/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: 'https://api.banco.com.br/open-banking/channels/v1/resource'
         first:
           type: string
           description: URL da primeira página de registros
-          example: 'https://api.banco.com.br/open-banking/channels/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: 'https://api.banco.com.br/open-banking/channels/v1/resource'
         prev:
           type: string
           description: URL da página anterior de registros
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          maxLength: 2000
         next:
           type: string
           description: URL da próxima página de registros
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
         last:
           type: string
           description: URL da última página de registros
-          example: 'https://api.banco.com.br/open-banking/channels/v1/<resource>'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: 'https://api.banco.com.br/open-banking/channels/v1/resource'
     Meta:
       type: object
       properties:
@@ -198,23 +204,27 @@ components:
         explanation:
           type: string
           description: Fornece uma explicação da interrupção atual que pode ser exibida para um cliente final. Será obrigatoriamente preenchido se code tiver algum valor que não seja OK
-          example: Retorno com Sucesso
+          pattern: '[\w\W\s]*'
           maxLength: 2000
+          example: Retorno com Sucesso
         detectionTime:
           type: string
           description: A data e hora em que a interrupção atual foi detectada. Será obrigatoriamente preenchido se a propriedade code for PARTIAL_FAILURE ou UNAVAILABLE
-          example: '2020-07-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
+          example: '2020-07-21T08:30:00Z'
         expectedResolutionTime:
           type: string
           description: A data e hora em que o serviço completo deve continuar (se conhecido). Será obrigatoriamente preenchido se code tiver algum valor que não seja OK
-          example: '2020-07-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
+          example: '2020-07-21T08:30:00Z'
         updateTime:
           type: string
           description: A data e hora em que esse status foi atualizado pela última vez pelo titular dos dados.
-          example: '2020-01-02T01:00:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
+          example: '2020-01-02T01:00:00Z'
         unavailableEndpoints:
           type: array
           description: Endpoints com indisponibilidade
