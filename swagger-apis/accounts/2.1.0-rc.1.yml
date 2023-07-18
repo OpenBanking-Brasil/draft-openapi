@@ -640,7 +640,7 @@ components:
         - transactionName
         - type
         - transactionAmount
-        - transactionDate
+        - transactionDateTime
       properties:
         transactionId:
           type: string
@@ -663,15 +663,13 @@ components:
           $ref: '#/components/schemas/EnumTransactionTypes'
         transactionAmount:
           $ref: '#/components/schemas/AccountTransactionsDataAmount'
-        transactionDate:
+        transactionDateTime:
           type: string
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          maxLength: 24
+          pattern: ' (^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           description: |
-            Se indicador de transação:
-            TRANSACAO_EFETIVADA - corresponde a data de lançamento da transação
-            LANCAMENTO_FUTURO - corresponde a data prevista de efetivação da transação
-          example: '2021-01-07'
+            Data e hora original da transação. No primeiro momento, as instituições poderão complementar informações faltantes com 0 (Por exemplo: 2016-01-29T00:00:00.000Z). A partir de 31/01/2024 é esperado que o campo seja preenchido com informações reais.
+          example: '2016-01-29T12:29:03.374Z'
         partieCnpjCpf:
           type: string
           maxLength: 14
