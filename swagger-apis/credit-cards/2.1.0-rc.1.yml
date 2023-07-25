@@ -741,7 +741,7 @@ components:
           description: Campo de preenchimento obrigatório se selecionada a opção 'OUTRAS' em lineName.
         isLimitFlexible:
           type: boolean
-          description: 'Indica se a operação de crédito é: com limite flexível (true) ou com limite (false).'
+          description: True= Indica que a conta cartão possui limite total flexível ou “sem limite”. False = Indica que a conta cartão possui limite predeterminado exibido no canal para o cliente.
           example: true
         limitAmount:
           $ref: '#/components/schemas/CreditCardsLimitAmount'
