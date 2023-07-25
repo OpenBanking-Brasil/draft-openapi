@@ -972,11 +972,12 @@ components:
 
             [Restrição] Preenchimento obrigatório quando selecionado no campo outros tipos de crédito "OUTROS".
         chargeIdentificator:
-          type: string
-          maxLength: 50
-          pattern: '[\w\W\s]*'
-          example: PARCELA_1
-          description: Identificador da parcela que está sendo informada. Campo de livre preenchimento
+          type: number
+          format: integer
+          description: Número da parcela que está sendo informada.
+          minimum: 1
+          maximum: 999
+          example: 12
         chargeNumber:
           type: number
           format: integer
