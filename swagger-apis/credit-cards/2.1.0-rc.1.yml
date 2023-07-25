@@ -798,6 +798,15 @@ components:
 
             [Restrição] O campo é obrigatório caso isLimitFlexible for igual a false.
           example: BRL
+        limitAmountReason:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 200
+          description: |
+            Razão pela qual o valor total do limite informado está igual a zero.
+
+            [Restrição] Campo de preenchimento obrigatório quando limitAmount for igual a 0.00.
+          example: O perfil do cliente passou por uma análise e o limite precisou ser zerado
     CreditCardsUsedAmount:
       type: object
       description: Valor utilizado do limite informado
