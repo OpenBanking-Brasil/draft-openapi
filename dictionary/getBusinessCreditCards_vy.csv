@@ -33,7 +33,11 @@ CORPORATIVO
 EMPRESARIAL 
 COMPRAS 
 OUTROS";1;1;"";Não permitido;string;PLATINUM;
-/data/brand/companies/businessCreditCards/identification/product/additionalInfo;additionalInfo;Informações complementares se tipo de Cartão 'OUTROS'. Campo deve ser obrigatoriamente preenchido se selecionado 'OUTROS';Texto;50;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;NA;
+/data/brand/companies/businessCreditCards/identification/product/typeAdditionalInfo;typeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo type.
+
+[Restrição] Obrigatório quando ""type” for igual “OUTROS“.
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""type” for igual “OUTROS“.
+";Não permitido;string;Informações adicionais;
 /data/brand/companies/businessCreditCards/identification/creditCard;creditCard;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/identification/creditCard/network;network;"Categoria de Bandeiras de Cartões de Crédito (Instituidor do arranjo de pagamento). Bandeira é a detentora de todos os direitos e deveres da utilização da marca estampada no cartão, inclusive as bandeiras pertencentes aos emissores. p.ex. ""American Express"", ""Diners Club"" Essas bandeiras estão definidas em documento do BACEN de nome ""Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento  Emissores""";Texto;;Obrigatório;;"VISA 
 MASTERCARD 
@@ -44,7 +48,11 @@ BANDEIRA_PROPRIA
 CHEQUE_ELETRONICO 
 ELO 
 OUTRAS";1;1;"";Não permitido;string;MASTERCARD;
-/data/brand/companies/businessCreditCards/identification/creditCard/additionalInfo;additionalInfo;Texto livre para especificar categoria de bandeira marcada como 'OUTRAS'. Campo deve ser obrigatoriamente preenchido se campo network vier selecionado como 'OUTROS';Texto;50;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;NA;
+/data/brand/companies/businessCreditCards/identification/creditCard/networkAdditionalInfo;networkAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo network.
+
+[Restrição] Obrigatório quando ""network” for igual “OUTROS“.
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""network” for igual “OUTROS“.
+";Não permitido;string;Informações adicionais;
 /data/brand/companies/businessCreditCards/rewardsProgram;rewardsProgram;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/rewardsProgram/hasRewardProgram;hasRewardProgram;Indicador da existência de programa de fidelidade/recompensa associado à conta de pagamento pós-paga (cartão) true false;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
 /data/brand/companies/businessCreditCards/rewardsProgram/rewardProgramInfo;rewardProgramInfo;Informações de termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Será de preenchimento obrigatório caso o campo hasRewardProgram esteja preenchido como true;Texto;2000;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresaa1.com/credit_cards_rewards;
@@ -166,7 +174,11 @@ OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 /data/brand/companies/businessCreditCards/interest/otherCredits/code;code;Lista de outras operações de crédito;Texto;;Obrigatório;;"SAQUE_A_CREDITO 
 PAGAMENTOS_CONTAS 
 OUTROS";1;1;"";Não permitido;string;SAQUE_A_CREDITO;
-/data/brand/companies/businessCreditCards/interest/otherCredits/additionalInfo;additionalInfo;Campo Texto para descrever outras operações de crédito marcadas como 'OUTROS'. Se o campo 'code' vier selecionado com 'OUTROS' é obrigatório o preenchimento do additionalInfo;Texto;50;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;NA;
+/data/brand/companies/businessCreditCards/interest/otherCredits/codeAdditionalInfo;codeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo code.
+
+[Restrição] Obrigatório quando ""code ” for igual “OUTROS“.
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""code ” for igual “OUTROS“.
+";Não permitido;string;Informações adicionais;
 /data/brand/companies/businessCreditCards/termsConditions;termsConditions;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/termsConditions/minimumFeeRate;minimumFeeRate;Percentual para pagamento mínimo sobre o saldo devedor da fatura.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.250000;8
 /data/brand/companies/businessCreditCards/termsConditions/additionalInfo;additionalInfo;Campo aberto para detalhamento de taxas de juros;Texto;500;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;NA;
