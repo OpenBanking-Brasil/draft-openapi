@@ -708,7 +708,6 @@ components:
         - consolidationType
         - identificationNumber
         - isLimitFlexible
-        - usedAmountCurrency
         - usedAmount
       properties:
         creditLineLimitType:
@@ -741,7 +740,7 @@ components:
           description: Campo de preenchimento obrigatório se selecionada a opção 'OUTRAS' em lineName.
         isLimitFlexible:
           type: boolean
-          description: 'Indica se a operação de crédito é: com limite flexível (true) ou com limite (false).'
+          description: True= Indica que a conta cartão possui limite total flexível ou “sem limite”. False = Indica que a conta cartão possui limite predeterminado exibido no canal para o cliente.
           example: true
         limitAmount:
           $ref: '#/components/schemas/CreditCardsLimitAmount'
@@ -749,6 +748,30 @@ components:
           $ref: '#/components/schemas/CreditCardsUsedAmount'
         availableAmount:
           $ref: '#/components/schemas/CreditCardsAvailableAmount'
+        customizedLimitAmount:
+          type: object
+          description: |
+            Valor total do limite customizado pelo cliente nos canais eletrônicos da instituição. Esse objeto é de envio obrigatório nos casos em que a instituição permita ao cliente alterar o seu limite.
+          required:
+            - amount
+            - currency
+          properties:
+            amount:
+              type: string
+              format: double
+              pattern: '^\d{1,15}\.\d{2,4}$'
+              maxLength: 20
+              minLength: 4
+              example: '1000.0400'
+              description: |
+                Valor total do limite informado expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+            currency:
+              type: string
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+              description: |
+                Moeda referente ao limite informado, segundo modelo ISO-4217. p.ex. 'BRL.' Todos os limite informados estão representados com a moeda vigente do Brasil.
+              example: BRL
     CreditCardsAccountPaymentMethod:
       type: object
       description: Conjunto de informações relativas aos Meios de Pagamento da Conta de pagamento pós-paga
@@ -772,7 +795,7 @@ components:
     CreditCardsLimitAmount:
       type: object
       description: |
-        Valor total do limite informado.
+        Valor total do limite concedido.
       required:
         - amount
         - currency
@@ -798,6 +821,15 @@ components:
 
             [Restrição] O campo é obrigatório caso isLimitFlexible for igual a false.
           example: BRL
+        limitAmountReason:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 200
+          description: |
+            Razão pela qual o valor total do limite informado está igual a zero.
+
+            [Restrição] Campo de preenchimento obrigatório quando limitAmount for igual a 0.00.
+          example: O perfil do cliente passou por uma análise e o limite precisou ser zerado
     CreditCardsUsedAmount:
       type: object
       description: Valor utilizado do limite informado
@@ -963,11 +995,12 @@ components:
 
             [Restrição] Preenchimento obrigatório quando selecionado no campo outros tipos de crédito "OUTROS".
         chargeIdentificator:
-          type: string
-          maxLength: 50
-          pattern: '[\w\W\s]*'
-          example: PARCELA_1
-          description: Identificador da parcela que está sendo informada. Campo de livre preenchimento
+          type: number
+          format: integer
+          description: Número da parcela que está sendo informada.
+          minimum: 1
+          maximum: 999
+          example: 12
         chargeNumber:
           type: number
           format: integer
@@ -1058,7 +1091,6 @@ components:
         - Multa por atraso no pagamento da fatura
         - Juros de mora por atraso no pagamento da fatura
         - IOF
-        - Sem Encargo
         - Outros
       enum:
         - JUROS_REMUNERATORIOS_ATRASO_PAGAMENTO_FATURA
