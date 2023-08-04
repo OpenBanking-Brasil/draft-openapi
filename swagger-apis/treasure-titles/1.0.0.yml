@@ -663,7 +663,7 @@ components:
         quantity:
           $ref: '#/components/schemas/TreasureTitlesQuantity'
     TreasureTitlesBlockedBalance:
-      description: 'Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
+      description: Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros). Prazo de carência não é considerado como bloqueio.
       type: object
       required:
         - amount
