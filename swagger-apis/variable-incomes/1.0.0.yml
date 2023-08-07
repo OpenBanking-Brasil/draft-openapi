@@ -774,7 +774,7 @@ components:
       additionalProperties: false
     VariableIncomesBalancesBlockedBalance:
       type: object
-      description: 'Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros).'
+      description: Valor não disponível para movimentação naquele momento por qualquer motivo (bloqueio judicial, bloqueio em garantia, entre outros). Prazo de carência não é considerado como bloqueio.
       required:
         - amount
         - currency
@@ -968,7 +968,7 @@ components:
       enum:
         - ENTRADA
         - SAIDA
-      example: ENTRADA
+      example: SAIDA
     EnumVariableIncomesTransactionsTransactionType:
       type: string
       description: |
@@ -993,7 +993,7 @@ components:
       enum:
         - ENTRADA
         - SAIDA
-      example: ENTRADA
+      example: SAIDA
     EnumVariableIncomesTransactionsCurrentTransactionType:
       type: string
       description: |
@@ -1190,7 +1190,7 @@ components:
               example: BRL
         taxes:
           type: object
-          description: 'Impostos cobrados na operação, exceto imposto de renda.'
+          description: 'Impostos cobrados na operação, inclusive imposto de renda day-trade, exceto imposto de renda retido na fonte.'
           required:
             - amount
             - currency
