@@ -3,10 +3,12 @@
 ";Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/transactionId;transactionId;Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.;Texto;100;Opcional;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;0;1;"";Não permitido;string;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;1
 /data/completedAuthorisedPaymentType;completedAuthorisedPaymentType;"Indicador da transação: 
-- Transação efetivada
-- Lançamento futuro
+  - Transação efetivada: a transação atinge esse status quando o ""transactionId"" torna-se imutável;
+  - Lançamento futuro: a transação será efetivada em momento futuro, ou seja, o ""transactionId"" pode mudar;
+  - Transação processando: a transação está em processamento, ou seja, o ""transactionId"" pode mudar.
 ";Texto;;Obrigatório;;"TRANSACAO_EFETIVADA 
-LANCAMENTO_FUTURO";1;1;"";Não permitido;string;TRANSACAO_EFETIVADA;
+LANCAMENTO_FUTURO 
+TRANSACAO_PROCESSANDO";1;1;"";Não permitido;string;TRANSACAO_EFETIVADA;
 /data/creditDebitType;creditDebitType;"Indicador do tipo de lançamento: 
 Débito (no extrato) Em um extrato bancário, os débitos, marcados com a letra “D” ao lado do valor registrado, informam as saídas de dinheiro na conta-corrente.
 Crédito (no extrato) Em um extrato bancário, os créditos, marcados com a letra “C” ao lado do valor registrado, informam as entradas de dinheiro na conta-corrente.

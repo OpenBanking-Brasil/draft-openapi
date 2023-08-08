@@ -766,11 +766,13 @@ components:
       type: string
       description: |
         Indicador da transação: 
-        - Transação efetivada
-        - Lançamento futuro
+          - Transação efetivada: a transação atinge esse status quando o "transactionId" torna-se imutável;
+          - Lançamento futuro: a transação será efetivada em momento futuro, ou seja, o "transactionId" pode mudar;
+          - Transação processando: a transação está em processamento, ou seja, o "transactionId" pode mudar.
       enum:
         - TRANSACAO_EFETIVADA
         - LANCAMENTO_FUTURO
+        - TRANSACAO_PROCESSANDO
       example: TRANSACAO_EFETIVADA
     EnumCreditDebitIndicator:
       type: string
