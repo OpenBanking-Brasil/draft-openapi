@@ -944,7 +944,9 @@ components:
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
-          description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
+          description: |
+            Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. 
+            É esperado que o `transactionId` seja único, imutável e estável.
         identificationNumber:
           type: string
           maxLength: 100
