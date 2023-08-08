@@ -1334,7 +1334,10 @@ components:
         DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
     ConsentRejectionReason:
       type: object
-      description: Motivo da rejeição do consentimento. Informações complementares sobre o motivo do status
+      description: |
+        Motivo da rejeição do consentimento. Informações complementares sobre o motivo do status. 
+
+        [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a REJECTED.
       required:
         - code
         - detail

@@ -191,7 +191,11 @@ Segue descrição de cada valor do ENUM.
 ";Texto;;Obrigatório;;"CACC 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
-/data/rejectionReason;rejectionReason;Motivo da rejeição do consentimento. Informações complementares sobre o motivo do status;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/rejectionReason;rejectionReason;"Motivo da rejeição do consentimento. Informações complementares sobre o motivo do status. 
+
+[Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a REJECTED.
+";Objeto;;Condicional;;;0;1;" Esse motivo deverá ser enviado quando o campo /data/status for igual a REJECTED.
+";Não permitido;object;;
 /data/rejectionReason/code;code;"Define o código da razão pela qual o consentimento foi rejeitado
 - VALOR_INVALIDO
 - NAO_INFORMADO
