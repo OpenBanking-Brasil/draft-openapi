@@ -1061,7 +1061,10 @@ components:
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
-          description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
+          description: |
+            - Caso a tabela fique na descrição do campo: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. O ideal é que o `transactionId` seja imutável. No entanto, para casos em que a transação ainda está em processamento, é esperado que o `transactionId` intermediário seja estável, mudando apenas quando a transação sofrer uma mudança em seu estado. Para transações processadas, é esperado que o `transactionld` e demais dados da transação sejam imutáveis. O `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas na tabela a seguir: 
+
+            - Caso a tabela fique nas orientações da API: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. O ideal é que o `transactionId` seja imutável. No entanto, para casos em que a transação ainda está em processamento, é esperado que o `transactionId` intermediário seja estável, mudando apenas quando a transação sofrer uma mudança em seu estado. Para transações processadas, é esperado que o `transactionld` e demais dados da transação sejam imutáveis. O `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas conforme a tabela “Data de imutabilidade por tipo de transação” presente nas orientações desta API
         identificationNumber:
           type: string
           maxLength: 100
