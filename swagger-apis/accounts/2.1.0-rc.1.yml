@@ -658,7 +658,10 @@ components:
       properties:
         transactionId:
           type: string
-          description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
+          description: |
+            Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. 
+            O ideal é que o `transactionId` seja imutável. 
+            No entanto, o `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas conforme tabela “Data de imutabilidade por tipo de transação” presente nas orientações desta API.
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
