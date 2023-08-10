@@ -53,6 +53,25 @@ info:
     ### `/accounts/{creditCardAccountId}/transactions-current`
       - permissions:
         - GET: **CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ**
+
+    ## Tabela: Data de imutabilidade por tipo de transação
+    ```
+      |-------------------|-------------------------|-----------------------|
+      | Tipo de Transação | Data da Obrigatoriedade | Data da Imutabilidade |
+      |-------------------|-------------------------|-----------------------|
+      | PAGAMENTO         | DO                      | Fatura fechada        |
+      |-------------------|-------------------------|-----------------------|
+      | TARIFA            | DO                      | Fatura fechada        |
+      |-------------------|-------------------------|-----------------------|
+      | OPERACOES_CRED    | DO                      | Fatura fechada        |
+      |-------------------|-------------------------|-----------------------|
+      | ESTORNO           | DO                      | Fatura fechada        |
+      |-------------------|-------------------------|-----------------------|
+      | CASHBACK          | DO                      | Fatura fechada        |
+      |-------------------|-------------------------|-----------------------|
+      | OUTROS            | DO                      | Fatura fechada        |
+      |-------------------|-------------------------|-----------------------|
+      ```
   version: 2.1.0-rc.1
   license:
     name: Apache 2.0
@@ -924,10 +943,11 @@ components:
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
-    CreditCardAccountsTransaction:
+    CreditCardAccountsBillsTransactions:
       type: object
       description: Lista que traz os valores relativos aos saldos do Limite de crédito total da conta de pagamento pós-paga
       required:
+        - transactionId
         - identificationNumber
         - transactionName
         - creditDebitType
@@ -944,7 +964,9 @@ components:
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
-          description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
+          description: |
+            Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. 
+            É esperado que o `transactionId` seja único, imutável e estável.
         identificationNumber:
           type: string
           maxLength: 100
@@ -966,6 +988,140 @@ components:
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: MTU0OTU1NjI2NTk4OTRmc2ZhZDRmc2Q1NmZkM
           description: Informação que identifica a fatura onde consta a transação informada.
+        creditDebitType:
+          $ref: '#/components/schemas/EnumCreditDebitIndicator'
+        transactionType:
+          $ref: '#/components/schemas/EnumCreditCardTransactionType'
+        transactionalAdditionalInfo:
+          type: string
+          maxLength: 140
+          pattern: '^\S[\s\S]*$'
+          description: 'Campo livre, de preenchimento obrigatório quando selecionado tipo de transação "OUTROS"'
+        paymentType:
+          $ref: '#/components/schemas/EnumCreditCardAccountsPaymentType'
+        feeType:
+          $ref: '#/components/schemas/EnumCreditCardAccountFee'
+        feeTypeAdditionalInfo:
+          type: string
+          pattern: '^\S[\s\S]*$'
+          maxLength: 140
+          description: 'Campo livre, de preenchimento obrigatório quando selecionada tipo de tarifa "OUTRA"'
+        otherCreditsType:
+          $ref: '#/components/schemas/EnumCreditCardAccountsOtherCreditType'
+        otherCreditsAdditionalInfo:
+          type: string
+          maxLength: 50
+          pattern: '^\S[\s\S]*$'
+          description: |
+            Campo livre para preenchimento de dados adicionais de outros tipos de crédito contratados no cartão.
+
+            [Restrição] Preenchimento obrigatório quando selecionado no campo outros tipos de crédito "OUTROS".
+        chargeIdentificator:
+          type: number
+          format: integer
+          description: Número da parcela que está sendo informada.
+          minimum: 1
+          maximum: 999
+          example: 12
+        chargeNumber:
+          type: number
+          format: integer
+          maximum: 999
+          example: 12
+          description: |
+            Quantidade de parcelas.   
+            [Restrição] O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
+        brazilianAmount:
+          $ref: '#/components/schemas/CreditCardAccountsTransactionBrazilianAmount'
+        amount:
+          $ref: '#/components/schemas/CreditCardAccountsTransactionAmount'
+        transactionDateTime:
+          type: string
+          format: date-time
+          maxLength: 24
+          pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
+          example: '2016-01-29T12:29:03.374Z'
+          description: |
+            Data e hora original da transação. 
+            No primeiro momento, as instituições poderão complementar informações faltantes com 0 (Por exemplo: 2016-01-29T00:00:00.000Z) 
+            A partir de 31/01/2024 é esperado que o campo seja preenchido com informações reais.
+        billPostDate:
+          type: string
+          format: date
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-05-21'
+          description: Data em que a transação foi inserida na fatura
+        payeeMCC:
+          type: number
+          format: integer
+          maximum: 2147483647
+          example: 5137
+          description: |
+            O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
+    CreditCardAccountsTransaction:
+      type: object
+      description: Lista que traz os valores relativos aos saldos do Limite de crédito total da conta de pagamento pós-paga
+      required:
+        - transactionId
+        - identificationNumber
+        - transactionName
+        - creditDebitType
+        - transactionType
+        - chargeIdentificator
+        - brazilianAmount
+        - amount
+        - transactionDateTime
+        - billPostDate
+      properties:
+        transactionId:
+          type: string
+          maxLength: 100
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
+          description: |
+            - Caso a tabela fique na descrição do campo: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. O ideal é que o `transactionId` seja imutável. No entanto, para casos em que a transação ainda está em processamento, é esperado que o `transactionId` intermediário seja estável, mudando apenas quando a transação sofrer uma mudança em seu estado. Para transações processadas, é esperado que o `transactionld` e demais dados da transação sejam imutáveis. O `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas na tabela a seguir: 
+            ```
+            |-------------------|-------------------------|-----------------------|
+            | Tipo de Transação | Data da Obrigatoriedade | Data da Imutabilidade |
+            |-------------------|-------------------------|-----------------------|
+            | PAGAMENTO         | DO                      | Fatura fechada        |
+            |-------------------|-------------------------|-----------------------|
+            | TARIFA            | DO                      | Fatura fechada        |
+            |-------------------|-------------------------|-----------------------|
+            | OPERACOES_CRED    | DO                      | Fatura fechada        |
+            |-------------------|-------------------------|-----------------------|
+            | ESTORNO           | DO                      | Fatura fechada        |
+            |-------------------|-------------------------|-----------------------|
+            | CASHBACK          | DO                      | Fatura fechada        |
+            |-------------------|-------------------------|-----------------------|
+            | OUTROS            | DO                      | Fatura fechada        |
+            |-------------------|-------------------------|-----------------------|
+            ```
+
+            - Caso a tabela fique nas orientações da API: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. O ideal é que o `transactionId` seja imutável. No entanto, para casos em que a transação ainda está em processamento, é esperado que o `transactionId` intermediário seja estável, mudando apenas quando a transação sofrer uma mudança em seu estado. Para transações processadas, é esperado que o `transactionld` e demais dados da transação sejam imutáveis. O `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas conforme a tabela “Data de imutabilidade por tipo de transação” presente nas orientações desta API
+        identificationNumber:
+          type: string
+          maxLength: 100
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: '4453'
+          description: |
+            Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Finance.
+        transactionName:
+          type: string
+          maxLength: 200
+          pattern: '[\w\W\s]*'
+          example: PGTO
+          description: Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato e fatura).
+        billId:
+          type: string
+          maxLength: 100
+          minLength: 1
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+          example: MTU0OTU1NjI2NTk4OTRmc2ZhZDRmc2Q1NmZkM
+          description: Informação que identifica a fatura onde consta a transação informada. Preencher apenas para casos de transação em fatura fechada, ou seja, este campo não é esperado em casos de transação em fatura aberta.
         creditDebitType:
           $ref: '#/components/schemas/EnumCreditDebitIndicator'
         transactionType:
@@ -1747,7 +1903,7 @@ components:
                 type: array
                 minItems: 0
                 items:
-                  $ref: '#/components/schemas/CreditCardAccountsTransaction'
+                  $ref: '#/components/schemas/CreditCardAccountsBillsTransactions'
               links:
                 $ref: '#/components/schemas/Links'
               meta:
