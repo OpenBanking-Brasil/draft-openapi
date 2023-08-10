@@ -74,6 +74,7 @@ components:
     ResponseMetricsListData:
       type: object
       required:
+        - endpoint
         - requestTime
         - availability
         - invocations
@@ -82,8 +83,12 @@ components:
         - peakTps
         - errors
         - rejections
-        - endpoint
       properties:
+        endpoint:
+          type: string
+          maxLength: 2000
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          description: URL do endpoint
         requestTime:
           type: string
           maxLength: 20
@@ -103,11 +108,6 @@ components:
           $ref: '#/components/schemas/ErrorMetrics'
         rejections:
           $ref: '#/components/schemas/RejectionMetrics'
-        endpoint:
-          type: string
-          maxLength: 2000
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-          description: URL do endpoint
     AvailabilityMetrics:
       type: object
       required:
