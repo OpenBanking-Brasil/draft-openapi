@@ -40,6 +40,49 @@ info:
     ### `/accounts/{accountId}/overdraft-limits`
       - permissions:
         - GET: **ACCOUNTS_OVERDRAFT_LIMITS_READ**
+
+    ## Tabela: Data de imutabilidade por tipo de transação
+    ```
+    |---------------------------------------|-------------------------|-----------------------|
+    | Tipo de Transação                     | Data da Obrigatoriedade | Data da Imutabilidade |
+    |---------------------------------------|-------------------------|-----------------------|
+    | TED                                   | DO                      | DO                    |
+    |---------------------------------------|-------------------------|-----------------------|
+    | PIX                                   | DO                      | DO                    |
+    |---------------------------------------|-------------------------|-----------------------|
+    | TRANSFERENCIA MESMA INSTITUIÇÃO (TEF) | DO                      | DO                    |
+    |---------------------------------------|-------------------------|-----------------------|
+    | TARIFA SERVIÇOS AVULSOS               | DO                      | DO                    |
+    |---------------------------------------|-------------------------|-----------------------|
+    | FOLHA DE PAGAMENTO                    | DO                      | DO                    |
+    |---------------------------------------|-------------------------|-----------------------|
+    | DOC                                   | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | BOLETO                                | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | CONVÊNIO ARRECADAÇÃO                  | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | PACOTE TARIFA SERVIÇOS                | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | DEPÓSITO                              | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | SAQUE                                 | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | CARTÃO                                | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | ENCARGOS JUROS CHEQUE ESPECIAL        | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | RENDIMENTO APLICAÇÃO FINANCEIRA       | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | PORTABILIDADE SALÁRIO                 | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | RESGATE APLICAÇÃO FINANCEIRA          | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | OPERAÇÃO DE CRÉDITO                   | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    | OUTROS                                | DO                      | D+1                   |
+    |---------------------------------------|-------------------------|-----------------------|
+    ```
   version: 2.1.0-rc.1
   license:
     name: Apache 2.0
@@ -649,6 +692,7 @@ components:
     AccountTransactionsData:
       type: object
       required:
+        - transactionId
         - completedAuthorisedPaymentType
         - creditDebitType
         - transactionName
@@ -658,7 +702,10 @@ components:
       properties:
         transactionId:
           type: string
-          description: Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual.
+          description: |
+            Código ou identificador único prestado pela instituição que mantém a conta para representar a transação individual. 
+            O ideal é que o `transactionId` seja imutável. 
+            No entanto, o `transactionId` deve obedecer, no mínimo, as regras de imutabilidade propostas conforme tabela “Data de imutabilidade por tipo de transação” presente nas orientações desta API.
           maxLength: 100
           minLength: 1
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -680,7 +727,7 @@ components:
         transactionDateTime:
           type: string
           maxLength: 24
-          pattern: ' (^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
+          pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           description: |
             Data e hora original da transação. No primeiro momento, as instituições poderão complementar informações faltantes com 0 (Por exemplo: 2016-01-29T00:00:00.000Z). A partir de 31/01/2024 é esperado que o campo seja preenchido com informações reais.
           example: '2016-01-29T12:29:03.374Z'
@@ -766,11 +813,13 @@ components:
       type: string
       description: |
         Indicador da transação: 
-        - Transação efetivada
-        - Lançamento futuro
+          - Transação efetivada: a transação atinge esse status quando o "transactionId" torna-se imutável;
+          - Lançamento futuro: a transação será efetivada em momento futuro, ou seja, o "transactionId" pode mudar;
+          - Transação processando: a transação está em processamento, ou seja, o "transactionId" pode mudar.
       enum:
         - TRANSACAO_EFETIVADA
         - LANCAMENTO_FUTURO
+        - TRANSACAO_PROCESSANDO
       example: TRANSACAO_EFETIVADA
     EnumCreditDebitIndicator:
       type: string
