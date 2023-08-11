@@ -902,10 +902,8 @@ components:
                   properties:
                     latitude:
                       type: number
-                      example:
                     longitude:
                       type: number
-                      example:
                     type:
                       type: string
                       enum:
@@ -974,6 +972,59 @@ components:
                 accountTenure:
                   type: integer
                   description: Indica há quanto tempo o cliente realizou seu cadastro na iniciadora.
+            fidoAssertion:
+              type: object
+              description: Dados da asserção
+              required:
+                - id
+                - rawId
+                - type
+                - response
+              properties:
+                id:
+                  type: string
+                  description: Identificador da credencial.
+                rawId:
+                  type: string
+                  description: Identificador da credencial. Pode ser igual ao campo id.
+                type:
+                  type: string
+                  description: Tipo da credencial.
+                response:
+                  type: object
+                  description: Tras as informações da resposta a asserção.
+                  required:
+                    - clientDataJSON
+                    - authenticatorData
+                    - signature
+                    - userHandle
+                  properties:
+                    clientDataJSON:
+                      type: string
+                      format: bytes
+                      description: Agrega as informações do aplicativo que gerou a credencial.
+                    authenticatorData:
+                      type: string
+                      format: bytes
+                      description: Representa a estrutura de dados do autenticador.
+                    signature:
+                      type: string
+                      format: bytes
+                      description: Sequencia de bytes contendo a assinatura.
+                    userHandle:
+                      type: string
+                      format: bytes
+                      description: Nome de usuário que foi enviado durante a criação da credencial.
+                    clientExtensionResults:
+                      type: object
+                      description: Estrutura para extensão de resultados 
+                      properties:
+                        additionalProp1:
+                          type: string
+                          description: Propriedade adicional.
+                        additionalProp2:
+                          type: string
+                          description: Propriedade adicional.
     DebtorAccount:
       type: object
       description: |
@@ -1493,7 +1544,7 @@ components:
         alg:
           type: integer
           description: Identificador do algoritmo (COSE)
-          example: -7 (ES256)
+          example: -7
         type:
           type: string
           description: Identificador do tipo de credencial.
