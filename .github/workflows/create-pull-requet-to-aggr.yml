@@ -15,7 +15,7 @@
             origin_url=$(git config --get remote.origin.url)
 
             # Verifica se o URL do repositório de origem contém o nome do repositório original
-            if [[ "$origin_url" == *"https://github.com/FelipeBaumgartel/draft-openapi"* ]]; then
+            if [[ "$origin_url" == *"https://github.com/Sensedia/draft-openapi"* ]]; then
               git fetch --all
               features=$(git branch -r | grep -i "aggr" | sed -e "s/.*origin\///g; /merge/d" | tr "\n" " ")
               eval "featureArray=($features)"
