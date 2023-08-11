@@ -1,5 +1,9 @@
-on: [pull_request]
-
+name: Verificar dependência de PR
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
 jobs:
   check_dependencies:
     runs-on: ubuntu-latest
