@@ -407,14 +407,32 @@ paths:
         content:
           application/jwt:
             schema:
-              $ref: '#/components/schemas/ConsentAuthorization'
+              $ref: '#/components/schemas/RiskSignals'
       responses:
         '204':
           $ref: '#/components/responses/204EnrollmentsRiskSignals'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '415':
+          $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityEnrollmentRiskSignals'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
       security:
         - OAuth2ClientCredentials:
             - payments
@@ -627,15 +645,12 @@ components:
               code:
                 type: string
                 enum:
-                  - RP_INVALIDA
                   - STATUS_VINCULO_INVALIDO
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
 
-                  • RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
-                  
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
               title:
                 type: string
                 maxLength: 255
@@ -644,9 +659,7 @@ components:
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
 
-                  • RP_INVALIDA: Relying party inválida.
-                  
-                  • STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
+                  - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
               detail:
                 type: string
                 maxLength: 2048
@@ -655,9 +668,7 @@ components:
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
 
-                  • RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
-                  
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorRiskSignals:
@@ -964,6 +975,27 @@ components:
               $ref: '#/components/schemas/BusinessEntity'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
+    RiskSignals:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Informa a integridade do dispositivo e app
+          properties:
+            integrity:
+              type: object
+              description: Informa a integridade do dispositivo e app
+              properties:
+                appRecognitionVerdict:
+                  type: string
+                  description: Informa a integridade do dispositivo e app
+                deviceRecognitionVerdict:
+                  type: string
+                  description: Informa a integridade do dispositivo e app
+
+
     ConsentAuthorization:
       type: object
       required:
