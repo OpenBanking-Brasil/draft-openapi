@@ -2,7 +2,7 @@
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/name;name;Nome da Marca.;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
-/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;680;"";Não permitido;array;;
 /data/brand/companies/name;name;Nome da Instituição, pertencente à marca, responsável pela comercialização dos produtos e serviços;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa da Marca A;
 /data/brand/companies/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
 /data/brand/companies/urlComplementaryList;urlComplementaryList;URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.;Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
@@ -21,7 +21,7 @@ EMPRESTIMO_MICROCREDITO_PRODUTIVO_ORIENTADO
 EMPRESTIMO_CHEQUE_ESPECIAL 
 EMPRESTIMO_CONTA_GARANTIDA";1;1;"";Não permitido;string;EMPRESTIMO_CREDITO_PESSOAL_CONSIGNADO;
 /data/brand/companies/personalLoans/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/brand/companies/personalLoans/fees/services;services;Lista das Tarifas cobradas sobre Serviços;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies/personalLoans/fees/services;services;Lista das Tarifas cobradas sobre Serviços;Lista;;Opcional;;;1;20;"";Não permitido;array;;
 /data/brand/companies/personalLoans/fees/services/name;name;Nomes das Tarifas cobradas sobre Serviços relacionados à Modalidade informada do Empréstimo para pessoa natural/jurídica.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Taxa de Abertura;
 /data/brand/companies/personalLoans/fees/services/code;code;Sigla de identificação do serviço relacionado à Modalidade informada de Empréstimo para pessoa natural/jurídica.;Texto;100;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;NA;
 /data/brand/companies/personalLoans/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatores geradores de cobrança que incidem sobre as Modalidades informada de Empréstimos para pessoa natural/jurídica.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;3% do valor do contrato;
@@ -43,7 +43,7 @@ EMPRESTIMO_CONTA_GARANTIDA";1;1;"";Não permitido;string;EMPRESTIMO_CREDITO_PESS
 /data/brand/companies/personalLoans/fees/services/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/personalLoans/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/personalLoans/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/brand/companies/personalLoans/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies/personalLoans/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Opcional;;;1;20;"";Não permitido;array;;
 /data/brand/companies/personalLoans/interestRates/referentialRateIndexer;referentialRateIndexer;Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040;Texto;;Obrigatório;;"SEM_INDEXADOR_TAXA 
 PRE_FIXADO 
 POS_FIXADO_TR_TBF 
