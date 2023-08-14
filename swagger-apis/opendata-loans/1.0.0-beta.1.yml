@@ -113,6 +113,7 @@ components:
           items:
             $ref: '#/components/schemas/PersonalLoanCompany'
           minItems: 1
+          maxItems: 680
           description: Companies traz uma lista de todas as instituições da Marca
     PersonalLoanCompany:
       type: object
@@ -181,6 +182,7 @@ components:
           items:
             $ref: '#/components/schemas/BusinessLoanCompany'
           minItems: 1
+          maxItems: 680
           description: Companies traz uma lista de todas as instituições da Marca
     BusinessLoanCompany:
       type: object
@@ -246,6 +248,7 @@ components:
           items:
             $ref: '#/components/schemas/LoanInterestRate'
           minItems: 1
+          maxItems: 20
           description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
         requiredWarranties:
           type: array
@@ -292,6 +295,7 @@ components:
           items:
             $ref: '#/components/schemas/LoanInterestRate'
           minItems: 1
+          maxItems: 20
           description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
         requiredWarranties:
           type: array
@@ -314,6 +318,7 @@ components:
           items:
             $ref: '#/components/schemas/LoanService'
           minItems: 1
+          maxItems: 20
           description: Lista das Tarifas cobradas sobre Serviços
       description: Objeto que reúne informações de tarifas de serviços
     LoanService:

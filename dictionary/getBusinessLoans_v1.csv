@@ -2,7 +2,7 @@
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/name;name;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
-/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;680;"";Não permitido;array;;
 /data/brand/companies/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
 /data/brand/companies/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
 /data/brand/companies/urlComplementaryList;urlComplementaryList;URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.;Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
@@ -21,7 +21,7 @@ EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS
 EMPRESTIMO_CAPITAL_GIRO_PRAZO_VENCIMENTO_SUPERIOR_365_DIAS 
 EMPRESTIMO_CAPITAL_GIRO_ROTATIVO";1;1;"";Não permitido;string;EMPRESTIMO_MICROCREDITO_PRODUTIVO_ORIENTADO;
 /data/brand/companies/businessLoans/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/brand/companies/businessLoans/fees/services;services;Lista das Tarifas cobradas sobre Serviços;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessLoans/fees/services;services;Lista das Tarifas cobradas sobre Serviços;Lista;;Opcional;;;1;20;"";Não permitido;array;;
 /data/brand/companies/businessLoans/fees/services/name;name;Nomes das Tarifas cobradas sobre Serviços relacionados à Modalidade informada do Empréstimo para pessoa natural/jurídica.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Taxa de Abertura;
 /data/brand/companies/businessLoans/fees/services/code;code;Sigla de identificação do serviço relacionado à Modalidade informada de Empréstimo para pessoa natural/jurídica.;Texto;100;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;NA;
 /data/brand/companies/businessLoans/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatores geradores de cobrança que incidem sobre as Modalidades informada de Empréstimos para pessoa natural/jurídica.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;3% do valor do contrato;
@@ -43,7 +43,7 @@ EMPRESTIMO_CAPITAL_GIRO_ROTATIVO";1;1;"";Não permitido;string;EMPRESTIMO_MICROC
 /data/brand/companies/businessLoans/fees/services/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessLoans/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/businessLoans/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/brand/companies/businessLoans/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Opcional;;;1;N;"";Não permitido;array;;
+/data/brand/companies/businessLoans/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Opcional;;;1;20;"";Não permitido;array;;
 /data/brand/companies/businessLoans/interestRates/referentialRateIndexer;referentialRateIndexer;Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040;Texto;;Obrigatório;;"SEM_INDEXADOR_TAXA 
 PRE_FIXADO 
 POS_FIXADO_TR_TBF 
