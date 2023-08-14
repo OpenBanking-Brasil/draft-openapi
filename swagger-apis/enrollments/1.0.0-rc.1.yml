@@ -983,7 +983,80 @@ components:
         data:
           type: object
           description: Informa a integridade do dispositivo e app
+          required:
+            - deviceId
+            - isRootedDevice
+            - screenBrightness
+            - elapsedTimeSinceBoot
+            - osVersion
+            - userTimeZone
+            - language
+            - screenDimensions
+            - accountTenure
           properties:
+            deviceId:
+              type: string
+              description: Identificador do dispositivo.
+            isRootedDevice:
+              type: boolean
+              description: Indica se o usuário possui permissão root no dispositivo.
+            screenBrightness:
+              type: integer
+              description: Indica o nível de brilho da tela do dispositivo.
+            elapsedTimeSinceBoot:
+              type: integer
+              format: int64
+              description: Indica por quanto tempo o dispositivo está ligado desde a última inicialização.
+            osVersion:
+              type: string
+              description: Versão do sistema operacional.
+            userTimeZone:
+              type: string
+              description: 'Indica a configuração de fuso horário do dispositivo no formato UTC offset: ±hh[:mm]'
+              example: '-03'
+            language:
+              type: string
+              description: Indica o idioma do dispositivo no formato ISO 639-1.
+              example: 'pt'
+            screenDimensions:
+              type: string
+              description: Tamanho de tela do dispositivo
+            accountTenure:
+              type: integer
+              description: Indica há quanto tempo o cliente realizou seu cadastro na iniciadora.
+            latitudeLongitude:
+              type: string
+              description: |
+                Latitude (2 casas decimais) e Longitude.
+
+                [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
+            isCallingProgress:
+              type: boolean
+              description: |
+                Indica chamada ativa no momento do vínculo.
+
+                [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
+            isDevModeEnabled:
+              type: boolean
+              description: Indica se o dispositivo está em modo de desenvolvedor.
+            isMockGPS:
+              type: boolean
+              description: Indica se o dispositivo está usando um GPS falso.
+            isEmulated:
+              type: boolean
+              description: Indica se o dispositivo é emulado ou real.
+            isMonkeyRunner:
+              type: boolean
+              description: Indica o uso do MonkeyRunner.
+            isCharging:
+              type: boolean
+              description: Indica se a bateria do dispositivo está sendo carregada.
+            antennaInformation:
+              type: boolean
+              description: Indica em qual antena o dispositivo está conectado.
+            isUsbConnected:
+              type: boolean
+              description: Indica se o dispositivo está conectado em um USB de um computador.
             integrity:
               type: object
               description: Informa a integridade do dispositivo e app
@@ -994,8 +1067,6 @@ components:
                 deviceRecognitionVerdict:
                   type: string
                   description: Informa a integridade do dispositivo e app
-
-
     ConsentAuthorization:
       type: object
       required:
