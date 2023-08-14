@@ -147,19 +147,70 @@ paths:
         content:
           application/jwt:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/EnrollmentCancellation'
-                - type: object
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
                   required:
-                    - data
+                    - cancellation
+                  description: |
+                    Objeto que agrupa as informações de qual foi o usuário logado que solicitou o cancelamento do vínculo de conta.
                   properties:
-                    data:
+                    cancellation:
                       type: object
                       required:
-                        - cancellation
+                        - reason
                       properties:
-                        cancellation:
+                        cancelledBy:
                           type: object
+                          description: |
+                            Informação relacionada ao usuário pagador que solicitou o cancelamento do vínculo de conta.
+                            Pode estar ausente em cenários de processos automatizados realizarem o cancelamento do vínculo, por exemplo, por data de expiração.
+                          required:
+                            - document
+                          properties:
+                            document:
+                              type: object
+                              description: Objeto que consolida os dados do documento do usuário que solicitou o cancelamento.
+                              required:
+                                - identification
+                                - rel
+                              properties:
+                                identification:
+                                  type: string
+                                  maxLength: 11
+                                  description: Número do documento do usuário responsável pelo cancelamento do vínculo de conta.
+                                  example: '11111111111'
+                                  pattern: '^\d{11}$'
+                                rel:
+                                  type: string
+                                  maxLength: 3
+                                  description: Tipo do documento do usuário responsável pelo cancelamento do vínculo de conta.
+                                  example: CPF
+                                  pattern: '^[A-Z]{3}$'
+                        reason:
+                          oneOf:
+                            - type: object
+                              required:
+                              - rejectionReason
+                              description: Motivo da rejeição do vínculo de conta.
+                              properties:
+                                rejectionReason:
+                                  $ref: '#/components/schemas/EnrollmentRejectionReason'
+                            - type: object
+                              required:
+                              - revocationReason
+                              description: Motivo da revogação do vínculo de conta.
+                              properties:
+                                revocationReason:
+                                  $ref: '#/components/schemas/EnrollmentRevocationReason'
+                        additionalInformation:
+                          type: string
+                          pattern: '[\w\W\s]*'
+                          example: Contrato entre iniciadora e detentora interrompido
+                          maxLength: 2048
       responses:
         '204':
           $ref: '#/components/responses/204EnrollmentsEnrollmentIdDelete'
@@ -336,19 +387,34 @@ paths:
         content:
           application/jwt:
             schema:
-              allOf:
-                - $ref: '#/components/schemas/EnrollmentFidoOptionsInput'
-                - type: object
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: object
+                  description: |
+                    Objeto que contém as informações sobre a Relying Party e a plataforma sobre a qual o usuário está utilizando o serviço da iniciadora para utilização de FIDO2.
                   required:
-                    - data
+                    - rp
+                    - platform
+                    - consentId
                   properties:
-                    data:
-                      type: object
-                      required:
-                        - consentId
-                      properties:
-                        consentId:
-                          $ref: '#/components/schemas/consentId'
+                    rp:
+                      type: string
+                      description: Identificador único da Relying Party.
+                    platform:
+                      type: string
+                      description: |
+                        Indica a plataforma em que o usuário criará a nova credencial FIDO2. 
+                        Este campo permite que o servidor FIDO inclua extensões de acordo com a plataforma utilizada.
+                      enum:
+                        - ANDROID
+                        - BROWSER
+                        - CROSS_PLATFORM
+                        - IOS
+                    consentId:
+                      $ref: '#/components/schemas/consentId'
       responses:
         '201':
           $ref: '#/components/responses/201EnrollmentFidoSignOptions'
@@ -1026,7 +1092,7 @@ components:
               type: string
               description: Tamanho de tela do dispositivo
             accountTenure:
-              type: integer
+              type: string
               description: Tempo que o cliente fez cadastro no ITP.
             latitudeLongitude:
               type: string
@@ -1056,7 +1122,7 @@ components:
               type: boolean
               description: Indica se a bateria do dispositivo está sendo carregada.
             antennaInformation:
-              type: boolean
+              type: string
               description: Indica em qual antena o dispositivo está conectado.
             isUsbConnected:
               type: boolean
