@@ -1002,34 +1002,32 @@ components:
           properties:
             deviceId:
               type: string
-              description: Identificador do dispositivo.
+              description: ID único do dispositivo gerado pela plataforma.
             isRootedDevice:
               type: boolean
-              description: Indica se o usuário possui permissão root no dispositivo.
+              description: Indica se o dispositivo sofreu processo de “root”.
             screenBrightness:
               type: integer
               description: Indica o nível de brilho da tela do dispositivo.
             elapsedTimeSinceBoot:
               type: integer
               format: int64
-              description: Indica por quanto tempo o dispositivo está ligado desde a última inicialização.
+              description: Indica por quanto tempo o dispositivo está ligado.
             osVersion:
               type: string
               description: Versão do sistema operacional.
             userTimeZone:
               type: string
-              description: 'Indica a configuração de fuso horário do dispositivo no formato UTC offset: ±hh[:mm]'
-              example: '-03'
+              description: Detalha o fuso horário em que o dispositivo está definido.
             language:
               type: string
-              description: Indica o idioma do dispositivo no formato ISO 639-1.
-              example: 'pt'
+              description: Idioma configurado no dispositivo.
             screenDimensions:
               type: string
               description: Tamanho de tela do dispositivo
             accountTenure:
               type: integer
-              description: Indica há quanto tempo o cliente realizou seu cadastro na iniciadora.
+              description: Tempo que o cliente fez cadastro no ITP.
             latitudeLongitude:
               type: string
               description: |
