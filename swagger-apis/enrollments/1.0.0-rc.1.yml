@@ -433,6 +433,12 @@ paths:
           $ref: '#/components/responses/InternalServerError'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          description: Erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
       security:
         - OAuth2ClientCredentials:
             - payments
@@ -645,51 +651,6 @@ components:
               code:
                 type: string
                 enum:
-                  - STATUS_VINCULO_INVALIDO
-                example: STATUS_VINCULO_INVALIDO
-                description: |
-                  Códigos de erros previstos:
-
-                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
-              title:
-                type: string
-                maxLength: 255
-                pattern: '[\w\W\s]*'
-                example: Permissões inválidas
-                description: |
-                  Título específico do erro reportado, de acordo com o código enviado:
-
-                  - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
-              detail:
-                type: string
-                maxLength: 2048
-                pattern: '[\w\W\s]*'
-                example: 'Permissões inválidas'
-                description: |
-                  Descrição específica do erro de acordo com o código reportado:
-
-                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
-        meta:
-          $ref: '#/components/schemas/Meta'
-    422ResponseErrorRiskSignals:
-      type: object
-      required:
-        - errors
-        - meta
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          items:
-            type: object
-            required:
-              - code
-              - title
-              - detail
-            properties:
-              code:
-                type: string
-                enum:
                   - RP_INVALIDA
                   - STATUS_VINCULO_INVALIDO
                 example: STATUS_VINCULO_INVALIDO
@@ -721,6 +682,51 @@ components:
                   • RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
                   
                   • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+        meta:
+          $ref: '#/components/schemas/Meta'
+    422ResponseErrorRiskSignals:
+      type: object
+      required:
+        - errors
+        - meta
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - STATUS_VINCULO_INVALIDO
+                example: STATUS_VINCULO_INVALIDO
+                description: |
+                  Códigos de erros previstos:
+
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Permissões inválidas
+                description: |
+                  Título específico do erro reportado, de acordo com o código enviado:
+
+                  - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: 'Permissões inválidas'
+                description: |
+                  Descrição específica do erro de acordo com o código reportado:
+
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorFidoSignOptions:
