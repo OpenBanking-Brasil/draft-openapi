@@ -1596,11 +1596,11 @@ components:
               items:
                 type: string
                 example: packed, tpm, android-key, android-safetynet, fido-u2f, apple, none
-            # extensions:
-            #   type: object
-            #   description: Campo de extensão com opções que variam por plataforma.
-            #   additionalProperties:
-            #     type: string
+            extensions:
+              type: object
+              description: Campo de extensão com opções que variam por plataforma.
+              additionalProperties:
+                type: string
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -1688,11 +1688,11 @@ components:
             userVerification:
               type: string
               example: required, preferred, discouraged
-            # extensions:
-            #   type: object
-            #   description: Campo de extensão com opções que variam por plataforma.
-            #   additionalProperties:
-            #     type: string
+            extensions:
+              type: object
+              description: Campo de extensão com opções que variam por plataforma.
+              additionalProperties:
+                type: string
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
