@@ -4,7 +4,7 @@
 /data/brand/name;name;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
 /data/brand/companies;companies;Companies traz uma lista de todas as instituições da Marca;Lista;;Obrigatório;;;1;700;"";Não permitido;array;;
 /data/brand/companies/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
-/data/brand/companies/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
+/data/brand/companies/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^(\d{14})$;;1;1;"";Não permitido;string;50685362000135;
 /data/brand/companies/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
 ";Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
@@ -106,16 +106,16 @@ SMS";1;1;"";Não permitido;string;;
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
 /data/brand/companies/personalAccounts/fees/priorityServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
-";Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;2000.00;
+";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
 /data/brand/companies/personalAccounts/fees/priorityServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/fees/priorityServices/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/personalAccounts/fees/priorityServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/personalAccounts/fees/priorityServices/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalAccounts/fees/priorityServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
+/data/brand/companies/personalAccounts/fees/priorityServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
 /data/brand/companies/personalAccounts/fees/priorityServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/fees/priorityServices/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalAccounts/fees/priorityServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
+/data/brand/companies/personalAccounts/fees/priorityServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/personalAccounts/fees/priorityServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/fees/otherServices;otherServices;Lista das Tarifas cobradas sobre outros Serviços, que não prioritários;Lista;;Opcional;;;1;100;"";Não permitido;array;;
 /data/brand/companies/personalAccounts/fees/otherServices/name;name;Nome do Serviço que incide sobre tipo de conta (Campo Livre);Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Evento personalizado;
@@ -128,16 +128,16 @@ SMS";1;1;"";Não permitido;string;;
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
 /data/brand/companies/personalAccounts/fees/otherServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
-";Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;2000.00;
+";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
 /data/brand/companies/personalAccounts/fees/otherServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/fees/otherServices/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/personalAccounts/fees/otherServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/personalAccounts/fees/otherServices/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalAccounts/fees/otherServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
+/data/brand/companies/personalAccounts/fees/otherServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
 /data/brand/companies/personalAccounts/fees/otherServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/fees/otherServices/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalAccounts/fees/otherServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
+/data/brand/companies/personalAccounts/fees/otherServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/personalAccounts/fees/otherServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/serviceBundles;serviceBundles;"Lista dos Pacotes de serviços
 
@@ -173,16 +173,16 @@ existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
 /data/brand/companies/personalAccounts/serviceBundles/prices/monthlyFee;monthlyFee;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
 (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
-";Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;2000.00;
+";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
 /data/brand/companies/personalAccounts/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/serviceBundles/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/personalAccounts/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/brand/companies/personalAccounts/serviceBundles/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalAccounts/serviceBundles/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;1350.00;
+/data/brand/companies/personalAccounts/serviceBundles/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
 /data/brand/companies/personalAccounts/serviceBundles/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/serviceBundles/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalAccounts/serviceBundles/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;8800.00;
+/data/brand/companies/personalAccounts/serviceBundles/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
 /data/brand/companies/personalAccounts/serviceBundles/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/openingClosingChannels;openingClosingChannels;Lista dos canais para aberturas e encerramento;Lista;;Obrigatório;;"DEPENDENCIAS_PROPRIAS 
 CORRESPONDENTES_BANCARIOS 
@@ -200,7 +200,7 @@ MOVIMENTACAO_CARTAO
 MOVIMENTACAO_PRESENCIAL";1;4;"";Não permitido;array;MOVIMENTACAO_CARTAO;
 /data/brand/companies/personalAccounts/termsConditions;termsConditions;Objeto que reúne informações relativas a Termos e Condições para as modalidades tratadas;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/personalAccounts/termsConditions/minimumBalance;minimumBalance;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/personalAccounts/termsConditions/minimumBalance/value;value;Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas.;Texto;12;Obrigatório;^((\d{1,9}\.\d{2}){1}|NA)$;;1;1;"";Não permitido;string;200.00;
+/data/brand/companies/personalAccounts/termsConditions/minimumBalance/value;value;Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas.;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;200.00;
 /data/brand/companies/personalAccounts/termsConditions/minimumBalance/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/brand/companies/personalAccounts/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
 /data/brand/companies/personalAccounts/termsConditions/closingProcessInfo;closingProcessInfo;Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. 'https://example.com/mobile-banking' ;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
