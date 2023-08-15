@@ -2,7 +2,7 @@
 info:
   title: API OpenData Invoice Financings do Open Finance Brasil
   description: A API descrita neste documento é referente as API Invoice Financings da fase OpenData do Open Finance Brasil.
-  version: 1.0.0
+  version: 1.0.0-beta.1
   contact:
     url: 'https://servicedesk.openbankingbrasil.org.br/Login.jsp?navLanguage=pt-BR'
 servers:
@@ -190,6 +190,7 @@ components:
           items:
             $ref: '#/components/schemas/PersonalInvoiceFinancingsCompanies'
           minItems: 1
+          maxItems: 530
           description: Companies traz uma lista de todas as instituições da Marca
     PersonalInvoiceFinancingsCompanies:
       type: object
@@ -251,6 +252,7 @@ components:
           items:
             $ref: '#/components/schemas/PersonalInvoiceFinancingsInterestRates'
           minItems: 1
+          maxItems: 20
           description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito.
         requiredWarranties:
           type: array
@@ -275,6 +277,7 @@ components:
           items:
             $ref:  "#/components/schemas/InvoiceFinancingsService"
           minItems: 1
+          maxItems: 20
       required:
         - services
     InvoiceFinancingsService:
@@ -415,6 +418,7 @@ components:
           items:
             $ref: '#/components/schemas/BusinessInvoiceFinancingsCompanies'
           minItems: 1
+          maxItems: 590
           description: Companies traz uma lista de todas as instituições da Marca
     BusinessInvoiceFinancingsCompanies:
       type: object
@@ -475,6 +479,7 @@ components:
           items:
             $ref: '#/components/schemas/BusinessInvoiceFinancingsInterestRates'
           minItems: 1
+          maxItems: 20
           description: Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito
         requiredWarranties:
           type: array
@@ -500,6 +505,7 @@ components:
           items:
             $ref:  "#/components/schemas/InvoiceFinancingsService"
           minItems: 1
+          maxItems: 20
           description: Lista das Tarifas cobradas sobre Serviços
     BusinessInvoiceFinancingsInterestRates:
       type: object
