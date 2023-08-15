@@ -207,7 +207,7 @@ components:
           example: 'Empresa A1'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^\d{14}$'
           description: CNPJ
           maxLength: 14
           example: "50685362000135"
@@ -435,7 +435,7 @@ components:
           example: 'Empresa A1'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^\d{14}$'
           description: CNPJ
           maxLength: 14
           example: "50685362000135"
@@ -583,7 +583,7 @@ components:
           $ref: '#/components/schemas/PriceIntervals'
         value:
           type: string
-          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          pattern: '^(\d{1,9}\.\d{2}){1}$'
           maxLength: 12
           x-cds-type: AmountString
           description: |
@@ -601,7 +601,7 @@ components:
       properties:
         value:
           type: string
-          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          pattern: '^(\d{1,9}\.\d{2}){1}$'
           maxLength: 12
           x-cds-type: AmountString
           description: Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
@@ -616,7 +616,7 @@ components:
       properties:
         value:
           type: string
-          pattern: '^((\d{1,9}\.\d{2}){1}|NA)$'
+          pattern: '^(\d{1,9}\.\d{2}){1}$'
           maxLength: 12
           x-cds-type: AmountString
           description: Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência
