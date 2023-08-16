@@ -952,7 +952,6 @@ components:
         - transactionName
         - creditDebitType
         - transactionType
-        - chargeIdentificator
         - brazilianAmount
         - amount
         - transactionDateTime
@@ -1019,7 +1018,10 @@ components:
         chargeIdentificator:
           type: number
           format: integer
-          description: Número da parcela que está sendo informada.
+          description: |
+            Número da parcela que está sendo informada.
+
+            [Restrição] Preenchimento obrigatório se Tipo de Pagamento (paymentType) selecionada for 'A_PRAZO'.
           minimum: 1
           maximum: 999
           example: 12
@@ -1068,7 +1070,6 @@ components:
         - transactionName
         - creditDebitType
         - transactionType
-        - chargeIdentificator
         - brazilianAmount
         - amount
         - transactionDateTime
@@ -1138,7 +1139,10 @@ components:
         chargeIdentificator:
           type: number
           format: integer
-          description: Número da parcela que está sendo informada.
+          description: |
+            Número da parcela que está sendo informada.
+
+            [Restrição] Preenchimento obrigatório se Tipo de Pagamento (paymentType) selecionada for 'A_PRAZO'.
           minimum: 1
           maximum: 999
           example: 12
