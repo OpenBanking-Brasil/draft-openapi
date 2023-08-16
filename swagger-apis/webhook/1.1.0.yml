@@ -80,13 +80,13 @@ paths:
       parameters:
         - $ref: '#/components/parameters/enrollmentId'
         - $ref: '#/components/parameters/versionApi'
-        - $ref: '#/components/parameters/xWebhookInteractionId'
+        - $ref: '#/components/parameters/EnrollmentxWebhookInteractionId'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/RequestBodyWebhook'
-        description: Payload enviado para notificar a alteração no estado do pagamento.
+        description: Payload enviado para notificar a alteração no estado do vínculo.
         required: true
       responses:
         '202':
@@ -166,6 +166,16 @@ components:
       name: x-webhook-interaction-id
       in: header
       description: Identificador único para cada tentativa de notificação realizada. O identificador deverá seguir o padrão UID [RFC4122](https://tools.ietf.org/html/rfc4122).
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        minLength: 1
+        maxLength: 100
+    EnrollmentxWebhookInteractionId:
+      name: x-webhook-interaction-id
+      in: header
+      description: Identificador único para cada tentativa de notificação realizada. Caso haja retentativas de notificação para o mesmo evento, este identificador não poderá ser reaproveitado da notificação anterior. O identificador deverá seguir o padrão [RFC4122](https://tools.ietf.org/html/rfc4122).
       required: true
       schema:
         type: string
