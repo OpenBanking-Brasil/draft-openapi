@@ -175,7 +175,7 @@ components:
     EnrollmentxWebhookInteractionId:
       name: x-webhook-interaction-id
       in: header
-      description: Identificador único para cada tentativa de notificação realizada. Caso haja retentativas de notificação para o mesmo evento, este identificador não poderá ser reaproveitado da notificação anterior. O identificador deverá seguir o padrão [RFC4122](https://tools.ietf.org/html/rfc4122).
+      description: Identificador único para cada tentativa de notificação realizada. Caso haja retentativas de notificação para o mesmo evento, este identificador não poderá ser reaproveitado da notificação anterior. O identificador deverá seguir o padrão UUID [RFC4122](https://tools.ietf.org/html/rfc4122).
       required: true
       schema:
         type: string
