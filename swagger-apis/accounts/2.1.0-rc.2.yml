@@ -698,6 +698,7 @@ components:
         - transactionName
         - type
         - transactionAmount
+        - transactionDate
         - transactionDateTime
       properties:
         transactionId:
@@ -724,6 +725,13 @@ components:
           $ref: '#/components/schemas/EnumTransactionTypes'
         transactionAmount:
           $ref: '#/components/schemas/AccountTransactionsDataAmount'
+        transactionDate:
+          type: string
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: |
+            Se indicador de transação: TRANSACAO_EFETIVADA - corresponde a data de lançamento da transação LANCAMENTO_FUTURO - corresponde a data prevista de efetivação da transação.
+          example: '2021-01-07'
         transactionDateTime:
           type: string
           maxLength: 24
