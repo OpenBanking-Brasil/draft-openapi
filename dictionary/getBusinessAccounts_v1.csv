@@ -26,17 +26,30 @@ CONTA_PAGAMENTO_PRE_PAGA";1;1;"";Não permitido;string;CONTA_DEPOSITO_A_VISTA;
 2_FAIXA 
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
-/data/BusinessAccounts/fees/services/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
+/data/BusinessAccounts/fees/services/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' 
+(representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. 
+O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
+
+Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
+devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
 /data/BusinessAccounts/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/BusinessAccounts/fees/services/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/BusinessAccounts/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/BusinessAccounts/fees/services/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/BusinessAccounts/fees/services/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
+/data/BusinessAccounts/fees/services/minimum/value;value;"Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+
+Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
+devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
 /data/BusinessAccounts/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/BusinessAccounts/fees/services/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/BusinessAccounts/fees/services/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
+/data/BusinessAccounts/fees/services/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+
+Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
+devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
 /data/BusinessAccounts/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/BusinessAccounts/serviceBundles;serviceBundles;"Lista dos serviços que compõe o pacote de serviços
 
@@ -71,17 +84,29 @@ existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
 /data/BusinessAccounts/serviceBundles/prices/monthlyFee;monthlyFee;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
-(representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
+(representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. 
+O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
+
+Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
+devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
 /data/BusinessAccounts/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/BusinessAccounts/serviceBundles/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/BusinessAccounts/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/BusinessAccounts/serviceBundles/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/BusinessAccounts/serviceBundles/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
+/data/BusinessAccounts/serviceBundles/minimum/value;value;"Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+
+Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
+devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
 /data/BusinessAccounts/serviceBundles/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/BusinessAccounts/serviceBundles/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/BusinessAccounts/serviceBundles/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
+/data/BusinessAccounts/serviceBundles/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+
+Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
+devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
+";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
 /data/BusinessAccounts/serviceBundles/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
 /data/BusinessAccounts/openingClosingChannels;openingClosingChannels;Lista dos canais para aberturas e encerramento;Lista;;Obrigatório;;"DEPENDENCIAS_PROPRIAS 
 CORRESPONDENTES_BANCARIOS 
