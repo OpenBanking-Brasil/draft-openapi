@@ -238,11 +238,6 @@ paths:
       security:
         - OAuth2ClientCredentials:
             - payments
-        - NonRedirectAuthorizationCode:
-          - openid
-          - 'enrollment:enrollmentId'
-          - payments
-          - nrp-consents
   /pix/payments:
     post:
       tags:
@@ -300,6 +295,11 @@ paths:
             - openid
             - 'consent:consentId'
             - payments
+        - NonRedirectAuthorizationCode:
+          - openid
+          - 'enrollment:enrollmentId'
+          - payments
+          - nrp-consents
   '/pix/payments/{paymentId}':
     get:
       tags:
