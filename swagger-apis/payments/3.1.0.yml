@@ -340,6 +340,11 @@ paths:
             - openid
             - 'consent:consentId'
             - payments
+        - NonRedirectAuthorizationCode:
+            - openid
+            - 'enrollment:enrollmentId'
+            - payments
+            - nrp-consents
   '/pix/payments/{paymentId}':
     get:
       tags:
@@ -756,6 +761,7 @@ components:
         - payment
         - creditorAccount
         - cnpjInitiator
+        - consentId
       properties:
         endToEndId:
           $ref: '#/components/schemas/EndToEndIdWithoutRestriction'
@@ -851,6 +857,23 @@ components:
             Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
             
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+        consentId:
+              type: string
+              maxLength: 256
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              example: 'urn:bancoex:C1DD33123'
+              description: |
+                Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+                Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+                seja um identificador de recurso persistente e independente da localização.
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+                - o namespace(urn)
+                - o identificador associado ao namespace da instituição transnmissora (bancoex)
+                - o identificador específico dentro do namespace (C1DD33123).
+                Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).  
+
+                [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
     CreditorAccount:
       type: object
       description: |
@@ -2144,7 +2167,9 @@ components:
                 - o namespace(urn)
                 - o identificador associado ao namespace da instituição transnmissora (bancoex)
                 - o identificador específico dentro do namespace (C1DD33123).
-                Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+                Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).  
+
+                [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
             creationDateTime:
               type: string
               format: date-time
@@ -2515,9 +2540,6 @@ components:
         maxLength: 40
         pattern: ^(?!\s)(.*)(\S)$
   securitySchemes:
-    OpenId:
-      type: openIdConnect
-      openIdConnectUrl: 'https://auth.mockbank.poc.raidiam.io/.well-known/openid-configuration'
     OAuth2ClientCredentials:
       type: oauth2
       description: |
