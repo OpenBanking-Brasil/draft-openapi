@@ -1,23 +1,23 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
-/data/PersonalAccountParticipant;PersonalAccountParticipant;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccountParticipant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
-/data/PersonalAccountParticipant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
-/data/PersonalAccountParticipant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
-/data/PersonalAccountParticipant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+/data/participant;participant;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
+/data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
+/data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
+/data/participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
 ";Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
-/data/PersonalAccount;PersonalAccount;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/type;type;"Tipos de contas ofertadas para pessoa natural ou jurídica, p.ex. 'CONTA_DEPOSITO_A_VISTA'.
+/data/personalAccount;personalAccount;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/type;type;"Tipos de contas ofertadas para pessoa natural ou jurídica, p.ex. 'CONTA_DEPOSITO_A_VISTA'.
 Conta de depósito à vista ou Conta corrente - é o tipo mais comum. Nela, o dinheiro fica à sua disposição para ser sacado a qualquer momento. Essa conta não gera rendimentos para o depositante
 Conta poupança - foi criada para estimular as pessoas a pouparem. O dinheiro que ficar na conta por trinta dias passa a gerar rendimentos, com isenção de imposto de renda para quem declara. Ou seja, o dinheiro “cresce” (rende) enquanto ficar guardado na conta. Cada depósito terá rendimentos de mês em mês, sempre no dia do mês em que o dinheiro tiver sido depositado
 Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'
 ";Texto;;Obrigatório;;"CONTA_DEPOSITO_A_VISTA 
 CONTA_POUPANCA 
 CONTA_PAGAMENTO_PRE_PAGA";1;1;"";Não permitido;string;CONTA_DEPOSITO_A_VISTA;
-/data/PersonalAccount/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/fees/priorityServices;priorityServices;Lista das Tarifas cobradas sobre Serviços Prioritários;Lista;;Obrigatório;;;1;40;"";Não permitido;array;;
-/data/PersonalAccount/fees/priorityServices/name;name;Nome dos Serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.;Texto;;Obrigatório;;"CONFECCAO_CADASTRO_INICIO_RELACIONAMENTO 
+/data/personalAccount/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/fees/priorityServices;priorityServices;Lista das Tarifas cobradas sobre Serviços Prioritários;Lista;;Obrigatório;;;1;40;"";Não permitido;array;;
+/data/personalAccount/fees/priorityServices/name;name;Nome dos Serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.;Texto;;Obrigatório;;"CONFECCAO_CADASTRO_INICIO_RELACIONAMENTO 
 FORNECIMENTO_2_VIA_CARTAO_FUNCAO_DEBITO 
 FORNECIMENTO_2_VIA_CARTAO_FUNCAO_MOVIMENTACAO_CONTA_POUPANCA 
 EXCLUSAO_CADASTRO_EMITENTES_CHEQUES_SEM_FUNDO_CCF 
@@ -57,7 +57,7 @@ AVALIACAO_EMERGENCIAL_CREDITO
 FORNECIMENTO_SEGUNDA_VIA_FUNCAO_CREDITO 
 PAGAMENTO_CONTAS_UTILIZANDO_FUNCAO_CREDITO 
 SMS";1;1;"";Não permitido;string;TRANSFERENCIA_TED_PESSOAL_OU_PRESENCIAL;
-/data/PersonalAccount/fees/priorityServices/code;code;Lista das Siglas de identificação do Serviço Prioritário, segundo Resolução 3.919 do Bacen.;Texto;;Obrigatório;;"CADASTRO 
+/data/personalAccount/fees/priorityServices/code;code;Lista das Siglas de identificação do Serviço Prioritário, segundo Resolução 3.919 do Bacen.;Texto;;Obrigatório;;"CADASTRO 
 2_VIA_CARTAO_DEBITO 
 2_VIA_CARTAO_POUPANCA 
 EXCLUSAO_CCF 
@@ -97,61 +97,61 @@ AVALIACAO_EMERGENCIAL_CREDITO
 EMISSAO_SEGUNDA_VIA 
 TARIFA_PAGAMENTO_CONTAS 
 SMS";1;1;"";Não permitido;string;;
-/data/PersonalAccount/fees/priorityServices/chargingTriggerInfo;chargingTriggerInfo;Fatos geradores de cobrança que incidem sobre os serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Fornecimento de extrato com a movimentação de um período em guichê de caixa ou por outras formas de atendimento pessoal, tal como atendimento telefônico realizado por atendente.;
-/data/PersonalAccount/fees/priorityServices/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
-/data/PersonalAccount/fees/priorityServices/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
+/data/personalAccount/fees/priorityServices/chargingTriggerInfo;chargingTriggerInfo;Fatos geradores de cobrança que incidem sobre os serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Fornecimento de extrato com a movimentação de um período em guichê de caixa ou por outras formas de atendimento pessoal, tal como atendimento telefônico realizado por atendente.;
+/data/personalAccount/fees/priorityServices/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
+/data/personalAccount/fees/priorityServices/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
 ";Texto;;Obrigatório;;"1_FAIXA 
 2_FAIXA 
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
-/data/PersonalAccount/fees/priorityServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
+/data/personalAccount/fees/priorityServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
-/data/PersonalAccount/fees/priorityServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/fees/priorityServices/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/fees/priorityServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
+/data/personalAccount/fees/priorityServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/fees/priorityServices/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/fees/priorityServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
-/data/PersonalAccount/fees/priorityServices/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/fees/priorityServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
-/data/PersonalAccount/fees/priorityServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/fees/priorityServices/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/fees/priorityServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
-/data/PersonalAccount/fees/priorityServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/fees/otherServices;otherServices;Lista das Tarifas cobradas sobre outros Serviços, que não prioritários;Lista;;Opcional;;;1;100;"";Não permitido;array;;
-/data/PersonalAccount/fees/otherServices/name;name;Nome do Serviço que incide sobre tipo de conta (Campo Livre);Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Evento personalizado;
-/data/PersonalAccount/fees/otherServices/code;code;Siglas de identificação do Serviço (Campo Livre);Texto;100;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;TALAO_DOMICILIO;
-/data/PersonalAccount/fees/otherServices/chargingTriggerInfo;chargingTriggerInfo;Fatos geradores de cobrança que incidem sobre outros serviços para pessoa natural. (Campo Livre);Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Cobrança devido a evento personalizado;
-/data/PersonalAccount/fees/otherServices/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
-/data/PersonalAccount/fees/otherServices/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
+/data/personalAccount/fees/priorityServices/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/fees/priorityServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
+/data/personalAccount/fees/priorityServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/fees/priorityServices/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/fees/priorityServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
+/data/personalAccount/fees/priorityServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/fees/otherServices;otherServices;Lista das Tarifas cobradas sobre outros Serviços, que não prioritários;Lista;;Opcional;;;1;100;"";Não permitido;array;;
+/data/personalAccount/fees/otherServices/name;name;Nome do Serviço que incide sobre tipo de conta (Campo Livre);Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Evento personalizado;
+/data/personalAccount/fees/otherServices/code;code;Siglas de identificação do Serviço (Campo Livre);Texto;100;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;TALAO_DOMICILIO;
+/data/personalAccount/fees/otherServices/chargingTriggerInfo;chargingTriggerInfo;Fatos geradores de cobrança que incidem sobre outros serviços para pessoa natural. (Campo Livre);Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Cobrança devido a evento personalizado;
+/data/personalAccount/fees/otherServices/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
+/data/personalAccount/fees/otherServices/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
 ";Texto;;Obrigatório;;"1_FAIXA 
 2_FAIXA 
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
-/data/PersonalAccount/fees/otherServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' 
+/data/personalAccount/fees/otherServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' 
 (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. 
 O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
-/data/PersonalAccount/fees/otherServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/fees/otherServices/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/fees/otherServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
+/data/personalAccount/fees/otherServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/fees/otherServices/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/fees/otherServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
-/data/PersonalAccount/fees/otherServices/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/fees/otherServices/minimum/value;value;"Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+/data/personalAccount/fees/otherServices/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/fees/otherServices/minimum/value;value;"Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
-/data/PersonalAccount/fees/otherServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/fees/otherServices/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/fees/otherServices/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+/data/personalAccount/fees/otherServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/fees/otherServices/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/fees/otherServices/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
-/data/PersonalAccount/fees/otherServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/serviceBundles;serviceBundles;"Lista dos Pacotes de serviços
+/data/personalAccount/fees/otherServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/serviceBundles;serviceBundles;"Lista dos Pacotes de serviços
 
 [Restrição]
 - Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
@@ -166,70 +166,70 @@ atrelado a este tipo de conta, porque são contas com serviços essenciais padro
 - Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
 existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
 ";Não permitido;array;;
-/data/PersonalAccount/serviceBundles/name;name;Nome do Pacote de Serviços dado pela instituição.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Conta de depósitos à vista Movimentação com cartão (sem cheque);
-/data/PersonalAccount/serviceBundles/services;services;Lista dos serviços que compõe o pacote de serviços;Lista;;Obrigatório;;;1;100;"";Não permitido;array;;
-/data/PersonalAccount/serviceBundles/services/code;code;"Código que identifica o Serviço que compõe o Pacote de Serviços, podendo ser da lista de Serviços Prioritários ou Outros Serviços. p.ex. segundo Resolução 3.919 do Bacen: 'SAQUE_TERMINAL'.
+/data/personalAccount/serviceBundles/name;name;Nome do Pacote de Serviços dado pela instituição.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Conta de depósitos à vista Movimentação com cartão (sem cheque);
+/data/personalAccount/serviceBundles/services;services;Lista dos serviços que compõe o pacote de serviços;Lista;;Obrigatório;;;1;100;"";Não permitido;array;;
+/data/personalAccount/serviceBundles/services/code;code;"Código que identifica o Serviço que compõe o Pacote de Serviços, podendo ser da lista de Serviços Prioritários ou Outros Serviços. p.ex. segundo Resolução 3.919 do Bacen: 'SAQUE_TERMINAL'.
 ";Texto;100;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;SAQUE_TERMINAL;
-/data/PersonalAccount/serviceBundles/services/chargingTriggerInfo;chargingTriggerInfo;"Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços.
+/data/personalAccount/serviceBundles/services/chargingTriggerInfo;chargingTriggerInfo;"Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços.
 ";Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;"Realização de pesquisa em serviços de proteção ao crédito, base de dados e informações cadastrais, e tratamento de dados e informações necessários ao início relacionamento decorrente da abertura de conta de depósitos à vista ou de poupança ou contratação de operação de crédito ou de arrendamento mercantil, não podendo ser cobrada cumulativamente
 ";
-/data/PersonalAccount/serviceBundles/services/eventLimitQuantity;eventLimitQuantity;"Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços (Número de eventos incluídos no mês) p.ex.'2'. No caso de quantidade ilimitada, reportar 999999
+/data/personalAccount/serviceBundles/services/eventLimitQuantity;eventLimitQuantity;"Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços (Número de eventos incluídos no mês) p.ex.'2'. No caso de quantidade ilimitada, reportar 999999
 ";Texto;6;Obrigatório;^(\d{1,6}){1}$;;1;1;"";Não permitido;string;2;
-/data/PersonalAccount/serviceBundles/services/freeEventQuantity;freeEventQuantity;"Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços com isenção de Tarifa.p.ex.'1'  No caso de quantidade ilimitada, reportar 999999
+/data/personalAccount/serviceBundles/services/freeEventQuantity;freeEventQuantity;"Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços com isenção de Tarifa.p.ex.'1'  No caso de quantidade ilimitada, reportar 999999
 ";Texto;6;Obrigatório;^(\d{1,6}){1}$;;1;1;"";Não permitido;string;1;
-/data/PersonalAccount/serviceBundles/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
-/data/PersonalAccount/serviceBundles/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
+/data/personalAccount/serviceBundles/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
+/data/personalAccount/serviceBundles/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
 ";Texto;;Obrigatório;;"1_FAIXA 
 2_FAIXA 
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
-/data/PersonalAccount/serviceBundles/prices/monthlyFee;monthlyFee;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
+/data/personalAccount/serviceBundles/prices/monthlyFee;monthlyFee;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. ''45.00''
 (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. 
 O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
-/data/PersonalAccount/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/serviceBundles/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
+/data/personalAccount/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/serviceBundles/prices/customers;customers;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
-/data/PersonalAccount/serviceBundles/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/serviceBundles/minimum/value;value;"Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+/data/personalAccount/serviceBundles/minimum;minimum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/serviceBundles/minimum/value;value;"Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
-/data/PersonalAccount/serviceBundles/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/serviceBundles/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/serviceBundles/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
+/data/personalAccount/serviceBundles/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/serviceBundles/maximum;maximum;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/serviceBundles/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
-/data/PersonalAccount/serviceBundles/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/openingClosingChannels;openingClosingChannels;Lista dos canais para aberturas e encerramento;Lista;;Obrigatório;;"DEPENDENCIAS_PROPRIAS 
+/data/personalAccount/serviceBundles/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/openingClosingChannels;openingClosingChannels;Lista dos canais para aberturas e encerramento;Lista;;Obrigatório;;"DEPENDENCIAS_PROPRIAS 
 CORRESPONDENTES_BANCARIOS 
 INTERNET_BANKING 
 MOBILE_BANKING 
 CENTRAL_TELEFONICA 
 CHAT 
 OUTROS";1;7;"";Não permitido;array;DEPENDENCIAS_PROPRIAS;
-/data/PersonalAccount/additionalInfo;additionalInfo;"Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
+/data/personalAccount/additionalInfo;additionalInfo;"Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
 Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
 ";Texto;100;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;NA;
-/data/PersonalAccount/transactionMethods;transactionMethods;Lista de formas de movimentação;Lista;;Obrigatório;;"MOVIMENTACAO_ELETRONICA 
+/data/personalAccount/transactionMethods;transactionMethods;Lista de formas de movimentação;Lista;;Obrigatório;;"MOVIMENTACAO_ELETRONICA 
 MOVIMENTACAO_CHEQUE 
 MOVIMENTACAO_CARTAO 
 MOVIMENTACAO_PRESENCIAL";1;4;"";Não permitido;array;MOVIMENTACAO_CARTAO;
-/data/PersonalAccount/termsConditions;termsConditions;Objeto que reúne informações relativas a Termos e Condições para as modalidades tratadas;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/termsConditions/minimumBalance;minimumBalance;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/PersonalAccount/termsConditions/minimumBalance/value;value;Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas.;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;200.00;
-/data/PersonalAccount/termsConditions/minimumBalance/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/PersonalAccount/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
-/data/PersonalAccount/termsConditions/closingProcessInfo;closingProcessInfo;Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. 'https://example.com/mobile-banking' ;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
-/data/PersonalAccount/incomeRate;incomeRate;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/PersonalAccount/incomeRate/savingAccount;savingAccount;"Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente.
+/data/personalAccount/termsConditions;termsConditions;Objeto que reúne informações relativas a Termos e Condições para as modalidades tratadas;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/termsConditions/minimumBalance;minimumBalance;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/personalAccount/termsConditions/minimumBalance/value;value;Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas.;Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;200.00;
+/data/personalAccount/termsConditions/minimumBalance/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/personalAccount/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
+/data/personalAccount/termsConditions/closingProcessInfo;closingProcessInfo;Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. 'https://example.com/mobile-banking' ;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
+/data/personalAccount/incomeRate;incomeRate;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/personalAccount/incomeRate/savingAccount;savingAccount;"Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente.
 Restrição: De preenchimento obrigatório para CONTA_POUPANCA.
 ";Texto;2000;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;"Para depósitos até 03/05/2012 – remuneração trimestral de 1,5% + TR, sempre creditada no aniversário da conta; Para depósitos a partir de 04/05/2012 – 70% da Selic + TR quando a Selic for igual ou inferior a 8,5% ao ano e 1,5% + TR caso a Selic seja superior a 8,5%.";
-/data/PersonalAccount/incomeRate/prepaidPaymentAccount;prepaidPaymentAccount;Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga.;Texto;2000;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;40% Rendimento a.m.;
+/data/personalAccount/incomeRate/prepaidPaymentAccount;prepaidPaymentAccount;Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga.;Texto;2000;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;40% Rendimento a.m.;
