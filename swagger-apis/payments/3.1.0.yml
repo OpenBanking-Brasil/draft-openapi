@@ -2569,10 +2569,10 @@ components:
           authorizationUrl: 'https://authserver.example/token'
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            payments: Escopo necessÃ¡rio para acesso Ã  API Payment Initiation.
-            openid: indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
-            enrollment:enrollmentId: escopo dinâmico que indica a permissão de realizar atualização de um registro com a permissão do cliente.
-            nrp-consents: deverá estar presente para indicar que este access_token comanda diversos pagamentos, cada um com seu consentimento.
+            payments: Escopo necessário para acesso à  API Payment Initiation.
+            openid: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
+            enrollment:enrollmentId: Permite realizar atualização de um registro com a permissão do cliente.
+            nrp-consents: Consentimento para pagamentos sem redirecionamento.
   responses:
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
