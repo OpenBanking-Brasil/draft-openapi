@@ -119,10 +119,10 @@ components:
     PersonalData:
       type: object
       required:
-        - Participant
-        - PersonalAccount
+        - participant
+        - personalAccount
       properties:
-        Participant:
+        participant:
           type: object
           required:
             - brand
@@ -155,7 +155,7 @@ components:
                 URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
                 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
               example: 'https://empresadaorganizacaoa.com/complementarylist'
-        PersonalAccount:
+        personalAccount:
           type: object
           required:
             - type
@@ -560,10 +560,10 @@ components:
     BusinessData:
       type: object
       required:
-        - Participant
-        - BusinessAccounts
+        - participant
+        - businessAccounts
       properties:
-        Participant:
+        participant:
           type: object
           required:
             - brand
@@ -596,7 +596,7 @@ components:
                 URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
                 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
               example: 'https://empresadaorganizacaoa.com/complementarylist'
-        BusinessAccounts:
+        businessAccounts:
           type: object
           required:
             - type
