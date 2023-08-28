@@ -320,6 +320,8 @@ paths:
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/creditCardAccountId'
         - $ref: '#/components/parameters/pagination-key'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseCreditCardAccountsLimits'
@@ -1082,7 +1084,6 @@ components:
         - amount
         - transactionDate
         - transactionDateTime
-        - billPostDate
       properties:
         transactionId:
           type: string
