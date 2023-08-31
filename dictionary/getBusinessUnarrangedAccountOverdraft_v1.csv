@@ -1,10 +1,10 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/Participant;Participant;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/Participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
-/data/Participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Empresa A1;
-/data/Participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
-/data/Participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+/data/participant;participant;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
+/data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Empresa A1;
+/data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
+/data/participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
 ";Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
 /data/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
