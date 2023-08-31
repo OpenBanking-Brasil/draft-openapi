@@ -86,137 +86,14 @@ components:
         - meta
       properties:
         data:
-          type: object
-          required:
-            - brand
-          properties:
-            brand:
-              $ref: '#/components/schemas/PersonalLoanBrand'
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponsePersonalLoansData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-    PersonalLoanBrand:
-      type: object
-      required:
-        - name
-        - companies
-      properties:
-        name:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 80
-          description: Nome da Marca.
-          example: Organização A
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonalLoanCompany'
-          minItems: 1
-          maxItems: 680
-          description: Companies traz uma lista de todas as instituições da Marca
-    PersonalLoanCompany:
-      type: object
-      required:
-        - name
-        - cnpjNumber
-        - personalLoans
-      properties:
-        name:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 80
-          description: 'Nome da Instituição, pertencente à marca, responsável pela comercialização dos produtos e serviços'
-          example: Empresa da Marca A
-        cnpjNumber:
-          type: string
-          pattern: '^\d{14}$'
-          description: CNPJ
-          maxLength: 14
-          example: "50685362000135"
-        urlComplementaryList:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 1024
-          description: URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.
-          example: 'https://example.com/mobile-banking'
-        personalLoans:
-          type: array
-          items:
-            $ref: '#/components/schemas/PersonalLoan'
-          minItems: 1
-          maxItems: 6
-          description: Lista de modalidades de empréstimos
-    ResponseBusinessLoans:
-      type: object
-      required:
-        - data
-        - links
-        - meta
-      properties:
-        data:
-          type: object
-          required:
-            - brand
-          properties:
-            brand:
-              $ref: '#/components/schemas/BusinessLoanBrand'
-        links:
-          $ref: '#/components/schemas/Links'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    BusinessLoanBrand:
-      type: object
-      required:
-        - name
-        - companies
-      properties:
-        name:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 80
-          description: Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes
-          example: Organização A
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/BusinessLoanCompany'
-          minItems: 1
-          maxItems: 680
-          description: Companies traz uma lista de todas as instituições da Marca
-    BusinessLoanCompany:
-      type: object
-      required:
-        - name
-        - cnpjNumber
-        - businessLoans
-      properties:
-        name:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 80
-          description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
-          example: Empresa A1
-        cnpjNumber:
-          type: string
-          pattern: '^\d{14}$'
-          description: CNPJ
-          maxLength: 14
-          example: "50685362000135"
-        urlComplementaryList:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 1024
-          description: URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.
-          example: 'https://example.com/mobile-banking'
-        businessLoans:
-          type: array
-          items:
-            $ref: '#/components/schemas/BusinessLoan'
-          minItems: 1
-          maxItems: 6
-          description: Lista de modalidades de empréstimos
-    PersonalLoan:
+    ResponsePersonalLoansData:
       type: object
       required:
         - type
@@ -224,6 +101,8 @@ components:
         - requiredWarranties
         - termsConditions
       properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
         type:
           type: string
           enum:
@@ -264,7 +143,54 @@ components:
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_loans'
-    BusinessLoan:
+    Participant:
+      type: object
+      required:
+        - brand
+        - name
+        - cnpjNumber
+        - personalLoans
+      properties:
+        brand:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 80
+          description: Nome da Marca.
+          example: Organização A
+        name:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 80
+          description: 'Nome da Instituição, pertencente à marca, responsável pela comercialização dos produtos e serviços'
+          example: Empresa da Marca A
+        cnpjNumber:
+          type: string
+          pattern: '^\d{14}$'
+          description: CNPJ
+          maxLength: 14
+          example: "50685362000135"
+        urlComplementaryList:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 1024
+          description: URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.
+          example: 'https://example.com/mobile-banking'
+    ResponseBusinessLoans:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseBusinessLoansData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseBusinessLoansData:
       type: object
       required:
         - type
@@ -272,6 +198,8 @@ components:
         - requiredWarranties
         - termsConditions
       properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
         type:
           type: string
           enum:
