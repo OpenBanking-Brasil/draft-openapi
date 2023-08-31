@@ -272,8 +272,6 @@ components:
           example: 'https://empresaa1.com/personal_financing'
     PersonalFinancingFee:
       type: object
-      required:
-        - services
       properties:
         services:
           type: array
@@ -526,8 +524,6 @@ components:
             $ref: '#/components/schemas/FinancingService'
           minItems: 1
           maxItems: 20
-      required:
-        - services
     Price:
       type: object
       required:
