@@ -33,10 +33,10 @@ CORPORATIVO
 EMPRESARIAL 
 COMPRAS 
 OUTROS";1;1;"";Não permitido;string;PLATINUM;
-/data/brand/companies/businessCreditCards/identification/product/typeAdditionalInfo;typeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo type.
+/data/brand/companies/businessCreditCards/identification/product/typeAdditionalInfo;typeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo ""type"".
 
-[Restrição] Obrigatório quando ""type” for igual “OUTROS“.
-";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""type” for igual “OUTROS“.
+[Restrição] Obrigatório quando ""type"" for igual ""OUTROS"".
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""type"" for igual ""OUTROS"".
 ";Não permitido;string;Informações adicionais;
 /data/brand/companies/businessCreditCards/identification/creditCard;creditCard;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/identification/creditCard/network;network;"Categoria de Bandeiras de Cartões de Crédito (Instituidor do arranjo de pagamento). Bandeira é a detentora de todos os direitos e deveres da utilização da marca estampada no cartão, inclusive as bandeiras pertencentes aos emissores. p.ex. ""American Express"", ""Diners Club"" Essas bandeiras estão definidas em documento do BACEN de nome ""Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento  Emissores""";Texto;;Obrigatório;;"VISA 
@@ -48,10 +48,10 @@ BANDEIRA_PROPRIA
 CHEQUE_ELETRONICO 
 ELO 
 OUTRAS";1;1;"";Não permitido;string;MASTERCARD;
-/data/brand/companies/businessCreditCards/identification/creditCard/networkAdditionalInfo;networkAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo network.
+/data/brand/companies/businessCreditCards/identification/creditCard/networkAdditionalInfo;networkAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo ""network"".
 
-[Restrição] Obrigatório quando ""network” for igual “OUTROS“.
-";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""network” for igual “OUTROS“.
+[Restrição] Obrigatório quando ""network"" for igual ""OUTROS"".
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""network"" for igual ""OUTROS"".
 ";Não permitido;string;Informações adicionais;
 /data/brand/companies/businessCreditCards/rewardsProgram;rewardsProgram;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/rewardsProgram/hasRewardProgram;hasRewardProgram;Indicador da existência de programa de fidelidade/recompensa associado à conta de pagamento pós-paga (cartão) true false;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
@@ -182,10 +182,10 @@ OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 /data/brand/companies/businessCreditCards/interest/otherCredits/code;code;Lista de outras operações de crédito;Texto;;Obrigatório;;"SAQUE_A_CREDITO 
 PAGAMENTOS_CONTAS 
 OUTROS";1;1;"";Não permitido;string;SAQUE_A_CREDITO;
-/data/brand/companies/businessCreditCards/interest/otherCredits/codeAdditionalInfo;codeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo code.
+/data/brand/companies/businessCreditCards/interest/otherCredits/codeAdditionalInfo;codeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo ""code"".
 
-[Restrição] Obrigatório quando ""code ” for igual “OUTROS“.
-";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""code ” for igual “OUTROS“.
+[Restrição] Obrigatório quando ""code"" for igual ""OUTROS"".
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""code"" for igual ""OUTROS"".
 ";Não permitido;string;Informações adicionais;
 /data/brand/companies/businessCreditCards/termsConditions;termsConditions;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brand/companies/businessCreditCards/termsConditions/minimumFeeRate;minimumFeeRate;Percentual para pagamento mínimo sobre o saldo devedor da fatura.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.250000;8
