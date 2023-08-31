@@ -278,8 +278,6 @@ components:
             $ref:  "#/components/schemas/InvoiceFinancingsService"
           minItems: 1
           maxItems: 20
-      required:
-        - services
     InvoiceFinancingsService:
       type: object
       required:
@@ -497,8 +495,6 @@ components:
     BusinessInvoiceFinancingsFees:
       type: object
       description: Objeto que reúne informações de tarifas de serviços
-      required:
-        - services
       properties:
         services:
           type: array
