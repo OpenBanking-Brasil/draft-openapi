@@ -185,14 +185,15 @@ components:
           minItems: 1
           maxItems: 7
           description: Lista dos canais para aberturas e encerramento
-        additionalInfo:
+        openingClosingChannelsAdditionalInfo:
           type: string
-          maxLength: 100
+          maxLength: 140
           pattern: '[\w\W\s]*'
           description: |
-            Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
-            Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
-          example: 'NA'
+            Campo livre para preenchimento das informações adicionais referente ao "openingClosingChannels". 
+
+            [Restrição] Obrigatório quando "openingClosingChannels" for igual 'OUTROS'.
+          example: Informações adicionais 
         transactionMethods:
           type: array
           items:
@@ -632,14 +633,15 @@ components:
           minItems: 1
           maxItems: 7
           description: Lista dos canais para aberturas e encerramento
-        additionalInfo:
+        openingClosingChannelsAdditionalInfo:
           type: string
-          maxLength: 100
+          maxLength: 140
           pattern: '[\w\W\s]*'
           description: |
-            Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
-            Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
-          example: 'NA'
+            Campo livre para preenchimento das informações adicionais referente ao "openingClosingChannels". 
+
+            [Restrição] Obrigatório quando "openingClosingChannels" for igual 'OUTROS'.
+          example: Informações adicionais 
         transactionMethods:
           type: array
           items:

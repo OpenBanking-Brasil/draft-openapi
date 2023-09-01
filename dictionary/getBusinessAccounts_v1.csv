@@ -114,9 +114,11 @@ MOBILE_BANKING
 CENTRAL_TELEFONICA 
 CHAT 
 OUTROS";1;7;"";Não permitido;array;DEPENDENCIAS_PROPRIAS;
-/data/additionalInfo;additionalInfo;"Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
-Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
-";Texto;100;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;NA;
+/data/openingClosingChannelsAdditionalInfo;openingClosingChannelsAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao ""openingClosingChannels"". 
+
+[Restrição] Obrigatório quando ""openingClosingChannels"" for igual 'OUTROS'.
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""openingClosingChannels"" for igual 'OUTROS'.
+";Não permitido;string;Informações adicionais;
 /data/transactionMethods;transactionMethods;Lista de formas de movimentação;Lista;;Obrigatório;;"MOVIMENTACAO_ELETRONICA 
 MOVIMENTACAO_CHEQUE 
 MOVIMENTACAO_CARTAO 
