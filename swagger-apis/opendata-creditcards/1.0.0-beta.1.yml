@@ -163,9 +163,9 @@ components:
               maxLength: 140
               pattern: '[\w\W\s]*'
               description: |
-                Campo livre para preenchimento das informações adicionais referente ao campo type.
+                Campo livre para preenchimento das informações adicionais referente ao campo "type".
 
-                [Restrição] Obrigatório quando "type” for igual “OUTROS“.
+                [Restrição] Obrigatório quando "type" for igual "OUTROS".
               example: 'Informações adicionais'
         creditCard:
           type: object
@@ -191,9 +191,9 @@ components:
               maxLength: 140
               pattern: '[\w\W\s]*'
               description: |
-                Campo livre para preenchimento das informações adicionais referente ao campo network.
+                Campo livre para preenchimento das informações adicionais referente ao campo "network".
 
-                [Restrição] Obrigatório quando "network” for igual “OUTROS“.
+                [Restrição] Obrigatório quando "network" for igual "OUTROS".
               example: 'Informações adicionais'
     CreditCardRewardsProgram:
       type: object
@@ -289,9 +289,9 @@ components:
           maxLength: 140
           pattern: '[\w\W\s]*'
           description: |
-            Campo livre para preenchimento das informações adicionais referente ao campo code.
+            Campo livre para preenchimento das informações adicionais referente ao campo "code".
 
-            [Restrição] Obrigatório quando "code ” for igual “OUTROS“.
+            [Restrição] Obrigatório quando "code" for igual "OUTROS".
           example: 'Informações adicionais'
     PersonalCreditCardResponse:
       type: object
@@ -301,42 +301,65 @@ components:
         - meta
       properties:
         data:
-          type: object
-          required:
-            - brand
-          properties:
-            brand:
-              $ref: '#/components/schemas/PersonalCreditCardBrand'
+          type: array
+          items:
+            $ref: '#/components/schemas/PersonalCreditCardData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-    PersonalCreditCardBrand:
+    PersonalCreditCardData:
       type: object
       required:
         - name
-        - companies
+        - identification
+        - rewardsProgram
+        - fees
+        - interest
+        - termsConditions
       properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
         name:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 50
+          description: Denominação/Identificação do nome da conta (cartão de crédito)
+          example: Cartão Universitário
+        identification:
+          $ref: '#/components/schemas/CreditCardIdentification'
+        rewardsProgram:
+          $ref: '#/components/schemas/CreditCardRewardsProgram'
+        fees:
+          type: object
+          description: Objeto que reúne informações de tarifas de serviços
+          required:
+            - services
+          properties:
+            services:
+              type: array
+              description: Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas
+              items:
+                $ref: '#/components/schemas/CreditCardService'
+              minItems: 1
+              maxItems: 9
+        interest:
+          $ref: '#/components/schemas/CreditCardInterest'
+        termsConditions:
+          $ref: '#/components/schemas/CreditCardTermsConditions'
+    Participant:
+      type: object
+      required:
+        - brand
+        - name
+        - cnpjNumber
+      properties:
+        brand:
           type: string
           maxLength: 80
           pattern: '[\w\W\s]*'
           description: Nome da Marca selecionada pelas Organizações
           example: Organização A
-        companies:
-          type: array
-          description: Companies traz uma lista de todas as instituições da Marca
-          items:
-            $ref: '#/components/schemas/PersonalCreditCardCompany'
-          minItems: 1
-          maxItems: 800
-    PersonalCreditCardCompany:
-      type: object
-      required:
-        - name
-        - cnpjNumber
-        - personalCreditCards
-      properties:
         name:
           type: string
           description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
@@ -357,13 +380,6 @@ components:
             URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
             Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
           example: 'https://empresadaorganizacaoa.com/complementarylist'
-        personalCreditCards:
-          type: array
-          description: Lista das contas de pagamento pós-paga
-          items:
-            $ref: '#/components/schemas/PersonalCreditCard'
-          minItems: 1
-          maxItems: 300
     BusinessCreditCardResponse:
       type: object
       required:
@@ -372,67 +388,52 @@ components:
         - meta
       properties:
         data:
-          type: object
-          required:
-            - brand
-          properties:
-            brand:
-              $ref: '#/components/schemas/BusinessCreditCardBrand'
+          type: array
+          items:
+            $ref: '#/components/schemas/BusinessCreditCardData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-    BusinessCreditCardBrand:
-      type: object
-      required:
-        - companies
-      properties:
-        name:
-          type: string
-          maxLength: 80
-          pattern: '[\w\W\s]*'
-          description: Nome da Marca selecionada pelas Organizações
-          example: Organização A
-        companies:
-          type: array
-          description: Companies traz uma lista de todas as instituições da Marca
-          items:
-            $ref: '#/components/schemas/BusinessCreditCardCompany'
-          minItems: 1
-          maxItems: 720
-    BusinessCreditCardCompany:
+    BusinessCreditCardData:
       type: object
       required:
         - name
-        - cnpjNumber
+        - identification
+        - rewardsProgram
+        - fees
+        - interest
+        - termsConditions
       properties:
+        participant:
+          $ref: '#/components/schemas/Participant'
         name:
           type: string
-          description: Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A'
-          maxLength: 80
           pattern: '[\w\W\s]*'
-          example: 'Empresa A1'
-        cnpjNumber:
-          type: string
-          pattern: '^\d{14}$'
-          description: CNPJ
-          maxLength: 14
-          example: "50685362000135"
-        urlComplementaryList:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 1024
-          description: |
-            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
-            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
-          example: 'https://empresadaorganizacaoa.com/complementarylist'
-        businessCreditCards:
-          type: array
-          description: Lista dos nomes de conta de pagamento pós-paga
-          items:
-            $ref: '#/components/schemas/BusinessCreditCard'
-          minItems: 1
-          maxItems: 80
+          maxLength: 50
+          description: Denominação/Identificação do nome da conta (cartão de crédito)
+          example: Cartão Vantagens
+        identification:
+          $ref: '#/components/schemas/CreditCardIdentification'
+        rewardsProgram:
+          $ref: '#/components/schemas/CreditCardRewardsProgram'
+        fees:
+          type: object
+          description: Objeto que reúne informações de tarifas de serviços
+          required:
+            - services
+          properties:
+            services:
+              type: array
+              description: Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas
+              items:
+                $ref: '#/components/schemas/CreditCardService'
+              minItems: 1
+              maxItems: 9
+        interest:
+          $ref: '#/components/schemas/CreditCardInterest'
+        termsConditions:
+          $ref: '#/components/schemas/CreditCardTermsConditions'
     CreditCardService:
       type: object
       required:
@@ -633,80 +634,6 @@ components:
         - CREDITO_RURAL_TRFC_POS
         - OUTROS_INDEXADORES
       example: 'SEM_INDEXADOR_TAXA'
-    PersonalCreditCard:
-      type: object
-      required:
-        - name
-        - identification
-        - rewardsProgram
-        - fees
-        - interest
-        - termsConditions
-      properties:
-        name:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 50
-          description: Denominação/Identificação do nome da conta (cartão de crédito)
-          example: Cartão Universitário
-        identification:
-          $ref: '#/components/schemas/CreditCardIdentification'
-        rewardsProgram:
-          $ref: '#/components/schemas/CreditCardRewardsProgram'
-        fees:
-          type: object
-          description: Objeto que reúne informações de tarifas de serviços
-          required:
-            - services
-          properties:
-            services:
-              type: array
-              description: Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas
-              items:
-                $ref: '#/components/schemas/CreditCardService'
-              minItems: 1
-              maxItems: 9
-        interest:
-          $ref: '#/components/schemas/CreditCardInterest'
-        termsConditions:
-          $ref: '#/components/schemas/CreditCardTermsConditions'
-    BusinessCreditCard:
-      type: object
-      required:
-        - name
-        - identification
-        - rewardsProgram
-        - fees
-        - interest
-        - termsConditions
-      properties:
-        name:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 50
-          description: Denominação/Identificação do nome da conta (cartão de crédito)
-          example: Cartão Vantagens
-        identification:
-          $ref: '#/components/schemas/CreditCardIdentification'
-        rewardsProgram:
-          $ref: '#/components/schemas/CreditCardRewardsProgram'
-        fees:
-          type: object
-          description: Objeto que reúne informações de tarifas de serviços
-          required:
-            - services
-          properties:
-            services:
-              type: array
-              description: Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas
-              items:
-                $ref: '#/components/schemas/CreditCardService'
-              minItems: 1
-              maxItems: 9
-        interest:
-          $ref: '#/components/schemas/CreditCardInterest'
-        termsConditions:
-          $ref: '#/components/schemas/CreditCardTermsConditions'
     Links:
       type: object
       properties:
