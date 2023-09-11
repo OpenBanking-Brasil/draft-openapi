@@ -259,11 +259,11 @@ paths:
       operationId: consentsGetConsentsConsentIdExtends
       description: Método para obter detalhes de extensões consentimento identificado por consentId.
       parameters:
-        - $ref: '#/components/parameters/ConsentIdExtends'
-        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/ConsentId'
+        - $ref: '#/components/parameters/AuthorizationExtends'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
-        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xFapiInteractionIdExtends'
         - $ref: '#/components/parameters/xCustomerUserAgent'
       responses:
         '200':
@@ -304,12 +304,12 @@ paths:
       operationId: consentsPostConsentsConsentIdExtends
       description: Método para renovar consentimento identificado por consentId, exceto casos com múltiplas alçadas. Nos casos de múltiplas alçadas, a transmissora deve retornar o status 422.
       parameters:
-        - $ref: '#/components/parameters/ConsentIdExtends'
-        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/ConsentId'
+        - $ref: '#/components/parameters/AuthorizationExtends'
         - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
-        - $ref: '#/components/parameters/xFapiInteractionId'
-        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressExtends'
+        - $ref: '#/components/parameters/xFapiInteractionIdExtends'
+        - $ref: '#/components/parameters/xCustomerUserAgentExtends'
       requestBody:
         content:
           application/json:
@@ -1027,20 +1027,11 @@ components:
         Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
         seja um identificador de recurso persistente e independente da localização.  
         Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
-        - o namespace(urn)
-        - o identificador associado ao namespace da instituição transnmissora (bancoex) 
-        - o identificador específico dentro do namespace (C1DD33123).  
+
+        - namespace(urn)
+        - identificador associado ao namespace da instituição transnmissora (bancoex)
+        - identificador específico dentro do namespace (C1DD33123).
         Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
-      required: true
-      schema:
-        type: string
-        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
-        maxLength: 256
-    ConsentIdExtends:
-      name: consentId
-      in: path
-      description: |
-        [O consentId é o identificador único do consentimento e deverá ser um URN - Uniform Resource Name.](https://tools.ietf.org/html/rfc8141)
       required: true
       schema:
         type: string
@@ -1057,11 +1048,31 @@ components:
         pattern: '[\w\W\s]*'
         minLength: 1
         maxLength: 2048
+    AuthorizationExtends:
+      name: Authorization
+      in: header
+      description: Cabeçalho HTTP padrão. Permite que as credenciais sejam fornecidas dependendo do tipo de recurso solicitado
+      required: true
+      schema:
+        type: string
+        pattern: '[^\s][\w\W\s][^\s]*'
+        minLength: 1
+        maxLength: 2048
     xCustomerUserAgent:
       name: x-customer-user-agent
       in: header
       description: Indica o user-agent que o usuário utiliza.
       required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
+    xCustomerUserAgentExtends:
+      name: x-customer-user-agent
+      in: header
+      description: Indica o user-agent que o usuário utiliza.
+      required: true
       schema:
         type: string
         pattern: '[\w\W\s]*'
@@ -1087,11 +1098,31 @@ components:
         pattern: '[\w\W\s]*'
         minLength: 1
         maxLength: 100
+    xFapiCustomerIpAddressExtends:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: O endereço IP do usuário se estiver atualmente logado com o receptor.
+      required: true
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
       description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
       required: false
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionIdExtends:
+      name: x-fapi-interaction-id
+      in: header
+      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser "espelhado" pela transmissora (server) no cabeçalho de resposta.'
+      required: true
       schema:
         type: string
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
