@@ -131,64 +131,64 @@ oas['paths'].each_with_index do |(path, methods)|
 
       if response['content'] == nil
         puts '    └── INFO: No content was found!'
-        return
-      end
-
-      applicationData = response['content'];
-
-      if response['content']['application/json'] != nil
-        applicationData = response['content']['application/json'];
-      elsif response['content']['application/jwt'] != nil
-        applicationData = response['content']['application/jwt'];
-      end
-      
-      extract_fields(applicationData['schema'], '', []).each do |field|
-        min_items = field['minItems']
-        max_items = field['maxItems']
-        data_type = field['type']
-        restriction = format_restriction(field['description'])
-        mandatory = field['isRequired'] ? "Obrigatório" : "Opcional"
-
-        if ['date', 'date-time'].include? field['format']
-          data_type = field['format']
+      elsif
+       
+        applicationData = response['content'];
+        
+        if response['content']['application/json'] != nil
+          applicationData = response['content']['application/json'];
+        elsif response['content']['application/jwt'] != nil
+          applicationData = response['content']['application/jwt'];
         end
 
-        if field['type'] && field['type'].match(/array/)
-          data_type = 'array'
-          field['type'] = 'array'
-        end
+        extract_fields(applicationData['schema'], '', []).each do |field|
+          min_items = field['minItems']
+          max_items = field['maxItems']
+          data_type = field['type']
+          restriction = format_restriction(field['description'])
+          mandatory = field['isRequired'] ? "Obrigatório" : "Opcional"
 
-        if field['minItems'] == nil
-          min_items = field['isRequired'] ? 1 : 0
-          max_items = 1
-        end
+          if ['date', 'date-time'].include? field['format']
+            data_type = field['format']
+          end
 
-        if field['type'] == 'array' and field['maxItems'] == nil
-          max_items = 'N'
-        end
+          if field['type'] && field['type'].match(/array/)
+            data_type = 'array'
+            field['type'] = 'array'
+          end
 
-        if restriction != '' && options[:conditional] && !field['isRequired']
-          mandatory = 'Condicional'
-        end
+          if field['minItems'] == nil
+            min_items = field['isRequired'] ? 1 : 0
+            max_items = 1
+          end
 
-        row = {
-          headers['COLUMN_1']   => field['path'],
-          headers['COLUMN_2']   => field['name'],
-          headers['COLUMN_3']   => field['description'],
-          headers['COLUMN_4']   => format_type(data_type),
-          headers['COLUMN_5']   => field['maxLength'],
-          headers['COLUMN_6']   => mandatory,
-          headers['COLUMN_7']   => field['pattern'],
-          headers['COLUMN_8']   => format_enum(field['enum']),
-          headers['COLUMN_9']   => min_items,
-          headers['COLUMN_10']  => max_items,
-          headers['COLUMN_11']  => restriction,
-          headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
-          headers['COLUMN_13']  => field['type'],
-          headers['COLUMN_14']  => field['example'],
-          headers['COLUMN_15']  => field['minLength']
-        }
-        rows.push row
+          if field['type'] == 'array' and field['maxItems'] == nil
+            max_items = 'N'
+          end
+
+          if restriction != '' && options[:conditional] && !field['isRequired']
+            mandatory = 'Condicional'
+          end
+
+          row = {
+            headers['COLUMN_1']   => field['path'],
+            headers['COLUMN_2']   => field['name'],
+            headers['COLUMN_3']   => field['description'],
+            headers['COLUMN_4']   => format_type(data_type),
+            headers['COLUMN_5']   => field['maxLength'],
+            headers['COLUMN_6']   => mandatory,
+            headers['COLUMN_7']   => field['pattern'],
+            headers['COLUMN_8']   => format_enum(field['enum']),
+            headers['COLUMN_9']   => min_items,
+            headers['COLUMN_10']  => max_items,
+            headers['COLUMN_11']  => restriction,
+            headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
+            headers['COLUMN_13']  => field['type'],
+            headers['COLUMN_14']  => field['example'],
+            headers['COLUMN_15']  => field['minLength']
+          }
+          rows.push row
+        end
       end
     end
 
