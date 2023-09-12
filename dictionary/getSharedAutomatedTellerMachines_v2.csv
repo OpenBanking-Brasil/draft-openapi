@@ -45,7 +45,7 @@ SE
 TO";0;1;"";Não permitido;string;SP;
 /data/brand/companies/sharedAutomatedTellerMachines/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Opcional;(\d{8})|^NA$;;0;1;"";Não permitido;string;17500001;
 /data/brand/companies/sharedAutomatedTellerMachines/postalAddress/country;country;Nome do país;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Brasil;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/countryCode;countryCode;Código do país;Texto;;Opcional;;;0;1;"";Não permitido;string;BRA;
+/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/countryCode;countryCode;Código do país;Texto;3;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
 /data/brand/companies/sharedAutomatedTellerMachines/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/brand/companies/sharedAutomatedTellerMachines/postalAddress/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;
 /data/brand/companies/sharedAutomatedTellerMachines/postalAddress/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;
