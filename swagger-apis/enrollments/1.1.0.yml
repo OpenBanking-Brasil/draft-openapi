@@ -1428,69 +1428,6 @@ components:
         - o identificador associado ao namespace da instituição detentora de conta (bancoex) 
         - o identificador específico dentro do namespace (C1DD33123).  
         Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
-    EnrollmentCancellation:
-      type: object
-      required:
-        - data
-      properties:
-        data:
-          type: object
-          description: |
-            Objeto que agrupa as informações de qual foi o usuário logado que solicitou o cancelamento do vínculo de conta.
-          properties:
-            cancellation:
-              type: object
-              required:
-                - reason
-              properties:
-                cancelledBy:
-                  type: object
-                  description: |
-                    Informação relacionada ao usuário pagador que solicitou o cancelamento do vínculo de conta.
-                    Pode estar ausente em cenários de processos automatizados realizarem o cancelamento do vínculo, por exemplo, por data de expiração.
-                  required:
-                    - document
-                  properties:
-                    document:
-                      type: object
-                      description: Objeto que consolida os dados do documento do usuário que solicitou o cancelamento.
-                      required:
-                        - identification
-                        - rel
-                      properties:
-                        identification:
-                          type: string
-                          maxLength: 11
-                          description: Número do documento do usuário responsável pelo cancelamento do vínculo de conta.
-                          example: '11111111111'
-                          pattern: '^\d{11}$'
-                        rel:
-                          type: string
-                          maxLength: 3
-                          description: Tipo do documento do usuário responsável pelo cancelamento do vínculo de conta.
-                          example: CPF
-                          pattern: '^[A-Z]{3}$'
-                reason:
-                  oneOf:
-                    - type: object
-                      required:
-                      - rejectionReason
-                      description: Motivo da rejeição do vínculo de conta.
-                      properties:
-                        rejectionReason:
-                          $ref: '#/components/schemas/EnrollmentRejectionReason'
-                    - type: object
-                      required:
-                      - revocationReason
-                      description: Motivo da revogação do vínculo de conta.
-                      properties:
-                        revocationReason:
-                          $ref: '#/components/schemas/EnrollmentRevocationReason'
-                additionalInformation:
-                  type: string
-                  pattern: '[\w\W\s]*'
-                  example: Contrato entre iniciadora e detentora interrompido
-                  maxLength: 2048
     EnrollmentRejectionReason:
       type: string
       enum:
@@ -1682,58 +1619,6 @@ components:
           $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
-    EnrollmentRejectionFrom:
-      type: object
-      required:
-        - data
-      properties:
-        data:
-          type: object
-          properties:
-            cancellation:
-              type: object
-              required:
-                - cancelledFrom
-              properties:
-                cancelledFrom:
-                  $ref: '#/components/schemas/EnumEnrollmentCancelledFrom'
-                rejectedAt:
-                  type: string
-                  format: date-time
-                  example: '2023-07-12T08:30:00Z'
-                  pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-                  maxLength: 20
-                  description: Instante de rejeição do vínculo de conta no ambiente da detentora.
-    EnrollmentLimits:
-      type: object
-      required:
-        - data
-      properties:
-        data:
-          type: object
-          required:
-            - dailyLimit
-            - debtorAccount
-            - transactionLimit
-          properties:
-            transactionLimit:
-              type: string
-              minLength: 4
-              maxLength: 19
-              pattern: '^((\d{1,16}\.\d{2}))$'
-              example: '100000.12'
-              description: |
-                Valor máximo, por transação, admitido para este vínculo de conta. Este limite não garante a autorização de iniciações de pagamento;
-                servindo como referência para a iniciadora evitar a criação de consentimentos de valores tais que, garantidamente, não serão autorizados.
-            dailyLimit:
-              type: string
-              minLength: 4
-              maxLength: 19
-              pattern: '^((\d{1,16}\.\d{2}))$'
-              example: '100000.12'
-              description: |
-                Limite diário cumulativo para este vínculo de conta. Este limite não garante a autorização de iniciações de pagamento;
-                servindo como referência para a iniciadora evitar a criação de consentimentos para valores tais que, garantidamente, não serão autorizados.
     EnrollmentFidoSignOptions:
       type: object
       required:
@@ -2077,8 +1962,6 @@ components:
             - permissions
             - expirationDateTime
             - loggedUser
-            - dailyLimit
-            - transactionLimit
           properties:
             enrollmentId:
               $ref: '#/components/schemas/enrollmentId'
@@ -2195,6 +2078,8 @@ components:
               description: |
                 Valor máximo, por transação, admitido para este vínculo de conta. Este limite não garante a autorização de iniciações de pagamento;
                 servindo como referência para a iniciadora evitar a criação de consentimentos de valores tais que, garantidamente, não serão autorizados.
+
+                [Restrição] Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
             dailyLimit:
               type: string
               minLength: 4
@@ -2204,6 +2089,8 @@ components:
               description: |
                 Limite diário cumulativo para este vínculo de conta. Este limite não garante a autorização de iniciações de pagamento;
                 servindo como referência para a iniciadora evitar a criação de consentimentos para valores tais que, garantidamente, não serão autorizados.
+
+                [Restrição] Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
