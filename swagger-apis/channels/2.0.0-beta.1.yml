@@ -9,7 +9,7 @@ tags:
   - name: "Channels"
     description: "Operações para listagem de canais de atendimentos"
 servers:
-  - url: http://api.banco.com.br/open-banking/channels/v1
+  - url: http://api.banco.com.br/open-banking/channels/v2
 paths:
   /banking-agents:
     get:
@@ -254,11 +254,11 @@ components:
                             code: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA_EXECUCAO_CONTRATOS_CONVENIO'
                             additionalInfo: 'NA'
         links:
-          self: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          first: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          prev: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
+          self: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          first: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          last: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
         meta:
           totalRecords: 1
           totalPages: 1
@@ -408,11 +408,11 @@ components:
                         code: "OUTROS_PRODUTOS_SERVICOS"
                         additionalInfo: "Renegociação"
         links:
-          self: 'https://api.banco.com.br/open-banking/channels/v1/branches'
-          first: 'https://api.banco.com.br/open-banking/channels/v1/branches'
-          prev: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v1/branches'
+          self: 'https://api.banco.com.br/open-banking/channels/v2/branches'
+          first: 'https://api.banco.com.br/open-banking/channels/v2/branches'
+          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          last: 'https://api.banco.com.br/open-banking/channels/v2/branches'
         meta:
           totalRecords: 1
           totalPages: 1
@@ -503,11 +503,11 @@ components:
                         code: "SEGUROS"
                         additionalInfo: 'NA'
         links:
-          self: 'https://api.banco.com.br/open-banking/channels/v1/electronic-channels'
-          first: 'https://api.banco.com.br/open-banking/channels/v1/electronic-channels'
-          prev: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v1/electronic-channels'
+          self: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
+          first: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
+          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          last: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
         meta:
           totalRecords: 1
           totalPages: 1
@@ -1486,11 +1486,11 @@ components:
                         code: 'OUTROS_PRODUTOS_SERVICOS'
                         additionalInfo: 'Previdência Privada'
         links:
-          self: 'https://api.banco.com.br/open-banking/channels/v1/phone-channels'
-          first: 'https://api.banco.com.br/open-banking/channels/v1/phone-channels'
-          prev: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v1/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v1/phone-channels'
+          self: 'https://api.banco.com.br/open-banking/channels/v2/phone-channels'
+          first: 'https://api.banco.com.br/open-banking/channels/v2/phone-channels'
+          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
+          last: 'https://api.banco.com.br/open-banking/channels/v2/phone-channels'
         meta:
           totalRecords: 1
           totalPages: 1
@@ -1707,13 +1707,13 @@ components:
           description: URL da página atualmente requisitada
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: "https://api.banco.com.br/open-banking/channels/v1/resource"
+          example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         first:
           type: string
           description: URL da primeira página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: "https://api.banco.com.br/open-banking/channels/v1/resource"
+          example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         prev:
           type: string
           description: URL da página anterior de registros
@@ -1729,7 +1729,7 @@ components:
           description: URL da última página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: "https://api.banco.com.br/open-banking/channels/v1/resource"
+          example: "https://api.banco.com.br/open-banking/channels/v2/resource"
     Meta:
       type: object
       properties:
