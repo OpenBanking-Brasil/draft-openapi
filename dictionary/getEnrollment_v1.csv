@@ -95,7 +95,13 @@ DETENTORA";1;1;"";Não permitido;string;;
 /data/cancellation/rejectedAt;rejectedAt;Instante de rejeição do vínculo de conta no ambiente da detentora.;Date Hora;20;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;0;1;"";Não permitido;string;2023-07-12T08:30:00Z;
 /data/transactionLimit;transactionLimit;"Valor máximo, por transação, admitido para este vínculo de conta. Este limite não garante a autorização de iniciações de pagamento;
 servindo como referência para a iniciadora evitar a criação de consentimentos de valores tais que, garantidamente, não serão autorizados.
-";Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
+
+[Restrição] Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
+";Texto;19;Condicional;^((\d{1,16}\.\d{2}))$;;0;1;" Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
+";Não permitido;string;100000.12;4
 /data/dailyLimit;dailyLimit;"Limite diário cumulativo para este vínculo de conta. Este limite não garante a autorização de iniciações de pagamento;
 servindo como referência para a iniciadora evitar a criação de consentimentos para valores tais que, garantidamente, não serão autorizados.
-";Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
+
+[Restrição] Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
+";Texto;19;Condicional;^((\d{1,16}\.\d{2}))$;;0;1;" Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
+";Não permitido;string;100000.12;4
