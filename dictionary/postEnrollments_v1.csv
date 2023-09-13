@@ -4,16 +4,18 @@
 Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
 Identifier - URI - que é atribuído sob o URI scheme ""urn"" e um namespace URN específico, com a intenção de que o URN
 seja um identificador de recurso persistente e independente da localização.
-Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+Considerando a string urn:bancoex:C1DD33123 como exemplo para enrollmentId temos:
 - o namespace(urn)
-- o identificador associado ao namespace da instituição transnmissora (bancoex)
+- o identificador associado ao namespace da instituição detentora de conta (bancoex)
 - o identificador específico dentro do namespace (C1DD33123).
 Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
 ";Texto;256;Obrigatório;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;1;1;"";Não permitido;string;urn:bancoex:C1DD33123;
 /data/creationDateTime;creationDateTime;O instante em que o vínculo de conta foi criado no ambiente da detentora.;Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2023-07-12T08:30:00Z;
 /data/status;status;"Status do vínculo de conta:
 
-• AWAITING_AUTHORISATION: Vínculo de conta criado e aguando autorização no ambiente da dentora de conta.
+• AWAITING_RISK_SIGNALS: Vínculo de conta criado e aguardando envio dos sinais de risco para a dentora.
+
+• AWAITING_ACCOUNT_HOLDER_VALIDATION: Vínculo de conta aguardando autorização no ambiente da detentora.
 
 • AWAITING_ENROLLMENT: Vínculo de conta autorizado no ambiente da detentora e aguardando o vínculo de credenciais (FIDO2).
 
@@ -22,7 +24,8 @@ Informações mais detalhadas sobre a construção de namespaces devem ser consu
 • REVOKED: Vínculo de conta revogado.
 
 • REJECTED: Vínculo de conta rejeitado.
-";Texto;;Obrigatório;;"AWAITING_AUTHORISATION 
+";Texto;;Obrigatório;;"AWAITING_RISK_SIGNALS 
+AWAITING_ACCOUNT_HOLDER_VALIDATION 
 AWAITING_ENROLLMENT 
 AUTHORISED 
 REVOKED 
