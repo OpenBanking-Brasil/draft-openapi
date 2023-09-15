@@ -433,7 +433,7 @@ components:
           type: string
           description: Contém informações adicionais a critério da transmissora.
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Tempo de confirmação da múltipla alçada excedido.
     ResponseConsent:
       type: object
