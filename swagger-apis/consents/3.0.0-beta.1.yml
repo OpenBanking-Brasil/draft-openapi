@@ -11,83 +11,127 @@ info:
     - Na chamada para a criação do consentimento deve-se utilizar um token gerado via `client_credentials`.
     - Após o `POST` de criação do consentimento, o `STATUS` devolvido na resposta deverá ser `AWAITING_AUTHORISATION`.
     - O `STATUS` será alterado para `AUTHORISED` somente após autenticação e confirmação por parte do usuário na instituição transmissora dos dados.
-    - Alteração obrigatória do status `AWAITING_AUTHORISATION` para `REVOKED` após 60 minutos.
+    - Alteração obrigatória do status `AWAITING_AUTHORISATION` para `REJECTED` após 60 minutos.
     - Todas as datas trafegadas nesta API seguem o padrão da [RFC3339](https://tools.ietf.org/html/rfc3339) e formato "zulu".
     - A descrição do fluxo de consentimento encontra-se disponível no [Portal do desenvolvedor](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369300/Dados+Cadastrais+e+Transacionais#Fluxo-b%C3%A1sico-de-consentimento).
     - O arquivo com o mapeamento completo entre `Roles`, `scopes` e `permissions` está disponibilizado no Portal do desenvolvedor, no mesmo item acima - descrição do fluxo de consentimento.
     - A receptora deve enviar obrigatoriamente, no pedido de criação de consentimento, todas as permissions dos agrupamentos de dados as quais ela deseja consentimento, conforme tabela abaixo:
       
       ```
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | CATEGORIA DE DADOS   | AGRUPAMENTO                   | PERMISSIONS                                              |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Cadastro             | Dados Cadastrais PF           | CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ                  |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Cadastro             | Informações complementares PF | CUSTOMERS_PERSONAL_ADITTIONALINFO_READ                   |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Cadastro             | Dados Cadastrais PJ           | CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ                  |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Cadastro             | Informações complementares PJ | CUSTOMERS_BUSINESS_ADITTIONALINFO_READ                   |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Contas               | Saldos                        | ACCOUNTS_READ                                            |
-      |                      |                               | ACCOUNTS_BALANCES_READ                                   |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Contas               | Limites                       | ACCOUNTS_READ                                            |
-      |                      |                               | ACCOUNTS_OVERDRAFT_LIMITS_READ                           |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Contas               | Extratos                      | ACCOUNTS_READ                                            |
-      |                      |                               | ACCOUNTS_TRANSACTIONS_READ                               |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Cartão de Crédito    | Limites                       | CREDIT_CARDS_ACCOUNTS_READ                               |
-      |                      |                               | CREDIT_CARDS_ACCOUNTS_LIMITS_READ                        |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Cartão de Crédito    | Transações                    | CREDIT_CARDS_ACCOUNTS_READ                               |
-      |                      |                               | CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ                  |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Cartão de Crédito    | Faturas                       | CREDIT_CARDS_ACCOUNTS_READ                               |
-      |                      |                               | CREDIT_CARDS_ACCOUNTS_BILLS_READ                         |
-      |                      |                               | CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ            |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Operações de Crédito | Dados do Contrato             | LOANS_READ                                               |
-      |                      |                               | LOANS_WARRANTIES_READ                                    |
-      |                      |                               | LOANS_SCHEDULED_INSTALMENTS_READ                         |
-      |                      |                               | LOANS_PAYMENTS_READ                                      |
-      |                      |                               | FINANCINGS_READ                                          |
-      |                      |                               | FINANCINGS_WARRANTIES_READ                               |
-      |                      |                               | FINANCINGS_SCHEDULED_INSTALMENTS_READ                    |
-      |                      |                               | FINANCINGS_PAYMENTS_READ                                 |
-      |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_READ                       |
-      |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ            |
-      |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ |
-      |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ              |
-      |                      |                               | INVOICE_FINANCINGS_READ                                  |
-      |                      |                               | INVOICE_FINANCINGS_WARRANTIES_READ                       |
-      |                      |                               | INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ            |
-      |                      |                               | INVOICE_FINANCINGS_PAYMENTS_READ                         |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
-      | Investimento         | Dados da Operação             | BANK_FIXED_INCOMES_READ                                  |
-      |                      |                               | CREDIT_FIXED_INCOMES_READ                                |
-      |                      |                               | FUNDS_READ                                               |
-      |                      |                               | VARIABLE_INCOMES_READ                                    |
-      |                      |                               | TREASURE_TITLES_READ                                     |
-      |                      |                               | RESOURCES_READ                                           |
-      |----------------------|-------------------------------|----------------------------------------------------------|
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      | ROLE  | CATEGORIA DE DADOS   | AGRUPAMENTO                   | PERMISSIONS                                              | SCOPE OAUTH 2.0               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_PERSONAL_IDENTIFICATIONS_READ                  | customers                     |
+      |       | Cadastro             | Dados Cadastrais PF           |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_PERSONAL_ADITTIONALINFO_READ                   | customers                     |
+      |       | Cadastro             | Informações complementares PF |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      | DADOS |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_BUSINESS_IDENTIFICATIONS_READ                  | customers                     |
+      |       | Cadastro             | Dados Cadastrais PJ           |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CUSTOMERS_BUSINESS_ADITTIONALINFO_READ                   | customers                     |
+      |       | Cadastro             | Informações complementares PJ |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | ACCOUNTS_READ                                            |                               |
+      |       |                      |                               |----------------------------------------------------------| accounts                      |
+      |       | Contas               | Saldos                        | ACCOUNTS_BALANCES_READ                                   |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | ACCOUNTS_READ                                            |                               |
+      |       |                      |                               |----------------------------------------------------------| accounts                      |
+      | DADOS | Contas               | Limites                       | ACCOUNTS_OVERDRAFT_LIMITS_READ                           |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | ACCOUNTS_READ                                            |                               |
+      |       |                      |                               |----------------------------------------------------------| accounts                      |
+      |       | Contas               | Extratos                      | ACCOUNTS_TRANSACTIONS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------| credit-card-account           |
+      |       | Cartão de Crédito    | Limites                       | CREDIT_CARDS_ACCOUNTS_LIMITS_READ                        |                               |
+      |       |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------| credit-card-account           |
+      |       | Cartão de Crédito    | Transações                    | CREDIT_CARDS_ACCOUNTS_TRANSACTIONS_READ                  |                               |
+      | DADOS |                      |                               |----------------------------------------------------------| resources                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |       |----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_BILLS_READ                         | credit-card-account           |
+      |       | Cartão de Crédito    | Faturas                       |----------------------------------------------------------|                               |
+      |       |                      |                               | CREDIT_CARDS_ACCOUNTS_BILLS_TRANSACTIONS_READ            | resources                     |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | LOANS_READ                                               |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | LOANS_WARRANTIES_READ                                    |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | LOANS_SCHEDULED_INSTALMENTS_READ                         |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | LOANS_PAYMENTS_READ                                      |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_READ                                          |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_WARRANTIES_READ                               |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_SCHEDULED_INSTALMENTS_READ                    | loans                         |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | FINANCINGS_PAYMENTS_READ                                 | financings                    |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      | DADOS | Operações de Crédito | Dados do Contrato             | UNARRANGED_ACCOUNTS_OVERDRAFT_READ                       | unarranged-accounts-overdraft |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_WARRANTIES_READ            | invouce-financings            |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_SCHEDULED_INSTALMENTS_READ | resources                     |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ              |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_READ                                  |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_WARRANTIES_READ                       |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_SCHEDULED_INSTALMENTS_READ            |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | INVOICE_FINANCINGS_PAYMENTS_READ                         |                               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | BANK_FIXED_INCOMES_READ                                  | bank-fixed-incomes            |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | CREDIT_FIXED_INCOMES_READ                                | credit-fixed-incomes          |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      | DADOS | Investimento         | Dados da Operação             | FUNDS_READ                                               | variable-incomes              |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | VARIABLE_INCOMES_READ                                    | treasure-titles               |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | TREASURE_TITLES_READ                                     | funds                         |
+      |       |                      |                               |----------------------------------------------------------|                               |
+      |       |                      |                               | RESOURCES_READ                                           | resources                     |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      |       |                      |                               | EXCHANGES_READ                                           |                               |
+      | DADOS | Câmbio               | Dados da Operação             |----------------------------------------------------------| exchanges                     |
+      |       |                      |                               | RESOURCES_READ                                           |                               |
+      |-------|----------------------|-------------------------------|----------------------------------------------------------|-------------------------------|
+      
       ```
     - A instituição transmissora deve validar o preenchimento correto desses agrupamentos no momento da geração do consentimento.
     - Caso a instiuição receptora envie permissões divergentes ao agrupamento especificado na tabela, a transmissora deve rejeitar o pedido da receptora dando retorno HTTP Status Code 400.
     - Caso o cliente tenha selecionado na receptora uma opção de produtos agrupados, a transmissora deve retornar todas as permissionsreferentes ao agrupamento, mesmo que não os comercialize. Por exemplo, o cliente seleciona na receptora a opção "Operações de Crédito". Nessa situação, a transmissora deve retornar todas as permissionsreferentes a esse agrupamento de produtos: Empréstimos, Financiamentos, Direitos Creditórios e Adiantamento a depositante.
     - A transmissora deve retornar, da lista de permissions requisitadas, apenas o subconjunto de permissions por ela suportada, removendo da lista as permissions de produtos não suportados e retornando HTTP Status Code 201. A única exceção a este comportamento são os casos de produtos agrupados, como Operações de crédito e Investimentos, para os quais todas as permissões do agrupamento devem ser mantidas. Caso não restem permissões funcionais, a instituição transmissora deve retornar o erro HTTP Code "422 Unprocessable Entity".
+    - Caso o método DELETE seja chamado para um consentimento que já se encontra no STATUS `REJECTED` deve se retornar o STATUS CODE 422.
   version: 3.0.0-beta.1
   license:
     name: Apache 2.0
@@ -235,6 +279,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -430,7 +476,7 @@ components:
           type: string
           description: Contém informações adicionais a critério da transmissora.
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Tempo de confirmação da múltipla alçada excedido.
     ResponseConsent:
       type: object
