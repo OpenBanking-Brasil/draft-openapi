@@ -552,7 +552,6 @@ components:
           items:
             $ref: '#/components/schemas/ElectronicChannel'
           minItems: 1
-          maxItems: 4
           description: Lista  de canais de atendimento eltrônico
         cnpjNumber:
             type: string
@@ -580,7 +579,6 @@ components:
           items:
             $ref: '#/components/schemas/BankingAgentService'
           minItems: 1
-          maxItems: 20
           description: "Traz a relação de serviços disponbilizados pelo Canal de Atendimento"
     BankingAgentIdentification:
       type: object
@@ -820,7 +818,6 @@ components:
           items:
             $ref: '#/components/schemas/BranchService'
           minItems: 1
-          maxItems: 20
     BranchPostalAddress:
       type: object
       required:
@@ -1024,7 +1021,6 @@ components:
                 maxLength: 13
                 pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$
           minItems: 1
-          maxItems: 7
         exception:
           type: string
           maxLength: 2000
@@ -1105,7 +1101,6 @@ components:
           items:
             $ref: '#/components/schemas/ElectronicChannelService'
           minItems: 1
-          maxItems: 20
           description: "Traz a relação de serviços disponbilizados pelo Canal de Atendimento"
       required:
         - identification
@@ -1291,7 +1286,6 @@ components:
           items:
             $ref: '#/components/schemas/SharedAutomatedTellerMachines'
           minItems: 0
-          maxItems: 1
     SharedAutomatedTellerMachines:
       type: object
       properties:
@@ -1555,7 +1549,6 @@ components:
           items:
             $ref: '#/components/schemas/PhoneChannelService'
           minItems: 1
-          maxItems: 20
           description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
       required:
         - identification
