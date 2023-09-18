@@ -972,13 +972,13 @@ components:
               code:
                 type: string
                 enum:
-                  - DEPENDE_MULTIPLA_ALCADA_PJ
-                  - DEPENDE_MULTIPLA_ALCADA_PF
+                  - DEPENDE_MULTIPLA_ALCADA
+                  - REFRESH_TOKEN_JWT
                   - ESTADO_CONSENTIMENTO_INVALIDO
-                example: DEPENDE_MULTIPLA_ALCADA_PJ
+                example: DEPENDE_MULTIPLA_ALCADA
                 description: |
                  Códigos de erros previstos na durante o processo de extensão do consentimento:  
-                  • DEPENDE_MULTIPLA_ALCADA_PJ: Necessário aprovação de múltipla alçada.  
+                  • DEPENDE_MULTIPLA_ALCADA: Necessário aprovação de múltipla alçada.  
                   • REFRESH_TOKEN_JWT: Refresh token não pode ser expandido.  
                   • ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.  
               title:
@@ -988,7 +988,7 @@ components:
                 example: Necessário aprovação de múltipla alçada.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:  
-                  • DEPENDE_MULTIPLA_ALCADA_PJ: Necessário aprovação de múltipla alçada.  
+                  • DEPENDE_MULTIPLA_ALCADA: Necessário aprovação de múltipla alçada.  
                   • REFRESH_TOKEN_JWT: Refresh token não pode ser expandido.  
                   • ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.  
               detail:
@@ -998,7 +998,7 @@ components:
                 example: O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:  
-                  • DEPENDE_MULTIPLA_ALCADA_PJ: O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação.  
+                  • DEPENDE_MULTIPLA_ALCADA: O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação.  
                   • REFRESH_TOKEN_JWT: O consentimento informado não pode ser renovado sem redirecionamento porque está vinculado a um refresh token JWT e não pode ter seu prazo de validade alterado.  
                   • ESTADO_CONSENTIMENTO_INVALIDO: O consentimento informado não pode ser.  
         meta:
@@ -1263,13 +1263,13 @@ components:
           schema:
             $ref: '#/components/schemas/422ResponseErrorCreateConsent'
           examples:
-            Forma de pagamento inválida:
-              summary: Forma de pagamento inválida
+            Necessário aprovação de múltipla alçada:
+              summary: Necessário aprovação de múltipla alçada
               value:
                 errors:
-                  - code: FORMA_PAGAMENTO_INVALIDA
-                    title: Forma de pagamento inválida.
-                    detail: 'Forma de pagamento [Modalidade] não suportada.'
+                  - code: DEPENDE_MULTIPLA_ALCADA
+                    title: Necessário aprovação de múltipla alçada.
+                    detail: 'O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação'
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
     Unauthorized:
