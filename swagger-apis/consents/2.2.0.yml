@@ -972,51 +972,35 @@ components:
               code:
                 type: string
                 enum:
-                  - FORMA_PAGAMENTO_INVALIDA
-                  - DATA_PAGAMENTO_INVALIDA
-                  - DETALHE_PAGAMENTO_INVALIDO
-                  - PARAMETRO_NAO_INFORMADO
-                  - PARAMETRO_INVALIDO
-                  - ERRO_IDEMPOTENCIA
-                  - NAO_INFORMADO
-                example: FORMA_PAGAMENTO_INVALIDA
+                  - DEPENDE_MULTIPLA_ALCADA_PJ
+                  - DEPENDE_MULTIPLA_ALCADA_PF
+                  - ESTADO_CONSENTIMENTO_INVALIDO
+                example: DEPENDE_MULTIPLA_ALCADA_PJ
                 description: |
-                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:  
-                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.  
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.  
-                  • NAO_INFORMADO: Não informado.   
+                 Códigos de erros previstos na durante o processo de extensão do consentimento:
+                  • DEPENDE_MULTIPLA_ALCADA_PJ: Necessário aprovação de múltipla alçada.
+                  • REFRESH_TOKEN_JWT: Refresh token não pode ser expandido.
+                  • ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.
               title:
                 type: string
                 maxLength: 255
                 pattern: '[\w\W\s]*'
-                example: Forma de pagamento inválida.
+                example: Necessário aprovação de múltipla alçada.
                 description: |
-                  Título específico do erro reportado, de acordo com o código enviado:  
-                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.  
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.  
-                  • NAO_INFORMADO: Não informado.    
+                  Título específico do erro reportado, de acordo com o código enviado:
+                  • DEPENDE_MULTIPLA_ALCADA_PJ: Necessário aprovação de múltipla alçada.
+                  • REFRESH_TOKEN_JWT: Refresh token não pode ser expandido.
+                  • ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.
               detail:
                 type: string
                 maxLength: 2048
                 pattern: '[\w\W\s]*'
-                example: 'Forma de pagamento [Modalidade] não suportada.'
+                example: O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação.
                 description: |
-                  Descrição específica do erro de acordo com o código reportado:  
-                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento [Modalidade] não suportada.  
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.  
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.  
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.  
-                  • PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.  
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).  
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
+                  Título específico do erro reportado, de acordo com o código enviado:
+                  • DEPENDE_MULTIPLA_ALCADA_PJ: O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação.
+                  • REFRESH_TOKEN_JWT: O consentimento informado não pode ser renovado sem redirecionamento porque está vinculado a um refresh token JWT e não pode ter seu prazo de validade alterado.
+                  • ESTADO_CONSENTIMENTO_INVALIDO: O consentimento informado não pode ser
         meta:
           $ref: '#/components/schemas/Meta'
     LoggedUser:
