@@ -281,7 +281,7 @@ paths:
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntity'
+          $ref: '#/components/responses/UnprocessableEntityConsents'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -955,6 +955,72 @@ components:
                 maxLength: 2048
         meta:
           $ref: '#/components/schemas/Meta'
+    422ResponseErrorCreateConsent:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 3
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - FORMA_PAGAMENTO_INVALIDA
+                  - DATA_PAGAMENTO_INVALIDA
+                  - DETALHE_PAGAMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                  - NAO_INFORMADO
+                example: FORMA_PAGAMENTO_INVALIDA
+                description: |
+                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:  
+                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
+                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
+                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
+                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+                  • PARAMETRO_INVALIDO: Parâmetro inválido.  
+                  • ERRO_IDEMPOTENCIA: Erro idempotência.  
+                  • NAO_INFORMADO: Não informado.   
+              title:
+                type: string
+                maxLength: 255
+                pattern: '[\w\W\s]*'
+                example: Forma de pagamento inválida.
+                description: |
+                  Título específico do erro reportado, de acordo com o código enviado:  
+                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
+                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
+                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
+                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+                  • PARAMETRO_INVALIDO: Parâmetro inválido.  
+                  • ERRO_IDEMPOTENCIA: Erro idempotência.  
+                  • NAO_INFORMADO: Não informado.    
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: 'Forma de pagamento [Modalidade] não suportada.'
+                description: |
+                  Descrição específica do erro de acordo com o código reportado:  
+                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento [Modalidade] não suportada.  
+                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.  
+                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.  
+                  • PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.  
+                  • PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.  
+                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).  
+                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
+        meta:
+          $ref: '#/components/schemas/Meta'
     LoggedUser:
       type: object
       description: Usuário (pessoa natural) que encontra-se logado na instituição receptora e que iniciará o processo de consentimento para compartilhamento de dados.
@@ -1208,6 +1274,22 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
+    UnprocessableEntityConsents:
+      description: 'Seguir as orientações presentes na descrição da API, item 1.3 e seus subitens.'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/422ResponseErrorCreateConsent'
+          examples:
+            Forma de pagamento inválida:
+              summary: Forma de pagamento inválida
+              value:
+                errors:
+                  - code: FORMA_PAGAMENTO_INVALIDA
+                    title: Forma de pagamento inválida.
+                    detail: 'Forma de pagamento [Modalidade] não suportada.'
+                meta:
+                  requestDateTime: '2021-05-21T08:30:00Z'
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
