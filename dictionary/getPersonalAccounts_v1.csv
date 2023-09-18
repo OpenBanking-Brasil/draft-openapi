@@ -150,20 +150,16 @@ Observação: Para efeito de comparação de taxas dos produtos, as instituiçõ
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
 /data/fees/otherServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/serviceBundles;serviceBundles;"Lista dos Pacotes de serviços
+/data/serviceBundles;serviceBundles;"Lista dos pacotes de serviços de contas com serviços essenciais padronizados e regulados pela Resolução BC 3919, de 25/11/2010
 
 [Restrição]
-- Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
-atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+- Obrigatório quando ""type"" for igual ""CONTA_DEPOSITO_A_VISTA"" (conta corrente) ou ""CONTA_POUPANCA"", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
 
-- Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
-existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+- Opcional quando ""type"" for igual ""CONTA_PAGAMENTO_PRE_PAGA"" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
 ";Lista;;Condicional;;;1;200;"
-- Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
-atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+- Obrigatório quando ""type"" for igual ""CONTA_DEPOSITO_A_VISTA"" (conta corrente) ou ""CONTA_POUPANCA"", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
 
-- Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
-existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+- Opcional quando ""type"" for igual ""CONTA_PAGAMENTO_PRE_PAGA"" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
 ";Não permitido;array;;
 /data/serviceBundles/name;name;Nome do Pacote de Serviços dado pela instituição.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Conta de depósitos à vista Movimentação com cartão (sem cheque);
 /data/serviceBundles/services;services;Lista dos serviços que compõe o pacote de serviços;Lista;;Obrigatório;;;1;100;"";Não permitido;array;;
