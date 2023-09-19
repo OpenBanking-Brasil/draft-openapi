@@ -2467,7 +2467,7 @@ components:
               format: date
               maxLength: 10
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-              example: '2021-01-01'
+              example: '2023-08-23'
               description: |
                 Define a data alvo da liquidação do pagamento. 
 
@@ -2489,6 +2489,7 @@ components:
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              maxLength: 10
               example: '2023-08-23'
             quantity:
               type: integer
@@ -2523,6 +2524,7 @@ components:
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              maxLength: 10
               example: '2023-08-23'
             quantity:
               type: integer
@@ -2551,6 +2553,7 @@ components:
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              maxLength: 10
               example: '2023-08-23'
             quantity:
               type: integer
@@ -2574,7 +2577,15 @@ components:
                 type: string
                 format: date
                 pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                maxLength: 10
                 example: '2023-08-23'
+              example: [
+                '2023-08-23',
+                '2023-08-30',
+                '2023-09-01',
+                '2023-09-03',
+                '2023-12-10'
+              ]
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
