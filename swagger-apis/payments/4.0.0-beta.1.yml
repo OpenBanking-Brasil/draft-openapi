@@ -698,8 +698,18 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
+                  description: |
+                    [Restrição] Mutuamente excludente com o campo date. 
+
+                    Este campo é obrigatório no caso de agendamento. 
+
+                    Neste caso, o campo date não deve ser informado.
                   oneOf:
-                    - $ref: '#/components/schemas/Schedule'
+                    - $ref: '#/components/schemas/ScheduleSingle'
+                    - $ref: '#/components/schemas/ScheduleDaily'
+                    - $ref: '#/components/schemas/ScheduleWeekly'
+                    - $ref: '#/components/schemas/ScheduleMonthly'
+                    - $ref: '#/components/schemas/ScheduleCustom'
                 date:
                   type: string
                   format: date
@@ -1493,8 +1503,18 @@ components:
         type:
           $ref: '#/components/schemas/EnumPaymentType'
         schedule:
+          description: |
+            [Restrição] Mutuamente excludente com o campo date. 
+
+            Este campo é obrigatório no caso de agendamento. 
+
+            Neste caso, o campo date não deve ser informado.
           oneOf:
-            - $ref: '#/components/schemas/Schedule'
+            - $ref: '#/components/schemas/ScheduleSingle'
+            - $ref: '#/components/schemas/ScheduleDaily'
+            - $ref: '#/components/schemas/ScheduleWeekly'
+            - $ref: '#/components/schemas/ScheduleMonthly'
+            - $ref: '#/components/schemas/ScheduleCustom'
         date:
           type: string
           format: date
@@ -1906,8 +1926,18 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
+                  description: |
+                    [Restrição] Mutuamente excludente com o campo date. 
+
+                    Este campo é obrigatório no caso de agendamento. 
+
+                    Neste caso, o campo date não deve ser informado.
                   oneOf:
-                    - $ref: '#/components/schemas/Schedule'
+                    - $ref: '#/components/schemas/ScheduleSingle'
+                    - $ref: '#/components/schemas/ScheduleDaily'
+                    - $ref: '#/components/schemas/ScheduleWeekly'
+                    - $ref: '#/components/schemas/ScheduleMonthly'
+                    - $ref: '#/components/schemas/ScheduleCustom'
                 date:
                   type: string
                   format: date
@@ -2125,306 +2155,304 @@ components:
         - meta
       properties:
         data:
-          type: object
-          description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
-          required:
-            - paymentId
-            - endToEndId
-            - creationDateTime
-            - statusUpdateDateTime
-            - status
-            - localInstrument
-            - payment
-            - creditorAccount
-            - cnpjInitiator
-            - debtorAccount
-          properties:
-            paymentId:
-              type: string
-              minLength: 1
-              maxLength: 100
-              pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-              example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
-              description: |
-                Código ou identificador único informado pela instituição detentora da conta para representar
-                a iniciação de pagamento individual. O `paymentId` deve ser diferente do `endToEndId`.
-                Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
-            endToEndId:
-              $ref: '#/components/schemas/EndToEndId'
-            consentId:
-              type: string
-              maxLength: 256
-              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
-              example: 'urn:bancoex:C1DD33123'
-              description: |
-                Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
-                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
-                Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
-                seja um identificador de recurso persistente e independente da localização.
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
-                - o namespace(urn)
-                - o identificador associado ao namespace da instituição transnmissora (bancoex)
-                - o identificador específico dentro do namespace (C1DD33123).
-                Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).  
+          type: array
+          items:
+            type: object
+            description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
+            required:
+              - paymentId
+              - endToEndId
+              - creationDateTime
+              - statusUpdateDateTime
+              - status
+              - localInstrument
+              - payment
+              - creditorAccount
+              - cnpjInitiator
+              - debtorAccount
+            properties:
+              paymentId:
+                type: string
+                minLength: 1
+                maxLength: 100
+                pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+                example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
+                description: |
+                  Código ou identificador único informado pela instituição detentora da conta para representar
+                  a iniciação de pagamento individual. O `paymentId` deve ser diferente do `endToEndId`.
+                  Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
+              endToEndId:
+                $ref: '#/components/schemas/EndToEndId'
+              consentId:
+                type: string
+                maxLength: 256
+                pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+                example: 'urn:bancoex:C1DD33123'
+                description: |
+                  Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+                  Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+                  Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+                  seja um identificador de recurso persistente e independente da localização.
+                  Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+                  - o namespace(urn)
+                  - o identificador associado ao namespace da instituição transnmissora (bancoex)
+                  - o identificador específico dentro do namespace (C1DD33123).
+                  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).  
 
-                [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
-            creationDateTime:
-              type: string
-              format: date-time
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-              example: '2020-07-21T08:30:00Z'
-              description: |
-                Data e hora em que o recurso foi criado.
-                Uma string com data e hora conforme especificação RFC-3339,
-                sempre com a utilização de timezone UTC(UTC time format).
-            statusUpdateDateTime:
-              type: string
-              format: date-time
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-              example: '2020-07-21T08:30:00Z'
-              description: |
-                Data e hora da última atualização da iniciação de pagamento.
-                Uma string com data e hora conforme especificação RFC-3339,
-                sempre com a utilização de timezone UTC(UTC time format).
-            proxy:
-              type: string
-              maxLength: 77
-              pattern: '[\w\W\s]*'
-              example: '12345678901'
-              description: |
-                Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória.
-                No caso de telefone celular deve ser informado no padrão E.1641.
-                Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres.
-                No caso de CPF deverá ser informado com 11 números, sem pontos ou traços.
-                Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços.
-                No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na RFC41223.
-                Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT, QRDN ou QRES e validar o campo creditorAccount.
-                Esta validação é opcional caso o localInstrument for igual a INIC.
-                [Restrição] Se localInstrument for igual a MANU, o campo proxy não deve ser preenchido. Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
-            ibgeTownCode:
-              type: string
-              minLength: 7
-              maxLength: 7
-              pattern: '^\d{7}$'
-              example: '5300108'
-              description: |
-                O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
+                  [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
+              creationDateTime:
+                type: string
+                format: date-time
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                example: '2020-07-21T08:30:00Z'
+                description: |
+                  Data e hora em que o recurso foi criado.
+                  Uma string com data e hora conforme especificação RFC-3339,
+                  sempre com a utilização de timezone UTC(UTC time format).
+              statusUpdateDateTime:
+                type: string
+                format: date-time
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                example: '2020-07-21T08:30:00Z'
+                description: |
+                  Data e hora da última atualização da iniciação de pagamento.
+                  Uma string com data e hora conforme especificação RFC-3339,
+                  sempre com a utilização de timezone UTC(UTC time format).
+              proxy:
+                type: string
+                maxLength: 77
+                pattern: '[\w\W\s]*'
+                example: '12345678901'
+                description: |
+                  Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória.
+                  No caso de telefone celular deve ser informado no padrão E.1641.
+                  Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres.
+                  No caso de CPF deverá ser informado com 11 números, sem pontos ou traços.
+                  Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços.
+                  No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na RFC41223.
+                  Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT, QRDN ou QRES e validar o campo creditorAccount.
+                  Esta validação é opcional caso o localInstrument for igual a INIC.
+                  [Restrição] Se localInstrument for igual a MANU, o campo proxy não deve ser preenchido. Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
+              ibgeTownCode:
+                type: string
+                minLength: 7
+                maxLength: 7
+                pattern: '^\d{7}$'
+                example: '5300108'
+                description: |
+                  O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
 
-                1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
-            status:
-              $ref: '#/components/schemas/EnumPaymentStatusType'
-            rejectionReason:
-              $ref: '#/components/schemas/RejectionReason'
-            localInstrument:
-              $ref: '#/components/schemas/EnumLocalInstrument'
-            cnpjInitiator:
-              type: string
-              pattern: '^\d{14}$'
-              maxLength: 14
-              example: '50685362000135'
-              description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
-            payment:
-              type: object
-              description: Objeto contendo dados do pagameto como moeda e valor.
-              required:
-                - amount
-                - currency
-              properties:
-                amount:
-                  type: string
-                  minLength: 4
-                  maxLength: 19
-                  pattern: '^((\d{1,16}\.\d{2}))$'
-                  example: '100000.12'
-                  description: |
-                    Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
+                  1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+              status:
+                $ref: '#/components/schemas/EnumPaymentStatusType'
+              rejectionReason:
+                $ref: '#/components/schemas/RejectionReason'
+              localInstrument:
+                $ref: '#/components/schemas/EnumLocalInstrument'
+              cnpjInitiator:
+                type: string
+                pattern: '^\d{14}$'
+                maxLength: 14
+                example: '50685362000135'
+                description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
+              payment:
+                type: object
+                description: Objeto contendo dados do pagameto como moeda e valor.
+                required:
+                  - amount
+                  - currency
+                properties:
+                  amount:
+                    type: string
+                    minLength: 4
+                    maxLength: 19
+                    pattern: '^((\d{1,16}\.\d{2}))$'
+                    example: '100000.12'
+                    description: |
+                      Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
 
-                    Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
-                    Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
-                currency:
-                  type: string
-                  maxLength: 3
-                  pattern: '^([A-Z]{3})$'
-                  example: BRL
-                  description: |
-                    Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.  
-                    Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
-            transactionIdentification:
-              type: string
-              pattern: '^[a-zA-Z0-9]{1,35}$'
-              maxLength: 35
-              example: E00038166201907261559y6j6
-              description: |
-                Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento.
+                      Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
+                      Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
+                  currency:
+                    type: string
+                    maxLength: 3
+                    pattern: '^([A-Z]{3})$'
+                    example: BRL
+                    description: |
+                      Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.  
+                      Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
+              transactionIdentification:
+                type: string
+                pattern: '^[a-zA-Z0-9]{1,35}$'
+                maxLength: 35
+                example: E00038166201907261559y6j6
+                description: |
+                  Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento.
 
-                [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora, caso ele tenha sido enviado na requisição da iniciação do pagamento.
-            remittanceInformation:
-              type: string
-              maxLength: 140
-              pattern: '[\w\W\s]*'
-              example: Pagamento da nota RSTO035-002.
-              description: |
-                Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
-            creditorAccount:
-              $ref: '#/components/schemas/CreditorAccount'
-            debtorAccount:
-              $ref: '#/components/schemas/DebtorAccount' 
-            authorisationFlow:
-              type: string
-              enum:
-                - HYBRID_FLOW
-                - CIBA_FLOW
-                - FIDO_FLOW
-              example: HYBRID_FLOW
-              description: |
-                Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
-                
-                [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+                  [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora, caso ele tenha sido enviado na requisição da iniciação do pagamento.
+              remittanceInformation:
+                type: string
+                maxLength: 140
+                pattern: '[\w\W\s]*'
+                example: Pagamento da nota RSTO035-002.
+                description: |
+                  Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+              creditorAccount:
+                $ref: '#/components/schemas/CreditorAccount'
+              debtorAccount:
+                $ref: '#/components/schemas/DebtorAccount' 
+              authorisationFlow:
+                type: string
+                enum:
+                  - HYBRID_FLOW
+                  - CIBA_FLOW
+                  - FIDO_FLOW
+                example: HYBRID_FLOW
+                description: |
+                  Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+                  
+                  [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
     ResponsePixPaymentData:
+      type: array
+      items:
+        type: object
+        description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
+        required:
+          - paymentId
+          - endToEndId
+          - consentId
+          - creationDateTime
+          - statusUpdateDateTime
+          - status
+          - localInstrument
+          - payment
+          - creditorAccount
+          - cnpjInitiator
+          - debtorAccount
+        properties:
+          paymentId:
+            type: string
+            minLength: 1
+            maxLength: 100
+            pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+            example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
+            description: |
+              Código ou identificador único informado pela instituição detentora da conta para representar
+              a iniciação de pagamento individual. O `paymentId` deve ser diferente do `endToEndId`.
+              Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
+          endToEndId:
+            $ref: '#/components/schemas/EndToEndId'
+          consentId:
+            type: string
+            maxLength: 256
+            pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+            example: 'urn:bancoex:C1DD33123'
+            description: |
+              Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+              Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+              Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+              seja um identificador de recurso persistente e independente da localização.
+              Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+              - o namespace(urn)
+              - o identificador associado ao namespace da instituição transnmissora (bancoex)
+              - o identificador específico dentro do namespace (C1DD33123).
+              Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+          creationDateTime:
+            type: string
+            format: date-time
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+            example: '2020-07-21T08:30:00Z'
+            description: |
+              Data e hora em que o recurso foi criado.
+              Uma string com data e hora conforme especificação RFC-3339,
+              sempre com a utilização de timezone UTC(UTC time format).
+          statusUpdateDateTime:
+            type: string
+            format: date-time
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+            example: '2020-07-21T08:30:00Z'
+            description: |
+              Data e hora da última atualização da iniciação de pagamento.
+              Uma string com data e hora conforme especificação RFC-3339,
+              sempre com a utilização de timezone UTC(UTC time format).
+          proxy:
+            type: string
+            maxLength: 77
+            pattern: '[\w\W\s]*'
+            example: '12345678901'
+            description: |
+              Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória.
+              No caso de telefone celular deve ser informado no padrão E.1641.
+              Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres.
+              No caso de CPF deverá ser informado com 11 números, sem pontos ou traços.
+              Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços.
+              No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na RFC41223.
+              Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT, QRDN ou QRES e validar o campo creditorAccount.
+              Esta validação é opcional caso o localInstrument for igual a INIC.
+              [Restrição] Se localInstrument for igual a MANU, o campo proxy não deve ser preenchido. Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
+          ibgeTownCode:
+            type: string
+            minLength: 7
+            maxLength: 7
+            pattern: '^\d{7}$'
+            example: '5300108'
+            description: |
+              O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
+
+              1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+          status:
+            $ref: '#/components/schemas/EnumPaymentStatusType'
+          rejectionReason:
+            $ref: '#/components/schemas/RejectionReason'
+          localInstrument:
+            $ref: '#/components/schemas/EnumLocalInstrument'
+          cnpjInitiator:
+            type: string
+            pattern: '^\d{14}$'
+            maxLength: 14
+            example: '50685362000135'
+            description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
+          payment:
+            $ref: '#/components/schemas/PaymentPix'
+          transactionIdentification:
+            type: string
+            pattern: '^[a-zA-Z0-9]{1,35}$'
+            maxLength: 35
+            example: E00038166201907261559y6j6
+            description: |
+              Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento.
+
+              [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora, caso ele tenha sido enviado na requisição da iniciação do pagamento.
+          remittanceInformation:
+            type: string
+            maxLength: 140
+            pattern: '[\w\W\s]*'
+            example: Pagamento da nota RSTO035-002.
+            description: |
+              Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+          creditorAccount:
+            $ref: '#/components/schemas/CreditorAccount'
+          cancellation:
+            $ref: '#/components/schemas/PixPaymentCancellation'
+          debtorAccount:
+            $ref: '#/components/schemas/DebtorAccount' 
+          authorisationFlow:
+            type: string
+            enum:
+              - HYBRID_FLOW
+              - CIBA_FLOW
+              - FIDO_FLOW
+            example: HYBRID_FLOW
+            description: |
+              Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+              
+              [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+    ScheduleSingle:
       type: object
-      description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
-      required:
-        - paymentId
-        - endToEndId
-        - consentId
-        - creationDateTime
-        - statusUpdateDateTime
-        - status
-        - localInstrument
-        - payment
-        - creditorAccount
-        - cnpjInitiator
-        - debtorAccount
-      properties:
-        paymentId:
-          type: string
-          minLength: 1
-          maxLength: 100
-          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-          example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
-          description: |
-            Código ou identificador único informado pela instituição detentora da conta para representar
-            a iniciação de pagamento individual. O `paymentId` deve ser diferente do `endToEndId`.
-            Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
-        endToEndId:
-          $ref: '#/components/schemas/EndToEndId'
-        consentId:
-          type: string
-          maxLength: 256
-          pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
-          example: 'urn:bancoex:C1DD33123'
-          description: |
-            Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
-            Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
-            Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
-            seja um identificador de recurso persistente e independente da localização.
-            Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
-            - o namespace(urn)
-            - o identificador associado ao namespace da instituição transnmissora (bancoex)
-            - o identificador específico dentro do namespace (C1DD33123).
-            Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
-        creationDateTime:
-          type: string
-          format: date-time
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          example: '2020-07-21T08:30:00Z'
-          description: |
-            Data e hora em que o recurso foi criado.
-            Uma string com data e hora conforme especificação RFC-3339,
-            sempre com a utilização de timezone UTC(UTC time format).
-        statusUpdateDateTime:
-          type: string
-          format: date-time
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          example: '2020-07-21T08:30:00Z'
-          description: |
-            Data e hora da última atualização da iniciação de pagamento.
-            Uma string com data e hora conforme especificação RFC-3339,
-            sempre com a utilização de timezone UTC(UTC time format).
-        proxy:
-          type: string
-          maxLength: 77
-          pattern: '[\w\W\s]*'
-          example: '12345678901'
-          description: |
-            Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória.
-            No caso de telefone celular deve ser informado no padrão E.1641.
-            Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres.
-            No caso de CPF deverá ser informado com 11 números, sem pontos ou traços.
-            Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços.
-            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na RFC41223.
-            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT, QRDN ou QRES e validar o campo creditorAccount.
-            Esta validação é opcional caso o localInstrument for igual a INIC.
-            [Restrição] Se localInstrument for igual a MANU, o campo proxy não deve ser preenchido. Se localInstrument for igual INIC, DICT, QRDN ou QRES, o campo proxy deve ser sempre preenchido com a chave Pix.
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
-
-            1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
-        status:
-          $ref: '#/components/schemas/EnumPaymentStatusType'
-        rejectionReason:
-          $ref: '#/components/schemas/RejectionReason'
-        localInstrument:
-          $ref: '#/components/schemas/EnumLocalInstrument'
-        cnpjInitiator:
-          type: string
-          pattern: '^\d{14}$'
-          maxLength: 14
-          example: '50685362000135'
-          description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
-        payment:
-          $ref: '#/components/schemas/PaymentPix'
-        transactionIdentification:
-          type: string
-          pattern: '^[a-zA-Z0-9]{1,35}$'
-          maxLength: 35
-          example: E00038166201907261559y6j6
-          description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento.
-
-            [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora, caso ele tenha sido enviado na requisição da iniciação do pagamento.
-        remittanceInformation:
-          type: string
-          maxLength: 140
-          pattern: '[\w\W\s]*'
-          example: Pagamento da nota RSTO035-002.
-          description: |
-            Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
-        creditorAccount:
-          $ref: '#/components/schemas/CreditorAccount'
-        cancellation:
-          $ref: '#/components/schemas/PixPaymentCancellation'
-        debtorAccount:
-          $ref: '#/components/schemas/DebtorAccount' 
-        authorisationFlow:
-          type: string
-          enum:
-            - HYBRID_FLOW
-            - CIBA_FLOW
-            - FIDO_FLOW
-          example: HYBRID_FLOW
-          description: |
-            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
-            
-            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
-    Schedule:
-      type: object
-      description: |
-        [Restrição] Mutuamente excludente com o campo date. 
-
-        Este campo é obrigatório no caso de agendamento. 
-
-        Neste caso, o campo date não deve ser informado.
       required:
         - single
       properties:
@@ -2446,6 +2474,107 @@ components:
                 O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
 
                 Observação: Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+365 corridos a partir da data do consentimento considerando o fuso horário de Brasília
+    ScheduleDaily:
+      type: object
+      required:
+        - daily
+      properties:
+        daily:
+          type: object
+          required:
+            - startDate
+            - quantity
+          properties:
+            startDate:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2023-08-23'
+            quantity:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 2147483647
+              example: 3
+    ScheduleWeekly:
+      type: object
+      required:
+        - weekly
+      properties:
+        weekly:
+          type: object
+          required:
+            - dayOfWeek
+            - startDate
+            - quantity
+          properties:
+            dayOfWeek:
+              type: string
+              enum:
+                - SEGUNDA_FEIRA
+                - TERCA_FEIRA
+                - QUARTA_FEIRA
+                - QUINTA_FEIRA
+                - SEXTA_FEIRA
+                - SABADO
+                - DOMINGO
+              example: QUINTA_FEIRA
+            startDate:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2023-08-23'
+            quantity:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 2147483647
+              example: 10
+    ScheduleMonthly:
+      type: object
+      required:
+        - monthly
+      properties:
+        monthly:
+          type: object
+          required:
+            - dayOfMonth
+            - startDate
+            - quantity
+          properties:
+            dayOfMonth:
+              type: integer
+              minimum: 1
+              maximum: 31
+              example: 10
+            startDate:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2023-08-23'
+            quantity:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 2147483647
+              example: 36
+    ScheduleCustom:
+      type: object
+      required:
+        - custom
+      properties:
+        custom:
+          type: object
+          required:
+            - dates
+          properties:
+            dates:
+              type: array
+              items:
+                type: string
+                format: date
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                example: '2023-08-23'
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
