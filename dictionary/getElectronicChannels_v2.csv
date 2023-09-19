@@ -1,24 +1,23 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand;brand;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/name;name;Nome da marca selecionada pela Organização proprietária da dependência (titular).;Texto;80;Obrigatório;\w*\W*;;1;1;"";Não permitido;string;Marca A;
-/data/brand/companies;companies;Lista de instituições pertencentes à marca;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/brand/companies/name;name;Nome da marca selecionada pela Organização proprietária da dependência (titular).;Texto;80;Obrigatório;\w*\W*;;1;1;"";Não permitido;string;Empresa da Marca A;
-/data/brand/companies/urlComplementaryList;urlComplementaryList;;Texto;1024;Opcional;\w*\W*;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
-/data/brand/companies/electronicChannels;electronicChannels;Lista  de canais de atendimento eltrônico;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/brand/companies/electronicChannels/identification;identification;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand/companies/electronicChannels/identification/type;type;Tipo de canal de atendimento eletrônico;Texto;;Obrigatório;;"INTERNET_BANKING 
+/data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/participant;participant;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/participant/brand;brand;Nome da marca selecionada pela Organização proprietária da dependência (titular).;Texto;80;Obrigatório;\w*\W*;;1;1;"";Não permitido;string;Marca A;
+/data/participant/name;name;Nome da marca selecionada pela Organização proprietária da dependência (titular).;Texto;80;Obrigatório;\w*\W*;;1;1;"";Não permitido;string;Empresa da Marca A;
+/data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
+/data/participant/urlComplementaryList;urlComplementaryList;;Texto;1024;Opcional;\w*\W*;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
+/data/identification;identification;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/identification/type;type;Tipo de canal de atendimento eletrônico;Texto;;Obrigatório;;"INTERNET_BANKING 
 MOBILE_BANKING 
 SAC 
 OUVIDORIA 
 CHAT 
 OUTROS";1;1;"";Não permitido;string;CHAT;
-/data/brand/companies/electronicChannels/identification/additionalInfo;additionalInfo;"Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'
+/data/identification/additionalInfo;additionalInfo;"Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'
 Restrição: Preenchimento obrigatório para o tipo de canal de atendimento 'OUTROS'
 ";Texto;300;Opcional;\w*\W*;;0;1;"";Não permitido;string;;
-/data/brand/companies/electronicChannels/identification/urls;urls;Lista das URLs que atendem um tipo de canal eletrônico selecionado;Lista;1024;Obrigatório;\w*\W*;;1;N;"";Não permitido;array;;
-/data/brand/companies/electronicChannels/services;services;Traz a relação de serviços disponbilizados pelo Canal de Atendimento;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/brand/companies/electronicChannels/services/name;name;Nome dos Serviços efetivamente prestados pelo Canal de Atendimento;Texto;;Obrigatório;;"ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA 
+/data/identification/urls;urls;Lista das URLs que atendem um tipo de canal eletrônico selecionado;Lista;1024;Obrigatório;\w*\W*;;1;N;"";Não permitido;array;;
+/data/services;services;Traz a relação de serviços disponbilizados pelo Canal de Atendimento;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/services/name;name;Nome dos Serviços efetivamente prestados pelo Canal de Atendimento;Texto;;Obrigatório;;"ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA 
 SAQUE_MOEDA_EM_ESPECIE 
 RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA 
 TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_CONTAS_DEPOSITOS_OU_PAGAMENTO_TITULARIDADE_CLIENTES 
@@ -38,7 +37,7 @@ OUTROS_PRODUTOS_SERVICOS
 CANCELAMENTO 
 INFORMACOES 
 RECLAMACOES";1;1;"";Não permitido;string;ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA;
-/data/brand/companies/electronicChannels/services/code;code;Código dos Serviços efetivamente prestados pelo Canal de Atendimento;Texto;;Obrigatório;;"ABRE_CONTA_DEPOSITO_OU_PRE_PAGA 
+/data/services/code;code;Código dos Serviços efetivamente prestados pelo Canal de Atendimento;Texto;;Obrigatório;;"ABRE_CONTA_DEPOSITO_OU_PRE_PAGA 
 SAQUE_MOEDA_ESPECIE 
 RECEBE_PAGA_QUALQUER_NATUREZA 
 TRANSFERENCIAS_ELETRONICAS_MOVIMENTA_CONTAS_DEPOSITOS_OU_PAGTO_TITULARES_CLIENTES 
@@ -58,5 +57,4 @@ OUTROS_PRODUTOS_SERVICOS
 CANCELAMENTO 
 INFORMACOES 
 RECLAMACOES";1;1;"";Não permitido;string;ABRE_CONTA_DEPOSITO_OU_PRE_PAGA;
-/data/brand/companies/electronicChannels/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;\w*\W*;;0;1;"";Não permitido;string;SIC;
-/data/brand/companies/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
+/data/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;\w*\W*;;0;1;"";Não permitido;string;SIC;
