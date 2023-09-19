@@ -1504,13 +1504,13 @@ components:
         type:
           $ref: '#/components/schemas/EnumPaymentType'
         schedule:
-                  type: object
-                  description: |
-                    [Restrição] Mutuamente excludente com o campo date. 
+          type: object
+          description: |
+            [Restrição] Mutuamente excludente com o campo date. 
 
-                    Este campo é obrigatório no caso de agendamento. 
+            Este campo é obrigatório no caso de agendamento. 
 
-                    Neste caso, o campo date não deve ser informado.
+            Neste caso, o campo date não deve ser informado.
           oneOf:
             - $ref: '#/components/schemas/ScheduleSingle'
             - $ref: '#/components/schemas/ScheduleDaily'
