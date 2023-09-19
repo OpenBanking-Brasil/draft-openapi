@@ -698,6 +698,12 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
+                  description: |
+                    [Restrição] Mutuamente excludente com o campo date. 
+
+                    Este campo é obrigatório no caso de agendamento. 
+
+                    Neste caso, o campo date não deve ser informado.
                   oneOf:
                     - $ref: '#/components/schemas/ScheduleSingle'
                     - $ref: '#/components/schemas/ScheduleDaily'
@@ -1497,6 +1503,12 @@ components:
         type:
           $ref: '#/components/schemas/EnumPaymentType'
         schedule:
+          description: |
+            [Restrição] Mutuamente excludente com o campo date. 
+
+            Este campo é obrigatório no caso de agendamento. 
+
+            Neste caso, o campo date não deve ser informado.
           oneOf:
             - $ref: '#/components/schemas/ScheduleSingle'
             - $ref: '#/components/schemas/ScheduleDaily'
@@ -1914,6 +1926,12 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
+                  description: |
+                    [Restrição] Mutuamente excludente com o campo date. 
+
+                    Este campo é obrigatório no caso de agendamento. 
+
+                    Neste caso, o campo date não deve ser informado.
                   oneOf:
                     - $ref: '#/components/schemas/ScheduleSingle'
                     - $ref: '#/components/schemas/ScheduleDaily'
@@ -2458,12 +2476,6 @@ components:
                 Observação: Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+365 corridos a partir da data do consentimento considerando o fuso horário de Brasília
     ScheduleDaily:
       type: object
-      description: |
-        [Restrição] Mutuamente excludente com o campo date. 
-
-        Este campo é obrigatório no caso de agendamento. 
-
-        Neste caso, o campo date não deve ser informado.
       required:
         - daily
       properties:
@@ -2486,12 +2498,6 @@ components:
               example: 3
     ScheduleWeekly:
       type: object
-      description: |
-        [Restrição] Mutuamente excludente com o campo date. 
-
-        Este campo é obrigatório no caso de agendamento. 
-
-        Neste caso, o campo date não deve ser informado.
       required:
         - weekly
       properties:
@@ -2526,12 +2532,6 @@ components:
               example: 10
     ScheduleMonthly:
       type: object
-      description: |
-        [Restrição] Mutuamente excludente com o campo date. 
-
-        Este campo é obrigatório no caso de agendamento. 
-
-        Neste caso, o campo date não deve ser informado.
       required:
         - monthly
       properties:
@@ -2560,12 +2560,6 @@ components:
               example: 36
     ScheduleCustom:
       type: object
-      description: |
-        [Restrição] Mutuamente excludente com o campo date. 
-
-        Este campo é obrigatório no caso de agendamento. 
-
-        Neste caso, o campo date não deve ser informado.
       required:
         - custom
       properties:
