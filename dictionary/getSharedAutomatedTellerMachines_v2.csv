@@ -1,22 +1,20 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/brand;brand;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/brand/name;name;Nome da marca selecionada pela Organização;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Organização A;
-/data/brand/companies;companies;Lista de instituições pertencentes à marca;Lista;;Opcional;;;0;N;"";Não permitido;array;;
-/data/brand/companies/name;name;Nome da Instituição, pertencente à Marca.;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Empresa da Organização A;
-/data/brand/companies/urlComplementaryList;urlComplementaryList;"URL de link para lista complementar com os nomes e CNPJs agrupados para o caso instituições ofertantes de produtos e serviços com as mesmas características.
+/data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/participant;participant;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/participant/brand;brand;Nome da marca selecionada pela Organização;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Organização A;
+/data/participant/name;name;Nome da Instituição, pertencente à Marca.;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Empresa da Organização A;
+/data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Opcional;^(\d{14})$|^NA$;;0;1;"";Não permitido;string;50685362000135;
+/data/participant/urlComplementaryList;urlComplementaryList;"URL de link para lista complementar com os nomes e CNPJs agrupados para o caso instituições ofertantes de produtos e serviços com as mesmas características.
 ";Texto;1024;Opcional;\w*\W*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
-/data/brand/companies/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Opcional;^(\d{14})$|^NA$;;0;1;"";Não permitido;string;50685362000135;
-/data/brand/companies/sharedAutomatedTellerMachines;sharedAutomatedTellerMachines;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
-/data/brand/companies/sharedAutomatedTellerMachines/identification;identification;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/brand/companies/sharedAutomatedTellerMachines/identification/ownerName;ownerName;Nome do proprietário do terminal de Autoatendimento Compartilhado;Texto;100;Opcional;\w*\W*;;0;1;"";Não permitido;string;João da Silva Santos;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress;postalAddress;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Opcional;\w*\W*;;0;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/additionalInfo;additionalInfo;Complemento;Texto;30;Opcional;\w*\W*;;0;1;"";Não permitido;string;Fundos;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/districtName;districtName;Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso';Texto;50;Opcional;\w*\W*;;0;1;"";Não permitido;string;Centro;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/townName;townName;Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo';Texto;50;Opcional;\w*\W*;;0;1;"";Não permitido;string;Marília;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/ibgeCode;ibgeCode;Código IBGE do município;Texto;7;Opcional;\d{7};;0;1;"";Não permitido;string;3515890;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/countrySubDivision;countrySubDivision;Enumeração referente a cada sigla da unidade da federação que identifica o estado ou o distrito federal, no qual o endereço está localizado. p.ex. 'AC'. São consideradas apenas as siglas para os estados brasileiros;Texto;;Opcional;;"AC 
+/data/identification;identification;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/identification/ownerName;ownerName;Nome do proprietário do terminal de Autoatendimento Compartilhado;Texto;100;Opcional;\w*\W*;;0;1;"";Não permitido;string;João da Silva Santos;
+/data/postalAddress;postalAddress;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Opcional;\w*\W*;;0;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;
+/data/postalAddress/additionalInfo;additionalInfo;Complemento;Texto;30;Opcional;\w*\W*;;0;1;"";Não permitido;string;Fundos;
+/data/postalAddress/districtName;districtName;Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso';Texto;50;Opcional;\w*\W*;;0;1;"";Não permitido;string;Centro;
+/data/postalAddress/townName;townName;Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo';Texto;50;Opcional;\w*\W*;;0;1;"";Não permitido;string;Marília;
+/data/postalAddress/ibgeCode;ibgeCode;Código IBGE do município;Texto;7;Opcional;\d{7};;0;1;"";Não permitido;string;3515890;
+/data/postalAddress/countrySubDivision;countrySubDivision;Enumeração referente a cada sigla da unidade da federação que identifica o estado ou o distrito federal, no qual o endereço está localizado. p.ex. 'AC'. São consideradas apenas as siglas para os estados brasileiros;Texto;;Opcional;;"AC 
 AL 
 AP 
 AM 
@@ -43,27 +41,27 @@ SC
 SP 
 SE 
 TO";0;1;"";Não permitido;string;SP;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Opcional;(\d{8})|^NA$;;0;1;"";Não permitido;string;17500001;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/country;country;Nome do país;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Brasil;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/countryCode;countryCode;Código do país;Texto;3;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;
-/data/brand/companies/sharedAutomatedTellerMachines/postalAddress/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;
-/data/brand/companies/sharedAutomatedTellerMachines/availability;availability;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/brand/companies/sharedAutomatedTellerMachines/availability/standards;standards;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
-/data/brand/companies/sharedAutomatedTellerMachines/availability/standards/weekday;weekday;Dia da semana de abertura;Texto;;Opcional;;"DOMINGO 
+/data/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Opcional;(\d{8})|^NA$;;0;1;"";Não permitido;string;17500001;
+/data/postalAddress/country;country;Nome do país;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Brasil;
+/data/postalAddress/countryCode;countryCode;Código do país;Texto;3;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
+/data/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/postalAddress/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;
+/data/postalAddress/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;
+/data/availability;availability;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/availability/standards;standards;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
+/data/availability/standards/weekday;weekday;Dia da semana de abertura;Texto;;Opcional;;"DOMINGO 
 SEGUNDA_FEIRA 
 TERCA_FEIRA 
 QUARTA_FEIRA 
 QUINTA_FEIRA 
 SEXTA_FEIRA 
 SABADO";0;1;"";Não permitido;string;SEGUNDA_FEIRA;
-/data/brand/companies/sharedAutomatedTellerMachines/availability/standards/openingTime;openingTime;Horário de abertura (UTC);Texto;13;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;0;1;"";Não permitido;string;10:00:57Z;
-/data/brand/companies/sharedAutomatedTellerMachines/availability/standards/closingTime;closingTime;Horário de fechamento (UTC);Texto;13;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;0;1;"";Não permitido;string;16:00:57Z;
-/data/brand/companies/sharedAutomatedTellerMachines/availability/exception;exception;;Texto;2000;Opcional;\w*\W*;;0;1;"";Não permitido;string;Exceto feriados municipais, nacionais e estaduais;
-/data/brand/companies/sharedAutomatedTellerMachines/availability/isPublicAccessAllowed;isPublicAccessAllowed;;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;false;
-/data/brand/companies/sharedAutomatedTellerMachines/services;services;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
-/data/brand/companies/sharedAutomatedTellerMachines/services/name;name;Nome dos Serviços efetivamente prestados pelo Terminal de Autoatendimento Compartilhado informado;Texto;;Opcional;;"ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA 
+/data/availability/standards/openingTime;openingTime;Horário de abertura (UTC);Texto;13;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;0;1;"";Não permitido;string;10:00:57Z;
+/data/availability/standards/closingTime;closingTime;Horário de fechamento (UTC);Texto;13;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;0;1;"";Não permitido;string;16:00:57Z;
+/data/availability/exception;exception;;Texto;2000;Opcional;\w*\W*;;0;1;"";Não permitido;string;Exceto feriados municipais, nacionais e estaduais;
+/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;false;
+/data/services;services;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
+/data/services/name;name;Nome dos Serviços efetivamente prestados pelo Terminal de Autoatendimento Compartilhado informado;Texto;;Opcional;;"ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA 
 SAQUE_MOEDA_EM_ESPECIE 
 RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA 
 TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO 
@@ -86,7 +84,7 @@ OUTROS_PRODUTOS_SERVICOS
 CANCELAMENTO 
 INFORMACOES 
 RECLAMACOES";0;1;"";Não permitido;string;OUTROS_PRODUTOS_SERVICOS;
-/data/brand/companies/sharedAutomatedTellerMachines/services/code;code;Código dos Serviços efetivamente prestados pelo Terminal de Autoatendimento Compartilhado informado;Texto;;Opcional;;"ABRE_CONTA_DEPOSITO_OU_PRE_PAGA 
+/data/services/code;code;Código dos Serviços efetivamente prestados pelo Terminal de Autoatendimento Compartilhado informado;Texto;;Opcional;;"ABRE_CONTA_DEPOSITO_OU_PRE_PAGA 
 SAQUE_MOEDA_ESPECIE 
 RECEBE_PAGA_QUALQUER_NATUREZA 
 TRANSFERENCIAS_ELETRONICAS_MOVIMENTA_CONTAS_DEPOSITOS_OU_PAGA_TITULARES_CLIENTES 
@@ -107,4 +105,4 @@ OUTROS_PRODUTOS_SERVICOS
 CANCELAMENTO 
 INFORMACOES 
 RECLAMACOES";0;1;"";Não permitido;string;OUTROS_PRODUTOS_SERVICOS;
-/data/brand/companies/sharedAutomatedTellerMachines/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;\w*\W*;;0;1;"";Não permitido;string;Serviços complementares de atendimento via terminais de autoatendimento.;
+/data/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;\w*\W*;;0;1;"";Não permitido;string;Serviços complementares de atendimento via terminais de autoatendimento.;

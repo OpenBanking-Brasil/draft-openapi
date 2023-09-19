@@ -1180,58 +1180,18 @@ components:
         - meta
       properties:
         data:
-          type: object
-          properties:
-            brand:
-              $ref: '#/components/schemas/SharedAutomatedTellerMachinesBrand'
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedAutomatedTellerMachinesData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-    SharedAutomatedTellerMachinesBrand:
+    SharedAutomatedTellerMachinesData:
       type: object
       properties:
-        name:
-          type: string
-          maxLength: 80
-          pattern: \w*\W*
-          description: Nome da marca selecionada pela Organização
-          example: Organização A
-        companies:
-          type: array
-          description: Lista de instituições pertencentes à marca
-          items:
-            $ref: '#/components/schemas/SharedAutomatedTellerMachinesCompanies'
-    SharedAutomatedTellerMachinesCompanies:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Nome da Instituição, pertencente à Marca.
-          maxLength: 80
-          pattern: \w*\W*
-          example: 'Empresa da Organização A'
-        urlComplementaryList:
-          type: string
-          pattern: \w*\W*
-          maxLength: 1024
-          description: |
-            URL de link para lista complementar com os nomes e CNPJs agrupados para o caso instituições ofertantes de produtos e serviços com as mesmas características.
-          example: 'https://empresadaorganizacaoa.com/complementarylist'
-        cnpjNumber:
-          type: string
-          pattern: '^(\d{14})$|^NA$'
-          description: Número completo do CNPJ da instituição
-          maxLength: 14
-          example: "50685362000135"
-        sharedAutomatedTellerMachines:
-          type: array
-          items:
-            $ref: '#/components/schemas/SharedAutomatedTellerMachines'
-          minItems: 0
-    SharedAutomatedTellerMachines:
-      type: object
-      properties:
+        participant:
+          $ref: '#/components/schemas/SharedAutomatedTellerMachinesParticipant'
         identification:
           $ref: '#/components/schemas/SharedAutomatedTellerMachinesIdentification'
         postalAddress:
@@ -1242,6 +1202,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SharedAutomatedTellerMachinesServices'
+    SharedAutomatedTellerMachinesParticipant:
+      type: object
+      properties:
+        brand:
+          type: string
+          maxLength: 80
+          pattern: \w*\W*
+          description: Nome da marca selecionada pela Organização
+          example: Organização A
+        name:
+          type: string
+          description: Nome da Instituição, pertencente à Marca.
+          maxLength: 80
+          pattern: \w*\W*
+          example: 'Empresa da Organização A'
+        cnpjNumber:
+          type: string
+          pattern: '^(\d{14})$|^NA$'
+          description: Número completo do CNPJ da instituição
+          maxLength: 14
+          example: "50685362000135"
+        urlComplementaryList:
+          type: string
+          pattern: \w*\W*
+          maxLength: 1024
+          description: |
+            URL de link para lista complementar com os nomes e CNPJs agrupados para o caso instituições ofertantes de produtos e serviços com as mesmas características.
+          example: 'https://empresadaorganizacaoa.com/complementarylist'
     SharedAutomatedTellerMachinesServices:
       type: object
       properties:
