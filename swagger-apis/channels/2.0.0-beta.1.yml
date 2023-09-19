@@ -107,152 +107,154 @@ components:
       properties:
         data:
           type: object
-          required:
-            - brand
           properties:
-            brand:
-              $ref: '#/components/schemas/BankingAgentsBrand'
+            participant:
+              $ref: '#/components/schemas/BankingAgentsParticipant'
+            bankingAgents:
+              type: array
+              items:
+                $ref: '#/components/schemas/BankingAgent'
+              minItems: 1
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
       example:
         data:
-          brand:
-            name: 'Organização A'
-            companies:
-              - name: 'Empresa A1'
-                cnpjNumber: '45086338000178'
-                contractors:
-                  - name: 'Empresa Contratante 1'
-                    cnpjNumber: '99558332000137'
-                    bankingAgents:
-                      - identification:
-                          corporationName: 'Empresa Correspondente A'
-                          groupName: 'Grupo Master'
-                          cnpjNumber: '02345876000299'
-                          isUnderestablishment: true
-                        locations:
-                          - postalAddress:
-                              address: 'Av Tasuko Ykeda, 25'
-                              districtName: 'Centro'
-                              townName: 'Marília'
-                              countrySubDivision: 'SP'
-                              postCode: '17500001'
-                              additionalInfo: "Loja B."
-                              ibgeCode: "3550308"
-                              country: "Brasil"
-                              countryCode: "BRA"
-                              geographicCoordinates:
-                                latitude: "-90.8365180"
-                                longitude: "-180.836519"
-                            phones:
-                              - type: 'FIXO'
-                                countryCallingCode: '55'
-                                areaCode: '14'
-                                number: '35721199'
-                              - type: 'MOVEL'
-                                countryCallingCode: '55'
-                                areaCode: '14'
-                                number: '997865532'
-                            availability:
-                              standards:
-                                - weekday: SEGUNDA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: TERCA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: QUARTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: QUINTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: SEXTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                              exception: 'Exceto feriados municipais, estaduais e nacionais'
-                              isPublicAccessAllowed: true
-                          - postalAddress:
-                              address: 'R Yroshima Takasi, 72'
-                              districtName: 'Altos da Colina'
-                              townName: 'Marília'
-                              countrySubDivision: 'SP'
-                              postCode: '17526760'
-                              additionalInfo: "Loja 2."
-                              ibgeCode: "3550308"
-                              country: "Brasil"
-                              countryCode: "BRA"
-                              geographicCoordinates:
-                                latitude: "-90.8365180"
-                                longitude: "-180.836519"
-                            phones:
-                              - type: 'FIXO'
-                                countryCallingCode: '55'
-                                areaCode: '14'
-                                number: '64721199'
-                            availability:
-                              standards:
-                                - weekday: SEGUNDA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: TERCA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: QUARTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: QUINTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: SEXTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                              exception: 'Exceto feriados municipais, estaduais e nacionais'
-                              isPublicAccessAllowed: true
-                          - postalAddress:
-                              address: 'Al Nasso Origami, 15, bloco A'
-                              districtName: 'Centro'
-                              townName: 'Marília'
-                              countrySubDivision: 'SP'
-                              postCode: '17500001'
-                              additionalInfo: "Loja B."
-                              ibgeCode: "3550308"
-                              country: "Brasil"
-                              countryCode: "BRA"
-                              geographicCoordinates:
-                                latitude: "-90.8365180"
-                                longitude: "-180.836519"
-                            availability:
-                              standards:
-                                - weekday: SEGUNDA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: TERCA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: QUARTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: QUINTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                                - weekday: SEXTA_FEIRA
-                                  openingTime: '10:00:57Z'
-                                  closingTime: '16:00:57Z'
-                              exception: 'Exceto feriados municipais, estaduais e nacionais'
-                              isPublicAccessAllowed: true
-                        services:
-                          - name: 'RECEPCAO_ENCAMINHAMENTO_PROPOSTAS_ABERTURA_CONTAS_DEPOSITOS_VISTA_PRAZO_POUPANCA_MANTIDOS_INSTITUICAO_CONTRATANTE'
-                            code: 'RECEBE_ENCAMINHA_PROPOSTAS_ABERTURA_CONTAS'
-                            additionalInfo: 'NA'
-                          - name: 'REALIZACAO_RECEBIMENTOS_PAGAMENTOS_TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_CONTAS_DEPOSITOS_TITULARIDADE_CLIENTES_MANTIDAS_INSTITUICAO_CONTRATANTE'
-                            code: 'REALIZA_RECEBIMENTOS_PAGAMENTOS_TRANSFERENCIAS_ELETRONICAS'
-                            additionalInfo: 'NA'
-                          - name: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA_OUTRAS_ATIVIDADES_DECORRENTES_EXECUCAO_CONTRATOS_CONVENIOS_PRESTACAO_SERVICOS'
-                            code: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA_EXECUCAO_CONTRATOS_CONVENIO'
-                            additionalInfo: 'NA'
+          participant:
+            brand: 'Organização A'
+            name: 'Empresa A1'
+            cnpjNumber: '45086338000178'
+          bankingAgents:
+            - identification:
+                corporationName: 'Empresa Correspondente A'
+                groupName: 'Grupo Master'
+                cnpjNumber: '02345876000299'
+                isUnderestablishment: true
+              locations:
+                - postalAddress:
+                    address: 'Av Tasuko Ykeda, 25'
+                    districtName: 'Centro'
+                    townName: 'Marília'
+                    countrySubDivision: 'SP'
+                    postCode: '17500001'
+                    additionalInfo: "Loja B."
+                    ibgeCode: "3550308"
+                    country: "Brasil"
+                    countryCode: "BRA"
+                    geographicCoordinates:
+                      latitude: "-90.8365180"
+                      longitude: "-180.836519"
+                  phones:
+                    - type: 'FIXO'
+                      countryCallingCode: '55'
+                      areaCode: '14'
+                      number: '35721199'
+                    - type: 'MOVEL'
+                      countryCallingCode: '55'
+                      areaCode: '14'
+                      number: '997865532'
+                  availability:
+                    standards:
+                      - weekday: SEGUNDA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: TERCA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: QUARTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: QUINTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: SEXTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                    exception: 'Exceto feriados municipais, estaduais e nacionais'
+                    isPublicAccessAllowed: true
+                - postalAddress:
+                    address: 'R Yroshima Takasi, 72'
+                    districtName: 'Altos da Colina'
+                    townName: 'Marília'
+                    countrySubDivision: 'SP'
+                    postCode: '17526760'
+                    additionalInfo: "Loja 2."
+                    ibgeCode: "3550308"
+                    country: "Brasil"
+                    countryCode: "BRA"
+                    geographicCoordinates:
+                      latitude: "-90.8365180"
+                      longitude: "-180.836519"
+                  phones:
+                    - type: 'FIXO'
+                      countryCallingCode: '55'
+                      areaCode: '14'
+                      number: '64721199'
+                  availability:
+                    standards:
+                      - weekday: SEGUNDA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: TERCA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: QUARTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: QUINTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: SEXTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                    exception: 'Exceto feriados municipais, estaduais e nacionais'
+                    isPublicAccessAllowed: true
+                - postalAddress:
+                    address: 'Al Nasso Origami, 15, bloco A'
+                    districtName: 'Centro'
+                    townName: 'Marília'
+                    countrySubDivision: 'SP'
+                    postCode: '17500001'
+                    additionalInfo: "Loja B."
+                    ibgeCode: "3550308"
+                    country: "Brasil"
+                    countryCode: "BRA"
+                    geographicCoordinates:
+                      latitude: "-90.8365180"
+                      longitude: "-180.836519"
+                  availability:
+                    standards:
+                      - weekday: SEGUNDA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: TERCA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: QUARTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: QUINTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                      - weekday: SEXTA_FEIRA
+                        openingTime: '10:00:57Z'
+                        closingTime: '16:00:57Z'
+                    exception: 'Exceto feriados municipais, estaduais e nacionais'
+                    isPublicAccessAllowed: true
+              services:
+                - name: 'RECEPCAO_ENCAMINHAMENTO_PROPOSTAS_ABERTURA_CONTAS_DEPOSITOS_VISTA_PRAZO_POUPANCA_MANTIDOS_INSTITUICAO_CONTRATANTE'
+                  code: 'RECEBE_ENCAMINHA_PROPOSTAS_ABERTURA_CONTAS'
+                  additionalInfo: 'NA'
+                - name: 'REALIZACAO_RECEBIMENTOS_PAGAMENTOS_TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_CONTAS_DEPOSITOS_TITULARIDADE_CLIENTES_MANTIDAS_INSTITUICAO_CONTRATANTE'
+                  code: 'REALIZA_RECEBIMENTOS_PAGAMENTOS_TRANSFERENCIAS_ELETRONICAS'
+                  additionalInfo: 'NA'
+                - name: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA_OUTRAS_ATIVIDADES_DECORRENTES_EXECUCAO_CONTRATOS_CONVENIOS_PRESTACAO_SERVICOS'
+                  code: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA_EXECUCAO_CONTRATOS_CONVENIO'
+                  additionalInfo: 'NA'
+              contractors:
+                - name: 'Empresa Contratante 1'
+                  cnpjNumber: '99558332000137'
         links:
           self: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
           first: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
@@ -262,43 +264,25 @@ components:
         meta:
           totalRecords: 1
           totalPages: 1
-    BankingAgentsBrand:
+    BankingAgentsParticipant:
       type: object
       required:
+        - brand
         - name
-        - companies
+        - cnpjNumber
       properties:
-        name:
+        brand:
           type: string
           maxLength: 80
           pattern: \w*\W*
           description: Nome da marca selecionada pela Organização proprietário da dependência (titular).
           example: Organização A
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/BankingAgentsCompanies'
-          minItems: 1
-          description: Lista de instituições pertencentes à marca
-    BankingAgentsCompanies:
-      type: object
-      required:
-        - name
-        - cnpjNumber
-        - contractors
-      properties:
         name:
           type: string
           maxLength: 80
           pattern: \w*\W*
           description: Nome da Instituição, pertencente à marca, responsável pelo Correspondente Bancário no país.
           example: 'Empresa da Organização A'
-        contractors:
-          type: array
-          items:
-            $ref: '#/components/schemas/BankingAgentsContractor'
-          minItems: 1
-          description: Relação de informações de um contratante do serviço de correspondente.
         cnpjNumber:
           type: string
           pattern: '^(\d{14})$|^NA$'
@@ -315,11 +299,6 @@ components:
           type: string
           maxLength: 100
           pattern: \w*\W*
-        bankingAgents:
-          type: array
-          items:
-            $ref: '#/components/schemas/BankingAgent'
-          minItems: 1
         cnpjNumber:
           type: string
           pattern: '^(\d{14})$|^NA$'
@@ -580,6 +559,12 @@ components:
             $ref: '#/components/schemas/BankingAgentService'
           minItems: 1
           description: "Traz a relação de serviços disponbilizados pelo Canal de Atendimento"
+        contractors:
+          type: array
+          items:
+            $ref: '#/components/schemas/BankingAgentsContractor'
+          minItems: 1
+          description: Relação de informações de um contratante do serviço de correspondente.
     BankingAgentIdentification:
       type: object
       required:
