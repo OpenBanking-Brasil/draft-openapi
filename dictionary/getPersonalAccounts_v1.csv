@@ -150,20 +150,16 @@ Observação: Para efeito de comparação de taxas dos produtos, as instituiçõ
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
 /data/fees/otherServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
-/data/serviceBundles;serviceBundles;"Lista dos Pacotes de serviços
+/data/serviceBundles;serviceBundles;"Lista dos pacotes de serviços de contas com serviços essenciais padronizados e regulados pela Resolução BC 3919, de 25/11/2010
 
 [Restrição]
-- Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
-atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+- Obrigatório quando ""type"" for igual ""CONTA_DEPOSITO_A_VISTA"" (conta corrente) ou ""CONTA_POUPANCA"", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
 
-- Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
-existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+- Opcional quando ""type"" for igual ""CONTA_PAGAMENTO_PRE_PAGA"" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
 ";Lista;;Condicional;;;1;200;"
-- Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
-atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+- Obrigatório quando ""type"" for igual ""CONTA_DEPOSITO_A_VISTA"" (conta corrente) ou ""CONTA_POUPANCA"", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
 
-- Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
-existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+- Opcional quando ""type"" for igual ""CONTA_PAGAMENTO_PRE_PAGA"" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
 ";Não permitido;array;;
 /data/serviceBundles/name;name;Nome do Pacote de Serviços dado pela instituição.;Texto;250;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Conta de depósitos à vista Movimentação com cartão (sem cheque);
 /data/serviceBundles/services;services;Lista dos serviços que compõe o pacote de serviços;Lista;;Obrigatório;;;1;100;"";Não permitido;array;;
@@ -214,9 +210,11 @@ MOBILE_BANKING
 CENTRAL_TELEFONICA 
 CHAT 
 OUTROS";1;7;"";Não permitido;array;DEPENDENCIAS_PROPRIAS;
-/data/additionalInfo;additionalInfo;"Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
-Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
-";Texto;100;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;NA;
+/data/openingClosingChannelsAdditionalInfo;openingClosingChannelsAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao ""openingClosingChannels"". 
+
+[Restrição] Obrigatório quando ""openingClosingChannels"" for igual 'OUTROS'.
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""openingClosingChannels"" for igual 'OUTROS'.
+";Não permitido;string;Informações adicionais;
 /data/transactionMethods;transactionMethods;Lista de formas de movimentação;Lista;;Obrigatório;;"MOVIMENTACAO_ELETRONICA 
 MOVIMENTACAO_CHEQUE 
 MOVIMENTACAO_CARTAO 
@@ -228,7 +226,9 @@ MOVIMENTACAO_PRESENCIAL";1;4;"";Não permitido;array;MOVIMENTACAO_CARTAO;
 /data/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
 /data/termsConditions/closingProcessInfo;closingProcessInfo;Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. 'https://example.com/mobile-banking' ;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
 /data/incomeRate;incomeRate;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/incomeRate/savingAccount;savingAccount;"Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente.
-Restrição: De preenchimento obrigatório para CONTA_POUPANCA.
-";Texto;2000;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;"Para depósitos até 03/05/2012 – remuneração trimestral de 1,5% + TR, sempre creditada no aniversário da conta; Para depósitos a partir de 04/05/2012 – 70% da Selic + TR quando a Selic for igual ou inferior a 8,5% ao ano e 1,5% + TR caso a Selic seja superior a 8,5%.";
+/data/incomeRate/savingAccount;savingAccount;"Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente. 
+
+[Restrição] Obrigatório quando ""type"" for igual ""CONTA_POUPANCA"".
+";Texto;2000;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""type"" for igual ""CONTA_POUPANCA"".
+";Não permitido;string;;
 /data/incomeRate/prepaidPaymentAccount;prepaidPaymentAccount;Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga.;Texto;2000;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;40% Rendimento a.m.;
