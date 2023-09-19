@@ -56,7 +56,7 @@ SE
 TO";1;1;"";Não permitido;string;SP;
 /data/postalAddresses/postCode;postCode;Código de Endereçamento Postal;Texto;8;Obrigatório;(\d{8}|^NA$);;1;1;"";Não permitido;string;17500001;
 /data/postalAddresses/country;country;Nome do país;Texto;80;Opcional;\w*\W*;;0;1;"";Não permitido;string;Brasil;
-/data/postalAddresses/countryCode;countryCode;Código do país;Texto;3;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
+/data/postalAddresses/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;3;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
 /data/postalAddresses/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/postalAddresses/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;
 /data/postalAddresses/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;
