@@ -456,37 +456,32 @@ components:
         - meta
       properties:
         data:
-          type: object
-          required:
-            - brand
-          properties:
-            brand:
-              $ref: '#/components/schemas/ElectronicChannelsBrand'
+          type: array
+          items:
+            $ref: '#/components/schemas/ElectronicChannelsData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
       example:
         data:
-          brand:
-            name: 'Organização A'
-            companies:
-              - name: 'Empresa A1'
-                cnpjNumber: '45086338000178'
-                urlComplementaryList: 'https://empresaa1.com/branches-banking'
-                electronicChannels:
-                  - identification:
-                      type: 'INTERNET_BANKING'
-                      additionalInfo: 'NA'
-                      urls:
-                        - 'https://empresaa1.com/internet-banking'
-                    services:
-                      - name: "ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA"
-                        code: "ABRE_CONTA_DEPOSITO_OU_PRE_PAGA"
-                        additionalInfo: 'NA'
-                      - name: "SEGUROS"
-                        code: "SEGUROS"
-                        additionalInfo: 'NA'
+          - participant:
+              brand: 'Organização A'
+              name: 'Empresa A1'
+              cnpjNumber: '45086338000178'
+              urlComplementaryList: 'https://empresaa1.com/branches-banking'
+            identification:
+              type: 'INTERNET_BANKING'
+              additionalInfo: 'NA'
+              urls:
+                - 'https://empresaa1.com/internet-banking'
+            services:
+              - name: "ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA"
+                code: "ABRE_CONTA_DEPOSITO_OU_PRE_PAGA"
+                additionalInfo: 'NA'
+              - name: "SEGUROS"
+                code: "SEGUROS"
+                additionalInfo: 'NA'
         links:
           self: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
           first: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
@@ -496,54 +491,52 @@ components:
         meta:
           totalRecords: 1
           totalPages: 1
-    ElectronicChannelsBrand:
+    ElectronicChannelsData:
       type: object
       required:
-        - name
-        - companies
+        - identification
+        - services
       properties:
-        name:
+        participant:
+          $ref: '#/components/schemas/ElectronicChannelsParticipant'
+        identification:
+          $ref: '#/components/schemas/ElectronicChannelIdentification'
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElectronicChannelService'
+          minItems: 1
+          description: "Traz a relação de serviços disponbilizados pelo Canal de Atendimento"
+    ElectronicChannelsParticipant:
+      type: object
+      required:
+        - brand
+        - name
+        - cnpjNumber
+      properties:
+        brand:
           type: string
           description: Nome da marca selecionada pela Organização proprietária da dependência (titular).
           example: "Marca A"
           maxLength: 80
           pattern: \w*\W*
-        companies:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElectronicChannelsCompanies'
-          minItems: 1
-          description: Lista de instituições pertencentes à marca
-    ElectronicChannelsCompanies:
-      type: object
-      required:
-        - name
-        - electronicChannels
-        - cnpjNumber
-      properties:
         name:
           type: string
           description: Nome da marca selecionada pela Organização proprietária da dependência (titular).
           example: "Empresa da Marca A"
           maxLength: 80
           pattern: \w*\W*
-        urlComplementaryList:
-          type: string
-          maxLength: 1024
-          pattern: \w*\W*
-          example: "https://example.com/mobile-banking"
-        electronicChannels:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElectronicChannel'
-          minItems: 1
-          description: Lista  de canais de atendimento eltrônico
         cnpjNumber:
             type: string
             pattern: '^(\d{14})$|^NA$'
             description: Número completo do CNPJ da instituição
             maxLength: 14
             example: "50685362000135"
+        urlComplementaryList:
+          type: string
+          maxLength: 1024
+          pattern: \w*\W*
+          example: "https://example.com/mobile-banking"
     BankingAgent:
       type: object
       required:
@@ -1055,20 +1048,6 @@ components:
       required:
       - code
       - name
-    ElectronicChannel:
-      type: object
-      properties:
-        identification:
-          $ref: '#/components/schemas/ElectronicChannelIdentification'
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/ElectronicChannelService'
-          minItems: 1
-          description: "Traz a relação de serviços disponbilizados pelo Canal de Atendimento"
-      required:
-        - identification
-        - services
     ElectronicChannelIdentification:
       type: object
       required:
