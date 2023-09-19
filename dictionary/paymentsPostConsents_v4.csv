@@ -54,32 +54,33 @@ Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasi
 /data/payment;payment;Objeto contendo dados de pagamento para consentimento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/payment/type;type;"Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
 ";Texto;;Obrigatório;;PIX;1;1;"";Não permitido;string;PIX;
-/data/payment/schedule;;Define a política de agendamento único.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/payment/schedule/date;date;"Define a data alvo da liquidação do pagamento. 
+/data/payment/schedule;;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/payment/schedule/single;single;Define a política de agendamento único.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/payment/schedule/single/date;date;"Define a data alvo da liquidação do pagamento. 
 
 O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
 
 Observação: Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+365 corridos a partir da data do consentimento considerando o fuso horário de Brasília
 ";Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2021-01-01;
-/data/payment/schedule;;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/payment/schedule/startDate;startDate;;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
-/data/payment/schedule/quantity;quantity;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;3;
-/data/payment/schedule;;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/payment/schedule/dayOfWeek;dayOfWeek;;Texto;;Obrigatório;;"SEGUNDA_FEIRA 
+/data/payment/schedule/daily;daily;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/payment/schedule/daily/startDate;startDate;;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
+/data/payment/schedule/daily/quantity;quantity;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;3;
+/data/payment/schedule/weekly;weekly;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/payment/schedule/weekly/dayOfWeek;dayOfWeek;;Texto;;Obrigatório;;"SEGUNDA_FEIRA 
 TERCA_FEIRA 
 QUARTA_FEIRA 
 QUINTA_FEIRA 
 SEXTA_FEIRA 
 SABADO 
 DOMINGO";1;1;"";Não permitido;string;QUINTA_FEIRA;
-/data/payment/schedule/startDate;startDate;;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
-/data/payment/schedule/quantity;quantity;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;10;
-/data/payment/schedule;;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/payment/schedule/dayOfMonth;dayOfMonth;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;10;
-/data/payment/schedule/startDate;startDate;;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
-/data/payment/schedule/quantity;quantity;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;36;
-/data/payment/schedule;;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/payment/schedule/dates;dates;;Lista;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;N;"";Não permitido;array;2023-08-23;
+/data/payment/schedule/weekly/startDate;startDate;;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
+/data/payment/schedule/weekly/quantity;quantity;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;10;
+/data/payment/schedule/monthly;monthly;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/payment/schedule/monthly/dayOfMonth;dayOfMonth;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;10;
+/data/payment/schedule/monthly/startDate;startDate;;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
+/data/payment/schedule/monthly/quantity;quantity;;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;36;
+/data/payment/schedule/custom;custom;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/payment/schedule/custom/dates;dates;;Lista;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;N;"";Não permitido;array;2023-08-23;
 /data/payment/date;date;"[Restrição] Mutuamente excludente com o objeto schedule. 
 
 Este campo é obrigatório no caso de pagamento único. 

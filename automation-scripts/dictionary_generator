@@ -84,7 +84,9 @@ def sub_extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'
     elsif path != ''
       parent = schema.clone
       parent['path'] = path
-      fields.push parent
+      if !fields.any? { |objeto| objeto['path'] == path }
+        fields.push parent
+      end
     end
 
     schema = schema['items'] if schema['type'] == 'array'

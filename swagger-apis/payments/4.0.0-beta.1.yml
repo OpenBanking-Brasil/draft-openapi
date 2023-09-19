@@ -698,13 +698,6 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
-                  type: object
-                  description: |
-                    [Restrição] Mutuamente excludente com o campo date. 
-
-                    Este campo é obrigatório no caso de agendamento. 
-
-                    Neste caso, o campo date não deve ser informado.
                   oneOf:
                     - $ref: '#/components/schemas/ScheduleSingle'
                     - $ref: '#/components/schemas/ScheduleDaily'
@@ -1504,13 +1497,6 @@ components:
         type:
           $ref: '#/components/schemas/EnumPaymentType'
         schedule:
-          type: object
-          description: |
-            [Restrição] Mutuamente excludente com o campo date. 
-
-            Este campo é obrigatório no caso de agendamento. 
-
-            Neste caso, o campo date não deve ser informado.
           oneOf:
             - $ref: '#/components/schemas/ScheduleSingle'
             - $ref: '#/components/schemas/ScheduleDaily'
@@ -1928,13 +1914,6 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
-                  type: object
-                  description: |
-                    [Restrição] Mutuamente excludente com o campo date. 
-
-                    Este campo é obrigatório no caso de agendamento. 
-
-                    Neste caso, o campo date não deve ser informado.
                   oneOf:
                     - $ref: '#/components/schemas/ScheduleSingle'
                     - $ref: '#/components/schemas/ScheduleDaily'
@@ -2456,103 +2435,152 @@ components:
               [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     ScheduleSingle:
       type: object
-      description: Define a política de agendamento único.
       required:
-        - date
+        - single
       properties:
-        date:
-          type: string
-          format: date
-          maxLength: 10
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2021-01-01'
-          description: |
-            Define a data alvo da liquidação do pagamento. 
+        single:
+          type: object
+          description: Define a política de agendamento único.
+          required:
+            - date
+          properties:
+            date:
+              type: string
+              format: date
+              maxLength: 10
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2021-01-01'
+              description: |
+                Define a data alvo da liquidação do pagamento. 
 
-            O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+                O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
 
-            Observação: Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+365 corridos a partir da data do consentimento considerando o fuso horário de Brasília
+                Observação: Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+365 corridos a partir da data do consentimento considerando o fuso horário de Brasília
     ScheduleDaily:
       type: object
+      description: |
+        [Restrição] Mutuamente excludente com o campo date. 
+
+        Este campo é obrigatório no caso de agendamento. 
+
+        Neste caso, o campo date não deve ser informado.
       required:
-        - startDate
-        - quantity
+        - daily
       properties:
-        startDate:
-          type: string
-          format: date
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2023-08-23'
-        quantity:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 2147483647
-          example: 3
+        daily:
+          type: object
+          required:
+            - startDate
+            - quantity
+          properties:
+            startDate:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2023-08-23'
+            quantity:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 2147483647
+              example: 3
     ScheduleWeekly:
       type: object
+      description: |
+        [Restrição] Mutuamente excludente com o campo date. 
+
+        Este campo é obrigatório no caso de agendamento. 
+
+        Neste caso, o campo date não deve ser informado.
       required:
-        - dayOfWeek
-        - startDate
-        - quantity
+        - weekly
       properties:
-        dayOfWeek:
-          type: string
-          enum:
-            - SEGUNDA_FEIRA
-            - TERCA_FEIRA
-            - QUARTA_FEIRA
-            - QUINTA_FEIRA
-            - SEXTA_FEIRA
-            - SABADO
-            - DOMINGO
-          example: QUINTA_FEIRA
-        startDate:
-          type: string
-          format: date
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2023-08-23'
-        quantity:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 2147483647
-          example: 10
+        weekly:
+          type: object
+          required:
+            - dayOfWeek
+            - startDate
+            - quantity
+          properties:
+            dayOfWeek:
+              type: string
+              enum:
+                - SEGUNDA_FEIRA
+                - TERCA_FEIRA
+                - QUARTA_FEIRA
+                - QUINTA_FEIRA
+                - SEXTA_FEIRA
+                - SABADO
+                - DOMINGO
+              example: QUINTA_FEIRA
+            startDate:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2023-08-23'
+            quantity:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 2147483647
+              example: 10
     ScheduleMonthly:
       type: object
+      description: |
+        [Restrição] Mutuamente excludente com o campo date. 
+
+        Este campo é obrigatório no caso de agendamento. 
+
+        Neste caso, o campo date não deve ser informado.
       required:
-        - dayOfMonth
-        - startDate
-        - quantity
+        - monthly
       properties:
-        dayOfMonth:
-          type: integer
-          minimum: 1
-          maximum: 31
-          example: 10
-        startDate:
-          type: string
-          format: date
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-          example: '2023-08-23'
-        quantity:
-          type: integer
-          format: int32
-          minimum: 1
-          maximum: 2147483647
-          example: 36
+        monthly:
+          type: object
+          required:
+            - dayOfMonth
+            - startDate
+            - quantity
+          properties:
+            dayOfMonth:
+              type: integer
+              minimum: 1
+              maximum: 31
+              example: 10
+            startDate:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              example: '2023-08-23'
+            quantity:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 2147483647
+              example: 36
     ScheduleCustom:
       type: object
+      description: |
+        [Restrição] Mutuamente excludente com o campo date. 
+
+        Este campo é obrigatório no caso de agendamento. 
+
+        Neste caso, o campo date não deve ser informado.
       required:
-        - dates
+        - custom
       properties:
-        dates:
-          type: array
-          items:
-            type: string
-            format: date
-            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-            example: '2023-08-23'
+        custom:
+          type: object
+          required:
+            - dates
+          properties:
+            dates:
+              type: array
+              items:
+                type: string
+                format: date
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+                example: '2023-08-23'
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
