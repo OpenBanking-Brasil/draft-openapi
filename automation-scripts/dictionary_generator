@@ -56,7 +56,6 @@ end
 # Extract fields from Schema Object recursivily
 def extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
   if !schema['oneOf'].nil?
-    puts schema['oneOf']
     schema['oneOf'].each do |option|
       fields = sub_extract_fields(option, path, fields, ignore)
     end
