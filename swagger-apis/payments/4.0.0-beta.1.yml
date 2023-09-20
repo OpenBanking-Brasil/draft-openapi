@@ -1278,6 +1278,65 @@ components:
         - SALDO_INSUFICIENTE
         - VALOR_ACIMA_LIMITE
         - QRCODE_INVALIDO
+    EnumRejectionReasonTypeGetPix:
+      type: string
+      enum:
+        - SALDO_INSUFICIENTE
+        - VALOR_ACIMA_LIMITE
+        - VALOR_INVALIDO
+        - COBRANCA_INVALIDA
+        - NAO_INFORMADO
+        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+        - DETALHE_PAGAMENTO_INVALIDO
+        - PAGAMENTO_RECUSADO_DETENTORA
+        - PAGAMENTO_RECUSADO_SPI
+        - FALHA_INFRAESTRUTURA
+        - FALHA_INFRAESTRUTURA_SPI
+        - FALHA_INFRAESTRUTURA_DICT
+        - FALHA_INFRAESTRUTURA_ICP
+        - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
+        - FALHA_INFRAESTRUTURA_DETENTORA
+        - CONTAS_ORIGEM_DESTINO_IGUAIS
+        - FALHA_AGENDAMENTO_PAGAMENTOS
+      example: SALDO_INSUFICIENTE
+      description: |
+        Define o código da razão pela qual o pagamento foi rejeitado
+
+        - SALDO_INSUFICIENTE - A conta selecionada não possui saldo suficiente para realizar o pagamento.
+
+        - VALOR_ACIMA_LIMITE - O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outro] para permitir a realização de transações pelo cliente.
+
+        - VALOR_INVALIDO - O valor enviado não é válido para o QR Code informado.
+
+        - COBRANCA_INVALIDA - Validação de expiração, validação de vencimento ou Status Válido.
+
+        - NAO_INFORMADO - Não reportado/identificado pela instituição detentora de conta.
+
+        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO - Dados do pagamento divergentes dos dados do consentimento.
+
+        - DETALHE_PAGAMENTO_INVALIDO - Parâmetro [nome_campo] não obedecer às regras de negócio.
+
+        - PAGAMENTO_RECUSADO_DETENTORA - [Descrição do motivo de recusa].
+
+        - PAGAMENTO_RECUSADO_SPI - [Código de erro conforme tabela de domínios reason PACS.002].
+
+        - FALHA_INFRAESTRUTURA - [Descrição de qual falha na infraestrutura inviabilizou o processamento].
+
+        - FALHA_INFRAESTRUTURA_SPI - Indica uma falha no Sistema de Pagamentos Instantâneos (SPI).
+
+        - FALHA_INFRAESTRUTURA_DICT - Indica uma falha no Diretório de Identificadores de Contas Transacionais (DICT).
+
+        - FALHA_INFRAESTRUTURA_ICP - Indica uma falha na Infraestrutura de Chaves Públicas (ICP).
+
+        - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR - Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento.
+
+        - FALHA_INFRAESTRUTURA_DETENTORA - indica uma falha na infraestrutura da instituição detentora das informações ou recursos.
+
+        - CONTAS_ORIGEM_DESTINO_IGUAIS - Indica uma tentativa de pagamento onde a conta origem e a conta de destino são iguais.
+
+        - FALHA_AGENDAMENTO_PAGAMENTOS - Falha ao agendar pagamentos.
+
+        O rejectionReason FALHA_INFRAESTRUTURA não será excluído, apenas deixará de ser utilizado, permitindo assim, retrocompatibilidade e integridade entre os participantes.
     EnumRejectionReasonType:
       type: string
       enum:
@@ -1408,6 +1467,22 @@ components:
       properties:
         code:
           $ref: '#/components/schemas/EnumRejectionReasonType'
+        detail:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 2048
+          description: Contém informações adicionais ao pagamento rejeitado
+    RejectionReasonGetPix:
+      type: object
+      description: |-
+        Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status
+        [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
+      required:
+        - code
+        - detail
+      properties:
+        code:
+          $ref: '#/components/schemas/EnumRejectionReasonTypeGetPix'
         detail:
           type: string
           pattern: '[\w\W\s]*'
@@ -2407,7 +2482,7 @@ components:
           status:
             $ref: '#/components/schemas/EnumPaymentStatusType'
           rejectionReason:
-            $ref: '#/components/schemas/RejectionReason'
+            $ref: '#/components/schemas/RejectionReasonGetPix'
           localInstrument:
             $ref: '#/components/schemas/EnumLocalInstrument'
           cnpjInitiator:
