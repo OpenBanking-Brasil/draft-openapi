@@ -170,14 +170,12 @@ components:
           minItems: 1
           maxItems: 200
           description: |
-            Lista dos Pacotes de serviços
+            Lista dos pacotes de serviços de contas com serviços essenciais padronizados e regulados pela Resolução BC 3919, de 25/11/2010
 
             [Restrição]
-            - Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
-            atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+            - Obrigatório quando "type" for igual "CONTA_DEPOSITO_A_VISTA" (conta corrente) ou "CONTA_POUPANCA", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
 
-            - Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
-            existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+            - Opcional quando "type" for igual "CONTA_PAGAMENTO_PRE_PAGA" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
         openingClosingChannels:
           type: array
           items:
@@ -185,14 +183,15 @@ components:
           minItems: 1
           maxItems: 7
           description: Lista dos canais para aberturas e encerramento
-        additionalInfo:
+        openingClosingChannelsAdditionalInfo:
           type: string
-          maxLength: 100
+          maxLength: 140
           pattern: '[\w\W\s]*'
           description: |
-            Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
-            Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
-          example: 'NA'
+            Campo livre para preenchimento das informações adicionais referente ao "openingClosingChannels". 
+
+            [Restrição] Obrigatório quando "openingClosingChannels" for igual 'OUTROS'.
+          example: Informações adicionais 
         transactionMethods:
           type: array
           items:
@@ -527,9 +526,9 @@ components:
           maxLength: 2000
           pattern: '[\w\W\s]*'
           description: |
-            Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente.
-            Restrição: De preenchimento obrigatório para CONTA_POUPANCA.
-          example: 'Para depósitos até 03/05/2012 – remuneração trimestral de 1,5% + TR, sempre creditada no aniversário da conta; Para depósitos a partir de 04/05/2012 – 70% da Selic + TR quando a Selic for igual ou inferior a 8,5% ao ano e 1,5% + TR caso a Selic seja superior a 8,5%.'
+            Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente. 
+            
+            [Restrição] Obrigatório quando "type" for igual "CONTA_POUPANCA".
         prepaidPaymentAccount:
           type: string
           maxLength: 2000
@@ -617,14 +616,12 @@ components:
             $ref:  "#/components/schemas/ServiceBundle"
           minItems: 1
           description: |
-            Lista dos serviços que compõe o pacote de serviços
+            Lista dos pacotes de serviços de contas com serviços essenciais padronizados e regulados pela Resolução BC 3919, de 25/11/2010
 
             [Restrição]
-            - Caso o ENUM do campo “type” seja CONTA_PAGAMENTO_PRE_PAGA a estrutura “serviceBundle” fica condicionado caso a instituição tenha pacote de serviço
-            atrelado a este tipo de conta, porque são contas com serviços essenciais padronizados e regulados pela Resolução BACEN 3919, de 25/11/2010
+            - Obrigatório quando "type" for igual "CONTA_DEPOSITO_A_VISTA" (conta corrente) ou "CONTA_POUPANCA", porque existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados);
 
-            - Caso o ENUM do campo “type” seja CONTA_DEPOSITO_A_VISTA (conta corrente) ou CONTA_POUPANCA, deverá ser incluso a estrutura “serviceBundle”, porque
-            existem hoje pacotes passíveis de cobrança diferentes dos serviços essenciais (que não são cobrados)
+            - Opcional quando "type" for igual "CONTA_PAGAMENTO_PRE_PAGA" ficando condicionado caso a instituição tenha pacote de serviço atrelado a este tipo de conta.
         openingClosingChannels:
           type: array
           items:
@@ -632,14 +629,15 @@ components:
           minItems: 1
           maxItems: 7
           description: Lista dos canais para aberturas e encerramento
-        additionalInfo:
+        openingClosingChannelsAdditionalInfo:
           type: string
-          maxLength: 100
+          maxLength: 140
           pattern: '[\w\W\s]*'
           description: |
-            Texto livre para complementar informação relativa ao Canal disponível, quando no campo ''openingClosingChannels'' estiver preenchida a opção ''Outros''
-            Restrição: Campo de preenchimento obrigatório se ''openingCloseChannels'' estiver preenchida a opção ''OUTROS''
-          example: 'NA'
+            Campo livre para preenchimento das informações adicionais referente ao "openingClosingChannels". 
+
+            [Restrição] Obrigatório quando "openingClosingChannels" for igual 'OUTROS'.
+          example: Informações adicionais 
         transactionMethods:
           type: array
           items:
