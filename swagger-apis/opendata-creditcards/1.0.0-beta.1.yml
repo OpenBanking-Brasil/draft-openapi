@@ -6,7 +6,7 @@ info:
   contact:
     url: 'https://servicedesk.openbankingbrasil.org.br/Login.jsp?navLanguage=pt-BR'
 servers:
-  - url: 'http://api.banco.com.br/open-banking/products-services/v1'
+  - url: 'http://api.banco.com.br/open-banking/opendata-creditcards/v1'
 tags:
   - name: Credit Cards
 paths:
@@ -638,13 +638,13 @@ components:
           maxLength: 2000
           description: URL da página atualmente requisitada
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-          example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
+          example: 'https://api.banco.com.br/open-banking/opendata-creditcards/v1/resource'
         first:
           type: string
           maxLength: 2000
           description: URL da primeira página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-          example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
+          example: 'https://api.banco.com.br/open-banking/opendata-creditcards/v1/resource'
         prev:
           type: string
           maxLength: 2000
@@ -660,7 +660,7 @@ components:
           maxLength: 2000
           description: URL da última página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-          example: 'https://api.banco.com.br/open-banking/products-services/v1/resource'
+          example: 'https://api.banco.com.br/open-banking/opendata-creditcards/v1/resource'
     Meta:
       type: object
       properties:
