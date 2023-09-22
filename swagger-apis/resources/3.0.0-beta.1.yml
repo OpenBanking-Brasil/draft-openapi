@@ -58,6 +58,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/OKResponseResourceList'
+        '202':
+          $ref: '#/components/responses/202ResponseResource'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -87,6 +89,12 @@ paths:
             - 'consent:consentId'
             - resources
 components:
+  headers:
+    xFapiInteractionId:
+      description: |
+        A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+      schema:
+        $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
     ResponseResourceList:
       type: object
@@ -366,6 +374,11 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseResourceList'
+    202ResponseResource:
+      description: Requisição foi recebida.
+      headers:
+        x-fapi-interaction-id:
+          $ref: '#/components/headers/xFapiInteractionId'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
