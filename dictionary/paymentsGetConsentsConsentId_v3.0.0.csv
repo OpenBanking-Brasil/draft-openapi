@@ -86,10 +86,7 @@ Neste caso, o objeto schedule não deve ser informado.
 /data/payment/currency;currency;"Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.
 Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
 ";Texto;3;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
-/data/payment/amount;amount;"Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
-
-Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
-Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
+/data/payment/amount;amount;"Valor da transação com 2 casas decimais.
 ";Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
 /data/payment/ibgeTownCode;ibgeTownCode;"O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
 
@@ -194,3 +191,47 @@ Segue descrição de cada valor do ENUM.
 ";Texto;;Obrigatório;;"CACC 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
+/data/rejectionReason;rejectionReason;"Motivo da rejeição do consentimento. Informações complementares sobre o motivo do status. 
+
+[Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a REJECTED.
+";Objeto;;Condicional;;;0;1;" Esse motivo deverá ser enviado quando o campo /data/status for igual a REJECTED.
+";Não permitido;object;;
+/data/rejectionReason/code;code;"Define o código da razão pela qual o consentimento foi rejeitado
+- VALOR_INVALIDO
+- NAO_INFORMADO
+- FALHA_INFRAESTRUTURA
+- TEMPO_EXPIRADO_AUTORIZACAO
+- TEMPO_EXPIRADO_CONSUMO
+- REJEITADO_USUARIO
+- CONTAS_ORIGEM_DESTINO_IGUAIS
+- CONTA_NAO_PERMITE_PAGAMENTO
+- SALDO_INSUFICIENTE
+- VALOR_ACIMA_LIMITE
+- QRCODE_INVALIDO
+";Texto;;Obrigatório;;"VALOR_INVALIDO 
+NAO_INFORMADO 
+FALHA_INFRAESTRUTURA 
+TEMPO_EXPIRADO_AUTORIZACAO 
+TEMPO_EXPIRADO_CONSUMO 
+REJEITADO_USUARIO 
+CONTAS_ORIGEM_DESTINO_IGUAIS 
+CONTA_NAO_PERMITE_PAGAMENTO 
+SALDO_INSUFICIENTE 
+VALOR_ACIMA_LIMITE 
+QRCODE_INVALIDO";1;1;"";Não permitido;string;SALDO_INSUFICIENTE;
+/data/rejectionReason/detail;detail;"Contém informações adicionais ao consentimento rejeitado.
+- VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado;
+- NAO_INFORMADO: Não informada pela detentora de conta;
+- FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento].
+- TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo.
+- TEMPO_EXPIRADO_CONSUMO: O usuário não finalizou o fluxo de pagamento e o consentimento expirou;
+- REJEITADO_USUARIO: O usuário rejeitou a autorização do consentimento 
+- CONTAS_ORIGEM_DESTINO_IGUAIS: A conta selecionada é igual à conta destino e não permite realizar esse pagamento.
+- CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento.
+- SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+- VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outro] para permitir a realização de transações pelo cliente.
+- QRCODE_INVALIDO: O QRCode utilizado para a iniciação de pagamento não é válido. 
+
+[Restrição] Caso consentimento rejeitado de versões nas quais não havia o campo rejectionReason retornar o seguinte detail: Motivo de rejeição inexistente em versões anteriores.
+";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;" Caso consentimento rejeitado de versões nas quais não havia o campo rejectionReason retornar o seguinte detail: Motivo de rejeição inexistente em versões anteriores.
+";Não permitido;string;O usuário rejeitou a autorização do consentimento;
