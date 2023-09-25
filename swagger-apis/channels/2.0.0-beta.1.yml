@@ -1794,13 +1794,17 @@ components:
       description: Número da página que está sendo requisitada (o valor da primeira página é 1).
       schema:
         type: integer
+        format: int32
         default: 1
         minimum: 1
+        maximum: 2147483647
     pageSize:
       name: page-size
       in: query
       description: Quantidade total de registros por páginas.
       schema:
         type: integer
+        format: int32
         default: 25
         minimum: 1
+        maximum: 1000
