@@ -745,7 +745,7 @@ components:
           maxLength: 14
           pattern: '^\d{11}$|^\d{14}$'
           description: |
-            Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação). Exceção a obrigatoriedade de envio: Tipo de transação TED quando se tratar de Transferência entre Reservas (STR0004) e Recebimento de recursos judiciais (STR0051R2).
+            Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação). Com a IN BCB nº 371, a partir de 02/05/23, o envio das informações de identificação de contraparte tornou-se obrigatória para transações de pagamento. Para maiores detalhes, favor consultar a página `Orientações - Contas`.
           example: '43908445778'
         partiePersonType:
           $ref: '#/components/schemas/EnumPartiePersonType'
