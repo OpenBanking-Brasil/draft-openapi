@@ -734,52 +734,12 @@ components:
                 maxLength: 2048
         meta:
           $ref: '#/components/schemas/Meta'
-    ResponseErrorMetaSingle:
-      type: object
-      required:
-        - errors
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          maxItems: 13
-          items:
-            type: object
-            required:
-              - code
-              - title
-              - detail
-            properties:
-              code:
-                description: Código de erro específico do endpoint
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              title:
-                description: Título legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              detail:
-                description: Descrição legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 2048
-        meta:
-          type: object
-          description: Meta informações referente à API requisitada.
-          required:
-            - requestDateTime
-          properties:
-            requestDateTime:
-              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
-              type: string
-              maxLength: 20
-              format: date-time
-              example: '2021-05-21T08:30:00Z'
     LoggedUser:
       type: object
-      description: Usuário (pessoa natural) que encontra-se logado na instituição receptora e que iniciará o processo de consentimento para compartilhamento de dados.
+      description: |
+        Usuário (pessoa natural) que encontra-se logado na instituição receptora e que iniciará o processo de consentimento para compartilhamento de dados.
+
+        É obrigatório que o número do documento utilizado seja um número válido e pertencente ao usuário logado. A transmissora pode utilizar algoritmos de validação de documento para garantir que se trata de um documento válido, como por exemplo: Cálculo de DV módulo 11 para o CPF.
       required:
         - document
       properties:
@@ -803,7 +763,10 @@ components:
               pattern: '^[A-Z]{3}$'
     BusinessEntity:
       type: object
-      description: 'Titular, pessoa jurídica a quem se referem os dados que são objeto de compartilhamento.'
+      description: |
+        Titular, pessoa jurídica a quem se referem os dados que são objeto de compartilhamento.
+
+        É obrigatório que o número do CNPJ utilizado seja um número válido. A transmissora pode utilizar algoritmos de validação de documento para garantir que se trata de um documento válido, como por exemplo: Cálculo de DV módulo 11 para o CNPJ.
       required:
         - document
       properties:
@@ -886,8 +849,8 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
-      required: false
+      description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser "espelhado" pela transmissora (server) no cabeçalho de resposta.
+      required: true
       schema:
         type: string
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
