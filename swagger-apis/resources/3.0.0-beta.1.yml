@@ -2,7 +2,7 @@
 info:
   title: API Resources - Open Finance Brasil
   description: |
-    API que trata da consulta do status de recursos para o Open Finance Brasil - Fase 2.\
+    API que trata da consulta do status de recursos para o Open Finance Brasil - Dados cadastrais e transacionais.\
     Não possui segregação entre pessoa natural e pessoa jurídica.
 
     # Orientações importantes
@@ -117,10 +117,11 @@ components:
                 type: string
                 description: |
                   Identifica o recurso reportado pelo participante do Open Finance, no caso de:
-                  Contas de depósito à vista, de poupança ou de pagamento pré-paga : corresponde ao accountId;
-                  Conta de pagamento pós-paga: corresponde ao creditCardAccountId;
-                  Empréstimos, Financiamentos, Direitos creditórios descontados e Adiantamento a depositantes: corresponde ao contractId.
-                  Renda Fixa Crédito, Renda Fixa Bancária, Renda Variável, Títulos do Tesouro Direto e Fundos de Investimentos: corresponde ao investmentId
+                  - Contas de depósito à vista, de poupança ou de pagamento pré-paga : corresponde ao accountId;
+                  - Conta de pagamento pós-paga: corresponde ao  creditCardAccountId;
+                  - Empréstimos, Financiamentos, Direitos creditórios descontados e Adiantamento a depositantes: corresponde ao contractId
+                  - Renda Fixa Bancária, Renda Fixa Crédito, Renda Variável, Título do Tesouro Direto e Fundo de Investimento: corresponde ao investmentId;
+                  - Câmbio: corresponde ao operationId.
                 minLength: 1
                 maxLength: 100
                 pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -139,6 +140,7 @@ components:
                   - VARIABLE_INCOME
                   - TREASURE_TITLE
                   - FUND
+                  - EXCHANGE
                 description: |
                   Tipo de recurso (vide Enum):
                     - Account - Conta de depósito à vista, poupança ou pagamento pré-paga
@@ -152,6 +154,7 @@ components:
                     - Variabel Income - Renda Variável
                     - Treasure Title - Título do Tesouro Direto
                     - Fund - Fundo de Investimento
+                    - Exchange - Câmbio
                 example: ACCOUNT
               status:
                 type: string
