@@ -31,7 +31,7 @@ paths:
           description: |
             Período a ser consultado
               * `CURRENT` - Métricas do dia atual.
-              * `ALL` - Métricas de todo o período disponível.
+              * `ALL` - Métricas de todo o período disponível (últimos 7 dias).
       responses:
         '200':
           description: Dados das métricas
@@ -156,7 +156,7 @@ components:
       properties:
         currentDay:
           type: integer
-          description: Número de chamadas não autenticadas no dia atual.
+          description: Número de chamadas no dia atual.
         previousDays:
           type: array
           maxItems: 7
