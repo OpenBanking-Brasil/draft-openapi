@@ -2649,12 +2649,13 @@ components:
           properties:
             dates:
               type: array
+              example: ['2023-08-23', '2023-09-26']
               items:
                 type: string
                 format: date
                 pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
                 maxLength: 10
-                example: ['2023-08-23', '2023-09-26']
+                example: '2023-08-23'
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
