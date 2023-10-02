@@ -1267,9 +1267,9 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseError'
     UnprocessableEntityConsents:
-      description: 'Seguir as orientações presentes na descrição da API, item 1.3 e seus subitens.'
+      description: 'A sintaxe da requisição está correta, mas não foi possível processar as instruções presentes.'
       content:
-        application/jwt:
+        application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/422ResponseErrorCreateConsent'
           examples:
