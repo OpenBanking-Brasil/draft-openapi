@@ -184,15 +184,15 @@ paths:
       operationId: paymentsGetRecurringConsentsConsentId
       description: Método para consulta do consentimento para a iniciação de pagamento.
       parameters:
-        - $ref: '#/components/parameters/recurringConsentId'
         - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
-        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/recurringConsentId'
       responses:
         '200':
-          $ref: '#/components/responses/200PaymentsConsentsConsentIdRead'
+          $ref: '#/components/responses/200RecurringConsentsConsentIdRead'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -205,10 +205,16 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityConsents'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -1396,37 +1402,81 @@ components:
         INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
 
         DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
+    ConsentRejection:
+      type: object
+      description: Objeto contendo as informações de rejeição dos consentimentos
+      required:
+        - rejectedBy
+        - rejectedFrom
+        - rejectedAt
+      properties:
+        rejectedBy:
+          type: string
+          enum:
+            - INICIADORA
+            - USUARIO
+            - DETENTORA
+          example: INICIADORA
+          description: |
+            Quem iniciou a solicitação de rejeição
+            - INICIADORA
+            - USUARIO
+            - DETENTORA
+        rejectedFrom:
+          type: string
+          enum:
+            - INICIADORA
+            - DETENTORA
+          example: DETENTORA
+          description: |
+            Canal onde iniciou-se o processo de rejeição 
+            - INICIADORA
+            - DETENTORA
+        rejectedAt:
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+          description: Data e hora em que o consentimento foi rejeitado
+        reason:
+          $ref: '#/components/schemas/ConsentRejectionReason'
     ConsentRejectionReason:
       type: object
       description: |
-        Motivo da rejeição do consentimento. Informações complementares sobre o motivo do status. 
-
-        [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a REJECTED.
+        Informações sobre o motivo da rejeição 
       required:
         - code
         - detail
       properties:
         code:
-          $ref: '#/components/schemas/EnumConsentRejectionReasonType'
+          type: string
+          enum:
+            - NAO_INFORMADO
+            - FALHA_INFRAESTRUTURA
+            - TEMPO_EXPIRADO_AUTORIZACAO
+            - REJEITADO_USUARIO
+            - CONTAS_ORIGEM_DESTINO_IGUAIS
+            - CONTA_NAO_PERMITE_PAGAMENTO
+            - SALDO_INSUFICIENTE
+            - VALOR_ACIMA_LIMITE
+          example: VALOR_ACIMA_LIMITE
+          description: |
+            Define o código da razão pela qual o consentimento foi rejeitado
+            - NAO_INFORMADO
+            - FALHA_INFRAESTRUTURA
+            - TEMPO_EXPIRADO_AUTORIZACAO
+            - REJEITADO_USUARIO
+            - CONTAS_ORIGEM_DESTINO_IGUAIS
+            - CONTA_NAO_PERMITE_PAGAMENTO
+            - SALDO_INSUFICIENTE
+            - VALOR_ACIMA_LIMITE
         detail:
           type: string
           pattern: '[\w\W\s]*'
           maxLength: 2048
           description: |
-            Contém informações adicionais ao consentimento rejeitado.
-            - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado;
-            - NAO_INFORMADO: Não informada pela detentora de conta;
-            - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento].
-            - TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo.
-            - TEMPO_EXPIRADO_CONSUMO: O usuário não finalizou o fluxo de pagamento e o consentimento expirou;
-            - REJEITADO_USUARIO: O usuário rejeitou a autorização do consentimento 
-            - CONTAS_ORIGEM_DESTINO_IGUAIS: A conta selecionada é igual à conta destino e não permite realizar esse pagamento.
-            - CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento.
-            - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
-            - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outro] para permitir a realização de transações pelo cliente.
-            - QRCODE_INVALIDO: O QRCode utilizado para a iniciação de pagamento não é válido. 
-
-            [Restrição] Caso consentimento rejeitado de versões nas quais não havia o campo rejectionReason retornar o seguinte detail: Motivo de rejeição inexistente em versões anteriores.
+            Detalhe sobre o motivo de rejeição indicado no campo "/data/rejection/reason/code"
           example: O usuário rejeitou a autorização do consentimento 
     RejectionReason:
       type: object
@@ -1444,6 +1494,407 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 2048
           description: Contém informações adicionais ao pagamento rejeitado
+    Revocation:
+      type: object
+      description: Objeto contendo as informações de revogação dos consentimentos
+      required:
+        - revokedBy
+        - revokedFrom
+        - revokedAt
+      properties:
+        revokedBy:
+            type: string
+            enum:
+              - INICIADORA
+              - USUARIO
+              - DETENTORA
+            example: INICIADORA
+            description: |
+              Quem iniciou a solicitação de revogação 
+              - INICIADORA
+              - USUARIO
+              - DETENTORA
+        revokedFrom:
+          type: string
+          enum:
+            - INICIADORA
+            - DETENTORA
+          example: DETENTORA
+          description: |
+            Canal onde iniciou-se o processo de revogação 
+            - INICIADORA
+            - DETENTORA
+        revokedAt:
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+          description: Data e hora em que o consentimento foi revogado 
+        reason:
+          $ref: '#/components/schemas/ConsentRevokedReason'
+    ConsentRevokedReason:
+      type: object
+      description: |
+        Informações sobre o motivo da revogado
+      required:
+        - code
+        - detail
+      properties:
+        code:
+          type: string
+          enum:
+            - REVOGADO_RECEBEDOR
+            - REVOGADO_USUARIO
+            - NAO_INFORMADO
+          example: REVOGADO_RECEBEDOR
+          description: |
+            Define o código da razão pela qual o consentimento foi rejeitado
+            - REVOGADO_RECEBEDOR
+            - REVOGADO_USUARIO
+            - NAO_INFORMADO
+        detail:
+          type: string
+          pattern: '[\w\W\s]*'
+          maxLength: 2048
+          description: |
+            Detalhe sobre o motivo de rejeição indicado no campo "/data/rejection/reason/code"
+          example: O usuário rejeitou a autorização do consentimento 
+    RecurringConfiguration:
+      type: object
+      description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
+      properties:
+        automatic:
+          $ref: '#/components/schemas/Automatic'
+        sweeping:
+          $ref: '#/components/schemas/Sweeping'
+        vrp:
+          $ref: '#/components/schemas/Vrp'
+    Automatic:
+      type: object
+      description: Definição da configuração de recorrência para pagamentos automáticos
+      required:
+        - contractId
+        - amount
+        - transactionLimit
+        - period
+      properties:
+        contractId:
+          type: string
+          pattern: '^[a-zA-Z0-9]{1,35}$'
+          maxLength: 35
+          example: XE00038166201907261559y6j6
+          description: Identificador do contrato de transação
+        amount:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação variável poderá sofrer alterações durante a vida útil do consentimento
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação variável poderá sofrer alterações durante a vida útil do consentimento
+        period:
+          type: string
+          enum:
+            - DIARIO
+            - SEMANAL
+            - MENSAL
+            - ANUAL
+          example: DIARIO
+          description: |
+            Define a periodicidade permitida para realização de transações
+            - DIARIO
+            - SEMANAL
+            - MENSAL
+            - ANUAL
+        dayOfMonth:
+          type: integer
+          format: int32
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          maxLength: 31
+          example: 10
+          description: |
+            Dia fixo do mês que está prevista a transação.
+
+            [Restrição] Campo deve ser enviado quando o campo "/data/recurringConfiguration/automatic/period" for igual a MENSAL ou ANUAL.
+        dayOfWeek:
+          type: string
+          enum:
+            - SEGUNDA_FEIRA
+            - TERCA_FEIRA
+            - QUARTA_FEIRA
+            - QUINTA_FEIRA
+            - SEXTA_FEIRA
+          example: 'SEGUNDA_FEIRA'
+          description: |
+            Dia da semana que está prevista a transação.
+            - SEGUNDA_FEIRA
+            - TERCA_FEIRA
+            - QUARTA_FEIRA
+            - QUINTA_FEIRA
+            - SEXTA_FEIRA
+
+            [Restrição] Campo deve ser enviado quando o campo "/data/recurringConfiguration/automatic/period" for igual a SEMANAL.
+        month:
+          type: string
+          enum:
+            - JANEIRO
+            - FEVEREIRO
+            - MARCO
+            - ABRIL
+            - MAIO
+            - JUNHO
+            - JULHO
+            - AGOSTO
+            - SETEMBRO
+            - OUTUBRO
+            - NOVEMBRO
+            - DEZEMBRO
+          example: 'JANEIRO'
+          description: |
+            Mês previstos para ocorrer transações.
+            - JANEIRO
+            - FEVEREIRO
+            - MARCO
+            - ABRIL
+            - MAIO
+            - JUNHO
+            - JULHO
+            - AGOSTO
+            - SETEMBRO
+            - OUTUBRO
+            - NOVEMBRO
+            - DEZEMBRO
+
+            [Restrição] Campo deve ser enviado quando o campo "/data/recurringConfiguration/automatic/period" for igual a ANUAL
+        contractDebtor:
+          $ref: '#/components/schemas/ContractDebtor'
+        immediatePayment:
+          $ref: '#/components/schemas/ImmediatePayment'
+    ContractDebtor:
+      type: object
+      description: Informações sobre o cliente devedor do contrato.
+      required: 
+        - name
+        - document
+      properties:
+        name:
+          type: string
+          pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+          maxLength: 120
+          example: Policarpo Quaresma
+          description: Informações sobre o cliente devedor do contrato.
+        document:
+            type: object
+            required:
+              - identification
+              - rel
+            properties:
+              identification:
+                type: string
+                maxLength: 14
+                description: Número do documento de identificação oficial do cliente devedor do contrato.
+                example: '11111111111111'
+                pattern: '^\d{14}$'
+              rel:
+                type: string
+                maxLength: 4
+                description: Tipo do documento de identificação oficial do cliente devedor do contrato.
+                example: CNPJ
+                pattern: '^[A-Z]{4}$'
+    ImmediatePayment:
+      type: object
+      description: Definições para transação imediata.
+        - type
+        - currency
+        - amount
+        - details
+      properties:
+        type:
+          $ref: '#/components/schemas/EnumPaymentType'
+        date:
+          type: string
+          format: date
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2021-01-01'
+          description: |  
+            Define a data alvo da liquidação do pagamento.
+            O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
+        currency:
+          type: string
+          maxLength: 3
+          pattern: '^([A-Z]{3})$'
+          example: BRL
+          description: |
+            Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.
+            Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
+        amount:
+          type: string
+          minLength: 4
+          maxLength: 19
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          example: '100000.12'
+          description: |
+            Valor da transação com 2 casas decimais.
+        remittanceInformation:
+          type: string
+          maxLength: 140
+          pattern: '^[\w\W\s]*'
+          example: '100000.12'
+          description: |
+            Pagamento da nota RSTO035-002
+        creditorAccount:
+          $ref: '#/components/schemas/CreditorAccount'
+    Sweeping:
+      type: object
+      description: Objeto contendo os dados do recebedor (creditor).
+      properties:
+        amount:
+          type: string
+          minLength: 4
+          maxLength: 19
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          example: '100000.12'
+          description: |
+            Valor da transação com 2 casas decimais.
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação variável, o qual poderá sofrer alterações durante a vida útil do consentimento.
+        periodicLimits:
+          $ref: "#/components/schemas/PeriodicLimits"
+    PeriodicLimits:
+      type: object
+      description: Limites transacionais por período determinado pelo usuário pagador.
+      properties:
+        day:
+          $ref: '#/components/schemas/Day'
+        week:
+          $ref: '#/components/schemas/Week'
+        month:
+          $ref: '#/components/schemas/Month'
+        year:
+          $ref: '#/components/schemas/Year'
+    Vrp:
+      type: object
+      description: Definição da configuração de recorrência para realização de transações de valores variáveis 
+      properties:
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Limite máximo de valor permitido para cada transação de pagamento.
+        globalLimits:
+          type: object
+          description: Limite transacional máximo para pagamentos, após atingir este valor, o consentimento deve ir para o status "CONSUMED".
+          properties:
+            quantityLimit:
+              type: integer
+              example: 10
+              description: Quantidade máxima de ocorrência  de pagamentos, apos atingir este valor, o consentimento deve ir para o status "CONSUMED"
+            transactionLimit:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '100000.12'
+              description: Valor transacional máximo para pagamentos sob este consentimento, após atingir este valor, o consentimento deve ir para o status "CONSUMED".
+        periodicLimits:
+          type: object
+          description: Limites transacionais por período determinado pelo usuário pagador.
+          properties:
+            day:
+              $ref: '#/components/schemas/Day'
+            week:
+              $ref: '#/components/schemas/Week'
+            month:
+              $ref: '#/components/schemas/Month'
+            year:
+              $ref: '#/components/schemas/Year'
+    Day:
+      type: object
+      description: |
+        Configurar limite transacional diário determinado pelo usuário pagador.
+        
+        [Restrição] Caso enviado o objeto, ao menos um dos campos (<code>quantityLimit</code> ou <code>transactionLimit</code>) devem ser preenchidos.
+      properties:
+        quantityLimit:
+          type: integer
+          example: 2
+          description: Quantidade limite de transações permitidas para ocorrer durante um dia.
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Valor máximo a ser transacionado diariamente.
+    Week:
+      type: object
+      description: |
+        Configurar limite transacional semanal determinado pelo usuário pagador.
+        
+        [Restrição] Caso enviado o objeto, ao menos um dos campos (<code>quantityLimit</code> ou <code>transactionLimit</code>) devem ser preenchidos
+      properties:
+        quantityLimit:
+          type: integer
+          example: 2
+          description: Quantidade limite de transações permitidas para ocorrer durante uma semana.
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Valor máximo a ser transacionado semanalmente.
+    Month:
+      type: object
+      description: |
+        Configurar limite transacional mensal determinado pelo usuário pagador.
+        
+        [Restrição] Caso enviado o objeto, ao menos um dos campos (<code>quantityLimit</code> ou <code>transactionLimit</code>) devem ser preenchidos
+      properties:
+        quantityLimit:
+          type: integer
+          example: 2
+          description: Quantidade limite de transações permitidas para ocorrer durante um mês.
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Valor máximo a ser transacionado mensalmente.
+    Year:
+      type: object
+      description: |
+        Configurar limite transacional anual determinado pelo usuário pagador.
+        
+        [Restrição] Caso enviado o objeto, ao menos um dos campos (<code>quantityLimit</code> ou <code>transactionLimit</code>) devem ser preenchidos
+      properties:
+        quantityLimit:
+          type: integer
+          example: 2
+          description: Quantidade limite de transações permitidas para ocorrer durante um ano. 
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Valor máximo a ser transacionado por um ano, a partir da data definida no campo "/data/startDateTime".
     Identification:
       type: object
       description: Objeto contendo os dados do recebedor (creditor).
@@ -1797,6 +2248,90 @@ components:
               maxLength: 20
               format: date-time
               example: '2021-05-21T08:30:00Z'
+    ResponseRecurringConsent:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Objeto contendo as informações de resposta do consentimento para a iniciação de pagamento individual.
+          required:
+            - recurringConsentId
+            - statusUpdateDateTime
+            - loggedUser
+            - bussinessEntity
+            - status
+            - creditor
+            - startDateTime
+            - creationDateTime
+            - expirationDateTime
+            - recurringConfiguration
+          properties:
+            recurringConsentId:
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 100
+              description: |
+                Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+                Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+                seja um identificador de recurso persistente e independente da localização.
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+                - o namespace(urn)
+                - o identificador associado ao namespace da instituição transnmissora (bancoex)
+                - o identificador específico dentro do namespace (C1DD33123).
+                Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+            statusUpdateDateTime:
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: |
+                Data e hora em que o recurso foi atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            status:
+              $ref: '#/components/schemas/EnumAuthorisationStatusType'
+            creditor:
+              $ref: '#/components/schemas/Identification'
+            startDateTime:
+              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            expirationDateTime:
+              description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            additionalInformation:
+              description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional no consentimento
+              type: string
+              example: 'Minha recorrência'
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+            debtorAccount:
+              $ref: '#/components/schemas/ConsentsDebtorAccount'
+            rejection:
+              $ref: '#/components/schemas/ConsentRejection'
+            revocation:
+              $ref: '#/components/schemas/Revocation'
+            recurringConfiguration:
+              $ref: '#/components/schemas/RecurringConfiguration'
+        links:
+          $ref: '#/components/schemas/LinkSingle'
+        meta:
+          $ref: '#/components/schemas/Meta'
     ResponsePaymentConsent:
       type: object
       required:
@@ -2629,7 +3164,7 @@ components:
       schema:
         type: string
         pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
-        maxLength: 256
+        maxLength: 100
     recurringPaymentId:
       name: recurringPaymentId
       in: path
@@ -2780,6 +3315,12 @@ components:
             Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+    GatewayTimeoutWithAdditionalProperties:
+      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
@@ -2885,6 +3426,12 @@ components:
             Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+    LockedWithAdditionalProperties:
+      description: Locked
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
     UnprocessableEntityPixPayments:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
@@ -2943,6 +3490,18 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseCreatePaymentConsent'
+    200RecurringConsentsConsentIdRead:
+      description: Dados do consentimento de pagamento obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponseRecurringConsent'
     200PaymentsConsentsConsentIdRead:
       description: Dados do consentimento de pagamento obtidos com sucesso.
       headers:
