@@ -337,26 +337,22 @@ paths:
     get:
       tags:
         - Recurring Payments
-      summary: Criar iniciação de pagamento.
+      summary: Consultar consentimento para iniciação de pagamento.
       operationId: paymentsGetPixRecurringPayments
-      description: Método para criar uma iniciação de pagamento.
+      description: Consultar consentimento para iniciação de pagamento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
-        - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/XIdempotencyKey'
-      requestBody:
-        content:
-          application/jwt:
-            schema:
-              $ref: '#/components/schemas/CreatePixPayment'
-        description: Payload para criação da iniciação do pagamento Pix.
-        required: true
+        - $ref: '#/components/parameters/recurringPaymentId'
+        - $ref: '#/components/parameters/recurringConsentId'
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
       responses:
-        '201':
-          $ref: '#/components/responses/201PaymentsInitiationPixPaymentCreated'
+        '200':
+          $ref: '#/components/responses/200RecurringPixPaymentRead'
         '400':
           $ref: '#/components/responses/BadRequestPixPayments'
         '401':
@@ -369,14 +365,16 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityPixPayment'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -2479,6 +2477,19 @@ components:
           $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
+    ResponseRecurringPixPayment:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseRecurringPixData'
+        links:
+          $ref: '#/components/schemas/LinkSingle'
+        meta:
+          $ref: '#/components/schemas/Meta'
     ResponsePatchPixPayment:
       type: object
       required:
@@ -2795,6 +2806,84 @@ components:
           $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
+    ResponseRecurringPixData:
+      type: array
+      items:
+        type: object
+        description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
+        required:
+          - recurringPaymentId
+          - recurringConsentId
+          - endToEndId
+          - date
+          - creationDateTime
+          - statusUpdateDateTime  
+          - status
+          - payment
+        properties:
+          recurringPaymentId:
+            type: string
+            minLength: 1
+            maxLength: 100
+            pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+            example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
+            description: |
+              Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. O `recurringPaymentId` deve ser diferente do `endToEndId`. 
+              Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
+          recurringConsentId:
+            type: string
+            maxLength: 256
+            pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+            example: 'urn:bancoex:C1DD33123'
+            description: |
+              Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+              Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+              Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+              seja um identificador de recurso persistente e independente da localização.
+              Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+              - o namespace(urn)
+              - o identificador associado ao namespace da instituição transnmissora (bancoex)
+              - o identificador específico dentro do namespace (C1DD33123).
+              Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+          endToEndId:
+            $ref: '#/components/schemas/EndToEndId'
+          date:
+            type: string
+            maxLength: 10
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+            example: '2023-10-10'
+            description: Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).
+          creationDateTime:
+            type: string
+            format: date-time
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+            example: '2020-07-21T08:30:00Z'
+            description: |
+              Data e hora em que o recurso foi criado.
+              Uma string com data e hora conforme especificação RFC-3339,
+              sempre com a utilização de timezone UTC(UTC time format).
+          statusUpdateDateTime:
+            type: string
+            format: date-time
+            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+            example: '2020-07-21T08:30:00Z'
+            description: |
+              Data e hora da última atualização da iniciação de pagamento.
+              Uma string com data e hora conforme especificação RFC-3339,
+              sempre com a utilização de timezone UTC(UTC time format).
+          status:
+            $ref: '#/components/schemas/EnumPaymentStatusType'
+          rejectionReason:
+            $ref: '#/components/schemas/RejectionReason'
+          payment:
+            $ref: '#/components/schemas/PaymentPix'
+          remittanceInformation:
+            type: string
+            maxLength: 140
+            pattern: '[\w\W\s]*'
+            example: Pagamento da nota RSTO035-002.
+            description: |
+              Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
     ResponsePixPaymentData:
       type: array
       items:
@@ -3087,6 +3176,26 @@ components:
         type: string
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
         maxLength: 100
+    startDate:
+      name: Authorization
+      in: header
+      description: Data inicial de corte da ocorrência do pagamento ligada ao consentimento de longa duração.
+      required: false
+      schema:
+        type: string
+        pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+        minLength: 10
+        maxLength: 10
+    endDate:
+      name: Authorization
+      in: header
+      description: Data final de corte para recuperação da ocorrência do pagamento ligada ao consentimento de longa duração.
+      required: false
+      schema:
+        type: string
+        pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+        minLength: 10
+        maxLength: 10
     Authorization:
       name: Authorization
       in: header
@@ -3439,6 +3548,18 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseCreatePixPayment'
+    200RecurringPixPaymentRead:
+      description: Dados de iniciação de pagamento Pix obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponseRecurringPixPayment'
     200PaymentsInitiationPixPaymentIdRead:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
