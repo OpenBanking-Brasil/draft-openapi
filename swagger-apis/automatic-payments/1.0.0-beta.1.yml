@@ -352,8 +352,6 @@ paths:
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
-        - $ref: '#/components/parameters/recurringPaymentId'
-        - $ref: '#/components/parameters/recurringConsentId'
         - $ref: '#/components/parameters/startDate'
         - $ref: '#/components/parameters/endDate'
       responses:
@@ -2621,7 +2619,7 @@ components:
         pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
         maxLength: 100
     startDate:
-      name: Authorization
+      name: startDate
       in: header
       description: Data inicial de corte da ocorrência do pagamento ligada ao consentimento de longa duração.
       required: false
@@ -2631,7 +2629,7 @@ components:
         minLength: 10
         maxLength: 10
     endDate:
-      name: Authorization
+      name: endDate
       in: header
       description: Data final de corte para recuperação da ocorrência do pagamento ligada ao consentimento de longa duração.
       required: false
