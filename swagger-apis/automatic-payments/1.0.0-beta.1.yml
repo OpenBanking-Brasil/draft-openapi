@@ -129,9 +129,9 @@ paths:
     post:
       tags:
         - Recurring Consents
-      summary: Criar consentimento para a iniciação de pagamento.
+      summary: Criação do Consentimento Recorrente.
       operationId: paymentsPostRecurringConsents
-      description: Método de criação do consentimento para a iniciação de pagamento.
+      description: Criação do Consentimento Recorrente.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
@@ -235,9 +235,9 @@ paths:
     patch:
       tags:
         - Recurring Consents
-      summary: Consultar consentimento para iniciação de pagamento.
+      summary: Atualização do Consentimento.
       operationId: paymentsPatchRecurringConsentsConsentId
-      description: Método para consulta do consentimento para a iniciação de pagamento.
+      description: Atualização do Consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
@@ -285,9 +285,9 @@ paths:
     post:
       tags:
         - Recurring Payments
-      summary: Criar iniciação de pagamento.
+      summary: Criação do Pagamento Recorrente.
       operationId: paymentsPostPixRecurringPayments
-      description: Método para criar uma iniciação de pagamento.
+      description: Criação do Pagamento Recorrente.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
@@ -343,9 +343,9 @@ paths:
     get:
       tags:
         - Recurring Payments
-      summary: Consultar consentimento para iniciação de pagamento.
+      summary: Listagem de Pagamentos Recorrentes.
       operationId: paymentsGetPixRecurringPayments
-      description: Consultar consentimento para iniciação de pagamento.
+      description: Listagem de Pagamentos Recorrentes.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
@@ -447,36 +447,27 @@ paths:
     patch:
       tags:
         - Recurring Payments
-      summary: Cancelar iniciação de pagamento.
+      summary: Atualização do Pagamento Recorrente.
       operationId: paymentsPatchPixRecurringPaymentsPaymentId
-      description: |
-
-        Esse endpoint deve ser usado para cancelar, a pedido do cliente pagador, as transações que estejam em uma das seguintes situações: Agendada com sucesso (SCHD), retida para análise (PDNG) ou aguardando autorização de múltiplas alçadas (PATC).  
-
-        - Caso a requisição seja bem sucedida, a transação vai para a situação CANC.
-
-        - Caso o status do pagamento seja diferente de SCHD/PDNG/PATC ou alguma outra regra de negócio impeça o cancelamento, a requisição PATCH retorna HTTP Status 422 com o code PAGAMENTO_NAO_PERMITE_CANCELAMENTO.
-
-        - Caso receba um 422, a iniciadora deve fazer uma requisição GET no pagamento para verificar a situação atual dele, bem como detalhes associados.  
-
-        O cancelamento de pagamento agendado (SCHD) pode ser enviado até 23:59 (Horário de Brasília) do dia anterior à data de efetivação do pagamento.  
+      description: Atualização do Pagamento Recorrente.
       parameters:
-        - $ref: '#/components/parameters/recurringPaymentId'
         - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
-        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/recurringPaymentId'
+        - $ref: '#/components/parameters/XIdempotencyKey'
       requestBody:
         content:
           application/jwt:
             schema:
               $ref: '#/components/schemas/PatchPixPayment'
-        description: Payload para cancelamento do pagamento.
+        description: Atualização do Pagamento Recorrente.
         required: true
       responses:
         '200':
-          $ref: '#/components/responses/200PatchPixPayments'
+          $ref: '#/components/responses/200RecurringPaymentsIdRead'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -491,10 +482,14 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityPixPayments'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'        
         '529':
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
@@ -1187,11 +1182,10 @@ components:
     EnumPaymentCancellationStatusType:
       type: string
       enum:
-        - CANC
-      example: CANC
+        - REJECTED
+      example: REJECTED
       description: |
-        Utilizado para informar para qual estado deve ir o pagamento.  
-        Atualmente o único valor possível é CANC.
+        Estado para qual o pagamento deverá transitar
     EnumPaymentPersonType:
       type: string
       enum:
@@ -2046,14 +2040,13 @@ components:
         cancellation:
           type: object
           description: |
-            Objeto que agrupa as informações de qual foi o usuário pagador que solicitou o cancelamento da transação.  
-            Observação: este campo é necessário porque, em casos de múltiplas alçadas de autorização, é possível que o pagamento seja solicitado por um usuário pagador e cancelado por outro.
+           Informações gerais sobre o cancelamento.
           required:
             - cancelledBy
           properties:
             cancelledBy:
               type: object
-              description: Informação relacionada ao usuário pagador que solicitou o cancelamento do pagamento.
+              description: Informações gerais sobre o usuário que solicitou o cancelamento.
               required:
                 - document
               properties:
@@ -2067,13 +2060,13 @@ components:
                     identification:
                       type: string
                       maxLength: 11
-                      description: Número do documento do usuário pagador responsável pelo cancelamento do pagamento.
+                      description: Número do documento de identificação oficial do usuário.
                       example: '11111111111'
                       pattern: '^\d{11}$'
                     rel:
                       type: string
                       maxLength: 3
-                      description: Tipo do documento do usuário pagador responsável pelo cancelamento do pagamento.
+                      description: Tipo do documento de identificação oficial do usuário.
                       example: CPF
                       pattern: '^[A-Z]{3}$'
     PatchPixPaymentCancellation:
