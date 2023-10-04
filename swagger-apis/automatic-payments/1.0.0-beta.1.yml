@@ -186,9 +186,9 @@ paths:
     get:
       tags:
         - Recurring Consents
-      summary: Consultar consentimento para iniciação de pagamento.
+      summary: Listagem do Consentimento Recorrente por Id do Consentimento.
       operationId: paymentsGetRecurringConsentsConsentId
-      description: Método para consulta do consentimento para a iniciação de pagamento.
+      description: Listagem do Consentimento Recorrente por Id do Consentimento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
@@ -738,7 +738,7 @@ components:
             businessEntity:
               $ref: '#/components/schemas/BusinessEntity'
             creditor:
-              $ref: '#/components/schemas/Creditor'
+              $ref: '#/components/schemas/Creditors'
             startDateTime:
               description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
               type: string
@@ -865,9 +865,10 @@ components:
     CreditorAccount:
       type: object
       description: |
-        Objeto que contém a identificação da conta de destino do beneficiário/recebedor.  
+        Recebe os dados de conta do usuário recebedor. 
       required:
         - ispb
+        - issuer
         - number
         - accountType
       properties:
@@ -946,17 +947,15 @@ components:
     ConsentsDebtorAccount:
       type: object
       description: |
-        Objeto que contém a identificação da conta de origem do pagador.
-        As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente.
-        No caso em que o cliente não preenche os dados na iniciadora, a detentora deverá persistir as informações da conta selecionada seguindo as condições abaixo.
-
-        [Restrição] 
-        - AUTHORISED e CONSUMED: Para esses dois status, o preenchimento do campo deverá ser obrigatório.
-        - REJECTED: Para este status o preenchimento é condicional, dado que há cenários em que a detentora também não terá conhecimento da conta origem, pois a mesma não foi selecionada pelo usuário. Nos casos em que houver seleção, a conta deve ser preenchida obrigatoriamente.
+        Objeto que contém a identificação da conta de origem do pagador. As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. 
+        Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.  
       required:
         - ispb
+        - issuer
         - number
         - accountType
+        - ibgeTownCode
+        - overdraftLimit
       properties:
         ispb:
           type: string
@@ -989,6 +988,19 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountPaymentsType'
+        ibgeTownCode:
+          type: string
+          minLength: 7
+          maxLength: 7
+          pattern: '^\d{7}$'
+          example: '5300108'
+          description: |
+            O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
+            1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+        overdraftLimit:
+          type: boolean
+          example: true
+          description: Indica se o usuário pagador autorizou a utilização de limite na sua conta para realização de pagamentos
     Details:
       type: object
       description: |
@@ -1091,15 +1103,11 @@ components:
         - CONSUMED
       example: AWAITING_AUTHORISATION
       description: |
-        Retorna o estado do consentimento, o qual no momento de sua criação será AWAITING_AUTHORISATION.
-        Este estado será alterado depois da autorização do consentimento na detentora da conta do pagador (Debtor) para AUTHORISED ou REJECTED. 
-        O consentimento fica no estado CONSUMED após ocorrer a iniciação do pagamento referente ao consentimento.  
-        Em caso de consentimento expirado a detentora deverá retornar o status REJECTED.  
-        Estados possíveis:  
-        AWAITING_AUTHORISATION - Aguardando autorização  
-        AUTHORISED - Autorizado   
-        REJECTED - Rejeitado  
-        CONSUMED - Consumido 
+        Status atual do consentimento recorrente de acordo com a máquina de estados
+        - AWAITING_AUTHORISATION
+        - AUTHORISED
+        - REJECTED
+        - CONSUMED
     EnumErrorsCreatePixPayment:
       type: string
       enum:
@@ -1346,7 +1354,10 @@ components:
         DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
     ConsentRejection:
       type: object
-      description: Objeto contendo as informações de rejeição dos consentimentos
+      description: |
+        Objeto contendo as informações de rejeição dos consentimentos. 
+
+        [Restrição] Campode preenchimento obrigatório caso status do consentimento igual a "REJECTED" ou "REVOKED"
       required:
         - rejectedBy
         - rejectedFrom
@@ -1404,7 +1415,7 @@ components:
             - VALOR_ACIMA_LIMITE
           example: VALOR_ACIMA_LIMITE
           description: |
-            Define o código da razão pela qual o consentimento foi rejeitado
+            Código indicador do motivo de rejeição.
             - NAO_INFORMADO
             - FALHA_INFRAESTRUTURA
             - TEMPO_EXPIRADO_AUTORIZACAO
@@ -1520,6 +1531,7 @@ components:
         - amount
         - transactionLimit
         - period
+        - contractDebtor
       properties:
         contractId:
           type: string
@@ -1533,7 +1545,7 @@ components:
           minLength: 4
           maxLength: 19
           example: '100000.12'
-          description: Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação variável poderá sofrer alterações durante a vida útil do consentimento
+          description: Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação fixo que não pode sofrer alterações durante a vida útil do consentimento.
         transactionLimit:
           type: string
           pattern: '^((\d{1,16}\.\d{2}))$'
@@ -1631,7 +1643,7 @@ components:
           pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
           maxLength: 120
           example: Policarpo Quaresma
-          description: Informações sobre o cliente devedor do contrato.
+          description: Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor. Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
         document:
             type: object
             required:
@@ -1653,10 +1665,11 @@ components:
     ImmediatePayment:
       type: object
       description: Definições para transação imediata.
+      required:
         - type
         - currency
         - amount
-        - details
+        - creditorAccount
       properties:
         type:
           $ref: '#/components/schemas/EnumPaymentType'
@@ -1691,12 +1704,12 @@ components:
           pattern: '^[\w\W\s]*'
           example: '100000.12'
           description: |
-            Pagamento da nota RSTO035-002
+            Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
           $ref: '#/components/schemas/CreditorAccount'
     Sweeping:
       type: object
-      description: Objeto contendo os dados do recebedor (creditor).
+      description: Definição da configuração de recorrência para transferências automáticas de fundos.
       properties:
         amount:
           type: string
@@ -1837,35 +1850,39 @@ components:
           maxLength: 19
           example: '100000.12'
           description: Valor máximo a ser transacionado por um ano, a partir da data definida no campo "/data/startDateTime".
-    Creditor:
-      type: object
-      description: Objeto contendo os dados do recebedor (creditor).
-      required:
-        - personType
-        - cpfCnpj
-        - name
-      properties:
-        personType:
-          $ref: '#/components/schemas/EnumPaymentPersonType'
-        cpfCnpj:
-          type: string
-          minLength: 11
-          maxLength: 14
-          pattern: '^\d{11}$|^\d{14}$'
-          example: '58764789000137'
-          description: |
-            Identificação da pessoa envolvida na transação.  
-            Preencher com o CPF ou CNPJ, de acordo com o valor escolhido no campo type.  
-            O CPF será utilizado com 11 números e deverá ser informado sem pontos ou traços.  
-            O CNPJ será utilizado com 14 números e deverá ser informado sem pontos ou traços.
-        name:
-          type: string
-          pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
-          maxLength: 120
-          example: Marco Antonio de Brito
-          description: |
-            Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
-            Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+    Creditors:
+      type: array
+      minItems: 1
+      maxItems: 2
+      items:
+        type: object
+        description: Objeto contendo os dados do recebedor (creditor).
+        required:
+          - personType
+          - cpfCnpj
+          - name
+        properties:
+          personType:
+            $ref: '#/components/schemas/EnumPaymentPersonType'
+          cpfCnpj:
+            type: string
+            minLength: 11
+            maxLength: 14
+            pattern: '^\d{11}$|^\d{14}$'
+            example: '58764789000137'
+            description: |
+              Identificação da pessoa envolvida na transação.  
+              Preencher com o CPF ou CNPJ, de acordo com o valor escolhido no campo type.  
+              O CPF será utilizado com 11 números e deverá ser informado sem pontos ou traços.  
+              O CNPJ será utilizado com 14 números e deverá ser informado sem pontos ou traços.
+          name:
+            type: string
+            pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+            maxLength: 120
+            example: Marco Antonio de Brito
+            description: |
+              Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
+              Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
     LoggedUser:
       type: object
       description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
@@ -2199,14 +2216,14 @@ components:
       properties:
         data:
           type: object
-          description: Objeto contendo as informações de resposta do consentimento para a iniciação de pagamento individual.
+          description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
           required:
             - recurringConsentId
             - statusUpdateDateTime
             - loggedUser
-            - bussinessEntity
+            - businessEntity
             - status
-            - creditor
+            - creditors
             - startDateTime
             - creationDateTime
             - expirationDateTime
@@ -2217,15 +2234,11 @@ components:
               pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
               maxLength: 100
               description: |
-                Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
-                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
-                Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
-                seja um identificador de recurso persistente e independente da localização.
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
-                - o namespace(urn)
-                - o identificador associado ao namespace da instituição transnmissora (bancoex)
-                - o identificador específico dentro do namespace (C1DD33123).
-                Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+                Identificador único do consentimento de longa duração criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:  
+                - o namespace(urn)  
+                - o identificador associado ao namespace da instituição transnmissora (bancoex)  
+                - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
             statusUpdateDateTime:
               type: string
               format: date-time
@@ -2233,17 +2246,24 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
               description: |
-                Data e hora em que o recurso foi atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+                Data e hora em que o consentimento teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
               $ref: '#/components/schemas/BusinessEntity'
             status:
               $ref: '#/components/schemas/EnumAuthorisationStatusType'
-            creditor:
-              $ref: '#/components/schemas/Creditor'
+            creditors:
+              $ref: '#/components/schemas/Creditors'
             startDateTime:
               description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            creationDateTime:
+              description: Data e hora em que o consentimento foi criado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -2367,7 +2387,7 @@ components:
             businessEntity:
               $ref: '#/components/schemas/BusinessEntity'
             creditor:
-              $ref: '#/components/schemas/Creditor'
+              $ref: '#/components/schemas/Creditors'
             payment:
               type: object
               description: Objeto contendo dados de pagamento para consentimento.
@@ -3130,7 +3150,7 @@ components:
       name: recurringConsentId
       in: path
       description: |
-        O consentId é o identificador único do consentimento e deverá ser um URN - Uniform Resource Name.  
+        O recurringConsentId é o identificador único do consentimento de longa duração e deverá ser um URN - Uniform Resource Name.  
         Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
         Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
         seja um identificador de recurso persistente e independente da localização.  
@@ -3143,6 +3163,7 @@ components:
       schema:
         type: string
         pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        minLength: 1
         maxLength: 100
     recurringPaymentId:
       name: recurringPaymentId
@@ -3181,6 +3202,7 @@ components:
       schema:
         type: string
         pattern: '[\w\W\s]*'
+        minLength: 1
         maxLength: 2048
     xCustomerUserAgent:
       name: x-customer-user-agent
@@ -3215,7 +3237,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.'
+      description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.'
       required: true
       schema:
         type: string
@@ -3490,7 +3512,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseCreateRecurringConsent'
     200RecurringConsentsConsentIdRead:
-      description: Dados do consentimento de pagamento obtidos com sucesso.
+      description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
       headers:
         x-fapi-interaction-id:
           description: |
