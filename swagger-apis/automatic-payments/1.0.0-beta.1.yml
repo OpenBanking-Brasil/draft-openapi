@@ -245,9 +245,16 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/recurringConsentId'
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: '#/components/schemas/PatchRecurringConsent'
+        description: Payload para criação do consentimento para iniciação do pagamento.
+        required: true
       responses:
         '200':
-          $ref: '#/components/responses/200PatchRecurringConsentsConsentIdRead'
+          $ref: '#/components/responses/RecurringConsentsConsentIdRead'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -2944,18 +2951,6 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseRecurringConsent'
-    200PatchRecurringConsentsConsentIdRead:
-      description: Dados do consentimento de pagamento obtidos com sucesso.
-      headers:
-        x-fapi-interaction-id:
-          description: |
-            Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
-      content:
-        application/jwt:
-          schema:
-            $ref: '#/components/schemas/PatchRecurringConsent'
     201RecurringInitiationPixPaymentCreated:
       description: Iniciação de pagamento Pix criada com sucesso.
       headers:
