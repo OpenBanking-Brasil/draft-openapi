@@ -700,10 +700,9 @@ components:
                 schedule:
                   description: |
                     [Restrição] Mutuamente excludente com o campo date. 
-
                     Este campo é obrigatório no caso de agendamento. 
-
-                    Neste caso, o campo date não deve ser informado.
+                    Neste caso, o campo date não deverá ser informado. 
+                    O prazo máximo para o consentimento deverá ser de dois anos, contando a partir da data de criação do consentimento retornada na criação do mesmo (campo /data/creationDateTime).
                   oneOf:
                     - $ref: '#/components/schemas/ScheduleSingle'
                     - $ref: '#/components/schemas/ScheduleDaily'
