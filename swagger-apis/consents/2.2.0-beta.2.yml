@@ -114,7 +114,7 @@ info:
     A transmissora deve validar documento fornecido (`loggedUser`; `businessEntity` quando aplicável) e token de acesso para executar a renovação de consentimento. Caso a transmissora detecte que trata-se de acesso inválido por questões de segurança, é esperado status de erro 401 ou 403.
     - Após a renovação de consentimento (`POST /consents/{consentId}/extends`) a transmissora deve garantir que a data de expiração do refresh token opaco, ao qual o consentimento está associado, seja:
       - sem expiração: refresh token permanece ativo, desde que o consentimento associado permaneça ativo (status AUTHORIZED);
-      - com expiração: desde que, no mínimo, a nova data de expiração do refresh token seja igual à nova data de expiração do consentimento.
+      - com expiração: desde que, no mínimo, a nova data de expiração do refreshtoken seja igual à nova data do consentimento.
     - A lista do payload de resposta do endpoint de histórico de renovações feitas (`GET /consents/{consentId}/extends`) deve ser entregue em ordem decrescente pela data de requisição (`data[].requestDateTime`). 
     Dessa forma, o primeiro item da lista apresentará a mesma data de expiração do consentimento vigente, pois foi a última renovação feita.
   version: 2.2.0-beta.2
@@ -514,7 +514,7 @@ components:
                 - ACCOUNTS_OVERDRAFT_LIMITS_READ
                 - RESOURCES_READ
             expirationDateTime:
-              description: Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format). Para consentimentos com prazo indeterminado, preencher com valor `2300-01-01T00:00:00Z`.
+              description: Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
               type: string
               maxLength: 20
               format: date-time
@@ -684,7 +684,7 @@ components:
                 - ACCOUNTS_OVERDRAFT_LIMITS_READ
                 - RESOURCES_READ
             expirationDateTime:
-              description: Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format). Para consentimentos com prazo indeterminado, é esperado preenchimento com `2300-01-01T00:00:00Z`.
+              description: Data e hora de expiração da permissão. De preenchimento obrigatório, reflete a data limite de validade do consentimento. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
