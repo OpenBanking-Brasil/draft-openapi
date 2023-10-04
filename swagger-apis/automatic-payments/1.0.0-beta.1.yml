@@ -768,7 +768,14 @@ components:
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
             recurringConfiguration:
-              $ref: '#/components/schemas/PostRecurringConfiguration'
+              type: object
+              description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
+              properties:
+                recurringConfiguration:
+                  oneOf:
+                    - $ref: '#/components/schemas/Automatic'
+                    - $ref: '#/components/schemas/PostSweeping'
+                    - $ref: '#/components/schemas/Vrp'
     CreateRecurringPixPayment:
       type: object
       required:
@@ -1484,15 +1491,6 @@ components:
           description: |
             Detalhe sobre o motivo de rejeição indicado no campo "/data/rejection/reason/code"
           example: O usuário rejeitou a autorização do consentimento 
-    PostRecurringConfiguration:
-      type: object
-      description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
-      properties:
-        recurringConfiguration:
-          oneOf:
-            - $ref: '#/components/schemas/Automatic'
-            - $ref: '#/components/schemas/PostSweeping'
-            - $ref: '#/components/schemas/Vrp'
     RecurringConfiguration:
       type: object
       description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
