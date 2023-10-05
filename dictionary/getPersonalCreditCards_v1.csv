@@ -55,7 +55,10 @@ OUTRAS";1;1;"";Não permitido;string;MASTERCARD;
 /data/rewardsProgram/hasRewardProgram;hasRewardProgram;Indicador da existência de programa de fidelidade/recompensa associado à conta de pagamento pós-paga (cartão) true false;Booleano;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;boolean;false;
 /data/rewardsProgram/rewardProgramInfo;rewardProgramInfo;Informações de termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Será de preenchimento obrigatório caso o campo hasRewardProgram esteja preenchido como true;Texto;2000;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresaa1.com/credit_cards_rewards;
 /data/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/fees/services;services;Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas;Lista;;Opcional;Opcional;;;1;9;"";Não permitido;array;;
+/data/fees/services;services;"Lista das Tarifas cobradas sobre Serviço.
+
+Para melhor entendimento da regra de envio, verificar área do desenvolvedor na página de Dados Abertos a seção: tabela verdade com instruções de envio de dados por Instituições.
+";Lista;;Opcional;Opcional;;;1;9;"";Não permitido;array;;
 /data/fees/services/name;name;Denominação de Serviços relacionados à Modalidade de Contas de Pagamento Pós-Pagas (Vide ENUM);Texto;;Obrigatório;Obrigatório;;"ANUIDADE_CARTAO_BASICO_NACIONAL 
 ANUIDADE_CARTAO_BASICO_INTERNACIONAL 
 ANUIDADE_DIFERENCIADA 
