@@ -397,8 +397,6 @@ paths:
                 $ref: '#/components/schemas/ResponseError'
       security:
         - OAuth2AuthorizationCode:
-            - openid
-            - 'recurringConsent:recurringConsentId'
             - recurringPayments
   '/pix/recurring-payments/{recurringPaymentId}':
     get:
@@ -1204,7 +1202,6 @@ components:
       type: string
       enum:
         - RCVD
-        - PATC
         - CANC
         - ACCP
         - ACPD
@@ -1218,21 +1215,19 @@ components:
 
         1.  RCVD (Received) - Indica que a requisição de pagamento foi recebida com sucesso pela detentora, mas ainda há validações a serem feitas antes de ser submetida para liquidação.
 
-        2.  PATC (Partially Accepted Technical Correct) - Indica que a transação precisa da confirmação de mais autorizadores para que o processamento do pagamento possa prosseguir.  
+        2.  CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
 
-        3.  CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
+        3.  ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
 
-        4.  ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
+        4.  ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
 
-        5.  ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
+        5.  RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
 
-        6.  RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
+        6.  ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
 
-        7.  ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
+        7.  PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
 
-        8.  PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
-
-        9.  SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.
+        8.  SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.
 
         Em caso insucesso: 
          
@@ -1250,56 +1245,22 @@ components:
         - SALDO_INSUFICIENTE
         - VALOR_ACIMA_LIMITE
         - VALOR_INVALIDO
-        - COBRANCA_INVALIDA
         - NAO_INFORMADO
         - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
-        - DETALHE_PAGAMENTO_INVALIDO
         - PAGAMENTO_RECUSADO_DETENTORA
         - PAGAMENTO_RECUSADO_SPI
-        - FALHA_INFRAESTRUTURA
         - FALHA_INFRAESTRUTURA_SPI
-        - FALHA_INFRAESTRUTURA_DICT
         - FALHA_INFRAESTRUTURA_ICP
         - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
         - FALHA_INFRAESTRUTURA_DETENTORA
-        - CONTAS_ORIGEM_DESTINO_IGUAIS
+        - CONSENTIMENTO_INVALIDO
+
       example: SALDO_INSUFICIENTE
       description: |
-        Define o código da razão pela qual o pagamento foi rejeitado
+        Código identificador do motivo de rejeição.
+        Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.  
 
-        - SALDO_INSUFICIENTE - A conta selecionada não possui saldo suficiente para realizar o pagamento.
-
-        - VALOR_ACIMA_LIMITE - O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outro] para permitir a realização de transações pelo cliente.
-
-        - VALOR_INVALIDO - O valor enviado não é válido para o QR Code informado.
-
-        - COBRANCA_INVALIDA - Validação de expiração, validação de vencimento ou Status Válido.
-
-        - NAO_INFORMADO - Não reportado/identificado pela instituição detentora de conta.
-
-        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO - Dados do pagamento divergentes dos dados do consentimento.
-
-        - DETALHE_PAGAMENTO_INVALIDO - Parâmetro [nome_campo] não obedecer às regras de negócio.
-
-        - PAGAMENTO_RECUSADO_DETENTORA - [Descrição do motivo de recusa].
-
-        - PAGAMENTO_RECUSADO_SPI - [Código de erro conforme tabela de domínios reason PACS.002].
-
-        - FALHA_INFRAESTRUTURA - [Descrição de qual falha na infraestrutura inviabilizou o processamento].
-
-        - FALHA_INFRAESTRUTURA_SPI - Indica uma falha no Sistema de Pagamentos Instantâneos (SPI).
-
-        - FALHA_INFRAESTRUTURA_DICT - Indica uma falha no Diretório de Identificadores de Contas Transacionais (DICT).
-
-        - FALHA_INFRAESTRUTURA_ICP - Indica uma falha na Infraestrutura de Chaves Públicas (ICP).
-
-        - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR - Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento.
-
-        - FALHA_INFRAESTRUTURA_DETENTORA - indica uma falha na infraestrutura da instituição detentora das informações ou recursos.
-
-        - CONTAS_ORIGEM_DESTINO_IGUAIS - Indica uma tentativa de pagamento onde a conta origem e a conta de destino são iguais.
-
-        O rejectionReason FALHA_INFRAESTRUTURA não será excluído, apenas deixará de ser utilizado, permitindo assim, retrocompatibilidade e integridade entre os participantes.
+        [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
       type: string
       enum:
@@ -1376,10 +1337,25 @@ components:
       description: |
         Objeto contendo as informações de rejeição dos consentimentos. 
       required:
+        - EnumAuthorisationStatusType
         - rejectedBy
         - rejectedFrom
         - reason
       properties:
+        EnumAuthorisationStatusType:
+          type: string
+          enum:
+            - AWAITING_AUTHORISATION
+            - AUTHORISED
+            - REJECTED
+            - CONSUMED
+          example: AWAITING_AUTHORISATION
+          description: |
+            Status atual do consentimento recorrente de acordo com a máquina de estados
+            - AWAITING_AUTHORISATION
+            - AUTHORISED
+            - REJECTED
+            - CONSUMED
         rejectedBy:
           type: string
           enum:
@@ -1443,9 +1419,8 @@ components:
           example: O usuário rejeitou a autorização do consentimento 
     RejectionReason:
       type: object
-      description: |-
-        Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status
-        [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
+      description: |
+        Objeto contendo o motivo de rejeição assíncrono
       required:
         - code
         - detail
@@ -1456,7 +1431,7 @@ components:
           type: string
           pattern: '[\w\W\s]*'
           maxLength: 2048
-          description: Contém informações adicionais ao pagamento rejeitado
+          description: Detalhe sobre o código identificador do motivo de rejeição.
     Revocation:
       type: object
       description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
@@ -1500,10 +1475,25 @@ components:
       type: object
       description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
       required:
+        - EnumAuthorisationStatusType
         - revokedBy
         - revokedFrom
         - reason
       properties:
+        EnumAuthorisationStatusType:
+          type: string
+          enum:
+            - AWAITING_AUTHORISATION
+            - AUTHORISED
+            - REJECTED
+            - CONSUMED
+          example: AWAITING_AUTHORISATION
+          description: |
+            Status atual do consentimento recorrente de acordo com a máquina de estados
+            - AWAITING_AUTHORISATION
+            - AUTHORISED
+            - REJECTED
+            - CONSUMED
         revokedBy:
             type: string
             enum:
@@ -1981,6 +1971,7 @@ components:
         requestDateTime:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
           type: string
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
@@ -2011,18 +2002,14 @@ components:
           pattern: '^((\d{1,16}\.\d{2}))$'
           example: '100000.12'
           description: |
-            Valor da transação com 2 casas decimais. O valor deve ser o mesmo enviado no consentimento. 
-
-            Para QR Code estático com valor pré-determinado no QR Code ou para QR Code dinâmico com indicação de que o valor não pode ser alterado: O campo amount deve ser preenchido com o valor estabelecido no QR Code. 
-            Caso seja preenchido com valor divergente do QR Code, deve ser retornado um erro HTTP Status 422.
+           Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'. Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
         currency:
           type: string
           maxLength: 3
           pattern: '^([A-Z]{3})$'
           example: BRL
           description: |
-            Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.  
-            Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
+            Valor da transação com 2 casas decimais.
     PatchPixPayment:
       type: object
       required:
@@ -2254,19 +2241,9 @@ components:
         - data
       properties:
         data:
-          type: object
-          description: Objeto contendo as informações de rejeição e revogação dos consentimentos
-          required:
-            - status
-          properties:
-              status:
-                $ref: '#/components/schemas/EnumAuthorisationStatusType'
-              revocation:
-                oneOf:
-                - $ref: '#/components/schemas/ConsentRevocation'
-              Rejection:
-               oneOf:
-                - $ref: '#/components/schemas/ConsentRejection'
+          oneOf:
+            - $ref: '#/components/schemas/ConsentRevocation'
+            - $ref: '#/components/schemas/ConsentRejection'
     ResponseRecurringPaymentsIdRead:
       type: object
       required:
@@ -2466,7 +2443,6 @@ components:
       type: array
       items:
         type: object
-        description: Objeto contendo dados do pagamento e da conta do recebedor (creditor).
         required:
           - recurringPaymentId
           - recurringConsentId
@@ -2512,6 +2488,7 @@ components:
           creationDateTime:
             type: string
             format: date-time
+            maxLength: 20
             pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
             example: '2020-07-21T08:30:00Z'
             description: |
@@ -2521,6 +2498,7 @@ components:
           statusUpdateDateTime:
             type: string
             format: date-time
+            maxLength: 20
             pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
             example: '2020-07-21T08:30:00Z'
             description: |
@@ -2541,115 +2519,119 @@ components:
             description: |
               Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
     ResponseRecurringPaymentsData:
-      type: array
-      items:
-        type: object
-        required:
-          - recurringPaymentId
-          - recurringConsentId
-          - endToEndId
-          - date
-          - creationDateTime
-          - statusUpdateDateTime  
-          - ibgeTownCode
-          - status
-          - cnpjInitiator
-          - payment
-        properties:
-          recurringPaymentId:
-            type: string
-            minLength: 1
-            maxLength: 100
-            pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-            example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
-            description: |
-              Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. O `recurringPaymentId` deve ser diferente do `endToEndId`. 
-              Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
-          recurringConsentId:
-            type: string
-            maxLength: 256
-            pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
-            example: 'urn:bancoex:C1DD33123'
-            description: |
-              Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
-              Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
-              Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
-              seja um identificador de recurso persistente e independente da localização.
-              Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
-              - o namespace(urn)
-              - o identificador associado ao namespace da instituição transnmissora (bancoex)
-              - o identificador específico dentro do namespace (C1DD33123).
-              Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
-          endToEndId:
-            $ref: '#/components/schemas/EndToEndId'
-          date:
-            type: string
-            maxLength: 10
-            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
-            example: '2023-10-10'
-            description: Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).
-          creationDateTime:
-            type: string
-            format: date-time
-            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-            example: '2020-07-21T08:30:00Z'
-            description: |
-              Data e hora em que o recurso foi criado.
-              Uma string com data e hora conforme especificação RFC-3339,
-              sempre com a utilização de timezone UTC(UTC time format).
-          statusUpdateDateTime:
-            type: string
-            format: date-time
-            pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-            example: '2020-07-21T08:30:00Z'
-            description: |
-              Data e hora da última atualização da iniciação de pagamento.
-              Uma string com data e hora conforme especificação RFC-3339,
-              sempre com a utilização de timezone UTC(UTC time format).
-          ibgeTownCode:
-            type: string
-            minLength: 7
-            maxLength: 7
-            pattern: '^\d{7}$'
-            example: '5300108'
-            description: |
-              O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
+      type: object
+      required:
+        - recurringPaymentId
+        - recurringConsentId
+        - endToEndId
+        - date
+        - creationDateTime
+        - statusUpdateDateTime  
+        - ibgeTownCode
+        - status
+        - cnpjInitiator
+        - payment
+        - creditorAccount
+        - debtorAccount
+      properties:
+        recurringPaymentId:
+          type: string
+          minLength: 1
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
+          description: |
+            Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. O `recurringPaymentId` deve ser diferente do `endToEndId`. 
+            Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
+        recurringConsentId:
+          type: string
+          maxLength: 256
+          pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+          example: 'urn:bancoex:C1DD33123'
+          description: |
+            Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+            Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+            Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+            seja um identificador de recurso persistente e independente da localização.
+            Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+            - o namespace(urn)
+            - o identificador associado ao namespace da instituição transnmissora (bancoex)
+            - o identificador específico dentro do namespace (C1DD33123).
+            Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+        endToEndId:
+          $ref: '#/components/schemas/EndToEndId'
+        date:
+          type: string
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-10-10'
+          description: Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).
+        creationDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2020-07-21T08:30:00Z'
+          description: |
+            Data e hora em que o recurso foi criado.
+            Uma string com data e hora conforme especificação RFC-3339,
+            sempre com a utilização de timezone UTC(UTC time format).
+        statusUpdateDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2020-07-21T08:30:00Z'
+          description: |
+            Data e hora da última atualização da iniciação de pagamento.
+            Uma string com data e hora conforme especificação RFC-3339,
+            sempre com a utilização de timezone UTC(UTC time format).
+        ibgeTownCode:
+          type: string
+          minLength: 7
+          maxLength: 7
+          pattern: '^\d{7}$'
+          example: '5300108'
+          description: |
+            O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
 
-              1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
-          status:
-            $ref: '#/components/schemas/EnumPaymentStatusType'
-          rejectionReason:
-            $ref: '#/components/schemas/RejectionReason'
-          cnpjInitiator:
-            type: string
-            pattern: '^\d{14}$'
-            maxLength: 14
-            example: '50685362000135'
-            description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
-          payment:
-            $ref: '#/components/schemas/PaymentPix'
-          remittanceInformation:
-            type: string
-            maxLength: 140
-            pattern: '[\w\W\s]*'
-            example: Pagamento da nota RSTO035-002.
-            description: |
-              Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
-          debtorAccount:
-              $ref: '#/components/schemas/DebtorAccount'
-          cancellation:
-            $ref: '#/components/schemas/PixPaymentCancellation'
-          authorisationFlow:
-            type: string
-            enum:
-              - HYBRID_FLOW
-              - CIBA_FLOW
-              - FIDO_FLOW
-            example: HYBRID_FLOW
-            description: |
-              Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
-              
-              [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+            1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+        status:
+          $ref: '#/components/schemas/EnumPaymentStatusType'
+        rejectionReason:
+          $ref: '#/components/schemas/RejectionReason'
+        cnpjInitiator:
+          type: string
+          pattern: '^\d{14}$'
+          maxLength: 14
+          example: '50685362000135'
+          description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
+        payment:
+          $ref: '#/components/schemas/PaymentPix'
+        remittanceInformation:
+          type: string
+          maxLength: 140
+          pattern: '[\w\W\s]*'
+          example: Pagamento da nota RSTO035-002.
+          description: |
+            Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+        creditorAccount:
+          $ref: '#/components/schemas/CreditorAccount'
+        debtorAccount:
+            $ref: '#/components/schemas/DebtorAccount'
+        cancellation:
+          $ref: '#/components/schemas/PixPaymentCancellation'
+        authorisationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+            - FIDO_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
@@ -2686,7 +2668,7 @@ components:
         maxLength: 100
     startDate:
       name: startDate
-      in: header
+      in: query
       description: Data inicial de corte da ocorrência do pagamento ligada ao consentimento de longa duração.
       required: false
       schema:
@@ -2696,7 +2678,7 @@ components:
         maxLength: 10
     endDate:
       name: endDate
-      in: header
+      in: query
       description: Data final de corte para recuperação da ocorrência do pagamento ligada ao consentimento de longa duração.
       required: false
       schema:
