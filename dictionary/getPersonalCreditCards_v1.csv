@@ -1,13 +1,13 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/participant;participant;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/participant/brand;brand;Nome da Marca selecionada pelas Organizações;Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Organização A;
-/data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Empresa A1;
+/data/participant/brand;brand;Nome da Marca selecionada pelas Organizações;Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;
+/data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa A1;
 /data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
 /data/participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
-";Texto;1024;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
-/data/name;name;Denominação/Identificação do nome da conta (cartão de crédito);Texto;50;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Cartão Universitário;
+";Texto;1024;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
+/data/name;name;Denominação/Identificação do nome da conta (cartão de crédito);Texto;50;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Cartão Universitário;
 /data/identification;identification;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/identification/product;product;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/identification/product/type;type;Categoria atribuída a um cartão de pagamento, sob uma certa denominação, que lhe agrega um conjunto de vantagens, diferenciando-o de acordo com o perfil do portador. Essa categoria é definida pelo BACEN e está contida no documento de nome 'Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento  Emissores';Texto;;Obrigatório;;"CLASSIC_NACIONAL 
@@ -34,7 +34,7 @@ OUTROS";1;1;"";Não permitido;string;PLATINUM;
 /data/identification/product/typeAdditionalInfo;typeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo ""type"".
 
 [Restrição] Obrigatório quando ""type"" for igual ""OUTROS"".
-";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""type"" for igual ""OUTROS"".
+";Texto;140;Condicional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório quando ""type"" for igual ""OUTROS"".
 ";Não permitido;string;Informações adicionais;
 /data/identification/creditCard;creditCard;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/identification/creditCard/network;network;"Categoria de Bandeiras de Cartões de Crédito (Instituidor do arranjo de pagamento). Bandeira é a detentora de todos os direitos e deveres da utilização da marca estampada no cartão, inclusive as bandeiras pertencentes aos emissores. p.ex. ""American Express"", ""Diners Club"" Essas bandeiras estão definidas em documento do BACEN de nome ""Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento  Emissores""";Texto;;Obrigatório;;"VISA 
@@ -49,11 +49,11 @@ OUTRAS";1;1;"";Não permitido;string;MASTERCARD;
 /data/identification/creditCard/networkAdditionalInfo;networkAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo ""network"".
 
 [Restrição] Obrigatório quando ""network"" for igual ""OUTROS"".
-";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""network"" for igual ""OUTROS"".
+";Texto;140;Condicional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório quando ""network"" for igual ""OUTROS"".
 ";Não permitido;string;Informações adicionais;
 /data/rewardsProgram;rewardsProgram;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/rewardsProgram/hasRewardProgram;hasRewardProgram;Indicador da existência de programa de fidelidade/recompensa associado à conta de pagamento pós-paga (cartão) true false;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
-/data/rewardsProgram/rewardProgramInfo;rewardProgramInfo;Informações de termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Será de preenchimento obrigatório caso o campo hasRewardProgram esteja preenchido como true;Texto;2000;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;https://empresaa1.com/credit_cards_rewards;
+/data/rewardsProgram/rewardProgramInfo;rewardProgramInfo;Informações de termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Será de preenchimento obrigatório caso o campo hasRewardProgram esteja preenchido como true;Texto;2000;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresaa1.com/credit_cards_rewards;
 /data/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/services;services;Lista das Tarifas cobradas sobre Serviço relacionadas a Modalidade de Pagamento Pós-Pagas;Lista;;Opcional;;;1;9;"";Não permitido;array;;
 /data/fees/services/name;name;Denominação de Serviços relacionados à Modalidade de Contas de Pagamento Pós-Pagas (Vide ENUM);Texto;;Obrigatório;;"ANUIDADE_CARTAO_BASICO_NACIONAL 
@@ -74,7 +74,7 @@ AVALIACAO_EMERGENCIAL_CREDITO
 EMISSAO_SEGUNDA_VIA 
 TARIFA_PAGAMENTO_CONTAS 
 SMS";1;1;"";Não permitido;string;ANUIDADE_NACIONAL;
-/data/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatos geradores de cobrança que incidem sobre as Modalidades de Contas de Pagamento Pós-Pagas informada, para pessoa jurídica. (Campo Livre);Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Disponibilização de rede de estabelecimentos afiliados, instalada no País, para pagamentos de bens e serviços, cobrada no máximo uma vez a cada doze meses, admitido o parcelamento da cobrança;
+/data/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatos geradores de cobrança que incidem sobre as Modalidades de Contas de Pagamento Pós-Pagas informada, para pessoa jurídica. (Campo Livre);Texto;2000;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Disponibilização de rede de estabelecimentos afiliados, instalada no País, para pagamentos de bens e serviços, cobrada no máximo uma vez a cada doze meses, admitido o parcelamento da cobrança;
 /data/fees/services/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;;;4;4;"";Não permitido;array;;
 /data/fees/services/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
 ";Texto;;Obrigatório;;"1_FAIXA 
@@ -183,10 +183,10 @@ OUTROS";1;1;"";Não permitido;string;SAQUE_A_CREDITO;
 /data/interest/otherCredits/codeAdditionalInfo;codeAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao campo ""code"".
 
 [Restrição] Obrigatório quando ""code"" for igual ""OUTROS"".
-";Texto;140;Condicional;[\w\W\s]*;;0;1;" Obrigatório quando ""code"" for igual ""OUTROS"".
+";Texto;140;Condicional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório quando ""code"" for igual ""OUTROS"".
 ";Não permitido;string;Informações adicionais;
 /data/termsConditions;termsConditions;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/termsConditions/minimumFeeRate;minimumFeeRate;Percentual para pagamento mínimo sobre o saldo devedor da fatura.;Texto;8;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.250000;8
-/data/termsConditions/additionalInfo;additionalInfo;Campo aberto para detalhamento de taxas de juros;Texto;500;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;NA;
-/data/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Informação sobre as condições e critérios de elegibilidade do emissor do cartão. Pode ser informada a URL referente ao endereço onde constam as condições informadas.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://empresaa1.com/creditcards_elegibility_criteria;
-/data/termsConditions/closingProcessInfo;closingProcessInfo;Descrição dos procedimentos para encerramento da conta de pagamento pós paga. Pode ser informada a URL referente ao endereço onde constam as condições informadas.;Texto;2000;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;https://empresaa1.com/creditcards_closing_process;
+/data/termsConditions/additionalInfo;additionalInfo;Campo aberto para detalhamento de taxas de juros;Texto;500;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;NA;
+/data/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Informação sobre as condições e critérios de elegibilidade do emissor do cartão. Pode ser informada a URL referente ao endereço onde constam as condições informadas.;Texto;2000;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;https://empresaa1.com/creditcards_elegibility_criteria;
+/data/termsConditions/closingProcessInfo;closingProcessInfo;Descrição dos procedimentos para encerramento da conta de pagamento pós paga. Pode ser informada a URL referente ao endereço onde constam as condições informadas.;Texto;2000;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;https://empresaa1.com/creditcards_closing_process;
