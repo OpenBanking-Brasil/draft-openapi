@@ -143,7 +143,7 @@ components:
           description: Lista das garantias exigidas
         termsConditions:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_loans'
@@ -161,13 +161,13 @@ components:
       properties:
         brand:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 80
           description: Nome da Marca.
           example: Organização A
         name:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 80
           description: 'Nome da Instituição, pertencente à marca, responsável pela comercialização dos produtos e serviços'
           example: Empresa da Marca A
@@ -179,7 +179,7 @@ components:
           example: "50685362000135"
         urlComplementaryList:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 1024
           description: URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal.
           example: 'https://example.com/mobile-banking'
@@ -248,7 +248,7 @@ components:
           description: Lista das garantias exigidas
         termsConditions:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Empréstimo para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_loans'
@@ -279,19 +279,19 @@ components:
       properties:
         name:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 250
           description: Nomes das Tarifas cobradas sobre Serviços relacionados à Modalidade informada do Empréstimo para pessoa natural/jurídica.
           example: Taxa de Abertura
         code:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 100
           description: Sigla de identificação do serviço relacionado à Modalidade informada de Empréstimo para pessoa natural/jurídica.
           example: NA
         chargingTriggerInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 2000
           description: Fatores geradores de cobrança que incidem sobre as Modalidades informada de Empréstimos para pessoa natural/jurídica.
           example: 3% do valor do contrato
@@ -612,17 +612,17 @@ components:
               code:
                 description: Código de erro específico do endpoint
                 type: string
-                pattern: '[\w\W\s]*'
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               title:
                 description: Título legível por humanos deste erro específico
                 type: string
-                pattern: '[\w\W\s]*'
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               detail:
                 description: Descrição legível por humanos deste erro específico
                 type: string
-                pattern: '[\w\W\s]*'
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 2048
         meta:
           type: object
@@ -655,17 +655,17 @@ components:
               code:
                 description: Código de erro específico do endpoint
                 type: string
-                pattern: '[\w\W\s]*'
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               title:
                 description: Título legível por humanos deste erro específico
                 type: string
-                pattern: '[\w\W\s]*'
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 255
               detail:
                 description: Descrição legível por humanos deste erro específico
                 type: string
-                pattern: '[\w\W\s]*'
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                 maxLength: 2048
         meta:
           type: object
