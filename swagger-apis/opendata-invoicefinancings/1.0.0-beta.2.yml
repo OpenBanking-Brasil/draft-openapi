@@ -440,7 +440,10 @@ components:
       properties:
         services:
           type: array
-          description: Lista das Tarifas cobradas sobre Serviços
+          description: |
+            Lista das Tarifas cobradas sobre Serviço.
+
+            Para melhor entendimento da regra de envio, verificar área do desenvolvedor na página de Dados Abertos a seção: tabela verdade com instruções de envio de dados por Instituições.
           items:
             $ref:  "#/components/schemas/InvoiceFinancingsService"
           minItems: 1
