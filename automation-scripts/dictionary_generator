@@ -56,9 +56,16 @@ end
 # Extract fields from Schema Object recursivily
 def extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
   if !schema['oneOf'].nil?
-    schema = schema['oneOf'][0]
+    schema['oneOf'].each do |option|
+      fields = sub_extract_fields(option, path, fields, ignore)
+    end
+    return fields
+  else
+    return sub_extract_fields(schema, path, fields, ignore)
   end
+end
 
+def sub_extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
   if ['array', 'object'].include? schema['type']
     index = 'properties'
 
@@ -76,7 +83,9 @@ def extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
     elsif path != ''
       parent = schema.clone
       parent['path'] = path
-      fields.push parent
+      if !fields.any? { |objeto| objeto['path'] == path }
+        fields.push parent
+      end
     end
 
     schema = schema['items'] if schema['type'] == 'array'
@@ -87,12 +96,11 @@ def extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
 
       fields.concat extract_fields(spec, path + '/' + name)
     end
-    return fields
   else
     schema['path'] = path
     fields.push schema
-    return fields
   end
+  return fields
 end
 
 # Write headers and rows on given filename
