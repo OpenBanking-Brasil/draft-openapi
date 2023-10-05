@@ -291,6 +291,20 @@ components:
             $ref:  "#/components/schemas/CreditCardInterestRate"
           minItems: 1
           maxItems: 3
+    RequiredWarranty:
+      type: string
+      enum:
+        - CESSAO_DIREITOS_CREDITORIOS
+        - ALIENACAO_FIDUCIARIA
+        - GARANTIA_FIDEJUSSORIA
+        - NAO_EXIGE_GARANTIA
+      description: |
+        Relação de garantias exigidas, segundo documento 3040 do Bacen:
+        - `CESSAO_DIREITOS_CREDITORIOS`: o cedente transfere ao credor/cessionário a titularidade de direitos creditórios, até a liquidação da dívida. O credor/cessionário passa a recebê-los diretamente dos devedores e credita o produto da operação para o cedente na operação que originou a cessão, até a sua liquidação
+        - `ALIENACAO_FIDUCIARIA`: transferência ao credor, ou fiduciário, da propriedade do bem
+        - `GARANTIA_FIDEJUSSORIA`: baseada na fidelidade do garantidor em cumprir as obrigações, caso o devedor não o faça
+        - `NAO_EXIGE_GARANTIA`
+      example: CESSAO_DIREITOS_CREDITORIOS
     CreditCardInterestRate:
       type: object
       required:
@@ -339,6 +353,7 @@ components:
         - rewardsProgram
         - fees
         - interest
+        - requiredWarranties
         - termsConditions
       x-regulatory-required:
         - name
@@ -368,6 +383,13 @@ components:
               maxItems: 9
         interest:
           $ref: '#/components/schemas/CreditCardInterest'
+        requiredWarranties:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequiredWarranty'
+          minItems: 1
+          maxItems: 4
+          description: Lista das garantias exigidas
         termsConditions:
           $ref: '#/components/schemas/CreditCardTermsConditions'
     Participant:
@@ -431,6 +453,7 @@ components:
         - rewardsProgram
         - fees
         - interest
+        - requiredWarranties
         - termsConditions
       x-regulatory-required:
         - name
@@ -460,6 +483,13 @@ components:
               maxItems: 9
         interest:
           $ref: '#/components/schemas/CreditCardInterest'
+        requiredWarranties:
+          type: array
+          items:
+            $ref: '#/components/schemas/RequiredWarranty'
+          minItems: 1
+          maxItems: 4
+          description: Lista das garantias exigidas
         termsConditions:
           $ref: '#/components/schemas/CreditCardTermsConditions'
     CreditCardService:

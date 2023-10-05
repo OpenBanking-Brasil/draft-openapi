@@ -185,6 +185,10 @@ OUTROS";1;1;"";Não permitido;string;SAQUE_A_CREDITO;
 [Restrição] Obrigatório quando ""code"" for igual ""OUTROS"".
 ";Texto;140;Condicional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório quando ""code"" for igual ""OUTROS"".
 ";Não permitido;string;Informações adicionais;
+/data/requiredWarranties;requiredWarranties;Lista das garantias exigidas;Lista;;Obrigatório;Opcional;;"CESSAO_DIREITOS_CREDITORIOS 
+ALIENACAO_FIDUCIARIA 
+GARANTIA_FIDEJUSSORIA 
+NAO_EXIGE_GARANTIA";1;4;"";Não permitido;array;CESSAO_DIREITOS_CREDITORIOS;
 /data/termsConditions;termsConditions;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/termsConditions/minimumFeeRate;minimumFeeRate;Percentual para pagamento mínimo sobre o saldo devedor da fatura.;Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.250000;8
 /data/termsConditions/additionalInfo;additionalInfo;Campo aberto para detalhamento de taxas de juros;Texto;500;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;NA;
