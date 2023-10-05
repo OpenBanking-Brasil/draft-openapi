@@ -432,6 +432,8 @@ components:
         - fees
         - interest
         - termsConditions
+      x-regulatory-required:
+        - name
       properties:
         participant:
           $ref: '#/components/schemas/Participant'
@@ -473,8 +475,6 @@ components:
         - name
         - code
         - chargingTriggerInfo
-        - minimum
-        - maximum
       properties:
         name:
           type: string
@@ -623,6 +623,7 @@ components:
         - minimumRate
         - maximumRate
       x-regulatory-required:
+        - referentialRateIndexer
         - rate
         - minimumRate
         - maximumRate
