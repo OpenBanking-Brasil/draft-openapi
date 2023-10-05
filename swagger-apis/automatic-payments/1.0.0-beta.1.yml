@@ -245,6 +245,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/recurringConsentId'
+        - $ref: '#/components/parameters/XIdempotencyKey'
       requestBody:
         content:
           application/jwt:
@@ -1330,12 +1331,10 @@ components:
         INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
 
         DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
-    ConsentRejection:
+    Rejection:
       type: object
       description: |
         Objeto contendo as informações de rejeição dos consentimentos. 
-
-        [Restrição] Campode preenchimento obrigatório caso status do consentimento igual a "REJECTED" ou "REVOKED"
       required:
         - rejectedBy
         - rejectedFrom
@@ -1370,6 +1369,39 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
           description: Data e hora em que o consentimento foi rejeitado
+        reason:
+          $ref: '#/components/schemas/ConsentRejectionReason'
+    ConsentRejection:
+      type: object
+      description: |
+        Objeto contendo as informações de rejeição dos consentimentos. 
+      required:
+        - rejectedBy
+        - rejectedFrom
+        - reason
+      properties:
+        rejectedBy:
+          type: string
+          enum:
+            - INICIADORA
+            - USUARIO
+            - DETENTORA
+          example: INICIADORA
+          description: |
+            Quem iniciou a solicitação de rejeição
+            - INICIADORA
+            - USUARIO
+            - DETENTORA
+        rejectedFrom:
+          type: string
+          enum:
+            - INICIADORA
+            - DETENTORA
+          example: DETENTORA
+          description: |
+            Canal onde iniciou-se o processo de rejeição 
+            - INICIADORA
+            - DETENTORA
         reason:
           $ref: '#/components/schemas/ConsentRejectionReason'
     ConsentRejectionReason:
@@ -1427,7 +1459,7 @@ components:
           description: Contém informações adicionais ao pagamento rejeitado
     Revocation:
       type: object
-      description: Objeto contendo as informações de revogação dos consentimentos
+      description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
       required:
         - revokedBy
         - revokedFrom
@@ -1464,6 +1496,38 @@ components:
           description: Data e hora em que o consentimento foi revogado 
         reason:
           $ref: '#/components/schemas/ConsentRevokedReason'
+    ConsentRevocation:
+      type: object
+      description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
+      required:
+        - revokedBy
+        - revokedFrom
+        - reason
+      properties:
+        revokedBy:
+            type: string
+            enum:
+              - INICIADORA
+              - USUARIO
+              - DETENTORA
+            example: INICIADORA
+            description: |
+              Quem iniciou a solicitação de revogação 
+              - INICIADORA
+              - USUARIO
+              - DETENTORA
+        revokedFrom:
+          type: string
+          enum:
+            - INICIADORA
+            - DETENTORA
+          example: DETENTORA
+          description: |
+            Canal onde iniciou-se o processo de revogação 
+            - INICIADORA
+            - DETENTORA
+        reason:
+          $ref: '#/components/schemas/ConsentRevokedReason'
     ConsentRevokedReason:
       type: object
       description: |
@@ -1480,7 +1544,7 @@ components:
             - NAO_INFORMADO
           example: REVOGADO_RECEBEDOR
           description: |
-            Define o código da razão pela qual o consentimento foi rejeitado
+            Código indicador do motivo de revogação.
             - REVOGADO_RECEBEDOR
             - REVOGADO_USUARIO
             - NAO_INFORMADO
@@ -1489,7 +1553,7 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 2048
           description: |
-            Detalhe sobre o motivo de rejeição indicado no campo "/data/rejection/reason/code"
+            Detalhe sobre o motivo de revogação indicado no campo "/data/rejection/reason/code".
           example: O usuário rejeitou a autorização do consentimento 
     RecurringConfiguration:
       type: object
@@ -2175,7 +2239,7 @@ components:
             debtorAccount:
               $ref: '#/components/schemas/ConsentsDebtorAccount'
             rejection:
-              $ref: '#/components/schemas/ConsentRejection'
+              $ref: '#/components/schemas/Rejection'
             revocation:
               $ref: '#/components/schemas/Revocation'
             recurringConfiguration:
@@ -2188,8 +2252,6 @@ components:
       type: object
       required:
         - data
-        - links
-        - meta
       properties:
         data:
           type: object
@@ -2197,15 +2259,14 @@ components:
           required:
             - status
           properties:
-            recurringConfiguration:
-              oneOf:
-              - $ref: '#/components/schemas/EnumAuthorisationStatusType'
-              - $ref: '#/components/schemas/Revocation'
-              - $ref: '#/components/schemas/ConsentRejection'
-        links:
-          $ref: '#/components/schemas/LinkSingle'
-        meta:
-          $ref: '#/components/schemas/Meta'
+              status:
+                $ref: '#/components/schemas/EnumAuthorisationStatusType'
+              revocation:
+                oneOf:
+                - $ref: '#/components/schemas/ConsentRevocation'
+              Rejection:
+               oneOf:
+                - $ref: '#/components/schemas/ConsentRejection'
     ResponseRecurringPaymentsIdRead:
       type: object
       required:
@@ -2605,7 +2666,7 @@ components:
         seja um identificador de recurso persistente e independente da localização.  
         Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
         - o namespace(urn)
-        - o identificador associado ao namespace da instituição transnmissora (bancoex) 
+        - o identificador associado ao namespace da instituição detentora (bancoex).
         - o identificador específico dentro do namespace (C1DD33123).  
         Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
       required: true
