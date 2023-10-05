@@ -19,7 +19,10 @@ EMPRESTIMO_MICROCREDITO_PRODUTIVO_ORIENTADO
 EMPRESTIMO_CHEQUE_ESPECIAL 
 EMPRESTIMO_CONTA_GARANTIDA";1;1;"";Não permitido;string;EMPRESTIMO_CREDITO_PESSOAL_CONSIGNADO;
 /data/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
-/data/fees/services;services;Lista das Tarifas cobradas sobre Serviços;Lista;;Opcional;Opcional;;;1;20;"";Não permitido;array;;
+/data/fees/services;services;"Lista das Tarifas cobradas sobre Serviços.
+
+Para melhor entendimento da regra de envio, verificar área do desenvolvedor na página de Dados Abertos a seção: tabela verdade com instruções de envio de dados por Instituições.
+";Lista;;Opcional;Opcional;;;1;20;"";Não permitido;array;;
 /data/fees/services/name;name;Nomes das Tarifas cobradas sobre Serviços relacionados à Modalidade informada do Empréstimo para pessoa natural/jurídica.;Texto;250;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Taxa de Abertura;
 /data/fees/services/code;code;Sigla de identificação do serviço relacionado à Modalidade informada de Empréstimo para pessoa natural/jurídica.;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;NA;
 /data/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatores geradores de cobrança que incidem sobre as Modalidades informada de Empréstimos para pessoa natural/jurídica.;Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;3% do valor do contrato;
