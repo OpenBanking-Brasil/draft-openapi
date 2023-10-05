@@ -13,7 +13,10 @@ ANTECIPACAO_FATURA_CARTAO_CREDITO
 OUTROS_DIREITOS_CREDITORIOS_DESCONTADOS 
 OUTROS_TITULOS_DESCONTADOS";1;1;"";Não permitido;string;;
 /data/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/fees/services;services;Lista das Tarifas cobradas sobre Serviços;Lista;;Opcional;Opcional;;;1;20;"";Não permitido;array;;
+/data/fees/services;services;"Lista das Tarifas cobradas sobre Serviço.
+
+Para melhor entendimento da regra de envio, verificar área do desenvolvedor na página de Dados Abertos a seção: tabela verdade com instruções de envio de dados por Instituições.
+";Lista;;Opcional;Opcional;;;1;20;"";Não permitido;array;;
 /data/fees/services/name;name;Nomes das Tarifas cobradas sobre Serviços ofertados à Modalidade de direitos creditórios descontados, para pessoa natural. (Campo Livre);Texto;250;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Custódia de Duplicatas;
 /data/fees/services/code;code;Sigla de identificação do serviço relacionado à Modalidade de direitos creditórios descontados, para pessoa natural. Campo aberto;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;NA;
 /data/fees/services/chargingTriggerInfo;chargingTriggerInfo;Fatores geradores de cobrança que incidem sobre as Modalidades de direitos creditórios descontados, para pessoa natural. Campo Livre;Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;5% do valor do contrato;
