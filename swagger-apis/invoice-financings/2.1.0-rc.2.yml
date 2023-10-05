@@ -740,14 +740,13 @@ components:
           example: '0.290000'
           pattern: '^\d{1,2}\.\d{6}$'
           description: |
-            CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas). 
+            CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
 
-            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros 
-            (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
-
-            Para o público PF (pessoa física) o campo é de envio obrigatório para contratos firmados a partir de 2008, conforme Resolução CMN 3.517. 
-            Para o público PJ (pessoa jurídica) o campo é de envio obrigatório para contratos firmados a partir de 2011, conforme Resolução CMN 3.909. 
-            O campo poderá ser preenchido com 0.00, como exceção, em contratos anteriores a 2008 (para o público PF) e anteriores a 2011 (para o público PJ), para os quais a casa não tenha a informação de CET (Custo efetivo total)
+            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).  
+            Para o público PF (pessoa física) o campo é de envio obrigatório para contratos firmados a partir de 2008, conforme Resolução CMN 3.517. Para o público PJ (pessoa jurídica) o campo é de envio obrigatório para contratos firmados a partir de 2011, conforme Resolução CMN 3.909. O campo poderá ser preenchido com 0.00 em cenários nos quais a casa não tenha a informação de CET (Custo efetivo total) apenas para as exceções listadas abaixo:
+            - Em contratos anteriores a 2008 (para o público PF);
+            - Em contratos anteriores a 2011 (para o público PJ);
+            - Público PJ de médio ou grande porte.
         amortizationScheduled:
           $ref: '#/components/schemas/EnumContractAmortizationScheduled'
         amortizationScheduledAdditionalInfo:
