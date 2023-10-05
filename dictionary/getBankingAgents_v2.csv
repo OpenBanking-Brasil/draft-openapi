@@ -64,9 +64,9 @@ SABADO";1;1;"";Não permitido;string;;
 /data/bankingAgents/locations/availability/exception;exception;;Texto;2000;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, nacionais e estaduais;
 /data/bankingAgents/locations/availability/isPublicAccessAllowed;isPublicAccessAllowed;;Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;false;
 /data/bankingAgents/locations/phones;phones;;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
-/data/bankingAgents/locations/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Opcional;;"FIXO 
+/data/bankingAgents/locations/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Obrigatório;;"FIXO 
 MOVEL";0;1;"";Não permitido;string;FIXO;
-/data/bankingAgents/locations/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55';Texto;4;Opcional;Opcional;^\d{1,4}$;;0;1;"";Não permitido;string;55;
+/data/bankingAgents/locations/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55';Texto;4;Opcional;Obrigatório;^\d{1,4}$;;0;1;"";Não permitido;string;55;
 /data/bankingAgents/locations/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19';Texto;2;Opcional;Obrigatório;^\d{2}$;;0;1;"";Não permitido;string;19;
 /data/bankingAgents/locations/phones/number;number;Número de telefone da dependência - se houver;Texto;11;Opcional;Obrigatório;^([0-9]{8,11})$;;0;1;"";Não permitido;string;35721199;
 /data/bankingAgents/services;services;Traz a relação de serviços disponbilizados pelo Canal de Atendimento;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
