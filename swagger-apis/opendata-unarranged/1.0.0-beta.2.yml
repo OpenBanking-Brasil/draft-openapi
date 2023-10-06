@@ -389,8 +389,9 @@ components:
           cnpjNumber:
             type: string
             pattern: '^\d{14}$'
-            description: CNPJ
+            minLength: 14
             maxLength: 14
+            description: CNPJ
             example: "50685362000135"
           urlComplementaryList:
             type: string
@@ -429,6 +430,7 @@ components:
         value:
           type: string
           pattern: '^(\d{1,9}\.\d{2}){1}$'
+          minLength: 4
           maxLength: 12
           x-cds-type: AmountString
           description: |
@@ -452,6 +454,7 @@ components:
         value:
           type: string
           pattern: '^(\d{1,9}\.\d{2}){1}$'
+          minLength: 4
           maxLength: 12
           x-cds-type: AmountString
           description: |
@@ -473,6 +476,7 @@ components:
         value:
           type: string
           pattern: '^(\d{1,9}\.\d{2}){1}$'
+          minLength: 4
           maxLength: 12
           x-cds-type: AmountString
           description: |
@@ -500,6 +504,7 @@ components:
     Currency:
       type: string
       pattern: '^(\w{3}){1}$'
+      minLength: 3
       maxLength: 3
       x-cds-type: CurrencyString
       description: 'Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217'
@@ -534,28 +539,33 @@ components:
       properties:
         self:
           type: string
+          minLength: 5
           maxLength: 2000
           description: URL da página atualmente requisitada
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
         first:
           type: string
+          minLength: 5
           maxLength: 2000
           description: URL da primeira página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
         prev:
           type: string
+          minLength: 5
           maxLength: 2000
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
+          minLength: 5
           maxLength: 2000
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
+          minLength: 5
           maxLength: 2000
           description: URL da última página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
