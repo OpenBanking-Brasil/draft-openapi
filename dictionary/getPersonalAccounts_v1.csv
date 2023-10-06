@@ -1,9 +1,9 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;;Lista;;Obrigatório;Opcional;;;0;N;"";Não permitido;array;;
+/data;data;;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/participant;participant;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;
 /data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa A1;
-/data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
+/data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;14
 /data/participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
 ";Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
@@ -104,17 +104,17 @@ SMS";1;1;"";Não permitido;string;;
 3_FAIXA 
 4_FAIXA";1;1;"";Não permitido;string;1_FAIXA;
 /data/fees/priorityServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
-/data/fees/priorityServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
+/data/fees/priorityServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/fees/priorityServices/prices/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/priorityServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/fees/priorityServices/minimum;minimum;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/fees/priorityServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
-/data/fees/priorityServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/fees/priorityServices/minimum/value;value;Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;4
+/data/fees/priorityServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/fees/priorityServices/maximum;maximum;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/fees/priorityServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;Opcional;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
-/data/fees/priorityServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Opcional;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/fees/priorityServices/maximum/value;value;Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência;Texto;12;Obrigatório;Opcional;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;4
+/data/fees/priorityServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Opcional;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/fees/otherServices;otherServices;Lista das Tarifas cobradas sobre outros Serviços, que não prioritários;Lista;;Opcional;Opcional;;;1;100;"";Não permitido;array;;
 /data/fees/otherServices/name;name;Nome do Serviço que incide sobre tipo de conta (Campo Livre);Texto;250;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Evento personalizado;
 /data/fees/otherServices/code;code;Siglas de identificação do Serviço (Campo Livre);Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;TALAO_DOMICILIO;
@@ -131,8 +131,8 @@ O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. 
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
-/data/fees/otherServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
+/data/fees/otherServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/fees/otherServices/prices/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/otherServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
@@ -141,15 +141,15 @@ devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pe
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Opcional;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
-/data/fees/otherServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Opcional;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Opcional;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;4
+/data/fees/otherServices/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Opcional;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/fees/otherServices/maximum;maximum;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/otherServices/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
-/data/fees/otherServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;4
+/data/fees/otherServices/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/serviceBundles;serviceBundles;"Lista dos pacotes de serviços de contas com serviços essenciais padronizados e regulados pela Resolução BC 3919, de 25/11/2010
 
 [Restrição]
@@ -184,7 +184,7 @@ O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
-/data/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/serviceBundles/prices/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
@@ -193,15 +193,15 @@ devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pe
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Opcional;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
-/data/serviceBundles/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Opcional;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Opcional;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;4
+/data/serviceBundles/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Opcional;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/serviceBundles/maximum;maximum;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/serviceBundles/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
-/data/serviceBundles/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;4
+/data/serviceBundles/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/openingClosingChannels;openingClosingChannels;Lista dos canais para aberturas e encerramento;Lista;;Obrigatório;Obrigatório;;"DEPENDENCIAS_PROPRIAS 
 CORRESPONDENTES_BANCARIOS 
 INTERNET_BANKING 
@@ -220,8 +220,8 @@ MOVIMENTACAO_CARTAO
 MOVIMENTACAO_PRESENCIAL";1;4;"";Não permitido;array;MOVIMENTACAO_CARTAO;
 /data/termsConditions;termsConditions;Objeto que reúne informações relativas a Termos e Condições para as modalidades tratadas;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/termsConditions/minimumBalance;minimumBalance;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/termsConditions/minimumBalance/value;value;Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas.;Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;200.00;
-/data/termsConditions/minimumBalance/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+/data/termsConditions/minimumBalance/value;value;Saldo mínimo exigido nos Termos e condições contratuais, que regem as contas comercializadas.;Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;200.00;4
+/data/termsConditions/minimumBalance/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/termsConditions/elegibilityCriteriaInfo;elegibilityCriteriaInfo;Critérios de qualificação do cliente com a finalidade de definir sua elegibilidade para a aquisição do tipo de conta. Campo Aberto;Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
 /data/termsConditions/closingProcessInfo;closingProcessInfo;Procedimentos de encerramento para o tipo de conta tratado. Possibilidade de inscrição da URL. Endereço eletrônico de acesso ao canal. p.ex. 'https://example.com/mobile-banking' ;Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;https://example.com/mobile-banking;
 /data/incomeRate;incomeRate;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
