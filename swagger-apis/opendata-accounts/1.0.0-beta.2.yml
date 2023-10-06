@@ -819,6 +819,9 @@ components:
       required:
         - value
         - currency
+      x-regulatory-required:
+        - value
+        - currency
       properties:
         value:
           type: string
@@ -879,6 +882,9 @@ components:
     PriorityServiceMaximumPrice:
       type: object
       required:
+        - value
+        - currency
+      x-regulatory-required:
         - value
         - currency
       properties:
