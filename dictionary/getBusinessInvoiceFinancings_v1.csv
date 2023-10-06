@@ -3,7 +3,7 @@
 /data/participant;participant;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca.;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;
 /data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa A1;
-/data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
+/data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;14
 /data/participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
 Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
 ";Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
@@ -29,8 +29,8 @@ Para melhor entendimento da regra de envio, verificar área do desenvolvedor na 
 /data/fees/services/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar).
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço. 
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
-/data/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
+/data/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/fees/services/prices/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
@@ -38,14 +38,14 @@ Observação: Para efeito de comparação de taxas dos produtos, as instituiçõ
 /data/fees/services/minimum/value;value;"Valor mínimo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;
-/data/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;1350.00;4
+/data/fees/services/minimum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/fees/services/maximum;maximum;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/fees/services/maximum/value;value;"Valor máximo apurado para a tarifa de serviços sobre a base de clientes no mês de referência.
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;
-/data/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;8800.00;4
+/data/fees/services/maximum/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/interestRates;interestRates;Lista que traz o conjunto de informações necessárias para demonstrar a distribuição de frequências das taxas de juros remuneratórios da Modalidade de crédito;Lista;;Obrigatório;Opcional;;;1;20;"";Não permitido;array;;
 /data/interestRates/referentialRateIndexer;referentialRateIndexer;Tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040;Texto;;Obrigatório;Obrigatório;;"SEM_INDEXADOR_TAXA 
 PRE_FIXADO 
