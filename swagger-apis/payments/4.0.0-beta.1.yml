@@ -451,6 +451,66 @@ paths:
       security:
         - OAuth2ClientCredentials:
             - payments
+  '/pix/payments/consents/{consentId}':
+    patch:
+      tags:
+        - Pagamentos
+      summary: Cancelar todos os pagamentos referentes ao mesmo Consentimento.
+      operationId: paymentsPatchPixPaymentsConsentId
+      description: |
+        Esse endpoint deve ser usado para cancelar, a pedido do cliente pagador, as transações que estejam em uma das seguintes situações: Agendada com sucesso (SCHD) ou retida para análise (PDNG).
+        O cancelamento de pagamentos agendados (SCHD) podem ser enviados até 23:59 (Horário de Brasília) do dia anterior à data de efetivação do pagamento. Todos os pagamentos vinculados a esse consentimento e previstos para ocorrer a partir do dia seguinte serão cancelados.
+        Os pagamentos já liquidados não são passíveis de cancelamento.
+        - Se não restar nenhum pagamento (ocorrência) que poderá ser cancelado, a requisição PATCH retorna HTTP Status 422 com o code PAGAMENTO_NAO_PERMITE_CANCELAMENTO.
+        - Caso receba um 422, a iniciadora deve fazer uma requisição GET no pagamento para verificar a situação atual dele, bem como detalhes associados.
+        - Caso o consentimento enviado pelo iniciador no path de requisição não exista na detentora de conta, a detentora deverá retornar código 404.
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/consentId'
+        - $ref: '#/components/parameters/XIdempotencyKey'
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: '#/components/schemas/PatchPixPayment'
+        description: Payload para cancelamento do pagamento.
+        required: true 
+      responses:
+        '200':
+          $ref: '#/components/responses/200PatchPixPayments'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityPixPayments'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          description: Erro inesperado.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseError'
+      security:
+        - OAuth2ClientCredentials:
+            - payments
 components:
   schemas:
     422ResponseErrorCreateConsent:
