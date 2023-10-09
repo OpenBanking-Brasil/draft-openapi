@@ -547,28 +547,28 @@ components:
                 type: string
                 maxLength: 255
                 pattern: '[\w\W\s]*'
-                example: Forma de pagamento inválida.
+                example: Data de pagamento inválida.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
-                  • NAO_INFORMADO: Não informado.   
+                   • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
+                   • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
+                   • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+                   • PARAMETRO_INVALIDO: Parâmetro inválido.  
+                   • ERRO_IDEMPOTENCIA: Erro idempotência.  
+                   • NAO_INFORMADO: Não informado.  
               detail:
                 type: string
                 maxLength: 2048
                 pattern: '[\w\W\s]*'
-                example: 'Forma de pagamento [Modalidade] não suportada.'
+                example: Data de pagamento inválida para a forma de pagamento selecionada.
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
-                  • PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
+                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.  
+                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.  
+                  • PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.  
+                  • PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.  
+                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).  
+                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateConsent:
@@ -2526,9 +2526,9 @@ components:
                       example: REVOGADO_RECEBEDOR
                       description: |
                         Define o código da razão pela qual o consentimento foi rejeitado
-                        • NAO_INFORMADO
-                        • REVOGADO_USUARIO
-                        • REVOGADO_RECEBEDOR
+                        • NAO_INFORMADO    
+                        • REVOGADO_USUARIO   
+                        • REVOGADO_RECEBEDOR   
                     detail:
                       type: string
                       pattern: '[\w\W\s]*'
