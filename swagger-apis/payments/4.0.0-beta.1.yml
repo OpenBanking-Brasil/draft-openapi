@@ -2700,6 +2700,7 @@ components:
           type: object
           required:
             - dates
+            - additionalInformation
           properties:
             dates:
               type: array
@@ -2710,6 +2711,14 @@ components:
                 pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
                 maxLength: 10
                 example: '2023-08-23'
+            additionalInformation:
+              type: string
+              description: |
+                Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. 
+                O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Todas quintas e domingos por 6 meses
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
