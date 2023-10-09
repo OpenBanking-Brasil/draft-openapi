@@ -395,16 +395,15 @@ paths:
       summary: Cancelar iniciação de pagamento.
       operationId: paymentsPatchPixPaymentsPaymentId
       description: |
-
-        Esse endpoint deve ser usado para cancelar, a pedido do cliente pagador, as transações que estejam em uma das seguintes situações: Agendada com sucesso (SCHD), retida para análise (PDNG) ou aguardando autorização de múltiplas alçadas (PATC).  
+        Esse endpoint deve ser usado para cancelar, a pedido do cliente pagador, as transações que estejam em uma das seguintes situações: Agendada com sucesso (SCHD) ou retida para análise (PDNG).
 
         - Caso a requisição seja bem sucedida, a transação vai para a situação CANC.
 
-        - Caso o status do pagamento seja diferente de SCHD/PDNG/PATC ou alguma outra regra de negócio impeça o cancelamento, a requisição PATCH retorna HTTP Status 422 com o code PAGAMENTO_NAO_PERMITE_CANCELAMENTO.
+        - Caso o status do pagamento seja diferente de SCHD/PDNG ou alguma outra regra de negócio impeça o cancelamento, a requisição PATCH retorna HTTP Status 422 com o code PAGAMENTO_NAO_PERMITE_CANCELAMENTO.
 
-        - Caso receba um 422, a iniciadora deve fazer uma requisição GET no pagamento para verificar a situação atual dele, bem como detalhes associados.  
+        - Caso receba um 422, a iniciadora deve fazer uma requisição GET no pagamento para verificar a situação atual dele, bem como detalhes associados.
 
-        O cancelamento de pagamento agendado (SCHD) pode ser enviado até 23:59 (Horário de Brasília) do dia anterior à data de efetivação do pagamento.  
+        O cancelamento de pagamento agendado (SCHD) pode ser enviado até 23:59 (Horário de Brasília) do dia anterior à data de efetivação do pagamento.
       parameters:
         - $ref: '#/components/parameters/paymentId'
         - $ref: '#/components/parameters/Authorization'
@@ -1270,7 +1269,6 @@ components:
       type: string
       enum:
         - RCVD
-        - PATC
         - CANC
         - ACCP
         - ACPD
@@ -1280,28 +1278,26 @@ components:
         - SCHD
       example: PDNG
       description: |
-        Estado atual da iniciação de pagamento. O estado evolui na seguinte ordem:  
+        Estado atual da iniciação de pagamento. O estado evolui na seguinte ordem:
 
         1.  RCVD (Received) - Indica que a requisição de pagamento foi recebida com sucesso pela detentora, mas ainda há validações a serem feitas antes de ser submetida para liquidação.
 
-        2.  PATC (Partially Accepted Technical Correct) - Indica que a transação precisa da confirmação de mais autorizadores para que o processamento do pagamento possa prosseguir.  
+        2.  CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
 
-        3.  CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
+        3.  ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
 
-        4.  ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
+        4.  ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
 
-        5.  ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
+        5.  RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
 
-        6.  RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
+        6.  ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
 
-        7.  ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
+        7.  PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
 
-        8.  PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
+        8.  SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.
 
-        9.  SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.
+        Em caso insucesso:
 
-        Em caso insucesso: 
-         
         RJCT (REJECTED) - Instrução de pagamento rejeitada.
     EnumPaymentType:
       type: string
