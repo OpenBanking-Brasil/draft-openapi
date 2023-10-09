@@ -168,9 +168,9 @@ devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pe
 /data/serviceBundles/services/chargingTriggerInfo;chargingTriggerInfo;"Fatos geradores de cobrança que incidem sobre serviço que compõe o Pacote de Serviços.
 ";Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Realização de pesquisa em serviços de proteção ao crédito, base de dados e informações cadastrais, e tratamento de dados e informações necessários ao início relacionamento decorrente da abertura de conta de depósitos à vista ou de poupança ou contratação de operação de crédito ou de arrendamento mercantil, não podendo ser cobrada cumulativamente;
 /data/serviceBundles/services/eventLimitQuantity;eventLimitQuantity;"Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços (Número de eventos incluídos no mês) p.ex.'2'. No caso de quantidade ilimitada, reportar 999999
-";Texto;6;Obrigatório;Obrigatório;^(\d{1,6}){1}$;;1;1;"";Não permitido;string;2;
+";Texto;6;Obrigatório;Obrigatório;^(\d{1,6}){1}$;;1;1;"";Não permitido;string;2;1
 /data/serviceBundles/services/freeEventQuantity;freeEventQuantity;"Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços com isenção de Tarifa.p.ex.'1'  No caso de quantidade ilimitada, reportar 999999
-";Texto;6;Obrigatório;Obrigatório;^(\d{1,6}){1}$;;1;1;"";Não permitido;string;1;
+";Texto;6;Obrigatório;Obrigatório;^(\d{1,6}){1}$;;1;1;"";Não permitido;string;1;1
 /data/serviceBundles/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;Opcional;;;4;4;"";Não permitido;array;;
 /data/serviceBundles/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
 ";Texto;;Obrigatório;Obrigatório;;"1_FAIXA 
@@ -183,7 +183,7 @@ O único separador presente deve ser o ''.'' (ponto) para indicar a casa decimal
 
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, 
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
-";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;
+";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
 /data/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
 /data/serviceBundles/prices/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.

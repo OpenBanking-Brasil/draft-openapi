@@ -508,15 +508,17 @@ components:
           example: Realização de pesquisa em serviços de proteção ao crédito, base de dados e informações cadastrais, e tratamento de dados e informações necessários ao início relacionamento decorrente da abertura de conta de depósitos à vista ou de poupança ou contratação de operação de crédito ou de arrendamento mercantil, não podendo ser cobrada cumulativamente
         eventLimitQuantity:
           type: string
-          maxLength: 6
           pattern: ^(\d{1,6}){1}$
+          minLength: 1
+          maxLength: 6
           description: |
             Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços (Número de eventos incluídos no mês) p.ex.'2'. No caso de quantidade ilimitada, reportar 999999
           example: '2'
         freeEventQuantity:
           type: string
-          maxLength: 6
           pattern: ^(\d{1,6}){1}$
+          minLength: 1
+          maxLength: 6
           description: |
             Segundo Resolução  4196, BCB, de 2013: Quantidade de eventos previstos no Pacote de Serviços com isenção de Tarifa.p.ex.'1'  No caso de quantidade ilimitada, reportar 999999
           example: '1'
@@ -800,6 +802,7 @@ components:
         monthlyFee:
           type: string
           pattern: '^(\d{1,9}\.\d{2}){1}$'
+          minLength: 4
           maxLength: 12
           x-cds-type: AmountString
           description: |
