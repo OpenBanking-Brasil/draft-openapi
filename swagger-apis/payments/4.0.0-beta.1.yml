@@ -494,8 +494,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityPixPayments'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -2742,6 +2740,7 @@ components:
       schema:
         type: string
         pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        minLength: 1
         maxLength: 256
     paymentId:
       name: paymentId
@@ -2760,6 +2759,7 @@ components:
       schema:
         type: string
         pattern: '[\w\W\s]*'
+        minLength: 1
         maxLength: 2048
     xCustomerUserAgent:
       name: x-customer-user-agent
@@ -2808,6 +2808,7 @@ components:
       required: true
       schema:
         type: string
+        minLength: 1
         maxLength: 40
         pattern: ^(?!\s)(.*)(\S)$
   securitySchemes:
