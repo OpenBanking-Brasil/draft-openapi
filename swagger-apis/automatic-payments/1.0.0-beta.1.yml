@@ -20,6 +20,10 @@ info:
     A implementação e o uso da API de Pagamentos Automáticos (Pix) devem seguir as regras do arranjo Pix do Banco Central, que podem ser encontradas no link abaixo:  
     [Banco Central do Brasil](https://www.bcb.gov.br/estabilidadefinanceira/pix?modalAberto=regulamentacao_pix)
 
+    ## Assinatura de payloads
+    No contexto da API de Pagamentos Automáticos, os payloads de mensagem que trafegam tanto por parte da instituição iniciadora de transação de pagamento quanto por parte da instituição detentora de conta devem estar assinados. 
+    Para o processo de assinatura destes payloads, as instituições devem seguir as especificações de segurança publicadas no Portal do desenvolvedor.
+
     ## Controle de acesso
     - Os endpoints de consulta de pagamentos GET /pix/recurring-payments/{recurringPaymentId} e GET /pix/recurring-payments devem suportar acesso a partir de access_token emitido por meio de um grant_type do tipo client credentials, como opção do uso do token vinculado ao consentimento (hybrid flow).
     - Para evitar vazamento de informação, a detentora deve validar que o pagamento consultado pertence ao ClientId que o criou e, caso haja divergências, retorne um erro HTTP 400.
@@ -3110,13 +3114,13 @@ components:
           schema:
             $ref: '#/components/schemas/422ResponseErrorCreateRecurringPaymentsPaymentId'
           examples:
-            Saldo insuficiente:
-              summary: Saldo insuficiente
+            Pagamento não permite cancelamento:
+              summary: Pagamento não permite cancelamento
               value:
                 errors:
-                  - code: SALDO_INSUFICIENTE
-                    title: Saldo insuficiente.
-                    detail: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                  - code: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                    title: O pagamento está com um status que não permite o cancelamento.
+                    detail: O pagamento está com um status que não permite o cancelamento.
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
     UnprocessableEntityPixPayments:
