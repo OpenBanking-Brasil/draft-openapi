@@ -312,3 +312,12 @@ TRAN";1;1;"";Não permitido;string;CACC;
 ";Não permitido;object;;
 /data/recurringConfiguration/recurringConfiguration/periodicLimits/year/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um ano.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;2;
 /data/recurringConfiguration/recurringConfiguration/periodicLimits/year/transactionLimit;transactionLimit;"Valor máximo a ser transacionado por um ano, a partir da data definida no campo ""/data/startDateTime"".";Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
+/data/ibgeTownCode;ibgeTownCode;"Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
+
+[Restrições]
+- Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+- Campo obrigatório quando o oneOfutilizado do recurringConfigurationfor “automatic”.
+";Texto;7;Condicional;^\d{7}$;;0;1;"
+- Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+- Campo obrigatório quando o oneOfutilizado do recurringConfigurationfor “automatic”.
+";Não permitido;string;5300108;7
