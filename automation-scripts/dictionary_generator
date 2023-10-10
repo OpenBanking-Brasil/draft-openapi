@@ -140,7 +140,13 @@ end
 
 def format_restriction(text)
   return '' if !text
-  return text.partition('[Restrição]').last
+  if text.include?('[Restrição]')
+    return text.partition('[Restrição]').last
+  elsif text.include?('[Restrições]')
+    return text.partition('[Restrições]').last
+  else
+    return ''
+  end
 end
 
 def format_definition(text)
