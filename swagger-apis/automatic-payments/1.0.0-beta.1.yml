@@ -17,6 +17,10 @@ info:
     - Credenciais: As credenciais (authorization_code) geradas na autorização do consentimento devem ser utilizadas para criação dos pagamentos subsequentes utilizando o mecanismo de refresh, caso necessário. Maiores informações através do link [[PT] Open Finance Brasil Financial-grade API Security Profile 1.0 Implementers Draft 3 - Área do Desenvolvedor -Open Finance Brasil - Área do Desenvolvedor (atlassian.net)](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/82051180/PT+Open+Finance+Brasil+Financial-grade+API+Security+Profile+1.0+Implementers+Draft+3#7.2.2.-Servidor-de-autorização)
 
     ## Regras do arranjo Pix
+    A implementação e o uso da API de Pagamentos Automáticos (Pix) devem seguir as regras do arranjo Pix do Banco Central, que podem ser encontradas no link abaixo:  
+    [Banco Central do Brasil](https://www.bcb.gov.br/estabilidadefinanceira/pix?modalAberto=regulamentacao_pix)
+
+    ## Assinatura de payloads
     No contexto da API de Pagamentos Automáticos, os payloads de mensagem que trafegam tanto por parte da instituição iniciadora de transação de pagamento quanto por parte da instituição detentora de conta devem estar assinados. 
     Para o processo de assinatura destes payloads, as instituições devem seguir as especificações de segurança publicadas no Portal do desenvolvedor.
 
@@ -117,13 +121,15 @@ info:
     email: gt-interfaces@openbankingbr.org
     url: 'https://openbanking-brasil.github.io/areadesenvolvedor/'
 servers:
-  - url: 'https://api.banco.com.br/open-banking/blablabla/v1'
+  - url: 'https://api.banco.com.br/open-banking/automatic-payments/v1'
     description: Servidor de Produção
-  - url: 'https://apih.banco.com.br/open-banking/blablabla/v1'
+  - url: 'https://apih.banco.com.br/open-banking/automatic-payments/v1'
     description: Servidor de Homologação
 tags:
   - name: Recurring Consents
+    description: Métodos para criação e gestão de consentimento
   - name: Recurring Payments
+    description: Métodos para criação e gestão de pagamentos
 paths:
   /recurring-consents:
     post:
@@ -148,7 +154,7 @@ paths:
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/RecurringConsentsConsentIdRead'
+          $ref: '#/components/responses/RecurringConsentsConsentId'
         '400':
           $ref: '#/components/responses/BadRequestPayments'
         '401':
@@ -255,7 +261,7 @@ paths:
         required: true
       responses:
         '200':
-          $ref: '#/components/responses/RecurringConsentsConsentIdRead'
+          $ref: '#/components/responses/RecurringConsentsConsentId'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -380,7 +386,7 @@ paths:
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityPixPayments'
+          $ref: '#/components/responses/UnprocessableEntityPixPayment'
         '423':
           $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
@@ -430,7 +436,7 @@ paths:
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityPixPayment'
+          $ref: '#/components/responses/UnprocessableEntityPixPayments'
         '423':
           $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
@@ -536,7 +542,7 @@ components:
                   - NAO_INFORMADO
                 example: DATA_PAGAMENTO_INVALIDA
                 description: |
-                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos: 
+                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:
                   - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
                   - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
                   - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
@@ -547,28 +553,28 @@ components:
                 type: string
                 maxLength: 255
                 pattern: '[\w\W\s]*'
-                example: Forma de pagamento inválida.
+                example: Data de pagamento inválida.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
-                  • NAO_INFORMADO: Não informado.   
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - NAO_INFORMADO: Não informado.
               detail:
                 type: string
                 maxLength: 2048
                 pattern: '[\w\W\s]*'
-                example: 'Forma de pagamento [Modalidade] não suportada.'
+                example: Data de pagamento inválida para a forma de pagamento selecionada.
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
-                  • PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.
+                  - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+                  - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateConsent:
@@ -599,42 +605,42 @@ components:
                   - NAO_INFORMADO
                 example: FORMA_PAGAMENTO_INVALIDA
                 description: |
-                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:  
-                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.  
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.  
-                  • NAO_INFORMADO: Não informado.   
+                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:
+                  - FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - NAO_INFORMADO: Não informado.
               title:
                 type: string
                 maxLength: 255
                 pattern: '[\w\W\s]*'
                 example: Forma de pagamento inválida.
                 description: |
-                  Título específico do erro reportado, de acordo com o código enviado:  
-                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.  
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.  
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.  
-                  • NAO_INFORMADO: Não informado.    
+                  Título específico do erro reportado, de acordo com o código enviado:
+                  - FORMA_PAGAMENTO_INVALIDA: Forma de pagamento inválida.
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - NAO_INFORMADO: Não informado.
               detail:
                 type: string
                 maxLength: 2048
                 pattern: '[\w\W\s]*'
                 example: 'Forma de pagamento [Modalidade] não suportada.'
                 description: |
-                  Descrição específica do erro de acordo com o código reportado:  
-                  • FORMA_PAGAMENTO_INVALIDA: Forma de pagamento [Modalidade] não suportada.  
-                  • DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.  
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.  
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.  
-                  • PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.  
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).  
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
+                  Descrição específica do erro de acordo com o código reportado:
+                  - FORMA_PAGAMENTO_INVALIDA: Forma de pagamento [Modalidade] não suportada.
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.
+                  - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+                  - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
@@ -673,34 +679,21 @@ components:
                 example: SALDO_INSUFICIENTE
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
+                  - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
+                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+                  - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
+                  - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido;
+                  - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida;
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - NAO_INFORMADO: Não informada pela detentora de conta.
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+                  - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
+                  - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
 
-                  • SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-
-                  • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-                  • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-                  • LIMITE_PERIODO_VALOR_EXCEDIDO: 
-
-                  • LIMITE_PERIODO_QUANTIDADE_EXCEDIDO:
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
-
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.
-
-                  • NAO_INFORMADO: Não informada pela detentora de conta.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-                  • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -708,32 +701,20 @@ components:
                 example: Saldo insuficiente.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • SALDO_INSUFICIENTE: Saldo insuficiente.
-
-                  • VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
-
-                  • VALOR_INVALIDO: Valor inválido.
-
-                  • COBRANCA_INVALIDA: Cobrança inválida.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido.
-
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
-
-                  • PARAMETRO_INVALIDO: Parâmetro com valor inválido.
-
-                  • NAO_INFORMADO: Não informado.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-                  • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - SALDO_INSUFICIENTE: Saldo insuficiente.
+                  - VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
+                  - VALOR_INVALIDO: Valor inválido.
+                  - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido;
+                  - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida;
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro com valor inválido.
+                  - NAO_INFORMADO: Não informado.
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+                  - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
+                  - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -741,32 +722,20 @@ components:
                 example: A conta selecionada não possui saldo suficiente para realizar o pagamento.
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
-
-                  • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-                  • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-                  • COBRANCA_INVALIDA: Validação de expiração, validação de vencimento ou Status Válido.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
-
-                  • PARAMETRO_NAO_INFORMADO: endToEndId
-
-                  • PARAMETRO_INVALIDO: endToEndId
-
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa].
-
-                  • PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002].
-
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+                  - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
+                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
+                  - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado;
+                  - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido;
+                  - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida;
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado);
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado;
+                  - PARAMETRO_INVALIDO: Parâmetro com valor inválido;
+                  - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
+                  - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio;
+                  - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
+                  - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key);
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateRecurringPaymentsPaymentId:
@@ -788,51 +757,13 @@ components:
               code:
                 type: string
                 enum:
-                  - SALDO_INSUFICIENTE
-                  - VALOR_ACIMA_LIMITE
-                  - VALOR_INVALIDO
-                  - COBRANCA_INVALIDA
-                  - CONSENTIMENTO_INVALIDO
-                  - PARAMETRO_NAO_INFORMADO
-                  - PARAMETRO_INVALIDO
-                  - NAO_INFORMADO
-                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
-                  - DETALHE_PAGAMENTO_INVALIDO
-                  - PAGAMENTO_RECUSADO_DETENTORA
-                  - PAGAMENTO_RECUSADO_SPI
-                  - ERRO_IDEMPOTENCIA
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
                   - CANCELAMENTO_FORA_PERIODO_PERMITIDO
-                example: SALDO_INSUFICIENTE
+                example: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
-
-                  • SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-
-                  • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-                  • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-                  • COBRANCA_INVALIDA: Validação de expiração, validação de vencimento, Status Válido.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
-
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-
-                  • PARAMETRO_INVALIDO: Parâmetro inválido.
-
-                  • NAO_INFORMADO: Não informada pela detentora de conta.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-                  • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
-
-                  • CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
               title:
                 type: string
                 maxLength: 255
@@ -840,34 +771,8 @@ components:
                 example: Saldo insuficiente.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • SALDO_INSUFICIENTE: Saldo insuficiente.
-
-                  • VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
-
-                  • VALOR_INVALIDO: Valor inválido.
-
-                  • COBRANCA_INVALIDA: Cobrança inválida.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido.
-
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
-
-                  • PARAMETRO_INVALIDO: Parâmetro com valor inválido.
-
-                  • NAO_INFORMADO: Não informado.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-                  • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
-
-                  • CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
               detail:
                 type: string
                 maxLength: 2048
@@ -875,34 +780,8 @@ components:
                 example: A conta selecionada não possui saldo suficiente para realizar o pagamento.
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
-
-                  • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-                  • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-                  • COBRANCA_INVALIDA: Validação de expiração, validação de vencimento ou Status Válido.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
-
-                  • PARAMETRO_NAO_INFORMADO: endToEndId
-
-                  • PARAMETRO_INVALIDO: endToEndId
-
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa].
-
-                  • PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002].
-
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
-
-                  • CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixPayments:
@@ -930,32 +809,19 @@ components:
                 example: Saldo insuficiente.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • SALDO_INSUFICIENTE: Saldo insuficiente.
-
-                  • VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
-
-                  • VALOR_INVALIDO: Valor inválido.
-
-                  • COBRANCA_INVALIDA: Cobrança inválida.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido.
-
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
-
-                  • PARAMETRO_INVALIDO: Parâmetro com valor inválido.
-
-                  • NAO_INFORMADO: Não informado.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-                  • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - SALDO_INSUFICIENTE: Saldo insuficiente.
+                  - VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
+                  - VALOR_INVALIDO: Valor inválido.
+                  - COBRANCA_INVALIDA: Cobrança inválida.
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro com valor inválido.
+                  - NAO_INFORMADO: Não informado.
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+                  - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
+                  - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -963,32 +829,19 @@ components:
                 example: A conta selecionada não possui saldo suficiente para realizar o pagamento.
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
-
-                  • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-                  • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-                  • COBRANCA_INVALIDA: Validação de expiração, validação de vencimento ou Status Válido.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
-
-                  • PARAMETRO_NAO_INFORMADO: endToEndId
-
-                  • PARAMETRO_INVALIDO: endToEndId
-
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa].
-
-                  • PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002].
-
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+                  - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+                  - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
+                  - COBRANCA_INVALIDA: Validação de expiração, validação de vencimento ou Status Válido.
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
+                  - PARAMETRO_NAO_INFORMADO: endToEndId
+                  - PARAMETRO_INVALIDO: endToEndId
+                  - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
+                  - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
+                  - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa].
+                  - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002].
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixPayment:
@@ -1016,8 +869,7 @@ components:
                 example: Pagamento não permite cancelamento.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
               detail:
                 type: string
                 maxLength: 2048
@@ -1025,8 +877,7 @@ components:
                 example: Pagamento não permite cancelamento.
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
         meta:
           $ref: '#/components/schemas/Meta'
     BusinessEntity:
@@ -1421,8 +1272,7 @@ components:
       example: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
       description: |
         Códigos de erros previstos na criação da iniciação de pagamento:
-
-        • PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
+        - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento
     EnumErrorsCreatePayment:
       type: string
       enum:
@@ -1442,32 +1292,19 @@ components:
       example: SALDO_INSUFICIENTE
       description: |
         Códigos de erros previstos na criação da iniciação de pagamento:
-
-        • SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-
-        • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-        • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-        • COBRANCA_INVALIDA: Validação de expiração, validação de vencimento, Status Válido.
-
-        • CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
-
-        • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-
-        • PARAMETRO_INVALIDO: Parâmetro inválido.
-
-        • NAO_INFORMADO: Não informada pela detentora de conta.
-
-        • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-        • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-        • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-        • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-        • ERRO_IDEMPOTENCIA: Erro idempotência.
+        - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
+        - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+        - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
+        - COBRANCA_INVALIDA: Validação de expiração, validação de vencimento, Status Válido.
+        - CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
+        - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+        - PARAMETRO_INVALIDO: Parâmetro inválido.
+        - NAO_INFORMADO: Não informada pela detentora de conta.
+        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
+        - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+        - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
+        - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
+        - ERRO_IDEMPOTENCIA: Erro idempotência.
     EnumPaymentCancellationStatusType:
       type: string
       enum:
@@ -1538,11 +1375,22 @@ components:
         - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
         - FALHA_INFRAESTRUTURA_DETENTORA
         - CONSENTIMENTO_INVALIDO
-
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
-        Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.  
+        Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.
+        - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
+        - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
+        - VALOR_INVALIDO: O valor enviado não é válido; 
+        - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
+        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
+        - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
+        - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
+        - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado);
+        - FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI);
+        - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP);
+        - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
+        - FALHA_INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos;
 
         [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -1700,6 +1548,14 @@ components:
           maxLength: 2048
           description: |
             Detalhe sobre o motivo de rejeição indicado no campo "/data/rejection/reason/code"
+            - NAO_INFORMADO: Não informada pela detentora de conta;
+            - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
+            - TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo;
+            - REJEITADO_USUARIO: O usuário rejeitou a autorização do consentimento;
+            - CONTAS_ORIGEM_DESTINO_IGUAIS: A conta selecionada é igual à conta destino e não permite realizar esse pagamento;
+            - CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
+            - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
+            - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido para permitir a realização de transações pelo cliente;
           example: O usuário rejeitou a autorização do consentimento 
     RejectionReason:
       type: object
@@ -2488,7 +2344,7 @@ components:
                       - DETENTORA
                     example: INICIADORA
                     description: |
-                      Quem iniciou a solicitação de revogação 
+                      Quem iniciou a solicitação de revogação  
                       - INICIADORA
                       - USUARIO
                       - DETENTORA
@@ -2499,9 +2355,9 @@ components:
                     - DETENTORA
                   example: DETENTORA
                   description: |
-                    Canal onde iniciou-se o processo de revogação 
-                    - INICIADORA
-                    - DETENTORA
+                    Canal onde iniciou-se o processo de revogação   
+                    - INICIADORA  
+                    - DETENTORA  
                 revokedAt:
                   type: string
                   format: date-time
@@ -2526,18 +2382,185 @@ components:
                       example: REVOGADO_RECEBEDOR
                       description: |
                         Define o código da razão pela qual o consentimento foi rejeitado
-                        • NAO_INFORMADO
-                        • REVOGADO_USUARIO
-                        • REVOGADO_RECEBEDOR
+                        - NAO_INFORMADO
+                        - REVOGADO_USUARIO
+                        - REVOGADO_RECEBEDOR
                     detail:
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 2048
                       description: |
                         Detalhe sobre o motivo de revogação indicado no campo "/data/rejection/reason/code".
+                        - NAO_INFORMADO: Não informada pela detentora de conta;
+                        - REVOGADO_USUARIO: O usuário pagador revogou a recorrência do consentimento;
+                        - REVOGADO_RECEBEDOR: O usuário recebedor revogou a recorrência do consentimento.
                       example: O usuário rejeitou a autorização do consentimento 
             recurringConfiguration:
               $ref: '#/components/schemas/RecurringConfiguration'
+        links:
+          $ref: '#/components/schemas/LinkSingle'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseRecurringConsentRead:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
+          required:
+            - recurringConsentId
+            - statusUpdateDateTime
+            - loggedUser
+            - businessEntity
+            - status
+            - creditors
+            - startDateTime
+            - creationDateTime
+            - expirationDateTime
+            - recurringConfiguration
+          properties:
+            recurringConsentId:
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 100
+              description: |
+                Identificador único do consentimento de longa duração criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:  
+                - o namespace(urn)  
+                - o identificador associado ao namespace da instituição transnmissora (bancoex)  
+                - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+            statusUpdateDateTime:
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: |
+                Data e hora em que o consentimento teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            status:
+              $ref: '#/components/schemas/EnumAuthorisationStatusType'
+            creditors:
+              $ref: '#/components/schemas/Creditors'
+            startDateTime:
+              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            creationDateTime:
+              description: Data e hora em que o consentimento foi criado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            expirationDateTime:
+              description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            additionalInformation:
+              description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional no consentimento
+              type: string
+              example: 'Minha recorrência'
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+            debtorAccount:
+              $ref: '#/components/schemas/ConsentsDebtorAccount'
+            rejection:
+              $ref: '#/components/schemas/Rejection'
+            revocation:
+              type: object
+              description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
+              required:
+                - revokedBy
+                - revokedFrom
+                - revokedAt
+              properties:
+                revokedBy:
+                    type: string
+                    enum:
+                      - INICIADORA
+                      - USUARIO
+                      - DETENTORA
+                    example: INICIADORA
+                    description: |
+                      Quem iniciou a solicitação de revogação  
+                      - INICIADORA
+                      - USUARIO
+                      - DETENTORA
+                revokedFrom:
+                  type: string
+                  enum:
+                    - INICIADORA
+                    - DETENTORA
+                  example: DETENTORA
+                  description: |
+                    Canal onde iniciou-se o processo de revogação   
+                    - INICIADORA  
+                    - DETENTORA  
+                revokedAt:
+                  type: string
+                  format: date-time
+                  example: '2021-05-21T08:30:00Z'
+                  pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                  maxLength: 20
+                  description: Data e hora em que o consentimento foi revogado 
+                reason:
+                  type: object
+                  description: |
+                    Informações sobre o motivo da revogado
+                  required:
+                    - code
+                    - detail
+                  properties:
+                    code:
+                      type: string
+                      enum:
+                        - NAO_INFORMADO
+                        - REVOGADO_USUARIO
+                        - REVOGADO_RECEBEDOR
+                      example: REVOGADO_RECEBEDOR
+                      description: |
+                        Define o código da razão pela qual o consentimento foi rejeitado
+                        - NAO_INFORMADO
+                        - REVOGADO_USUARIO
+                        - REVOGADO_RECEBEDOR
+                    detail:
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 2048
+                      description: |
+                        Detalhe sobre o motivo de revogação indicado no campo "/data/rejection/reason/code".
+                        - NAO_INFORMADO: Não informada pela detentora de conta;
+                        - REVOGADO_USUARIO: O usuário pagador revogou a recorrência do consentimento;
+                        - REVOGADO_RECEBEDOR: O usuário recebedor revogou a recorrência do consentimento.
+                      example: O usuário rejeitou a autorização do consentimento 
+            recurringConfiguration:
+              $ref: '#/components/schemas/RecurringConfiguration'
+            ibgeTownCode:
+              type: string
+              minLength: 7
+              maxLength: 7
+              pattern: '^\d{7}$'
+              example: '5300108'
+              description: |
+                Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
+                
+                [Restrições]
+                - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+                - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2922,7 +2945,7 @@ components:
         clientCredentials:
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            recurringPayments: Escopo necessário para acesso à API Payment Initiation.
+            recurringPayments: Escopo necessário para acesso à API Automatic Payments.
     OAuth2AuthorizationCode:
       type: oauth2
       description: Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.
@@ -2931,7 +2954,7 @@ components:
           authorizationUrl: 'https://authserver.example/token'
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            recurringPayments: Escopo necessário para acesso à API Payment Initiation.
+            recurringPayments: Escopo necessário para acesso à API Automatic Payments.
             openid: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
             'recurringConsent:recurringConsentId': Escopo contendo o identificador único do consentimento criado para a iniciação de pagamento solicitada
   responses:
@@ -3091,16 +3114,16 @@ components:
           schema:
             $ref: '#/components/schemas/422ResponseErrorCreateRecurringPaymentsPaymentId'
           examples:
-            Saldo insuficiente:
-              summary: Saldo insuficiente
+            Pagamento não permite cancelamento:
+              summary: Pagamento não permite cancelamento
               value:
                 errors:
-                  - code: SALDO_INSUFICIENTE
-                    title: Saldo insuficiente.
-                    detail: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                  - code: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                    title: O pagamento está com um status que não permite o cancelamento.
+                    detail: O pagamento está com um status que não permite o cancelamento.
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
-    UnprocessableEntityPixPayment:
+    UnprocessableEntityPixPayments:
       description: 'Seguir as orientações presentes na descrição da API, itens 2.2 e 2.3 e seus subitens.'
       content:
         application/jwt:
@@ -3162,7 +3185,7 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
-    UnprocessableEntityPixPayments:
+    UnprocessableEntityPixPayment:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
         application/jwt:
@@ -3197,6 +3220,18 @@ components:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
     RecurringConsentsConsentIdRead:
+      description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponseRecurringConsentRead'
+    RecurringConsentsConsentId:
       description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
       headers:
         x-fapi-interaction-id:

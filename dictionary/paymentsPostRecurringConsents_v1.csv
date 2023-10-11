@@ -106,31 +106,42 @@ CONTA_NAO_PERMITE_PAGAMENTO
 SALDO_INSUFICIENTE 
 VALOR_ACIMA_LIMITE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
 /data/rejection/reason/detail;detail;"Detalhe sobre o motivo de rejeição indicado no campo ""/data/rejection/reason/code""
+- NAO_INFORMADO: Não informada pela detentora de conta;
+- FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
+- TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo;
+- REJEITADO_USUARIO: O usuário rejeitou a autorização do consentimento;
+- CONTAS_ORIGEM_DESTINO_IGUAIS: A conta selecionada é igual à conta destino e não permite realizar esse pagamento;
+- CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
+- SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
+- VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido para permitir a realização de transações pelo cliente;
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;O usuário rejeitou a autorização do consentimento;
 /data/revocation;revocation;Objeto contendo as informações de revogação dos consentimentos de longa duração.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/revocation/revokedBy;revokedBy;"Quem iniciou a solicitação de revogação 
+/data/revocation/revokedBy;revokedBy;"Quem iniciou a solicitação de revogação  
 - INICIADORA
 - USUARIO
 - DETENTORA
 ";Texto;;Obrigatório;;"INICIADORA 
 USUARIO 
 DETENTORA";1;1;"";Não permitido;string;INICIADORA;
-/data/revocation/revokedFrom;revokedFrom;"Canal onde iniciou-se o processo de revogação 
-- INICIADORA
-- DETENTORA
+/data/revocation/revokedFrom;revokedFrom;"Canal onde iniciou-se o processo de revogação   
+- INICIADORA  
+- DETENTORA  
 ";Texto;;Obrigatório;;"INICIADORA 
 DETENTORA";1;1;"";Não permitido;string;DETENTORA;
 /data/revocation/revokedAt;revokedAt;Data e hora em que o consentimento foi revogado;Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
 /data/revocation/reason;reason;"Informações sobre o motivo da revogado
 ";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/revocation/reason/code;code;"Define o código da razão pela qual o consentimento foi rejeitado
-• NAO_INFORMADO
-• REVOGADO_USUARIO
-• REVOGADO_RECEBEDOR
+- NAO_INFORMADO
+- REVOGADO_USUARIO
+- REVOGADO_RECEBEDOR
 ";Texto;;Obrigatório;;"NAO_INFORMADO 
 REVOGADO_USUARIO 
 REVOGADO_RECEBEDOR";1;1;"";Não permitido;string;REVOGADO_RECEBEDOR;
 /data/revocation/reason/detail;detail;"Detalhe sobre o motivo de revogação indicado no campo ""/data/rejection/reason/code"".
+- NAO_INFORMADO: Não informada pela detentora de conta;
+- REVOGADO_USUARIO: O usuário pagador revogou a recorrência do consentimento;
+- REVOGADO_RECEBEDOR: O usuário recebedor revogou a recorrência do consentimento.
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;O usuário rejeitou a autorização do consentimento;
 /data/recurringConfiguration;recurringConfiguration;Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/recurringConfiguration;;Definição da configuração de recorrência para pagamentos automáticos;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
