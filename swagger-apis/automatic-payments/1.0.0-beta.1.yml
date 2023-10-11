@@ -403,7 +403,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResponseError'
       security:
-        - OAuth2AuthorizationCode:
+        - OAuth2ClientCredentials:
             - recurringPayments
   '/pix/recurring-payments/{recurringPaymentId}':
     get:
