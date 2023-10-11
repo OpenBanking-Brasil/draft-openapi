@@ -1266,6 +1266,8 @@ components:
           example: '1000.0400'
           description: |
             Valor original da garantia. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+
+            [Restrição] Nos casos em que warrantyType for igual a "GARANTIA_FIDEJUSSORIA“ pode ser enviado o valor 0.00.
     LoansBalloonPaymentAmount:
       type: object
       required:
