@@ -367,7 +367,6 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/recurringConsentId'
-        - $ref: '#/components/parameters/recurringPaymentId'
         - $ref: '#/components/parameters/startDate'
         - $ref: '#/components/parameters/endDate'
       responses:
@@ -2801,7 +2800,7 @@ components:
   parameters:
     recurringConsentId:
       name: recurringConsentId
-      in: header
+      in: query
       description: |
         O recurringConsentId é o identificador único do consentimento de longa duração e deverá ser um URN - Uniform Resource Name.  
         Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
@@ -2818,15 +2817,6 @@ components:
         pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
         minLength: 1
         maxLength: 256
-    recurringPaymentId:
-      name: recurringPaymentId
-      in: header
-      description: Identificador da operação de pagamento.
-      required: true
-      schema:
-        type: string
-        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-        maxLength: 100
     pathRecurringConsentId:
       name: recurringConsentId
       in: path
