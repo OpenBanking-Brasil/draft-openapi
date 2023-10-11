@@ -2,8 +2,8 @@
 info:
   title: API Financings - Open Finance Brasil
   description: |
-    API de informações de operações de financiamentos do Open Finance Brasil – Fase 2.
-    API que retorna informações de operações de crédito do tipo financiamento, mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação, modalidade, número do contrato, tarifas, prazo, prestações, pagamentos, amortizações, garantias, encargos e taxas de juros remuneratórios.\
+    API de informações de operações de financiamentos do Open Finance Brasil –Fase 2. 
+    API que retorna informações de operações de crédito do tipo financiamento, mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação, modalidade, número do contrato, tarifas, prazo, prestações, pagamentos (ao menos para os últimos 12 meses), amortizações, garantias, encargos e taxas de juros remuneratórios.\
     Não possui segregação entre pessoa natural e pessoa jurídica.\
     Requer consentimento do cliente para todos os `endpoints`.
 
@@ -1294,6 +1294,8 @@ components:
           example: '1000.0400'
           description: |
             Valor original da garantia. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+
+            [Restrição] Nos casos em que warrantyType for igual a "GARANTIA_FIDEJUSSORIA“ pode ser enviado o valor 0.00.
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
