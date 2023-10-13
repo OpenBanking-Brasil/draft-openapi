@@ -127,6 +127,7 @@ components:
         - 4_FAIXA
       description: |
         Faixas para cobrança da taxa efetiva aplicada pela contratação do crédito, no intervalo informado: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa. Segundo Normativa nº32 de 2020: 'Distribuição de frequência relativa dos valores de tarifas e taxas de juros cobrados dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana e o percentual de clientes em cada uma dessas faixas.
+      example: 4_FAIXA
     ResponseBusinessUnarrangedAccountOverdraft:
       type: object
       required:
@@ -199,17 +200,20 @@ components:
             - CONCESSAO_ADIANTAMENTO_DEPOSITANTE
           default: CONCESSAO_ADIANTAMENTO_DEPOSITANTE
           description: 'Nome da Tarifa cobrada sobre Serviço que incide sobre Adiantamento a depositante, para pessoa jurídica.'
+          example: CONCESSAO_ADIANTAMENTO_DEPOSITANTE
         code:
           type: string
           enum:
             - ADIANT_DEPOSITANTE
           default: ADIANT_DEPOSITANTE
           description: 'Sigla de identificação do serviço relacionado à Modalidade de Adiantamento a depositante, para pessoa jurídica.'
+          example: ADIANT_DEPOSITANTE
         chargingTriggerInfo:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: 'Fato gerador de cobrança que incide sobre a Modalidade de Adiantamento a depositante informada, para pessoa jurídica.'
+          example: Excesso no limite do cheque especial
         prices:
           type: array
           items:
@@ -291,6 +295,7 @@ components:
           pattern: '^\d{1}\.\d{6}$'
           minLength: 8
           maxLength: 8
+          example: '1.005343'
         maximumRate:
           type: string
           description: |
@@ -298,6 +303,7 @@ components:
           pattern: '^\d{1}\.\d{6}$'
           minLength: 8
           maxLength: 8
+          example: '3.005343'
       example:
           referentialRateIndexer: "SEM_INDEXADOR_TAXA"
           rate: "0.650000"
@@ -559,12 +565,14 @@ components:
           maxLength: 2000
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
         next:
           type: string
           minLength: 5
           maxLength: 2000
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/opendata-unarranged/v1/resource'
         last:
           type: string
           minLength: 5
