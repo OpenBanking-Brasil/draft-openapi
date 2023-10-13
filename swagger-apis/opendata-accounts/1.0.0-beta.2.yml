@@ -403,6 +403,7 @@ components:
     AccountPriorityServiceCode:
       type: string
       description: 'Lista das Siglas de identificação do Serviço Prioritário, segundo Resolução 3.919 do Bacen.'
+      example: TARIFA_PAGAMENTO_CONTAS
       enum:
         - CADASTRO
         - 2_VIA_CARTAO_DEBITO
@@ -532,6 +533,7 @@ components:
           type: string
           maxLength: 2000
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: Remuneração trimestral de x% + TR conforme determinação legal vigente​
           description: |
             Descrição da Remuneração especificamente para Conta de Poupança. Deve ser preenchido com a determinação legal vigente. 
             
@@ -965,12 +967,14 @@ components:
           maxLength: 2000
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
         next:
           type: string
           minLength: 5
           maxLength: 2000
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+          example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
         last:
           type: string
           minLength: 5
