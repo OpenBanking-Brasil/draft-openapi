@@ -604,32 +604,20 @@ components:
                 example: Saldo insuficiente.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • SALDO_INSUFICIENTE: Saldo insuficiente.
-
-                  • VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
-
-                  • VALOR_INVALIDO: Valor inválido.
-
-                  • COBRANCA_INVALIDA: Cobrança inválida.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido.
-
-                  • PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
-
-                  • PARAMETRO_INVALIDO: Parâmetro com valor inválido.
-
-                  • NAO_INFORMADO: Não informado.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-                  • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-                  • ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - SALDO_INSUFICIENTE: Saldo insuficiente.
+                  - VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
+                  - VALOR_INVALIDO: Valor inválido.
+                  - COBRANCA_INVALIDA: Cobrança inválida.
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro com valor inválido.
+                  - NAO_INFORMADO: Não informado.
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+                  - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
+                  - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - CONSENTIMENTO_PENDENTE_AUTORIZACAO: Consentimento pendente autorização de múltiplas alçadas (status “PARTIALLY_ACCEPTED”).
               detail:
                 type: string
                 maxLength: 2048
@@ -637,32 +625,20 @@ components:
                 example: A conta selecionada não possui saldo suficiente para realizar o pagamento.
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
-
-                  • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-                  • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-                  • COBRANCA_INVALIDA: Validação de expiração, validação de vencimento ou Status Válido.
-
-                  • CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
-
-                  • PARAMETRO_NAO_INFORMADO: endToEndId
-
-                  • PARAMETRO_INVALIDO: endToEndId
-
-                  • NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
-
-                  • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-                  • DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
-
-                  • PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa].
-
-                  • PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002].
-
-                  • ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+                  - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+                  - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
+                  - COBRANCA_INVALIDA: Validação de expiração, validação de vencimento ou Status Válido.
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
+                  - PARAMETRO_NAO_INFORMADO: endToEndId
+                  - PARAMETRO_INVALIDO: endToEndId
+                  - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
+                  - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
+                  - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa].
+                  - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002].
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+                  - CONSENTIMENTO_PENDENTE_AUTORIZACAO: Consentimento pendente autorização de múltiplas alçadas (status “PARTIALLY_ACCEPTED”).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixPayment:
@@ -1206,35 +1182,24 @@ components:
         - PAGAMENTO_RECUSADO_DETENTORA
         - PAGAMENTO_RECUSADO_SPI
         - ERRO_IDEMPOTENCIA
+        - CONSENTIMENTO_PENDENTE_AUTORIZACAO
       example: SALDO_INSUFICIENTE
       description: |
         Códigos de erros previstos na criação da iniciação de pagamento:
-
-        • SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-
-        • VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-
-        • VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-
-        • COBRANCA_INVALIDA: Validação de expiração, validação de vencimento, Status Válido.
-
-        • CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
-
-        • PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-
-        • PARAMETRO_INVALIDO: Parâmetro inválido.
-
-        • NAO_INFORMADO: Não informada pela detentora de conta.
-
-        • PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-
-        • DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-
-        • PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-
-        • PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-
-        • ERRO_IDEMPOTENCIA: Erro idempotência.
+        - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
+        - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+        - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
+        - COBRANCA_INVALIDA: Validação de expiração, validação de vencimento, Status Válido.
+        - CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
+        - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+        - PARAMETRO_INVALIDO: Parâmetro inválido.
+        - NAO_INFORMADO: Não informada pela detentora de conta.
+        - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
+        - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
+        - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
+        - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
+        - ERRO_IDEMPOTENCIA: Erro idempotência.
+        - CONSENTIMENTO_PENDENTE_AUTORIZACAO: Consentimento pendente autorização de múltiplas alçadas (status “PARTIALLY_ACCEPTED”)
     EnumLocalInstrument:
       type: string
       enum:
