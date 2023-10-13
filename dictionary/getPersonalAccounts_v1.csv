@@ -95,7 +95,7 @@ SAQUE_CARTAO_EXTERIOR
 AVALIACAO_EMERGENCIAL_CREDITO 
 EMISSAO_SEGUNDA_VIA 
 TARIFA_PAGAMENTO_CONTAS 
-SMS";1;1;"";Não permitido;string;;
+SMS";1;1;"";Não permitido;string;TARIFA_PAGAMENTO_CONTAS;
 /data/fees/priorityServices/chargingTriggerInfo;chargingTriggerInfo;Fatos geradores de cobrança que incidem sobre os serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.;Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Fornecimento de extrato com a movimentação de um período em guichê de caixa ou por outras formas de atendimento pessoal, tal como atendimento telefônico realizado por atendente.;
 /data/fees/priorityServices/prices;prices;Lista distribuição preços tarifas de serviços;Lista;;Obrigatório;Obrigatório;;;4;4;"";Não permitido;array;;
 /data/fees/priorityServices/prices/interval;interval;"Segundo Normativa nº 32, BCB, de 2020: Distribuição de frequência relativa dos valores de tarifas cobradas dos clientes, de que trata o § 2º do art. 3º da Circular nº 4.015, de 2020, deve dar-se com base em quatro faixas de igual tamanho, com explicitação dos valores sobre a mediana em cada uma dessas faixas. Informando: 1ª faixa, 2ª faixa, 3ª faixa e 4ª faixa
@@ -229,5 +229,5 @@ MOVIMENTACAO_PRESENCIAL";1;4;"";Não permitido;array;MOVIMENTACAO_CARTAO;
 
 [Restrição] Obrigatório quando ""type"" for igual ""CONTA_POUPANCA"".
 ";Texto;2000;Condicional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório quando ""type"" for igual ""CONTA_POUPANCA"".
-";Não permitido;string;;
+";Não permitido;string;Remuneração trimestral de x% + TR conforme determinação legal vigente​;
 /data/incomeRate/prepaidPaymentAccount;prepaidPaymentAccount;Campo Livre. Deve explicitar o Percentual em favor do titular da conta de pagamento pré-paga.;Texto;2000;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;40% Rendimento a.m.;
