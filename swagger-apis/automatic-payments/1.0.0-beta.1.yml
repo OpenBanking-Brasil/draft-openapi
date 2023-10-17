@@ -132,6 +132,17 @@ info:
     - Caso seja encontrado problema em qualquer uma das validações, deve ser retornado um erro no rejectionReason do API GET /pix/recurring-payments/{recurringPaymentId}
       - CODE: CHAVE_PIX_NAO_ELEGIVEL_SWEEPING 
       - Details: Chave pix não elegível a Sweeping
+
+    ## Validações antifraude do Sweeping accounts
+
+    - Afim de garantir a mesma titularidade e aumentar a segurança das transações do produto Sweeping Accounts, as validações abaixo devem ser realizadas pela detetora de conta e opcionalmente pela iniciadora.
+    - A detentora DEVE usar a API Consultar Vinculo ([DICT API](https://www.bcb.gov.br/content/estabilidadefinanceira/pix/API-DICT-2.0.0.html)) do arranjo Pix e validar no momento de transação ao menos os atributos abaixo mencionados:
+      - se o valor dos atributos de fraude abaixo são iguais a 0, de modo a evitar que contas criadas especificamente para uso indevido do Sweeping accounts impactem o ecossistema 
+        - OwnerStatistics.Spi.FraudMarkers.ApplicationFrauds.d90
+        - OwnerStatistics.Spi.FraudMarkers.MuleAccounts.d90
+        - OwnerStatistics.Spi.FraudMarkers.ScammerAccounts.d90
+        - OwnerStatistics.Spi.FraudMarkers.OtherFrauds.d90
+        - OwnerStatistics.Spi.FraudMarkers.UnknownFrauds.d90
   version: 1.0.0-beta.1
   license:
     name: Apache 2.0
