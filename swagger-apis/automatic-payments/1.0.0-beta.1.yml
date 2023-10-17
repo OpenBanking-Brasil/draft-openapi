@@ -1468,52 +1468,45 @@ components:
           $ref: '#/components/schemas/ConsentRejectionReason'
     ConsentRejection:
       type: object
-      description: |
-        Objeto contendo as informações de rejeição dos consentimentos. 
-      required:
-        - status
-        - rejectedBy
-        - rejectedFrom
-        - reason
       properties:
-        status:
-          type: string
-          enum:
-            - AWAITING_AUTHORISATION
-            - AUTHORISED
-            - REJECTED
-            - CONSUMED
-          example: AWAITING_AUTHORISATION
+        rejection:
+          type: object
           description: |
-            Status atual do consentimento recorrente de acordo com a máquina de estados
-            - AWAITING_AUTHORISATION
-            - AUTHORISED
-            - REJECTED
-            - CONSUMED
-        rejectedBy:
-          type: string
-          enum:
-            - INICIADORA
-            - USUARIO
-            - DETENTORA
-          example: INICIADORA
-          description: |
-            Quem iniciou a solicitação de rejeição
-            - INICIADORA
-            - USUARIO
-            - DETENTORA
-        rejectedFrom:
-          type: string
-          enum:
-            - INICIADORA
-            - DETENTORA
-          example: DETENTORA
-          description: |
-            Canal onde iniciou-se o processo de rejeição 
-            - INICIADORA
-            - DETENTORA
-        reason:
-          $ref: '#/components/schemas/ConsentRejectionReason'
+            Objeto contendo as informações de rejeição dos consentimentos. 
+          required:
+            - status
+            - rejectedBy
+            - rejectedFrom
+            - reason
+          properties:
+            status:
+              type: string
+              enum:
+                - REJECTED
+              example: REJECTED
+              description: |
+                Estado atual do consentimento de longa duração
+            rejectedBy:
+              type: string
+              enum:
+                - INICIADORA
+                - USUARIO
+                - DETENTORA
+              example: INICIADORA
+              description: |
+                Ator responsável pela solicitação rejeição
+            rejectedFrom:
+              type: string
+              enum:
+                - INICIADORA
+                - DETENTORA
+              example: DETENTORA
+              description: |
+                Canal onde iniciou-se o processo de rejeição 
+                - INICIADORA
+                - DETENTORA
+            reason:
+              $ref: '#/components/schemas/ConsentRejectionReason'
     ConsentRejectionReason:
       type: object
       description: |
@@ -1576,51 +1569,47 @@ components:
           description: Detalhe sobre o código identificador do motivo de rejeição.
     ConsentRevocation:
       type: object
-      description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
-      required:
-        - status
-        - revokedBy
-        - revokedFrom
-        - reason
       properties:
-        status:
-          type: string
-          enum:
-            - AWAITING_AUTHORISATION
-            - AUTHORISED
-            - REJECTED
-            - CONSUMED
-          example: AWAITING_AUTHORISATION
-          description: |
-            Status atual do consentimento recorrente de acordo com a máquina de estados
-            - AWAITING_AUTHORISATION
-            - AUTHORISED
-            - REJECTED
-            - CONSUMED
-        revokedBy:
-            type: string
-            enum:
-              - INICIADORA
-              - USUARIO
-              - DETENTORA
-            example: INICIADORA
-            description: |
-              Quem iniciou a solicitação de revogação 
-              - INICIADORA
-              - USUARIO
-              - DETENTORA
-        revokedFrom:
-          type: string
-          enum:
-            - INICIADORA
-            - DETENTORA
-          example: DETENTORA
-          description: |
-            Canal onde iniciou-se o processo de revogação 
-            - INICIADORA
-            - DETENTORA
-        reason:
-          $ref: '#/components/schemas/ConsentRevokedReason'
+        revocation:
+          type: object
+          description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
+          required:
+            - status
+            - revokedBy
+            - revokedFrom
+            - reason
+          properties:
+            status:
+              type: string
+              enum:
+                - REVOKED
+              example: REVOKED
+              description: |
+                Estado atual do consentimento de longa duração
+            revokedBy:
+                type: string
+                enum:
+                  - INICIADORA
+                  - USUARIO
+                  - DETENTORA
+                example: INICIADORA
+                description: |
+                  Quem iniciou a solicitação de revogação 
+                  - INICIADORA
+                  - USUARIO
+                  - DETENTORA
+            revokedFrom:
+              type: string
+              enum:
+                - INICIADORA
+                - DETENTORA
+              example: DETENTORA
+              description: |
+                Canal onde iniciou-se o processo de revogação 
+                - INICIADORA
+                - DETENTORA
+            reason:
+              $ref: '#/components/schemas/ConsentRevokedReason'
     ConsentRevokedReason:
       type: object
       description: |
@@ -2582,6 +2571,7 @@ components:
         - data
       properties:
         data:
+          description: Objeto contendo as informações de rejeição e revogação dos consentimentos
           oneOf:
             - $ref: '#/components/schemas/ConsentRevocation'
             - $ref: '#/components/schemas/ConsentRejection'
