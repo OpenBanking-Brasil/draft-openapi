@@ -235,7 +235,7 @@ paths:
         - $ref: '#/components/parameters/pathRecurringConsentId'
       responses:
         '200':
-          $ref: '#/components/responses/RecurringConsentsConsentIdRead'
+          $ref: '#/components/responses/RecurringConsentsConsentId'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -934,7 +934,10 @@ components:
           $ref: '#/components/schemas/Meta'
     BusinessEntity:
       type: object
-      description: 'Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).'
+      description: |
+        Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento.
+        
+        [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
       required:
         - document
       properties:
@@ -1004,12 +1007,10 @@ components:
             recurringConfiguration:
               type: object
               description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
-              properties:
-                recurringConfiguration:
-                  oneOf:
-                    - $ref: '#/components/schemas/Automatic'
-                    - $ref: '#/components/schemas/PostSweeping'
-                    - $ref: '#/components/schemas/Vrp'
+              oneOf:
+                - $ref: '#/components/schemas/Automatic'
+                - $ref: '#/components/schemas/PostSweeping'
+                - $ref: '#/components/schemas/Vrp'
     CreateRecurringPixPayment:
       type: object
       required:
@@ -1040,7 +1041,7 @@ components:
             seja um identificador de recurso persistente e independente da localização. 
             Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
             - o namespace(urn)
-            - o identificador associado ao namespace da instituição transnmissora (bancoex)
+            - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
         endToEndId:
@@ -1246,6 +1247,7 @@ components:
         Recebe os dados de conta do usuário recebedor. 
       required:
         - ispb
+        - issuer
         - number
         - accountType
       properties:
@@ -1279,7 +1281,7 @@ components:
             Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), 
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
-          $ref: '#/components/schemas/EnumAccountTypePayments'
+          $ref: '#/components/schemas/EnumAccountTypeConsents'
     CreditorAccount:
       type: object
       description: |
@@ -1328,6 +1330,7 @@ components:
         As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.
       required:
         - ispb
+        - issuer
         - number
         - accountType
       properties:
@@ -1401,8 +1404,7 @@ components:
           pattern: '^[0-9]{1,20}$'
           example: '1234567890'
           description: |
-            Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
-            se houver valor alfanumérico, este deve ser convertido para 0.
+            Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountTypeConsents'
         ibgeTownCode:
@@ -1412,7 +1414,7 @@ components:
           pattern: '^\d{7}$'
           example: '5300108'
           description: |
-            O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
+            O campo ibgeTownCode no arranjo Pix, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix, conforme segue:
             1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         overdraftLimit:
           type: boolean
@@ -1464,7 +1466,8 @@ components:
       description: |
         Tipos de contas usadas para pagamento. 
         Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
-        conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
+        conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
+        Segue descrição de cada valor do ENUM.
 
         - CACC - Current - Conta Corrente.
         - SVGS - Savings - Conta de Poupança.
@@ -1473,16 +1476,20 @@ components:
       type: string
       enum:
         - AWAITING_AUTHORISATION
+        - PARTIALLY_ACCEPTED
         - AUTHORISED
         - REJECTED
+        - REVOKED
         - CONSUMED
       example: AWAITING_AUTHORISATION
       description: |
         Status atual do consentimento recorrente de acordo com a máquina de estados
-        - AWAITING_AUTHORISATION
-        - AUTHORISED
-        - REJECTED
-        - CONSUMED
+        - AWAITING_AUTHORISATION - Aguardando autorização
+        - PARTIALLY_ACCEPTED - Parcialmente aceito
+        - AUTHORISED - Autorizado
+        - REJECTED - Rejeitado
+        - REVOKED - Revogado
+        - CONSUMED - Consumido
     EnumErrorsCreatePixPayment:
       type: string
       enum:
@@ -1735,7 +1742,7 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 2048
           description: |
-            Detalhe sobre o motivo de rejeição indicado no campo "/data/rejection/reason/code"
+            Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
             - NAO_INFORMADO: Não informada pela detentora de conta;
             - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
             - TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo;
@@ -1822,7 +1829,7 @@ components:
     ConsentRevokedReason:
       type: object
       description: |
-        Informações sobre o motivo da revogado
+        Informações sobre o motivo da revogação
       required:
         - code
         - detail
@@ -1844,8 +1851,10 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 2048
           description: |
-            Detalhe sobre o motivo de revogação indicado no campo "/data/rejection/reason/code".
-          example: O usuário rejeitou a autorização do consentimento 
+            Detalhe sobre o motivo de revogação indicado no campo `/data/revocation/reason/code`.
+            - NAO_INFORMADO: Não informada pela detentora de conta;
+            - REVOGADO_USUARIO: O usuário pagador revogou a recorrência do consentimento;
+            - REVOGADO_RECEBEDOR: O usuário recebedor revogou a recorrência do consentimento.
     RecurringConfiguration:
       type: object
       description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
@@ -1871,6 +1880,7 @@ components:
             contractId:
               type: string
               pattern: '^[a-zA-Z0-9]{1,35}$'
+              minLength: 1
               maxLength: 35
               example: XE00038166201907261559y6j6
               description: Identificador do contrato de transação
@@ -1911,7 +1921,7 @@ components:
               description: |
                 Dia fixo do mês que está prevista a transação.
 
-                [Restrição] Campo deve ser enviado quando o campo "/data/recurringConfiguration/automatic/period" for igual a MENSAL ou ANUAL.
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
             dayOfWeek:
               type: string
               enum:
@@ -1929,7 +1939,7 @@ components:
                 - QUINTA_FEIRA
                 - SEXTA_FEIRA
 
-                [Restrição] Campo deve ser enviado quando o campo "/data/recurringConfiguration/automatic/period" for igual a SEMANAL.
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
             month:
               type: string
               enum:
@@ -1961,7 +1971,7 @@ components:
                 - NOVEMBRO
                 - DEZEMBRO
 
-                [Restrição] Campo deve ser enviado quando o campo "/data/recurringConfiguration/automatic/period" for igual a ANUAL
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
             immediatePayment:
@@ -1978,7 +1988,7 @@ components:
           pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
           maxLength: 120
           example: Policarpo Quaresma
-          description: Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor. Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+          description: Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.
         document:
             type: object
             required:
@@ -2127,7 +2137,7 @@ components:
                 quantityLimit:
                   type: integer
                   example: 10
-                  description: Quantidade máxima de ocorrência  de pagamentos, apos atingir este valor, o consentimento deve ir para o status "CONSUMED"
+                  description: Quantidade máxima de ocorrência  de pagamentos, após atingir este valor, o consentimento deve ir para o status "CONSUMED"
                 transactionLimit:
                   type: string
                   pattern: '^((\d{1,16}\.\d{2}))$'
@@ -2218,7 +2228,7 @@ components:
           minLength: 4
           maxLength: 19
           example: '100000.12'
-          description: Valor máximo a ser transacionado por um ano, a partir da data definida no campo "/data/startDateTime".
+          description: Valor máximo a ser transacionado por um ano, a partir da data definida no campo `/data/startDateTime`.
     Creditors:
       type: array
       minItems: 1
@@ -2486,164 +2496,12 @@ components:
             recurringConsentId:
               type: string
               pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
-              maxLength: 100
-              description: |
-                Identificador único do consentimento de longa duração criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:  
-                - o namespace(urn)  
-                - o identificador associado ao namespace da instituição transnmissora (bancoex)  
-                - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141).
-            statusUpdateDateTime:
-              type: string
-              format: date-time
-              example: '2021-05-21T08:30:00Z'
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-              maxLength: 20
-              description: |
-                Data e hora em que o consentimento teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-            loggedUser:
-              $ref: '#/components/schemas/LoggedUser'
-            businessEntity:
-              $ref: '#/components/schemas/BusinessEntity'
-            status:
-              $ref: '#/components/schemas/EnumAuthorisationStatusType'
-            creditors:
-              $ref: '#/components/schemas/Creditors'
-            startDateTime:
-              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-              type: string
-              format: date-time
-              example: '2021-05-21T08:30:00Z'
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-              maxLength: 20
-            creationDateTime:
-              description: Data e hora em que o consentimento foi criado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-              type: string
-              format: date-time
-              example: '2021-05-21T08:30:00Z'
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-              maxLength: 20
-            expirationDateTime:
-              description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-              type: string
-              format: date-time
-              example: '2021-05-21T08:30:00Z'
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-              maxLength: 20
-            additionalInformation:
-              description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional no consentimento
-              type: string
-              example: 'Minha recorrência'
-              pattern: '[\w\W\s]*'
-              maxLength: 140
-            debtorAccount:
-              $ref: '#/components/schemas/ConsentsDebtorAccount'
-            rejection:
-              $ref: '#/components/schemas/Rejection'
-            revocation:
-              type: object
-              description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
-              required:
-                - revokedBy
-                - revokedFrom
-                - revokedAt
-              properties:
-                revokedBy:
-                    type: string
-                    enum:
-                      - INICIADORA
-                      - USUARIO
-                      - DETENTORA
-                    example: INICIADORA
-                    description: |
-                      Quem iniciou a solicitação de revogação  
-                      - INICIADORA
-                      - USUARIO
-                      - DETENTORA
-                revokedFrom:
-                  type: string
-                  enum:
-                    - INICIADORA
-                    - DETENTORA
-                  example: DETENTORA
-                  description: |
-                    Canal onde iniciou-se o processo de revogação   
-                    - INICIADORA  
-                    - DETENTORA  
-                revokedAt:
-                  type: string
-                  format: date-time
-                  example: '2021-05-21T08:30:00Z'
-                  pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-                  maxLength: 20
-                  description: Data e hora em que o consentimento foi revogado 
-                reason:
-                  type: object
-                  description: |
-                    Informações sobre o motivo da revogado
-                  required:
-                    - code
-                    - detail
-                  properties:
-                    code:
-                      type: string
-                      enum:
-                        - NAO_INFORMADO
-                        - REVOGADO_USUARIO
-                        - REVOGADO_RECEBEDOR
-                      example: REVOGADO_RECEBEDOR
-                      description: |
-                        Define o código da razão pela qual o consentimento foi rejeitado
-                        - NAO_INFORMADO
-                        - REVOGADO_USUARIO
-                        - REVOGADO_RECEBEDOR
-                    detail:
-                      type: string
-                      pattern: '[\w\W\s]*'
-                      maxLength: 2048
-                      description: |
-                        Detalhe sobre o motivo de revogação indicado no campo "/data/rejection/reason/code".
-                        - NAO_INFORMADO: Não informada pela detentora de conta;
-                        - REVOGADO_USUARIO: O usuário pagador revogou a recorrência do consentimento;
-                        - REVOGADO_RECEBEDOR: O usuário recebedor revogou a recorrência do consentimento.
-                      example: O usuário rejeitou a autorização do consentimento 
-            recurringConfiguration:
-              $ref: '#/components/schemas/RecurringConfiguration'
-        links:
-          $ref: '#/components/schemas/LinkSingle'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    ResponseRecurringConsentRead:
-      type: object
-      required:
-        - data
-        - links
-        - meta
-      properties:
-        data:
-          type: object
-          description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
-          required:
-            - recurringConsentId
-            - statusUpdateDateTime
-            - loggedUser
-            - businessEntity
-            - status
-            - creditors
-            - startDateTime
-            - creationDateTime
-            - expirationDateTime
-            - recurringConfiguration
-          properties:
-            recurringConsentId:
-              type: string
-              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
               maxLength: 256
               description: |
                 Identificador único do consentimento de longa duração criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:  
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para recurringConsentId temos:  
                 - o namespace(urn)  
-                - o identificador associado ao namespace da instituição transnmissora (bancoex)  
+                - o identificador associado ao namespace da instituição transmissora (bancoex)  
                 - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141).
             statusUpdateDateTime:
               type: string
@@ -2732,7 +2590,7 @@ components:
                 reason:
                   type: object
                   description: |
-                    Informações sobre o motivo da revogado
+                    Informações sobre o motivo da revogação
                   required:
                     - code
                     - detail
@@ -2745,13 +2603,13 @@ components:
                         - REVOGADO_RECEBEDOR
                       example: REVOGADO_RECEBEDOR
                       description: |
-                        Código indicador do motivo de revogado
+                        Código indicador do motivo da revogação
                     detail:
                       type: string
                       pattern: '[\w\W\s]*'
                       maxLength: 2048
                       description: |
-                        Detalhe sobre o motivo de revogação indicado no campo "/data/rejection/reason/code".
+                        Detalhe sobre o motivo de revogação indicado no campo `/data/revocation/reason/code`.
                         - NAO_INFORMADO: Não informada pela detentora de conta;
                         - REVOGADO_USUARIO: O usuário pagador revogou a recorrência do consentimento;
                         - REVOGADO_RECEBEDOR: O usuário recebedor revogou a recorrência do consentimento.
@@ -2845,7 +2703,7 @@ components:
               seja um identificador de recurso persistente e independente da localização.
               Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
               - o namespace(urn)
-              - o identificador associado ao namespace da instituição transnmissora (bancoex)
+              - o identificador associado ao namespace da instituição transmissora (bancoex)
               - o identificador específico dentro do namespace (C1DD33123).
               Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
           endToEndId:
@@ -3413,18 +3271,6 @@ components:
             Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
-    RecurringConsentsConsentIdRead:
-      description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
-      headers:
-        x-fapi-interaction-id:
-          description: |
-            Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
-      content:
-        application/jwt:
-          schema:
-            $ref: '#/components/schemas/ResponseRecurringConsentRead'
     RecurringConsentsConsentId:
       description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
       headers:
