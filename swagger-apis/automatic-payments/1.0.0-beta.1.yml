@@ -981,10 +981,10 @@ components:
           pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
           maxLength: 256
           description: |
-            Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
-            Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
-            Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
-            seja um identificador de recurso persistente e independente da localização.
+            Identificador único do consentimento de longa duração criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. 
+            Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
+            Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
+            seja um identificador de recurso persistente e independente da localização. 
             Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
             - o namespace(urn)
             - o identificador associado ao namespace da instituição transnmissora (bancoex)
@@ -1024,9 +1024,9 @@ components:
           pattern: '^\d{7}$'
           example: '5300108'
           description: |
-            O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
+            O campo ibgeTownCode no arranjo PIX tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX.
 
-            1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+            Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         authorisationFlow:
           type: string
           enum:
@@ -1077,11 +1077,11 @@ components:
             Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), 
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
-          $ref: '#/components/schemas/EnumAccountPaymentsType'
+          $ref: '#/components/schemas/EnumAccountTypePayments'
     CreditorAccount:
       type: object
       description: |
-        Recebe os dados de conta do usuário recebedor. 
+        Objeto que contém a identificação da conta de destino do beneficiário/recebedor. 
       required:
         - ispb
         - issuer
@@ -1115,10 +1115,10 @@ components:
           pattern: '^[0-9]{1,20}$'
           example: '1234567890'
           description: |
-            Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),  
+            Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
-          $ref: '#/components/schemas/EnumAccountPaymentsType'
+          $ref: '#/components/schemas/EnumAccountTypePayments'
     DebtorAccount:
       type: object
       description: |
@@ -1159,7 +1159,7 @@ components:
             Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
-          $ref: '#/components/schemas/EnumAccountPaymentsType'
+          $ref: '#/components/schemas/EnumAccountTypeConsents'
     ConsentsDebtorAccount:
       type: object
       description: |
@@ -1202,7 +1202,7 @@ components:
             Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
-          $ref: '#/components/schemas/EnumAccountPaymentsType'
+          $ref: '#/components/schemas/EnumAccountTypeConsents'
         ibgeTownCode:
           type: string
           minLength: 7
@@ -1234,7 +1234,9 @@ components:
       example: E9040088820210128000800123873170
       description: |
         Trata-se de um identificador único, gerado na instituição iniciadora de pagamento e recebido na instituição detentora de conta, permeando toda a jornada do pagamento Pix.
-    EnumAccountPaymentsType:
+
+        [Restrição] A detentora deve obrigatoriamente retornar o campo Com o mesmo valor recebido da iniciadora.
+    EnumAccountTypePayments:
       type: string
       enum:
         - CACC
@@ -1242,10 +1244,25 @@ components:
         - TRAN
       example: CACC
       description: |
-        Tipos de contas usadas para pagamento.
+        Tipos de contas usadas para pagamento via Pix.
+        Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,
+        conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
+        Segue descrição de cada valor do ENUM para o escopo do Pix.
+
+        - CACC - Current - Conta Corrente.
+        - SVGS - Savings - Conta de Poupança.
+        - TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+    EnumAccountTypeConsents:
+      type: string
+      enum:
+        - CACC
+        - SVGS
+        - TRAN
+      example: CACC
+      description: |
+        Tipos de contas usadas para pagamento. 
         Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
         conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-        Segue descrição de cada valor do ENUM.
 
         - CACC - Current - Conta Corrente.
         - SVGS - Savings - Conta de Poupança.

@@ -100,7 +100,7 @@ CONSENTIMENTO_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo /da
 ";Texto;3;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
 /data/remittanceInformation;remittanceInformation;"Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
 ";Texto;140;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Pagamento da nota RSTO035-002.;
-/data/creditorAccount;creditorAccount;"Recebe os dados de conta do usuário recebedor. 
+/data/creditorAccount;creditorAccount;"Objeto que contém a identificação da conta de destino do beneficiário/recebedor. 
 ";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/creditorAccount/ispb;ispb;"Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
 ";Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;12345678;8
@@ -111,13 +111,13 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
 ";Texto;4;Obrigatório;^[0-9]{1,4}$;;1;1;" Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
 ";Não permitido;string;1774;1
-/data/creditorAccount/number;number;"Deve ser preenchido com o número da conta do usuário recebedor, com dígito verificador (se este existir),  
+/data/creditorAccount/number;number;"Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
-/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
-Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
+/data/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento via Pix.
+Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas,
 conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-Segue descrição de cada valor do ENUM.
+Segue descrição de cada valor do ENUM para o escopo do Pix.
 
 - CACC - Current - Conta Corrente.
 - SVGS - Savings - Conta de Poupança.
@@ -140,10 +140,9 @@ no exercício de atividades da instituição, não podendo ser móvel ou transit
 /data/debtorAccount/number;number;"Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir),  
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
-/data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento.
+/data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento. 
 Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
 conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.
-Segue descrição de cada valor do ENUM.
 
 - CACC - Current - Conta Corrente.
 - SVGS - Savings - Conta de Poupança.
