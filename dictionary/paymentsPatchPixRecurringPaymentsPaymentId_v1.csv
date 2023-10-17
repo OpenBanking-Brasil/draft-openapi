@@ -20,11 +20,11 @@ Informações mais detalhadas sobre a construção de namespaces devem ser consu
 ";Não permitido;string;E9040088820210128000800123873170;32
 /data/date;date;Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).;Texto;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-10-10;
 /data/creationDateTime;creationDateTime;"Data e hora em que o recurso foi criado.
-Uma string com data e hora conforme especificação RFC-3339,
+Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339),
 sempre com a utilização de timezone UTC(UTC time format).
 ";Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
 /data/statusUpdateDateTime;statusUpdateDateTime;"Data e hora da última atualização da iniciação de pagamento.
-Uma string com data e hora conforme especificação RFC-3339,
+Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339),
 sempre com a utilização de timezone UTC(UTC time format).
 ";Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
 /data/ibgeTownCode;ibgeTownCode;"O campo ibgetowncode no arranjo PIX, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX, conforme segue:
@@ -177,7 +177,7 @@ INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
 DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
 ";Texto;;Obrigatório;;"INICIADORA 
 DETENTORA";1;1;"";Não permitido;string;INICIADORA;
-/data/cancellation/cancelledAt;cancelledAt;Data e hora que foi realizado o cancelamento, conforme especificação RFC-3339, formato UTC.;Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
+/data/cancellation/cancelledAt;cancelledAt;Data e hora que foi realizado o cancelamento, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.;Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
 /data/cancellation/cancelledBy;cancelledBy;Informação relacionada ao usuário pagador que solicitou o cancelamento do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/cancellation/cancelledBy/document;document;Objeto que consolida os dados do documento do usuário que solicitou o cancelamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/cancellation/cancelledBy/document/identification;identification;Número do documento do usuário pagador responsável pelo cancelamento do pagamento.;Texto;11;Obrigatório;^\d{11}$;;1;1;"";Não permitido;string;11111111111;
