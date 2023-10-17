@@ -1045,6 +1045,155 @@ components:
             Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
             
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+        riskSignals:
+          $ref: '#/components/schemas/RiskSignals'
+    RiskSignals:
+      type: object
+      description: |
+        Sinais de risco para iniciação de pagamentos automáticos
+
+        [Restrição] Deve ser enviado quando o consentimento for para o produto Sweeping Accounts (O objeto "/data/recurringConfiguration/sweeping" usado no oneOf)
+      properties:
+        manual:
+          type: object
+          required:
+            - deviceId
+            - isRootedDevice
+            - screenBrightness
+            - elapsedTimeSinceBoot
+            - osVersion
+            - userTimeZoneOffset
+            - language
+            - screenDimensions
+            - accountTenure
+          description: |
+            Representa a coleta de sinais de risco com a presença do usuário
+            
+            [Restrição] Obrigatório de ser enviado quando a transação ocorrer na presença do usuário
+          properties:
+            deviceId:
+              type: string
+              description: ID único do dispositivo gerado pela plataforma.
+              example: 00000000-54b3-e7c7-0000-000046bffd97
+            isRootedDevice:
+              type: boolean
+              description: Indica se o dispositivo atualmente está com permissão de “root”.
+              example: false
+            screenBrightness:
+              type: number
+              format: double
+              description: |
+                Indica o nível de brilho da tela do dispositivo.  
+                Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
+                Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+            elapsedTimeSinceBoot:
+              type: integer
+              format: int64
+              description: Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+            osVersion:
+              type: string
+              description: Versão do sistema operacional.
+            userTimeZoneOffset:
+              type: string
+              description: |
+                Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
+            language:
+              type: string
+              description: Indica o idioma do dispositivo no formato ISO 639-1.
+            screenDimensions:
+              type: object
+              description: Dimensões da tela do dispositivo
+              required:
+                - height
+                - width
+              properties:
+                height:
+                  type: integer
+                  description: Altura da tela, em pixels.
+                width:
+                  type: integer
+                  description: Largura da tela, em pixels.
+            accountTenure:
+              type: string
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+              description: Data de cadastro do cliente na iniciadora.
+            geolocation:
+              type: object
+              description: Dados de geolocalização do cliente enquanto logado na iniciadora
+              properties:
+                latitude:
+                  type: number
+                  format: double
+                  description: Coordenada latitudial do cliente enquanto logado na iniciadora
+                longitude:
+                  type: number
+                  format: double
+                  description: Coordenada longitudinal do cliente enquanto logado na iniciadora
+                type:
+                  type: string
+                  description: |
+                    Tipo de mecanismo utilizado na geração da geolocalização
+                  enum:
+                    - COARSE
+                    - FINE
+                    - INFERRED
+            isCallInProgress:
+              type: boolean
+              description: |
+                Indica chamada ativa no momento do vínculo.
+
+                [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
+            isDevModeEnabled:
+              type: boolean
+              description: Indica se o dispositivo está em modo de desenvolvedor.
+            isMockGPS:
+              type: boolean
+              description: Indica se o dispositivo está usando um GPS falso.
+            isEmulated:
+              type: boolean
+              description: Indica se o dispositivo é emulado ou real.
+            isMonkeyRunner:
+              type: boolean
+              description: Indica o uso do MonkeyRunner.
+            isCharging:
+              type: boolean
+              description: Indica se a bateria do dispositivo está sendo carregada.
+            antennaInformation:
+              type: string
+              description: Indica em qual antena o dispositivo está conectado.
+            isUsbConnected:
+              type: boolean
+              description: Indica se o dispositivo está conectado a outro dispositivo via USB.
+            integrity:
+              type: object
+              properties:
+                appRecognitionVerdict:
+                  type: string
+                  description: Informa a integridade do app
+                deviceRecognitionVerdict:
+                  type: string
+                  description: Informa a integridade do dispositivo
+        automatic:
+          type: object
+          required:
+            - lastLoginDateTime
+            - pixKeyRegistrationDateTime
+          description: |
+            Representa a coleta de sinais de risco com a presença do usuário
+
+            [Restrição] Obrigatório de ser enviado quando a transação não ocorrer na presença do usuário
+          properties:
+            lastLoginDateTime:
+              type: string
+              format: date-time
+              description: Data e hora do último login do cliente na iniciadora
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+            pixKeyRegistrationDateTime:
+              type: string
+              format: date-time
+              description: Data e hora de cadastro da chave Pix do recebedor na iniciadora
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
     PostCreditorAccount:
       type: object
       description: |
