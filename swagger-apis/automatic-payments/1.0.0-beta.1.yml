@@ -1468,24 +1468,25 @@ components:
           $ref: '#/components/schemas/ConsentRejectionReason'
     ConsentRejection:
       type: object
+      required:
+        - status
       properties:
+        status:
+          type: string
+          enum:
+            - REJECTED
+          example: REJECTED
+          description: |
+            Estado atual do consentimento de longa duração
         rejection:
           type: object
           description: |
             Objeto contendo as informações de rejeição dos consentimentos. 
           required:
-            - status
             - rejectedBy
             - rejectedFrom
             - reason
           properties:
-            status:
-              type: string
-              enum:
-                - REJECTED
-              example: REJECTED
-              description: |
-                Estado atual do consentimento de longa duração
             rejectedBy:
               type: string
               enum:
@@ -1569,23 +1570,24 @@ components:
           description: Detalhe sobre o código identificador do motivo de rejeição.
     ConsentRevocation:
       type: object
+      required:
+        - status
       properties:
+        status:
+          type: string
+          enum:
+            - REVOKED
+          example: REVOKED
+          description: |
+            Estado atual do consentimento de longa duração
         revocation:
           type: object
           description: Objeto contendo as informações de revogação dos consentimentos de longa duração.
           required:
-            - status
             - revokedBy
             - revokedFrom
             - reason
           properties:
-            status:
-              type: string
-              enum:
-                - REVOKED
-              example: REVOKED
-              description: |
-                Estado atual do consentimento de longa duração
             revokedBy:
                 type: string
                 enum:
