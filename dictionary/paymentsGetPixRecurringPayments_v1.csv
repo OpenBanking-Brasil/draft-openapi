@@ -19,59 +19,32 @@ Informações mais detalhadas sobre a construção de namespaces devem ser consu
 ";Texto;32;Obrigatório;^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$;;1;1;" A detentora deve obrigatoriamente retornar o campo Com o mesmo valor recebido da iniciadora.
 ";Não permitido;string;E9040088820210128000800123873170;32
 /data/date;date;Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).;Texto;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-10-10;
-/data/creationDateTime;creationDateTime;"Data e hora em que o recurso foi criado.
-Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339),
+/data/creationDateTime;creationDateTime;"Data e hora em que o pagamento foi criado. 
+Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
 sempre com a utilização de timezone UTC(UTC time format).
 ";Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
-/data/statusUpdateDateTime;statusUpdateDateTime;"Data e hora da última atualização da iniciação de pagamento.
-Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339),
+/data/statusUpdateDateTime;statusUpdateDateTime;"Data e hora em que o pagamento teve o status atualizado. 
+Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
 sempre com a utilização de timezone UTC(UTC time format).
 ";Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
-/data/status;status;"Estado atual da iniciação de pagamento. O estado evolui na seguinte ordem:  
-
-1.  RCVD (Received) - Indica que a requisição de pagamento foi recebida com sucesso pela detentora, mas ainda há validações a serem feitas antes de ser submetida para liquidação.
-
-2.  CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
-
-3.  ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
-
-4.  ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
-
-5.  RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
-
-6.  ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
-
-7.  PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
-
-8.  SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.
-
-Em caso insucesso: 
- 
-RJCT (REJECTED) - Instrução de pagamento rejeitada.
-";Texto;;Obrigatório;;"RCVD 
-CANC 
-ACCP 
-ACPD 
-RJCT 
-ACSC 
-PDNG 
-SCHD";1;1;"";Não permitido;string;PDNG;
+/data/status;status;"Estado atual do pagamento
+";Texto;;Obrigatório;;PDNG;1;1;"";Não permitido;string;PDNG;
 /data/rejectionReason;rejectionReason;"Objeto contendo o motivo de rejeição assíncrono
 ";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/rejectionReason/code;code;"Código identificador do motivo de rejeição.
 Motivo da rejeição do pagamento. Informações complementares sobre o motivo do status.
-- SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
-- VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
-- VALOR_INVALIDO: O valor enviado não é válido; 
-- NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
-- PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
-- PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
-- PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
-- CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de ""AUTHORISED"" ou está expirado);
-- FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI);
-- FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP);
-- FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
-- FALHA_INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos;
+- SALDO_INSUFICIENTE
+- VALOR_ACIMA_LIMITE
+- VALOR_INVALIDO
+- NAO_INFORMADO
+- PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+- PAGAMENTO_RECUSADO_DETENTORA
+- PAGAMENTO_RECUSADO_SPI
+- CONSENTIMENTO_INVALIDO
+- FALHA_INFRAESTRUTURA_SPI
+- FALHA_INFRAESTRUTURA_ICP
+- FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
+- FALHA_INFRAESTRUTURA_DETENTORA
 
 [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -87,8 +60,22 @@ FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
 FALHA_INFRAESTRUTURA_DETENTORA 
 CONSENTIMENTO_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
-/data/rejectionReason/detail;detail;Detalhe sobre o código identificador do motivo de rejeição.;Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
-/data/payment;payment;Objeto contendo dados do pagameto como moeda e valor.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
+
+- SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
+- VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
+- VALOR_INVALIDO: O valor enviado não é válido; 
+- NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
+- PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
+- PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
+- PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
+- CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de ""AUTHORISED"" ou está expirado);
+- FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI);
+- FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP);
+- FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
+- FALHA_INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos;
+";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
+/data/payment;payment;Objeto contendo as informações do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/payment/amount;amount;"Valor da transação com 2 casas decimais.
 ";Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
 /data/payment/currency;currency;"Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'. Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
