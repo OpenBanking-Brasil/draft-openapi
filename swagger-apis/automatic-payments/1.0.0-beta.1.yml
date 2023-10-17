@@ -119,6 +119,19 @@ info:
         &ensp;6.1.10 - Erro de infraestrutura na comunicação com o PSP do recebedor: Ocorreu uma falha de infraestrutura durante a comunicação com o PSP do recebedor (FALHA_INFRAESTRUTURA_PSP_RECEBEDOR);  
         &ensp;6.1.11 - Erro de infraestrutura interno na detentora: Ocorreu uma falha de infraestrutura interna na detentora durante o processamento do pagamento (FALHA_INFRAESTRUTURA_DETENTORA);  
         &ensp;6.1.12 - Status Consentimento: Valida se status de consentimento é diferente de “AUTHORISED” (CONSENTIMENTO_INVALIDO);  
+        &ensp;6.1.13 - Chave pix não elegível: A chave enviada pelo usuário não atende os critérios de elegibilidade para utilização (CHAVE_PIX_NAO_ELEGIVEL_SWEEPING);  
+
+    ## Validações para elegibilidade ao Sweeping accounts
+
+    Afim de garantir a mesma titularidade e aumentar a segurança das transações do produto Sweeping Accounts, as validações abaixo devem ser realizadas pela detetora de conta e opcionalmente pela iniciadora.
+
+    - A detentora DEVE usar a API Consultar Vinculo (link da API) do arranjo Pix e validar em momento de transação: 
+      - Se o valor do atributo `Entry.Owner.TaxIdNumber` pertence ao mesmo CPF/CNPJ (radical) informado no consentimento (recurring consents) 
+      - Se o valor do atributo `Entry.KeyOwnershipDate` é superior a 24h 
+      - Se o valor do atributo `Entry.Owner.Account`.OpeningDate é superior a 7 dias, de modo a evitar que contas criadas especificamente para uso indevido do sweeping accounts impactem o ecossistema ▪ 
+    - Caso seja encontrado problema em qualquer uma das validações, deve ser retornado um erro no rejectionReason do API GET /pix/recurring-payments/{recurringPaymentId}
+      - CODE: CHAVE_PIX_NAO_ELEGIVEL_SWEEPING 
+      - Details: Chave pix não elegível a Sweeping
   version: 1.0.0-beta.1
   license:
     name: Apache 2.0
