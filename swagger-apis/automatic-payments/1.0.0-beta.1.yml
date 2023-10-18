@@ -167,7 +167,7 @@ paths:
       tags:
         - Recurring Consents
       summary: Cria um consentimento para transações de pagamentos.
-      operationId: paymentsPostRecurringConsents
+      operationId: automaticPaymentsPostRecurringConsents
       description: Método para criação de consentimento de longa duração. Retorna um `recurringConsentId` no status AWAITING_AUTHORISATION.
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -224,7 +224,7 @@ paths:
       tags:
         - Recurring Consents
       summary: Busca informações de um consentimento.
-      operationId: paymentsGetRecurringConsentsConsentId
+      operationId: automaticPaymentsGetRecurringConsentsConsentId
       description: Método para buscar informações sobre um consentimento de longa duração.
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -273,7 +273,7 @@ paths:
       tags:
         - Recurring Consents
       summary: Revoga ou edita um consentimento.
-      operationId: paymentsPatchRecurringConsentsConsentId
+      operationId: automaticPaymentsPatchRecurringConsentsConsentId
       description: |
         Método para revogar ou editar um consentimento de longa duração:  
         1 - Informações sobre a revogação:
@@ -341,7 +341,7 @@ paths:
       tags:
         - Recurring Payments
       summary: Cria uma transação de pagamento.
-      operationId: paymentsPostPixRecurringPayments
+      operationId: automaticPaymentsPostPixRecurringPayments
       description: Método para criação de uma transação de pagamento. Retorna um recurringPaymentId.
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -400,7 +400,7 @@ paths:
       tags:
         - Recurring Payments
       summary: Busca informações de transações de pagamentos associadas a um consentimento.
-      operationId: paymentsGetPixRecurringPayments
+      operationId: automaticPaymentsGetPixRecurringPayments
       description: |
         Método para buscar informações sobre um conjunto de pagamentos associados ao mesmo recurringConsentId. 
         Também é possível enviar uma data de início (startDate) e final (endDate), caso a busca seja por transações em uma determinada janela de tempo.
@@ -454,7 +454,7 @@ paths:
       tags:
         - Recurring Payments
       summary: Busca informações de uma transação de pagamento.
-      operationId: paymentsGetPixRecurringPaymentsPaymentId
+      operationId: automaticPaymentsGetPixRecurringPaymentsPaymentId
       description: Método para buscar informações sobre um pagamento.
       parameters:
         - $ref: '#/components/parameters/Authorization'
@@ -503,7 +503,7 @@ paths:
       tags:
         - Recurring Payments
       summary: Atualização do Pagamento Recorrente.
-      operationId: paymentsPatchPixRecurringPaymentsPaymentId
+      operationId: automaticPaymentsPatchPixRecurringPaymentsPaymentId
       description: |
         Esse endpoint deve ser usado para cancelar as transações que estejam em uma das seguintes situações: 
         Agendada com sucesso (SCHD), retida para análise (PDNG). Caso a requisição seja bem sucedida, a transação vai para a situação CANC. 
