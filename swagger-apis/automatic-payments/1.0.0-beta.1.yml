@@ -508,8 +508,10 @@ paths:
       description: |
         Esse endpoint deve ser usado para cancelar as transações que estejam em uma das seguintes situações: 
         Agendada com sucesso (SCHD), retida para análise (PDNG). Caso a requisição seja bem sucedida, a transação vai para a situação CANC. 
+        
         Caso o status do pagamento seja diferente de SCHD/PDNG ou alguma outra regra de negócio impeça o cancelamento, a requisição PATCH retorna 
         HTTP Status 422 com o code PAGAMENTO_NAO_PERMITE_CANCELAMENTO. 
+        
         Caso receba um 422, a iniciadora deve fazer uma requisição GET no pagamento para verificar a situação atual dele, bem como detalhes associados. 
 
         [Restrição] Para o Pix Automático (“recurringConfiguration” igual a “automatic”) tanto o recebedor quanto o pagador poderão realizar o 
