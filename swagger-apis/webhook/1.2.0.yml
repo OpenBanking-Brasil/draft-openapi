@@ -20,7 +20,7 @@ servers:
   - url:  'https://apih.banco.com.br/open-banking/webhook/v1'
     description: Servidor de Homologação
 tags:
-  - name: Payments - Consents and PIX Payments
+  - name: Payments - Consents and Pix Payments
     description: Notificações de mudanças de estados de consentimentos e do pagamento.
   - name: No redirect - Enrollment Id Notification
     description: Notificações de mudanças de estados do vínculo de conta com a instituição.
@@ -29,7 +29,7 @@ paths:
   '/payments/{versionApi}/consents/{consentId}':
     post:
       tags:
-        - Payments - Consents and PIX Payments
+        - Payments - Consents and Pix Payments
       summary: Notificações de mudanças de estados de consentimentos da API de Iniciação de Pagamentos.
       operationId: consentNotification
       description: Notificações de mudanças de estados de consentimentos da API de Iniciação de Pagamentos.
@@ -50,7 +50,7 @@ paths:
   '/payments/{versionApi}/pix/payments/{paymentId}':
     post:
       tags:
-        - Payments - Consents and PIX Payments
+        - Payments - Consents and Pix Payments
       summary: 'Notificações de mudanças de estados do pagamento: Arranjo Pix da API de Iniciação de Pagamentos.'
       operationId: pixPaymentNotification
       description: 'Notificações de mudanças de estados do pagamento: Arranjo Pix da API de Iniciação de Pagamentos.'
