@@ -168,7 +168,7 @@ paths:
         - Recurring Consents
       summary: Cria um consentimento para transações de pagamentos.
       operationId: paymentsPostRecurringConsents
-      description: Método para criação de consentimento de longa duração. Retorna um recurringConsentId no status AWAITING_AUTHORISATION.
+      description: Método para criação de consentimento de longa duração. Retorna um `recurringConsentId` no status AWAITING_AUTHORISATION.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
@@ -728,24 +728,25 @@ components:
                   - PAGAMENTO_RECUSADO_DETENTORA
                   - PAGAMENTO_RECUSADO_SPI
                   - ERRO_IDEMPOTENCIA
+                  - COBRANCA_INVALIDO
                 example: SALDO_INSUFICIENTE
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
-                  - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
-                  - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
-                  - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido;
-                  - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida;
-                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
-                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-                  - PARAMETRO_INVALIDO: Parâmetro inválido.
-                  - NAO_INFORMADO: Não informada pela detentora de conta.
-                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
-                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-                  - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-                  - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-                  - ERRO_IDEMPOTENCIA: Erro idempotência.
-
+                  - SALDO_INSUFICIENTE
+                  - VALOR_ACIMA_LIMITE
+                  - VALOR_INVALIDO
+                  - LIMITE_PERIODO_VALOR_EXCEDIDO
+                  - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
+                  - CONSENTIMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - NAO_INFORMADO
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+                  - DETALHE_PAGAMENTO_INVALIDO
+                  - PAGAMENTO_RECUSADO_DETENTORA
+                  - PAGAMENTO_RECUSADO_SPI
+                  - ERRO_IDEMPOTENCIA
+                  - COBRANCA_INVALIDO
               title:
                 type: string
                 maxLength: 255
@@ -753,20 +754,21 @@ components:
                 example: Saldo insuficiente.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-                  - SALDO_INSUFICIENTE: Saldo insuficiente.
-                  - VALOR_ACIMA_LIMITE: Acima do limite estabelecido.
-                  - VALOR_INVALIDO: Valor inválido.
+                  - SALDO_INSUFICIENTE: Saldo insuficiente;
+                  - VALOR_ACIMA_LIMITE: Acima do limite estabelecido;
+                  - VALOR_INVALIDO: Valor inválido;
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido;
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida;
-                  - CONSENTIMENTO_INVALIDO: Consentimento inválido.
-                  - PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado.
-                  - PARAMETRO_INVALIDO: Parâmetro com valor inválido.
-                  - NAO_INFORMADO: Não informado.
-                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento.
-                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-                  - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
-                  - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
-                  - ERRO_IDEMPOTENCIA: Erro idempotência.
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido;
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro obrigatório não informado;
+                  - PARAMETRO_INVALIDO: Parâmetro com valor inválido;
+                  - NAO_INFORMADO: Não informado;
+                  - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Divergência entre pagamento e consentimento;
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido;
+                  - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta;
+                  - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI);
+                  - ERRO_IDEMPOTENCIA: Erro idempotência;
+                  - COBRANCA_INVALIDO: Validação de expiração, validação de vencimento ou Status Válido.
               detail:
                 type: string
                 maxLength: 2048
@@ -788,6 +790,7 @@ components:
                   - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
                   - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
                   - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key);
+                  - COBRANCA_INVALIDO: Validação de expiração, validação de vencimento ou Status Válido.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateRecurringPaymentsPaymentId:
@@ -814,8 +817,8 @@ components:
                 example: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO
               title:
                 type: string
                 maxLength: 255
@@ -824,7 +827,7 @@ components:
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
                   - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicite o cancelamento fora da janela de tempo permitido.
               detail:
                 type: string
                 maxLength: 2048
@@ -833,7 +836,7 @@ components:
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
                   - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: Pagamento fora do período permitido.
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicite o cancelamento fora da janela de tempo permitido.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixPayments:
@@ -1039,13 +1042,13 @@ components:
             Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
             Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
             seja um identificador de recurso persistente e independente da localização. 
-            Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+            Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:
             - o namespace(urn)
             - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
         endToEndId:
-          $ref: '#/components/schemas/EndToEndIdWithoutRestriction'
+          $ref: '#/components/schemas/EndToEndId'
         date:
           type: string
           format: date
@@ -1078,9 +1081,9 @@ components:
           pattern: '^\d{7}$'
           example: '5300108'
           description: |
-            O campo ibgeTownCode no arranjo PIX tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX.
+            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
 
-            Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+            Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         authorisationFlow:
           type: string
           enum:
@@ -1417,7 +1420,7 @@ components:
           example: '5300108'
           description: |
             O campo ibgeTownCode no arranjo Pix, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix, conforme segue:
-            1. Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         overdraftLimit:
           type: boolean
           example: true
@@ -1431,17 +1434,7 @@ components:
       description: |
         Trata-se de um identificador único, gerado na instituição iniciadora de pagamento e recebido na instituição detentora de conta, permeando toda a jornada do pagamento Pix.
 
-        [Restrição] A detentora deve obrigatoriamente retornar o campo Com o mesmo valor recebido da iniciadora.
-    EndToEndIdWithoutRestriction:
-      type: string
-      minLength: 32
-      maxLength: 32
-      pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
-      example: E9040088820210128000800123873170
-      description: |
-        Trata-se de um identificador único, gerado na instituição iniciadora de pagamento e recebido na instituição detentora de conta, permeando toda a jornada do pagamento Pix.
-
-        [Restrição] A detentora deve obrigatoriamente retornar o campo Com o mesmo valor recebido da iniciadora.
+        [Restrição] A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
     EnumAccountTypePayments:
       type: string
       enum:
@@ -1550,10 +1543,27 @@ components:
     EnumPaymentStatusType:
       type: string
       enum:
+        - RCVD
+        - CANC
+        - ACCP
+        - ACPD
+        - RJCT
+        - ACSC
         - PDNG
+        - SCHD
       example: PDNG
       description: |
-        Estado atual do pagamento
+        Estado atual do pagamento. O estado evolui na seguinte ordem:
+        - RCVD (Received) - Indica que a requisição de pagamento foi recebida com sucesso pela detentora, mas ainda há validações a serem feitas antes de ser submetida para liquidação.
+        - CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
+        - ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
+        - ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
+        - RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
+        - ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
+        - PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
+        - SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.  
+        Em caso insucesso:
+        - RJCT (REJECTED) - Instrução de pagamento rejeitada.
     EnumPaymentType:
       type: string
       enum:
@@ -1593,7 +1603,7 @@ components:
         - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
         - FALHA_INFRAESTRUTURA_DETENTORA
 
-        [Restrição] Esse motivo deverá ser enviado quando o campo /data/status for igual a RJCT (REJECTED).
+        [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
       type: string
       enum:
@@ -2102,7 +2112,7 @@ components:
               pattern: '^((\d{1,16}\.\d{2}))$'
               minLength: 4
               maxLength: 19
-              example: '100000.12'
+              example: '1000000.12'
               description: Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação variável, o qual poderá sofrer alterações durante a vida útil do consentimento.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
@@ -2501,7 +2511,7 @@ components:
               maxLength: 256
               description: |
                 Identificador único do consentimento de longa duração criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para recurringConsentId temos:  
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:  
                 - o namespace(urn)  
                 - o identificador associado ao namespace da instituição transmissora (bancoex)  
                 - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141).
@@ -2703,7 +2713,7 @@ components:
               Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
               Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
               seja um identificador de recurso persistente e independente da localização.
-              Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+              Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:
               - o namespace(urn)
               - o identificador associado ao namespace da instituição transmissora (bancoex)
               - o identificador específico dentro do namespace (C1DD33123).
@@ -2780,7 +2790,15 @@ components:
           pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
           example: 'urn:bancoex:C1DD33123'
           description: |
-            Identificador único do consentimento criado para a iniciação de pagamento solicitada.
+            Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+            Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+            Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+            seja um identificador de recurso persistente e independente da localização.
+            Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:
+            - o namespace(urn)
+            - o identificador associado ao namespace da instituição transmissora (bancoex)
+            - o identificador específico dentro do namespace (C1DD33123).
+            Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
         endToEndId:
           $ref: '#/components/schemas/EndToEndId'
         date:
@@ -2816,9 +2834,9 @@ components:
           pattern: '^\d{7}$'
           example: '5300108'
           description: |
-            O campo ibgeTownCode no arranjo PIX tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do PIX.
+            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
 
-            Caso a informação referente ao município não seja enviada; o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
           $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
@@ -2865,11 +2883,11 @@ components:
       name: recurringConsentId
       in: query
       description: |
-        O recurringConsentId é o identificador único do consentimento de longa duração e deverá ser um URN - Uniform Resource Name.  
+        O `recurringConsentId` é o identificador único do consentimento de longa duração e deverá ser um URN - Uniform Resource Name.  
         Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
         Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
         seja um identificador de recurso persistente e independe da localização.  
-        Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+        Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:
         - o namespace(urn)
         - o identificador associado ao namespace da instituição detentora (bancoex).
         - o identificador específico dentro do namespace (C1DD33123).  
@@ -2884,11 +2902,11 @@ components:
       name: recurringConsentId
       in: path
       description: |
-        O recurringConsentId é o identificador único do consentimento de longa duração e deverá ser um URN - Uniform Resource Name.  
+        O `recurringConsentId` é o identificador único do consentimento de longa duração e deverá ser um URN - Uniform Resource Name.  
         Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
         Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
         seja um identificador de recurso persistente e independe da localização.  
-        Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+        Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:
         - o namespace(urn)
         - o identificador associado ao namespace da instituição detentora (bancoex).
         - o identificador específico dentro do namespace (C1DD33123).  
