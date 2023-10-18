@@ -977,7 +977,6 @@ components:
             - creditors
             - startDateTime
             - expirationDateTime
-            - debtorAccount
             - recurringConfiguration
           properties:
             loggedUser:
@@ -1876,8 +1875,6 @@ components:
           description: Definição da configuração de recorrência para pagamentos automáticos
           required:
             - contractId
-            - amount
-            - transactionLimit
             - period
             - contractDebtor
           properties:
@@ -2765,7 +2762,6 @@ components:
         - cnpjInitiator
         - payment
         - creditorAccount
-        - debtorAccount
       properties:
         recurringPaymentId:
           type: string
