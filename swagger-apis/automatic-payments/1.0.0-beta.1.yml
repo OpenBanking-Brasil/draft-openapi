@@ -187,7 +187,7 @@ paths:
         '201':
           $ref: '#/components/responses/RecurringConsentsConsentId'
         '400':
-          $ref: '#/components/responses/BadRequestPayments'
+          $ref: '#/components/responses/BadRequestPaymentsConsents'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -595,45 +595,41 @@ components:
                   - PARAMETRO_INVALIDO
                   - ERRO_IDEMPOTENCIA
                   - NAO_INFORMADO
-                  - FUNCIONALIDADE_NAO_HABILITADA
                 example: DATA_PAGAMENTO_INVALIDA
                 description: |
-                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:
-                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
-                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
-                  - PARAMETRO_INVALIDO: Parâmetro inválido.
-                  - ERRO_IDEMPOTENCIA: Erro idempotência. 
-                  - NAO_INFORMADO: Não informado. 
-                  - FUNCIONALIDADE_NAO_HABILITADA: A detentora de conta não oferece o serviço nessa modalidade. 
+                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:   
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.  
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.  
+                  - NAO_INFORMADO: Não informado.   
               title:
                 type: string
                 maxLength: 255
-                pattern: '[\w\W\s]*'
-                example: Data de pagamento inválida.
+                pattern: '[\w\W\s]'
+                example: Forma de pagamento inválida.
                 description: |
-                  Título específico do erro reportado, de acordo com o código enviado:
-                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.
-                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
-                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
-                  - PARAMETRO_INVALIDO: Parâmetro inválido.
-                  - ERRO_IDEMPOTENCIA: Erro idempotência.
-                  - NAO_INFORMADO: Não informado.
-                  - FUNCIONALIDADE_NAO_HABILITADA: A detentora de conta não oferece o serviço nessa modalidade. 
+                  Título específico do erro reportado, de acordo com o código enviado:  
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
+                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.  
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.  
+                  - NAO_INFORMADO: Não informado.    
               detail:
                 type: string
                 maxLength: 2048
-                pattern: '[\w\W\s]*'
-                example: Data de pagamento inválida para a forma de pagamento selecionada.
+                pattern: '[\w\W\s]'
+                example: 'Data de pagamento inválida para a forma de pagamento selecionada.'
                 description: |
-                  Descrição específica do erro de acordo com o código reportado:
-                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.
-                  - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.
-                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
-                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
-                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
-                  - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
-                  - FUNCIONALIDADE_NAO_HABILITADA: A detentora de conta não oferece o serviço nessa modalidade. 
+                  Descrição específica do erro de acordo com o código reportado:  
+                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida para a forma de pagamento selecionada.  
+                  - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece às regras de negócio.  
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.  
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.  
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).  
+                  - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateConsent:
@@ -3058,6 +3054,18 @@ components:
             $ref: '#/components/schemas/XFapiInteractionId'
     BadRequestPayments:
       description: 'Seguir as orientações presentes na descrição da API, subitem 1.2.3'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+    BadRequestPaymentsConsents:
+      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL'
       content:
         application/json; charset=utf-8:
           schema:
