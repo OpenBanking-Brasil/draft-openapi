@@ -1264,6 +1264,10 @@ components:
               description: Indica se o dispositivo está conectado a outro dispositivo via USB.
             integrity:
               type: object
+              description: |
+                Informa a integridade do dispositivo e app.  
+                No Android, conforme documentação Play API Integrity - [Android](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
+                No iOS, conforme documentação App Attest [iOS](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity)
               properties:
                 appRecognitionVerdict:
                   type: string
