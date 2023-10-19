@@ -24,6 +24,8 @@ tags:
     description: Notificações de mudanças de estados de consentimentos e do pagamento.
   - name: No redirect - Enrollment Id Notification
     description: Notificações de mudanças de estados do vínculo de conta com a instituição.
+  - name: Automatic Payments - Consents and Pix Payments
+    description: Notificações de mudanças nas entidades de consentimentos de longa duração e do pagamento.
     
 paths:
   '/payments/{versionApi}/consents/{consentId}':
@@ -88,6 +90,48 @@ paths:
         required: true
       responses:
         '202':
+          $ref: '#/components/responses/202Webhook'
+  '/automatic-payments/{versionApi}/recurring-consents/{recurringConsentId}':
+    post:
+      tags:
+       - Automatic Payments - Consents and Pix Payments
+      summary: Notificações de mudanças nas entidades de consentimentos de longa duração e do pagamento. 
+      operationId: recurringConsentIdNotification
+      description: Notificações de mudanças nas entidades de consentimentos de longa duração e do pagamento.
+      parameters:
+        - $ref: '#/components/parameters/recurringConsentId'
+        - $ref: '#/components/parameters/versionApi'
+        - $ref: '#/components/parameters/xWebhookInteractionId'
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyWebhook'
+        description: Payload enviado para notificar a alteração no estado do vínculo.
+        required: true
+      responses:
+        '202': 
+          $ref: '#/components/responses/202Webhook'
+  '/automatic-payments/{versionApi}/pix/recurring-payments/{recurringPaymentId}':
+    post:
+      tags:
+       - Automatic Payments - Consents and Pix Payments
+      summary: Notificações de mudanças nas entidades de consentimentos de longa duração e do pagamento. 
+      operationId: recurringPaymentIdNotification
+      description: Notificações de mudanças nas entidades de consentimentos de longa duração e do pagamento.
+      parameters:
+        - $ref: '#/components/parameters/recurringPaymentId'
+        - $ref: '#/components/parameters/versionApi'
+        - $ref: '#/components/parameters/xWebhookInteractionId'
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestBodyWebhook'
+        description: Payload enviado para notificar a alteração no estado do vínculo.
+        required: true
+      responses:
+        '202': 
           $ref: '#/components/responses/202Webhook'
 components:
   schemas:
@@ -155,6 +199,31 @@ components:
       name: enrollmentId
       in: path
       description: Identificador único do vínculo de conta criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        maxLength: 100
+    recurringConsentId:
+      name: recurringConsentId
+      in: path
+      description: | 
+        O recurringConsentId é o identificador único do consentimento e deverá ser um URN - Uniform Resource Name.
+        Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
+        Considerando a string urn:bancoex:C1DD33123 como exemplo para recurringConsentIdtemos:
+
+        - o namespace(urn). 
+        - o identificador associado ao namespace da instituição transnmissora (bancoex). 
+        - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+      required: true
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        maxLength: 256
+    recurringPaymentId:
+      name: recurringConsentId
+      in: path
+      description: Identificador da operação de pagamento.
       required: true
       schema:
         type: string
