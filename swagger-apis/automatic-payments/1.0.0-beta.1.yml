@@ -361,7 +361,7 @@ paths:
         '201':
           $ref: '#/components/responses/200RecurringPaymentsIdRead'
         '400':
-          $ref: '#/components/responses/BadRequestPixPayments'
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -740,6 +740,8 @@ components:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
       type: object
+      required:
+        - errors
       properties:
         errors:
           type: array
@@ -849,27 +851,24 @@ components:
                   - CANCELAMENTO_FORA_PERIODO_PERMITIDO
                 example: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
                 description: |
-                  Códigos de erros previstos na criação da iniciação de pagamento:
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o pagamento fora da janela de tempo permitido
               title:
                 type: string
                 maxLength: 255
                 pattern: '[\w\W\s]*'
-                example: Saldo insuficiente.
+                example: Pagamento não permite cancelamento.
                 description: |
-                  Título específico do erro reportado, de acordo com o código enviado:
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicite o cancelamento fora da janela de tempo permitido.
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o pagamento fora da janela de tempo permitido
               detail:
                 type: string
                 maxLength: 2048
                 pattern: '[\w\W\s]*'
-                example: A conta selecionada não possui saldo suficiente para realizar o pagamento.
+                example: Pagamento não permite cancelamento.
                 description: |
-                  Descrição específica do erro de acordo com o código reportado:
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: O pagamento está com um status que não permite o cancelamento;
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicite o cancelamento fora da janela de tempo permitido.
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
+                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o pagamento fora da janela de tempo permitido
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixPayments:
@@ -3242,7 +3241,7 @@ components:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
     UnprocessableEntityRecurringPaymentsPaymentId:
-      description: 'Seguir as orientações presentes na descrição da API, itens 2.2 e 2.3 e seus subitens.'
+      description: Seguir as orientações presentes na descrição do endpoint
       content:
         application/jwt:
           schema:
@@ -3257,6 +3256,12 @@ components:
                     detail: O pagamento está com um status que não permite o cancelamento.
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     UnprocessableEntityPixPayments:
       description: 'Seguir as orientações presentes na descrição da API, itens 2.2 e 2.3 e seus subitens.'
       content:
