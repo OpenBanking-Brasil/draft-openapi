@@ -639,7 +639,7 @@ components:
         errors:
           type: array
           minItems: 1
-          maxItems: 9
+          maxItems: 3
           items:
             type: object
             required:
@@ -650,28 +650,33 @@ components:
               code:
                 type: string
                 enum:
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO
-                example: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                  - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO
+                  - CAMPO_NAO_PERMITIDO
+                example: CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO
                 description: |
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o pagamento fora da janela de tempo permitido
+                  Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:   
+                  - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO:  O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")    
+                  - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.  
               title:
                 type: string
                 maxLength: 255
                 pattern: '[\w\W\s]*'
-                example: Pagamento não permite cancelamento.
+                example: Forma de pagamento inválida.
                 description: |
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o pagamento fora da janela de tempo permitido
+                  Título específico do erro reportado, de acordo com o código enviado:  
+                  - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO:  O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED") 
+                  - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
               detail:
                 type: string
                 maxLength: 2048
                 pattern: '[\w\W\s]*'
-                example: Pagamento não permite cancelamento.
+                example: 'Data de pagamento inválida para a forma de pagamento selecionada.'
                 description: |
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
-                  - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o pagamento fora da janela de tempo permitido
+                  Descrição específica do erro de acordo com o código reportado:  
+                  - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO:  O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")   
+                  - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
+        meta:
+          $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateConsent:
       type: object
       required:
