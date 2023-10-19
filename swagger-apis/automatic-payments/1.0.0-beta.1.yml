@@ -594,15 +594,17 @@ components:
                   - PARAMETRO_INVALIDO
                   - ERRO_IDEMPOTENCIA
                   - NAO_INFORMADO
+                  - FUNCIONALIDADE_NAO_HABILITADA
                 example: DATA_PAGAMENTO_INVALIDA
                 description: |
                   Códigos de erros previstos na criação de consentimento para a iniciação de pagamentos:   
-                  - DATA_PAGAMENTO_INVALIDA: Data de pagamento inválida.  
-                  - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.  
-                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
-                  - PARAMETRO_INVALIDO: Parâmetro inválido.  
-                  - ERRO_IDEMPOTENCIA: Erro idempotência.  
-                  - NAO_INFORMADO: Não informado.   
+                  - DATA_PAGAMENTO_INVALIDA
+                  - DETALHE_PAGAMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                  - NAO_INFORMADO
+                  - FUNCIONALIDADE_NAO_HABILITADA
               title:
                 type: string
                 maxLength: 255
@@ -615,7 +617,8 @@ components:
                   - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.  
                   - PARAMETRO_INVALIDO: Parâmetro inválido.  
                   - ERRO_IDEMPOTENCIA: Erro idempotência.  
-                  - NAO_INFORMADO: Não informado.    
+                  - NAO_INFORMADO: Não informado.  
+                  - FUNCIONALIDADE_NAO_HABILITADA: A detentora de conta não oferece o serviço nessa modalidade  
               detail:
                 type: string
                 maxLength: 2048
@@ -629,6 +632,7 @@ components:
                   - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.  
                   - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).  
                   - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.  
+                  - FUNCIONALIDADE_NAO_HABILITADA: A detentora de conta não oferece o serviço nessa modalidade
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorRecurringConsents:
