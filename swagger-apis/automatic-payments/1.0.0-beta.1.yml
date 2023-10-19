@@ -200,8 +200,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableConsents'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -248,8 +246,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityConsents'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -313,8 +309,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityRecurringConsents'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -368,8 +362,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityPixRecurringPayment'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -422,8 +414,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityPixPayment'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -470,8 +460,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityPixPayments'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -536,8 +524,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityRecurringPaymentsPaymentId'
-        '423':
-          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -3306,12 +3292,6 @@ components:
             Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
-    LockedWithAdditionalProperties:
-      description: Locked
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseError'
     UnprocessableEntityPixPayment:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       content:
