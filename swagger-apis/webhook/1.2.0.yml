@@ -111,7 +111,7 @@ paths:
         required: true
       responses:
         '202': 
-          $ref: '#/components/responses/202Webhook'
+          $ref: '#/components/responses/202WebhookPayments'
   '/automatic-payments/{versionApi}/pix/recurring-payments/{recurringPaymentId}':
     post:
       tags:
@@ -132,7 +132,7 @@ paths:
         required: true
       responses:
         '202': 
-          $ref: '#/components/responses/202Webhook'
+          $ref: '#/components/responses/202WebhookPayments'
 components:
   schemas:
     RequestBodyWebhook:
@@ -158,6 +158,11 @@ components:
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
       maxLength: 100
       description: Identificador único recebido da detentora de conta na notificação enviada pelo Webhook.
+    xWebhookInteractionIdPayments:
+      type: string
+      pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+      maxLength: 100
+      description: Identificador único para cada tentativa de notificação realizada. O identificador deverá seguir o padrão UID RFC4122.
   parameters:
     consentId:
       name: consentId
@@ -221,7 +226,7 @@ components:
         pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
         maxLength: 256
     recurringPaymentId:
-      name: recurringConsentId
+      name: recurringPaymentId
       in: path
       description: Identificador da operação de pagamento.
       required: true
@@ -257,3 +262,10 @@ components:
           description: Identificador único recebido da detentora de conta na notificação enviada pelo Webhook.
           schema:
             $ref: '#/components/schemas/xWebhookInteractionId'
+    202WebhookPayments:
+      description: Requisição aceita para processamento posterior.
+      headers:
+        x-webhook-interaction-id:      
+          description: Identificador único para cada tentativa de notificação realizada. O identificador deverá seguir o padrão UID RFC4122.
+          schema:
+            $ref: '#/components/schemas/xWebhookInteractionIdPayments'
