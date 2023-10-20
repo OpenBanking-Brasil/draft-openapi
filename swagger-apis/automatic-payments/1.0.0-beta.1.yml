@@ -906,7 +906,7 @@ components:
         payment:
           $ref: '#/components/schemas/PaymentPix'
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccount'
+          $ref: '#/components/schemas/CreditorAccountPost'
         remittanceInformation:
           type: string
           maxLength: 140
@@ -1160,6 +1160,49 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountTypeConsents'
+    CreditorAccountPost:
+      type: object
+      description: |
+        Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
+
+        [Restrição] Se localInstrument for igual a MANU, o campo creditorAccount deve ser preenchido.
+      required:
+        - ispb
+        - issuer
+        - number
+        - accountType
+      properties:
+        ispb:
+          type: string
+          minLength: 8
+          maxLength: 8
+          pattern: '^[0-9]{8}$'
+          example: '12345678'
+          description: |
+            Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+        issuer:
+          type: string
+          minLength: 1
+          maxLength: 4
+          pattern: '^[0-9]{1,4}$'
+          example: '1774'
+          description: |
+            Código da Agência emissora da conta sem dígito. 
+            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+            
+            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+        number:
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: '^[0-9]{1,20}$'
+          example: '1234567890'
+          description: |
+            Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
+            se houver valor alfanumérico, este deve ser convertido para 0.
+        accountType:
+          $ref: '#/components/schemas/EnumAccountTypePayments'
     CreditorAccount:
       type: object
       description: |
@@ -2764,7 +2807,7 @@ components:
           description: |
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccount'
+          $ref: '#/components/schemas/CreditorAccountPost'
         debtorAccount:
             $ref: '#/components/schemas/DebtorAccount'
         cancellation:
