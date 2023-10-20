@@ -66,6 +66,7 @@ Motivo da rejeição do pagamento. Informações complementares sobre o motivo d
 - FALHA_INFRAESTRUTURA_ICP
 - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
 - FALHA_INFRAESTRUTURA_DETENTORA
+- TITULARIDADE_INCONSISTENTE
 
 [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -79,7 +80,8 @@ FALHA_INFRAESTRUTURA_SPI
 FALHA_INFRAESTRUTURA_ICP 
 FALHA_INFRAESTRUTURA_PSP_RECEBEDOR 
 FALHA_INFRAESTRUTURA_DETENTORA 
-CONSENTIMENTO_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
+CONSENTIMENTO_INVALIDO 
+TITULARIDADE_INCONSISTENTE";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
 
@@ -95,6 +97,7 @@ CONSENTIMENTO_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/d
 - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP);
 - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
 - FALHA_INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos;
+- TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/cnpjInitiator;cnpjInitiator;CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
 /data/payment;payment;Objeto contendo as informações do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
