@@ -132,6 +132,7 @@ info:
     - Caso seja encontrado problema em qualquer uma das validações, deve ser retornado um erro no rejectionReason do API GET /pix/recurring-payments/{recurringPaymentId}
       - CODE: CHAVE_PIX_NAO_ELEGIVEL_SWEEPING 
       - Details: Chave pix não elegível a Sweeping
+      - Titularidade inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE)
 
     ## Validações antifraude do Sweeping accounts
 
