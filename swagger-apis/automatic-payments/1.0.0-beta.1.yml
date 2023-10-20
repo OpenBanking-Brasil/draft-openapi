@@ -968,6 +968,14 @@ components:
             [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
           pattern: '[\w\W\s]*'
           example: '11221131242'
+        transactionIdentification:
+          type: string
+          pattern: ^[a-zA-Z0-9]{1,35}$
+          maxLength: 35
+          example: 'E00038166201907261559y6j6'
+          description: |
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            'z'Dígitos decimais, de '0' a '9'
     RiskSignals:
       type: object
       description: |
@@ -2711,6 +2719,14 @@ components:
             example: Pagamento da nota RSTO035-002.
             description: |
               Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+          transactionIdentification:
+            type: string
+            pattern: ^[a-zA-Z0-9]{1,35}$
+            maxLength: 35
+            example: 'E00038166201907261559y6j6'
+            description: |
+              Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+              'z'Dígitos decimais, de '0' a '9'
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -2850,6 +2866,14 @@ components:
             [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
           pattern: '[\w\W\s]*'
           example: '11221131242'
+        transactionIdentification:
+          type: string
+          pattern: ^[a-zA-Z0-9]{1,35}$
+          maxLength: 35
+          example: 'E00038166201907261559y6j6'
+          description: |
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            'z'Dígitos decimais, de '0' a '9'
     ResponseRecurringPaymentsData:
       type: object
       required:
@@ -2963,6 +2987,14 @@ components:
             Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
             
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+        transactionIdentification:
+          type: string
+          pattern: ^[a-zA-Z0-9]{1,35}$
+          maxLength: 35
+          example: 'E00038166201907261559y6j6'
+          description: |
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            'z'Dígitos decimais, de '0' a '9'
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
