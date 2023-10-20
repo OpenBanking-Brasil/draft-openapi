@@ -202,8 +202,10 @@ FIDO_FLOW";0;1;" Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não 
 /data/localInstrument;localInstrument;"Especifica a forma de iniciação do pagamento
 - MANU - Inserção manual de dados da conta transacional
 - DICT - Inserção manual de chave Pix
+- INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
 ";Texto;;Obrigatório;;"MANU 
-DICT";1;1;"";Não permitido;string;DICT;
+DICT 
+INIC";1;1;"";Não permitido;string;DICT;
 /data/proxy;proxy;"Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
 No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
 No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
