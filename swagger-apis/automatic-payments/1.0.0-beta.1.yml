@@ -374,6 +374,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResponseError'
       security:
+        - OAuth2AuthorizationCode:
+            - openid
+            - 'recurringConsent:recurringConsentId'
+            - recurringPayments
         - NonRedirectAuthorizationCode:
             - openid
             - recurringPayments
