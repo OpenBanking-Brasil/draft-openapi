@@ -877,6 +877,7 @@ components:
         - creditorAccount
         - cnpjInitiator
         - ibgeTownCode
+        - localInstrument
       properties:
         recurringConsentId:
           type: string
@@ -942,6 +943,16 @@ components:
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         riskSignals:
           $ref: '#/components/schemas/RiskSignals'
+        localInstrument:
+          type: string
+          description: |
+            Especifica a forma de iniciação do pagamento
+            - MANU - Inserção manual de dados da conta transacional
+            - DICT - Inserção manual de chave Pix
+          enum:
+            - MANU
+            - DICT
+          example: DICT
         proxy:
           type: string
           description: |
@@ -2669,6 +2680,7 @@ components:
         - cnpjInitiator
         - payment
         - creditorAccount
+        - localInstrument
       properties:
         recurringPaymentId:
           type: string
@@ -2768,6 +2780,16 @@ components:
             Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
             
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+        localInstrument:
+          type: string
+          description: |
+            Especifica a forma de iniciação do pagamento
+            - MANU - Inserção manual de dados da conta transacional
+            - DICT - Inserção manual de chave Pix
+          enum:
+            - MANU
+            - DICT
+          example: DICT
         proxy:
           type: string
           description: |
