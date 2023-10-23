@@ -114,6 +114,7 @@ components:
         data:
           type: array
           minItems: 1
+          description: Conjunto de informações referente ao produto de Contas
           items:
             $ref: '#/components/schemas/PersonalData'
         links:
@@ -137,6 +138,7 @@ components:
       properties:
         participant:
           type: object
+          description: Conjunto de informações relativas ao participante do Open Finance que oferta este produto
           required:
             - brand
             - name
@@ -554,6 +556,7 @@ components:
         data:
           type: array
           minItems: 1
+          description: 'Conjunto de informações referente ao produto de Contas'
           items:
             $ref: '#/components/schemas/BusinessData'
         links:
@@ -577,6 +580,7 @@ components:
       properties:
         participant:
           type: object
+          description: 'Conjunto de informações relativas ao participante do Open Finance que oferta este produto'
           required:
             - brand
             - name
@@ -905,6 +909,7 @@ components:
           $ref:  "#/components/schemas/Currency"
     Customer:
       type: object
+      description: Informações relevantes para o cliente
       required:
         - rate
       x-regulatory-required:
@@ -946,6 +951,7 @@ components:
       example: BRL
     Links:
       type: object
+      description: Referências para outros recursos da API requisitada
       properties:
         self:
           type: string
@@ -984,6 +990,7 @@ components:
           example: 'https://api.banco.com.br/open-banking/opendata-accounts/v1/resource'
     Meta:
       type: object
+      description: Meta informações referente à API requisitada
       properties:
         totalRecords:
           type: integer
