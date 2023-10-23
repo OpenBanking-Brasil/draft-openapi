@@ -1,6 +1,6 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;Conjunto de informações referente ao produto de Contas;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
-/data/participant;participant;Conjunto de informações relativas ao participante do Open Finance que oferta este produto;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data;data;Conjunto de informações referente ao produto Contas.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
+/data/participant;participant;Conjunto de informações relativas ao participante do Open Finance que oferta este produto.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;
 /data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa A1;
 /data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;14
@@ -14,7 +14,7 @@ Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'de
 ";Texto;;Obrigatório;Obrigatório;;"CONTA_DEPOSITO_A_VISTA 
 CONTA_POUPANCA 
 CONTA_PAGAMENTO_PRE_PAGA";1;1;"";Não permitido;string;CONTA_DEPOSITO_A_VISTA;
-/data/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data/fees;fees;Objeto que reúne informações de tarifas de serviços.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/fees/priorityServices;priorityServices;Lista das Tarifas cobradas sobre Serviços Prioritários;Lista;;Obrigatório;Opcional;;;1;40;"";Não permitido;array;;
 /data/fees/priorityServices/name;name;Nome dos Serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.;Texto;;Obrigatório;Obrigatório;;"CONFECCAO_CADASTRO_INICIO_RELACIONAMENTO 
 FORNECIMENTO_2_VIA_CARTAO_FUNCAO_DEBITO 
@@ -106,7 +106,7 @@ SMS";1;1;"";Não permitido;string;TARIFA_PAGAMENTO_CONTAS;
 /data/fees/priorityServices/prices/value;value;"Valor da mediana de cada faixa relativa ao serviço ofertado, informado no período, conforme Res nº 32 BCB, 2020. p.ex. '45.00' (representa um valor monetário. p.ex: 1547368.92. Este valor, considerando que a moeda seja BRL, significa R$ 1.547.368,92. O único separador presente deve ser o '.' (ponto) para indicar a casa decimal. Não deve haver separador de milhar)
 ";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
 /data/fees/priorityServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
-/data/fees/priorityServices/prices/customers;customers;Informações relevantes para o cliente;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/fees/priorityServices/prices/customers;customers;Informações relevantes para o cliente.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/priorityServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/fees/priorityServices/minimum;minimum;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -133,7 +133,7 @@ Observação: Para efeito de comparação de taxas dos produtos, as instituiçõ
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
 /data/fees/otherServices/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
-/data/fees/otherServices/prices/customers;customers;Informações relevantes para o cliente;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/fees/otherServices/prices/customers;customers;Informações relevantes para o cliente.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/otherServices/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/fees/otherServices/minimum;minimum;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -185,7 +185,7 @@ Observação: Para efeito de comparação de taxas dos produtos, as instituiçõ
 devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
 /data/serviceBundles/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
-/data/serviceBundles/prices/customers;customers;Informações relevantes para o cliente;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/serviceBundles/prices/customers;customers;Informações relevantes para o cliente.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/serviceBundles/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/serviceBundles/minimum;minimum;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
