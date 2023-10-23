@@ -27,6 +27,7 @@ Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentI
 - REJECTED - Rejeitado
 - REVOKED - Revogado
 - CONSUMED - Consumido
+- ERRO_IDEMPOTENCIA: Erro idempotência.
 ";Texto;;Obrigatório;;"AWAITING_AUTHORISATION 
 PARTIALLY_ACCEPTED 
 AUTHORISED 
@@ -154,8 +155,8 @@ REVOGADO_RECEBEDOR";1;1;"";Não permitido;string;REVOGADO_RECEBEDOR;
 /data/recurringConfiguration/recurringConfiguration;;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/recurringConfiguration/recurringConfiguration/automatic;automatic;Definição da configuração de recorrência para pagamentos automáticos;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/recurringConfiguration/recurringConfiguration/automatic/contractId;contractId;Identificador do contrato de transação;Texto;35;Obrigatório;^[a-zA-Z0-9]{1,35}$;;1;1;"";Não permitido;string;XE00038166201907261559y6j6;1
-/data/recurringConfiguration/recurringConfiguration/automatic/amount;amount;Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação fixo que não pode sofrer alterações durante a vida útil do consentimento.;Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
-/data/recurringConfiguration/recurringConfiguration/automatic/transactionLimit;transactionLimit;Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação variável poderá sofrer alterações durante a vida útil do consentimento;Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;1000000.12;4
+/data/recurringConfiguration/recurringConfiguration/automatic/amount;amount;Valor da transação com 2 casas decimais.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
+/data/recurringConfiguration/recurringConfiguration/automatic/transactionLimit;transactionLimit;Valor da transação com 2 casas decimais.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;1000000.12;4
 /data/recurringConfiguration/recurringConfiguration/automatic/period;period;"Define a periodicidade permitida para realização de transações
 - DIARIO
 - SEMANAL
@@ -256,9 +257,8 @@ Segue descrição de cada valor do ENUM.
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
 /data/recurringConfiguration/recurringConfiguration/sweeping;sweeping;Definição da configuração de recorrência para transferências automáticas de fundos.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/recurringConfiguration/recurringConfiguration/sweeping/amount;amount;"Valor da transação com 2 casas decimais.
-";Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
-/data/recurringConfiguration/recurringConfiguration/sweeping/transactionLimit;transactionLimit;Valor da transação com 2 casas decimais. Se enviado, subentende-se um valor de transação variável, o qual poderá sofrer alterações durante a vida útil do consentimento.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;1000000.12;4
+/data/recurringConfiguration/recurringConfiguration/sweeping/amount;amount;Valor da transação com 2 casas decimais.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
+/data/recurringConfiguration/recurringConfiguration/sweeping/transactionLimit;transactionLimit;Valor da transação com 2 casas decimais.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;1000000.12;4
 /data/recurringConfiguration/recurringConfiguration/sweeping/periodicLimits;periodicLimits;Limites transacionais por período determinado pelo usuário pagador.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/recurringConfiguration/recurringConfiguration/sweeping/periodicLimits/day;day;"Configurar limite transacional diário determinado pelo usuário pagador.
 
