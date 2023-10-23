@@ -247,6 +247,48 @@ oas['paths'].each_with_index do |(path, methods)|
         end
       end
     end
+          if oas['info'].to_s.include?('OpenData')
+            row = {
+              headersPeS['COLUMN_1']   => field['path'],
+              headersPeS['COLUMN_2']   => field['name'],
+              headersPeS['COLUMN_3']   => field['description'],
+              headersPeS['COLUMN_4']   => format_type(data_type),
+              headersPeS['COLUMN_5']   => field['maxLength'],
+              headersPeS['COLUMN_6']   => mandatory,
+              headersPeS['COLUMN_7']   => regulatoryMandatory,
+              headersPeS['COLUMN_8']   => field['pattern'],
+              headersPeS['COLUMN_9']   => format_enum(field['enum']),
+              headersPeS['COLUMN_10']  => min_items,
+              headersPeS['COLUMN_11']  => max_items,
+              headersPeS['COLUMN_12']  => restriction,
+              headersPeS['COLUMN_13']  => field['nullable'] ? "Permitido" : "Não permitido",
+              headersPeS['COLUMN_14']  => field['type'],
+              headersPeS['COLUMN_15']  => field['example'],
+              headersPeS['COLUMN_16']  => field['minLength']
+            }
+          else
+            row = {
+              headers['COLUMN_1']   => field['path'],
+              headers['COLUMN_2']   => field['name'],
+              headers['COLUMN_3']   => field['description'],
+              headers['COLUMN_4']   => format_type(data_type),
+              headers['COLUMN_5']   => field['maxLength'],
+              headers['COLUMN_6']   => mandatory,
+              headers['COLUMN_7']   => field['pattern'],
+              headers['COLUMN_8']   => format_enum(field['enum']),
+              headers['COLUMN_9']   => min_items,
+              headers['COLUMN_10']  => max_items,
+              headers['COLUMN_11']  => restriction,
+              headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
+              headers['COLUMN_13']  => field['type'],
+              headers['COLUMN_14']  => field['example'],
+              headers['COLUMN_15']  => field['minLength']
+            }
+          end
+          rows.push row
+        end
+      end
+    end
 
     version = "v" + oas['info']['version'].split(/\./, 3).first
     filename = output_path + spec['operationId'] + "_" + version + '.csv'
