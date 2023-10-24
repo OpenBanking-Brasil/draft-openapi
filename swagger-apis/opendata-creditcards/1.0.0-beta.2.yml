@@ -340,6 +340,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente ao produto Cartões de Crédito.
           minItems: 1
           items:
             $ref: '#/components/schemas/PersonalCreditCardData'
@@ -399,6 +400,7 @@ components:
           $ref: '#/components/schemas/CreditCardTermsConditions'
     Participant:
       type: object
+      description: Conjunto de informações relativas ao participante do Open Finance que oferta este produto.
       required:
         - brand
         - name
@@ -445,6 +447,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente ao produto Cartões de Crédito.
           minItems: 1
           items:
             $ref: '#/components/schemas/BusinessCreditCardData'
@@ -479,7 +482,7 @@ components:
           $ref: '#/components/schemas/CreditCardRewardsProgram'
         fees:
           type: object
-          description: Objeto que reúne informações de tarifas de serviços
+          description: Objeto que reúne informações de tarifas de serviços.
           properties:
             services:
               type: array
@@ -637,6 +640,7 @@ components:
           $ref:  "#/components/schemas/Currency"
     Customer:
       type: object
+      description: Informações relevantes para o cliente.
       required:
         - rate
       x-regulatory-required:
@@ -730,6 +734,7 @@ components:
       example: 'SEM_INDEXADOR_TAXA'
     Links:
       type: object
+      description: Referências para outros recursos da API requisitada.
       properties:
         self:
           type: string
@@ -768,6 +773,7 @@ components:
           example: 'https://api.banco.com.br/open-banking/opendata-creditcards/v1/resource'
     Meta:
       type: object
+      description: Meta informações referente à API requisitada.
       properties:
         totalRecords:
           type: integer
