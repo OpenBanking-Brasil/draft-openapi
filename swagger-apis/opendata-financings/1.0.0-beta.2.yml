@@ -171,6 +171,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente ao produto Financiamentos.
           minItems: 1
           items:
             $ref: '#/components/schemas/ResponsePersonalFinancingsData'
@@ -208,7 +209,7 @@ components:
           description: 'Modalidades de financiamentos ofertados para pessoas naturais, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido'
           example: FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES
         fees:
-          $ref: '#/components/schemas/PersonalFinancingFee'
+          $ref: '#/components/schemas/Fee'
         interestRates:
           type: array
           items:
@@ -230,6 +231,7 @@ components:
           example: 'https://empresaa1.com/personal_financing'
     Participant:
       type: object
+      description: Conjunto de informações relativas ao participante do Open Finance que oferta este produto.
       required:
         - brand
         - name
@@ -267,19 +269,6 @@ components:
             URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
             Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
           example: 'https://empresadaorganizacaoa.com/complementarylist'
-    PersonalFinancingFee:
-      type: object
-      properties:
-        services:
-          type: array
-          description: |
-            Lista das Tarifas cobradas sobre Serviço.
-
-            Para melhor entendimento da regra de envio, verificar área do desenvolvedor na página de Dados Abertos a seção: tabela verdade com instruções de envio de dados por Instituições.
-          items:
-            $ref: '#/components/schemas/FinancingService'
-          minItems: 1
-          maxItems: 20
     FinancingService:
       type: object
       required:
@@ -417,6 +406,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente ao produto Financiamentos.
           minItems: 1
           items:
             $ref: '#/components/schemas/BusinessFinancingData'
@@ -454,7 +444,7 @@ components:
           description: 'Modalidades de financiamentos ofertados para pessoas jurídicas, conforme Circular 4015-Bacen. Segundo cartilha do Bacen: Financiamento é um contrato entre o cliente e uma instituição financeira, mas com, destinação específica como para a aquisição de veículo ou de bem imóvel, que funcionam como garantia para o crédito concedido'
           example: FINANCIAMENTO_AQUISICAO_BENS_VEICULOS_AUTOMOTORES
         fees:
-          $ref: '#/components/schemas/BusinessFinancingFee'
+          $ref: '#/components/schemas/Fee'
         interestRates:
           type: array
           items:
@@ -474,9 +464,9 @@ components:
           maxLength: 2000
           description: Campo aberto para informar as condições contratuais relativas à Modalidade de Financiamentos para pessoa jurídica informada. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Endereço eletrônico de acesso ao canal.
           example: 'https://empresaa1.com/personal_financing'
-    BusinessFinancingFee:
+    Fee:
       type: object
-      description: Objeto que reúne informações de tarifas de serviços
+      description: Objeto que reúne informações de tarifas de serviços.
       properties:
         services:
           type: array
@@ -564,6 +554,7 @@ components:
           $ref:  "#/components/schemas/Currency"
     Customer:
       type: object
+      description: Informações relevantes para o cliente.
       required:
         - rate
       x-regulatory-required:
@@ -587,6 +578,7 @@ components:
       example: BRL
     Links:
       type: object
+      description: Referências para outros recursos da API requisitada.
       properties:
         self:
           type: string
@@ -625,6 +617,7 @@ components:
           example: 'https://api.banco.com.br/open-banking/opendata-financings/v1/resource'
     Meta:
       type: object
+      description: Meta informações referente à API requisitada.
       properties:
         totalRecords:
           type: integer
