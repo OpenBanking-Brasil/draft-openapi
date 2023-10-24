@@ -1,6 +1,6 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
-/data/participant;participant;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
+/data;data;Conjunto de informações referente ao produto Cartões de Crédito.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
+/data/participant;participant;Conjunto de informações relativas ao participante do Open Finance que oferta este produto.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da Marca selecionada pelas Organizações;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;
 /data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pela modalidade de Empréstimos. p.ex.'Empresa da Organização A';Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa A1;
 /data/participant/cnpjNumber;cnpjNumber;CNPJ;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;14
@@ -54,7 +54,7 @@ OUTRAS";1;1;"";Não permitido;string;MASTERCARD;
 /data/rewardsProgram;rewardsProgram;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/rewardsProgram/hasRewardProgram;hasRewardProgram;Indicador da existência de programa de fidelidade/recompensa associado à conta de pagamento pós-paga (cartão) true false;Booleano;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;boolean;false;
 /data/rewardsProgram/rewardProgramInfo;rewardProgramInfo;Informações de termos e condições do programa de fidelidade/recompensa. Pode ser informada a URL referente ao endereço onde constam as condições informadas. Será de preenchimento obrigatório caso o campo hasRewardProgram esteja preenchido como true;Texto;2000;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresaa1.com/credit_cards_rewards;
-/data/fees;fees;Objeto que reúne informações de tarifas de serviços;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data/fees;fees;Objeto que reúne informações de tarifas de serviços.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/fees/services;services;"Lista das Tarifas cobradas sobre Serviço.
 
 Para melhor entendimento da regra de envio, verificar área do desenvolvedor na página de Dados Abertos a seção: tabela verdade com instruções de envio de dados por Instituições.
@@ -89,7 +89,7 @@ SMS";1;1;"";Não permitido;string;ANUIDADE_NACIONAL;
 Observação: Para efeito de comparação de taxas dos produtos, as instituições participantes, quando não cobram tarifas, devem enviar o valor 0.00 sinalizando que para aquela taxa não há cobrança pelo serviço.
 ";Texto;12;Obrigatório;Obrigatório;^(\d{1,9}\.\d{2}){1}$;;1;1;"";Não permitido;string;2000.00;4
 /data/fees/services/prices/currency;currency;Moeda referente ao valor mínimo da Tarifa, segundo modelo ISO-4217;Texto;3;Obrigatório;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
-/data/fees/services/prices/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/fees/services/prices/customers;customers;Informações relevantes para o cliente.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/fees/services/prices/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/fees/services/minimum;minimum;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
@@ -137,7 +137,7 @@ OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 /data/interest/rates/applications/indexer;indexer;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/interest/rates/applications/indexer/rate;rate;"Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
 ";Texto;8;Opcional;Obrigatório;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.870000;8
-/data/interest/rates/applications/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/interest/rates/applications/customers;customers;Informações relevantes para o cliente.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/interest/rates/applications/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/interest/rates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.045600;8
@@ -174,7 +174,7 @@ OUTROS_INDEXADORES";1;1;"";Não permitido;string;SEM_INDEXADOR_TAXA;
 /data/interest/instalmentRates/applications/indexer;indexer;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/interest/instalmentRates/applications/indexer/rate;rate;"Percentual que corresponde a mediana da taxa efetiva cobrada do cliente pela contratação do crédito, no intervalo informado. p.ex. '0,8700%'. A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%)
 ";Texto;8;Opcional;Obrigatório;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.870000;8
-/data/interest/instalmentRates/applications/customers;customers;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/interest/instalmentRates/applications/customers;customers;Informações relevantes para o cliente.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/interest/instalmentRates/applications/customers/rate;rate;"Percentual de clientes em cada faixa.
 ";Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.150000;8
 /data/interest/instalmentRates/minimumRate;minimumRate;Percentual mínimo cobrado (taxa efetiva) no mês de referência, para o Financiamento contratado  A apuração pode acontecer com até 4 casas decimais. O preenchimento deve respeitar as 4 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%);Texto;8;Obrigatório;Obrigatório;^\d{1}\.\d{6}$;;1;1;"";Não permitido;string;0.045600;8
