@@ -100,8 +100,10 @@ info:
     Ou seja, não é possível utilizar o endpoint `POST /consents/{consentId}/extends` para consentimentos nesses estados (status REJECTED). 
     A transmissora deve retornar status de erro 422 (`ESTADO_CONSENTIMENTO_INVALIDO`) para requisições que não seguem essa definição.
     - A renovação de consentimento (`POST /consents/{consentId}/extends`) deve ser possível por apenas um cliente logado. 
-    Não deve ser possível quando o consentimento foi criado demandando aprovações por múltiplas alçadas. 
-    A transmissora deve retornar status de erro 422 (`DEPENDE_MULTIPLA_ALCADA`) para requisições que não seguem essa definição.
+    Isso implica que qualquer usuário (`loggedUser`) com permissão para o consentimento associado deve ser capaz de finalizar o fluxo de renovação sem redirecionamento.  
+    A transmissora deve retornar status de erro 422 (DEPENDE_MULTIPLA_ALCADA) para requisições que necessitam de múltipla alçada.  
+    Para consentimentos Pessoa Natural apenas o loggedUser criador do consentimento consegue renovar sem redirecionamento (`POST /consents/{consentId}/extends`).
+    A transmissora deve retornar status de erro 403 para requisições que não seguem essa definição.
     - A renovação de consentimento (`POST /consents/{consentId}/extends`) deve ser possível para consentimento para o qual foi emitido um refresh token opaco. 
     Não deve ser possível quando o consentimento está vinculado a um refresh token do tipo JWT (com prazo não prorrogável). 
     A transmissora deve retornar status de erro 422 (`REFRESH_TOKEN_JWT`) para requisições que não seguem essa definição.
