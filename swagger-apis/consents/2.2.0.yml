@@ -345,7 +345,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CreateConsentExtends'
-        description: Payload para criação do consentimento.
+        description: Payload para renovação do consentimento.
         required: true
       responses:
         '201':
@@ -1402,7 +1402,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseConsent'
     201ConsentsCreatedExtends:
-      description: Consentimento criado com sucesso.
+      description: Renovação do consentimento finalizada com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1436,7 +1436,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseConsentRead'
     200ConsentsConsentIdReadExtends:
-      description: Consentimento consultado com sucesso.
+      description: Renovações de consentimento consultado com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
