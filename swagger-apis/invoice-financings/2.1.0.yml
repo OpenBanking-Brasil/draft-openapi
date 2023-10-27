@@ -806,7 +806,8 @@ components:
           description: |
             Valor original da garantia. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
 
-            [Restrição] Nos casos em que warrantyType for igual a "GARANTIA_FIDEJUSSORIA“ pode ser enviado o valor 0.00.
+            [Restrição]  Para casos em que warrantyType for igual a "GARANTIA_FIDEJUSSORIA" o valor da garantia corresponde a uma porcentagem do total garantido. 
+            Dessa forma, os casos de garantia fidejussória para os quais não é possível determinar um valor monetário para a garantia devem ser preenchidos com 0.00.
     InvoiceFinancingsContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
