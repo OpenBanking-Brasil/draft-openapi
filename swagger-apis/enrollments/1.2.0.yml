@@ -1725,13 +1725,16 @@ components:
           type: string
           description: 'Indica os tipos de autenticadores suportados (ex: Sistema Operacional ou Cross-Platform como uma chave USB)'
           example: platform, cross-platform
-        requireResidentKey:
+        userVerification:
           type: string
           description: Indica o tipo de "discoverability" da credencial.
           example: discouraged, preferred, required
-        userVerification:
+        requireResidentKey:
           type: boolean
           description: Indica o requisito de verificação do usuário.
+        residentKey:
+          type: string
+          description: Replicar a descrição do campo requireResidentKey
     FidoRelyingParty:
       type: object
       required:
