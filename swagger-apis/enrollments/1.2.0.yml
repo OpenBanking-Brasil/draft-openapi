@@ -52,7 +52,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
-          $ref: '#/components/responses/Forbidden'
+          $ref: '#/components/responses/ForbiddenEnrollments'
         '404':
           $ref: '#/components/responses/NotFound'
         '405':
@@ -2237,6 +2237,20 @@ components:
             $ref: '#/components/schemas/XFapiInteractionId'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseError'
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+    ForbiddenEnrollments:
+      description: |
+        O token tem escopo incorreto ou uma política de segurança foi violada.
+        Esta política de segurança também envolve os casos em que a iniciadora de pagamento não possui contrato bilateral ativo com a detentora de conta.
       content:
         application/json; charset=utf-8:
           schema:
