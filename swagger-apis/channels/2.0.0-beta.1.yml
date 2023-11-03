@@ -529,7 +529,7 @@ components:
           type: string
           minLength: 14
           maxLength: 14
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: |
             Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
             Deve-se ter apenas os números do CNPJ, sem máscara
@@ -1635,7 +1635,7 @@ components:
           example: "Empresa da Marca A"
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
           example: "50685362000135"
