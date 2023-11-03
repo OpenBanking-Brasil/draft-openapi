@@ -3,7 +3,7 @@
 /data/participant;participant;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca selecionada pela Organização proprietário da dependência (titular).;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;
 /data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pelo Correspondente Bancário no país.;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa da Organização A;
-/data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
+/data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;Obrigatório;^(\d{14})$;;1;1;"";Não permitido;string;50685362000135;
 /data/bankingAgents;bankingAgents;;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
 /data/bankingAgents/identification;identification;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/bankingAgents/identification/corporationName;corporationName;;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
@@ -44,7 +44,7 @@ SC
 SP 
 SE 
 TO";1;1;"";Não permitido;string;SP;
-/data/bankingAgents/locations/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Obrigatório;Obrigatório;(\d{8}|^NA$);;1;1;"";Não permitido;string;17500001;
+/data/bankingAgents/locations/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Obrigatório;Obrigatório;^(\d{8})$;;1;1;"";Não permitido;string;17500001;
 /data/bankingAgents/locations/postalAddress/country;country;Nome do país;Texto;80;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Brasil;
 /data/bankingAgents/locations/postalAddress/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;;Opcional;Obrigatório;;;0;1;"";Não permitido;string;BRA;
 /data/bankingAgents/locations/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;

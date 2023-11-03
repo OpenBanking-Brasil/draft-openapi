@@ -5,7 +5,7 @@
 /data/participant/name;name;;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
 /data/participant/cnpjNumber;cnpjNumber;"Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
 Deve-se ter apenas os números do CNPJ, sem máscara
-";Texto;14;Obrigatório;Obrigatório;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;45086338000178;14
+";Texto;14;Obrigatório;Obrigatório;^(\d{14})$;;1;1;"";Não permitido;string;45086338000178;14
 /data/participant/urlComplementaryList;urlComplementaryList;;Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
 /data/identification;identification;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/identification/type;type;" > Tipo da dependência, segundo a regulamentação do Bacen,  na Resolução Nº 4072, de 26 de abril de 2012: Dependência de instituições financeiras e demais instituições, autorizadas a funcionar pelo Banco Central do Brasil, destinada à prática das atividades para as quais a instituição esteja regularmente habilitada. 
@@ -16,7 +16,7 @@ Deve-se ter apenas os números do CNPJ, sem máscara
 POSTO_ATENDIMENTO 
 POSTO_ATENDIMENTO_ELETRONICO 
 UNIDADE_ADMINISTRATIVA_DESMEMBRADA";1;1;"";Não permitido;string;;
-/data/identification/code;code;Código identificador da dependência;Texto;4;Obrigatório;Obrigatório;^\d{4}$|^NA$;;1;1;"";Não permitido;string;;
+/data/identification/code;code;Código identificador da dependência;Texto;4;Obrigatório;Obrigatório;^(\d{4})$;;1;1;"";Não permitido;string;;
 /data/identification/checkDigit;checkDigit;Dígito verificador do código da dependência;Texto;1;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
 /data/identification/name;name;Nome da dependência;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
 /data/identification/relatedBranch;relatedBranch;Código da agência vinculada ao Posto de Atendimento - se aplicável;Texto;4;Opcional;Obrigatório;^\d{4}$;;0;1;"";Não permitido;string;;

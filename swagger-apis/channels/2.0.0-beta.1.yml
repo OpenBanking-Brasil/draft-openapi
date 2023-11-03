@@ -369,7 +369,7 @@ components:
           example: 'Empresa da Organização A'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
           example: "50685362000135"
@@ -529,7 +529,7 @@ components:
           type: string
           minLength: 14
           maxLength: 14
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: |
             Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
             Deve-se ter apenas os números do CNPJ, sem máscara
@@ -624,7 +624,7 @@ components:
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         cnpjNumber:
             type: string
-            pattern: '^(\d{14})$|^NA$'
+            pattern: '^(\d{14})$'
             description: Número completo do CNPJ da instituição
             maxLength: 14
             example: "50685362000135"
@@ -783,7 +783,7 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: (\d{8}|^NA$)
+          pattern: '^(\d{8})$'
           maxLength: 8
           example: '17500001'
         country:
@@ -1052,7 +1052,7 @@ components:
         code:
           type: string
           maxLength: 4
-          pattern: ^\d{4}$|^NA$
+          pattern: '^(\d{4})$'
           description: Código identificador da dependência
         checkDigit:
           type: string
@@ -1377,7 +1377,7 @@ components:
           example: 'Empresa da Organização A'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
           example: "50685362000135"
@@ -1635,7 +1635,7 @@ components:
           example: "Empresa da Marca A"
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
           example: "50685362000135"
@@ -1692,19 +1692,19 @@ components:
         countryCallingCode:
           type: string
           maxLength: 4
-          pattern: ^\d{1,4}$|^NA$
+          pattern: '^\d{1,4}$'
           example: "55"
           description: "Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Canal - se houver."
         areaCode:
           type: string
           maxLength: 2
-          pattern: ^\d{2}$|^NA$
+          pattern: '^(\d{2})$'
           example: "19"
           description: "Número de DDD (Discagem Direta à Distância) para telefone de acesso ao Canal - se houver."
         number:
           type: string
           maxLength: 13
-          pattern: ^([0-9]{8,11})$|^NA$
+          pattern: '^([0-9]{8,11})$'
           example: "08007787788"
           description: "Número de telefone de acesso ao canal."
         additionalInfo:
@@ -1959,7 +1959,7 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: (\d{8})|^NA$
+          pattern: '^(\d{8})$'
           maxLength: 8
           example: '17500001'
         country:
