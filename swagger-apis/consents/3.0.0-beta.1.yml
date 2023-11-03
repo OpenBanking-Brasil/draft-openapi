@@ -336,7 +336,11 @@ paths:
         - Consents
       summary: Obter detalhes de extensões feitas no consentimento identificado por consentId.
       operationId: consentsGetConsentsConsentIdExtends
-      description: Método para obter detalhes de extensões consentimento identificado por consentId.
+      description: |
+        Método para obter histórico de extensões de consentimento identificado por consentId.
+
+        IMPORTANTE: A lista do payload de resposta deve ser entregue em ordem decrescente pela data de requisição (`data[].requestDateTime`). 
+        Dessa forma, o primeiro item da lista apresentará a mesma data de expiração do consentimento vigente, pois foi a última renovação feita.
       parameters:
         - $ref: '#/components/parameters/ConsentId'
         - $ref: '#/components/parameters/AuthorizationExtends'
@@ -381,7 +385,7 @@ paths:
         - Consents
       summary: Renovar consentimento identificado por consentId.
       operationId: consentsPostConsentsConsentIdExtends
-      description: Método para renovar consentimento identificado por consentId, exceto casos com múltiplas alçadas. Nos casos de múltiplas alçadas, a transmissora deve retornar o status 422.
+      description: Método utilizado para renovação de consentimento do cliente. O consentimento só pode ser renovado caso esteja ativo (status `AUTHORISED`) e tenha alçada simples de aprovação (não dependa de múltiplos aprovadores).
       parameters:
         - $ref: '#/components/parameters/ConsentId'
         - $ref: '#/components/parameters/AuthorizationExtends'
