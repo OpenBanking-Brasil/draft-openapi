@@ -3,7 +3,7 @@
 /data/participant;participant;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca selecionada pela Organização;Texto;80;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Organização A;
 /data/participant/name;name;Nome da Instituição, pertencente à Marca.;Texto;80;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Empresa da Organização A;
-/data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Opcional;Obrigatório;^(\d{14})$|^NA$;;0;1;"";Não permitido;string;50685362000135;
+/data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Opcional;Obrigatório;^(\d{14})$;;0;1;"";Não permitido;string;50685362000135;
 /data/participant/urlComplementaryList;urlComplementaryList;"URL de link para lista complementar com os nomes e CNPJs agrupados para o caso instituições ofertantes de produtos e serviços com as mesmas características.
 ";Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;
 /data/identification;identification;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
@@ -41,7 +41,7 @@ SC
 SP 
 SE 
 TO";0;1;"";Não permitido;string;SP;
-/data/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Opcional;Obrigatório;(\d{8})|^NA$;;0;1;"";Não permitido;string;17500001;
+/data/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Opcional;Obrigatório;^(\d{8})$;;0;1;"";Não permitido;string;17500001;
 /data/postalAddress/country;country;Nome do país;Texto;80;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Brasil;
 /data/postalAddress/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
 /data/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;

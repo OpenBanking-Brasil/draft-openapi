@@ -16,7 +16,7 @@ Deve-se ter apenas os números do CNPJ, sem máscara
 POSTO_ATENDIMENTO 
 POSTO_ATENDIMENTO_ELETRONICO 
 UNIDADE_ADMINISTRATIVA_DESMEMBRADA";1;1;"";Não permitido;string;;
-/data/identification/code;code;Código identificador da dependência;Texto;4;Obrigatório;Obrigatório;^\d{4}$|^NA$;;1;1;"";Não permitido;string;;
+/data/identification/code;code;Código identificador da dependência;Texto;4;Obrigatório;Obrigatório;^(\d{4})$;;1;1;"";Não permitido;string;;
 /data/identification/checkDigit;checkDigit;Dígito verificador do código da dependência;Texto;1;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
 /data/identification/name;name;Nome da dependência;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
 /data/identification/relatedBranch;relatedBranch;Código da agência vinculada ao Posto de Atendimento - se aplicável;Texto;4;Opcional;Obrigatório;^\d{4}$;;0;1;"";Não permitido;string;;
