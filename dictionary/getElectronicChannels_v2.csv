@@ -1,11 +1,15 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
-/data/participant;participant;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
+/data;data;Conjunto de informações referente aos canais eletrônicos de atendimento da instituição.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
+/data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca selecionada pela Organização proprietária da dependência (titular).;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Marca A;
 /data/participant/name;name;Nome da marca selecionada pela Organização proprietária da dependência (titular).;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa da Marca A;
 /data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;Obrigatório;^(\d{14})$;;1;1;"";Não permitido;string;50685362000135;
-/data/participant/urlComplementaryList;urlComplementaryList;;Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
-/data/identification;identification;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data/participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
+Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
+
+Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+";Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://example.com/mobile-banking;
+/data/identification;identification;Identificação dos canais eletrônicos para atendimento.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/identification/type;type;Tipo de canal de atendimento eletrônico;Texto;;Obrigatório;Obrigatório;;"INTERNET_BANKING 
 MOBILE_BANKING 
 SAC 
@@ -15,7 +19,7 @@ OUTROS";1;1;"";Não permitido;string;CHAT;
 /data/identification/additionalInfo;additionalInfo;"Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'
 Restrição: Preenchimento obrigatório para o tipo de canal de atendimento 'OUTROS'
 ";Texto;300;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;
-/data/identification/urls;urls;Lista das URLs que atendem um tipo de canal eletrônico selecionado;Lista;1024;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;N;"";Não permitido;array;;
+/data/identification/urls;urls;URLs dos canais eletrônicos de atendimento.;Lista;1024;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;N;"";Não permitido;array;;
 /data/services;services;Traz a relação de serviços disponbilizados pelo Canal de Atendimento;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/services/name;name;Nome dos Serviços efetivamente prestados pelo Canal de Atendimento;Texto;;Obrigatório;Obrigatório;;"ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA 
 SAQUE_MOEDA_EM_ESPECIE 

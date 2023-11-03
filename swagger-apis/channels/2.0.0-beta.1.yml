@@ -186,6 +186,7 @@ components:
         - meta
       properties:
         data:
+          description: Conjunto de informações referente aos correspondentes bancários da Instituição.
           type: object
           properties:
             participant:
@@ -345,6 +346,7 @@ components:
           totalRecords: 1
           totalPages: 1
     BankingAgentsParticipant:
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       type: object
       required:
         - brand
@@ -381,6 +383,7 @@ components:
       properties:
         name:
           type: string
+          description: Nome do contratante do serviço de correspondente.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         cnpjNumber:
@@ -398,6 +401,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente as dependências própria das instituição.
           minItems: 1
           items:
             $ref: '#/components/schemas/BranchesData'
@@ -426,7 +430,7 @@ components:
               townName: 'Marília'
               ibgeCode: '3550308'
               countrySubDivision: 'SP'
-              postCode: '17500-001'
+              postCode: '17500001'
               country: 'Brasil'
               countryCode: 'BRA'
               geographicCoordinates:
@@ -504,6 +508,7 @@ components:
             $ref: '#/components/schemas/BranchService'
           minItems: 1
     BranchesParticipant:
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       type: object
       required:
         - brand
@@ -535,6 +540,11 @@ components:
           example: '45086338000178'
         urlComplementaryList:
           type: string
+          description: | 
+            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
+            Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
+            
+            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           maxLength: 1024
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'https://example.com/mobile-banking'
@@ -547,6 +557,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente aos canais eletrônicos de atendimento da instituição.
           minItems: 1
           items:
             $ref: '#/components/schemas/ElectronicChannelsData'
@@ -600,6 +611,7 @@ components:
           description: "Traz a relação de serviços disponbilizados pelo Canal de Atendimento"
     ElectronicChannelsParticipant:
       type: object
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       required:
         - brand
         - name
@@ -630,6 +642,11 @@ components:
             example: "50685362000135"
         urlComplementaryList:
           type: string
+          description: | 
+            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
+            Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
+            
+            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           maxLength: 1024
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: "https://example.com/mobile-banking"
@@ -662,6 +679,7 @@ components:
           description: Relação de informações de um contratante do serviço de correspondente.
     BankingAgentIdentification:
       type: object
+      description: Lojas do correspondente bancário.
       required:
         - cnpjNumber
         - corporationName
@@ -673,10 +691,12 @@ components:
       properties:
         corporationName:
           type: string
+          description: Nome da loja do correspondente bancário.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         groupName:
           type: string
+          description: Nome do grupo do correspondente bancário.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         isUnderestablishment:
@@ -703,6 +723,7 @@ components:
             $ref: '#/components/schemas/Phone'
     BankingAgentPostalAddress:
       type: object
+      description: Informação referente ao endereço postal.
       required:
         - address
         - districtName
@@ -801,8 +822,10 @@ components:
           $ref: '#/components/schemas/GeographicCoordinates'
     BankingAgentAvailability:
       type: object
+      description: Horário de funcionamento das operações.
       properties:
         standards:
+          description: Lista disponibilidade padrão da dependência por dias da semana.
           type: array
           items:
             type: object
@@ -832,10 +855,12 @@ components:
                 pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$
         exception:
           type: string
+          description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Exceto feriados municipais, nacionais e estaduais
         isPublicAccessAllowed:
+          description: Indica se a instalação da Dependência tem acesso restrito a clientes.
           type: boolean
           example: false
     BankingAgentService:
@@ -890,6 +915,7 @@ components:
         - code
     BranchPostalAddress:
       type: object
+      description: Endereço das dependências próprias.
       required:
         - address
         - districtName
@@ -1014,6 +1040,7 @@ components:
           example: "35721199"
           description: "Número de telefone da dependência - se houver"
     BranchIdentification:
+      description: Identificação das dependência próprias.
       type: object
       x-regulatory-required:
         - type
@@ -1067,6 +1094,7 @@ components:
         - name
     BranchAvailability:
       type: object
+      description: Horário de funcionamento das operações.
       properties:
         standards:
           type: array
@@ -1175,6 +1203,7 @@ components:
       - name
     ElectronicChannelIdentification:
       type: object
+      description: Identificação dos canais eletrônicos para atendimento.
       required:
         - type
         - urls
@@ -1205,7 +1234,7 @@ components:
           items:
             $ref: '#/components/schemas/ElectronicChannelUrl'
           minItems: 1
-          description: Lista das URLs que atendem um tipo de canal eletrônico selecionado
+          description: URLs dos canais eletrônicos de atendimento.
     ElectronicChannelUrl:
       type: string
       pattern: ^(?!\s)[\w\W\s]*[^\s]$
@@ -1277,6 +1306,7 @@ components:
           example: "SIC"
     Phone:
       type: object
+      description: Lista de telefones do agente bancária.
       x-regulatory-required:
         - areaCode
       properties:
@@ -1314,6 +1344,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente aos terminais compartilhados de autoatendimento da instituição.
           minItems: 1
           items:
             $ref: '#/components/schemas/SharedAutomatedTellerMachinesData'
@@ -1338,6 +1369,7 @@ components:
             $ref: '#/components/schemas/SharedAutomatedTellerMachinesServices'
     SharedAutomatedTellerMachinesParticipant:
       type: object
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       properties:
         brand:
           type: string
@@ -1366,6 +1398,7 @@ components:
           example: 'https://empresadaorganizacaoa.com/complementarylist'
     SharedAutomatedTellerMachinesServices:
       type: object
+      description: Traz a relação de serviços disponibilizados pelo Canal de Atendimento.
       properties:
         name:
           type: string
@@ -1429,6 +1462,7 @@ components:
           example: "Serviços complementares de atendimento via terminais de autoatendimento."
     SharedAutomatedTellerMachinesIdentification:
       type: object
+      description: Identificação dos terminais de autoatendimento compartilhados
       properties:
         ownerName:
           type: string
@@ -1449,6 +1483,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente aos canais telefônicos de atendimento da instituição.
           minItems: 1
           items:
             $ref: '#/components/schemas/PhoneChannelsData'
@@ -1583,6 +1618,7 @@ components:
           description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
     PhoneChannelsParticipant:
       type: object
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       required:
         - brand
         - name
@@ -1613,12 +1649,18 @@ components:
           example: "50685362000135"
         urlComplementaryList:
           type: string
+          description: | 
+            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
+            Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
+            
+            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           maxLength: 1024
           example: "https://example.com/mobile-banking"
     #### PhoneChannelIdentification ####
     PhoneChannelIdentification:
       type: object
+      description: Identificação dos canais telefônicos de atendimento.
       required:
         - type
       x-regulatory-required:
@@ -1679,6 +1721,7 @@ components:
           description: "Número de telefone de acesso ao canal."
         additionalInfo:
           type: string
+          description: Informações adicionais referente ao canal telefônico de atendimento.
           maxLength: 300
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: "Mensagem complementar necessária para o agrupamento da identificação do telefone."
@@ -1764,6 +1807,7 @@ components:
           example: '-180.836519'
     Links:
       type: object
+      description: Referências para outros recursos da API requisitada.
       properties:
         self:
           type: string
@@ -1795,6 +1839,7 @@ components:
           example: "https://api.banco.com.br/open-banking/channels/v2/resource"
     Meta:
       type: object
+      description: Meta informações referente à API requisitada.
       properties:
         totalRecords:
           type: integer
@@ -1811,9 +1856,11 @@ components:
 #### ATM specific schemas because of optional NA values ####
     SharedAutomatedTellerMachinesAvailability:
       type: object
+      description: Horário de funcionamento das operações.
       properties:
         standards:
           type: array
+          description: Lista disponibilidade padrão dos terminais de autoatendimento compartilhados por dias da semana.
           items:
             type: object
             properties:
@@ -1843,14 +1890,17 @@ components:
                 example: '16:00:57Z'
         exception:
           type: string
+          description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Exceto feriados municipais, nacionais e estaduais
         isPublicAccessAllowed:
           type: boolean
+          description: Indica se o terminal de autoatendimento compartilhado tem acesso restrito a clientes.
           example: false
     SharedAutomatedTellerMachinesPostalAddress:
       type: object
+      description: Endereço dos terminais de autoatendimento compartilhados.
       properties:
         address:
           type: string
