@@ -19,14 +19,14 @@ UNIDADE_ADMINISTRATIVA_DESMEMBRADA";1;1;"";Não permitido;string;;
 /data/identification/code;code;Código identificador da dependência;Texto;4;Obrigatório;Obrigatório;^(\d{4})$;;1;1;"";Não permitido;string;;
 /data/identification/checkDigit;checkDigit;Dígito verificador do código da dependência;Texto;1;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
 /data/identification/name;name;Nome da dependência;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
-/data/identification/relatedBranch;relatedBranch;Código da agência vinculada ao Posto de Atendimento - se aplicável;Texto;4;Opcional;Obrigatório;^\d{4}$;;0;1;"";Não permitido;string;;
-/data/identification/openingDate;openingDate;Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19);Texto;10;Opcional;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"";Não permitido;string;;
+/data/identification/relatedBranch;relatedBranch;Código da agência vinculada ao Posto de Atendimento - se aplicável;Texto;4;Opcional;Opcional;^\d{4}$;;0;1;"";Não permitido;string;;
+/data/identification/openingDate;openingDate;Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19);Texto;10;Opcional;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"";Não permitido;string;;
 /data/postalAddress;postalAddress;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;
 /data/postalAddress/additionalInfo;additionalInfo;Alguns logradouros ainda necessitam ser especificados por meio de complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Fundos;
 /data/postalAddress/districtName;districtName;Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso';Texto;50;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Centro;
 /data/postalAddress/townName;townName;Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo';Texto;50;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Marília;
-/data/postalAddress/ibgeCode;ibgeCode;Código IBGE do município;Texto;7;Opcional;Obrigatório;^\d{7}$;;0;1;"";Não permitido;string;3515890;
+/data/postalAddress/ibgeCode;ibgeCode;Código IBGE do município;Texto;7;Opcional;Opcional;^\d{7}$;;0;1;"";Não permitido;string;3515890;
 /data/postalAddress/countrySubDivision;countrySubDivision;Enumeração referente a cada sigla da unidade da federação que identifica o estado ou o distrito federal, no qual o endereço está localizado. p.ex. 'AC'. São consideradas apenas as siglas para os estados brasileiros;Texto;;Obrigatório;Obrigatório;;"AC 
 AL 
 AP 
@@ -55,8 +55,8 @@ SP
 SE 
 TO";1;1;"";Não permitido;string;SP;
 /data/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Obrigatório;Obrigatório;(\d{8}|^NA$);;1;1;"";Não permitido;string;17500001;
-/data/postalAddress/country;country;Nome do país;Texto;80;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Brasil;
-/data/postalAddress/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
+/data/postalAddress/country;country;Nome do país;Texto;80;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Brasil;
+/data/postalAddress/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;3;Opcional;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
 /data/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/postalAddress/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;
 /data/postalAddress/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;
@@ -71,14 +71,14 @@ SEXTA_FEIRA
 SABADO";1;1;"";Não permitido;string;;
 /data/availability/standards/openingTime;openingTime;Horário de abertura da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;1;1;"";Não permitido;string;;
 /data/availability/standards/closingTime;closingTime;Horário de fechamento da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;1;1;"";Não permitido;string;;
-/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento.;Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
-/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes.;Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;;
+/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento.;Texto;2000;Obrigatório;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
+/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes.;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;;
 /data/phones;phones;Lista de telefones da Dependência;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
-/data/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Obrigatório;;"FIXO 
+/data/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Opcional;;"FIXO 
 MOVEL";0;1;"";Não permitido;string;FIXO;
-/data/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55';Texto;4;Opcional;Obrigatório;^\d{1,4}$;;0;1;"";Não permitido;string;55;
-/data/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19';Texto;2;Opcional;Obrigatório;^\d{2}$;;0;1;"";Não permitido;string;19;
-/data/phones/number;number;Número de telefone da dependência - se houver;Texto;11;Opcional;Obrigatório;^([0-9]{8,11})$;;0;1;"";Não permitido;string;35721199;
+/data/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55';Texto;4;Opcional;Opcional;^\d{1,4}$;;0;1;"";Não permitido;string;55;
+/data/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19';Texto;2;Opcional;Opcional;^\d{2}$;;0;1;"";Não permitido;string;19;
+/data/phones/number;number;Número de telefone da dependência - se houver;Texto;11;Opcional;Opcional;^([0-9]{8,11})$;;0;1;"";Não permitido;string;35721199;
 /data/services;services;Traz a relação de serviços disponbilizados pelo Canal de Atendimento;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/services/name;name;Nome dos Serviços efetivamente prestados pelo Canal de Atendimento;Texto;;Obrigatório;Obrigatório;;"ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA 
 SAQUE_MOEDA_EM_ESPECIE 
