@@ -2014,11 +2014,13 @@ components:
             - requestDateTime
           properties:
             requestDateTime:
-              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+              description: Data e hora da consulta, conforme especificação RFC-3339, formato UTC.
               type: string
-              maxLength: 20
               format: date-time
-              example: '2021-05-21T08:30:00Z'
+              minLength: 20
+              maxLength: 20
+              pattern: '^[2-9]\d{3}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$'
+              example: '2023-10-09T14:10:00Z'
     ResponseError:
       type: object
       required:
@@ -2054,19 +2056,16 @@ components:
           type: object
           description: Meta informações referente à API requisitada.
           required:
-            - totalRecords
-            - totalPages
+            - requestDateTime
           properties:
-            totalRecords:
-              type: integer
-              format: int32
-              description: Número total de registros no resultado
-              example: 1
-            totalPages:
-              type: integer
-              format: int32
-              description: Número total de páginas no resultado
-              example: 1
+            requestDateTime:
+              description: Data e hora da consulta, conforme especificação RFC-3339, formato UTC.
+              type: string
+              format: date-time
+              minLength: 20
+              maxLength: 20
+              pattern: '^[2-9]\d{3}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$'
+              example: '2023-10-09T14:10:00Z'
   parameters:
     page:
       name: page
