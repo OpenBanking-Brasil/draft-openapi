@@ -74,8 +74,8 @@ SABADO";1;1;"";Não permitido;string;;
 /data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento.;Texto;2000;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
 /data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes.;Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;;
 /data/phones;phones;Lista de telefones da Dependência;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
-/data/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Obrigatório;Obrigatório;;"FIXO 
-MOVEL";1;1;"";Não permitido;string;FIXO;
+/data/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Obrigatório;;"FIXO 
+MOVEL";0;1;"";Não permitido;string;FIXO;
 /data/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55';Texto;4;Opcional;Obrigatório;^\d{1,4}$;;0;1;"";Não permitido;string;55;
 /data/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19';Texto;2;Opcional;Obrigatório;^\d{2}$;;0;1;"";Não permitido;string;19;
 /data/phones/number;number;Número de telefone da dependência - se houver;Texto;11;Opcional;Obrigatório;^([0-9]{8,11})$;;0;1;"";Não permitido;string;35721199;

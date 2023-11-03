@@ -16,8 +16,8 @@ OUVIDORIA
 OUTROS";1;1;"";Não permitido;string;OUVIDORIA;
 /data/identification/additionalInfo;additionalInfo;"Campo de texto livre para descrever informações complementateres sobre canais telefônicos. De preenchimento obrigatório quando o tipo de canal de atendimento telefônico selecionado for ""OUTROS""";Texto;300;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;
 /data/identification/phones;phones;Lista de telefones do Canal de Atendimento;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
-/data/identification/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Canal - se houver.;Texto;4;Obrigatório;Obrigatório;^\d{1,4}$;;1;1;"";Não permitido;string;55;
-/data/identification/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) para telefone de acesso ao Canal - se houver.;Texto;2;Obrigatório;Obrigatório;^(\d{2})$;;1;1;"";Não permitido;string;19;
+/data/identification/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Canal - se houver.;Texto;4;Opcional;Obrigatório;^\d{1,4}$;;0;1;"";Não permitido;string;55;
+/data/identification/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) para telefone de acesso ao Canal - se houver.;Texto;2;Opcional;Obrigatório;^(\d{2})$;;0;1;"";Não permitido;string;19;
 /data/identification/phones/number;number;Número de telefone de acesso ao canal.;Texto;13;Obrigatório;Obrigatório;^([0-9]{8,11})$;;1;1;"";Não permitido;string;08007787788;
 /data/identification/phones/additionalInfo;additionalInfo;;Texto;300;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Mensagem complementar necessária para o agrupamento da identificação do telefone.;
 /data/services;services;Traz a relação de serviços disponbilizados pelo Canal de Atendimento;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;

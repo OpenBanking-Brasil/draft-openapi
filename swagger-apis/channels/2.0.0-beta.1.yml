@@ -665,6 +665,7 @@ components:
       required:
         - cnpjNumber
         - corporationName
+        - isUnderestablishment
       x-regulatory-required:
         - corporationName
         - groupName
@@ -992,8 +993,6 @@ components:
           $ref: '#/components/schemas/GeographicCoordinates'
     BranchPhone:
       type: object
-      required:
-        - type
       x-regulatory-required:
         - type
         - countryCallingCode
@@ -1681,8 +1680,6 @@ components:
     PhoneChannelPhone:
       type: object
       required:
-        - countryCallingCode
-        - areaCode
         - number
       x-regulatory-required:
         - countryCallingCode
