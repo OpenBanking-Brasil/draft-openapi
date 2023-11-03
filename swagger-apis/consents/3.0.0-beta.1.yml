@@ -149,9 +149,6 @@ info:
     A transmissora deve retornar status de erro 422 (DEPENDE_MULTIPLA_ALCADA) para requisições que necessitam de múltipla alçada.
     - Para consentimentos Pessoa Natural apenas o loggedUser criador do consentimento consegue renovar sem redirecionamento (`POST /consents/{consentId}/extends`).
     A transmissora deve retornar status de erro 403 para requisições que não seguem essa definição.
-    - A renovação de consentimento (`POST /consents/{consentId}/extends`) deve ser possível para consentimento para o qual foi emitido um refresh token opaco. 
-    Não deve ser possível quando o consentimento está vinculado a um refresh token do tipo JWT (com prazo não prorrogável). 
-    A transmissora deve retornar status de erro 422 (`REFRESH_TOKEN_JWT`) para requisições que não seguem essa definição.
     - A renovação de consentimento (`POST /consents/{consentId}/extends`) deve ocorrer apenas até o período de 12 meses após a data de requisição (`current_datetime<= expirationDateTime<= current_datetime+12meses`), ou com prazo de expiração indeterminado (`expirationDateTime=2300-01-01T00:00:00Z`). 
     A transmissora deve retornar status de erro 422 (`DATA_EXPIRACAO_INVALIDA`) para requisições que não seguem essa definição.
     - A renovação de consentimento (`POST /consents/{consentId}/extends`) sempre aumenta a data de expiração final do consentimento em relação à data de expiração vigente. 
@@ -1090,14 +1087,12 @@ components:
                 type: string
                 enum:
                   - DEPENDE_MULTIPLA_ALCADA
-                  - REFRESH_TOKEN_JWT
                   - ESTADO_CONSENTIMENTO_INVALIDO
                   - DATA_EXPIRACAO_INVALIDA
                 example: DEPENDE_MULTIPLA_ALCADA
                 description: |
                  Códigos de erros previstos na durante o processo de extensão do consentimento:
                   - DEPENDE_MULTIPLA_ALCADA: Necessário aprovação de múltipla alçada.
-                  - REFRESH_TOKEN_JWT: Refresh token não pode ser expandido.
                   - ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.
                   - DATA_EXPIRACAO_INVALIDA: Nova data para expiração do consentimento é inválida.
               title:
@@ -1108,7 +1103,6 @@ components:
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
                   - DEPENDE_MULTIPLA_ALCADA: Necessário aprovação de múltipla alçada.
-                  - REFRESH_TOKEN_JWT: Refresh token não pode ser expandido.
                   - ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.
                   - DATA_EXPIRACAO_INVALIDA: Nova data para expiração do consentimento é inválida.
               detail:
@@ -1119,7 +1113,6 @@ components:
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
                   - DEPENDE_MULTIPLA_ALCADA: O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação.
-                  - REFRESH_TOKEN_JWT: O consentimento informado não pode ser renovado sem redirecionamento porque está vinculado a um refresh token JWT e não pode ter seu prazo de validade alterado.
                   - ESTADO_CONSENTIMENTO_INVALIDO: O consentimento informado não pode ser renovado sem redirecionamento porque está em um estado que não permite a renovação.
                   - DATA_EXPIRACAO_INVALIDA: O consentimento informado não pode ser renovado pois a nova data de expiração não segue a convenção do ecossistema.
         meta:
