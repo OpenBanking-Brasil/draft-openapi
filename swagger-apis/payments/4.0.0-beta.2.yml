@@ -1215,6 +1215,8 @@ components:
         - QRDN - QR code dinâmico
         - QRES - QR code estático
         - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
+        
+        [Restrição] Se /data/payment/schedule enviado com valor diferente de single durante a criação do consentimento, apenas os métodos MANU, DICT ou QRES são permitidos.
     EnumPaymentCancellationStatusType:
       type: string
       enum:
