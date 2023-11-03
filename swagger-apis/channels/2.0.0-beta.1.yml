@@ -378,8 +378,6 @@ components:
       required:
         - name
         - cnpjNumber
-      x-regulatory-required:
-        - name
       properties:
         name:
           type: string
@@ -713,11 +711,8 @@ components:
         - address
         - districtName
         - townName
-        - ibgeCode
         - countrySubDivision
         - postCode
-        - country
-        - countryCode
       properties:
         address:
           type: string
@@ -801,9 +796,6 @@ components:
           $ref: '#/components/schemas/GeographicCoordinates'
     BankingAgentAvailability:
       type: object
-      x-regulatory-required:
-        - exception
-        - isPublicAccessAllowed
       properties:
         standards:
           type: array
@@ -903,11 +895,8 @@ components:
         - address
         - districtName
         - townName
-        - ibgeCode
         - countrySubDivision
         - postCode
-        - country
-        - countryCode
       properties:
         address:
           type: string
@@ -993,11 +982,6 @@ components:
           $ref: '#/components/schemas/GeographicCoordinates'
     BranchPhone:
       type: object
-      x-regulatory-required:
-        - type
-        - countryCallingCode
-        - areaCode
-        - number
       properties:
         type:
           type: string
@@ -1031,8 +1015,6 @@ components:
         - code
         - checkDigit
         - name
-        - relatedBranch
-        - openingDate
       properties:
         type:
           type: string
@@ -1080,9 +1062,6 @@ components:
         - name
     BranchAvailability:
       type: object
-      x-regulatory-required:
-        - exception
-        - isPublicAccessAllowed
       properties:
         standards:
           type: array
@@ -1294,10 +1273,7 @@ components:
     Phone:
       type: object
       x-regulatory-required:
-        - type
-        - countryCallingCode
         - areaCode
-        - number
       properties:
         type:
           type: string
@@ -1356,11 +1332,6 @@ components:
             $ref: '#/components/schemas/SharedAutomatedTellerMachinesServices'
     SharedAutomatedTellerMachinesParticipant:
       type: object
-      x-regulatory-required:
-        - brand
-        - name
-        - cnpjNumber
-        - urlComplementaryList
       properties:
         brand:
           type: string
@@ -1389,9 +1360,6 @@ components:
           example: 'https://empresadaorganizacaoa.com/complementarylist'
     SharedAutomatedTellerMachinesServices:
       type: object
-      x-regulatory-required:
-        - name
-        - code
       properties:
         name:
           type: string
@@ -1455,8 +1423,6 @@ components:
           example: "Serviços complementares de atendimento via terminais de autoatendimento."
     SharedAutomatedTellerMachinesIdentification:
       type: object
-      x-regulatory-required:
-        - ownerName
       properties:
         ownerName:
           type: string
@@ -1838,9 +1804,6 @@ components:
 #### ATM specific schemas because of optional NA values ####
     SharedAutomatedTellerMachinesAvailability:
       type: object
-      x-regulatory-required:
-        - exception
-        - isPublicAccessAllowed
       properties:
         standards:
           type: array
@@ -1881,15 +1844,6 @@ components:
           example: false
     SharedAutomatedTellerMachinesPostalAddress:
       type: object
-      x-regulatory-required:
-        - address
-        - districtName
-        - townName
-        - ibgeCode
-        - countrySubDivision
-        - postCode
-        - country
-        - countryCode
       properties:
         address:
           type: string
