@@ -7,7 +7,7 @@ info:
     url: 'https://servicedesk.openbankingbrasil.org.br/Login.jsp?navLanguage=pt-BR'
 tags:
   - name: "Channels"
-    description: "Operações para listagem de canais de atendimentos"
+    description: "Operações para listagem de canais de atendimento"
 servers:
   - url: http://api.banco.com.br/open-banking/channels/v2
 paths:
@@ -751,7 +751,7 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: (\d{8}|^NA$)
+          pattern: '^(\d{8})$'
           maxLength: 8
           example: '17500001'
         country:
