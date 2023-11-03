@@ -46,7 +46,7 @@ SE
 TO";1;1;"";Não permitido;string;SP;
 /data/bankingAgents/locations/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Obrigatório;Obrigatório;^(\d{8})$;;1;1;"";Não permitido;string;17500001;
 /data/bankingAgents/locations/postalAddress/country;country;Nome do país;Texto;80;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Brasil;
-/data/bankingAgents/locations/postalAddress/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;;Opcional;Opcional;;;0;1;"";Não permitido;string;BRA;
+/data/bankingAgents/locations/postalAddress/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;3;Opcional;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;3
 /data/bankingAgents/locations/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/bankingAgents/locations/postalAddress/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;
 /data/bankingAgents/locations/postalAddress/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;
