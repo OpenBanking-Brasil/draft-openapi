@@ -241,6 +241,7 @@ components:
           description: Nome do contratante do serviço de correspondente.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Empresa Contratante
         cnpjNumber:
           type: string
           pattern: '^(\d{14})$|^NA$'
@@ -310,10 +311,12 @@ components:
           description: Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
           maxLength: 80
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Organização A
         name:
           type: string
           maxLength: 80
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Empresa A1
         cnpjNumber:
           type: string
           minLength: 14
@@ -451,14 +454,17 @@ components:
           description: Nome da loja do correspondente bancário.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Empresa Correspondente A
         groupName:
           type: string
           description: Nome do grupo do correspondente bancário.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Grupo Master
         isUnderestablishment:
           type: boolean
           description: Indicador do Correspondente Bancário ser um Substabelecimento (são empresas  que foram contratadas por um correspondente bancário para prestar serviços. A empresa substabelecida é tratada como um correspondente do banco e tem praticamente os mesmos direitos e obrigações que possui o correspondente direto)
+          example: true
         cnpjNumber:
           type: string
           pattern: '^(\d{14})$|^NA$'
@@ -824,26 +830,31 @@ components:
           maxLength: 4
           pattern: '^(\d{4})$'
           description: Código identificador da dependência
+          example: 0001
         checkDigit:
           type: string
           maxLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Dígito verificador do código da dependência
+          example: 1 
         name:
           type: string
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Nome da dependência
+          example: Dependência X
         relatedBranch:
           type: string
           maxLength: 4
           pattern: ^\d{4}$
           description: Código da agência vinculada ao Posto de Atendimento - se aplicável
+          example: 0001
         openingDate:
           type: string
           maxLength: 10
           pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
           description: Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19)
+          example: '2023-10-16'
       required:
         - type
         - code
@@ -890,12 +901,13 @@ components:
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
+          example: Exceto feriados municipais, estaduais e nacionais
         isPublicAccessAllowed:
           type: boolean
           description: Indica se a instalação da Dependência tem acesso restrito a clientes.
+          example: true
       required:
         - standards
-        - exception
     BranchService:
       type: object
       x-regulatory-required:
@@ -992,6 +1004,7 @@ components:
             $ref: '#/components/schemas/ElectronicChannelUrl'
           minItems: 1
           description: URLs dos canais eletrônicos de atendimento.
+          example: [ "https://empresaa1.com/internet-banking", "https://empresaa1.com/sac", "https://empresaa1.com/ouvidoria"]
     ElectronicChannelUrl:
       type: string
       pattern: ^(?!\s)[\w\W\s]*[^\s]$
@@ -1064,8 +1077,6 @@ components:
     Phone:
       type: object
       description: Lista de telefones do agente bancária.
-      x-regulatory-required:
-        - areaCode
       properties:
         type:
           type: string
@@ -1475,11 +1486,13 @@ components:
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: "https://api.banco.com.br/open-banking/channels/v1/<resource>"
         next:
           type: string
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: "https://api.banco.com.br/open-banking/channels/v1/<resource>"
         last:
           type: string
           description: URL da última página de registros
