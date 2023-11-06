@@ -511,7 +511,6 @@ components:
           description: "Alguns logradouros ainda necessitam ser especificados por meio de complemento"
           maxLength: 30
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: 'Fundos'
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
@@ -703,7 +702,6 @@ components:
           description: "Alguns logradouros ainda necessitam ser especificados por meio de complemento"
           maxLength: 30
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: 'Fundos'
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
@@ -830,13 +828,13 @@ components:
           maxLength: 4
           pattern: '^(\d{4})$'
           description: Código identificador da dependência
-          example: 0001
+          example: '0001'
         checkDigit:
           type: string
           maxLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Dígito verificador do código da dependência
-          example: 1 
+          example: '1' 
         name:
           type: string
           maxLength: 100
@@ -848,7 +846,7 @@ components:
           maxLength: 4
           pattern: ^\d{4}$
           description: Código da agência vinculada ao Posto de Atendimento - se aplicável
-          example: 0001
+          example: '0001'
         openingDate:
           type: string
           maxLength: 10
@@ -1073,7 +1071,6 @@ components:
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
-          example: "SIC"
     Phone:
       type: object
       description: Lista de telefones do agente bancária.
@@ -1227,7 +1224,6 @@ components:
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS'
-          example: "Serviços complementares de atendimento via terminais de autoatendimento."
     SharedAutomatedTellerMachinesIdentification:
       type: object
       description: Identificação dos terminais de autoatendimento compartilhados
@@ -1384,7 +1380,6 @@ components:
           description: Informações adicionais referente ao canal telefônico de atendimento.
           maxLength: 300
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: "Mensagem complementar necessária para o agrupamento da identificação do telefone."
     #### PhoneChannelService ####
     PhoneChannelService:
       type: object
@@ -1448,7 +1443,6 @@ components:
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           maxLength: 2000
           description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
-          example: ""
     GeographicCoordinates:
       type: object
       description: Informação referente a geolocalização informada.
@@ -1486,13 +1480,13 @@ components:
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: "https://api.banco.com.br/open-banking/channels/v1/<resource>"
+          example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         next:
           type: string
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: "https://api.banco.com.br/open-banking/channels/v1/<resource>"
+          example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         last:
           type: string
           description: URL da última página de registros
@@ -1575,7 +1569,6 @@ components:
           description: "Complemento"
           maxLength: 30
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: 'Fundos'
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"

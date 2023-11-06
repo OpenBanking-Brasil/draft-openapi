@@ -10,7 +10,7 @@
 /data/identification/ownerName;ownerName;Nome do proprietário do terminal de Autoatendimento Compartilhado;Texto;100;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;João da Silva Santos;
 /data/postalAddress;postalAddress;Endereço dos terminais de autoatendimento compartilhados.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;
-/data/postalAddress/additionalInfo;additionalInfo;Complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Fundos;
+/data/postalAddress/additionalInfo;additionalInfo;Complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;
 /data/postalAddress/districtName;districtName;Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso';Texto;50;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Centro;
 /data/postalAddress/townName;townName;Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo';Texto;50;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Marília;
 /data/postalAddress/ibgeCode;ibgeCode;Código IBGE do município;Texto;7;Opcional;Opcional;\d{7};;0;1;"";Não permitido;string;3515890;
@@ -105,4 +105,4 @@ OUTROS_PRODUTOS_SERVICOS
 CANCELAMENTO 
 INFORMACOES 
 RECLAMACOES";0;1;"";Não permitido;string;OUTROS_PRODUTOS_SERVICOS;
-/data/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Serviços complementares de atendimento via terminais de autoatendimento.;
+/data/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;
