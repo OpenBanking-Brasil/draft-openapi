@@ -1,8 +1,8 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;Conjunto de informações referente as dependências própria das instituição.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
-/data/participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
-/data/participant/name;name;;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
+/data/participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;
+/data/participant/name;name;;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa A1;
 /data/participant/cnpjNumber;cnpjNumber;"Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
 Deve-se ter apenas os números do CNPJ, sem máscara
 ";Texto;14;Obrigatório;Obrigatório;^(\d{14})$;;1;1;"";Não permitido;string;45086338000178;14
@@ -20,11 +20,11 @@ Restrição: Será obrigatorimente preenchido se houver lista complementar com o
 POSTO_ATENDIMENTO 
 POSTO_ATENDIMENTO_ELETRONICO 
 UNIDADE_ADMINISTRATIVA_DESMEMBRADA";1;1;"";Não permitido;string;;
-/data/identification/code;code;Código identificador da dependência;Texto;4;Obrigatório;Obrigatório;^(\d{4})$;;1;1;"";Não permitido;string;;
-/data/identification/checkDigit;checkDigit;Dígito verificador do código da dependência;Texto;1;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
-/data/identification/name;name;Nome da dependência;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
-/data/identification/relatedBranch;relatedBranch;Código da agência vinculada ao Posto de Atendimento - se aplicável;Texto;4;Opcional;Opcional;^\d{4}$;;0;1;"";Não permitido;string;;
-/data/identification/openingDate;openingDate;Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19);Texto;10;Opcional;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"";Não permitido;string;;
+/data/identification/code;code;Código identificador da dependência;Texto;4;Obrigatório;Obrigatório;^(\d{4})$;;1;1;"";Não permitido;string;1;
+/data/identification/checkDigit;checkDigit;Dígito verificador do código da dependência;Texto;1;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;1;
+/data/identification/name;name;Nome da dependência;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Dependência X;
+/data/identification/relatedBranch;relatedBranch;Código da agência vinculada ao Posto de Atendimento - se aplicável;Texto;4;Opcional;Opcional;^\d{4}$;;0;1;"";Não permitido;string;1;
+/data/identification/openingDate;openingDate;Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19);Texto;10;Opcional;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"";Não permitido;string;2023-10-16;
 /data/postalAddress;postalAddress;Endereço das dependências próprias.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;
 /data/postalAddress/additionalInfo;additionalInfo;Alguns logradouros ainda necessitam ser especificados por meio de complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Fundos;
@@ -58,7 +58,7 @@ SC
 SP 
 SE 
 TO";1;1;"";Não permitido;string;SP;
-/data/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Obrigatório;Obrigatório;(\d{8}|^NA$);;1;1;"";Não permitido;string;17500001;
+/data/postalAddress/postCode;postCode;Código de Endereçamento Postal;Texto;8;Obrigatório;Obrigatório;^(\d{8})$;;1;1;"";Não permitido;string;17500001;
 /data/postalAddress/country;country;Nome do país;Texto;80;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Brasil;
 /data/postalAddress/countryCode;countryCode;Código do país de acordo com a ISO 3166-1 alpha-3;Texto;3;Opcional;Opcional;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRA;
 /data/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
@@ -75,8 +75,8 @@ SEXTA_FEIRA
 SABADO";1;1;"";Não permitido;string;;
 /data/availability/standards/openingTime;openingTime;Horário de abertura da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;1;1;"";Não permitido;string;;
 /data/availability/standards/closingTime;closingTime;Horário de fechamento da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$;;1;1;"";Não permitido;string;;
-/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento.;Texto;2000;Obrigatório;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
-/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes.;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;;
+/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento.;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, estaduais e nacionais;
+/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes.;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;true;
 /data/phones;phones;Lista de telefones da Dependência;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
 /data/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Opcional;;"FIXO 
 MOVEL";0;1;"";Não permitido;string;FIXO;

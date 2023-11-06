@@ -6,9 +6,9 @@
 /data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;Obrigatório;^(\d{14})$;;1;1;"";Não permitido;string;50685362000135;
 /data/bankingAgents;bankingAgents;;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
 /data/bankingAgents/identification;identification;Lojas do correspondente bancário.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/bankingAgents/identification/corporationName;corporationName;Nome da loja do correspondente bancário.;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
-/data/bankingAgents/identification/groupName;groupName;Nome do grupo do correspondente bancário.;Texto;100;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;
-/data/bankingAgents/identification/isUnderestablishment;isUnderestablishment;Indicador do Correspondente Bancário ser um Substabelecimento (são empresas  que foram contratadas por um correspondente bancário para prestar serviços. A empresa substabelecida é tratada como um correspondente do banco e tem praticamente os mesmos direitos e obrigações que possui o correspondente direto);Booleano;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;boolean;;
+/data/bankingAgents/identification/corporationName;corporationName;Nome da loja do correspondente bancário.;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa Correspondente A;
+/data/bankingAgents/identification/groupName;groupName;Nome do grupo do correspondente bancário.;Texto;100;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Grupo Master;
+/data/bankingAgents/identification/isUnderestablishment;isUnderestablishment;Indicador do Correspondente Bancário ser um Substabelecimento (são empresas  que foram contratadas por um correspondente bancário para prestar serviços. A empresa substabelecida é tratada como um correspondente do banco e tem praticamente os mesmos direitos e obrigações que possui o correspondente direto);Booleano;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;boolean;true;
 /data/bankingAgents/identification/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;Opcional;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
 /data/bankingAgents/locations;locations;Relação de informações referentes as localizações dos Correspondentes bancários.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/bankingAgents/locations/postalAddress;postalAddress;Informação referente ao endereço postal.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
@@ -67,7 +67,7 @@ SABADO";1;1;"";Não permitido;string;;
 /data/bankingAgents/locations/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Opcional;;"FIXO 
 MOVEL";0;1;"";Não permitido;string;FIXO;
 /data/bankingAgents/locations/phones/countryCallingCode;countryCallingCode;Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55';Texto;4;Opcional;Opcional;^\d{1,4}$;;0;1;"";Não permitido;string;55;
-/data/bankingAgents/locations/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19';Texto;2;Opcional;Obrigatório;^\d{2}$;;0;1;"";Não permitido;string;19;
+/data/bankingAgents/locations/phones/areaCode;areaCode;Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19';Texto;2;Opcional;Opcional;^\d{2}$;;0;1;"";Não permitido;string;19;
 /data/bankingAgents/locations/phones/number;number;Número de telefone da dependência - se houver;Texto;11;Opcional;Opcional;^([0-9]{8,11})$;;0;1;"";Não permitido;string;35721199;
 /data/bankingAgents/services;services;Traz a relação de serviços disponbilizados pelo Canal de Atendimento;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/bankingAgents/services/name;name;Relação dos Nomes de serviços prestados pelo Correspondente;Texto;;Obrigatório;Obrigatório;;"RECEPCAO_ENCAMINHAMENTO_PROPOSTAS_ABERTURA_CONTAS_DEPOSITOS_VISTA_PRAZO_POUPANCA_MANTIDOS_INSTITUICAO_CONTRATANTE 
@@ -99,5 +99,5 @@ REALIZA_OPERACOES_CAMBIO
 OUTROS";1;1;"";Não permitido;string;;
 /data/bankingAgents/services/additionalInfo;additionalInfo;Campo aberto para detalhamento;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;
 /data/bankingAgents/contractors;contractors;Relação de informações de um contratante do serviço de correspondente.;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
-/data/bankingAgents/contractors/name;name;Nome do contratante do serviço de correspondente.;Texto;100;Obrigatório;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;
+/data/bankingAgents/contractors/name;name;Nome do contratante do serviço de correspondente.;Texto;100;Obrigatório;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa Contratante;
 /data/bankingAgents/contractors/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;Opcional;^(\d{14})$|^NA$;;1;1;"";Não permitido;string;50685362000135;
