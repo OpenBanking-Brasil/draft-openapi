@@ -14,15 +14,15 @@ paths:
     get:
       tags:
         - Invoice Financings
-      summary: Obtém a lista de Adiantamento de Recebíveis de Pessoa Natural.
-      description: Obtém a lista de Adiantamento de Recebíveis de Pessoa Natural.
+      summary: Obtém a lista de Direitos Creditórios Descontados​ de Pessoa Natural.
+      description: Obtém a lista de Direitos Creditórios Descontados​ de Pessoa Natural.
       operationId: getPersonalInvoiceFinancings
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
         '200':
-          description: Lista de adiantamento de recebíveis de pessoa natural obtida com sucesso.
+          description: Lista de Direitos Creditórios Descontados​ de pessoa natural obtida com sucesso.
           content:
             application/json:
               schema:
@@ -47,15 +47,15 @@ paths:
     get:
       tags:
         - Invoice Financings
-      summary: Obtém a lista de Adiantamento de Recebíveis de Pessoa Jurídica.
-      description: Obtém a lista de Adiantamento de Recebíveis de Pessoa Jurídica.
+      summary: Obtém a lista de Direitos Creditórios Descontados​ de Pessoa Jurídica.
+      description: Obtém a lista de Direitos Creditórios Descontados​ de Pessoa Jurídica.
       operationId: getBusinessInvoiceFinancings
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
         '200':
-          description: Lista de adiantamento de recebíveis de pessoa jurídica obtida com sucesso.
+          description: Lista de Direitos Creditórios Descontados​ de pessoa jurídica obtida com sucesso.
           content:
             application/json:
               schema:
@@ -172,7 +172,7 @@ components:
         data:
           type: array
           minItems: 1
-          description: Conjunto de informações referente ao produto Adiantamento de Recebíveis.
+          description: Conjunto de informações referente ao produto Direitos Creditórios Descontados​.
           items:
             $ref: '#/components/schemas/PersonalInvoiceFinancingsData'
         links:
@@ -388,7 +388,7 @@ components:
         data:
           type: array
           minItems: 1
-          description: Conjunto de informações referente ao produto Adiantamento de Recebíveis.
+          description: Conjunto de informações referente ao produto Direitos Creditórios Descontados​.
           items:
             $ref: '#/components/schemas/BusinessInvoiceFinancingsData'
         links:
