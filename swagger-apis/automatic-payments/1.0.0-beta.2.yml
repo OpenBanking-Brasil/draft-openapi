@@ -129,6 +129,12 @@ info:
         - OwnerStatistics.Spi.FraudMarkers.ScammerAccounts.d90
         - OwnerStatistics.Spi.FraudMarkers.OtherFrauds.d90
         - OwnerStatistics.Spi.FraudMarkers.UnknownFrauds.d90
+    
+    ## Validações da edição do consentimento recorrente para o produto Pix Automático
+
+    Para permitir a edição dos campos de um consentimento na iniciadora sem que se faça necessário o redirecionamento para o 
+    ambiente da detentora de conta, é necessário o envio de indicadores de risco. 
+    Esta medida visa proporcionar à detentora de conta as informações necessárias para decidir sobre os ajustes no consentimento de forma segura
   version: 1.0.0-beta.2
   license:
     name: Apache 2.0
@@ -171,7 +177,7 @@ paths:
         required: true
       responses:
         '201':
-          $ref: '#/components/responses/RecurringConsentsConsentId'
+          $ref: '#/components/responses/RecurringConsentsPost'
         '400':
           $ref: '#/components/responses/BadRequestPaymentsConsents'
         '401':
@@ -928,6 +934,26 @@ components:
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         riskSignals:
           $ref: '#/components/schemas/RiskSignals'
+        automatic:
+          type: object
+          required:
+            - lastLoginDateTime
+            - pixKeyRegistrationDateTime
+          description: |
+            Representa a coleta de sinais de risco com a presença do usuário
+
+            [Restrição] Obrigatório de ser enviado quando a transação não ocorrer na presença do usuário
+          properties:
+            lastLoginDateTime:
+              type: string
+              format: date-time
+              description: Data e hora do último login do cliente na iniciadora
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+            pixKeyRegistrationDateTime:
+              type: string
+              format: date-time
+              description: Data e hora de cadastro da chave Pix do recebedor na iniciadora
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
         localInstrument:
           type: string
           description: |
@@ -1094,26 +1120,6 @@ components:
                 deviceRecognitionVerdict:
                   type: string
                   description: Informa a integridade do dispositivo
-        automatic:
-          type: object
-          required:
-            - lastLoginDateTime
-            - pixKeyRegistrationDateTime
-          description: |
-            Representa a coleta de sinais de risco com a presença do usuário
-
-            [Restrição] Obrigatório de ser enviado quando a transação não ocorrer na presença do usuário
-          properties:
-            lastLoginDateTime:
-              type: string
-              format: date-time
-              description: Data e hora do último login do cliente na iniciadora
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-            pixKeyRegistrationDateTime:
-              type: string
-              format: date-time
-              description: Data e hora de cadastro da chave Pix do recebedor na iniciadora
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
     PostCreditorAccount:
       type: object
       description: |
@@ -1626,6 +1632,8 @@ components:
                 - DETENTORA
             reason:
               $ref: '#/components/schemas/ConsentRejectionReason'
+        riskSignals:
+          $ref: '#/components/schemas/RiskSignals'
     ConsentRejectionReason:
       type: object
       description: |
@@ -1774,6 +1782,8 @@ components:
                 - DETENTORA
             reason:
               $ref: '#/components/schemas/ConsentRevokedReason'
+        riskSignals:
+          $ref: '#/components/schemas/RiskSignals'
     ConsentRevokedReason:
       type: object
       description: |
@@ -2415,6 +2425,167 @@ components:
               maxLength: 20
               format: date-time
               example: '2021-05-21T08:30:00Z'
+    ResponsePostRecurringConsent:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
+          required:
+            - recurringConsentId
+            - statusUpdateDateTime
+            - loggedUser
+            - businessEntity
+            - status
+            - creditors
+            - startDateTime
+            - creationDateTime
+            - expirationDateTime
+            - recurringConfiguration
+          properties:
+            recurringConsentId:
+              type: string
+              pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+              maxLength: 256
+              description: |
+                Identificador único do consentimento de longa duração criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização.
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:  
+                - o namespace(urn)  
+                - o identificador associado ao namespace da instituição transmissora (bancoex)  
+                - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://datatracker.ietf.org/doc/html/rfc8141).
+            statusUpdateDateTime:
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+              description: |
+                Data e hora em que o consentimento teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+            loggedUser:
+              $ref: '#/components/schemas/LoggedUser'
+            businessEntity:
+              $ref: '#/components/schemas/BusinessEntity'
+            status:
+              $ref: '#/components/schemas/EnumAuthorisationStatusType'
+            creditors:
+              $ref: '#/components/schemas/Creditors'
+            startDateTime:
+              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            creationDateTime:
+              description: Data e hora em que o consentimento foi criado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            expirationDateTime:
+              description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              type: string
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              maxLength: 20
+            additionalInformation:
+              description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional no consentimento
+              type: string
+              example: 'Minha recorrência'
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+            debtorAccount:
+              $ref: '#/components/schemas/ConsentsDebtorAccount'
+            rejection:
+              $ref: '#/components/schemas/Rejection'
+            revocation:
+              type: object
+              description: Objeto contendo as informações de revogação dos consentimentos.
+              required:
+                - revokedBy
+                - revokedFrom
+                - revokedAt
+              properties:
+                revokedBy:
+                    type: string
+                    enum:
+                      - INICIADORA
+                      - USUARIO
+                      - DETENTORA
+                    example: INICIADORA
+                    description: |
+                      Quem iniciou a solicitação de revogação  
+                      - INICIADORA
+                      - USUARIO
+                      - DETENTORA
+                revokedFrom:
+                  type: string
+                  enum:
+                    - INICIADORA
+                    - DETENTORA
+                  example: DETENTORA
+                  description: |
+                    Canal onde iniciou-se o processo de revogação   
+                    - INICIADORA  
+                    - DETENTORA  
+                revokedAt:
+                  type: string
+                  format: date-time
+                  example: '2021-05-21T08:30:00Z'
+                  pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                  maxLength: 20
+                  description: Data e hora em que o consentimento foi revogado 
+                reason:
+                  type: object
+                  description: |
+                    Informações sobre o motivo da revogação
+                  required:
+                    - code
+                    - detail
+                  properties:
+                    code:
+                      type: string
+                      enum:
+                        - NAO_INFORMADO
+                        - REVOGADO_USUARIO
+                        - REVOGADO_RECEBEDOR
+                      example: REVOGADO_RECEBEDOR
+                      description: |
+                        Código indicador do motivo da revogação
+                    detail:
+                      type: string
+                      pattern: '[\w\W\s]*'
+                      maxLength: 2048
+                      description: |
+                        Detalhe sobre o motivo de revogação indicado no campo `/data/revocation/reason/code`.
+                        - NAO_INFORMADO: Não informada pela detentora de conta;
+                        - REVOGADO_USUARIO: O usuário pagador revogou a recorrência do consentimento;
+                        - REVOGADO_RECEBEDOR: O usuário recebedor revogou a recorrência do consentimento.
+                      example: O usuário rejeitou a autorização do consentimento 
+            recurringConfiguration:
+              $ref: '#/components/schemas/RecurringConfiguration'
+            ibgeTownCode:
+              type: string
+              minLength: 7
+              maxLength: 7
+              pattern: '^\d{7}$'
+              example: '5300108'
+              description: |
+                Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
+                
+                [Restrições]
+                - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+                - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
+        links:
+          $ref: '#/components/schemas/LinkSingle'
+        meta:
+          $ref: '#/components/schemas/Meta'
     ResponseRecurringConsent:
       type: object
       required:
@@ -2572,6 +2743,8 @@ components:
                 [Restrições]
                 - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
                 - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
+            RiskSignals:
+              $ref: '#/components/schemas/RiskSignals'
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3342,6 +3515,18 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseRecurringConsent'
+    RecurringConsentsPost:
+      description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponsePostRecurringConsent'
     200RecurringPixPaymentRead:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
