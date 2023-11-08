@@ -330,46 +330,46 @@ TRAN";1;1;"";Não permitido;string;CACC;
 - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
 - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
 ";Não permitido;string;5300108;7
-/data/RiskSignals;RiskSignals;"Conjunto de sinais extraídos do dispositivo do usuário para ativação do consentimento de pagamento.
+/data/riskSignals;riskSignals;"Conjunto de sinais extraídos do dispositivo do usuário para ativação do consentimento de pagamento.
 A obrigatoriedade das informações variam de acordo com a plataforma utilizada.
 ";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/RiskSignals/deviceId;deviceId;ID único do dispositivo gerado pela plataforma.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;00000000-54b3-e7c7-0000-000046bffd97;
-/data/RiskSignals/isRootedDevice;isRootedDevice;Indica se o dispositivo atualmente está com permissão de “root”.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
-/data/RiskSignals/screenBrightness;screenBrightness;"Indica o nível de brilho da tela do dispositivo.  
+/data/riskSignals/deviceId;deviceId;ID único do dispositivo gerado pela plataforma.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;00000000-54b3-e7c7-0000-000046bffd97;
+/data/riskSignals/isRootedDevice;isRootedDevice;Indica se o dispositivo atualmente está com permissão de “root”.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
+/data/riskSignals/screenBrightness;screenBrightness;"Indica o nível de brilho da tela do dispositivo.  
 Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
 Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
 ";Número;;Obrigatório;;;1;1;"";Não permitido;number;;
-/data/RiskSignals/elapsedTimeSinceBoot;elapsedTimeSinceBoot;Indica por quanto tempo (em milissegundos) o dispositivo está ligado.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
-/data/RiskSignals/osVersion;osVersion;Versão do sistema operacional.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
-/data/RiskSignals/userTimeZoneOffset;userTimeZoneOffset;"Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
+/data/riskSignals/elapsedTimeSinceBoot;elapsedTimeSinceBoot;Indica por quanto tempo (em milissegundos) o dispositivo está ligado.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
+/data/riskSignals/osVersion;osVersion;Versão do sistema operacional.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
+/data/riskSignals/userTimeZoneOffset;userTimeZoneOffset;"Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
 ";Texto;;Obrigatório;;;1;1;"";Não permitido;string;-03;
-/data/RiskSignals/language;language;Indica o idioma do dispositivo no formato ISO 639-1.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;pt;
-/data/RiskSignals/screenDimensions;screenDimensions;Dimensões da tela do dispositivo;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/RiskSignals/screenDimensions/height;height;Altura da tela, em pixels.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
-/data/RiskSignals/screenDimensions/width;width;Largura da tela, em pixels.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
-/data/RiskSignals/accountTenure;accountTenure;Data de cadastro do cliente na iniciadora.;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-09-01 00:00:00 UTC;
-/data/RiskSignals/geolocation;geolocation;Dados de geolocalização do cliente enquanto logado na iniciadora;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/RiskSignals/geolocation/latitude;latitude;Coordenada latitudial do cliente enquanto logado na iniciadora;Número;;Opcional;;;0;1;"";Não permitido;number;;
-/data/RiskSignals/geolocation/longitude;longitude;Coordenada longitudinal do cliente enquanto logado na iniciadora;Número;;Opcional;;;0;1;"";Não permitido;number;;
-/data/RiskSignals/geolocation/type;type;"Tipo de mecanismo utilizado na geração da geolocalização
+/data/riskSignals/language;language;Indica o idioma do dispositivo no formato ISO 639-1.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;pt;
+/data/riskSignals/screenDimensions;screenDimensions;Dimensões da tela do dispositivo;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/riskSignals/screenDimensions/height;height;Altura da tela, em pixels.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
+/data/riskSignals/screenDimensions/width;width;Largura da tela, em pixels.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
+/data/riskSignals/accountTenure;accountTenure;Data de cadastro do cliente na iniciadora.;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-09-01 00:00:00 UTC;
+/data/riskSignals/geolocation;geolocation;Dados de geolocalização do cliente enquanto logado na iniciadora;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/riskSignals/geolocation/latitude;latitude;Coordenada latitudial do cliente enquanto logado na iniciadora;Número;;Opcional;;;0;1;"";Não permitido;number;;
+/data/riskSignals/geolocation/longitude;longitude;Coordenada longitudinal do cliente enquanto logado na iniciadora;Número;;Opcional;;;0;1;"";Não permitido;number;;
+/data/riskSignals/geolocation/type;type;"Tipo de mecanismo utilizado na geração da geolocalização
 ";Texto;;Opcional;;"COARSE 
 FINE 
 INFERRED";0;1;"";Não permitido;string;;
-/data/RiskSignals/isCallInProgress;isCallInProgress;"Indica chamada ativa no momento do vínculo.
+/data/riskSignals/isCallInProgress;isCallInProgress;"Indica chamada ativa no momento do vínculo.
 
 [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
 ";Booleano;;Condicional;;;0;1;" Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
 ";Não permitido;boolean;;
-/data/RiskSignals/isDevModeEnabled;isDevModeEnabled;Indica se o dispositivo está em modo de desenvolvedor.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
-/data/RiskSignals/isMockGPS;isMockGPS;Indica se o dispositivo está usando um GPS falso.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
-/data/RiskSignals/isEmulated;isEmulated;Indica se o dispositivo é emulado ou real.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
-/data/RiskSignals/isMonkeyRunner;isMonkeyRunner;Indica o uso do MonkeyRunner.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
-/data/RiskSignals/isCharging;isCharging;Indica se a bateria do dispositivo está sendo carregada.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
-/data/RiskSignals/antennaInformation;antennaInformation;Indica em qual antena o dispositivo está conectado.;Texto;;Opcional;;;0;1;"";Não permitido;string;;
-/data/RiskSignals/isUsbConnected;isUsbConnected;Indica se o dispositivo está conectado a outro dispositivo via USB.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
-/data/RiskSignals/integrity;integrity;"Informa a integridade do dispositivo e app.  
+/data/riskSignals/isDevModeEnabled;isDevModeEnabled;Indica se o dispositivo está em modo de desenvolvedor.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
+/data/riskSignals/isMockGPS;isMockGPS;Indica se o dispositivo está usando um GPS falso.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
+/data/riskSignals/isEmulated;isEmulated;Indica se o dispositivo é emulado ou real.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
+/data/riskSignals/isMonkeyRunner;isMonkeyRunner;Indica o uso do MonkeyRunner.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
+/data/riskSignals/isCharging;isCharging;Indica se a bateria do dispositivo está sendo carregada.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
+/data/riskSignals/antennaInformation;antennaInformation;Indica em qual antena o dispositivo está conectado.;Texto;;Opcional;;;0;1;"";Não permitido;string;;
+/data/riskSignals/isUsbConnected;isUsbConnected;Indica se o dispositivo está conectado a outro dispositivo via USB.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
+/data/riskSignals/integrity;integrity;"Informa a integridade do dispositivo e app.  
 No Android, conforme documentação Play API Integrity - [Android](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
 No iOS, conforme documentação App Attest [iOS](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity)
 ";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/RiskSignals/integrity/appRecognitionVerdict;appRecognitionVerdict;Informa a integridade do app;Texto;;Opcional;;;0;1;"";Não permitido;string;;
-/data/RiskSignals/integrity/deviceRecognitionVerdict;deviceRecognitionVerdict;Informa a integridade do dispositivo;Texto;;Opcional;;;0;1;"";Não permitido;string;;
+/data/riskSignals/integrity/appRecognitionVerdict;appRecognitionVerdict;Informa a integridade do app;Texto;;Opcional;;;0;1;"";Não permitido;string;;
+/data/riskSignals/integrity/deviceRecognitionVerdict;deviceRecognitionVerdict;Informa a integridade do dispositivo;Texto;;Opcional;;;0;1;"";Não permitido;string;;

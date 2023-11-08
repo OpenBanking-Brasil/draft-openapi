@@ -365,6 +365,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResponseError'
       security:
+        - OAuth2AuthorizationCode:
+            - openid
+            - 'recurringConsent:recurringConsentId'
+            - recurringPayments
         - NonRedirectAuthorizationCode:
             - openid
             - recurringPayments
@@ -720,7 +724,7 @@ components:
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
                   - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
                   - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
-                  - PARAMETRO_INVALIDO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
                   - NAO_INFORMADO: Não informado pela detentora de conta.
                   - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
                   - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
@@ -2869,7 +2873,7 @@ components:
                 [Restrições]
                 - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
                 - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
-            RiskSignals:
+            riskSignals:
               $ref: '#/components/schemas/RiskSignalsConsents'
         links:
           $ref: '#/components/schemas/LinkSingle'
