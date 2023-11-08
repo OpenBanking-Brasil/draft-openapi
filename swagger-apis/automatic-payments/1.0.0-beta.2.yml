@@ -164,8 +164,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiAuthDateReceptor'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressReceptor'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/XIdempotencyKey'
       requestBody:
@@ -217,9 +217,9 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
-        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xFapiAuthDateIniciador'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressIniciador'
+        - $ref: '#/components/parameters/xFapiInteractionIdUUID'
         - $ref: '#/components/parameters/pathRecurringConsentId'
       responses:
         '200':
@@ -270,8 +270,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiAuthDateIniciador'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressIniciador'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/pathRecurringConsentId'
         - $ref: '#/components/parameters/XIdempotencyKey'
@@ -324,8 +324,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiAuthDateReceptor'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressReceptor'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/XIdempotencyKey'
       requestBody:
@@ -385,8 +385,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiAuthDateReceptor'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressReceptor'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/recurringConsentId'
         - $ref: '#/components/parameters/startDate'
@@ -431,8 +431,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiAuthDateReceptor'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressReceptor'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/pathRecurringPaymentId'
       responses:
@@ -485,8 +485,8 @@ paths:
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiAuthDateReceptor'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddressReceptor'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/pathRecurringPaymentId'
         - $ref: '#/components/parameters/XIdempotencyKey'
@@ -3378,7 +3378,7 @@ components:
         pattern: '[\w\W\s]*'
         minLength: 1
         maxLength: 100
-    xFapiAuthDate:
+    xFapiAuthDateReceptor:
       name: x-fapi-auth-date
       in: header
       description: 'Data em que o usuário logou pela última vez com o receptor. Representada de acordo com a [RFC7231](https://tools.ietf.org/html/rfc7231).Exemplo: Sun, 10 Sep 2017 19:43:31 UTC'
@@ -3388,7 +3388,17 @@ components:
         pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
         minLength: 29
         maxLength: 29
-    xFapiCustomerIpAddress:
+    xFapiAuthDateIniciador:
+      name: x-fapi-auth-date
+      in: header
+      description: 'Data em que o usuário logou pela última vez com o iniciador. Representada de acordo com a [RFC7231](https://tools.ietf.org/html/rfc7231).Exemplo: Sun, 10 Sep 2017 19:43:31 UTC'
+      required: false
+      schema:
+        type: string
+        pattern: '^(Mon|Tue|Wed|Thu|Fri|Sat|Sun), \d{2} (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) \d{4} \d{2}:\d{2}:\d{2} (GMT|UTC)$'
+        minLength: 29
+        maxLength: 29
+    xFapiCustomerIpAddressReceptor:
       name: x-fapi-customer-ip-address
       in: header
       description: O endereço IP do usuário se estiver atualmente logado com o receptor.
@@ -3398,7 +3408,27 @@ components:
         pattern: '[\w\W\s]*'
         minLength: 1
         maxLength: 100
+    xFapiCustomerIpAddressIniciador:
+      name: x-fapi-customer-ip-address
+      in: header
+      description: O endereço IP do usuário se estiver atualmente logado com o iniciador.
+      required: false
+      schema:
+        type: string
+        pattern: '[\w\W\s]*'
+        minLength: 1
+        maxLength: 100
     xFapiInteractionId:
+      name: x-fapi-interaction-id
+      in: header
+      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.'
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        minLength: 1
+        maxLength: 100
+    xFapiInteractionIdUUID:
       name: x-fapi-interaction-id
       in: header
       description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. A detentora deve obrigatoriamente retornar o campo com o mesmo valor recebido da iniciadora.'
