@@ -865,7 +865,6 @@ components:
         - endToEndId
         - date
         - payment
-        - creditorAccount
         - cnpjInitiator
         - ibgeTownCode
         - localInstrument
@@ -965,8 +964,9 @@ components:
           maxLength: 35
           example: 'E00038166201907261559y6j6'
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-            'z'Dígitos decimais, de '0' a '9'
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
     RiskSignalsPayments:
       type: object
       description: |
@@ -1133,7 +1133,8 @@ components:
         - screenDimensions
         - accountTenure
       description: |
-        Representa a coleta de sinais de risco com a presença do usuário
+        Conjunto de sinais extraídos do dispositivo do usuário para ativação do consentimento de pagamento.
+        A obrigatoriedade das informações variam de acordo com a plataforma utilizada.
       properties:
         deviceId:
           type: string
@@ -1161,9 +1162,11 @@ components:
           type: string
           description: |
             Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
+          example: '-03'
         language:
           type: string
           description: Indica o idioma do dispositivo no formato ISO 639-1.
+          example: 'pt'
         screenDimensions:
           type: object
           description: Dimensões da tela do dispositivo
@@ -1184,6 +1187,7 @@ components:
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           description: Data de cadastro do cliente na iniciadora.
+          example: 2023-09-01
         geolocation:
           type: object
           description: Dados de geolocalização do cliente enquanto logado na iniciadora
@@ -1940,12 +1944,10 @@ components:
     RecurringConfiguration:
       type: object
       description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
-      properties:
-        recurringConfiguration:
-          oneOf:
-            - $ref: '#/components/schemas/Automatic'
-            - $ref: '#/components/schemas/Sweeping'
-            - $ref: '#/components/schemas/Vrp'
+      oneOf:
+        - $ref: '#/components/schemas/Automatic'
+        - $ref: '#/components/schemas/Sweeping'
+        - $ref: '#/components/schemas/Vrp'
     Automatic:
       type: object
       properties:
@@ -3007,8 +3009,9 @@ components:
             maxLength: 35
             example: 'E00038166201907261559y6j6'
             description: |
-              Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-              'z'Dígitos decimais, de '0' a '9'
+              Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+              Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+              Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -3022,7 +3025,6 @@ components:
         - status
         - cnpjInitiator
         - payment
-        - creditorAccount
         - localInstrument
       properties:
         recurringPaymentId:
@@ -3154,8 +3156,9 @@ components:
           maxLength: 35
           example: 'E00038166201907261559y6j6'
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-            'z'Dígitos decimais, de '0' a '9'
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
     ResponseRecurringPaymentsData:
       type: object
       required:
@@ -3169,7 +3172,6 @@ components:
         - status
         - cnpjInitiator
         - payment
-        - creditorAccount
       properties:
         recurringPaymentId:
           type: string
@@ -3275,8 +3277,9 @@ components:
           maxLength: 35
           example: 'E00038166201907261559y6j6'
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-            'z'Dígitos decimais, de '0' a '9'
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
