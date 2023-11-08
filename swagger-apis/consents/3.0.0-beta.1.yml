@@ -7,7 +7,15 @@ info:
 
     # Orientações importantes
     A API Consents trata dos consentimentos exclusivamente para a Dados cadastrais e transacionais do Open Finance Brasil.
-    - As informações da instituição receptora não trafegam na API Consents – a autenticação da receptora se dá através do [DCR](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378307/Dynamic+Client+Registration).   
+    - A API consents é composta de endpoints que permitem:
+      - Pedido de criação do consentimento pela receptora: `POST /consents`
+      - Devolução do pedido de criação pela transmissora: `GET /consents/{consentId}`
+      - Pedido de renovação de consentimento do cliente pela receptora: `POST /consents/{consentId}/extends`
+      - Devolução de lista com histórico de renovações efetuadas: `GET /consents/{consentId}/extends)`
+      - Pedido de revogação do consentimento: `DELETE /consents/{consentId}`
+    - Recomenda-se fortemente a leitura da seção “Orientações – Consentimento” para maiores detalhes, regras e restrições referente aos endpoints da API Consents
+    - As informações da instituição receptora não trafegam na API Consents – a autenticação da receptora se dá através do [DCR](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17378307/Dynamic+Client+Registration).
+    - Na chamada para a criação, consulta e revogação do consentimento deve-se utilizar um token gerado via `client_credentials`. Na chamada para renovação do consentimento deve-se utilizar um token gerado via `authorization_code`.
     - Na chamada para a criação do consentimento deve-se utilizar um token gerado via `client_credentials`.
     - Após o `POST` de criação do consentimento, o `STATUS` devolvido na resposta deverá ser `AWAITING_AUTHORISATION`.
     - O `STATUS` será alterado para `AUTHORISED` somente após autenticação e confirmação por parte do usuário na instituição transmissora dos dados.
@@ -15,6 +23,8 @@ info:
     - Todas as datas trafegadas nesta API seguem o padrão da [RFC3339](https://tools.ietf.org/html/rfc3339) e formato "zulu".
     - A descrição do fluxo de consentimento encontra-se disponível no [Portal do desenvolvedor](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/17369300/Dados+Cadastrais+e+Transacionais#Fluxo-b%C3%A1sico-de-consentimento).
     - O arquivo com o mapeamento completo entre `Roles`, `scopes` e `permissions` está disponibilizado no Portal do desenvolvedor, no mesmo item acima - descrição do fluxo de consentimento.
+    - Pedidos de renovação de consentimento somente podem alterar a data de validade (conforme as regras definidas em Orientações – Consentimento) e a finalidade do consentimento, e aplica-se somente a consentimentos ativos ( status AUTHORIZED)
+    - No caso de criação ou renovação de consentimentos com prazo indeterminado, a receptora não deve enviar o atributo expirationDateTime. Para prazos determinados o campo deve ser enviado.
     - A receptora deve enviar obrigatoriamente, no pedido de criação de consentimento, todas as permissions dos agrupamentos de dados as quais ela deseja consentimento, conforme tabela abaixo:
 
       ```
@@ -129,8 +139,13 @@ info:
       ```
     - A instituição transmissora deve validar o preenchimento correto desses agrupamentos no momento da geração do consentimento.
     - Caso a instiuição receptora envie permissões divergentes ao agrupamento especificado na tabela, a transmissora deve rejeitar o pedido da receptora dando retorno HTTP Status Code 400.
-    - Caso o cliente tenha selecionado na receptora uma opção de produtos agrupados, a transmissora deve retornar todas as permissionsreferentes ao agrupamento, mesmo que não os comercialize. Por exemplo, o cliente seleciona na receptora a opção "Operações de Crédito". Nessa situação, a transmissora deve retornar todas as permissionsreferentes a esse agrupamento de produtos: Empréstimos, Financiamentos, Direitos Creditórios e Adiantamento a depositante.
     - A transmissora deve retornar, da lista de permissions requisitadas, apenas o subconjunto de permissions por ela suportada, removendo da lista as permissions de produtos não suportados e retornando HTTP Status Code 201. A única exceção a este comportamento são os casos de produtos agrupados, como Operações de crédito e Investimentos, para os quais todas as permissões do agrupamento devem ser mantidas. Caso não restem permissões funcionais, a instituição transmissora deve retornar o erro HTTP Code "422 Unprocessable Entity".
+    - A renovação de consentimento não pode ser efetuada em situações determinadas. 
+    É esperado status 401 ou 403 para situações em que o erro for tratado na camada de segurança. 
+    Para erros tratados em camada de negócio, a transmissora deve retornar 422 com as mensagens especificadas na documentação caso haja pedido de renovação de consentimentos nas situações abaixo:
+      - Não deve ser possível quando o consentimento foi criado demandando aprovações por múltiplas alçadas
+      - Consentimentos em estado expirado ou cancelado não podem ser renovados sem redirecionamento
+      - Não será permitida uma nova data de expiração de consentimento superior a 12 meses da data de requisição, exceto quando a alteração for para prazo indeterminado
     - Caso o método DELETE seja chamado para um consentimento que já se encontra no STATUS `REJECTED` deve se retornar o STATUS CODE 422.
     - O endpoint `POST /consents/{consentId}/extends` é utilizado para renovação de consentimento ativo do cliente. 
     Ou seja, quando a receptora recebe pedido de renovação de consentimento com status ainda ativo para a transmissora, ela deve requisitar este endpoint.
@@ -176,7 +191,7 @@ servers:
     description: Servidor de Homologação
 tags:
   - name: Consents
-    description: 'Operações para criação, consulta e revogação do consentimento dado pelo cliente.'
+    description: 'Operações para criação, consulta, renovação e revogação do consentimento dado pelo cliente.'
 paths:
   /consents:
     post:
