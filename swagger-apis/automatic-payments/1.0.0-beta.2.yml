@@ -365,6 +365,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResponseError'
       security:
+        - OAuth2AuthorizationCode:
+            - openid
+            - 'recurringConsent:recurringConsentId'
+            - recurringPayments
         - NonRedirectAuthorizationCode:
             - openid
             - recurringPayments
@@ -720,7 +724,7 @@ components:
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
                   - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado).
                   - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
-                  - PARAMETRO_INVALIDO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
                   - NAO_INFORMADO: Não informado pela detentora de conta.
                   - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento.
                   - DETALHE_PAGAMENTO_INVALIDO: Detalhe do pagamento inválido.
@@ -865,7 +869,6 @@ components:
         - endToEndId
         - date
         - payment
-        - creditorAccount
         - cnpjInitiator
         - ibgeTownCode
         - localInstrument
@@ -933,27 +936,7 @@ components:
             
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         riskSignals:
-          $ref: '#/components/schemas/RiskSignals'
-        automatic:
-          type: object
-          required:
-            - lastLoginDateTime
-            - pixKeyRegistrationDateTime
-          description: |
-            Representa a coleta de sinais de risco com a presença do usuário
-
-            [Restrição] Obrigatório de ser enviado quando a transação não ocorrer na presença do usuário
-          properties:
-            lastLoginDateTime:
-              type: string
-              format: date-time
-              description: Data e hora do último login do cliente na iniciadora
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-            pixKeyRegistrationDateTime:
-              type: string
-              format: date-time
-              description: Data e hora de cadastro da chave Pix do recebedor na iniciadora
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          $ref: '#/components/schemas/RiskSignalsPayments'
         localInstrument:
           type: string
           description: |
@@ -985,9 +968,10 @@ components:
           maxLength: 35
           example: 'E00038166201907261559y6j6'
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-            'z'Dígitos decimais, de '0' a '9'
-    RiskSignals:
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
+    RiskSignalsPayments:
       type: object
       description: |
         Sinais de risco para iniciação de pagamentos automáticos
@@ -1120,6 +1104,154 @@ components:
                 deviceRecognitionVerdict:
                   type: string
                   description: Informa a integridade do dispositivo
+        automatic:
+          type: object
+          required:
+            - lastLoginDateTime
+            - pixKeyRegistrationDateTime
+          description: |
+            Representa a coleta de sinais de risco com a presença do usuário
+
+            [Restrição] Obrigatório de ser enviado quando a transação não ocorrer na presença do usuário
+          properties:
+            lastLoginDateTime:
+              type: string
+              format: date-time
+              description: Data e hora do último login do cliente na iniciadora
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+            pixKeyRegistrationDateTime:
+              type: string
+              format: date-time
+              description: Data e hora de cadastro da chave Pix do recebedor na iniciadora
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+    RiskSignalsConsents:
+      type: object
+      required:
+        - deviceId
+        - isRootedDevice
+        - screenBrightness
+        - elapsedTimeSinceBoot
+        - osVersion
+        - userTimeZoneOffset
+        - language
+        - screenDimensions
+        - accountTenure
+      description: |
+        Conjunto de sinais extraídos do dispositivo do usuário para ativação do consentimento de pagamento.
+        A obrigatoriedade das informações variam de acordo com a plataforma utilizada.
+      properties:
+        deviceId:
+          type: string
+          description: ID único do dispositivo gerado pela plataforma.
+          example: 00000000-54b3-e7c7-0000-000046bffd97
+        isRootedDevice:
+          type: boolean
+          description: Indica se o dispositivo atualmente está com permissão de “root”.
+          example: false
+        screenBrightness:
+          type: number
+          format: double
+          description: |
+            Indica o nível de brilho da tela do dispositivo.  
+            Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
+            Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+        elapsedTimeSinceBoot:
+          type: integer
+          format: int64
+          description: Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+        osVersion:
+          type: string
+          description: Versão do sistema operacional.
+        userTimeZoneOffset:
+          type: string
+          description: |
+            Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
+          example: '-03'
+        language:
+          type: string
+          description: Indica o idioma do dispositivo no formato ISO 639-1.
+          example: 'pt'
+        screenDimensions:
+          type: object
+          description: Dimensões da tela do dispositivo
+          required:
+            - height
+            - width
+          properties:
+            height:
+              type: integer
+              format: int64
+              description: Altura da tela, em pixels.
+            width:
+              type: integer
+              format: int64
+              description: Largura da tela, em pixels.
+        accountTenure:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: Data de cadastro do cliente na iniciadora.
+          example: 2023-09-01
+        geolocation:
+          type: object
+          description: Dados de geolocalização do cliente enquanto logado na iniciadora
+          properties:
+            latitude:
+              type: number
+              format: double
+              description: Coordenada latitudial do cliente enquanto logado na iniciadora
+            longitude:
+              type: number
+              format: double
+              description: Coordenada longitudinal do cliente enquanto logado na iniciadora
+            type:
+              type: string
+              description: |
+                Tipo de mecanismo utilizado na geração da geolocalização
+              enum:
+                - COARSE
+                - FINE
+                - INFERRED
+        isCallInProgress:
+          type: boolean
+          description: |
+            Indica chamada ativa no momento do vínculo.
+
+            [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
+        isDevModeEnabled:
+          type: boolean
+          description: Indica se o dispositivo está em modo de desenvolvedor.
+        isMockGPS:
+          type: boolean
+          description: Indica se o dispositivo está usando um GPS falso.
+        isEmulated:
+          type: boolean
+          description: Indica se o dispositivo é emulado ou real.
+        isMonkeyRunner:
+          type: boolean
+          description: Indica o uso do MonkeyRunner.
+        isCharging:
+          type: boolean
+          description: Indica se a bateria do dispositivo está sendo carregada.
+        antennaInformation:
+          type: string
+          description: Indica em qual antena o dispositivo está conectado.
+        isUsbConnected:
+          type: boolean
+          description: Indica se o dispositivo está conectado a outro dispositivo via USB.
+        integrity:
+          type: object
+          description: |
+            Informa a integridade do dispositivo e app.  
+            No Android, conforme documentação Play API Integrity - [Android](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
+            No iOS, conforme documentação App Attest [iOS](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity)
+          properties:
+            appRecognitionVerdict:
+              type: string
+              description: Informa a integridade do app
+            deviceRecognitionVerdict:
+              type: string
+              description: Informa a integridade do dispositivo
     PostCreditorAccount:
       type: object
       description: |
@@ -1633,7 +1765,7 @@ components:
             reason:
               $ref: '#/components/schemas/ConsentRejectionReason'
         riskSignals:
-          $ref: '#/components/schemas/RiskSignals'
+          $ref: '#/components/schemas/RiskSignalsConsents'
     ConsentRejectionReason:
       type: object
       description: |
@@ -1783,7 +1915,7 @@ components:
             reason:
               $ref: '#/components/schemas/ConsentRevokedReason'
         riskSignals:
-          $ref: '#/components/schemas/RiskSignals'
+          $ref: '#/components/schemas/RiskSignalsConsents'
     ConsentRevokedReason:
       type: object
       description: |
@@ -1816,12 +1948,10 @@ components:
     RecurringConfiguration:
       type: object
       description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
-      properties:
-        recurringConfiguration:
-          oneOf:
-            - $ref: '#/components/schemas/Automatic'
-            - $ref: '#/components/schemas/Sweeping'
-            - $ref: '#/components/schemas/Vrp'
+      oneOf:
+        - $ref: '#/components/schemas/Automatic'
+        - $ref: '#/components/schemas/Sweeping'
+        - $ref: '#/components/schemas/Vrp'
     Automatic:
       type: object
       properties:
@@ -2743,8 +2873,8 @@ components:
                 [Restrições]
                 - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
                 - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
-            RiskSignals:
-              $ref: '#/components/schemas/RiskSignals'
+            riskSignals:
+              $ref: '#/components/schemas/RiskSignalsConsents'
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2883,8 +3013,9 @@ components:
             maxLength: 35
             example: 'E00038166201907261559y6j6'
             description: |
-              Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-              'z'Dígitos decimais, de '0' a '9'
+              Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+              Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+              Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -2898,7 +3029,6 @@ components:
         - status
         - cnpjInitiator
         - payment
-        - creditorAccount
         - localInstrument
       properties:
         recurringPaymentId:
@@ -3030,8 +3160,9 @@ components:
           maxLength: 35
           example: 'E00038166201907261559y6j6'
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-            'z'Dígitos decimais, de '0' a '9'
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
     ResponseRecurringPaymentsData:
       type: object
       required:
@@ -3045,7 +3176,6 @@ components:
         - status
         - cnpjInitiator
         - payment
-        - creditorAccount
       properties:
         recurringPaymentId:
           type: string
@@ -3151,8 +3281,9 @@ components:
           maxLength: 35
           example: 'E00038166201907261559y6j6'
           description: |
-            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
-            'z'Dígitos decimais, de '0' a '9'
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
