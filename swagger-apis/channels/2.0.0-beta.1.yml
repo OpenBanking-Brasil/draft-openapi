@@ -7,7 +7,7 @@ info:
     url: 'https://servicedesk.openbankingbrasil.org.br/Login.jsp?navLanguage=pt-BR'
 tags:
   - name: "Channels"
-    description: "Operações para listagem de canais de atendimentos"
+    description: "Operações para listagem de canais de atendimento"
 servers:
   - url: http://api.banco.com.br/open-banking/channels/v2
 paths:
@@ -186,6 +186,7 @@ components:
         - meta
       properties:
         data:
+          description: Conjunto de informações referente aos correspondentes bancários da Instituição.
           type: object
           properties:
             participant:
@@ -199,152 +200,8 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      example:
-        data:
-          participant:
-            brand: 'Organização A'
-            name: 'Empresa A1'
-            cnpjNumber: '45086338000178'
-          bankingAgents:
-            - identification:
-                corporationName: 'Empresa Correspondente A'
-                groupName: 'Grupo Master'
-                cnpjNumber: '02345876000299'
-                isUnderestablishment: true
-              locations:
-                - postalAddress:
-                    address: 'Av Tasuko Ykeda, 25'
-                    districtName: 'Centro'
-                    townName: 'Marília'
-                    countrySubDivision: 'SP'
-                    postCode: '17500001'
-                    additionalInfo: "Loja B."
-                    ibgeCode: "3550308"
-                    country: "Brasil"
-                    countryCode: "BRA"
-                    geographicCoordinates:
-                      latitude: "-90.8365180"
-                      longitude: "-180.836519"
-                  phones:
-                    - type: 'FIXO'
-                      countryCallingCode: '55'
-                      areaCode: '14'
-                      number: '35721199'
-                    - type: 'MOVEL'
-                      countryCallingCode: '55'
-                      areaCode: '14'
-                      number: '997865532'
-                  availability:
-                    standards:
-                      - weekday: SEGUNDA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: TERCA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: QUARTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: QUINTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: SEXTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                    exception: 'Exceto feriados municipais, estaduais e nacionais'
-                    isPublicAccessAllowed: true
-                - postalAddress:
-                    address: 'R Yroshima Takasi, 72'
-                    districtName: 'Altos da Colina'
-                    townName: 'Marília'
-                    countrySubDivision: 'SP'
-                    postCode: '17526760'
-                    additionalInfo: "Loja 2."
-                    ibgeCode: "3550308"
-                    country: "Brasil"
-                    countryCode: "BRA"
-                    geographicCoordinates:
-                      latitude: "-90.8365180"
-                      longitude: "-180.836519"
-                  phones:
-                    - type: 'FIXO'
-                      countryCallingCode: '55'
-                      areaCode: '14'
-                      number: '64721199'
-                  availability:
-                    standards:
-                      - weekday: SEGUNDA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: TERCA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: QUARTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: QUINTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: SEXTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                    exception: 'Exceto feriados municipais, estaduais e nacionais'
-                    isPublicAccessAllowed: true
-                - postalAddress:
-                    address: 'Al Nasso Origami, 15, bloco A'
-                    districtName: 'Centro'
-                    townName: 'Marília'
-                    countrySubDivision: 'SP'
-                    postCode: '17500001'
-                    additionalInfo: "Loja B."
-                    ibgeCode: "3550308"
-                    country: "Brasil"
-                    countryCode: "BRA"
-                    geographicCoordinates:
-                      latitude: "-90.8365180"
-                      longitude: "-180.836519"
-                  availability:
-                    standards:
-                      - weekday: SEGUNDA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: TERCA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: QUARTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: QUINTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                      - weekday: SEXTA_FEIRA
-                        openingTime: '10:00:57Z'
-                        closingTime: '16:00:57Z'
-                    exception: 'Exceto feriados municipais, estaduais e nacionais'
-                    isPublicAccessAllowed: true
-              services:
-                - name: 'RECEPCAO_ENCAMINHAMENTO_PROPOSTAS_ABERTURA_CONTAS_DEPOSITOS_VISTA_PRAZO_POUPANCA_MANTIDOS_INSTITUICAO_CONTRATANTE'
-                  code: 'RECEBE_ENCAMINHA_PROPOSTAS_ABERTURA_CONTAS'
-                  additionalInfo: 'NA'
-                - name: 'REALIZACAO_RECEBIMENTOS_PAGAMENTOS_TRANSFERENCIAS_ELETRONICAS_VISANDO_MOVIMENTACAO_CONTAS_DEPOSITOS_TITULARIDADE_CLIENTES_MANTIDAS_INSTITUICAO_CONTRATANTE'
-                  code: 'REALIZA_RECEBIMENTOS_PAGAMENTOS_TRANSFERENCIAS_ELETRONICAS'
-                  additionalInfo: 'NA'
-                - name: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA_OUTRAS_ATIVIDADES_DECORRENTES_EXECUCAO_CONTRATOS_CONVENIOS_PRESTACAO_SERVICOS'
-                  code: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA_EXECUCAO_CONTRATOS_CONVENIO'
-                  additionalInfo: 'NA'
-              contractors:
-                - name: 'Empresa Contratante 1'
-                  cnpjNumber: '99558332000137'
-        links:
-          self: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          first: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-        meta:
-          totalRecords: 1
-          totalPages: 1
     BankingAgentsParticipant:
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       type: object
       required:
         - brand
@@ -369,7 +226,7 @@ components:
           example: 'Empresa da Organização A'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
           example: "50685362000135"
@@ -378,13 +235,13 @@ components:
       required:
         - name
         - cnpjNumber
-      x-regulatory-required:
-        - name
       properties:
         name:
           type: string
+          description: Nome do contratante do serviço de correspondente.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Empresa Contratante
         cnpjNumber:
           type: string
           pattern: '^(\d{14})$|^NA$'
@@ -400,82 +257,14 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente as dependências própria das instituição.
+          minItems: 1
           items:
             $ref: '#/components/schemas/BranchesData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      example:
-        data:
-          - participant:
-              brand: Organização A
-              name: Empresa A1
-              cnpjNumber: '45086338000178'
-              urlComplementaryList: 'https://empresaa1.com/branches-banking'
-            identification:
-              type: 'AGENCIA'
-              code: '0001'
-              checkDigit: '9'
-              name: 'Marília'
-              relatedBranch: '0001'
-              openingDate: '2010-01-02'
-            postalAddress:
-              address: 'Av Naburo Ykesaki, 1270'
-              additionalInfo: 'Loja B'
-              districtName: 'Centro'
-              townName: 'Marília'
-              ibgeCode: '3550308'
-              countrySubDivision: 'SP'
-              postCode: '17500-001'
-              country: 'Brasil'
-              countryCode: 'BRA'
-              geographicCoordinates:
-                latitude: "-90.8365180"
-                longitude: "-180.836519"
-            availability:
-              standards:
-                - weekday: SEGUNDA_FEIRA
-                  openingTime: '10:00:57Z'
-                  closingTime: '16:00:57Z'
-                - weekday: TERCA_FEIRA
-                  openingTime: '10:00:57Z'
-                  closingTime: '16:00:57Z'
-                - weekday: QUARTA_FEIRA
-                  openingTime: '10:00:57Z'
-                  closingTime: '16:00:57Z'
-                - weekday: QUINTA_FEIRA
-                  openingTime: '10:00:57Z'
-                  closingTime: '16:00:57Z'
-                - weekday: SEXTA_FEIRA
-                  openingTime: '10:00:57Z'
-                  closingTime: '16:00:57Z'
-              exception: 'Exceto feriados municipais, estaduais e nacionais'
-              isPublicAccessAllowed: true
-            phones:
-              - type: FIXO
-                countryCallingCode: '55'
-                areaCode: '14'
-                number: '35721199'
-              - type: MOVEL
-                countryCallingCode: '55'
-                areaCode: '14'
-                number: '997865532'
-            services:
-              - name: "RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA"
-                code: "RECEBE_PAGA_QUALQUER_NATUREZA"
-              - name: "OUTROS_PRODUTOS_SERVICOS"
-                code: "OUTROS_PRODUTOS_SERVICOS"
-                additionalInfo: "Renegociação"
-        links:
-          self: 'https://api.banco.com.br/open-banking/channels/v2/branches'
-          first: 'https://api.banco.com.br/open-banking/channels/v2/branches'
-          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v2/branches'
-        meta:
-          totalRecords: 1
-          totalPages: 1
     BranchesData:
       type: object
       required:
@@ -488,7 +277,7 @@ components:
           $ref: '#/components/schemas/BranchesParticipant'
         identification:
           $ref: '#/components/schemas/BranchIdentification'
-        postalAddresses:
+        postalAddress:
           $ref: '#/components/schemas/BranchPostalAddress'
         availability:
           $ref: '#/components/schemas/BranchAvailability'
@@ -505,6 +294,7 @@ components:
             $ref: '#/components/schemas/BranchService'
           minItems: 1
     BranchesParticipant:
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       type: object
       required:
         - brand
@@ -521,21 +311,28 @@ components:
           description: Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
           maxLength: 80
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Organização A
         name:
           type: string
           maxLength: 80
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Empresa A1
         cnpjNumber:
           type: string
           minLength: 14
           maxLength: 14
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: |
             Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
             Deve-se ter apenas os números do CNPJ, sem máscara
           example: '45086338000178'
         urlComplementaryList:
           type: string
+          description: | 
+            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
+            Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
+            
+            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           maxLength: 1024
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'https://example.com/mobile-banking'
@@ -548,40 +345,14 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente aos canais eletrônicos de atendimento da instituição.
+          minItems: 1
           items:
             $ref: '#/components/schemas/ElectronicChannelsData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      example:
-        data:
-          - participant:
-              brand: 'Organização A'
-              name: 'Empresa A1'
-              cnpjNumber: '45086338000178'
-              urlComplementaryList: 'https://empresaa1.com/branches-banking'
-            identification:
-              type: 'INTERNET_BANKING'
-              additionalInfo: 'NA'
-              urls:
-                - 'https://empresaa1.com/internet-banking'
-            services:
-              - name: "ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA"
-                code: "ABRE_CONTA_DEPOSITO_OU_PRE_PAGA"
-                additionalInfo: 'NA'
-              - name: "SEGUROS"
-                code: "SEGUROS"
-                additionalInfo: 'NA'
-        links:
-          self: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
-          first: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
-          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
-        meta:
-          totalRecords: 1
-          totalPages: 1
     ElectronicChannelsData:
       type: object
       required:
@@ -600,6 +371,7 @@ components:
           description: "Traz a relação de serviços disponbilizados pelo Canal de Atendimento"
     ElectronicChannelsParticipant:
       type: object
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       required:
         - brand
         - name
@@ -624,12 +396,17 @@ components:
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         cnpjNumber:
             type: string
-            pattern: '^(\d{14})$|^NA$'
+            pattern: '^(\d{14})$'
             description: Número completo do CNPJ da instituição
             maxLength: 14
             example: "50685362000135"
         urlComplementaryList:
           type: string
+          description: | 
+            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
+            Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
+            
+            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           maxLength: 1024
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: "https://example.com/mobile-banking"
@@ -662,9 +439,11 @@ components:
           description: Relação de informações de um contratante do serviço de correspondente.
     BankingAgentIdentification:
       type: object
+      description: Lojas do correspondente bancário.
       required:
         - cnpjNumber
         - corporationName
+        - isUnderestablishment
       x-regulatory-required:
         - corporationName
         - groupName
@@ -672,15 +451,20 @@ components:
       properties:
         corporationName:
           type: string
+          description: Nome da loja do correspondente bancário.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Empresa Correspondente A
         groupName:
           type: string
+          description: Nome do grupo do correspondente bancário.
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Grupo Master
         isUnderestablishment:
           type: boolean
           description: Indicador do Correspondente Bancário ser um Substabelecimento (são empresas  que foram contratadas por um correspondente bancário para prestar serviços. A empresa substabelecida é tratada como um correspondente do banco e tem praticamente os mesmos direitos e obrigações que possui o correspondente direto)
+          example: true
         cnpjNumber:
           type: string
           pattern: '^(\d{14})$|^NA$'
@@ -702,6 +486,7 @@ components:
             $ref: '#/components/schemas/Phone'
     BankingAgentPostalAddress:
       type: object
+      description: Informação referente ao endereço postal.
       required:
         - address
         - districtName
@@ -712,11 +497,8 @@ components:
         - address
         - districtName
         - townName
-        - ibgeCode
         - countrySubDivision
         - postCode
-        - country
-        - countryCode
       properties:
         address:
           type: string
@@ -729,7 +511,6 @@ components:
           description: "Alguns logradouros ainda necessitam ser especificados por meio de complemento"
           maxLength: 30
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: 'Fundos'
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
@@ -783,7 +564,7 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: (\d{8}|^NA$)
+          pattern: '^(\d{8})$'
           maxLength: 8
           example: '17500001'
         country:
@@ -795,16 +576,18 @@ components:
         countryCode:
           type: string
           description: Código do país de acordo com a ISO 3166-1 alpha-3
+          minLength: 3
+          maxLength: 3
+          pattern: '^([A-Z]{3})$'
           example: 'BRA'
         geographicCoordinates:
           $ref: '#/components/schemas/GeographicCoordinates'
     BankingAgentAvailability:
       type: object
-      x-regulatory-required:
-        - exception
-        - isPublicAccessAllowed
+      description: Horário de funcionamento das operações.
       properties:
         standards:
+          description: Lista disponibilidade padrão da dependência por dias da semana.
           type: array
           items:
             type: object
@@ -834,10 +617,12 @@ components:
                 pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$
         exception:
           type: string
+          description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Exceto feriados municipais, nacionais e estaduais
         isPublicAccessAllowed:
+          description: Indica se a instalação da Dependência tem acesso restrito a clientes.
           type: boolean
           example: false
     BankingAgentService:
@@ -892,6 +677,7 @@ components:
         - code
     BranchPostalAddress:
       type: object
+      description: Endereço das dependências próprias.
       required:
         - address
         - districtName
@@ -902,11 +688,8 @@ components:
         - address
         - districtName
         - townName
-        - ibgeCode
         - countrySubDivision
         - postCode
-        - country
-        - countryCode
       properties:
         address:
           type: string
@@ -919,7 +702,6 @@ components:
           description: "Alguns logradouros ainda necessitam ser especificados por meio de complemento"
           maxLength: 30
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: 'Fundos'
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
@@ -973,7 +755,7 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: (\d{8}|^NA$)
+          pattern: '^(\d{8})$'
           maxLength: 8
           example: '17500001'
         country:
@@ -992,13 +774,6 @@ components:
           $ref: '#/components/schemas/GeographicCoordinates'
     BranchPhone:
       type: object
-      required:
-        - type
-      x-regulatory-required:
-        - type
-        - countryCallingCode
-        - areaCode
-        - number
       properties:
         type:
           type: string
@@ -1026,14 +801,13 @@ components:
           example: "35721199"
           description: "Número de telefone da dependência - se houver"
     BranchIdentification:
+      description: Identificação das dependência próprias.
       type: object
       x-regulatory-required:
         - type
         - code
         - checkDigit
         - name
-        - relatedBranch
-        - openingDate
       properties:
         type:
           type: string
@@ -1052,28 +826,33 @@ components:
         code:
           type: string
           maxLength: 4
-          pattern: ^\d{4}$|^NA$
+          pattern: '^(\d{4})$'
           description: Código identificador da dependência
+          example: '0001'
         checkDigit:
           type: string
           maxLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Dígito verificador do código da dependência
+          example: '1' 
         name:
           type: string
           maxLength: 100
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Nome da dependência
+          example: Dependência X
         relatedBranch:
           type: string
           maxLength: 4
           pattern: ^\d{4}$
           description: Código da agência vinculada ao Posto de Atendimento - se aplicável
+          example: '0001'
         openingDate:
           type: string
           maxLength: 10
           pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
           description: Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19)
+          example: '2023-10-16'
       required:
         - type
         - code
@@ -1081,9 +860,7 @@ components:
         - name
     BranchAvailability:
       type: object
-      x-regulatory-required:
-        - exception
-        - isPublicAccessAllowed
+      description: Horário de funcionamento das operações.
       properties:
         standards:
           type: array
@@ -1122,12 +899,13 @@ components:
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
+          example: Exceto feriados municipais, estaduais e nacionais
         isPublicAccessAllowed:
           type: boolean
           description: Indica se a instalação da Dependência tem acesso restrito a clientes.
+          example: true
       required:
         - standards
-        - exception
     BranchService:
       type: object
       x-regulatory-required:
@@ -1192,6 +970,7 @@ components:
       - name
     ElectronicChannelIdentification:
       type: object
+      description: Identificação dos canais eletrônicos para atendimento.
       required:
         - type
         - urls
@@ -1222,7 +1001,8 @@ components:
           items:
             $ref: '#/components/schemas/ElectronicChannelUrl'
           minItems: 1
-          description: Lista das URLs que atendem um tipo de canal eletrônico selecionado
+          description: URLs dos canais eletrônicos de atendimento.
+          example: [ "https://empresaa1.com/internet-banking", "https://empresaa1.com/sac", "https://empresaa1.com/ouvidoria"]
     ElectronicChannelUrl:
       type: string
       pattern: ^(?!\s)[\w\W\s]*[^\s]$
@@ -1291,14 +1071,9 @@ components:
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
-          example: "SIC"
     Phone:
       type: object
-      x-regulatory-required:
-        - type
-        - countryCallingCode
-        - areaCode
-        - number
+      description: Lista de telefones do agente bancária.
       properties:
         type:
           type: string
@@ -1334,6 +1109,8 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente aos terminais compartilhados de autoatendimento da instituição.
+          minItems: 1
           items:
             $ref: '#/components/schemas/SharedAutomatedTellerMachinesData'
         links:
@@ -1357,11 +1134,7 @@ components:
             $ref: '#/components/schemas/SharedAutomatedTellerMachinesServices'
     SharedAutomatedTellerMachinesParticipant:
       type: object
-      x-regulatory-required:
-        - brand
-        - name
-        - cnpjNumber
-        - urlComplementaryList
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       properties:
         brand:
           type: string
@@ -1377,7 +1150,7 @@ components:
           example: 'Empresa da Organização A'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
           example: "50685362000135"
@@ -1390,9 +1163,7 @@ components:
           example: 'https://empresadaorganizacaoa.com/complementarylist'
     SharedAutomatedTellerMachinesServices:
       type: object
-      x-regulatory-required:
-        - name
-        - code
+      description: Traz a relação de serviços disponibilizados pelo Canal de Atendimento.
       properties:
         name:
           type: string
@@ -1453,11 +1224,9 @@ components:
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS'
-          example: "Serviços complementares de atendimento via terminais de autoatendimento."
     SharedAutomatedTellerMachinesIdentification:
       type: object
-      x-regulatory-required:
-        - ownerName
+      description: Identificação dos terminais de autoatendimento compartilhados
       properties:
         ownerName:
           type: string
@@ -1478,120 +1247,14 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente aos canais telefônicos de atendimento da instituição.
+          minItems: 1
           items:
             $ref: '#/components/schemas/PhoneChannelsData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
-      example:
-        data:
-          - participant:
-              brand: 'Organização A'
-              name: 'Empresa A1'
-              cnpjNumber: '45086338000178'
-              urlComplementaryList: 'https://empresaa1.com/branches-banking'
-            identification:
-              type: 'CENTRAL_TELEFONICA'
-              phones:
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '35721199'
-                  additionalInfo: 'NA'
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '997865532'
-                  additionalInfo: 'NA'
-            services:
-              - name: 'ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA'
-                code: 'ABRE_CONTA_DEPOSITO_OU_PRE_PAGA'
-              - name: 'RECEBIMENTOS_PAGAMENTOS_QUALQUER_NATUREZA'
-                code: 'RECEBE_PAGA_QUALQUER_NATUREZA'
-              - name: 'OUTROS_PRODUTOS_SERVICOS'
-                code: 'OUTROS_PRODUTOS_SERVICOS'
-                additionalInfo: "Atendimento em outros idiomas"
-          - participant:
-              brand: 'Organização A'
-              name: 'Empresa A1'
-              cnpjNumber: '45086338000178'
-              urlComplementaryList: 'https://empresaa1.com/branches-banking'
-            identification:
-              type: 'SAC'
-              phones:
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '40044828'
-                  additionalInfo: 'DDI ''55''; DDD ''11'', 40044828, ''Para clientes no exterior'''
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '40044828'
-                  additionalInfo: 'DDI '' '', DDD '' '', 40044828, ''Para regiões metropolitanas'''
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '40044828'
-                  additionalInfo: 'DDI '' '', DDD '' '', 40044828, ''Para demais localidades'''
-            services:
-              - name: 'RECLAMACOES'
-                code: 'RECLAMACOES'
-              - name: 'INFORMACOES'
-                code: 'INFORMACOES'
-              - name: 'CANCELAMENTO'
-                code: 'CANCELAMENTO'
-          - participant:
-              brand: 'Organização A'
-              name: 'Empresa A1'
-              cnpjNumber: '45086338000178'
-              urlComplementaryList: 'https://empresaa1.com/branches-banking'
-            identification:
-              type: 'OUVIDORIA'
-              phones:
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '40045555'
-                  additionalInfo: 'DDI ''55''; DDD ''11'', 40045555, ''Para clientes no exterior'''
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '40045555'
-                  additionalInfo: 'DDI '' '', DDD '' '', 40045555, ''Para regiões metropolitanas'''
-                - countryCallingCode: '55'
-                  areaCode: '14'
-                  number: '40045555'
-                  additionalInfo: 'DDI '' '', DDD '' '', 40045555, ''Para demais localidades'''
-            services:
-              - name: 'RECLAMACOES'
-                code: 'RECLAMACOES'
-              - name: 'INFORMACOES'
-                code: 'INFORMACOES'
-          - participant:
-              brand: 'Organização A'
-              name: 'Empresa A1'
-              cnpjNumber: '45086338000178'
-              urlComplementaryList: 'https://empresaa1.com/branches-banking'
-            identification:
-              type: 'OUTROS'
-              additionalInfo: 'Receptivo'
-              phones:
-                - countryCallingCode: '55'
-                  areaCode: 'NA'
-                  number: '40043277'
-                  additionalInfo: 'DDI ''55''; DDD ''11'', 40043277, ''Para clientes no metropolitanas'''
-                - countryCallingCode: 'NA'
-                  areaCode: 'NA'
-                  number: '40043277'
-                  additionalInfo: 'DDI '' '', DDD '' '', 40043277, ''Para regiões localidades'''
-            services:
-              - name: 'OUTROS_PRODUTOS_SERVICOS'
-                code: 'OUTROS_PRODUTOS_SERVICOS'
-                additionalInfo: 'Previdência Privada'
-        links:
-          self: 'https://api.banco.com.br/open-banking/channels/v2/phone-channels'
-          first: 'https://api.banco.com.br/open-banking/channels/v2/phone-channels'
-          prev: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          next: 'https://api.banco.com.br/open-banking/channels/v2/banking-agents'
-          last: 'https://api.banco.com.br/open-banking/channels/v2/phone-channels'
-        meta:
-          totalRecords: 1
-          totalPages: 1
     #### PhoneChannelsBrand ####
     PhoneChannelsData:
       type: object
@@ -1611,6 +1274,7 @@ components:
           description: Traz a relação de serviços disponbilizados pelo Canal de Atendimento
     PhoneChannelsParticipant:
       type: object
+      description: Conjunto de informações relativas ao participante do produto de Open Finance.
       required:
         - brand
         - name
@@ -1635,18 +1299,24 @@ components:
           example: "Empresa da Marca A"
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^(\d{14})$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
           example: "50685362000135"
         urlComplementaryList:
           type: string
+          description: | 
+            URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
+            Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
+            
+            Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           maxLength: 1024
           example: "https://example.com/mobile-banking"
     #### PhoneChannelIdentification ####
     PhoneChannelIdentification:
       type: object
+      description: Identificação dos canais telefônicos de atendimento.
       required:
         - type
       x-regulatory-required:
@@ -1681,8 +1351,6 @@ components:
     PhoneChannelPhone:
       type: object
       required:
-        - countryCallingCode
-        - areaCode
         - number
       x-regulatory-required:
         - countryCallingCode
@@ -1692,26 +1360,26 @@ components:
         countryCallingCode:
           type: string
           maxLength: 4
-          pattern: ^\d{1,4}$|^NA$
+          pattern: '^\d{1,4}$'
           example: "55"
           description: "Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Canal - se houver."
         areaCode:
           type: string
           maxLength: 2
-          pattern: ^\d{2}$|^NA$
+          pattern: '^(\d{2})$'
           example: "19"
           description: "Número de DDD (Discagem Direta à Distância) para telefone de acesso ao Canal - se houver."
         number:
           type: string
-          maxLength: 13
-          pattern: ^([0-9]{8,11})$|^NA$
+          maxLength: 11
+          pattern: '^([0-9]{8,11})$'
           example: "08007787788"
           description: "Número de telefone de acesso ao canal."
         additionalInfo:
           type: string
+          description: Informações adicionais referente ao canal telefônico de atendimento.
           maxLength: 300
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: "Mensagem complementar necessária para o agrupamento da identificação do telefone."
     #### PhoneChannelService ####
     PhoneChannelService:
       type: object
@@ -1775,7 +1443,6 @@ components:
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           maxLength: 2000
           description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
-          example: ""
     GeographicCoordinates:
       type: object
       description: Informação referente a geolocalização informada.
@@ -1794,6 +1461,7 @@ components:
           example: '-180.836519'
     Links:
       type: object
+      description: Referências para outros recursos da API requisitada.
       properties:
         self:
           type: string
@@ -1812,11 +1480,13 @@ components:
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         next:
           type: string
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         last:
           type: string
           description: URL da última página de registros
@@ -1825,6 +1495,7 @@ components:
           example: "https://api.banco.com.br/open-banking/channels/v2/resource"
     Meta:
       type: object
+      description: Meta informações referente à API requisitada.
       properties:
         totalRecords:
           type: integer
@@ -1841,12 +1512,11 @@ components:
 #### ATM specific schemas because of optional NA values ####
     SharedAutomatedTellerMachinesAvailability:
       type: object
-      x-regulatory-required:
-        - exception
-        - isPublicAccessAllowed
+      description: Horário de funcionamento das operações.
       properties:
         standards:
           type: array
+          description: Lista disponibilidade padrão dos terminais de autoatendimento compartilhados por dias da semana.
           items:
             type: object
             properties:
@@ -1876,23 +1546,17 @@ components:
                 example: '16:00:57Z'
         exception:
           type: string
+          description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
           maxLength: 2000
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Exceto feriados municipais, nacionais e estaduais
         isPublicAccessAllowed:
           type: boolean
+          description: Indica se o terminal de autoatendimento compartilhado tem acesso restrito a clientes.
           example: false
     SharedAutomatedTellerMachinesPostalAddress:
       type: object
-      x-regulatory-required:
-        - address
-        - districtName
-        - townName
-        - ibgeCode
-        - countrySubDivision
-        - postCode
-        - country
-        - countryCode
+      description: Endereço dos terminais de autoatendimento compartilhados.
       properties:
         address:
           type: string
@@ -1905,7 +1569,6 @@ components:
           description: "Complemento"
           maxLength: 30
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          example: 'Fundos'
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
@@ -1959,7 +1622,7 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: (\d{8})|^NA$
+          pattern: '^(\d{8})$'
           maxLength: 8
           example: '17500001'
         country:
@@ -2014,11 +1677,13 @@ components:
             - requestDateTime
           properties:
             requestDateTime:
-              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+              description: Data e hora da consulta, conforme especificação RFC-3339, formato UTC.
               type: string
-              maxLength: 20
               format: date-time
-              example: '2021-05-21T08:30:00Z'
+              minLength: 20
+              maxLength: 20
+              pattern: '^[2-9]\d{3}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$'
+              example: '2023-10-09T14:10:00Z'
     ResponseError:
       type: object
       required:
@@ -2054,19 +1719,16 @@ components:
           type: object
           description: Meta informações referente à API requisitada.
           required:
-            - totalRecords
-            - totalPages
+            - requestDateTime
           properties:
-            totalRecords:
-              type: integer
-              format: int32
-              description: Número total de registros no resultado
-              example: 1
-            totalPages:
-              type: integer
-              format: int32
-              description: Número total de páginas no resultado
-              example: 1
+            requestDateTime:
+              description: Data e hora da consulta, conforme especificação RFC-3339, formato UTC.
+              type: string
+              format: date-time
+              minLength: 20
+              maxLength: 20
+              pattern: '^[2-9]\d{3}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$'
+              example: '2023-10-09T14:10:00Z'
   parameters:
     page:
       name: page
