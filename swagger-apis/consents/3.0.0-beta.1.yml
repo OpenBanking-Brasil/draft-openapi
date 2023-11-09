@@ -387,6 +387,9 @@ components:
           required:
             - permissions
             - loggedUser
+          x-regulatory-required:
+            - permissions
+            - expirationDateTime
           properties:
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
@@ -507,6 +510,9 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
+          x-regulatory-required:
+            - permissions
+            - expirationDateTime
           properties:
             consentId:
               description: |
@@ -619,6 +625,9 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
+          x-regulatory-required: 
+            - permissions
+            - expirationDateTime​
           properties:
             consentId:
               description: |
@@ -776,6 +785,8 @@ components:
           required:
             - identification
             - rel
+          x-regulatory-required:
+            - identification
           properties:
             identification:
               type: string
@@ -803,6 +814,8 @@ components:
           required:
             - identification
             - rel
+          x-regulatory-required:
+            - identification
           properties:
             identification:
               type: string
