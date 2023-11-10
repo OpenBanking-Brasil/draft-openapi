@@ -526,6 +526,9 @@ components:
           required:
             - permissions
             - loggedUser
+          x-regulatory-required:
+            - permissions
+            - expirationDateTime
           properties:
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
@@ -673,6 +676,9 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
+          x-regulatory-required:
+            - permissions
+            - expirationDateTime
           properties:
             consentId:
               description: |
@@ -893,6 +899,9 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
+          x-regulatory-required: 
+            - permissions
+            - expirationDateTime​
           properties:
             consentId:
               description: |
@@ -1174,8 +1183,28 @@ components:
         - document
       properties:
         document:
-          $ref: '#/components/schemas/LoggedUserDocument'
+          $ref: '#/components/schemas/LoggedUserDocumentExtends'
     LoggedUserDocument:
+      type: object
+      required:
+        - identification
+        - rel
+      x-regulatory-required:
+        - identification
+      properties:
+        identification:
+          type: string
+          maxLength: 11
+          description: Número do documento de identificação oficial do usuário.
+          example: '11111111111'
+          pattern: '^\d{11}$'
+        rel:
+          type: string
+          maxLength: 3
+          description: Tipo do documento de identificação oficial do usuário.
+          example: CPF
+          pattern: '^[A-Z]{3}$'
+    LoggedUserDocumentExtends:
       type: object
       required:
         - identification
@@ -1214,8 +1243,28 @@ components:
         - document
       properties:
         document:
-          $ref: '#/components/schemas/BusinessEntityDocument'
+          $ref: '#/components/schemas/BusinessEntityDocumentExtends'
     BusinessEntityDocument:
+      type: object
+      required:
+        - identification
+        - rel
+      x-regulatory-required:
+        - identification
+      properties:
+        identification:
+          type: string
+          maxLength: 14
+          description: Número do documento de identificação oficial do titular pessoa jurídica.
+          example: '11111111111111'
+          pattern: '^\d{14}$'
+        rel:
+          type: string
+          maxLength: 4
+          description: Tipo do documento de identificação oficial do titular pessoa jurídica.
+          example: CNPJ
+          pattern: '^[A-Z]{4}$'
+    BusinessEntityDocumentExtends:
       type: object
       required:
         - identification
