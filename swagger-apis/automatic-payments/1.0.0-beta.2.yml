@@ -31,6 +31,12 @@ info:
     ## Aprovações de múltipla alçada
 
     Todas as aprovações devem ser realizadas até a data/hora limite suportada pela detentora e em tempo hábil para realizar o primeiro pagamento.
+    
+    ## Validações da edição do consentimento recorrente para o produto Pix Automático
+
+    Para permitir a edição dos campos de um consentimento na iniciadora sem que se faça necessário o redirecionamento para o 
+    ambiente da detentora de conta, é necessário o envio de indicadores de risco. 
+    Esta medida visa proporcionar à detentora de conta as informações necessárias para decidir sobre os ajustes no consentimento de forma segura
 
     ## Validações
  
@@ -129,12 +135,6 @@ info:
         - OwnerStatistics.Spi.FraudMarkers.ScammerAccounts.d90
         - OwnerStatistics.Spi.FraudMarkers.OtherFrauds.d90
         - OwnerStatistics.Spi.FraudMarkers.UnknownFrauds.d90
-    
-    ## Validações da edição do consentimento recorrente para o produto Pix Automático
-
-    Para permitir a edição dos campos de um consentimento na iniciadora sem que se faça necessário o redirecionamento para o 
-    ambiente da detentora de conta, é necessário o envio de indicadores de risco. 
-    Esta medida visa proporcionar à detentora de conta as informações necessárias para decidir sobre os ajustes no consentimento de forma segura
   version: 1.0.0-beta.2
   license:
     name: Apache 2.0
@@ -1137,8 +1137,9 @@ components:
         - screenDimensions
         - accountTenure
       description: |
-        Conjunto de sinais extraídos do dispositivo do usuário para ativação do consentimento de pagamento.
-        A obrigatoriedade das informações variam de acordo com a plataforma utilizada.
+        Sinais de risco para iniciação de pagamentos automáticos
+
+        [Restrição] Deve ser enviado quando o consentimento for para o produto Sweeping Accounts (O objeto "/data/recurringConfiguration/sweeping" usado no oneOf)
       properties:
         deviceId:
           type: string
@@ -1166,11 +1167,9 @@ components:
           type: string
           description: |
             Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
-          example: '-03'
         language:
           type: string
           description: Indica o idioma do dispositivo no formato ISO 639-1.
-          example: 'pt'
         screenDimensions:
           type: object
           description: Dimensões da tela do dispositivo
@@ -1191,7 +1190,6 @@ components:
           format: date
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           description: Data de cadastro do cliente na iniciadora.
-          example: 2023-09-01
         geolocation:
           type: object
           description: Dados de geolocalização do cliente enquanto logado na iniciadora
