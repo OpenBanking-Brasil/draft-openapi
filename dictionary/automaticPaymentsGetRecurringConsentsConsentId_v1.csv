@@ -27,7 +27,6 @@ Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentI
 - REJECTED - Rejeitado
 - REVOKED - Revogado
 - CONSUMED - Consumido
-- ERRO_IDEMPOTENCIA: Erro idempotência.
 ";Texto;;Obrigatório;;"AWAITING_AUTHORISATION 
 PARTIALLY_ACCEPTED 
 AUTHORISED 
@@ -330,9 +329,11 @@ TRAN";1;1;"";Não permitido;string;CACC;
 - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
 - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
 ";Não permitido;string;5300108;7
-/data/riskSignals;riskSignals;"Conjunto de sinais extraídos do dispositivo do usuário para ativação do consentimento de pagamento.
-A obrigatoriedade das informações variam de acordo com a plataforma utilizada.
-";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/riskSignals;riskSignals;"Sinais de risco para iniciação de pagamentos automáticos
+
+[Restrição] Deve ser enviado quando o consentimento for para o produto Sweeping Accounts (O objeto ""/data/recurringConfiguration/sweeping"" usado no oneOf)
+";Objeto;;Condicional;;;0;1;" Deve ser enviado quando o consentimento for para o produto Sweeping Accounts (O objeto ""/data/recurringConfiguration/sweeping"" usado no oneOf)
+";Não permitido;object;;
 /data/riskSignals/deviceId;deviceId;ID único do dispositivo gerado pela plataforma.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;00000000-54b3-e7c7-0000-000046bffd97;
 /data/riskSignals/isRootedDevice;isRootedDevice;Indica se o dispositivo atualmente está com permissão de “root”.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
 /data/riskSignals/screenBrightness;screenBrightness;"Indica o nível de brilho da tela do dispositivo.  
@@ -342,12 +343,12 @@ Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
 /data/riskSignals/elapsedTimeSinceBoot;elapsedTimeSinceBoot;Indica por quanto tempo (em milissegundos) o dispositivo está ligado.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/riskSignals/osVersion;osVersion;Versão do sistema operacional.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/riskSignals/userTimeZoneOffset;userTimeZoneOffset;"Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
-";Texto;;Obrigatório;;;1;1;"";Não permitido;string;-03;
-/data/riskSignals/language;language;Indica o idioma do dispositivo no formato ISO 639-1.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;pt;
+";Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
+/data/riskSignals/language;language;Indica o idioma do dispositivo no formato ISO 639-1.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/riskSignals/screenDimensions;screenDimensions;Dimensões da tela do dispositivo;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/riskSignals/screenDimensions/height;height;Altura da tela, em pixels.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/riskSignals/screenDimensions/width;width;Largura da tela, em pixels.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
-/data/riskSignals/accountTenure;accountTenure;Data de cadastro do cliente na iniciadora.;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-09-01 00:00:00 UTC;
+/data/riskSignals/accountTenure;accountTenure;Data de cadastro do cliente na iniciadora.;Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;;
 /data/riskSignals/geolocation;geolocation;Dados de geolocalização do cliente enquanto logado na iniciadora;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/riskSignals/geolocation/latitude;latitude;Coordenada latitudial do cliente enquanto logado na iniciadora;Número;;Opcional;;;0;1;"";Não permitido;number;;
 /data/riskSignals/geolocation/longitude;longitude;Coordenada longitudinal do cliente enquanto logado na iniciadora;Número;;Opcional;;;0;1;"";Não permitido;number;;
