@@ -18,6 +18,8 @@ cli.parse!(into: options)
 oas = YAML.load_file(options[:filename])
 output_path = options[:output].realpath.to_s + '/'
 
+$isRegulatoryRequiredAPI = false
+
 headers = {
   'COLUMN_1'  => 'Xpath',
   'COLUMN_2'  => 'Nome',
@@ -114,7 +116,9 @@ def sub_extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'
       spec['name'] = name
       spec['isRequired'] = true if schema['required'] and schema['required'].include? name
       spec['isRegulatoryRequired'] = true if schema['x-regulatory-required'] and schema['x-regulatory-required'].include? name
-
+      if !$isRegulatoryRequiredAPI
+        $isRegulatoryRequiredAPI = true if schema['x-regulatory-required'] and schema['x-regulatory-required'].include? name
+      end
       fields.concat extract_fields(spec, path + '/' + name)
     end
   else
@@ -205,28 +209,7 @@ oas['paths'].each_with_index do |(path, methods)|
             mandatory = 'Condicional'
           end
 
-          row = {
-            headers['COLUMN_1']   => field['path'],
-            headers['COLUMN_2']   => field['name'],
-            headers['COLUMN_3']   => field['description'],
-            headers['COLUMN_4']   => format_type(data_type),
-            headers['COLUMN_5']   => field['maxLength'],
-            headers['COLUMN_6']   => mandatory,
-            headers['COLUMN_7']   => field['pattern'],
-            headers['COLUMN_8']   => format_enum(field['enum']),
-            headers['COLUMN_9']   => min_items,
-            headers['COLUMN_10']  => max_items,
-            headers['COLUMN_11']  => restriction,
-            headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
-            headers['COLUMN_13']  => field['type'],
-            headers['COLUMN_14']  => field['example'],
-            headers['COLUMN_15']  => field['minLength']
-          }
-          rows.push row
-        end
-      end
-    end
-          if oas['info'].to_s.include?('OpenData')
+          if $isRegulatoryRequiredAPI
             row = {
               headersPeS['COLUMN_1']   => field['path'],
               headersPeS['COLUMN_2']   => field['name'],
@@ -272,7 +255,7 @@ oas['paths'].each_with_index do |(path, methods)|
     version = "v" + oas['info']['version'].split(/\./, 3).first
     filename = output_path + spec['operationId'] + "_" + version + '.csv'
     puts '  ├── Writing file ' + filename
-    if oas['info'].to_s.include?('OpenData')
+    if $isRegulatoryRequiredAPI
       generate_csv(filename, headersPeS, rows)
     else
       generate_csv(filename, headers, rows)
