@@ -10,7 +10,7 @@ info:
     - A API consents é composta de endpoints que permitem:
       - Pedido de criação do consentimento pela receptora: `POST /consents`
       - Devolução do pedido de criação pela transmissora: `GET /consents/{consentId}`
-      - Pedido de renovação de consentimento do cliente pela receptora: `POST /consents/{consentId}/extensions`
+      - Pedido de renovação de consentimento do cliente pela receptora: `POST /consents/{consentId}/extends`
       - Devolução de lista com histórico de renovações efetuadas: `GET /consents/{consentId}/extensions)`
       - Pedido de revogação do consentimento: `DELETE /consents/{consentId}`
     - Recomenda-se fortemente a leitura da seção “Orientações – Consentimento” para maiores detalhes, regras e restrições referente aos endpoints da API Consents
@@ -147,9 +147,9 @@ info:
       - Consentimentos em estado expirado ou cancelado não podem ser renovados sem redirecionamento
       - Não será permitida uma nova data de expiração de consentimento superior a 12 meses da data de requisição, exceto quando a alteração for para prazo indeterminado
     - Caso o método DELETE seja chamado para um consentimento que já se encontra no STATUS `REJECTED` deve se retornar o STATUS CODE 422.
-    - O endpoint `POST /consents/{consentId}/extensions` é utilizado para renovação de consentimento ativo do cliente. 
+    - O endpoint `POST /consents/{consentId}/extends` é utilizado para renovação de consentimento ativo do cliente. 
     Ou seja, quando a receptora recebe pedido de renovação de consentimento com status ainda ativo para a transmissora, ela deve requisitar este endpoint.
-    - Apenas consentimentos autorizados (status AUTHORISED) podem ser renovados pelo uso do endpoint `POST /consents/{consentId}/extensions`.
+    - Apenas consentimentos autorizados (status AUTHORISED) podem ser renovados pelo uso do endpoint `POST /consents/{consentId}/extends`.
     Essa renovação é feita exclusivamente via backende resulta em:
       - Alteração do `expirationDateTime` do consentimento vigente;
       - Persistência de informações para listar histórico de alterações que podem ser acessadas via endpoint `GET /consents/{consentId}/extensions`.
@@ -157,21 +157,21 @@ info:
     Ou seja, sempre que o cliente escolher prazo indeterminado para expiração de consentimento, a instituição receptora deve preencher `expirationDateTime= 2300-01-01T00:00:00Z` e assim informá-la para à instituição transmissora. 
     De igual forma, a instituição transmissora deve entender e representar consentimento com `expirationDateTime= 2300-01-01T00:00:00Z` como um consentimento com prazo de expiração indeterminado.
     - Os consentimentos em estado expirado ou cancelado não podem ser renovados sem redirecionamento. 
-    Ou seja, não é possível utilizar o endpoint `POST /consents/{consentId}/extensions` para consentimentos nesses estados (status REJECTED). 
+    Ou seja, não é possível utilizar o endpoint `POST /consents/{consentId}/extends` para consentimentos nesses estados (status REJECTED). 
     A transmissora deve retornar status de erro 422 (`ESTADO_CONSENTIMENTO_INVALIDO`) para requisições que não seguem essa definição.
-    - A renovação de consentimento (`POST /consents/{consentId}/extensions`) deve ser possível por apenas um cliente logado. 
+    - A renovação de consentimento (`POST /consents/{consentId}/extends`) deve ser possível por apenas um cliente logado. 
     Isso implica que qualquer usuário (`loggedUser`) com permissão para o consentimento associado deve ser capaz de finalizar o fluxo de renovação sem redirecionamento.  
     A transmissora deve retornar status de erro 422 (DEPENDE_MULTIPLA_ALCADA) para requisições que necessitam de múltipla alçada.
-    - Para consentimentos Pessoa Natural apenas o loggedUser criador do consentimento consegue renovar sem redirecionamento (`POST /consents/{consentId}/extensions`).
+    - Para consentimentos Pessoa Natural apenas o loggedUser criador do consentimento consegue renovar sem redirecionamento (`POST /consents/{consentId}/extends`).
     A transmissora deve retornar status de erro 403 para requisições que não seguem essa definição.
-    - A renovação de consentimento (`POST /consents/{consentId}/extensions`) deve ocorrer apenas até o período de 12 meses após a data de requisição (`current_datetime<= expirationDateTime<= current_datetime+12meses`), ou com prazo de expiração indeterminado (`expirationDateTime=2300-01-01T00:00:00Z`). 
+    - A renovação de consentimento (`POST /consents/{consentId}/extends`) deve ocorrer apenas até o período de 12 meses após a data de requisição (`current_datetime<= expirationDateTime<= current_datetime+12meses`), ou com prazo de expiração indeterminado (`expirationDateTime=2300-01-01T00:00:00Z`). 
     A transmissora deve retornar status de erro 422 (`DATA_EXPIRACAO_INVALIDA`) para requisições que não seguem essa definição.
-    - A renovação de consentimento (`POST /consents/{consentId}/extensions`) sempre aumenta a data de expiração final do consentimento em relação à data de expiração vigente. 
+    - A renovação de consentimento (`POST /consents/{consentId}/extends`) sempre aumenta a data de expiração final do consentimento em relação à data de expiração vigente. 
     Ou seja, um consentimento com prazo de expiração para 6 meses no futuro não pode ter sua data de expiração alterada para apenas 3 meses no futuro. 
     A transmissora deve retornar status de erro 422 (`DATA_EXPIRACAO_INVALIDA`) para requisições que não seguem essa definição.
     - A renovação de consentimento ativo do cliente somente poderá ser aceita pela transmissora para um usuário logado na receptora, identificado por seu documento (`loggedUser`; `businessEntity` quando aplicável) e permitido a partir de token de acesso (informado no cabeçalho `Authorization`) conseguido anteriormente durante a criação e confirmação do consentimento vigente. 
     A transmissora deve validar documento fornecido (`loggedUser`; `businessEntity` quando aplicável) e token de acesso para executar a renovação de consentimento. Caso a transmissora detecte que trata-se de acesso inválido por questões de segurança, é esperado status de erro 401 ou 403.
-    - Após a renovação de consentimento (`POST /consents/{consentId}/extensions`) a transmissora deve garantir que a data de expiração do refresh token opaco, ao qual o consentimento está associado, seja:
+    - Após a renovação de consentimento (`POST /consents/{consentId}/extends`) a transmissora deve garantir que a data de expiração do refresh token opaco, ao qual o consentimento está associado, seja:
       - sem expiração: refresh token permanece ativo, desde que o consentimento associado permaneça ativo (status AUTHORIZED);
       - com expiração: desde que, no mínimo, a nova data de expiração do refreshtoken seja igual à nova data do consentimento.
     - A lista do payload de resposta do endpoint de histórico de renovações feitas (`GET /consents/{consentId}/extensions`) deve ser entregue em ordem decrescente pela data de requisição (`data[].requestDateTime`). 
@@ -392,11 +392,12 @@ paths:
       security:
         - OAuth2Security:
             - consents
+  '/consents/{consentId}/extends':
     post:
       tags:
         - Consents
       summary: Renovar consentimento identificado por consentId.
-      operationId: consentsPostConsentsConsentIdExtensions
+      operationId: consentsPostConsentsConsentIdExtends
       description: Método utilizado para renovação de consentimento do cliente. O consentimento só pode ser renovado caso esteja ativo (status AUTHORISED) e tenha alçada simples de aprovação (não dependa de múltiplos aprovadores).  A alteração de data efetuada pela renovação deve ser refletida também na consulta do método _GET/consents/{consentId}_.
       parameters:
         - $ref: '#/components/parameters/ConsentId'
