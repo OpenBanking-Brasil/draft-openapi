@@ -397,7 +397,7 @@ paths:
         - Consents
       summary: Renovar consentimento identificado por consentId.
       operationId: consentsPostConsentsConsentIdExtends
-      description: Método utilizado para renovação de consentimento do cliente. O consentimento só pode ser renovado caso esteja ativo (status `AUTHORISED`) e tenha alçada simples de aprovação (não dependa de múltiplos aprovadores).
+      description: Método utilizado para renovação de consentimento do cliente. O consentimento só pode ser renovado caso esteja ativo (status AUTHORISED) e tenha alçada simples de aprovação (não dependa de múltiplos aprovadores).  A alteração de data efetuada pela renovação deve ser refletida também na consulta do método _GET/consents/{consentId}_.
       parameters:
         - $ref: '#/components/parameters/ConsentId'
         - $ref: '#/components/parameters/AuthorizationExtends'
