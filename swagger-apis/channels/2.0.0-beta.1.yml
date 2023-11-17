@@ -215,20 +215,23 @@ components:
         brand:
           type: string
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Nome da marca selecionada pela Organização proprietário da dependência (titular).
           example: Organização A
         name:
           type: string
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Nome da Instituição, pertencente à marca, responsável pelo Correspondente Bancário no país.
           example: 'Empresa da Organização A'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$'
+          pattern: '^\d{14}$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
+          minLength: 14
           example: "50685362000135"
     BankingAgentsContractor:
       type: object
@@ -240,13 +243,15 @@ components:
           type: string
           description: Nome do contratante do serviço de correspondente.
           maxLength: 100
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Empresa Contratante
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^\d{14}$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
+          minLength: 14
           example: "50685362000135"
     ResponseBranchesList:
       type: object
@@ -310,18 +315,20 @@ components:
           type: string
           description: Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Organização A
         name:
           type: string
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Empresa A1
         cnpjNumber:
           type: string
           minLength: 14
           maxLength: 14
-          pattern: '^(\d{14})$'
+          pattern: '^\d{14}$'
           description: |
             Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
             Deve-se ter apenas os números do CNPJ, sem máscara
@@ -334,6 +341,7 @@ components:
             
             Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           maxLength: 1024
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'https://example.com/mobile-banking'
     ResponseElectronicChannelsList:
@@ -387,18 +395,21 @@ components:
           description: Nome da marca selecionada pela Organização proprietária da dependência (titular).
           example: "Marca A"
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         name:
           type: string
           description: Nome da marca selecionada pela Organização proprietária da dependência (titular).
           example: "Empresa da Marca A"
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         cnpjNumber:
             type: string
-            pattern: '^(\d{14})$'
+            pattern: '^\d{14}$'
             description: Número completo do CNPJ da instituição
             maxLength: 14
+            minLength: 14
             example: "50685362000135"
         urlComplementaryList:
           type: string
@@ -408,6 +419,7 @@ components:
             
             Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           maxLength: 1024
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: "https://example.com/mobile-banking"
     BankingAgent:
@@ -453,12 +465,14 @@ components:
           type: string
           description: Nome da loja do correspondente bancário.
           maxLength: 100
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Empresa Correspondente A
         groupName:
           type: string
           description: Nome do grupo do correspondente bancário.
           maxLength: 100
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Grupo Master
         isUnderestablishment:
@@ -467,9 +481,10 @@ components:
           example: true
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$|^NA$'
+          pattern: '^\d{14}$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
+          minLength: 14
           example: "50685362000135"
     BankingAgentLocation:
       type: object
@@ -504,29 +519,34 @@ components:
           type: string
           description: "Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n'"
           maxLength: 150
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Av Naburo Ykesaki, 1270'
         additionalInfo:
           type: string
           description: "Alguns logradouros ainda necessitam ser especificados por meio de complemento"
           maxLength: 30
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
           maxLength: 50
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Centro'
         townName:
           type: string
           description: "Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo'"
           maxLength: 50
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Marília'
         ibgeCode:
           type: string
           description: "Código IBGE do município"
           maxLength: 7
+          minLength: 7
           pattern: ^\d{7}$
           example: '3515890'
         countrySubDivision:
@@ -564,13 +584,14 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: '^(\d{8})$'
+          pattern: '^\d{8}$'
           maxLength: 8
           example: '17500001'
         country:
           type: string
           description: "Nome do país"
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Brasil'
         countryCode:
@@ -619,6 +640,7 @@ components:
           type: string
           description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
           maxLength: 2000
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Exceto feriados municipais, nacionais e estaduais
         isPublicAccessAllowed:
@@ -670,6 +692,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 2000
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Campo aberto para detalhamento
       required:
@@ -695,29 +718,34 @@ components:
           type: string
           description: "Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n'"
           maxLength: 150
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Av Naburo Ykesaki, 1270'
         additionalInfo:
           type: string
           description: "Alguns logradouros ainda necessitam ser especificados por meio de complemento"
           maxLength: 30
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
           maxLength: 50
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Centro'
         townName:
           type: string
           description: "Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo'"
           maxLength: 50
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Marília'
         ibgeCode:
           type: string
           description: "Código IBGE do município"
           maxLength: 7
+          minLength: 7
           pattern: ^\d{7}$
           example: '3515890'
         countrySubDivision:
@@ -755,13 +783,14 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: '^(\d{8})$'
+          pattern: '^\d{8}$'
           maxLength: 8
           example: '17500001'
         country:
           type: string
           description: "Nome do país"
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Brasil'
         countryCode:
@@ -769,6 +798,7 @@ components:
           description: Código do país de acordo com a ISO 3166-1 alpha-3
           pattern: '^([A-Z]{3})$'
           maxLength: 3
+          minLength: 3
           example: 'BRA'
         geographicCoordinates:
           $ref: '#/components/schemas/GeographicCoordinates'
@@ -785,18 +815,21 @@ components:
         countryCallingCode:
           type: string
           maxLength: 4
+          minLength: 1
           pattern: ^\d{1,4}$
           example: "55"
           description: "Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55'"
         areaCode:
           type: string
           maxLength: 2
+          minLength: 2
           pattern: ^\d{2}$
           example: "19"
           description: "Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19'"
         number:
           type: string
           maxLength: 11
+          minLength: 8
           pattern: '^([0-9]{8,11})$'
           example: "35721199"
           description: "Número de telefone da dependência - se houver"
@@ -826,30 +859,35 @@ components:
         code:
           type: string
           maxLength: 4
+          minLength: 4
           pattern: '^(\d{4})$'
           description: Código identificador da dependência
           example: '0001'
         checkDigit:
           type: string
           maxLength: 1
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Dígito verificador do código da dependência
           example: '1' 
         name:
           type: string
           maxLength: 100
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Nome da dependência
           example: Dependência X
         relatedBranch:
           type: string
           maxLength: 4
+          minLength: 4
           pattern: ^\d{4}$
           description: Código da agência vinculada ao Posto de Atendimento - se aplicável
           example: '0001'
         openingDate:
           type: string
           maxLength: 10
+          minLength: 10
           pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$
           description: Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19)
           example: '2023-10-16'
@@ -887,16 +925,17 @@ components:
                 type: string
                 description: Horário de abertura da dependência bancária (UTC)
                 maxLength: 13
-                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$
+                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$
               closingTime:
                 type: string
                 description: Horário de fechamento da dependência bancária (UTC)
                 maxLength: 13
-                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$
+                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$
           minItems: 1
         exception:
           type: string
           maxLength: 2000
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
           example: Exceto feriados municipais, estaduais e nacionais
@@ -964,6 +1003,7 @@ components:
           type: string
           description: Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'
           maxLength: 2000
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
       required:
       - code
@@ -992,6 +1032,7 @@ components:
         additionalInfo:
           type: string
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          minLength: 1
           maxLength: 300
           description: |
             Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'
@@ -1006,6 +1047,7 @@ components:
     ElectronicChannelUrl:
       type: string
       pattern: ^(?!\s)[\w\W\s]*[^\s]$
+      minLength: 1
       maxLength: 1024
     ElectronicChannelService:
       type: object
@@ -1069,6 +1111,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 2000
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
     Phone:
@@ -1085,18 +1128,21 @@ components:
         countryCallingCode:
           type: string
           maxLength: 4
+          minLength: 1
           pattern: ^\d{1,4}$
           example: "55"
           description: "Número de DDI (Discagem Direta Internacional) para  telefone de acesso ao Canal - se houver. p.ex. '55'"
         areaCode:
           type: string
           maxLength: 2
+          minLength: 2
           pattern: ^\d{2}$
           example: "19"
           description: "Número de DDD (Discagem Direta à Distância) do telefone da dependência - se houver. p.ex. '19'"
         number:
           type: string
           maxLength: 11
+          minLength: 8
           pattern: '^([0-9]{8,11})$'
           example: "35721199"
           description: "Número de telefone da dependência - se houver"
@@ -1139,6 +1185,7 @@ components:
         brand:
           type: string
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Nome da marca selecionada pela Organização
           example: Organização A
@@ -1146,17 +1193,20 @@ components:
           type: string
           description: Nome da Instituição, pertencente à Marca.
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Empresa da Organização A'
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$'
+          pattern: '^\d{14}$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
+          minLength: 14
           example: "50685362000135"
         urlComplementaryList:
           type: string
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          minLength: 1
           maxLength: 1024
           description: |
             URL de link para lista complementar com os nomes e CNPJs agrupados para o caso instituições ofertantes de produtos e serviços com as mesmas características.
@@ -1222,6 +1272,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 2000
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS'
     SharedAutomatedTellerMachinesIdentification:
@@ -1231,6 +1282,7 @@ components:
         ownerName:
           type: string
           maxLength: 100
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           description: "Nome do proprietário do terminal de Autoatendimento Compartilhado"
           example: "João da Silva Santos"
@@ -1288,20 +1340,23 @@ components:
         brand:
           type: string
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          minLength: 1
           maxLength: 80
           description: "Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' utilizada está em definição pelos participantes."
           example: "Marca A"
         name:
           type: string
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          minLength: 1
           maxLength: 80
           description: "Nome da Instituição, pertencente à organização, responsável pelo Canal Telefônico."
           example: "Empresa da Marca A"
         cnpjNumber:
           type: string
-          pattern: '^(\d{14})$'
+          pattern: '^\d{14}$'
           description: Número completo do CNPJ da instituição
           maxLength: 14
+          minLength: 14
           example: "50685362000135"
         urlComplementaryList:
           type: string
@@ -1311,6 +1366,7 @@ components:
             
             Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          minLength: 1
           maxLength: 1024
           example: "https://example.com/mobile-banking"
     #### PhoneChannelIdentification ####
@@ -1339,6 +1395,7 @@ components:
         additionalInfo:
           type: string
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          minLength: 1
           maxLength: 300
           description: Campo de texto livre para descrever informações complementateres sobre canais telefônicos. De preenchimento obrigatório quando o tipo de canal de atendimento telefônico selecionado for "OUTROS"
         phones:
@@ -1360,18 +1417,21 @@ components:
         countryCallingCode:
           type: string
           maxLength: 4
+          minLength: 1
           pattern: '^\d{1,4}$'
           example: "55"
           description: "Número de DDI (Discagem Direta Internacional) para telefone de acesso ao Canal - se houver."
         areaCode:
           type: string
           maxLength: 2
+          minLength: 2
           pattern: '^(\d{2})$'
           example: "19"
           description: "Número de DDD (Discagem Direta à Distância) para telefone de acesso ao Canal - se houver."
         number:
           type: string
           maxLength: 11
+          minLength: 8
           pattern: '^([0-9]{8,11})$'
           example: "08007787788"
           description: "Número de telefone de acesso ao canal."
@@ -1379,6 +1439,7 @@ components:
           type: string
           description: Informações adicionais referente ao canal telefônico de atendimento.
           maxLength: 300
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
     #### PhoneChannelService ####
     PhoneChannelService:
@@ -1441,6 +1502,7 @@ components:
         additionalInfo:
           type: string
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          minLength: 1
           maxLength: 2000
           description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
     GeographicCoordinates:
@@ -1452,12 +1514,14 @@ components:
           type: string
           pattern: ^-?\d{1,2}\.\d{1,9}$
           maxLength: 13
+          minLength: 4
           example: '-90.8365180'
         longitude:
           description: Informação da longitude referente a geolocalização informada.
           type: string
           pattern: ^-?\d{1,3}\.\d{1,8}$
           maxLength: 13
+          minLength: 4
           example: '-180.836519'
     Links:
       type: object
@@ -1468,30 +1532,35 @@ components:
           description: URL da página atualmente requisitada
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          minLength: 5
           example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         first:
           type: string
           description: URL da primeira página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          minLength: 5
           example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         prev:
           type: string
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          minLength: 5
           example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         next:
           type: string
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          minLength: 5
           example: "https://api.banco.com.br/open-banking/channels/v2/resource"
         last:
           type: string
           description: URL da última página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          minLength: 5
           example: "https://api.banco.com.br/open-banking/channels/v2/resource"
     Meta:
       type: object
@@ -1536,18 +1605,19 @@ components:
                 type: string
                 description: Horário de abertura (UTC)
                 maxLength: 13
-                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$
+                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$
                 example: '10:00:57Z'
               closingTime:
                 type: string
                 description: Horário de fechamento (UTC)
                 maxLength: 13
-                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$|^NA$
+                pattern: ^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$
                 example: '16:00:57Z'
         exception:
           type: string
           description: Em campo texto devem ser registradas todas as Exceções para o não atendimento.
           maxLength: 2000
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: Exceto feriados municipais, nacionais e estaduais
         isPublicAccessAllowed:
@@ -1562,29 +1632,34 @@ components:
           type: string
           description: "Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n'"
           maxLength: 150
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Av Naburo Ykesaki, 1270'
         additionalInfo:
           type: string
           description: "Complemento"
           maxLength: 30
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
           maxLength: 50
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Centro'
         townName:
           type: string
           description: "Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo'"
           maxLength: 50
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Marília'
         ibgeCode:
           type: string
           description: "Código IBGE do município"
           maxLength: 7
+          minLength: 7
           pattern: \d{7}
           example: '3515890'
         countrySubDivision:
@@ -1622,13 +1697,14 @@ components:
         postCode:
           type: string
           description: "Código de Endereçamento Postal"
-          pattern: '^(\d{8})$'
+          pattern: '^\d{8}$'
           maxLength: 8
           example: '17500001'
         country:
           type: string
           description: "Nome do país"
           maxLength: 80
+          minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: 'Brasil'
         countryCode:
@@ -1636,6 +1712,7 @@ components:
           description: Código do país de acordo com a ISO 3166-1 alpha-3
           pattern: '^([A-Z]{3})$'
           maxLength: 3
+          minLength: 3
           example: 'BRA'
         geographicCoordinates:
           $ref: '#/components/schemas/GeographicCoordinates'
