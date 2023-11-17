@@ -1763,6 +1763,56 @@ components:
               $ref: '#/components/schemas/ConsentRejectionReason'
         riskSignals:
           $ref: '#/components/schemas/RiskSignalsConsents'
+        creditors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: Objeto contendo os dados do recebedor (creditor).
+            properties:
+              name:
+                type: string
+                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+                maxLength: 120
+                example: Marco Antonio de Brito
+                description: |
+                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
+                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+        startDateTime:
+          description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        expirationDateTime:
+          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        automatic:
+          type: object
+          description: Definição da configuração de recorrência para pagamentos automáticos
+          properties:
+            transactionLimit:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '1000000.12'
+              description: Valor da transação com 2 casas decimais.
+            dayOfMonth:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 31
+              example: 10
+              description: |
+                Dia fixo do mês que está prevista a transação.
+
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
     ConsentRejectionReason:
       type: object
       description: |
@@ -1913,6 +1963,56 @@ components:
               $ref: '#/components/schemas/ConsentRevokedReason'
         riskSignals:
           $ref: '#/components/schemas/RiskSignalsConsents'
+        creditors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: Objeto contendo os dados do recebedor (creditor).
+            properties:
+              name:
+                type: string
+                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+                maxLength: 120
+                example: Marco Antonio de Brito
+                description: |
+                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
+                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+        startDateTime:
+          description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        expirationDateTime:
+          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        automatic:
+          type: object
+          description: Definição da configuração de recorrência para pagamentos automáticos
+          properties:
+            transactionLimit:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '1000000.12'
+              description: Valor da transação com 2 casas decimais.
+            dayOfMonth:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 31
+              example: 10
+              description: |
+                Dia fixo do mês que está prevista a transação.
+
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
     ConsentRevokedReason:
       type: object
       description: |
