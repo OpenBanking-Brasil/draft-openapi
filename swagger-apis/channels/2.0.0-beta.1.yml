@@ -528,6 +528,7 @@ components:
           maxLength: 30
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Informações Adicionais
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
@@ -692,10 +693,11 @@ components:
             \n* `OUTROS` - Outros"
         additionalInfo:
           type: string
+          description: Campo aberto para detalhamento
           maxLength: 2000
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          description: Campo aberto para detalhamento
+          example: Informações Adicionais
       required:
         - name
         - code
@@ -728,6 +730,7 @@ components:
           maxLength: 30
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Informações Adicionais
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
@@ -1007,6 +1010,7 @@ components:
           maxLength: 2000
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Informações Adicionais
       required:
       - code
       - name
@@ -1033,12 +1037,13 @@ components:
           example: "CHAT"
         additionalInfo:
           type: string
-          pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          minLength: 1
-          maxLength: 300
           description: |
             Campo de texto livre para descrever complementação de informações necessárias. De preenchimento obrigatório para  o tipo de canal de atendimento 'OUTROS'
             Restrição: Preenchimento obrigatório para o tipo de canal de atendimento 'OUTROS'
+          minLength: 1
+          maxLength: 300
+          pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Informações Adicionais
         urls:
           type: array
           items:
@@ -1112,10 +1117,11 @@ components:
           example: "ABRE_CONTA_DEPOSITO_OU_PRE_PAGA"
         additionalInfo:
           type: string
+          description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
           maxLength: 2000
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
+          example: Informações Adicionais
     Phone:
       type: object
       description: Lista de telefones do agente bancária
@@ -1273,10 +1279,11 @@ components:
           example: OUTROS_PRODUTOS_SERVICOS
         additionalInfo:
           type: string
+          description: Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS'
           maxLength: 2000
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
-          description: Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS'
+          example: Informações Adicionais
     SharedAutomatedTellerMachinesIdentification:
       type: object
       description: Identificação dos terminais de autoatendimento compartilhados
@@ -1396,10 +1403,11 @@ components:
           example: "OUVIDORIA"
         additionalInfo:
           type: string
+          description: Campo de texto livre para descrever informações complementateres sobre canais telefônicos. De preenchimento obrigatório quando o tipo de canal de atendimento telefônico selecionado for "OUTROS"
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           minLength: 1
           maxLength: 300
-          description: Campo de texto livre para descrever informações complementateres sobre canais telefônicos. De preenchimento obrigatório quando o tipo de canal de atendimento telefônico selecionado for "OUTROS"
+          example: Informações Adicionais
         phones:
           type: array
           items:
@@ -1443,6 +1451,7 @@ components:
           maxLength: 300
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Informações Adicionais
     #### PhoneChannelService ####
     PhoneChannelService:
       type: object
@@ -1503,10 +1512,11 @@ components:
           description: "Código dos Serviços efetivamente prestados pelo Canal de Atendimento"
         additionalInfo:
           type: string
+          description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           minLength: 1
           maxLength: 2000
-          description: "Texto livre para complementar informação relativa ao Serviço disponível, quando for selecionada a opção 'OUTROS_PRODUTOS_SERVICOS'"
+          example: Informações Adicionais
     GeographicCoordinates:
       type: object
       description: Informação referente a geolocalização informada.
@@ -1643,6 +1653,7 @@ components:
           maxLength: 30
           minLength: 1
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
+          example: Informações Adicionais
         districtName:
           type: string
           description: "Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso'"
