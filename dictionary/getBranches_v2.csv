@@ -1,6 +1,6 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;Conjunto de informações referente as dependências próprias das instituição.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
-/data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
+/data;data;Conjunto de informações referente as dependências próprias das instituição;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
+/data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da Marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;1
 /data/participant/name;name;;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa A1;1
 /data/participant/cnpjNumber;cnpjNumber;"Número completo do CNPJ da instituição responsável pela dependência - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
@@ -9,9 +9,9 @@ Deve-se ter apenas os números do CNPJ, sem máscara
 /data/participant/urlComplementaryList;urlComplementaryList;"URL do link que conterá a lista complementar com os nomes e CNPJs agrupados sob o mesmo cnpjNumber. Os contidos nessa lista possuem as mesmas características para produtos e serviços. 
 Endereço eletrônico de acesso ao canal. Será obrigatoriamente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada. 
 
-Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada.
+Restrição: Será obrigatorimente preenchido se houver lista complementar com os nomes e CNPJs a ser disponibilizada
 ";Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://example.com/mobile-banking;1
-/data/identification;identification;Identificação das dependência próprias.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data/identification;identification;Identificação das dependência próprias;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/identification/type;type;" > Tipo da dependência, segundo a regulamentação do Bacen,  na Resolução Nº 4072, de 26 de abril de 2012: Dependência de instituições financeiras e demais instituições, autorizadas a funcionar pelo Banco Central do Brasil, destinada à prática das atividades para as quais a instituição esteja regularmente habilitada. 
 * `AGENCIA`: Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória; 
 * `POSTO_ATENDIMENTO`: Posto de Atendimento é a dependência subordinada a agência  ou à sede da instituição financeira, destinada ao atendimento ao público no exercício de uma ou mais de suas atividades, podendo ser fixo ou móvel. Segundo Art.15. Os Postos de Atendimento Bancário (PAB), Postos Avançados de Atendimento (PAA), Postos de Atendimento Transitórios (PAT), Postos de Compra de Ouro (PCO), Postos de Atendimento Cooperativo (PAC), Postos de Atendimento de Microcrédito (PAM), Postos Bancários de Arrecadação e Pagamento (PAP) e os Postos de Câmbio atualmente em funcionamento serão considerados PA. 
@@ -25,7 +25,7 @@ UNIDADE_ADMINISTRATIVA_DESMEMBRADA";1;1;"";Não permitido;string;;
 /data/identification/name;name;Nome da dependência;Texto;100;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Dependência X;1
 /data/identification/relatedBranch;relatedBranch;Código da agência vinculada ao Posto de Atendimento - se aplicável;Texto;4;Opcional;Opcional;^\d{4}$;;0;1;"";Não permitido;string;0001;4
 /data/identification/openingDate;openingDate;Data de abertura da dependência (uma string com data conforme especificação RFC-3339. p.ex. 2014-03-19);Texto;10;Opcional;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"";Não permitido;string;2023-10-16;10
-/data/postalAddress;postalAddress;Endereço das dependências próprias.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data/postalAddress;postalAddress;Endereço das dependências próprias;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;1
 /data/postalAddress/additionalInfo;additionalInfo;Alguns logradouros ainda necessitam ser especificados por meio de complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;1
 /data/postalAddress/districtName;districtName;Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso';Texto;50;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Centro;1
@@ -64,7 +64,7 @@ TO";1;1;"";Não permitido;string;SP;
 /data/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/postalAddress/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;4
 /data/postalAddress/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;4
-/data/availability;availability;Horário de funcionamento das operações.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data/availability;availability;Horário de funcionamento das operações;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/availability/standards;standards;Lista disponibilidade padrão da depêndencia por dias da semana;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/availability/standards/weekday;weekday;Dia da semana de abertura da dependência bancária;Texto;;Obrigatório;Opcional;;"DOMINGO 
 SEGUNDA_FEIRA 
@@ -75,8 +75,8 @@ SEXTA_FEIRA
 SABADO";1;1;"";Não permitido;string;;
 /data/availability/standards/openingTime;openingTime;Horário de abertura da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;1;1;"";Não permitido;string;;
 /data/availability/standards/closingTime;closingTime;Horário de fechamento da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;1;1;"";Não permitido;string;;
-/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento.;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, estaduais e nacionais;1
-/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes.;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;true;
+/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, estaduais e nacionais;1
+/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;true;
 /data/phones;phones;Lista de telefones da Dependência;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
 /data/phones/type;type;Identificação do Tipo de telefone da dependência. p.ex.FIXO, MOVEL.;Texto;;Opcional;Opcional;;"FIXO 
 MOVEL";0;1;"";Não permitido;string;FIXO;
