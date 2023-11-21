@@ -1,6 +1,6 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;Conjunto de informações referente aos terminais compartilhados de autoatendimento da instituição.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
-/data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
+/data;data;Conjunto de informações referente aos terminais compartilhados de autoatendimento da instituição;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
+/data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca selecionada pela Organização;Texto;80;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Organização A;1
 /data/participant/name;name;Nome da Instituição, pertencente à Marca.;Texto;80;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Empresa da Organização A;1
 /data/participant/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Opcional;Opcional;^\d{14}$;;0;1;"";Não permitido;string;50685362000135;14
@@ -8,9 +8,9 @@
 ";Texto;1024;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://empresadaorganizacaoa.com/complementarylist;1
 /data/identification;identification;Identificação dos terminais de autoatendimento compartilhados;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/identification/ownerName;ownerName;Nome do proprietário do terminal de Autoatendimento Compartilhado;Texto;100;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;João da Silva Santos;1
-/data/postalAddress;postalAddress;Endereço dos terminais de autoatendimento compartilhados.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
+/data/postalAddress;postalAddress;Endereço dos terminais de autoatendimento compartilhados;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;1
-/data/postalAddress/additionalInfo;additionalInfo;Complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;1
+/data/postalAddress/additionalInfo;additionalInfo;Complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Informações Adicionais;1
 /data/postalAddress/districtName;districtName;Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso';Texto;50;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Centro;1
 /data/postalAddress/townName;townName;Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo';Texto;50;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Marília;1
 /data/postalAddress/ibgeCode;ibgeCode;Código IBGE do município;Texto;7;Opcional;Opcional;\d{7};;0;1;"";Não permitido;string;3515890;7
@@ -47,8 +47,8 @@ TO";0;1;"";Não permitido;string;SP;
 /data/postalAddress/geographicCoordinates;geographicCoordinates;Informação referente a geolocalização informada.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/postalAddress/geographicCoordinates/latitude;latitude;Informação da latitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,2}\.\d{1,9}$;;0;1;"";Não permitido;string;-90.8365180;4
 /data/postalAddress/geographicCoordinates/longitude;longitude;Informação da longitude referente a geolocalização informada.;Texto;13;Opcional;Opcional;^-?\d{1,3}\.\d{1,8}$;;0;1;"";Não permitido;string;-180.836519;4
-/data/availability;availability;Horário de funcionamento das operações.;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
-/data/availability/standards;standards;Lista disponibilidade padrão dos terminais de autoatendimento compartilhados por dias da semana.;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
+/data/availability;availability;Horário de funcionamento das operações;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
+/data/availability/standards;standards;Lista disponibilidade padrão dos terminais de autoatendimento compartilhados por dias da semana;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
 /data/availability/standards/weekday;weekday;Dia da semana de abertura;Texto;;Opcional;Opcional;;"DOMINGO 
 SEGUNDA_FEIRA 
 TERCA_FEIRA 
@@ -58,8 +58,8 @@ SEXTA_FEIRA
 SABADO";0;1;"";Não permitido;string;SEGUNDA_FEIRA;
 /data/availability/standards/openingTime;openingTime;Horário de abertura (UTC);Texto;13;Opcional;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;0;1;"";Não permitido;string;10:00:57Z;
 /data/availability/standards/closingTime;closingTime;Horário de fechamento (UTC);Texto;13;Opcional;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;0;1;"";Não permitido;string;16:00:57Z;
-/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento.;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, nacionais e estaduais;1
-/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se o terminal de autoatendimento compartilhado tem acesso restrito a clientes.;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;false;
+/data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, nacionais e estaduais;1
+/data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se o terminal de autoatendimento compartilhado tem acesso restrito a clientes;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;false;
 /data/services;services;;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
 /data/services/name;name;Nome dos Serviços efetivamente prestados pelo Terminal de Autoatendimento Compartilhado informado;Texto;;Opcional;Opcional;;"ABERTURA_CONTAS_DEPOSITOS_OU_PAGAMENTO_PRE_PAGA 
 SAQUE_MOEDA_EM_ESPECIE 
@@ -105,4 +105,4 @@ OUTROS_PRODUTOS_SERVICOS
 CANCELAMENTO 
 INFORMACOES 
 RECLAMACOES";0;1;"";Não permitido;string;OUTROS_PRODUTOS_SERVICOS;
-/data/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;1
+/data/services/additionalInfo;additionalInfo;Texto livre para complementar informação relativa ao Serviço disponível, quando for preenchida a opção 'OUTROS_PRODUTOS_SERVICOS';Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Informações Adicionais;1
