@@ -13,7 +13,7 @@
 /data/bankingAgents/locations;locations;Relação de informações referentes as localizações dos Correspondentes bancários.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/bankingAgents/locations/postalAddress;postalAddress;Informação referente ao endereço postal;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/bankingAgents/locations/postalAddress/address;address;Deverá trazer toda a informação referente ao endereço da dependência informada: Tipo de logradouro + Nome do logradouro + Número do Logradouro (se não existir usar ' s/n') + complemento (se houver), como, p.ex.: 'R Diamatina, 59, bloco 35, fundos' 'Praça da Boa Vontade s/n';Texto;150;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;1
-/data/bankingAgents/locations/postalAddress/additionalInfo;additionalInfo;Alguns logradouros ainda necessitam ser especificados por meio de complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;1
+/data/bankingAgents/locations/postalAddress/additionalInfo;additionalInfo;Alguns logradouros ainda necessitam ser especificados por meio de complemento;Texto;30;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Informações Adicionais;1
 /data/bankingAgents/locations/postalAddress/districtName;districtName;Bairro é uma comunidade ou região localizada em uma cidade ou município de acordo com as suas subdivisões geográficas. p.ex: 'Paraíso';Texto;50;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Centro;1
 /data/bankingAgents/locations/postalAddress/townName;townName;Localidade: O nome da localidade corresponde à designação da cidade ou município no qual o endereço está localizado. p.ex. 'São Paulo';Texto;50;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Marília;1
 /data/bankingAgents/locations/postalAddress/ibgeCode;ibgeCode;Código IBGE do município;Texto;7;Opcional;Opcional;^\d{7}$;;0;1;"";Não permitido;string;3515890;7
@@ -97,7 +97,7 @@ RECEBE_PAGAMENTOS_RELACIONADOS_LETRAS_CAMBIO_ACEITE_INSTITUICAO
 RECEBE_ENCAMINHA_PROPOSTAS_FORNECIMENTO_CARTAO_CREDITO 
 REALIZA_OPERACOES_CAMBIO 
 OUTROS";1;1;"";Não permitido;string;;
-/data/bankingAgents/services/additionalInfo;additionalInfo;Campo aberto para detalhamento;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;;1
+/data/bankingAgents/services/additionalInfo;additionalInfo;Campo aberto para detalhamento;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Informações Adicionais;1
 /data/bankingAgents/contractors;contractors;Relação de informações de um contratante do serviço de correspondente.;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
 /data/bankingAgents/contractors/name;name;Nome do contratante do serviço de correspondente;Texto;100;Obrigatório;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa Contratante;1
 /data/bankingAgents/contractors/cnpjNumber;cnpjNumber;Número completo do CNPJ da instituição;Texto;14;Obrigatório;Opcional;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;14
