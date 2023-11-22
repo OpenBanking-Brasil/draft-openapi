@@ -1,20 +1,20 @@
 ﻿openapi: 3.0.0
 info:
-  title: APIs OpenData do Open Finance Brasil
-  description: As APIs descritas neste documento são referentes as APIs da fase OpenData do Open Finance Brasil.
+  title: API OpenData Channels do Open Finance Brasil
+  description: A API descrita neste documento é referente as API Channels da fase OpenData do Open Finance Brasil.
   version: '2.0.0-beta.1'
   contact:
     url: 'https://servicedesk.openbankingbrasil.org.br/Login.jsp?navLanguage=pt-BR'
 tags:
-  - name: "Channels"
-    description: "Operações para listagem de canais de atendimento"
+  - name: Channels
+    description: Operações para listagem de canais de atendimento
 servers:
   - url: http://api.banco.com.br/open-banking/channels/v2
 paths:
   /banking-agents:
     get:
       tags:
-        - "Channels"
+        - Channels
       summary: Obtém a lista de correspondentes bancários da instituição financeira.
       description: "Método para obter a lista de correspondentes bancários da instituição financeira."
       operationId: "getBankingAgents"
