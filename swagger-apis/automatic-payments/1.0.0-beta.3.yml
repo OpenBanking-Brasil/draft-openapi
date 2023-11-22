@@ -865,7 +865,6 @@ components:
       type: object
       description: Objeto contendo dados do pagamento e do recebedor (creditor).
       required:
-        - recurringConsentId
         - endToEndId
         - date
         - payment
@@ -887,6 +886,8 @@ components:
             - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
         endToEndId:
           $ref: '#/components/schemas/EndToEndId'
         date:
@@ -3024,7 +3025,6 @@ components:
         type: object
         required:
           - recurringPaymentId
-          - recurringConsentId
           - endToEndId
           - date
           - creationDateTime
@@ -3056,6 +3056,8 @@ components:
               - o identificador associado ao namespace da instituição transmissora (bancoex)
               - o identificador específico dentro do namespace (C1DD33123).
               Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+              [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
           endToEndId:
             $ref: '#/components/schemas/EndToEndId'
           date:
@@ -3110,7 +3112,6 @@ components:
       type: object
       required:
         - recurringPaymentId
-        - recurringConsentId
         - endToEndId
         - date
         - creationDateTime
@@ -3145,6 +3146,8 @@ components:
             - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
         endToEndId:
           $ref: '#/components/schemas/EndToEndId'
         date:
@@ -3257,7 +3260,6 @@ components:
       type: object
       required:
         - recurringPaymentId
-        - recurringConsentId
         - endToEndId
         - date
         - creationDateTime
@@ -3291,6 +3293,8 @@ components:
             - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
         endToEndId:
           $ref: '#/components/schemas/EndToEndId'
         date:
