@@ -1426,8 +1426,11 @@ components:
     ConsentsDebtorAccount:
       type: object
       description: |
-        Objeto que contém a identificação da conta de origem do pagador. As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. 
-        Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.  
+        Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
+
+        [Restrições]
+        - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+        - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
       required:
         - ispb
         - issuer
@@ -2792,18 +2795,6 @@ components:
                       example: O usuário rejeitou a autorização do consentimento 
             recurringConfiguration:
               $ref: '#/components/schemas/RecurringConfiguration'
-            ibgeTownCode:
-              type: string
-              minLength: 7
-              maxLength: 7
-              pattern: '^\d{7}$'
-              example: '5300108'
-              description: |
-                Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
-                
-                [Restrições]
-                - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
-                - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2953,18 +2944,6 @@ components:
                       example: O usuário rejeitou a autorização do consentimento 
             recurringConfiguration:
               $ref: '#/components/schemas/RecurringConfiguration'
-            ibgeTownCode:
-              type: string
-              minLength: 7
-              maxLength: 7
-              pattern: '^\d{7}$'
-              example: '5300108'
-              description: |
-                Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
-                
-                [Restrições]
-                - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
-                - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
             riskSignals:
               $ref: '#/components/schemas/RiskSignalsConsents'
         links:
