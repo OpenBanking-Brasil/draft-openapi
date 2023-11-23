@@ -139,34 +139,34 @@ info:
         &ensp;5.1.9 - Valor inválido: O valor enviado não é válido para o QR Code informado (VALOR_INVALIDO);  
         &ensp;5.1.10 - Não informado: Demais validações não explicitamente informadas (ex. suspeita de fraude) e consentimentos rejeitados em versões que não existiam o campo rejectionReason na API de Pagamentos (NAO_INFORMADO)  
         &ensp;5.1.11 - Tempo expirado consumo: O usuário não finalizou o fluxo de pagamento e o consentimento expirou (TEMPO_EXPIRADO_CONSUMO).  
-      5.2 **[Momentos obrigatórios de validação dos rejectionReasons de acordo com o funil de consentimentos.](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/150863940)**
+      5.2 **[Momentos obrigatórios de validação dos rejectionReasons de acordo com o funil de consentimentos.](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/150863940) Para casos em que um consentimento for rejeitado por mais de um motivo, seguir a ordem de prioridade da tabela.**
       
       ```
-      |----------------------------------|------------------------------|
-      | Etapas do funil de consentimento | rejectionReason/code         |
-      |----------------------------------|------------------------------|
-      | Início da autenticação           | FALHA_INFRAESTRUTURA         |
-      |                                  | TEMPO_EXPIRADO_AUTORIZACAO   |
-      |                                  | NAO_INFORMADO                |
-      |----------------------------------|------------------------------|
-      | Conclusão da autenticação        | FALHA_INFRAESTRUTURA         |
-      |                                  | TEMPO_EXPIRADO_AUTORIZACAO   |
-      |                                  | REJEITADO_USUARIO            |
-      |                                  | NAO_INFORMADO                |
-      |----------------------------------|------------------------------|
-      | Autorização do cliente           | FALHA_INFRAESTRUTURA         |
-      |                                  | CONTAS_ORIGEM_DESTINO_IGUAIS |
-      |                                  | CONTA_NAO_PERMITE_PAGAMENTO  |
-      |                                  | SALDO_INSUFICIENTE           |
-      |                                  | VALOR_ACIMA_LIMITE           |
-      |                                  | QRCODE_INVALIDO              |
-      |                                  | VALOR_INVALIDO               |
-      |                                  | NAO_INFORMADO                |
-      |----------------------------------|------------------------------|
-      | Authorisation code emitido       | FALHA_INFRAESTRUTURA         |
-      |                                  | TEMPO_EXPIRADO_CONSUMO       |
-      |                                  | NAO_INFORMADO                |
-      |----------------------------------|------------------------------|
+      |----------------------------------|------------------------------|---------------------|
+      | Etapas do funil de consentimento | rejectionReason/code         | Ordem de prioridade |
+      |----------------------------------|------------------------------|---------------------|
+      |                                  | TEMPO_EXPIRADO_AUTORIZACAO   |          1          |
+      | Início da autenticação           | FALHA_INFRAESTRUTURA         |          2          |
+      |                                  | NAO_INFORMADO                |          3          |
+      |----------------------------------|------------------------------|---------------------|
+      |                                  | TEMPO_EXPIRADO_AUTORIZACAO   |          1          |
+      |                                  | REJEITADO_USUARIO            |          2          |
+      | Conclusão da autenticação        | FALHA_INFRAESTRUTURA         |          3          |
+      |                                  | NAO_INFORMADO                |          4          |
+      |----------------------------------|------------------------------|---------------------|
+      |                                  | CONTA_NAO_PERMITE_PAGAMENTO  |          1          |
+      |                                  | CONTAS_ORIGEM_DESTINO_IGUAIS |          2          |
+      |                                  | VALOR_INVALIDO               |          3          |
+      | Autorização do cliente           | QRCODE_INVALIDO              |          4          |
+      |                                  | VALOR_ACIMA_LIMITE           |          5          |
+      |                                  | SALDO_INSUFICIENTE           |          6          |
+      |                                  | FALHA_INFRAESTRUTURA         |          7          |
+      |                                  | NAO_INFORMADO                |          8          |
+      |----------------------------------|------------------------------|---------------------|
+      |                                  | FALHA_INFRAESTRUTURA         |          1          |
+      | Authorisation code emitido       | NAO_INFORMADO                |          2          |
+      |                                  | TEMPO_EXPIRADO_CONSUMO       |          3          |
+      |----------------------------------|------------------------------|---------------------|
       ```
       Existem dois `endpoints` para cancelamento de pagamentos, um deles é o _PATCH /pix/payments/{paymentId}_ e o outro é o _PATCH /pix/payments/consents/{consentId}_.
       - O _PATCH /pix/payments/{paymentId}_ deve ser utilizado para o cancelamento de um pagamento de forma unitária. Não deve ser utilizado para o cancelamento de todos os agendamentos recorrentes associados a um consentimento.
