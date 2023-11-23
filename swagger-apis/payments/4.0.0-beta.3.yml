@@ -730,17 +730,7 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
-                  description: |
-                    [Restrição] Mutuamente excludente com o campo date. 
-                    Este campo é obrigatório no caso de agendamento. 
-                    Neste caso, o campo date não deverá ser informado. 
-                    O prazo máximo para o consentimento deverá ser de dois anos, contando a partir da data de criação do consentimento retornada na criação do mesmo (campo /data/creationDateTime).
-                  oneOf:
-                    - $ref: '#/components/schemas/ScheduleSingle'
-                    - $ref: '#/components/schemas/ScheduleDaily'
-                    - $ref: '#/components/schemas/ScheduleWeekly'
-                    - $ref: '#/components/schemas/ScheduleMonthly'
-                    - $ref: '#/components/schemas/ScheduleCustom'
+                  $ref: '#/components/schemas/Schedule'
                 date:
                   type: string
                   format: date
@@ -786,6 +776,19 @@ components:
                   $ref: '#/components/schemas/Details'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
+    Schedule:
+      description: |
+        [Restrição] Mutuamente excludente com o campo date. 
+        Este campo é obrigatório no caso de agendamento. 
+        Neste caso, o campo date não deverá ser informado. 
+        O prazo máximo para o consentimento deverá ser de dois anos, contando a partir da data de criação do consentimento retornada na criação do mesmo (campo /data/creationDateTime). 
+        Agendamento de pagamento único deve utilizar exclusivamente o objeto "single".
+      oneOf:
+        - $ref: '#/components/schemas/ScheduleSingle'
+        - $ref: '#/components/schemas/ScheduleDaily'
+        - $ref: '#/components/schemas/ScheduleWeekly'
+        - $ref: '#/components/schemas/ScheduleMonthly'
+        - $ref: '#/components/schemas/ScheduleCustom'
     CreatePixPayment:
       type: object
       required:
@@ -1607,18 +1610,7 @@ components:
         type:
           $ref: '#/components/schemas/EnumPaymentType'
         schedule:
-          description: |
-            [Restrição] Mutuamente excludente com o campo date. 
-
-            Este campo é obrigatório no caso de agendamento. 
-
-            Neste caso, o campo date não deve ser informado.
-          oneOf:
-            - $ref: '#/components/schemas/ScheduleSingle'
-            - $ref: '#/components/schemas/ScheduleDaily'
-            - $ref: '#/components/schemas/ScheduleWeekly'
-            - $ref: '#/components/schemas/ScheduleMonthly'
-            - $ref: '#/components/schemas/ScheduleCustom'
+          $ref: '#/components/schemas/Schedule'
         date:
           type: string
           format: date
@@ -2030,18 +2022,7 @@ components:
                 type:
                   $ref: '#/components/schemas/EnumPaymentType'
                 schedule:
-                  description: |
-                    [Restrição] Mutuamente excludente com o campo date. 
-
-                    Este campo é obrigatório no caso de agendamento. 
-
-                    Neste caso, o campo date não deve ser informado.
-                  oneOf:
-                    - $ref: '#/components/schemas/ScheduleSingle'
-                    - $ref: '#/components/schemas/ScheduleDaily'
-                    - $ref: '#/components/schemas/ScheduleWeekly'
-                    - $ref: '#/components/schemas/ScheduleMonthly'
-                    - $ref: '#/components/schemas/ScheduleCustom'
+                  $ref: '#/components/schemas/Schedule'
                 date:
                   type: string
                   format: date
@@ -2615,11 +2596,12 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               example: '2023-08-23'
               description: |
-                Define a data alvo da liquidação do pagamento. 
-
+                Define a data alvo da liquidação do pagamento.
                 O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
 
-                Observação: Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+365 corridos a partir da data do consentimento considerando o fuso horário de Brasília
+                [Restrição] Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em 
+                relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+730 corridos a 
+                partir da data do consentimento, também considerando o fuso horário de Brasília.
     ScheduleDaily:
       type: object
       required:
@@ -2638,10 +2620,11 @@ components:
               maxLength: 10
               example: '2023-08-23'
             quantity:
+              description: Define a quantidade de pagamentos que serão enviados para liquidação.
               type: integer
               format: int32
-              minimum: 1
-              maximum: 2147483647
+              minimum: 2
+              maximum: 730
               example: 3
     ScheduleWeekly:
       type: object
@@ -2673,10 +2656,11 @@ components:
               maxLength: 10
               example: '2023-08-23'
             quantity:
+              description: Define a quantidade de pagamentos que serão enviados para liquidação.
               type: integer
               format: int32
-              minimum: 1
-              maximum: 2147483647
+              minimum: 2
+              maximum: 104
               example: 10
     ScheduleMonthly:
       type: object
@@ -2704,9 +2688,9 @@ components:
             quantity:
               type: integer
               format: int32
-              minimum: 1
-              maximum: 2147483647
-              example: 36
+              minimum: 2
+              maximum: 24
+              example: 24
     ScheduleCustom:
       type: object
       required:
@@ -2720,6 +2704,8 @@ components:
           properties:
             dates:
               type: array
+              maxItems: 24
+              minItems: 2
               example: ['2023-08-23', '2023-09-26']
               items:
                 type: string
