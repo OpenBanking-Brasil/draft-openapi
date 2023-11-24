@@ -37,6 +37,12 @@ info:
     Para o caso de Pix imediato, todas as aprovações necessárias devem ser realizadas nos canais da detentora até às 23:59 (horário de Brasília) da data de solicitação do pagamento.
     Já para o caso de Pix agendado, todas as aprovações devem ser realizadas até a data/hora limite suportada pela detentora.
 
+    ## Validações para pagamentos recorrentes
+
+    Caso a data de liquidação enviada pela iniciadora no endToEndId seja de um dia inexistente, (ex.: 31/02) a detentora deve 
+    rejeitar com erro 422 com código PARAMETRO_INVALIDO e detalhe “Data de liquidação inválida“. 
+    A iniciadora deverá solicitar um novo consentimento ao usuário e corrigir as datas de liquidação.
+
     ## Validações
     **Validações** (*após o processo de DCR e obtenção de token client credential*– não escopo dessa documentação)  
     Durante a jornada de iniciação de pagamento, diferentes validações são necessárias pela instituição detentora 
@@ -171,12 +177,6 @@ info:
       Existem dois `endpoints` para cancelamento de pagamentos, um deles é o _PATCH /pix/payments/{paymentId}_ e o outro é o _PATCH /pix/payments/consents/{consentId}_.
       - O _PATCH /pix/payments/{paymentId}_ deve ser utilizado para o cancelamento de um pagamento de forma unitária. Não deve ser utilizado para o cancelamento de todos os agendamentos recorrentes associados a um consentimento.
       - O _PATCH /pix/payments/consents/{consentId}_ deve ser utilizado no cancelamento de todas as ocorrências de pagamentos agendados presentes em uma recorrência de pagamentos. Todos os pagamentos associados ao consentimento informado e passíveis de cancelamento (ainda não liquidados, com os status PDNG e SCHD) deverão ser cancelados.
-
-      ## Validações para pagamentos recorrentes
-
-      Caso a data de liquidação enviada pela iniciadora no endToEndId seja de um dia inexistente, (ex.: 31/02) a detentora deve 
-      rejeitar com erro 422 com código PARAMETRO_INVALIDO e detalhe “Data de liquidação inválida“. 
-      A iniciadora deverá solicitar um novo consentimento ao usuário e corrigir as datas de liquidação.
   version: 4.0.0-beta.3
   license:
     name: Apache 2.0
@@ -2704,7 +2704,7 @@ components:
           properties:
             dates:
               type: array
-              maxItems: 24
+              maxItems: 730
               minItems: 2
               example: ['2023-08-23', '2023-09-26']
               items:
