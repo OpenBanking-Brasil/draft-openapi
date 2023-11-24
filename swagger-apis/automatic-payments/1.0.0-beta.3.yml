@@ -1426,11 +1426,8 @@ components:
     ConsentsDebtorAccount:
       type: object
       description: |
-        Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
-
-        [Restrições]
-        - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
-        - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
+        Objeto que contém a identificação da conta de origem do pagador. As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. 
+        Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.  
       required:
         - ispb
         - issuer
@@ -1475,8 +1472,11 @@ components:
           pattern: '^\d{7}$'
           example: '5300108'
           description: |
-            O campo ibgeTownCode no arranjo Pix, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix, conforme segue:
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+            Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
+
+            [Restrições]
+            - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+            - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
     EndToEndId:
       type: string
       minLength: 32
