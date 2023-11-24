@@ -257,7 +257,7 @@ paths:
       summary: Revoga ou edita um consentimento.
       operationId: automaticPaymentsPatchRecurringConsentsConsentId
       description: |
-        Método para revogar ou editar um consentimento de longa duração:  
+        Método para rejeitar, revogar ou editar um consentimento de longa duração:  
         1 - Informações sobre a revogação:
         - Caso bem sucedido, o consentimento vai para o status “REVOKED”;
         - Apenas consentimentos com status “AUTHORISED” podem ser revogados;
@@ -265,8 +265,13 @@ paths:
         solicitação da revogação) deverão ser mantidos. Pagamentos agendados para ocorrer após esse período devem ser cancelados.
         - Demais orientações referentes a revogação podem ser encontrados no header da API, tópico “Validações”, item 3.
 
-        2 – Informações sobre a edição: 
-        - Os campos que são passíveis de edição e suas regras podem ser encontrados através do [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410772).
+        2 - Informações sobre a edição: 
+        - Os campos que são passíveis de edição e suas regras podem ser encontrados através do [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410772);
+        - A edição é possível apenas em casos de consentimento para Pix Automático (“automatic” escolhido no oneOf do objeto “recurringConfiguration”);
+        - O envio do item "/data/creditors/name" atualizará o nome do recebedor em todos os elementos do array.
+
+        3 - Informações sobre a rejeição:  
+        - Caso haja necessidade de cancelamento de um consentimento ainda não autorizado, o iniciador poderá chamar o endpoint para mover o consentimento para REJECTED.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
@@ -865,7 +870,6 @@ components:
       type: object
       description: Objeto contendo dados do pagamento e do recebedor (creditor).
       required:
-        - recurringConsentId
         - endToEndId
         - date
         - payment
@@ -887,6 +891,8 @@ components:
             - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
         endToEndId:
           $ref: '#/components/schemas/EndToEndId'
         date:
@@ -1466,8 +1472,11 @@ components:
           pattern: '^\d{7}$'
           example: '5300108'
           description: |
-            O campo ibgeTownCode no arranjo Pix, tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix, conforme segue:
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+            Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no município de cadastro do usuário pagador no detentor.
+
+            [Restrições]
+            - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+            - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
     EndToEndId:
       type: string
       minLength: 32
@@ -1717,8 +1726,6 @@ components:
           $ref: '#/components/schemas/ConsentRejectionReason'
     ConsentRejection:
       type: object
-      required:
-        - status
       properties:
         status:
           type: string
@@ -1915,8 +1922,6 @@ components:
             - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração
     ConsentRevocation:
       type: object
-      required:
-        - status
       properties:
         status:
           type: string
@@ -2790,18 +2795,6 @@ components:
                       example: O usuário rejeitou a autorização do consentimento 
             recurringConfiguration:
               $ref: '#/components/schemas/RecurringConfiguration'
-            ibgeTownCode:
-              type: string
-              minLength: 7
-              maxLength: 7
-              pattern: '^\d{7}$'
-              example: '5300108'
-              description: |
-                Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
-                
-                [Restrições]
-                - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
-                - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2951,18 +2944,6 @@ components:
                       example: O usuário rejeitou a autorização do consentimento 
             recurringConfiguration:
               $ref: '#/components/schemas/RecurringConfiguration'
-            ibgeTownCode:
-              type: string
-              minLength: 7
-              maxLength: 7
-              pattern: '^\d{7}$'
-              example: '5300108'
-              description: |
-                Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no munícipio de cadastro do usuário pagador no detentor.
-                
-                [Restrições]
-                - Campo obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
-                - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”.
             riskSignals:
               $ref: '#/components/schemas/RiskSignalsConsents'
         links:
@@ -3024,7 +3005,6 @@ components:
         type: object
         required:
           - recurringPaymentId
-          - recurringConsentId
           - endToEndId
           - date
           - creationDateTime
@@ -3056,6 +3036,8 @@ components:
               - o identificador associado ao namespace da instituição transmissora (bancoex)
               - o identificador específico dentro do namespace (C1DD33123).
               Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+              [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
           endToEndId:
             $ref: '#/components/schemas/EndToEndId'
           date:
@@ -3110,7 +3092,6 @@ components:
       type: object
       required:
         - recurringPaymentId
-        - recurringConsentId
         - endToEndId
         - date
         - creationDateTime
@@ -3145,6 +3126,8 @@ components:
             - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
         endToEndId:
           $ref: '#/components/schemas/EndToEndId'
         date:
@@ -3257,7 +3240,6 @@ components:
       type: object
       required:
         - recurringPaymentId
-        - recurringConsentId
         - endToEndId
         - date
         - creationDateTime
@@ -3291,6 +3273,8 @@ components:
             - o identificador associado ao namespace da instituição transmissora (bancoex)
             - o identificador específico dentro do namespace (C1DD33123).
             Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
         endToEndId:
           $ref: '#/components/schemas/EndToEndId'
         date:
