@@ -2257,7 +2257,7 @@ components:
               minLength: 4
               maxLength: 19
               example: '1000000.12'
-              description: Valor da transação com 2 casas decimais.
+              description: Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
     Sweeping:
@@ -2280,7 +2280,7 @@ components:
               minLength: 4
               maxLength: 19
               example: '1000000.12'
-              description: Valor da transação com 2 casas decimais.
+              description: Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
     PeriodicLimits:
