@@ -260,7 +260,7 @@ Segue descrição de cada valor do ENUM.
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
 /data/recurringConfiguration/sweeping;sweeping;Definição da configuração de recorrência para transferências automáticas de fundos.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/recurringConfiguration/sweeping/amount;amount;Valor da transação com 2 casas decimais.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
+/data/recurringConfiguration/sweeping/amount;amount;Valor máximo a ser atingido pelo somatório de todas as transações que utilizam o consentimento autorizado pelo cliente. Caso o valor seja superado, a detentora de conta deve negar a transação solicitada pela iniciadora.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/sweeping/transactionLimit;transactionLimit;Valor da transação com 2 casas decimais.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;1000000.12;4
 /data/recurringConfiguration/sweeping/periodicLimits;periodicLimits;Limites transacionais por período determinado pelo usuário pagador.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/recurringConfiguration/sweeping/periodicLimits/day;day;"Configurar limite transacional diário determinado pelo usuário pagador.
