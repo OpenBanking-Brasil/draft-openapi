@@ -493,6 +493,19 @@ components:
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
+    LinksConsents:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: uri
+          maxLength: 2000
+          description: URI completo que gerou a resposta atual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -776,7 +789,7 @@ components:
               example: '2021-05-21T08:30:00Z'
               maxLength: 20
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksConsents'
         meta:
           $ref: '#/components/schemas/Meta'
     ResponseConsentExtensions:
@@ -884,7 +897,7 @@ components:
               example: '2021-05-21T08:30:00Z'
               maxLength: 20
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksConsents'
         meta:
           $ref: '#/components/schemas/Meta'
     ResponseConsentRead:
@@ -1010,7 +1023,7 @@ components:
                 reason:
                   $ref: '#/components/schemas/RejectedReason'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksConsents'
         meta:
           $ref: '#/components/schemas/Meta'
     ResponseConsentReadExtensions:
