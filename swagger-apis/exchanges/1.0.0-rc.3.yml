@@ -534,33 +534,43 @@ components:
           pattern: '^\d{5}$'
           description: Código da natureza fato do fechamento da operação. Deve respeitar os códigos de natureza referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
           example: '90302'
-        relationshipCode:
-          type: string
-          maxLength: 2
-          pattern: '^\d{2}$'
+        foreignPartie:
+          type: array
           description: |
-            Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
-
-            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-          example: '50'
-        foreignPartieName:
-          type: string
-          description: |
-            Nome do pagador ou recebedor no exterior.
-
-            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-          maxLength: 80
-          pattern: '[\w\W\s]*'
-          example: José da Silva
-        foreignPartieCountryCode:
-          type: string
-          description: |
-            País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
-
-            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
-          example: ZA
+            Lista para envio de informações de parte envolvida.
+            
+            [Restrição] Lista de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM. 
+            Caso a instituição possua a informação, ela é de envio obrigatório. 
+            Caso a informação seja atualizada posteriormente a contratação, ela deve ser enviada através de eventos.
+          minItems: 1
+          items:
+            type: object
+            required:
+              - relationshipCode
+              - foreignPartieName
+              - foreignPartieCountryCode
+            properties:
+              relationshipCode:
+                type: string
+                maxLength: 2
+                pattern: '^\d{2}$'
+                description: |
+                  Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
+                example: '50'
+              foreignPartieName:
+                type: string
+                description: |
+                  Nome do pagador ou recebedor no exterior.
+                maxLength: 80
+                pattern: '[\w\W\s]*'
+                example: José da Silva
+              foreignPartieCountryCode:
+                type: string
+                description: |
+                  País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
+                maxLength: 2
+                pattern: '^[A-Z]{2}$'
+                example: ZA
       additionalProperties: false
     Events:
       type: object
@@ -710,33 +720,43 @@ components:
           pattern: '^\d{5}$'
           description: Código da natureza fato do fechamento da operação. Deve respeitar os códigos de natureza referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
           example: '90302'
-        relationshipCode:
-          type: string
-          maxLength: 2
-          pattern: '^\d{2}$'
+        foreignPartie:
+          type: array
           description: |
-            Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
-
-            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-          example: '50'
-        foreignPartieName:
-          type: string
-          description: |
-            Nome do pagador ou recebedor no exterior.
-
-            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-          maxLength: 80
-          pattern: '[\w\W\s]*'
-          example: José da Silva
-        foreignPartieCountryCode:
-          type: string
-          description: |
-            País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
-
-            [Restrição] Campo de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM.
-          maxLength: 2
-          pattern: '^[A-Z]{2}$'
-          example: ZA
+            Lista para envio de informações de parte envolvida.
+            
+            [Restrição] Lista de preenchimento opcional pelas participantes quando o campo 'deliveryForeignCurrency ' for igual EM ESPÉCIE E/OU CHEQUES DE VIAGEM. 
+            Caso a instituição possua a informação, ela é de envio obrigatório. 
+            Caso a informação seja atualizada posteriormente a contratação, ela deve ser enviada através de eventos.
+          minItems: 1
+          items:
+            type: object
+            required:
+              - relationshipCode
+              - foreignPartieName
+              - foreignPartieCountryCode
+            properties:
+              relationshipCode:
+                type: string
+                maxLength: 2
+                pattern: '^\d{2}$'
+                description: |
+                  Código de Relação de vínculo entre o Cliente e o Pagador/Recebedor no Exterior. Deve respeitar os códigos de vínculo referenciados na resolução 277 ou na Circular 3690, conforme se aplicar ao contrato de câmbio.
+                example: '50'
+              foreignPartieName:
+                type: string
+                description: |
+                  Nome do pagador ou recebedor no exterior.
+                maxLength: 80
+                pattern: '[\w\W\s]*'
+                example: José da Silva
+              foreignPartieCountryCode:
+                type: string
+                description: |
+                  País do pagador ou recebedor. Código do país segundo a norma ISO 3166-1.
+                maxLength: 2
+                pattern: '^[A-Z]{2}$'
+                example: ZA
       additionalProperties: false
     EnumExchangesOperationType:
       type: string
