@@ -1,9 +1,7 @@
 name: Verificar dependência de PR
 on:
-  pull_request:
-    types:
-      - opened
-      - edited
+  pull_request_target: 
+    types: [opened, edited, closed, reopened]
 jobs:
   check_dependencies:
     runs-on: ubuntu-latest
