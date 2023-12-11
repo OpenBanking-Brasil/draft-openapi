@@ -875,6 +875,7 @@ components:
         - cnpjInitiator
         - ibgeTownCode
         - localInstrument
+        - document
       properties:
         recurringConsentId:
           type: string
@@ -976,6 +977,28 @@ components:
             Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
             Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
             Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
+        document:
+          type: object
+          description: Informações do documento identificador.
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              pattern: ^(?:\d{11}|\d{14})$
+              minLength: 11
+              maxLength: 14
+              example: '11111111111111'
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+            rel:
+              type: string
+              pattern: ^[a-zA-Z0-9]{1,35}$
+              enum:
+                - CPF
+                - CNPJ
+              example: 'CNPJ'
+              description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
     RiskSignalsPayments:
       type: object
       description: |
@@ -3008,6 +3031,7 @@ components:
           - statusUpdateDateTime  
           - status
           - payment
+          - document
         properties:
           recurringPaymentId:
             type: string
@@ -3085,6 +3109,28 @@ components:
               Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
               Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
               Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
+          document:
+            type: object
+            description: Informações do documento identificador.
+            required:
+              - identification
+              - rel
+            properties:
+              identification:
+                type: string
+                pattern: ^(?:\d{11}|\d{14})$
+                minLength: 11
+                maxLength: 14
+                example: '11111111111111'
+                description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+              rel:
+                type: string
+                pattern: ^[a-zA-Z0-9]{1,35}$
+                enum:
+                  - CPF
+                  - CNPJ
+                example: 'CNPJ'
+                description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -3098,6 +3144,7 @@ components:
         - cnpjInitiator
         - payment
         - localInstrument
+        - document
       properties:
         recurringPaymentId:
           type: string
@@ -3233,6 +3280,28 @@ components:
             Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
             Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
             Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
+        document:
+          type: object
+          description: Informações do documento identificador.
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              pattern: ^(?:\d{11}|\d{14})$
+              minLength: 11
+              maxLength: 14
+              example: '11111111111111'
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+            rel:
+              type: string
+              pattern: ^[a-zA-Z0-9]{1,35}$
+              enum:
+                - CPF
+                - CNPJ
+              example: 'CNPJ'
+              description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
     ResponseRecurringPaymentsData:
       type: object
       required:
@@ -3245,6 +3314,7 @@ components:
         - status
         - cnpjInitiator
         - payment
+        - document
       properties:
         recurringPaymentId:
           type: string
@@ -3355,6 +3425,28 @@ components:
             Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
             Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
             Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
+        document:
+          type: object
+          description: Informações do documento identificador.
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              pattern: ^(?:\d{11}|\d{14})$
+              minLength: 11
+              maxLength: 14
+              example: '11111111111111'
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+            rel:
+              type: string
+              pattern: ^[a-zA-Z0-9]{1,35}$
+              enum:
+                - CPF
+                - CNPJ
+              example: 'CNPJ'
+              description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
     XFapiInteractionId:
       type: string
       pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
