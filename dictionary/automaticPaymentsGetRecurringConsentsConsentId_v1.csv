@@ -327,8 +327,8 @@ TRAN";1;1;"";Não permitido;string;CACC;
 /data/recurringConfiguration/vrp/periodicLimits/year/transactionLimit;transactionLimit;Valor máximo a ser transacionado por um ano, a partir da data definida no campo `/data/startDateTime`.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/riskSignals;riskSignals;"Sinais de risco para iniciação de pagamentos automáticos
 
-[Restrição] Deve ser enviado quando o consentimento for para o produto Sweeping Accounts (O objeto ""/data/recurringConfiguration/sweeping"" usado no oneOf)
-";Objeto;;Condicional;;;0;1;" Deve ser enviado quando o consentimento for para o produto Sweeping Accounts (O objeto ""/data/recurringConfiguration/sweeping"" usado no oneOf)
+[Restrição] Deve ser enviado quando o consentimento for para o produto Pix Automático (O objeto ""/data/recurringConfiguration/automatic"" usado no oneOf). Só estará presente após a primeira edição do consentimento de longa duração.
+";Objeto;;Condicional;;;0;1;" Deve ser enviado quando o consentimento for para o produto Pix Automático (O objeto ""/data/recurringConfiguration/automatic"" usado no oneOf). Só estará presente após a primeira edição do consentimento de longa duração.
 ";Não permitido;object;;
 /data/riskSignals/deviceId;deviceId;ID único do dispositivo gerado pela plataforma.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;00000000-54b3-e7c7-0000-000046bffd97;
 /data/riskSignals/isRootedDevice;isRootedDevice;Indica se o dispositivo atualmente está com permissão de “root”.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
