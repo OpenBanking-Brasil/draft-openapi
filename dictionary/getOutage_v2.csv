@@ -1,2 +1,6 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data;data;;Lista;;Obrigatório;;;1;1;"";Não permitido;array;;
+/data/outageTime;outageTime;Data e hora planejada do início da indisponibilidade;Texto;;Obrigatório;;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
+/data/duration;duration;Duração prevista da indisponibilidade;Texto;;Obrigatório;;;1;1;"";Não permitido;string;PT2H30M;
+/data/isPartial;isPartial;Flag que indica se a indisponibilidade é parcial (atingindo apenas alguns end points) ou total (atingindo todos os end points);Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
+/data/explanation;explanation;Explicação sobre os motivos da indisponibilidade.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;Atualização do API Gateway;
