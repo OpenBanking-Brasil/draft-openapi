@@ -1173,7 +1173,6 @@ components:
           type: object
           required:
             - lastLoginDateTime
-            - pixKeyRegistrationDateTime
           description: |
             Representa a coleta de sinais de risco com a presença do usuário
 
@@ -1187,7 +1186,10 @@ components:
             pixKeyRegistrationDateTime:
               type: string
               format: date-time
-              description: Data e hora de cadastro da chave Pix do recebedor na iniciadora
+              description: |
+                Data e hora de cadastro da chave Pix do recebedor na iniciadora
+
+                [Restrição] Campo obrigatório a ser enviado, caso o valor do campo "/data/localInstrument" sejaigual a "DICT" ou "INIC".
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
     RiskSignalsConsents:
       type: object
