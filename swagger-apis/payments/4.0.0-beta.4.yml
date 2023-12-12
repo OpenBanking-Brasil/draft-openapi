@@ -2705,6 +2705,9 @@ components:
       properties:
         custom:
           type: object
+          description: |
+            [Restrição] As datas enviadas na lista de datas (array “dates”) não podem ser repetidas. 
+            Caso datas repetidas sejam enviadas, o detentor deve rejeitar a criação do consentimento, informando o erro PARAMETRO_INVALIDO.
           required:
             - dates
             - additionalInformation
