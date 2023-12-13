@@ -14,15 +14,15 @@ paths:
     get:
       tags:
         - Discovery
-      summary: a descrição referente ao código de status retornado pelas APIs
-      description: " descrição referente ao código de status retornado pelas APIs"
+      summary: Descrição do status da implementação das APIs do OFB
+      description: Descrição do status da implementação das APIs do OFB
       operationId: "getStatus"
       parameters:
         - $ref: "#/components/parameters/page"
         - $ref: "#/components/parameters/pageSize"
       responses:
         '200':
-          description: código de status retornado pelas APIs
+          description: Descrição do status da implementação das APIs do OFB
           content:
             application/json:
               schema:
@@ -195,12 +195,14 @@ components:
             - PARTIAL_FAILURE
             - UNAVAILABLE
             - SCHEDULED_OUTAGE
-          description: >
-            Condição atual da API:
-              * `OK` - A implementação é totalmente funcional
-              * `PARTIAL_FAILURE` - Um ou mais endpoints estão indisponíveis
-              * `UNAVAILABLE` - A implementação completa está indisponível
-              * `SCHEDULED_OUTAGE` - Uma interrupção anunciada está em vigor
+          description: |
+            Condição atual da Implementação das APIs do OFB:
+            - OK - A implementação de todas as APIs foi concluída e está totalmente funcional 
+            - UNAVAILABLE - Uma ou mais APIs estão indisponíveis 
+            - PARTIAL_FAILURE - Um ou mais endpoints estão indisponíveis 
+            - SCHEDULED_OUTAGE - Uma interrupção programada (anunciada pelo endpoint /outages) está em vigor 
+            
+            A hierarquia de `data/status/code`, em casos concomitantes, segue a ordem conforme os bullets acima (OK, UNAVAILABLE, PARTIAL_FAILURE, SCHEDULED_OUTAGE)”
           example: OK
         explanation:
           type: string
