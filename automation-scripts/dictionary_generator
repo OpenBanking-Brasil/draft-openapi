@@ -36,6 +36,25 @@ headers = {
   'COLUMN_15' => 'Tamanho mínimo'
 }
 
+headersPeS = {
+  'COLUMN_1'  => 'Xpath',
+  'COLUMN_2'  => 'Nome',
+  'COLUMN_3'  => 'Definição',
+  'COLUMN_4'  => 'Tipo de Dado',
+  'COLUMN_5'  => 'Tamanho',
+  'COLUMN_6'  => 'Mandatoriedade',
+  'COLUMN_7'  => 'Obrigatório por Regulação',
+  'COLUMN_8'  => 'Formato',
+  'COLUMN_9'  => 'Domínio',
+  'COLUMN_10' => 'Mínimo de Ocorrências',
+  'COLUMN_11' => 'Máximo de Ocorrências',
+  'COLUMN_12' => 'Restrições',
+  'COLUMN_13' => 'Nulidade',
+  'COLUMN_14' => 'Tipo de Dado Json',
+  'COLUMN_15' => 'Exemplo',
+  'COLUMN_16' => 'Tamanho mínimo'
+}
+
 def format_type(type)
   return '' if !type
   types = {
@@ -56,15 +75,23 @@ end
 # Extract fields from Schema Object recursivily
 def extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
   if !schema['oneOf'].nil?
-    schema = schema['oneOf'][0]
+    schema['oneOf'].each do |option|
+      fields = sub_extract_fields(option, path, fields, ignore)
+    end
+    return fields
+  else
+    return sub_extract_fields(schema, path, fields, ignore)
   end
+end
 
+def sub_extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
   if ['array', 'object'].include? schema['type']
     index = 'properties'
 
     if schema['type'] == 'array' and !['array', 'object'].include? schema['items']['type']
       items = schema['items']
       items['isRequired'] = schema['isRequired']
+      items['isRegulatoryRequired'] = schema['isRegulatoryRequired']
       items['maxItems'] = schema['maxItems']
       items['minItems'] = schema['minItems']
       items['description'] = schema['description']
@@ -76,7 +103,9 @@ def extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
     elsif path != ''
       parent = schema.clone
       parent['path'] = path
-      fields.push parent
+      if !fields.any? { |objeto| objeto['path'] == path }
+        fields.push parent
+      end
     end
 
     schema = schema['items'] if schema['type'] == 'array'
@@ -84,15 +113,15 @@ def extract_fields(schema, path = '', fields = [], ignore = ['links', 'meta'])
     schema[index].select{|key, _| !ignore.include? key}.each_with_index do |(name, spec)|
       spec['name'] = name
       spec['isRequired'] = true if schema['required'] and schema['required'].include? name
+      spec['isRegulatoryRequired'] = true if schema['x-regulatory-required'] and schema['x-regulatory-required'].include? name
 
       fields.concat extract_fields(spec, path + '/' + name)
     end
-    return fields
   else
     schema['path'] = path
     fields.push schema
-    return fields
   end
+  return fields
 end
 
 # Write headers and rows on given filename
@@ -111,7 +140,13 @@ end
 
 def format_restriction(text)
   return '' if !text
-  return text.partition('[Restrição]').last
+  if text.include?('[Restrição]')
+    return text.partition('[Restrição]').last
+  elsif text.include?('[Restrições]')
+    return text.partition('[Restrições]').last
+  else
+    return ''
+  end
 end
 
 def format_definition(text)
@@ -131,71 +166,96 @@ oas['paths'].each_with_index do |(path, methods)|
 
       if response['content'] == nil
         puts '    └── INFO: No content was found!'
-        return
-      end
-
-      applicationData = response['content'];
-
-      if response['content']['application/json'] != nil
-        applicationData = response['content']['application/json'];
-      elsif response['content']['application/jwt'] != nil
-        applicationData = response['content']['application/jwt'];
-      end
-      
-      extract_fields(applicationData['schema'], '', []).each do |field|
-        min_items = field['minItems']
-        max_items = field['maxItems']
-        data_type = field['type']
-        restriction = format_restriction(field['description'])
-        mandatory = field['isRequired'] ? "Obrigatório" : "Opcional"
-
-        if ['date', 'date-time'].include? field['format']
-          data_type = field['format']
+      elsif
+       
+        applicationData = response['content'];
+        if response['content']['application/json'] != nil
+          applicationData = response['content']['application/json'];
+        elsif response['content']['application/jwt'] != nil
+          applicationData = response['content']['application/jwt'];
         end
 
-        if field['type'] && field['type'].match(/array/)
-          data_type = 'array'
-          field['type'] = 'array'
-        end
+        extract_fields(applicationData['schema'], '', []).each do |field|
+          min_items = field['minItems']
+          max_items = field['maxItems']
+          data_type = field['type']
+          restriction = format_restriction(field['description'])
+          mandatory = field['isRequired'] ? "Obrigatório" : "Opcional"
+          regulatoryMandatory = field['isRegulatoryRequired'] ? "Obrigatório" : "Opcional"
 
-        if field['minItems'] == nil
-          min_items = field['isRequired'] ? 1 : 0
-          max_items = 1
-        end
+          if ['date', 'date-time'].include? field['format']
+            data_type = field['format']
+          end
 
-        if field['type'] == 'array' and field['maxItems'] == nil
-          max_items = 'N'
-        end
+          if field['type'] && field['type'].match(/array/)
+            data_type = 'array'
+            field['type'] = 'array'
+          end
 
-        if restriction != '' && options[:conditional] && !field['isRequired']
-          mandatory = 'Condicional'
-        end
+          if field['minItems'] == nil
+            min_items = field['isRequired'] ? 1 : 0
+            max_items = 1
+          end
 
-        row = {
-          headers['COLUMN_1']   => field['path'],
-          headers['COLUMN_2']   => field['name'],
-          headers['COLUMN_3']   => field['description'],
-          headers['COLUMN_4']   => format_type(data_type),
-          headers['COLUMN_5']   => field['maxLength'],
-          headers['COLUMN_6']   => mandatory,
-          headers['COLUMN_7']   => field['pattern'],
-          headers['COLUMN_8']   => format_enum(field['enum']),
-          headers['COLUMN_9']   => min_items,
-          headers['COLUMN_10']  => max_items,
-          headers['COLUMN_11']  => restriction,
-          headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
-          headers['COLUMN_13']  => field['type'],
-          headers['COLUMN_14']  => field['example'],
-          headers['COLUMN_15']  => field['minLength']
-        }
-        rows.push row
+          if field['type'] == 'array' and field['maxItems'] == nil
+            max_items = 'N'
+          end
+
+          if restriction != '' && options[:conditional] && !field['isRequired']
+            mandatory = 'Condicional'
+          end
+
+          if oas['info'].to_s.include?('OpenData')
+            row = {
+              headersPeS['COLUMN_1']   => field['path'],
+              headersPeS['COLUMN_2']   => field['name'],
+              headersPeS['COLUMN_3']   => field['description'],
+              headersPeS['COLUMN_4']   => format_type(data_type),
+              headersPeS['COLUMN_5']   => field['maxLength'],
+              headersPeS['COLUMN_6']   => mandatory,
+              headersPeS['COLUMN_7']   => regulatoryMandatory,
+              headersPeS['COLUMN_8']   => field['pattern'],
+              headersPeS['COLUMN_9']   => format_enum(field['enum']),
+              headersPeS['COLUMN_10']  => min_items,
+              headersPeS['COLUMN_11']  => max_items,
+              headersPeS['COLUMN_12']  => restriction,
+              headersPeS['COLUMN_13']  => field['nullable'] ? "Permitido" : "Não permitido",
+              headersPeS['COLUMN_14']  => field['type'],
+              headersPeS['COLUMN_15']  => field['example'],
+              headersPeS['COLUMN_16']  => field['minLength']
+            }
+          else
+            row = {
+              headers['COLUMN_1']   => field['path'],
+              headers['COLUMN_2']   => field['name'],
+              headers['COLUMN_3']   => field['description'],
+              headers['COLUMN_4']   => format_type(data_type),
+              headers['COLUMN_5']   => field['maxLength'],
+              headers['COLUMN_6']   => mandatory,
+              headers['COLUMN_7']   => field['pattern'],
+              headers['COLUMN_8']   => format_enum(field['enum']),
+              headers['COLUMN_9']   => min_items,
+              headers['COLUMN_10']  => max_items,
+              headers['COLUMN_11']  => restriction,
+              headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
+              headers['COLUMN_13']  => field['type'],
+              headers['COLUMN_14']  => field['example'],
+              headers['COLUMN_15']  => field['minLength']
+            }
+          end
+          rows.push row
+        end
       end
     end
 
     version = "v" + oas['info']['version'].split(/\./, 3).first
     filename = output_path + spec['operationId'] + "_" + version + '.csv'
     puts '  ├── Writing file ' + filename
-    generate_csv(filename, headers, rows)
+    if oas['info'].to_s.include?('OpenData')
+      generate_csv(filename, headersPeS, rows)
+    else
+      generate_csv(filename, headers, rows)
+    end
     puts "  └── Finished! \n\n"
   end
 end
