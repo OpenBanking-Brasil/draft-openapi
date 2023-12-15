@@ -148,13 +148,13 @@ components:
           description: URL da página atualmente requisitada
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/channels/v2/resource'
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
         first:
           type: string
           description: URL da primeira página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/channels/v2/resource'
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
         prev:
           type: string
           description: URL da página anterior de registros
@@ -170,7 +170,7 @@ components:
           description: URL da última página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/channels/v2/resource'
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
     Meta:
       type: object
       properties:
@@ -239,7 +239,7 @@ components:
             type: string
             maxLength: 2000
           example:
-            - 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
+            - 'https://api.banco.com.br/open-banking/common/v2/electronic-common'
     ResponseErrorMetaSingle:
       type: object
       required:
