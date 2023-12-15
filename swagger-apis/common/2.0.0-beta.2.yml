@@ -148,29 +148,31 @@ components:
           description: URL da página atualmente requisitada
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/channels/v2/resource'
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
         first:
           type: string
           description: URL da primeira página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/channels/v2/resource'
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
         prev:
           type: string
           description: URL da página anterior de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
         next:
           type: string
           description: URL da próxima página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
         last:
           type: string
           description: URL da última página de registros
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           maxLength: 2000
-          example: 'https://api.banco.com.br/open-banking/channels/v2/resource'
+          example: 'https://api.banco.com.br/open-banking/common/v2/resource'
     Meta:
       type: object
       properties:
@@ -205,7 +207,7 @@ components:
             - PARTIAL_FAILURE - Um ou mais endpoints estão indisponíveis 
             - SCHEDULED_OUTAGE - Uma interrupção programada (anunciada pelo endpoint /outages) está em vigor 
             
-            A hierarquia de `data/status/code`, em casos concomitantes, segue a ordem conforme os bullets acima (OK, UNAVAILABLE, PARTIAL_FAILURE, SCHEDULED_OUTAGE)”
+            A hierarquia de `data/status/code`, em casos concomitantes, segue a ordem conforme os bullets acima (OK, UNAVAILABLE, PARTIAL_FAILURE, SCHEDULED_OUTAGE)
           example: OK
         explanation:
           type: string
@@ -239,7 +241,7 @@ components:
             type: string
             maxLength: 2000
           example:
-            - 'https://api.banco.com.br/open-banking/channels/v2/electronic-channels'
+            - 'https://api.banco.com.br/open-banking/common/v2/resource'
     ResponseErrorMetaSingle:
       type: object
       required:
