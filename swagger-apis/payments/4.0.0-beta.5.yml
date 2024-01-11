@@ -42,7 +42,7 @@ info:
     - No cenário onde o usuário pagador tenha agendado recorrências para os dias 29, 30 ou 31 de cada mês e o dia previsto na recorrência não exista no respectivo mês, 
     o iniciador deve enviar a ordem de pagamento para liquidação com o endToEndId representando o dia seguinte à data prevista para a liquidação. 
     Se identificado pelo detentor que a data enviada no endToEndId corresponde a um dia inexistente, ele deve rejeitar o pagamento com erro 422, 
-    com código PARAMETRO_INVALIDO e detalhe “Data de liquidação inválida
+    com código PARAMETRO_INVALIDO e detalhe “Data de liquidação inválida”
 
     - Quando o detentor receber mais de um item na lista de pagamentos enviados pelo iniciador e optar por responder 
     assincronamente, é de responsabilidade do detentor realizar a transição para o status SCHD de todos os itens enviados na 
