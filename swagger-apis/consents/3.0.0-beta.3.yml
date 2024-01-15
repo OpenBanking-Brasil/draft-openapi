@@ -291,7 +291,7 @@ paths:
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntity'
+          $ref: '#/components/responses/UnprocessableEntityDelete'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -1090,6 +1090,84 @@ components:
                 maxLength: 2048
         meta:
           $ref: '#/components/schemas/MetaError'
+    ResponseErrorUnprocessableEntityDelete:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - CONSENTIMENTO_EM_STATUS_REJEITADO
+                example: CONSENTIMENTO_EM_STATUS_REJEITADO
+                description: |
+                  - CONSENTIMENTO_EM_STATUS_REJEITADO
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaError'
+    ResponseErrorUnprocessableEntity:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - SEM_PERMISSOES_FUNCIONAIS_RESTANTES
+                  - INFORMACOES_PJ_NAO_INFORMADAS
+                  - PERMISSOES_PJ_INCORRETAS
+                  - PERMISSAO_PF_PJ_EM_CONJUNTO
+                  - COMBINACAO_PERMISSOES_INCORRETA
+                example: SEM_PERMISSOES_FUNCIONAIS_RESTANTES
+                description: |
+                  - SEM_PERMISSOES_FUNCIONAIS_RESTANTES
+                  - INFORMACOES_PJ_NAO_INFORMADAS
+                  - PERMISSOES_PJ_INCORRETAS
+                  - PERMISSAO_PF_PJ_EM_CONJUNTO
+                  - COMBINACAO_PERMISSOES_INCORRETA
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          $ref: '#/components/schemas/MetaError'
     422ResponseErrorCreateConsent:
       type: object
       required:
@@ -1439,7 +1517,13 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorUnprocessableEntity'
+    UnprocessableEntityDelete:
+      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorUnprocessableEntityDelete'
     UnprocessableEntityConsents:
       description: 'A sintaxe da requisição está correta, mas não foi possível processar as instruções presentes.'
       content:
