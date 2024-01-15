@@ -509,7 +509,7 @@ paths:
         required: true
       responses:
         '200':
-          $ref: '#/components/responses/200RecurringPaymentsIdRead'
+          $ref: '#/components/responses/200RecurringPaymentsIdPatch'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -3045,7 +3045,20 @@ components:
         - meta
       properties:
         data:
-          $ref: '#/components/schemas/ResponseRecurringPaymentsData'
+          $ref: '#/components/schemas/ResponseRecurringPaymentsDataRead'
+        links:
+          $ref: '#/components/schemas/LinkSingle'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseRecurringPaymentsIdPatch:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/ResponseRecurringPaymentsDataPatch'
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3344,7 +3357,7 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
-    ResponseRecurringPaymentsData:
+    ResponseRecurringPaymentsDataRead:
       type: object
       required:
         - recurringPaymentId
@@ -3392,6 +3405,150 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2023-10-10'
           description: Data em que o pagamento será realizado.
+        creationDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2020-07-21T08:30:00Z'
+          description: |
+            Data e hora em que o pagamento foi criado. 
+            Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
+            sempre com a utilização de timezone UTC(UTC time format).
+        statusUpdateDateTime:
+          type: string
+          format: date-time
+          maxLength: 20
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          example: '2020-07-21T08:30:00Z'
+          description: |
+            Data e hora em que o pagamento teve o status atualizado. 
+            Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
+            sempre com a utilização de timezone UTC(UTC time format).
+        ibgeTownCode:
+          type: string
+          minLength: 7
+          maxLength: 7
+          pattern: '^\d{7}$'
+          example: '5300108'
+          description: |
+            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
+
+            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
+        status:
+          $ref: '#/components/schemas/EnumPaymentStatusType'
+        rejectionReason:
+          $ref: '#/components/schemas/RejectionReason'
+        cnpjInitiator:
+          type: string
+          pattern: '^\d{14}$'
+          maxLength: 14
+          example: '50685362000135'
+          description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
+        payment:
+          $ref: '#/components/schemas/PaymentPix'
+        remittanceInformation:
+          type: string
+          maxLength: 140
+          pattern: '[\w\W\s]*'
+          example: Pagamento da nota RSTO035-002.
+          description: |
+            Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+        creditorAccount:
+          $ref: '#/components/schemas/CreditorAccount'
+        debtorAccount:
+            $ref: '#/components/schemas/DebtorAccount'
+        cancellation:
+          $ref: '#/components/schemas/PixPaymentCancellation'
+        authorisationFlow:
+          type: string
+          enum:
+            - HYBRID_FLOW
+            - CIBA_FLOW
+            - FIDO_FLOW
+          example: HYBRID_FLOW
+          description: |
+            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
+            
+            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
+        transactionIdentification:
+          type: string
+          pattern: ^[a-zA-Z0-9]{1,35}$
+          maxLength: 35
+          example: 'E00038166201907261559y6j6'
+          description: |
+            Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
+            Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
+            Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
+        document:
+          type: object
+          description: Informações do documento identificador.
+          required:
+            - identification
+            - rel
+          properties:
+            identification:
+              type: string
+              pattern: ^(?:\d{11}|\d{14})$
+              minLength: 11
+              maxLength: 14
+              example: '11111111111111'
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+            rel:
+              type: string
+              enum:
+                - CPF
+                - CNPJ
+              example: 'CNPJ'
+              description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
+    ResponseRecurringPaymentsDataPatch:
+      type: object
+      required:
+        - recurringPaymentId
+        - endToEndId
+        - date
+        - creationDateTime
+        - statusUpdateDateTime  
+        - ibgeTownCode
+        - status
+        - cnpjInitiator
+        - payment
+        - document
+      properties:
+        recurringPaymentId:
+          type: string
+          minLength: 1
+          maxLength: 100
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+          example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
+          description: |
+            Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. O `recurringPaymentId` deve ser diferente do `endToEndId`. 
+            Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
+        recurringConsentId:
+          type: string
+          maxLength: 256
+          pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+          example: 'urn:bancoex:C1DD33123'
+          description: |
+            Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name.
+            Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource
+            Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN
+            seja um identificador de recurso persistente e independente da localização.
+            Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentId` temos:
+            - o namespace(urn)
+            - o identificador associado ao namespace da instituição transmissora (bancoex)
+            - o identificador específico dentro do namespace (C1DD33123).
+            Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+
+            [Restrição] Este campo é de preenchimento obrigatório quando o valor do campo authorisationFlow for igual a FIDO_FLOW.
+        endToEndId:
+          $ref: '#/components/schemas/EndToEndId'
+        date:
+          type: string
+          maxLength: 10
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          example: '2023-10-10'
+          description: Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).
         creationDateTime:
           type: string
           format: date-time
@@ -3890,6 +4047,18 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseRecurringPaymentsIdRead'
+    200RecurringPaymentsIdPatch:
+      description: Dados de iniciação de pagamento Pix obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponseRecurringPaymentsIdPatch'
     201RecurringPaymentsIdPost:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
