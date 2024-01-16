@@ -9,6 +9,8 @@
 4 - Liquidação de Operação Cambial no Mercado Primário.  
 5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
 6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+9 - Anulação de Operação Cambial no Mercado Primário (utilizado, por exemplo, na anulação de um evento de liquidação/cancelamento).  
+Obs.: Códigos seguem o layout de mensageria enviada pelas instituições ao Banco Central.  
 
 O evento está relacionado ao tipo de contratação.
 ";Texto;;Obrigatório;;"1 
@@ -16,7 +18,8 @@ O evento está relacionado ao tipo de contratação.
 3 
 4 
 5 
-6";1;1;"";Não permitido;string;2;
+6 
+9";1;1;"";Não permitido;string;2;
 /data/eventDate;eventDate;Data do evento relacionado com a operação.;Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2023-03-07T08:30:00Z;
 /data/dueDate;dueDate;Data em que a operação (compra ou venda), após evento, está prevista para ser liquidada.;Data;10;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"";Não permitido;string;2018-02-15;
 /data/localCurrencyOperationTax;localCurrencyOperationTax;Valor da taxa de câmbio aplicada à operação, em moeda nacional.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;

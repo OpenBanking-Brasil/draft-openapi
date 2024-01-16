@@ -739,6 +739,8 @@ components:
         4 - Liquidação de Operação Cambial no Mercado Primário.  
         5 - Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
         6 - Restabelecimento de Baixa de Valor a Liquidar de Operação Cambial no Mercado Primário.  
+        9 - Anulação de Operação Cambial no Mercado Primário (utilizado, por exemplo, na anulação de um evento de liquidação/cancelamento).  
+        Obs.: Códigos seguem o layout de mensageria enviada pelas instituições ao Banco Central.  
 
         O evento está relacionado ao tipo de contratação.
       enum:
@@ -748,6 +750,7 @@ components:
         - '4'
         - '5'
         - '6'
+        - '9'
       example: '2'
     EnumExchangesDeliveryForeignCurrency:
       type: string
