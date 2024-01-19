@@ -127,12 +127,12 @@ components:
       required:
         - participant
         - type
-        - fees
         - openingClosingChannels
         - transactionMethods
         - termsConditions
       x-regulatory-required:
         - type
+        - fees
         - openingClosingChannels
         - openingClosingChannelsAdditionalInfo
         - transactionMethods
@@ -224,7 +224,7 @@ components:
     AccountFee:
       type: object
       description: Objeto que reúne informações de tarifas de serviços.
-      required:
+      x-regulatory-required:
         - priorityServices
       properties:
         priorityServices:
@@ -233,7 +233,10 @@ components:
             $ref: '#/components/schemas/AccountPriorityService'
           minItems: 1
           maxItems: 40
-          description: Lista das Tarifas cobradas sobre Serviços Prioritários
+          description: |
+            Lista das tarifas cobradas sobre serviços prioritários. 
+
+            [Restrição] Obrigatório quando "type" for igual "CONTA_DEPOSITO_A_VISTA" ou "CONTA_POUPANCA"
         otherServices:
           type: array
           items:
