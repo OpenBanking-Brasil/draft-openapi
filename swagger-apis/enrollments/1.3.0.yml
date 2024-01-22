@@ -2096,8 +2096,11 @@ components:
           $ref: '#/components/schemas/Meta'
     XFapiInteractionId:
       type: string
-      pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-      maxLength: 100
+      format: uuid
+      minLength: 1
+      maxLength: 36
+      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+      example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
       description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser "espelhado" pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
   parameters:
     consentId:
@@ -2180,9 +2183,11 @@ components:
       required: true
       schema:
         type: string
-        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        format: uuid
         minLength: 1
-        maxLength: 100
+        maxLength: 36
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+        example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
     XIdempotencyKey:
       name: x-idempotency-key
       in: header
