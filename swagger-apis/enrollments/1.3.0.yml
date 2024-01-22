@@ -65,8 +65,6 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityEnrollment'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -109,8 +107,6 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -234,8 +230,6 @@ paths:
           $ref: '#/components/responses/NotAcceptable'
         '422':
           $ref: '#/components/responses/UnprocessableEntityEnrollmentCancel'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -292,8 +286,6 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityEnrollmentFidoRegistrationOptions'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -353,8 +345,6 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityEnrollmentFidoRegistration'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -440,8 +430,6 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityEnrollmentFidoSignOptions'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -497,8 +485,6 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityEnrollmentRiskSignals'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -556,8 +542,6 @@ paths:
           $ref: '#/components/responses/UnsupportedMediaType'
         '422':
           $ref: '#/components/responses/UnprocessableEntityConsentsAuthorization'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '529':
@@ -2316,25 +2300,6 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
-    TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseError'
-      headers:
-        x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser "espelhado" pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
-        Retry-After:
-          description: |
-            Cabeçalho que indica o tempo (em segundos) que o cliente deverá aguardar para realizar uma nova tentativa de chamada. Este cabeçalho deverá estar presente quando o código HTTP de retorno for 429 Too many requests.
-          schema:
-            description: |
-              Cabeçalho que indica o tempo (em segundos) que o cliente deverá aguardar para realizar uma nova tentativa de chamada. Este cabeçalho deverá estar presente quando o código HTTP de retorno for 429 Too many requests.
-            type: integer
     UnprocessableEntityConsentsAuthorization:
       description: 'A solicitação foi bem-formada, mas não pôde ser processada devido à lógica de negócios específica da solicitação.'
       content:
