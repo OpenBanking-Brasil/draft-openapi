@@ -1,8 +1,8 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;Conjunto de informações do Título de Capitalização;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização;
-/data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;
+/data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização;1
+/data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;1
 /data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})$|^(NA)$;;1;1;"";Não permitido;string;13456789000112;
 /data/participant/urlComplementaryList;urlComplementaryList;"Espera-se que valor de retorno, após acesso ao link ‘urlComplementaryList’, deve ser array de objeto com a estrutura abaixo:
 
@@ -15,10 +15,10 @@
 - Ambos obrigatórios.
 ";Texto;1024;Opcional;^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)|(NA)$;;0;1;"";Não permitido;string;https://empresaa1.com/companies;
 /data/society;society;Conjunto de informações relativas à seguradora do produto de open insurance;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/society/name;name;Nome da Sociedade Seguradora.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Society A1;
+/data/society/name;name;Nome da Sociedade Seguradora.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Society A1;1
 /data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})$|^(NA)$;;1;1;"";Não permitido;string;13456789000112;
-/data/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;ACMEcap;
-/data/code;code;Código único a ser definido pela sociedade.;Texto;100;Obrigatório;;;1;1;"";Não permitido;string;01234589_cap;
+/data/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;ACMEcap;1
+/data/code;code;Código único a ser definido pela sociedade.;Texto;100;Obrigatório;;;1;1;"";Não permitido;string;01234589_cap;1
 /data/modality;modality;"1. Tradicional: A modalidade tradicional tem por objetivo restituir ao titular, ao final do prazo de vigência, no mínimo, o valor total das contribuições efetuadas pelo subscritor, desde que todas as contribuições previstas tenham sido realizadas nas datas programadas. (Res CNSP 384/20)
 2. Instrumento de Garantia: A modalidade tem por objetivo propiciar que a provisão matemática para capitalização do título de capitalização seja utilizada para assegurar o cumprimento de obrigação assumida em contrato principal pelo titular perante terceiro. (Res CNSP 384/20)
 3. Compra Programada: A modalidade compra programada garante o valor de resgate em moeda corrente nacional, sendo disponibilizada ao assim desejar e sem qualquer outro custo, pelo recebimento do bem e/ou serviço referenciado no subsidiado por acordos comerciais celebrados com indústrias, atacadistas, empresas comerciais ou prestadores de serviço. (Res CNSP 384/20)
@@ -43,15 +43,15 @@ PAGAMENTO_MENSAL
 PAGAMENTO_PERIODICO 
 NA";1;1;"";Não permitido;string;PAGAMENTO_UNICO;
 /data/termsAndConditions;termsAndConditions;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;2
+/data/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;30;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$;;1;1;"";Não permitido;string;15414.622222/2222-22;2
 /data/termsAndConditions/termsRegulations;termsRegulations;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/quotas;quotas;Informações relativas às taxas da Quotas praticadas para cada Parcela;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/quotas/quota;quota;Número da parcela.;Número;3;Obrigatório;;;1;1;"";Não permitido;number;10;
+/data/quotas/quota;quota;Número da parcela.;Número;;Obrigatório;;;1;1;"";Não permitido;number;10;
 /data/quotas/capitalizationQuota;capitalizationQuota;Percentual da contribuição destinado à constituição de capital referente ao direito de resgate. (Resolução CNSP 384/20) Em porcentagem(%).;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/quotas/raffleQuota;raffleQuota;Percentual da contribuição destinado a custear os sorteios, se previstos no plano. (Resolução CNSP 384/20) Em porcentagem(%).;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/quotas/chargingQuota;chargingQuota;Percentual da contribuição destinado aos custos de despesas com corretagem, colocação e administração do título de capitalização, emissão, divulgação, lucro da sociedade de capitalização e eventuais despesas relativas ao custeio da contemplação obrigatória e da distribuição de bônus. (Resolução CNSP 384/20) Em porcentagem(%).;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
-/data/validity;validity;Período entre a data de início e a data final para constituição do capital a ser pago ao(s) titular(es) do direito de resgate. Prazo de vigência do título de capitalização em meses (Resolução CNSP 384/20). Em meses.;Inteiro;3;Opcional;;;0;1;"";Não permitido;integer;48;
-/data/serieSize;serieSize;Os títulos de capitalização que prevejam sorteio devem ser estruturados em séries, ou seja, em sequências ou em grupos de títulos submetidos às mesmas condições e características, à exceção do valor do pagamento.;Inteiro;10;Opcional;;;0;1;"";Não permitido;integer;5000000;
+/data/validity;validity;Período entre a data de início e a data final para constituição do capital a ser pago ao(s) titular(es) do direito de resgate. Prazo de vigência do título de capitalização em meses (Resolução CNSP 384/20). Em meses.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;48;
+/data/serieSize;serieSize;Os títulos de capitalização que prevejam sorteio devem ser estruturados em séries, ou seja, em sequências ou em grupos de títulos submetidos às mesmas condições e características, à exceção do valor do pagamento.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;5000000;
 /data/capitalizationPeriod;capitalizationPeriod;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/capitalizationPeriod/interestRate;interestRate;Taxa que remunera a parte da mensalidade destinada a formar o Capital, ou seja, a Provisão Matemática de Resgate, também chamada de saldo de capitalização. Em porcentagem ao mês (% a.m.).;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/capitalizationPeriod/updateIndex;updateIndex;"Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
@@ -100,12 +100,12 @@ Valor máximo correspondente ao pagamento efetuado pelo subscritor à sociedade 
 Lista com os valores permitidos de contribuição ao plano.
 ";Número;;Obrigatório;;;1;1;"";Não permitido;number;5000;
 /data/capitalizationPeriod/earlyRedemptions;earlyRedemptions;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
-/data/capitalizationPeriod/earlyRedemptions/quota;quota;Parcela relativa ao Resgate Antecipado;Número;3;Obrigatório;;;1;1;"";Não permitido;number;10;
+/data/capitalizationPeriod/earlyRedemptions/quota;quota;Parcela relativa ao Resgate Antecipado;Número;;Obrigatório;;;1;1;"";Não permitido;number;10;
 /data/capitalizationPeriod/earlyRedemptions/rate;rate;Taxa relativa ao Resgate Antecipado;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/capitalizationPeriod/redemptionPercentageEndTerm;redemptionPercentageEndTerm;Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
-/data/capitalizationPeriod/gracePeriodRedemption;gracePeriodRedemption;Intervalo de tempo mínimo entre contratação e resgate do direito, em meses.;Número;3;Obrigatório;;;1;1;"";Não permitido;number;48;
+/data/capitalizationPeriod/gracePeriodRedemption;gracePeriodRedemption;Intervalo de tempo mínimo entre contratação e resgate do direito, em meses.;Número;;Obrigatório;;;1;1;"";Não permitido;number;48;
 /data/latePayment;latePayment;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/latePayment/suspensionMonths;suspensionMonths;Conforme manual SUSEP: Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado (não aplicável a pagamento único).;Número;3;Obrigatório;;;1;1;"";Não permitido;number;10;
+/data/latePayment/suspensionMonths;suspensionMonths;Conforme manual SUSEP: Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado (não aplicável a pagamento único).;Número;;Obrigatório;;;1;1;"";Não permitido;number;10;
 /data/latePayment/periodExtensionOption;periodExtensionOption;"Alteração do prazo de vigência original, pela suspensão (não aplicável a pagamento único). A considerar os seguintes domínios:
 1. true
 2. false
@@ -171,8 +171,8 @@ ANUAL
 OUTROS 
 NA";1;1;"";Não permitido;string;UNICO;
 /data/draws/timeIntervalAdditionalInfo;timeIntervalAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
-/data/draws/quantity;quantity;Número da quantidade de sorteios previstos ao longo da vigência.;Número;5;Obrigatório;;;1;1;"";Não permitido;number;10000;
-/data/draws/prizeMultiplier;prizeMultiplier;Valor dos sorteios representado por múltiplo do valor de contribuição. Por exemplo: 5 vezes valor da contribuição;Número;6;Obrigatório;;;1;1;"";Não permitido;number;5;
+/data/draws/quantity;quantity;Número da quantidade de sorteios previstos ao longo da vigência.;Número;;Obrigatório;;;1;1;"";Não permitido;number;10000;
+/data/draws/prizeMultiplier;prizeMultiplier;Valor dos sorteios representado por múltiplo do valor de contribuição. Por exemplo: 5 vezes valor da contribuição;Número;;Obrigatório;;;1;1;"";Não permitido;number;5;
 /data/draws/earlySettlementRaffle;earlySettlementRaffle;"Modelo de sorteio que acarreta, ao título contemplado, o seu resgate total obrigatório (Resolução Normativa 384/20). Conforme os domínios:
  1. true
  2. false
