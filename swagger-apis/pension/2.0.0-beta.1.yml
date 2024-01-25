@@ -96,91 +96,11 @@ components:
       required:
         - participant
         - society
-        - name
-        - code
-        - modality
-        - coverages
-        - termsAndConditions
-        - premiumUpdateIndex
-        - otherGuaranteedValues
-        - contributionPayment
-        - minimumRequirement
-        - targetAudience
       properties:
         participant:
           $ref: '#/components/schemas/PensionParticipant'
         society:
-          $ref: '#/components/schemas/PensionSociety'
-        name:
-          type: string
-          maxLength: 80
-          description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
-          example: Produto A
-        code:
-          type: string
-          maxLength: 80
-          description: Código único a ser definido pela sociedade.
-          example: '0001'
-        modality:
-          $ref: '#/components/schemas/EnumProductModality'
-        coverages:
-          type: array
-          items:
-            $ref: '#/components/schemas/Coverage'
-        assistanceTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnumAssistanceType'
-          example:
-            - PET
-            - FUNERAL
-        assistanceTypesAdditionalInfos:
-          type: array
-          items:
-            type: string
-          description: Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.
-          example:
-            - Assistance additional info.
-        additional:
-          $ref: '#/components/schemas/EnumAdditional'
-        termsAndConditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TermsAndConditions'
-          minItems: 1
-        pmbacRemuneration:
-          $ref: '#/components/schemas/RiskPensionEnumPmbacRemuneration'
-        premiumUpdateIndex:
-          $ref: '#/components/schemas/RiskPensionEnumPremiumUpdateIndex'
-        ageAdjustment:
-          $ref: '#/components/schemas/AgeAdjustment'
-        financialRegimeContractType:
-          $ref: '#/components/schemas/RiskPensionEnumFinancialRegime'
-        reclaim:
-          $ref: '#/components/schemas/RiskPensionReclaim'
-        otherGuaranteedValues:
-          $ref: '#/components/schemas/RiskPensionEnumOtherGuaranteedValues'
-        contributionPayment:
-          $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
-        minimumRequirement:
-          $ref: '#/components/schemas/RiskPensionMinimumRequirement'
-        targetAudience:
-          type: string
-          description: |
-            A considerar os domínios abaixo:
-
-              1. Pessoa Natural
-              2. Pessoa Jurídica
-              3. Ambas (Pessoa Natural e Jurídica)
-              4. NA
-          maxLength: 23
-          enum:
-            - PESSOA_NATURAL
-            - PESSOA_JURIDICA
-            - PESSOA_NATURAL_JURIDICA
-            - NA
-          example: PESSOA_NATURAL
-      additionalProperties: false
+          $ref: '#/components/schemas/RiskSociety'
     OKResponseSurvivalCoveragePension:
       type: object
       required:
@@ -201,76 +121,11 @@ components:
       type: object
       required:
         - participant
-        - name
-        - code
-        - segment
-        - modality
-        - defferalPeriod
-        - grantPeriodBenefit
-        - costs
-        - targetAudience
       properties:
         participant:
           $ref: '#/components/schemas/PensionParticipant'
         society:
-          $ref: '#/components/schemas/PensionSociety'
-        name:
-          type: string
-          maxLength: 80
-          description: |
-            Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.
-          example: Produto A
-        code:
-          type: string
-          maxLength: 80
-          description: |
-            Código único a ser definido pela sociedade.
-          example: '0001'
-        segment:
-          type: string
-          description: |
-            Segmento do qual se trata o produto contratado
-            1. Seguro de Pessoas
-            2. Previdência
-            3. NA
-          enum:
-            - SEGURO_PESSOAS
-            - PREVIDENCIA
-            - NA
-          example: PREVIDENCIA
-        modality:
-          type: string
-          description: |
-            1. Contribuição Variável;
-            2. Benefício Definido.
-            3. NA
-          enum:
-            - CONTRIBUICAO_VARIAVEL
-            - BENEFICIO_DEFINIDO
-            - NA
-          example: BENEFICIO_DEFINIDO
-        additionalInfo:
-          type: string
-          description: Campo aberto (possibilidade de incluir URL)
-          example: 'https://openinsurance.com.br/aaa'
-          maxLength: 1024
-        termsAndConditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/TermsAndConditions'
-          minItems: 1
-        type:
-          $ref: '#/components/schemas/SurvivalPensionType'
-        defferalPeriod:
-          $ref: '#/components/schemas/SurvivalPensionDefferalPeriod'
-        grantPeriodBenefit:
-          $ref: '#/components/schemas/SurvivalPensionGrantPeriodBenefit'
-        costs:
-          $ref: '#/components/schemas/SurvivalPensionCosts'
-        minimumRequirement:
-          $ref: '#/components/schemas/SurvivalPensionMinimumRequirements'
-        targetAudience:
-          $ref: '#/components/schemas/SurvivalPensionEnumTargetAudience'
+          $ref: '#/components/schemas/SurvivalSociety'
       additionalProperties: false
     SurvivalPensionInvestmentFund:
       type: object
@@ -382,6 +237,158 @@ components:
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
       pattern: '^(\d{14})$|^(NA)$'
       example: '13456789000112'
+    RiskProducts:
+      type: object
+      required:
+        - name
+        - code
+        - modality
+        - coverages
+        - termsAndConditions
+        - premiumUpdateIndex
+        - otherGuaranteedValues
+        - contributionPayment
+        - minimumRequirement
+        - targetAudience
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
+          example: Produto A
+        code:
+          type: string
+          maxLength: 80
+          description: Código único a ser definido pela sociedade.
+          example: '0001'
+        modality:
+          $ref: '#/components/schemas/EnumProductModality'
+        coverages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Coverage'
+        assistanceTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnumAssistanceType'
+          example:
+            - PET
+            - FUNERAL
+        assistanceTypesAdditionalInfos:
+          type: array
+          items:
+            type: string
+          description: Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.
+          example:
+            - Assistance additional info.
+        additional:
+          $ref: '#/components/schemas/EnumAdditional'
+        termsAndConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TermsAndConditions'
+          minItems: 1
+        pmbacRemuneration:
+          $ref: '#/components/schemas/RiskPensionEnumPmbacRemuneration'
+        premiumUpdateIndex:
+          $ref: '#/components/schemas/RiskPensionEnumPremiumUpdateIndex'
+        ageAdjustment:
+          $ref: '#/components/schemas/AgeAdjustment'
+        financialRegimeContractType:
+          $ref: '#/components/schemas/RiskPensionEnumFinancialRegime'
+        reclaim:
+          $ref: '#/components/schemas/RiskPensionReclaim'
+        otherGuaranteedValues:
+          $ref: '#/components/schemas/RiskPensionEnumOtherGuaranteedValues'
+        contributionPayment:
+          $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
+        minimumRequirement:
+          $ref: '#/components/schemas/RiskPensionMinimumRequirement'
+        targetAudience:
+          type: string
+          description: |
+            A considerar os domínios abaixo:
+
+              1. Pessoa Natural
+              2. Pessoa Jurídica
+              3. Ambas (Pessoa Natural e Jurídica)
+              4. NA
+          maxLength: 23
+          enum:
+            - PESSOA_NATURAL
+            - PESSOA_JURIDICA
+            - PESSOA_NATURAL_JURIDICA
+            - NA
+          example: PESSOA_NATURAL
+    SurvivalProducts:
+      type: object
+      required:
+        - name
+        - code
+        - segment
+        - modality
+        - defferalPeriod
+        - grantPeriodBenefit
+        - costs
+        - targetAudience
+      properties:
+        name:
+          type: string
+          maxLength: 80
+          description: |
+            Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.
+          example: Produto A
+        code:
+          type: string
+          maxLength: 80
+          description: |
+            Código único a ser definido pela sociedade.
+          example: '0001'
+        segment:
+          type: string
+          description: |
+            Segmento do qual se trata o produto contratado
+            1. Seguro de Pessoas
+            2. Previdência
+            3. NA
+          enum:
+            - SEGURO_PESSOAS
+            - PREVIDENCIA
+            - NA
+          example: PREVIDENCIA
+        modality:
+          type: string
+          description: |
+            1. Contribuição Variável;
+            2. Benefício Definido.
+            3. NA
+          enum:
+            - CONTRIBUICAO_VARIAVEL
+            - BENEFICIO_DEFINIDO
+            - NA
+          example: BENEFICIO_DEFINIDO
+        additionalInfo:
+          type: string
+          description: Campo aberto (possibilidade de incluir URL)
+          example: 'https://openinsurance.com.br/aaa'
+          maxLength: 1024
+        termsAndConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/TermsAndConditions'
+          minItems: 1
+        type:
+          $ref: '#/components/schemas/SurvivalPensionType'
+        defferalPeriod:
+          $ref: '#/components/schemas/SurvivalPensionDefferalPeriod'
+        grantPeriodBenefit:
+          $ref: '#/components/schemas/SurvivalPensionGrantPeriodBenefit'
+        costs:
+          $ref: '#/components/schemas/SurvivalPensionCosts'
+        minimumRequirement:
+          $ref: '#/components/schemas/SurvivalPensionMinimumRequirements'
+        targetAudience:
+          $ref: '#/components/schemas/SurvivalPensionEnumTargetAudience'
     SurvivalPensionDefferalPeriod:
       type: object
       description: Período de Diferimento
@@ -782,7 +789,7 @@ components:
           pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
-    PensionSociety:
+    RiskSociety:
       type: object
       description: Conjunto de informações relativas à seguradora do produto de open insurance
       required:
@@ -803,6 +810,40 @@ components:
           maxLength: 80
           minLength: 1
           example: Marca no OPIN.
+        products:
+          type: array
+          minItems: 1
+          description: Lista de produtos de uma empresa.
+          items:
+            $ref: '#/components/schemas/RiskProducts'
+      additionalProperties: false
+    SurvivalSociety:
+      type: object
+      description: Conjunto de informações relativas à seguradora do produto de open insurance
+      required:
+        - name
+        - cnpjNumber
+      properties:
+        name:
+          type: string
+          description: Nome da Sociedade Seguradora.
+          maxLength: 80
+          example: Society A1
+        cnpjNumber:
+          $ref: '#/components/schemas/CnpjNumber'
+        brand:
+          type: string
+          description: Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          maxLength: 80
+          minLength: 1
+          example: Marca no OPIN.
+        products:
+          type: array
+          minItems: 1
+          description: Lista de produtos de uma empresa.
+          items:
+            $ref: '#/components/schemas/SurvivalProducts'
       additionalProperties: false
     RiskPensionEnumIndemnifiablePeriodType:
       type: string
