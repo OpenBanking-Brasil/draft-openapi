@@ -322,7 +322,7 @@ components:
           type: string
           description: 'Restrição: Campo obrigatório para complementar a informação quando selecionada a opção ''OUTROS'''
           maxLength: 200
-          example: ''
+          example: Informações adicionais
         contributionAmount:
           type: array
           items:
@@ -425,7 +425,7 @@ components:
           type: string
           description: 'Restrição: Campo obrigatório para complementar a informação quando selecionada a opção ''OUTROS'''
           maxLength: 200
-          example: ''
+          example: Informações adicionais
         minimum:
           type: string
           pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
@@ -480,14 +480,14 @@ components:
           type: string
           description: 'Restrição: Campo obrigatório para complementar a informação quando selecionada a opção ''OUTROS'''
           maxLength: 200
-          example: ''
+          example: Informações adicionais
         updateIndex:
           $ref: '#/components/schemas/CapitalizationBondsProductUpdateIndex'
         updateIndexAdditionalInfo:
           type: string
           description: 'Restrição: Campo obrigatório para complementar a informação quando selecionada a opção ''OUTROS'''
           maxLength: 200
-          example: ''
+          example: Informações adicionais
       additionalProperties: false
     CapitalizationBondsProductPaymentMethod:
       type: string
@@ -557,7 +557,7 @@ components:
           type: string
           description: 'Restrição: Campo obrigatório para complementar a informação quando selecionada a opção ''OUTROS'''
           maxLength: 200
-          example: '5'
+          example: Informações adicionais
         quantity:
           type: number
           format: integer
@@ -589,7 +589,7 @@ components:
           type: string
           description: 'Campo aberto para complementar a regra dos sorteios do produto, a ser feita para cada participante.'
           maxLength: 200
-          example: Sorteios próprios às terças-feiras Toda quarta-feira sorteios através da loteria federal.
+          example: Sorteios próprios às terças-feiras. Toda quarta-feira sorteios através da loteria federal.
         minimumContemplationProbability:
           type: string
           pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
@@ -651,7 +651,7 @@ components:
           type: integer
           format: int32
           description: Número total de registros no resultado
-          example: 1
+          example: 10
         totalPages:
           type: integer
           format: int32

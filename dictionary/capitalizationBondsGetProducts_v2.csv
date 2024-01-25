@@ -62,7 +62,7 @@ TR
 INDICE_REMUNERACAO_DEPOSITOS_POUPANCA 
 OUTROS 
 NA";1;1;"";Não permitido;string;IPCA;
-/data/capitalizationPeriod/updateIndexAdditionalInfo;updateIndexAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
+/data/capitalizationPeriod/updateIndexAdditionalInfo;updateIndexAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/capitalizationPeriod/contributionAmount;contributionAmount;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/capitalizationPeriod/contributionAmount/periodicity;periodicity;"Intervalo de tempo regular previsto entre os sorteios. Conforme os domínios:
   1. Único
@@ -89,7 +89,7 @@ SEMESTRAL
 ANUAL 
 OUTROS 
 NA";1;1;"";Não permitido;string;UNICO;
-/data/capitalizationPeriod/contributionAmount/periodicityAdditionalInfo;periodicityAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
+/data/capitalizationPeriod/contributionAmount/periodicityAdditionalInfo;periodicityAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/capitalizationPeriod/contributionAmount/minimum;minimum;"Condicional: Quando modalidade for igual 'TRADICIONAL'
 Valor mínimo correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
 ";Texto;21;Obrigatório;^(\d{1,16}\.\d{2,4})$|^(NA)$;;1;1;"";Não permitido;string;1.2222;
@@ -132,7 +132,7 @@ CONSIGNACAO_FOLHA_PAGAMENTO
 PAGAMENTO_PONTOS 
 OUTROS 
 NA";1;1;"";Não permitido;string;CARTAO_CREDITO;
-/data/contributionPayment/paymentMethodAdditionalInfo;paymentMethodAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
+/data/contributionPayment/paymentMethodAdditionalInfo;paymentMethodAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/contributionPayment/updateIndex;updateIndex;"Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
 ";Texto;;Obrigatório;;"IPCA 
 IGPM 
@@ -141,7 +141,7 @@ TR
 INDICE_REMUNERACAO_DEPOSITOS_POUPANCA 
 OUTROS 
 NA";1;1;"";Não permitido;string;IPCA;
-/data/contributionPayment/updateIndexAdditionalInfo;updateIndexAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;"";
+/data/contributionPayment/updateIndexAdditionalInfo;updateIndexAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/redemptionPercentageEndTerm;redemptionPercentageEndTerm;Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/finalRedemptionRate;finalRedemptionRate;Valor percentual (%) de resgate final permitido.;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/draws;draws;Informações relativas aos Sorteios;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
@@ -170,7 +170,7 @@ SEMESTRAL
 ANUAL 
 OUTROS 
 NA";1;1;"";Não permitido;string;UNICO;
-/data/draws/timeIntervalAdditionalInfo;timeIntervalAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;5;
+/data/draws/timeIntervalAdditionalInfo;timeIntervalAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/draws/quantity;quantity;Número da quantidade de sorteios previstos ao longo da vigência.;Número;5;Obrigatório;;;1;1;"";Não permitido;number;10000;
 /data/draws/prizeMultiplier;prizeMultiplier;Valor dos sorteios representado por múltiplo do valor de contribuição. Por exemplo: 5 vezes valor da contribuição;Número;6;Obrigatório;;;1;1;"";Não permitido;number;5;
 /data/draws/earlySettlementRaffle;earlySettlementRaffle;"Modelo de sorteio que acarreta, ao título contemplado, o seu resgate total obrigatório (Resolução Normativa 384/20). Conforme os domínios:
@@ -182,7 +182,7 @@ desde que atingidos os requisitos definidos nas condições gerais do plano. Con
   1. true
   2. false
 ";Booleano;;Opcional;;;0;1;"";Não permitido;boolean;true;
-/data/draws/ruleDescription;ruleDescription;Campo aberto para complementar a regra dos sorteios do produto, a ser feita para cada participante.;Texto;200;Opcional;;;0;1;"";Não permitido;string;Sorteios próprios às terças-feiras Toda quarta-feira sorteios através da loteria federal.;
+/data/draws/ruleDescription;ruleDescription;Campo aberto para complementar a regra dos sorteios do produto, a ser feita para cada participante.;Texto;200;Opcional;;;0;1;"";Não permitido;string;Sorteios próprios às terças-feiras. Toda quarta-feira sorteios através da loteria federal.;
 /data/draws/minimumContemplationProbability;minimumContemplationProbability;Número representativo da probabilidade mínima de contemplação nos sorteios, em porcentagem (%).;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL) Observação: As URLs são limitadas a 2048 caracteres mas, para o contexto do Open Insurance , foi adotado a metade deste tamanho (1024). tamanho p.ex.  ‘https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais.;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais;
 /data/minimumRequirementDetails;minimumRequirementDetails;"Campo aberto (possibilidade de incluir URL).
