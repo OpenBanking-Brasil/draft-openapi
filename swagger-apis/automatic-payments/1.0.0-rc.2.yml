@@ -824,7 +824,6 @@ components:
           required:
             - loggedUser
             - creditors
-            - startDateTime
             - recurringConfiguration
           properties:
             loggedUser:
@@ -834,7 +833,10 @@ components:
             creditors:
               $ref: '#/components/schemas/Creditors'
             startDateTime:
-              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              description: |
+                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -1867,7 +1869,10 @@ components:
                   Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
                   Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
         startDateTime:
-          description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          description: |
+            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
           type: string
           format: date-time
           example: '2021-05-21T08:30:00Z'
@@ -2065,7 +2070,10 @@ components:
                   Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
                   Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
         startDateTime:
-          description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          description: |
+            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
           type: string
           format: date-time
           example: '2021-05-21T08:30:00Z'
@@ -2734,7 +2742,6 @@ components:
             - loggedUser
             - status
             - creditors
-            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -2765,7 +2772,10 @@ components:
             creditors:
               $ref: '#/components/schemas/Creditors'
             startDateTime:
-              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              description: |
+                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -2881,7 +2891,6 @@ components:
             - loggedUser
             - status
             - creditors
-            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -2912,7 +2921,10 @@ components:
             creditors:
               $ref: '#/components/schemas/Creditors'
             startDateTime:
-              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              description: |
+                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -3030,7 +3042,6 @@ components:
             - loggedUser
             - status
             - creditors
-            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -3061,7 +3072,10 @@ components:
             creditors:
               $ref: '#/components/schemas/Creditors'
             startDateTime:
-              description: Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              description: |
+                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
