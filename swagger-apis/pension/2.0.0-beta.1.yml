@@ -796,6 +796,13 @@ components:
           example: Society A1
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
+        brand:
+          type: string
+          description: Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          maxLength: 80
+          minLength: 1
+          example: Marca no OPIN.
       additionalProperties: false
     RiskPensionEnumIndemnifiablePeriodType:
       type: string
