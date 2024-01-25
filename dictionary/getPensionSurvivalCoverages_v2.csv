@@ -17,6 +17,7 @@
 /data/society;society;Conjunto de informações relativas à seguradora do produto de open insurance;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/society/name;name;Nome da Sociedade Seguradora.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Society A1;
 /data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^(\d{14})$|^(NA)$;;1;1;"";Não permitido;string;13456789000112;
+/data/society/brand;brand;Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Marca no OPIN.;1
 /data/name;name;"Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.
 ";Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Produto A;
 /data/code;code;"Código único a ser definido pela sociedade.
