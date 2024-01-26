@@ -49,9 +49,6 @@ components:
   schemas:
     CapitalizationBondsProductIdentificationData:
       type: object
-      required:
-        - participant
-        - society
       properties:
         participant:
           $ref: '#/components/schemas/Participant'
@@ -108,7 +105,7 @@ components:
         cnpjNumber:
           type: string
           description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
-          pattern: '^(\d{14})$|^(NA)$'
+          pattern: '^\d{14}$'
           example: '13456789000112'
         urlComplementaryList:
           type: string
@@ -123,25 +120,19 @@ components:
 
             - Ambos obrigatórios.
           maxLength: 1024
-          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)|(NA)$'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
     Products:
       type: object
       required:
-        - name
-        - code
         - modality
         - costType
-        - termsAndConditions
-        - quotas
-        - capitalizationPeriod
-        - latePayment
-        - contributionPayment
+        - valitidy
+        - serieSize
         - finalRedemptionRate
         - redemptionPercentageEndTerm
-        - draws
-        - additionalInfo
+        - minimumRequirementDetails
         - targetAudience
       properties:
         name:
@@ -226,12 +217,10 @@ components:
               1. Pessoa Natural
               2. Pessoa Jurídica
               3. Ambas (Pessoa Natural e Jurídica)
-              4. NA
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
-            - NA
           example: PESSOA_NATURAL
     EnumCapitalizationBondsProductModality:
       type: string
@@ -242,7 +231,6 @@ components:
         4. Popular: A modalidade popular tem por objetivo propiciar a capitalização da contribuição e a participação do titular em sorteios, sem que haja devolução integral do valor pago. (Res CNSP 384/20)
         5. Incentivo: A modalidade incentivo tem por objetivo a vinculação a um evento promocional de caráter comercial instituído pelo subscritor para alavancar a venda de seu(s) produto(s) ou serviços ou para fidelizar seus clientes. (Res CNSP 384/20)
         6. Filantropia Premiável: A modalidade filantropia premiável é destinada ao subscritor interessado em contribuir com entidades beneficentes de assistências sociais, certificadas nos termos da legislação vigente, e participar de sorteio(s). (Res CNSP 384/20)
-        7. NA
       enum:
         - TRADICIONAL
         - INSTRUMENTO_GARANTIA
@@ -250,7 +238,6 @@ components:
         - POPULAR
         - INCENTIVO
         - FILANTROPIA_PREMIAVEL
-        - NA
       example: TRADICIONAL
     EnumCapitalizationBondsProductCostType:
       type: string
@@ -259,25 +246,24 @@ components:
         1. Pagamento Único
         2. Pagamento Mensal
         3. Pagamento Periódico
-        4. NA
       enum:
         - PAGAMENTO_UNICO
         - PAGAMENTO_MENSAL
         - PAGAMENTO_PERIODICO
-        - NA
       example: PAGAMENTO_UNICO
     TermsAndConditions:
       type: object
       required:
         - susepProcessNumber
         - termsRegulations
+        - detail​
       properties:
         susepProcessNumber:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
           minLength: 2
           maxLength: 30
-          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
+          pattern: '^\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2}$'
           example: 15414.622222/2222-22
         termsRegulations:
           type: string
@@ -326,7 +312,6 @@ components:
       required:
         - interestRate
         - updateIndex
-        - contributionAmount
         - earlyRedemptions
         - redemptionPercentageEndTerm
         - gracePeriodRedemption
@@ -396,7 +381,6 @@ components:
         - TR
         - INDICE_REMUNERACAO_DEPOSITOS_POUPANCA
         - OUTROS
-        - NA
       example: IPCA
       description: |
         Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
@@ -408,7 +392,6 @@ components:
         Para as demais modalidades, informar a lista com os valores permitidos de contribuição ao plano.
         Em todas as situações indicar para qual periodicidade de pagamento se aplicam os valores: pagamento mensal, pagamento único ou periódico.
       required:
-        - periodicity
         - minimum
         - maximum
         - allowedValue
@@ -428,7 +411,6 @@ components:
               9. Semestral
               10. Anual
               11. Outros
-              12. NA
           enum:
             - UNICO
             - DIARIO
@@ -441,7 +423,6 @@ components:
             - SEMESTRAL
             - ANUAL
             - OUTROS
-            - NA
           example: UNICO
         periodicityAdditionalInfo:
           type: string
@@ -476,6 +457,7 @@ components:
       type: object
       required:
         - suspensionMonths
+        - periodExtensionOption
       properties:
         suspensionMonths:
           type: number
@@ -522,7 +504,6 @@ components:
         - CONSIGNACAO_FOLHA_PAGAMENTO
         - PAGAMENTO_PONTOS
         - OUTROS
-        - NA
       example: CARTAO_CREDITO
       description: |
         Meio de Pagamento utilizado para pagamento da contribuição. A considerar os domínios abaixo:
@@ -535,13 +516,15 @@ components:
           7. Consignação em Folha de Pagamento
           8. Pontos de Programas de Benefício
           9. Outros
-          10. NA
     CapitalizationBondsProductPrizeDraw:
       type: object
       required:
         - timeInterval
         - quantity
         - prizeMultiplier
+        - earlySettlementRaffle
+        - mandatoryContemplation
+        - ruleDescription
         - minimumContemplationProbability
       properties:
         timeInterval:
@@ -559,7 +542,6 @@ components:
               - SEMESTRAL
               - ANUAL
               - OUTROS
-              - NA
           enum:
             - UNICO
             - DIÁRIO
@@ -572,7 +554,6 @@ components:
             - SEMESTRAL
             - ANUAL
             - OUTROS
-            - NA
           example: UNICO
         timeIntervalAdditionalInfo:
           type: string
