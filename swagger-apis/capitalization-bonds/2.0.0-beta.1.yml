@@ -79,6 +79,7 @@ components:
             name:
               type: string
               description: Nome da Sociedade Seguradora.
+              minLength: 1
               maxLength: 80
               example: Society A1
             cnpjNumber:
@@ -87,11 +88,13 @@ components:
         name:
           type: string
           description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
+          minLength: 1
           maxLength: 80
           example: ACMEcap
         code:
           type: string
           description: Código único a ser definido pela sociedade.
+          minLength: 1
           maxLength: 100
           example: 01234589_cap
         modality:
@@ -110,12 +113,12 @@ components:
           type: integer
           format: int32
           description: Período entre a data de início e a data final para constituição do capital a ser pago ao(s) titular(es) do direito de resgate. Prazo de vigência do título de capitalização em meses (Resolução CNSP 384/20). Em meses.
-          maxLength: 3
+          maximum: 2147483647
           example: 48
         serieSize:
           type: integer
           description: 'Os títulos de capitalização que prevejam sorteio devem ser estruturados em séries, ou seja, em sequências ou em grupos de títulos submetidos às mesmas condições e características, à exceção do valor do pagamento.'
-          maxLength: 10
+          maximum: 2147483647
           example: 5000000
         capitalizationPeriod:
           $ref: '#/components/schemas/CapitalizationBondsProductCapitalizationPeriod'
@@ -183,11 +186,13 @@ components:
         brand:
           type: string
           description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          minLength: 1
           maxLength: 80
           example: Organização
         name:
           type: string
           description: Nome do participante do Open Finance.
+          minLength: 1
           maxLength: 80
           example: Organização A1
         cnpjNumber:
@@ -254,7 +259,7 @@ components:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
           minLength: 2
-          maxLength: 20
+          maxLength: 30
           pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
           example: 15414.622222/2222-22
         termsRegulations:
@@ -275,7 +280,7 @@ components:
           type: number
           format: integer
           description: Número da parcela.
-          maxLength: 3
+          maximum: 2147483647
           example: 10
         capitalizationQuota:
           type: string
@@ -341,7 +346,7 @@ components:
                 type: number
                 format: integer
                 description: Parcela relativa ao Resgate Antecipado
-                maxLength: 3
+                maximum: 2147483647
                 example: 10
               rate:
                 type: string
@@ -362,7 +367,7 @@ components:
           type: number
           format: integer
           description: 'Intervalo de tempo mínimo entre contratação e resgate do direito, em meses.'
-          maxLength: 3
+          maximum: 2147483647
           example: 48
       additionalProperties: false
     CapitalizationBondsProductUpdateIndex:
@@ -458,7 +463,6 @@ components:
         suspensionMonths:
           type: number
           description: 'Conforme manual SUSEP: Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado (não aplicável a pagamento único).'
-          maxLength: 3
           example: 10
         periodExtensionOption:
           type: boolean
@@ -562,13 +566,12 @@ components:
           type: number
           format: integer
           description: Número da quantidade de sorteios previstos ao longo da vigência.
-          maxLength: 5
           example: 10000
         prizeMultiplier:
           type: number
           format: integer
           description: 'Valor dos sorteios representado por múltiplo do valor de contribuição. Por exemplo: 5 vezes valor da contribuição'
-          maxLength: 6
+          maximum: 2147483647
           example: 5
         earlySettlementRaffle:
           description: |
