@@ -14,7 +14,7 @@ Informações mais detalhadas sobre a construção de namespaces devem ser consu
 /data/rp/id;id;Identificador único da Relying Party.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/rp/name;name;Nome amigável da Relying Party para exibição aos usuários.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/user;user;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/user/id;id;Identificador único do usuário sob registro.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
+/data/user/id;id;Identificador único do usuário sob registro em formato base64. A conversão deste valor para o formato original (BufferSource ou ArrayBuffer) não deve ultrapassar 64 bytes.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/user/name;name;Identificador do usuário human-readable.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/user/displayName;displayName;Identificador do usuário para fins de apresentação.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/challenge;challenge;Sequência de bytes aleatórios gerados pelo servidor FIDO2, codificados em base64.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
