@@ -1742,7 +1742,7 @@ components:
       properties:
         id:
           type: string
-          description: Identificador único do usuário sob registro.
+          description: Identificador único do usuário sob registro em formato base64. A conversão deste valor para o formato original (BufferSource ou ArrayBuffer) não deve ultrapassar 64 bytes.
         name:
           type: string
           description: Identificador do usuário human-readable.
