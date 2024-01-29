@@ -1,9 +1,9 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;Conjunto de informações do Título de Capitalização;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Opcional;;;1;1;"";Não permitido;string;Organização;1
-/data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;Opcional;;;1;1;"";Não permitido;string;Organização A1;1
-/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;Opcional;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
+/data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização;1
+/data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;1
+/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
 /data/participant/urlComplementaryList;urlComplementaryList;"Espera-se que valor de retorno, após acesso ao link ‘urlComplementaryList’, deve ser array de objeto com a estrutura abaixo:
 
 - ‘name’ com o valor contido no campo ‘LegalEntityName’ conforme cadastro no diretório;
@@ -72,7 +72,7 @@ OUTROS";1;1;"";Não permitido;string;IPCA;
   9. Semestral
   10. Anual
   11. Outros
-";Texto;;Obrigatório;Obrigatório;;"UNICO 
+";Texto;;Opcional;Obrigatório;;"UNICO 
 DIARIO 
 SEMANAL 
 QUINZENAL 
@@ -82,7 +82,7 @@ TRIMESTRAL
 QUADRIMESTRAL 
 SEMESTRAL 
 ANUAL 
-OUTROS";1;1;"";Não permitido;string;UNICO;
+OUTROS";0;1;"";Não permitido;string;UNICO;
 /data/society/products/capitalizationPeriod/contributionAmount/periodicityAdditionalInfo;periodicityAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/society/products/capitalizationPeriod/contributionAmount/minimum;minimum;"Condicional: Quando modalidade for igual 'TRADICIONAL'
 Valor mínimo correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
@@ -115,7 +115,7 @@ Lista com os valores permitidos de contribuição ao plano.
   7. Consignação em Folha de Pagamento
   8. Pontos de Programas de Benefício
   9. Outros
-";Texto;;Obrigatório;Obrigatório;;"CARTAO_CREDITO 
+";Texto;;Opcional;Obrigatório;;"CARTAO_CREDITO 
 CARTAO_DEBITO 
 DEBITO_CONTA_CORRENTE 
 DEBITO_CONTA_POUPANCA 
@@ -123,15 +123,15 @@ BOLETO_BANCARIO
 PIX 
 CONSIGNACAO_FOLHA_PAGAMENTO 
 PAGAMENTO_PONTOS 
-OUTROS";1;1;"";Não permitido;string;CARTAO_CREDITO;
+OUTROS";0;1;"";Não permitido;string;CARTAO_CREDITO;
 /data/society/products/contributionPayment/paymentMethodAdditionalInfo;paymentMethodAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/society/products/contributionPayment/updateIndex;updateIndex;"Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
-";Texto;;Obrigatório;Obrigatório;;"IPCA 
+";Texto;;Opcional;Obrigatório;;"IPCA 
 IGPM 
 INPC 
 TR 
 INDICE_REMUNERACAO_DEPOSITOS_POUPANCA 
-OUTROS";1;1;"";Não permitido;string;IPCA;
+OUTROS";0;1;"";Não permitido;string;IPCA;
 /data/society/products/contributionPayment/updateIndexAdditionalInfo;updateIndexAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/society/products/redemptionPercentageEndTerm;redemptionPercentageEndTerm;Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/finalRedemptionRate;finalRedemptionRate;Valor percentual (%) de resgate final permitido.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
@@ -148,7 +148,7 @@ OUTROS";1;1;"";Não permitido;string;IPCA;
   - SEMESTRAL
   - ANUAL
   - OUTROS
-";Texto;;Obrigatório;Obrigatório;;"UNICO 
+";Texto;;Opcional;Obrigatório;;"UNICO 
 DIÁRIO 
 SEMANAL 
 QUINZENAL 
@@ -158,7 +158,7 @@ TRIMESTRAL
 QUADRIMESTRAL 
 SEMESTRAL 
 ANUAL 
-OUTROS";1;1;"";Não permitido;string;UNICO;
+OUTROS";0;1;"";Não permitido;string;UNICO;
 /data/society/products/draws/timeIntervalAdditionalInfo;timeIntervalAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
 /data/society/products/draws/quantity;quantity;Número da quantidade de sorteios previstos ao longo da vigência.;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;10000;
 /data/society/products/draws/prizeMultiplier;prizeMultiplier;Valor dos sorteios representado por múltiplo do valor de contribuição. Por exemplo: 5 vezes valor da contribuição;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;5;
