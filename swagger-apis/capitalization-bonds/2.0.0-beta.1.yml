@@ -96,6 +96,10 @@ components:
         - brand
         - name
         - cnpjNumber
+      x-regulatory-required:
+        - brand
+        - name
+        - cnpjNumber
       properties:
         brand:
           type: string
@@ -425,7 +429,6 @@ components:
         Para as demais modalidades, informar a lista com os valores permitidos de contribuição ao plano.
         Em todas as situações indicar para qual periodicidade de pagamento se aplicam os valores: pagamento mensal, pagamento único ou periódico.
       required:
-        - periodicity
         - minimum
         - maximum
         - allowedValue
@@ -514,9 +517,6 @@ components:
       additionalProperties: false
     ContributionPayment:
       type: object
-      required:
-        - paymentMethod
-        - updateIndex
       x-regulatory-required:
         - paymentMethod
         - updateIndex
@@ -563,7 +563,6 @@ components:
     CapitalizationBondsProductPrizeDraw:
       type: object
       required:
-        - timeInterval
         - quantity
         - prizeMultiplier
         - minimumContemplationProbability
