@@ -49,6 +49,9 @@ components:
   schemas:
     CapitalizationBondsProductIdentificationData:
       type: object
+      required:
+        - participant
+        - society
       properties:
         participant:
           $ref: '#/components/schemas/Participant'
@@ -58,7 +61,11 @@ components:
           required:
             - name
             - cnpjNumber
+            - products
             - brand
+          x-regulatory-required:
+            - name
+            - cnpjNumber
           properties:
             name:
               type: string
@@ -126,9 +133,21 @@ components:
     Products:
       type: object
       required:
+        - name
+        - code
+        - termsAndConditions
+        - quotas
+        - capitalizationPeriod
+        - latePayment
+        - contributionPayment
+        - finalRedemptionRate
+        - redemptionPercentageEndTerm
+        - draws
+        - additionalInfo
+      x-regulatory-required:
         - modality
         - costType
-        - valitidy
+        - validity
         - serieSize
         - finalRedemptionRate
         - redemptionPercentageEndTerm
@@ -254,9 +273,11 @@ components:
     TermsAndConditions:
       type: object
       required:
-        - susepProcessNumber
         - termsRegulations
-        - detail​
+        - detail
+      x-regulatory-required:
+        - susepProcessNumber
+        - detail
       properties:
         susepProcessNumber:
           type: string
@@ -274,6 +295,11 @@ components:
     CapitalizationBondsProductQuota:
       type: object
       required:
+        - quota
+        - capitalizationQuota
+        - raffleQuota
+        - chargingQuota
+      x-regulatory-required:
         - quota
         - capitalizationQuota
         - raffleQuota
@@ -310,6 +336,13 @@ components:
     CapitalizationBondsProductCapitalizationPeriod:
       type: object
       required:
+        - interestRate
+        - updateIndex
+        - contributionAmount
+        - earlyRedemptions
+        - redemptionPercentageEndTerm
+        - gracePeriodRedemption
+      x-regulatory-required:
         - interestRate
         - updateIndex
         - earlyRedemptions
@@ -392,6 +425,12 @@ components:
         Para as demais modalidades, informar a lista com os valores permitidos de contribuição ao plano.
         Em todas as situações indicar para qual periodicidade de pagamento se aplicam os valores: pagamento mensal, pagamento único ou periódico.
       required:
+        - periodicity
+        - minimum
+        - maximum
+        - allowedValue
+      x-regulatory-required:
+        - periodicity
         - minimum
         - maximum
         - allowedValue
@@ -457,6 +496,8 @@ components:
       type: object
       required:
         - suspensionMonths
+      x-regulatory-required:
+        - suspensionMonths
         - periodExtensionOption
       properties:
         suspensionMonths:
@@ -474,6 +515,9 @@ components:
     ContributionPayment:
       type: object
       required:
+        - paymentMethod
+        - updateIndex
+      x-regulatory-required:
         - paymentMethod
         - updateIndex
       properties:
@@ -519,6 +563,11 @@ components:
     CapitalizationBondsProductPrizeDraw:
       type: object
       required:
+        - timeInterval
+        - quantity
+        - prizeMultiplier
+        - minimumContemplationProbability
+      x-regulatory-required:
         - timeInterval
         - quantity
         - prizeMultiplier
