@@ -99,7 +99,7 @@ Lista com os valores permitidos de contribuição ao plano.
 /data/society/products/capitalizationPeriod/redemptionPercentageEndTerm;redemptionPercentageEndTerm;Percentual mínimo da soma das contribuições efetuadas que poderá ser resgatado ao final da vigência, tendo como condição os pagamentos das parcelas nos respectivos vencimentos.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/capitalizationPeriod/gracePeriodRedemption;gracePeriodRedemption;Intervalo de tempo mínimo entre contratação e resgate do direito, em meses.;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;48;
 /data/society/products/latePayment;latePayment;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/society/products/latePayment/suspensionMonths;suspensionMonths;Conforme manual SUSEP: Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado (não aplicável a pagamento único).;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;10;
+/data/society/products/latePayment/suspensionMonths;suspensionMonths;Conforme manual SUSEP: Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado (não aplicável a pagamento único).;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/society/products/latePayment/periodExtensionOption;periodExtensionOption;"Alteração do prazo de vigência original, pela suspensão (não aplicável a pagamento único). A considerar os seguintes domínios:
 1. true
 2. false
@@ -160,7 +160,7 @@ SEMESTRAL
 ANUAL 
 OUTROS";0;1;"";Não permitido;string;UNICO;
 /data/society/products/draws/timeIntervalAdditionalInfo;timeIntervalAdditionalInfo;Restrição: Campo obrigatório para complementar a informação quando selecionada a opção 'OUTROS';Texto;200;Opcional;Opcional;;;0;1;"";Não permitido;string;Informações adicionais;
-/data/society/products/draws/quantity;quantity;Número da quantidade de sorteios previstos ao longo da vigência.;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;10000;
+/data/society/products/draws/quantity;quantity;Número da quantidade de sorteios previstos ao longo da vigência.;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;10000;
 /data/society/products/draws/prizeMultiplier;prizeMultiplier;Valor dos sorteios representado por múltiplo do valor de contribuição. Por exemplo: 5 vezes valor da contribuição;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;5;
 /data/society/products/draws/earlySettlementRaffle;earlySettlementRaffle;"Modelo de sorteio que acarreta, ao título contemplado, o seu resgate total obrigatório (Resolução Normativa 384/20). Conforme os domínios:
  1. true

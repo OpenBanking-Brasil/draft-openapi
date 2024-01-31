@@ -504,7 +504,7 @@ components:
         - periodExtensionOption
       properties:
         suspensionMonths:
-          type: number
+          type: integer
           description: 'Conforme manual SUSEP: Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado (não aplicável a pagamento único).'
           example: 10
         periodExtensionOption:
@@ -609,8 +609,7 @@ components:
           maxLength: 200
           example: Informações adicionais
         quantity:
-          type: number
-          format: integer
+          type: integer
           description: Número da quantidade de sorteios previstos ao longo da vigência.
           example: 10000
         prizeMultiplier:
