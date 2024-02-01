@@ -1571,7 +1571,7 @@ components:
             challenge:
               type: string
               format: byte
-              description: Sequência de bytes aleatórios gerados pelo servidor FIDO2, codificados em base64.
+              description: Sequência de bytes aleatórios gerados pelo servidor FIDO2. Deve ser o valor em formato base64url.
             pubKeyCredParams:
               type: array
               items:
@@ -1723,10 +1723,10 @@ components:
       properties:
         id:
           type: string
-          description: Identificador único da Relying Party.
+          description: Identificador único da Relying Party. Esse campo deve ser preenchido com o valor que é enviado na requisição no campo /data/rp.
         name:
           type: string
-          description: Nome amigável da Relying Party para exibição aos usuários.
+          description: Nome amigável da Relying Party para exibição aos usuários. Pode ser obtido através do Software Statement Assertion, atributo software_client_name.
     FidoUser:
       type: object
       required:
