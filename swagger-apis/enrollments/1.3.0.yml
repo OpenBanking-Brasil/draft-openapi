@@ -1550,7 +1550,6 @@ components:
       type: object
       required:
         - data
-        - links
         - meta
       properties:
         data:
@@ -1601,15 +1600,12 @@ components:
               description: Campo de extensão com opções que variam por plataforma.
               additionalProperties:
                 type: string
-        links:
-          $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
     EnrollmentFidoSignOptions:
       type: object
       required:
         - data
-        - links
         - meta
       properties:
         data:
@@ -1641,8 +1637,6 @@ components:
               description: Campo de extensão com opções que variam por plataforma.
               additionalProperties:
                 type: string
-        links:
-          $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
     EnumAccountPaymentsType:
