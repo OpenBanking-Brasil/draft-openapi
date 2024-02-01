@@ -4014,8 +4014,8 @@ components:
     OAuth2ClientCredentials:
       type: oauth2
       description: |
-        Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.  
-        Apenas pagamentos iniciados pela mesma iniciadora de pagamentos podem ser consultados ou cancelados através de modelo client credentials.
+         Fluxo OAuth necessário para que a iniciadora possa consultar ou cancelar pagamentos e criar ou consultar consentimentos. 
+         Apenas pagamentos e consentimentos iniciados pela mesma iniciadora de pagamentos podem ser consultados ou cancelados através deste modelo.
       flows:
         clientCredentials:
           tokenUrl: 'https://authserver.example/token'
