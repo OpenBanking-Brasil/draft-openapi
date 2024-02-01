@@ -65,8 +65,8 @@ Motivo da rejeição do pagamento. Informações complementares sobre o motivo d
 - FALHA_INFRAESTRUTURA_ICP
 - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
 - FALHA_INFRAESTRUTURA_DETENTORA
-- FALHA_INFRAESTRUTURA_DETENTORA
-- CONSENTIMENTO_INVALIDO
+- LIMITE_PERIODO_VALOR_EXCEDIDO
+- LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
 
 [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -80,7 +80,8 @@ FALHA_INFRAESTRUTURA_SPI
 FALHA_INFRAESTRUTURA_ICP 
 FALHA_INFRAESTRUTURA_PSP_RECEBEDOR 
 FALHA_INFRAESTRUTURA_DETENTORA 
-CONSENTIMENTO_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
+LIMITE_PERIODO_VALOR_EXCEDIDO 
+LIMITE_PERIODO_QUANTIDADE_EXCEDIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
 

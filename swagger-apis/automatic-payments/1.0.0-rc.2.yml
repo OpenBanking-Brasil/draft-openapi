@@ -1686,7 +1686,8 @@ components:
         - FALHA_INFRAESTRUTURA_ICP
         - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
         - FALHA_INFRAESTRUTURA_DETENTORA
-        - CONSENTIMENTO_INVALIDO
+        - LIMITE_PERIODO_VALOR_EXCEDIDO
+        - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         
       example: SALDO_INSUFICIENTE
       description: |
@@ -1704,8 +1705,8 @@ components:
         - FALHA_INFRAESTRUTURA_ICP
         - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
         - FALHA_INFRAESTRUTURA_DETENTORA
-        - FALHA_INFRAESTRUTURA_DETENTORA
-        - CONSENTIMENTO_INVALIDO
+        - LIMITE_PERIODO_VALOR_EXCEDIDO
+        - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
