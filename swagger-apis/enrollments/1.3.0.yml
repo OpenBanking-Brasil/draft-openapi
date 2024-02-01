@@ -1303,10 +1303,10 @@ components:
               properties:
                 id:
                   type: string
-                  description: Identificador da credencial.
+                  description: Identificador da credencial. Deve ser o valor em formato base64url do campo rawId de chave pública utilizada no processo de autenticação.
                 rawId:
                   type: string
-                  description: Identificador da credencial. Pode ser igual ao campo id.
+                  description: Identificador da credencial. Para envio à detentora de conta, o valor deste atributo deve ser idêntico ao valor do atributo id.
                 type:
                   type: string
                   description: Tipo da credencial.
@@ -1322,19 +1322,19 @@ components:
                     clientDataJSON:
                       type: string
                       format: bytes
-                      description: Agrega as informações do aplicativo que gerou a credencial.
+                      description: Agrega as informações do aplicativo que gerou a credencial. Deve ser enviado no formato base64url para a detentora de conta.
                     authenticatorData:
                       type: string
                       format: bytes
-                      description: Representa a estrutura de dados do autenticador.
+                      description: Representa a estrutura de dados do autenticador. Deve ser enviado no formato base64url para a detentora de contas.
                     signature:
                       type: string
                       format: bytes
-                      description: Sequencia de bytes contendo a assinatura.
+                      description: Sequencia de bytes contendo a assinatura. Deve ser enviado no formato base64url para a detentora de contas.
                     userHandle:
                       type: string
                       format: bytes
-                      description: Nome de usuário que foi enviado durante a criação da credencial.
+                      description: Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de contas.
                 clientExtensionResults:
                   type: object
                   description: Estrutura para extensão de resultados 
