@@ -1774,7 +1774,7 @@ components:
       description: |
         Objeto contendo as informações de rejeição dos consentimentos.
 
-        [Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a "REJECTED" ou "REVOKED"
+        [Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a "REJECTED".
       required:
         - rejectedBy
         - rejectedFrom
@@ -2807,7 +2807,10 @@ components:
               $ref: '#/components/schemas/Rejection'
             revocation:
               type: object
-              description: Objeto contendo as informações de revogação dos consentimentos.
+              description: |
+                Objeto contendo as informações de revogação dos consentimentos.
+
+                [Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a "REVOKED".
               required:
                 - revokedBy
                 - revokedFrom
@@ -2956,7 +2959,10 @@ components:
               $ref: '#/components/schemas/Rejection'
             revocation:
               type: object
-              description: Objeto contendo as informações de revogação dos consentimentos.
+              description: |
+                Objeto contendo as informações de revogação dos consentimentos.
+
+                [Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a "REVOKED".
               required:
                 - revokedBy
                 - revokedFrom
