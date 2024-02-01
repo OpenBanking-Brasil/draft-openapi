@@ -186,20 +186,25 @@ components:
         - meta
       properties:
         data:
-          description: Conjunto de informações referente aos correspondentes bancários da Instituição
-          type: object
-          properties:
-            participant:
-              $ref: '#/components/schemas/BankingAgentsParticipant'
-            bankingAgents:
-              type: array
-              items:
-                $ref: '#/components/schemas/BankingAgent'
-              minItems: 1
+          type: array
+          items: 
+            $ref: '#/components/schemas/BankingAgentsData'
+          minItems: 1
         links:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
+    BankingAgentsData:
+      type: object
+      description: Conjunto de informações referente aos correspondentes bancários da Instituição
+      properties:
+        participant:
+          $ref: '#/components/schemas/BankingAgentsParticipant'
+        bankingAgents:
+          type: array
+          items:
+            $ref: '#/components/schemas/BankingAgent'
+          minItems: 1
     BankingAgentsParticipant:
       description: Conjunto de informações relativas ao participante do produto de Open Finance
       type: object
