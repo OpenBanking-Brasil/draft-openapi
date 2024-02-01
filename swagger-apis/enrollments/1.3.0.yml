@@ -1303,7 +1303,7 @@ components:
               properties:
                 id:
                   type: string
-                  description: Identificador da credencial. Deve ser o valor em formato base64url do campo rawId de chave pública utilizada no processo de autenticação.
+                  description: Identificador da credencial. Deve ser o valor em formato base64url do campo rawId da chave pública utilizada no processo de autenticação.
                 rawId:
                   type: string
                   description: Identificador da credencial. Para envio à detentora de conta, o valor deste atributo deve ser idêntico ao valor do atributo id.
@@ -1326,15 +1326,15 @@ components:
                     authenticatorData:
                       type: string
                       format: bytes
-                      description: Representa a estrutura de dados do autenticador. Deve ser enviado no formato base64url para a detentora de contas.
+                      description: Representa a estrutura de dados do autenticador. Deve ser enviado no formato base64url para a detentora de conta.
                     signature:
                       type: string
                       format: bytes
-                      description: Sequencia de bytes contendo a assinatura. Deve ser enviado no formato base64url para a detentora de contas.
+                      description: Sequência de bytes contendo a assinatura. Deve ser enviado no formato base64url para a detentora de conta.
                     userHandle:
                       type: string
                       format: bytes
-                      description: Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de contas.
+                      description: Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de conta.
                 clientExtensionResults:
                   type: object
                   description: Estrutura para extensão de resultados 
