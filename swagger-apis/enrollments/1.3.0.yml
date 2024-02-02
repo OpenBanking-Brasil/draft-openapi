@@ -1303,10 +1303,10 @@ components:
               properties:
                 id:
                   type: string
-                  description: Identificador da credencial.
+                  description: Identificador da credencial. Deve ser o valor em formato base64url do campo rawId da chave pública utilizada no processo de autenticação.
                 rawId:
                   type: string
-                  description: Identificador da credencial. Pode ser igual ao campo id.
+                  description: Identificador da credencial. Para envio à detentora de conta, o valor deste atributo deve ser idêntico ao valor do atributo id.
                 type:
                   type: string
                   description: Tipo da credencial.
@@ -1322,19 +1322,19 @@ components:
                     clientDataJSON:
                       type: string
                       format: bytes
-                      description: Agrega as informações do aplicativo que gerou a credencial.
+                      description: Agrega as informações do aplicativo que gerou a credencial. Deve ser enviado no formato base64url para a detentora de conta.
                     authenticatorData:
                       type: string
                       format: bytes
-                      description: Representa a estrutura de dados do autenticador.
+                      description: Representa a estrutura de dados do autenticador. Deve ser enviado no formato base64url para a detentora de conta.
                     signature:
                       type: string
                       format: bytes
-                      description: Sequencia de bytes contendo a assinatura.
+                      description: Sequência de bytes contendo a assinatura. Deve ser enviado no formato base64url para a detentora de conta.
                     userHandle:
                       type: string
                       format: bytes
-                      description: Nome de usuário que foi enviado durante a criação da credencial.
+                      description: Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de conta.
                 clientExtensionResults:
                   type: object
                   description: Estrutura para extensão de resultados 
@@ -1487,10 +1487,10 @@ components:
           properties:
             id:
               type: string
-              description: Identificador da credencial.
+              description: Identificador da credencial. Deve ser o valor em formato base64url do campo rawId da chave pública criada no processo de registro do dispositivo.
             rawId:
               type: string
-              description: Identificador da credencial. Pode ser igual ao campo id.
+              description: Identificador da credencial. Para envio ao detentor, o valor deste atributo deve ser idêntico ao valor do atributo id.
             response:
               type: object
               required:
@@ -1500,12 +1500,12 @@ components:
                 clientDataJSON:
                   type: string
                   format: bytes
-                  description: Agrega as informações do aplicativo que gerou a credencial.
+                  description: Agrega as informações do aplicativo que gerou a credencial. Deve ser enviado em formato base64url para o detentor.
                   example: eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoiTVRBeU16azRhMkZxYUhOclpHcG9ZV3R6Iiwib3JpZ2luIjoiaHR0cHM6Ly93d3cudzMub3JnIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ==
                 attestationObject:
                   type: string
                   format: bytes
-                  description: Agrega as informações da chave pública da credencial.
+                  description: Agrega as informações da chave pública da credencial. Deve ser enviado em formato base64url para o detentor.
                   example: o2NmbXRoZmlkby11MmZnYXR0U3RtdKJjc2lnWEcwRQIgZyUMtm43lCCqzoIbSDeoCUpJzh/VSchwQNxFR2UM/DsCIQDWpp4+/nklI7G2HPVZCIqw08R9omcn9kJrKPsuIO5k22N4NWOBWQFIMIIBRDCB6qADAgECAgkBcwb/////QwMwCgYIKoZIzj0EAwIwGzEZMBcGA1UEAxMQR251YmJ5IEhTTSBDQSAwMDAiGA8yMDEyMDYwMTAwMDAwMFoYDzIwNjIwNTMxMjM1OTU5WjAwMRkwFwYDVQQDExBHb29nbGUgR251YmJ5IHYwMRMwEQYDVQQtAwoAAXMG/////0MDMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAELuWVatmVMfAOr53T6fh7X/iIgqKz5SCnKTBUnFo3FtbbslUGi8Qetr1nbyr6BVqGHqcJiXyvF6rVbj5fZqbiBTAKBggqhkjOPQQDAgNJADBGAiEA5GaaFxllkOr24b5s6Qu/4ch3ZgU+3GIAv/D8kj4EGMgCIQDXYfaVAMe7Jzht3ra4TaCKKpaUxp+nRkIO/SKiQZPjgmhhdXRoRGF0YVjEIYvQ2gJvAWdQFFLPcpStJJWLnFoQO0f5vT1T51P/rm5BAAAAAAAAAAAAAAAAAAAAAAAAAAAAQCJ8iR8CqPctr4tz/YAICs6bDwVqhDzdt3oohVVWRQruy+E1AFeEWgPMWsIS4UU0n+sRGW3m2K90z1d9ujtFPxylAQIDJiABIVggaUaH0XDx9F2UOrT0ao02wL+xjGR/BxnCB4WOU2w0H8YiWCATuK2PUWGPophwPsfNIC3CZw4TGlCMEq1R15cw1w5KDg==
             authenticatorAttachment:
               type: string
@@ -1550,7 +1550,6 @@ components:
       type: object
       required:
         - data
-        - links
         - meta
       properties:
         data:
@@ -1572,7 +1571,7 @@ components:
             challenge:
               type: string
               format: byte
-              description: Sequência de bytes aleatórios gerados pelo servidor FIDO2, codificados em base64.
+              description: Sequência de bytes aleatórios gerados pelo servidor FIDO2. Deve ser o valor em formato base64url.
             pubKeyCredParams:
               type: array
               items:
@@ -1601,15 +1600,12 @@ components:
               description: Campo de extensão com opções que variam por plataforma.
               additionalProperties:
                 type: string
-        links:
-          $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
     EnrollmentFidoSignOptions:
       type: object
       required:
         - data
-        - links
         - meta
       properties:
         data:
@@ -1641,8 +1637,6 @@ components:
               description: Campo de extensão com opções que variam por plataforma.
               additionalProperties:
                 type: string
-        links:
-          $ref: '#/components/schemas/LinkSingle'
         meta:
           $ref: '#/components/schemas/Meta'
     EnumAccountPaymentsType:
@@ -1729,10 +1723,10 @@ components:
       properties:
         id:
           type: string
-          description: Identificador único da Relying Party.
+          description: Identificador único da Relying Party. Esse campo deve ser preenchido com o valor que é enviado na requisição no campo /data/rp.
         name:
           type: string
-          description: Nome amigável da Relying Party para exibição aos usuários.
+          description: Nome amigável da Relying Party para exibição aos usuários. Pode ser obtido através do Software Statement Assertion, atributo software_client_name.
     FidoUser:
       type: object
       required:
