@@ -159,8 +159,6 @@ components:
           enum:
             - DIRETAMENTE
             - INDIRETAMENTE
-            - NAO_APLICA
-            - NA
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
                - Tipo de taxa de performance
@@ -211,13 +209,11 @@ components:
             - COLETIVO_AVERBADO
             - COLETIVO_INSTITUIDO
             - INDIVIDUAL
-            - NA
           description: |
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo Averbado;
             2. Coletivo instituído;
             3. Individual.
-            4. NA
           example: COLETIVO_AVERBADO
         participantQualified:
           type: boolean
@@ -312,13 +308,11 @@ components:
               1. Pessoa Natural
               2. Pessoa Jurídica
               3. Ambas (Pessoa Natural e Jurídica)
-              4. NA
           maxLength: 23
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
-            - NA
           example: PESSOA_NATURAL
     SurvivalProducts:
       type: object
@@ -350,22 +344,18 @@ components:
             Segmento do qual se trata o produto contratado
             1. Seguro de Pessoas
             2. Previdência
-            3. NA
           enum:
             - SEGURO_PESSOAS
             - PREVIDENCIA
-            - NA
           example: PREVIDENCIA
         modality:
           type: string
           description: |
             1. Contribuição Variável;
             2. Benefício Definido.
-            3. NA
           enum:
             - CONTRIBUICAO_VARIAVEL
             - BENEFICIO_DEFINIDO
-            - NA
           example: BENEFICIO_DEFINIDO
         additionalInfo:
           type: string
@@ -490,7 +480,6 @@ components:
         11. VRI
         12. VDR
         13. Demais produtos de Previdência.
-        14. NA
       enum:
         - PGBL
         - PRGP
@@ -505,7 +494,6 @@ components:
         - VRI
         - VDR
         - DEMAIS_PRODUTOS_PREVIDENCIA
-        - NA
     SurvivalPensionGracePeriod:
       type: object
       description: Prazo de carência
@@ -613,7 +601,6 @@ components:
             - SEMESTRAL
             - ANUAL
             - UNICO
-            - NA
         amount:
           type: string
           maxLength: 21
@@ -850,14 +837,12 @@ components:
       description: |
         Listagem do pagamento para cada benefício:
           1. Quantidade determinada de parcelas;
-          2. Até o fim de ciclo determinado;
-          3. NA.
+          2. Até o fim de ciclo determinado.
 
         Observação: Se for pagamento único, este campo não deve ser informado.
       enum:
         - QUANTIDADE_DETERMINADA_PARCELAS
         - FIM_CICLO_DETERMINADO
-        - NA
       example: QUANTIDADE_DETERMINADA_PARCELAS
     SurvivalPensionEnumTargetAudience:
       type: string
@@ -866,15 +851,13 @@ components:
 
           1. Pessoa Natural
           2. Pessoa Jurídica
-          3. NA
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
-        - NA
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
-      description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li><li>NA</li></ol>
+      description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>
       enum:
         - FUNERAL
         - PRESTAMISTA
@@ -893,7 +876,6 @@ components:
         - PENSAO_MENORES_24
         - PENSAO_CONJUGE_VITALICIA
         - PENSAO_CONJUGE_TEMPORARIA
-        - NA
       example: FUNERAL
     Coverage:
       type: object
@@ -924,7 +906,6 @@ components:
         - MORTE
         - INVALIDEZ
         - OUTROS
-        - NA
       example: MORTE
     CoverageAttributes:
       type: object
@@ -1017,13 +998,11 @@ components:
         2. IGP-M (FGV);
         3. INPC (IBGE).
         4. Não se aplica
-        5. NA
       enum:
         - IPCA
         - IGP_M
         - INPC
         - NAO_SE_APLICA
-        - NA
       example: IPCA
     RiskPensionReclaim:
       type: object
@@ -1087,11 +1066,9 @@ components:
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo;
             2. Individual.
-            3. NA
           enum:
             - COLETIVO
             - INDIVIDUAL
-            - NA
           example: COLETIVO
         contractingMinRequirement:
           type: string
@@ -1201,7 +1178,6 @@ components:
         - SUICIDIO
         - ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR
         - OUTROS
-        - NA
       example: ATO_RECONHECIMENTO_PERIGOSO
     EnumAssistanceType:
       type: string
@@ -1263,7 +1239,6 @@ components:
         - VIAGEM
         - VITIMA
         - OUTROS
-        - NA
       example: ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
     EnumAdditional:
       type: string
@@ -1273,7 +1248,6 @@ components:
         - SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
         - OUTROS
         - NAO_HA
-        - NA
       example: SORTEIO
     EnumGracePeriodUnit:
       type: string
@@ -1282,7 +1256,6 @@ components:
         - DIAS
         - MESES
         - NAO_APLICA
-        - NA
       example: MESES
     RiskPensionEnumGracePeriodUnit:
       type: string
@@ -1290,13 +1263,9 @@ components:
         Informar o critério de carência para resgate:
         1. Dias;
         2. Meses;
-        3. Não se aplica.
-        4. NA
       enum:
         - DIAS
         - MESES
-        - NAO_APLICA
-        - NA
       example: MESES
     RiskPensionEnumFinancialRegime:
       type: string
@@ -1305,13 +1274,11 @@ components:
           1. Repartição simples
           2. Repartição Capitais Cobertura
           3. Capitalização
-          4. NA
       example: REPARTICAO_SIMPLES
       enum:
         - REPARTICAO_SIMPLES
         - REPARTICAO_CAPITAIS
         - CAPITALIZACAO
-        - NA
     RiskPensionEnumPremiumUpdateIndex:
       type: string
       description: Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício
@@ -1319,7 +1286,6 @@ components:
         - IPCA
         - IGPM
         - INPC
-        - NA
       example: IPCA
     RiskPensionEnumContributionPayment:
       type: object
@@ -1342,7 +1308,6 @@ components:
              - CONSIGNACAO_FOLHA_PAGAMENTO
              - PONTOS_PROGRAMA_BENEFICIO
              - OUTROS
-             - NA
           enum:
             - CARTAO_CREDITO
             - DEBITO_CONTA
@@ -1353,7 +1318,6 @@ components:
             - CONSIGNACAO_FOLHA_PAGAMENTO
             - PONTOS_PROGRAMA_BENEFICIO
             - OUTROS
-            - NA
         contributionPaymentMethodAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
@@ -1375,7 +1339,6 @@ components:
             - SEMESTRAL
             - BIMESTRAL
             - OUTROS
-            - NA
           enum:
             - MENSAL
             - UNICA
@@ -1384,7 +1347,6 @@ components:
             - SEMESTRAL
             - BIMESTRAL
             - OUTROS
-            - NA
         contributionPeriodicityAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
@@ -1401,24 +1363,18 @@ components:
         Modalidade de pagamento da indenização, a considerar os domínios abaixo:
           1. Único
           2. Sob a forma de renda
-          3. NA
       enum:
         - UNICO
         - SOB_FORMA_RENDA
-        - NA
       example: UNICO
     RiskPensionEnumOtherGuaranteedValues:
       type: string
       description: |
         1. Saldamento
         2. Benefício Prolongado
-        3. Não se aplica
-        4. NA
       enum:
         - SALDAMENTO
         - BENEFICIO_PROLONGADO
-        - NAO_APLICA
-        - NA
       example: SALDAMENTO
     RiskPensionEnumProfitModality:
       type: string
@@ -1427,7 +1383,6 @@ components:
       enum:
         - PAGAMENTO_UNICO
         - FORMA_RENDA
-        - NA
       example: PAGAMENTO_UNICO
     ResponseErrorMetaSingle:
       type: object
