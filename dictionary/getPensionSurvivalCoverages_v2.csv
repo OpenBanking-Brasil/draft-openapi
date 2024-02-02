@@ -26,16 +26,12 @@
 /data/society/products/segment;segment;"Segmento do qual se trata o produto contratado
 1. Seguro de Pessoas
 2. Previdência
-3. NA
 ";Texto;;Obrigatório;;"SEGURO_PESSOAS 
-PREVIDENCIA 
-NA";1;1;"";Não permitido;string;PREVIDENCIA;
+PREVIDENCIA";1;1;"";Não permitido;string;PREVIDENCIA;
 /data/society/products/modality;modality;"1. Contribuição Variável;
 2. Benefício Definido.
-3. NA
 ";Texto;;Obrigatório;;"CONTRIBUICAO_VARIAVEL 
-BENEFICIO_DEFINIDO 
-NA";1;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
+BENEFICIO_DEFINIDO";1;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
 /data/society/products/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL);Texto;1024;Opcional;;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/society/products/termsAndConditions;termsAndConditions;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;2
@@ -53,7 +49,6 @@ NA";1;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
 11. VRI
 12. VDR
 13. Demais produtos de Previdência.
-14. NA
 ";Texto;;Opcional;;"PGBL 
 PRGP 
 PAGP 
@@ -66,8 +61,7 @@ VAGP
 VRSA 
 VRI 
 VDR 
-DEMAIS_PRODUTOS_PREVIDENCIA 
-NA";0;1;"";Não permitido;string;;
+DEMAIS_PRODUTOS_PREVIDENCIA";0;1;"";Não permitido;string;;
 /data/society/products/defferalPeriod;defferalPeriod;Período de Diferimento;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/products/defferalPeriod/interestRate;interestRate;Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/defferalPeriod/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
@@ -75,12 +69,10 @@ NA";0;1;"";Não permitido;string;;
 2. IGP-M (FGV);
 3. INPC (IBGE).
 4. Não se aplica
-5. NA
 ";Texto;;Obrigatório;;"IPCA 
 IGP_M 
 INPC 
-NAO_SE_APLICA 
-NA";1;1;"";Não permitido;string;IPCA;
+NAO_SE_APLICA";1;1;"";Não permitido;string;IPCA;
 /data/society/products/defferalPeriod/otherMinimumPerformanceGarantees;otherMinimumPerformanceGarantees;Para produtos do tipo PDR e VDR, indicação do índice de ampla divulgação utilizados como garantia mínima de desempenho.;Texto;12;Obrigatório;;;1;1;"";Não permitido;string;SELIC;
 /data/society/products/defferalPeriod/reversalFinancialResults;reversalFinancialResults;Percentual de reversão de excedente financeiro na concessão. Em %.;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/defferalPeriod/minimumPremiums;minimumPremiums;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
@@ -93,8 +85,7 @@ BIMESTRAL
 TRIMESTRAL 
 SEMESTRAL 
 ANUAL 
-UNICO 
-NA";0;1;"";Não permitido;string;MENSAL;
+UNICO";0;1;"";Não permitido;string;MENSAL;
 /data/society/products/defferalPeriod/minimumPremiums/amount;amount;Valor mínimo em R$ de prêmio/ contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único).;Texto;21;Opcional;^(\d{1,16}\.\d{2,4})$;;0;1;"";Não permitido;string;250.00;
 /data/society/products/defferalPeriod/premiumPaymentMethods;premiumPaymentMethods;;Lista;;Opcional;;"CARTAO_CREDITO 
 DEBITO_CONTA 
@@ -136,9 +127,7 @@ NA";0;N;"";Não permitido;array;CARTAO_CREDITO;
 /data/society/products/defferalPeriod/investmentFunds/typePerformanceFee;typePerformanceFee;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
    - Tipo de taxa de performance
 ";Texto;;Obrigatório;;"DIRETAMENTE 
-INDIRETAMENTE 
-NAO_APLICA 
-NA";1;1;"";Não permitido;string;DIRETAMENTE;
+INDIRETAMENTE";1;1;"";Não permitido;string;DIRETAMENTE;
 /data/society/products/defferalPeriod/investmentFunds/maximumPerformanceFee;maximumPerformanceFee;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
   - Taxa Máxima de Performance - em %
 ";Texto;9;Opcional;^(\d{1}\.\d{6})$|^(-1.000000)$;;0;1;"";Não permitido;string;0.019800;8
@@ -187,12 +176,10 @@ NA";0;N;"";Não permitido;array;AT_2000_MALE;
 2. IGP-M (FGV);
 3. INPC (IBGE).
 4. Não se aplica
-5. NA
 ";Texto;;Obrigatório;;"IPCA 
 IGP_M 
 INPC 
-NAO_SE_APLICA 
-NA";1;1;"";Não permitido;string;IPCA;
+NAO_SE_APLICA";1;1;"";Não permitido;string;IPCA;
 /data/society/products/grantPeriodBenefit/reversalFinancialResults;reversalFinancialResults;Percentual de reversão de excedente financeiro na concessão. Em %.;Texto;9;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/grantPeriodBenefit/investmentFunds;investmentFunds;;Lista;;Opcional;;;0;N;"";Não permitido;array;;
 /data/society/products/grantPeriodBenefit/investmentFunds/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
@@ -205,9 +192,7 @@ NA";1;1;"";Não permitido;string;IPCA;
 /data/society/products/grantPeriodBenefit/investmentFunds/typePerformanceFee;typePerformanceFee;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
    - Tipo de taxa de performance
 ";Texto;;Obrigatório;;"DIRETAMENTE 
-INDIRETAMENTE 
-NAO_APLICA 
-NA";1;1;"";Não permitido;string;DIRETAMENTE;
+INDIRETAMENTE";1;1;"";Não permitido;string;DIRETAMENTE;
 /data/society/products/grantPeriodBenefit/investmentFunds/maximumPerformanceFee;maximumPerformanceFee;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
   - Taxa Máxima de Performance - em %
 ";Texto;9;Opcional;^(\d{1}\.\d{6})$|^(-1.000000)$;;0;1;"";Não permitido;string;0.019800;8
@@ -233,11 +218,9 @@ NA";1;1;"";Não permitido;string;DIRETAMENTE;
 1. Coletivo Averbado;
 2. Coletivo instituído;
 3. Individual.
-4. NA
 ";Texto;;Obrigatório;;"COLETIVO_AVERBADO 
 COLETIVO_INSTITUIDO 
-INDIVIDUAL 
-NA";1;1;"";Não permitido;string;COLETIVO_AVERBADO;
+INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO_AVERBADO;
 /data/society/products/minimumRequirement/participantQualified;participantQualified;"Indicação se o plano é destinado para participante qualificado. A considerar os domínios abaixo:
 1. true
 2. false
@@ -247,7 +230,5 @@ NA";1;1;"";Não permitido;string;COLETIVO_AVERBADO;
 
   1. Pessoa Natural
   2. Pessoa Jurídica
-  3. NA
 ";Texto;;Obrigatório;;"PESSOA_NATURAL 
-PESSOA_JURIDICA 
-NA";1;1;"";Não permitido;string;PESSOA_NATURAL;
+PESSOA_JURIDICA";1;1;"";Não permitido;string;PESSOA_NATURAL;

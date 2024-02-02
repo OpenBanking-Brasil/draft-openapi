@@ -21,7 +21,7 @@
 /data/society/products;products;Lista de produtos de uma empresa.;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/society/products/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;Produto A;
 /data/society/products/code;code;Código único a ser definido pela sociedade.;Texto;80;Obrigatório;;;1;1;"";Não permitido;string;0001;
-/data/society/products/modality;modality;<ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li><li>NA</li></ol>;Texto;;Obrigatório;;"FUNERAL 
+/data/society/products/modality;modality;<ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>;Texto;;Obrigatório;;"FUNERAL 
 PRESTAMISTA 
 VIAGEM 
 EDUCACIONAL 
@@ -37,13 +37,11 @@ PENSAO_PRAZO_CERTO
 PENSAO_MENORES_21 
 PENSAO_MENORES_24 
 PENSAO_CONJUGE_VITALICIA 
-PENSAO_CONJUGE_TEMPORARIA 
-NA";1;1;"";Não permitido;string;FUNERAL;
+PENSAO_CONJUGE_TEMPORARIA";1;1;"";Não permitido;string;FUNERAL;
 /data/society/products/coverages;coverages;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/society/products/coverages/type;type;É o conjunto dos riscos cobertos elencados na apólice. (RESOLUÇÃO CNSP Nº 341/2016). Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela Tipo de Cobertura.;Texto;;Obrigatório;;"MORTE 
 INVALIDEZ 
-OUTROS 
-NA";1;1;"";Não permitido;string;MORTE;
+OUTROS";1;1;"";Não permitido;string;MORTE;
 /data/society/products/coverages/typeAdditionalInfos;typeAdditionalInfos;"Lista de textos para complementar informação relativa ao campo type, quando for selecionada a opção 'OUTROS'.
 Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a opção 'OUTROS'
 ";Lista;100;Opcional;;;0;N;"";Não permitido;array;;
@@ -56,27 +54,22 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
 /data/society/products/coverages/attributes/indemnifiablePeriod;indemnifiablePeriod;"Listagem do pagamento para cada benefício:
   1. Quantidade determinada de parcelas;
-  2. Até o fim de ciclo determinado;
-  3. NA.
+  2. Até o fim de ciclo determinado.
 
 Observação: Se for pagamento único, este campo não deve ser informado.
 ";Texto;;Opcional;;"QUANTIDADE_DETERMINADA_PARCELAS 
-FIM_CICLO_DETERMINADO 
-NA";0;1;"";Não permitido;string;QUANTIDADE_DETERMINADA_PARCELAS;
+FIM_CICLO_DETERMINADO";0;1;"";Não permitido;string;QUANTIDADE_DETERMINADA_PARCELAS;
 /data/society/products/coverages/attributes/indemnifiableDeadline;indemnifiableDeadline;Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.;Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;;
 /data/society/products/coverages/attributes/indemnityPaymentMethod;indemnityPaymentMethod;"Modalidade de pagamento da indenização, a considerar os domínios abaixo:
   1. Único
   2. Sob a forma de renda
-  3. NA
 ";Texto;;Obrigatório;;"UNICO 
-SOB_FORMA_RENDA 
-NA";1;1;"";Não permitido;string;UNICO;
+SOB_FORMA_RENDA";1;1;"";Não permitido;string;UNICO;
 /data/society/products/coverages/attributes/gracePeriod;gracePeriod;Período de carência da cobertura;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/products/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;90;
 /data/society/products/coverages/attributes/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li><li>NA</li></ol>";Texto;;Opcional;;"DIAS 
 MESES 
-NAO_APLICA 
-NA";0;1;"";Não permitido;string;MESES;
+NAO_APLICA";0;1;"";Não permitido;string;MESES;
 /data/society/products/coverages/attributes/excludedRisks;excludedRisks;;Lista;;Obrigatório;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
 OPERACOES_GUERRA 
@@ -86,13 +79,11 @@ DOENCAS_LESOES_PREEXISTENTES
 EPIDEMIAS_PANDEMIAS 
 SUICIDIO 
 ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR 
-OUTROS 
-NA";1;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
+OUTROS";1;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
 /data/society/products/coverages/attributes/excludedRisksURL;excludedRisksURL;Campo aberto (possibilidade de incluir URL).;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/society/products/coverages/attributes/profitModality;profitModality;"Modalidade de pagamento da indenização.
 ";Texto;;Obrigatório;;"PAGAMENTO_UNICO 
-FORMA_RENDA 
-NA";1;1;"";Não permitido;string;PAGAMENTO_UNICO;
+FORMA_RENDA";1;1;"";Não permitido;string;PAGAMENTO_UNICO;
 /data/society/products/assistanceTypes;assistanceTypes;;Lista;;Opcional;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
 ARQUITETO_VIRTUAL 
 ASSESSORIA_FINANCEIRA 
@@ -148,15 +139,13 @@ SUSTENTAVEL_DESCARTE_ECOLOGICO
 TELEMEDICINA 
 VIAGEM 
 VITIMA 
-OUTROS 
-NA";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
+OUTROS";0;N;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 /data/society/products/assistanceTypesAdditionalInfos;assistanceTypesAdditionalInfos;Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.;Lista;;Opcional;;;0;N;"";Não permitido;array;;
 /data/society/products/additional;additional;;Texto;;Opcional;;"SORTEIO 
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
 SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO 
 OUTROS 
-NAO_HA 
-NA";0;1;"";Não permitido;string;SORTEIO;
+NAO_HA";0;1;"";Não permitido;string;SORTEIO;
 /data/society/products/termsAndConditions;termsAndConditions;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;2
 /data/society/products/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
@@ -168,8 +157,7 @@ INPC
 NA";0;N;"";Não permitido;array;IPCA;
 /data/society/products/premiumUpdateIndex;premiumUpdateIndex;Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício;Texto;;Obrigatório;;"IPCA 
 IGPM 
-INPC 
-NA";1;1;"";Não permitido;string;IPCA;
+INPC";1;1;"";Não permitido;string;IPCA;
 /data/society/products/ageAdjustment;ageAdjustment;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/society/products/ageAdjustment/criterias;criterias;;Lista;;Obrigatório;;"APOS_PERIODO_ANOS 
 CADA_PERIODO_ANOS 
@@ -181,11 +169,9 @@ NA";1;N;"";Não permitido;array;APOS_PERIODO_ANOS;
   1. Repartição simples
   2. Repartição Capitais Cobertura
   3. Capitalização
-  4. NA
 ";Texto;;Opcional;;"REPARTICAO_SIMPLES 
 REPARTICAO_CAPITAIS 
-CAPITALIZACAO 
-NA";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
+CAPITALIZACAO";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
 /data/society/products/reclaim;reclaim;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/society/products/reclaim/table;table;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/society/products/reclaim/table/initialMonthRange;initialMonthRange;;Inteiro;2;Obrigatório;;;1;1;"";Não permitido;integer;1;
@@ -196,24 +182,16 @@ NA";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;
 /data/society/products/reclaim/gracePeriod/unit;unit;"Informar o critério de carência para resgate:
 1. Dias;
 2. Meses;
-3. Não se aplica.
-4. NA
 ";Texto;;Obrigatório;;"DIAS 
-MESES 
-NAO_APLICA 
-NA";1;1;"";Não permitido;string;MESES;
+MESES";1;1;"";Não permitido;string;MESES;
 /data/society/products/reclaim/differenciatedPercentage;differenciatedPercentage;Campo aberto (possibilidade de incluir URL);"";1024;Opcional;;;0;1;"";Não permitido;;"https://openinsurance.com.br/aaa’
 Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL
 Exemplo: Cobertura X: a partir de 25 meses = 100%
 ";
 /data/society/products/otherGuaranteedValues;otherGuaranteedValues;"1. Saldamento
 2. Benefício Prolongado
-3. Não se aplica
-4. NA
 ";Texto;;Obrigatório;;"SALDAMENTO 
-BENEFICIO_PROLONGADO 
-NAO_APLICA 
-NA";1;1;"";Não permitido;string;SALDAMENTO;
+BENEFICIO_PROLONGADO";1;1;"";Não permitido;string;SALDAMENTO;
 /data/society/products/contributionPayment;contributionPayment;Pagamento da contribuição.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/products/contributionPayment/contributionPaymentMethod;contributionPaymentMethod;"Forma de pagamento da contribuição.
  - CARTAO_CREDITO
@@ -225,7 +203,6 @@ NA";1;1;"";Não permitido;string;SALDAMENTO;
  - CONSIGNACAO_FOLHA_PAGAMENTO
  - PONTOS_PROGRAMA_BENEFICIO
  - OUTROS
- - NA
 ";Texto;;Obrigatório;;"CARTAO_CREDITO 
 DEBITO_CONTA 
 DEBITO_CONTA_POUPANCA 
@@ -234,8 +211,7 @@ PIX
 TED_DOC 
 CONSIGNACAO_FOLHA_PAGAMENTO 
 PONTOS_PROGRAMA_BENEFICIO 
-OUTROS 
-NA";1;1;"";Não permitido;string;CARTAO_CREDITO;
+OUTROS";1;1;"";Não permitido;string;CARTAO_CREDITO;
 /data/society/products/contributionPayment/contributionPaymentMethodAdditionalInfo;contributionPaymentMethodAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
 
 [Restrição] Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
@@ -249,15 +225,13 @@ NA";1;1;"";Não permitido;string;CARTAO_CREDITO;
 - SEMESTRAL
 - BIMESTRAL
 - OUTROS
-- NA
 ";Texto;;Obrigatório;;"MENSAL 
 UNICA 
 ANUAL 
 TRIMESTRAL 
 SEMESTRAL 
 BIMESTRAL 
-OUTROS 
-NA";1;1;"";Não permitido;string;MENSAL;
+OUTROS";1;1;"";Não permitido;string;MENSAL;
 /data/society/products/contributionPayment/contributionPeriodicityAdditionalInfo;contributionPeriodicityAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
 
 [Restrição] Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
@@ -267,18 +241,14 @@ NA";1;1;"";Não permitido;string;MENSAL;
 /data/society/products/minimumRequirement/contractType;contractType;"O tipo de serviço contratado. A considerar os domínios abaixo:
 1. Coletivo;
 2. Individual.
-3. NA
 ";Texto;;Obrigatório;;"COLETIVO 
-INDIVIDUAL 
-NA";1;1;"";Não permitido;string;COLETIVO;
+INDIVIDUAL";1;1;"";Não permitido;string;COLETIVO;
 /data/society/products/minimumRequirement/contractingMinRequirement;contractingMinRequirement;Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).;Texto;1024;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/society/products/targetAudience;targetAudience;"A considerar os domínios abaixo:
 
   1. Pessoa Natural
   2. Pessoa Jurídica
   3. Ambas (Pessoa Natural e Jurídica)
-  4. NA
 ";Texto;23;Obrigatório;;"PESSOA_NATURAL 
 PESSOA_JURIDICA 
-PESSOA_NATURAL_JURIDICA 
-NA";1;1;"";Não permitido;string;PESSOA_NATURAL;
+PESSOA_NATURAL_JURIDICA";1;1;"";Não permitido;string;PESSOA_NATURAL;
