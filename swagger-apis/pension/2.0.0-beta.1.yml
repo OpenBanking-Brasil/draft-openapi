@@ -185,7 +185,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo de Contribuição
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
           maxLength: 21
         minimumMathematicalProvisionAmount:
@@ -193,7 +193,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo do Saldo Provisão matemática
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
           maxLength: 21
         currency:
@@ -235,7 +235,7 @@ components:
     CnpjNumber:
       type: string
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
-      pattern: '^(\d{14})$|^(NA)$'
+      pattern: '^\d{14}$'
       example: '13456789000112'
     RiskProducts:
       type: object
@@ -617,7 +617,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           description: Valor mínimo em R$ de prêmio/ contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único).
           example: '250.00'
       additionalProperties: false
@@ -786,7 +786,7 @@ components:
             - Ambos obrigatórios.
           type: string
           maxLength: 1024
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
+          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
     RiskSociety:
@@ -1001,7 +1001,7 @@ components:
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
           minLength: 2
           maxLength: 20
-          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
+          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$'
           example: 15414.622222/2222-22
         detail:
           type: string
@@ -1055,7 +1055,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -1070,7 +1070,7 @@ components:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -1183,7 +1183,7 @@ components:
       additionalProperties: false
     CurrencyCode:
       type: string
-      pattern: '^([A-Z]{3})$|^(NA)$'
+      pattern: '^([A-Z]{3})$'
       maxLength: 3
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
       example: BRL
