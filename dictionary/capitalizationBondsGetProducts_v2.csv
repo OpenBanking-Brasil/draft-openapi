@@ -45,7 +45,7 @@ PAGAMENTO_MENSAL
 PAGAMENTO_PERIODICO";0;1;"";Não permitido;string;PAGAMENTO_UNICO;
 /data/society/products/termsAndConditions;termsAndConditions;Informações relativas aos termos e condições.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;30;Opcional;Obrigatório;^\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2}$;;0;1;"";Não permitido;string;15414.622222/2222-22;2
-/data/society/products/termsAndConditions/termsRegulations;termsRegulations;Campo aberto para representar as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto, confrome Circular SUSEP 321/06. Pode-se incluir URL que apresenta esse termos e condições.;Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
+/data/society/products/termsAndConditions/termsRegulations;termsRegulations;Campo aberto para representar as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto, conforme Circular SUSEP 321/06. Pode-se incluir URL que apresenta esse termos e condições.;Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/society/products/quotas;quotas;Informações relativas às taxas da cotas praticadas para cada parcela.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/society/products/quotas/quota;quota;Número da parcela.;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;10;
 /data/society/products/quotas/capitalizationQuota;capitalizationQuota;Percentual da contribuição destinado à constituição de capital referente ao direito de resgate. (Resolução CNSP 384/20).;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
@@ -53,7 +53,7 @@ PAGAMENTO_PERIODICO";0;1;"";Não permitido;string;PAGAMENTO_UNICO;
 /data/society/products/quotas/chargingQuota;chargingQuota;Percentual da contribuição destinado aos custos de despesas com corretagem, colocação e administração do título de capitalização, emissão, divulgação, lucro da sociedade de capitalização e eventuais despesas relativas ao custeio da contemplação obrigatória e da distribuição de bônus. (Resolução CNSP 384/20).;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/validity;validity;Período entre a data de início e a data final para constituição do capital a ser pago ao(s) titular(es) do direito de resgate. Prazo de vigência do título de capitalização em meses (Resolução CNSP 384/20).;Inteiro;;Opcional;Obrigatório;;;0;1;"";Não permitido;integer;48;
 /data/society/products/serieSize;serieSize;Os títulos de capitalização com sorteio devem ser estruturados em séries, ou seja, em sequências ou em grupos de títulos submetidos às mesmas condições e características, à exceção do valor do pagamento.;Inteiro;;Opcional;Obrigatório;;;0;1;"";Não permitido;integer;5000000;
-/data/society/products/capitalizationPeriod;capitalizationPeriod;Informações relativas ao perído de capitalização.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data/society/products/capitalizationPeriod;capitalizationPeriod;Informações relativas ao período de capitalização.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/society/products/capitalizationPeriod/interestRate;interestRate;Taxa que remunera a parte da mensalidade destinada a formar o Capital, ou seja, a Provisão Matemática de Resgate, também chamada de saldo de capitalização. Em porcentagem ao mês (% a.m.).;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/capitalizationPeriod/updateIndex;updateIndex;"Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
 ";Texto;;Opcional;Obrigatório;;"IPCA 
@@ -86,11 +86,11 @@ OUTROS";0;1;"";Não permitido;string;UNICO;
 [Restrição] Obrigatório quando ""periodicity"" for igual 'OUTROS'.
 ";Texto;200;Condicional;Opcional;;;0;1;" Obrigatório quando ""periodicity"" for igual 'OUTROS'.
 ";Não permitido;string;Informações adicionais;
-/data/society/products/capitalizationPeriod/contributionAmount/minimum;minimum;"Valor mínimo. Para a modalidade 'TRADICIONAL' o valor mínimo corresponde ao pagamento efetuado pelo subscritor à sociedade de capitalização.
+/data/society/products/capitalizationPeriod/contributionAmount/minimum;minimum;"Valor mínimo. Para a modalidade 'TRADICIONAL' o valor mínimo correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
 ";Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;1.2222;
-/data/society/products/capitalizationPeriod/contributionAmount/maximum;maximum;"Valor máximo. Para a modalidade 'TRADICIONAL' o valor máximo corresponde ao pagamento efetuado pelo subscritor à sociedade de capitalização.
+/data/society/products/capitalizationPeriod/contributionAmount/maximum;maximum;"Valor máximo. Para a modalidade 'TRADICIONAL' o valor máximo correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
 ";Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;1.2222;
-/data/society/products/capitalizationPeriod/contributionAmount/allowedValue;allowedValue;"Valor permitido. Para a modalidade 'TRADICIONAL' o valor permitido corresponde ao pagamento efetuado pelo subscritor à sociedade de capitalização.
+/data/society/products/capitalizationPeriod/contributionAmount/allowedValue;allowedValue;"Valor permitido. Para a modalidade 'TRADICIONAL' o valor permitido correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
 ";Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;5000;
 /data/society/products/capitalizationPeriod/earlyRedemptions;earlyRedemptions;Informações relativas ao resgate antecipado.;Lista;;Obrigatório;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/society/products/capitalizationPeriod/earlyRedemptions/quota;quota;Parcela relativa ao Resgate Antecipado;Número;;Obrigatório;Opcional;;;1;1;"";Não permitido;number;10;
@@ -160,7 +160,7 @@ OUTROS";0;1;"";Não permitido;string;UNICO;
 /data/society/products/additionalInfo;additionalInfo;Campo livre para preenchimento das informações adicionais referente ao produto da sociedade seguradora participante do OPIN. Pode-se incluir URL.;Texto;1024;Obrigatório;Opcional;;;1;1;"";Não permitido;string;https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais;
 /data/society/products/minimumRequirementDetails;minimumRequirementDetails;"Campo livre para preenchimento das informações adicionais referente ao requerimento mínimo. Pode-se incluir URL.
 ";Texto;1024;Opcional;Obrigatório;;;0;1;"";Não permitido;string;https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais;
-/data/society/products/targetAudience;targetAudience;"Públio alvo do produto da sociedade seguradora participante do OPIN.
+/data/society/products/targetAudience;targetAudience;"Público alvo do produto da sociedade seguradora participante do OPIN.
 ";Texto;;Opcional;Obrigatório;;"PESSOA_NATURAL 
 PESSOA_JURIDICA 
 PESSOA_NATURAL_JURIDICA";0;1;"";Não permitido;string;PESSOA_NATURAL;
