@@ -56,12 +56,12 @@ PAGAMENTO_PERIODICO";0;1;"";Não permitido;string;PAGAMENTO_UNICO;
 /data/society/products/capitalizationPeriod;capitalizationPeriod;Informações relativas ao perído de capitalização.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/society/products/capitalizationPeriod/interestRate;interestRate;Taxa que remunera a parte da mensalidade destinada a formar o Capital, ou seja, a Provisão Matemática de Resgate, também chamada de saldo de capitalização. Em porcentagem ao mês (% a.m.).;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/capitalizationPeriod/updateIndex;updateIndex;"Índice utilizado na atualização dos pagamentos mensais (para títulos com mais de 12 meses de vigência) (não aplicável a pagamento único). 
-";Texto;;Obrigatório;Obrigatório;;"IPCA 
+";Texto;;Opcional;Obrigatório;;"IPCA 
 IGPM 
 INPC 
 TR 
 INDICE_REMUNERACAO_DEPOSITOS_POUPANCA 
-OUTROS";1;1;"";Não permitido;string;IPCA;
+OUTROS";0;1;"";Não permitido;string;IPCA;
 /data/society/products/capitalizationPeriod/updateIndexAdditionalInfo;updateIndexAdditionalInfo;"Campo livre para preenchimento das informações adicionais referente ao índice utilizado na atualização dos pagamentos mensais. 
 
 [Restrição] Obrigatório quando ""updateIndex"" for igual 'OUTROS'.
