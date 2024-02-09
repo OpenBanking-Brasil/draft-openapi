@@ -227,7 +227,7 @@ components:
         targetAudience:
           type: string
           description: |
-            Públio alvo do produto da sociedade seguradora participante do OPIN.
+            Público alvo do produto da sociedade seguradora participante do OPIN.
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
@@ -284,7 +284,7 @@ components:
           example: 15414.622222/2222-22
         termsRegulations:
           type: string
-          description: Campo aberto para representar as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto, confrome Circular SUSEP 321/06. Pode-se incluir URL que apresenta esse termos e condições.
+          description: Campo aberto para representar as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto, conforme Circular SUSEP 321/06. Pode-se incluir URL que apresenta esse termos e condições.
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
@@ -330,7 +330,7 @@ components:
           example: '0.019800'
       additionalProperties: false
     CapitalizationBondsProductCapitalizationPeriod:
-      description: Informações relativas ao perído de capitalização.
+      description: Informações relativas ao período de capitalização.
       type: object
       required:
         - interestRate
@@ -460,21 +460,21 @@ components:
           type: string
           pattern: '^(\d{1,16}\.\d{2,4})$'
           description: |
-            Valor mínimo. Para a modalidade 'TRADICIONAL' o valor mínimo corresponde ao pagamento efetuado pelo subscritor à sociedade de capitalização.
+            Valor mínimo. Para a modalidade 'TRADICIONAL' o valor mínimo correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
           maxLength: 21
           example: '1.2222'
         maximum:
           type: string
           pattern: '^(\d{1,16}\.\d{2,4})$'
           description: |
-            Valor máximo. Para a modalidade 'TRADICIONAL' o valor máximo corresponde ao pagamento efetuado pelo subscritor à sociedade de capitalização.
+            Valor máximo. Para a modalidade 'TRADICIONAL' o valor máximo correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
           maxLength: 21
           example: '1.2222'
         allowedValue:
           type: number
           format: double
           description: |
-            Valor permitido. Para a modalidade 'TRADICIONAL' o valor permitido corresponde ao pagamento efetuado pelo subscritor à sociedade de capitalização.
+            Valor permitido. Para a modalidade 'TRADICIONAL' o valor permitido correspondente ao pagamento efetuado pelo subscritor à sociedade de capitalização.
           example: 5000
       additionalProperties: false
     LatePayment:
@@ -489,7 +489,8 @@ components:
         suspensionMonths:
           type: integer
           description: |
-            Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado, exceto pagamento único, conforme as diretrizes do manual da SUSEP.
+            Prazo máximo (contínuo ou intermitente) em meses que o título fica suspenso por atraso de pagamento, antes de ser cancelado, exceto pagamento único, 
+            conforme as diretrizes do manual da SUSEP
           example: 10
         periodExtensionOption:
           type: boolean
