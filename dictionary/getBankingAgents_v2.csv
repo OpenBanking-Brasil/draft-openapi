@@ -1,5 +1,5 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;Conjunto de informações referente aos correspondentes bancários da Instituição;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
+/data;data;;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca selecionada pela Organização proprietário da dependência (titular).;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Organização A;1
 /data/participant/name;name;Nome da Instituição, pertencente à marca, responsável pelo Correspondente Bancário no país.;Texto;80;Obrigatório;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Empresa da Organização A;1
@@ -59,8 +59,8 @@ QUARTA_FEIRA
 QUINTA_FEIRA 
 SEXTA_FEIRA 
 SABADO";1;1;"";Não permitido;string;;
-/data/bankingAgents/locations/availability/standards/openingTime;openingTime;Horário de abertura (UTC);Texto;13;Opcional;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;0;1;"";Não permitido;string;;
-/data/bankingAgents/locations/availability/standards/closingTime;closingTime;Horário de fechamento (UTC);Texto;13;Opcional;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;0;1;"";Não permitido;string;;
+/data/bankingAgents/locations/availability/standards/openingTime;openingTime;Horário de abertura (UTC);Texto;13;Opcional;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;0;1;"";Não permitido;string;;
+/data/bankingAgents/locations/availability/standards/closingTime;closingTime;Horário de fechamento (UTC);Texto;13;Opcional;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;0;1;"";Não permitido;string;;
 /data/bankingAgents/locations/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, nacionais e estaduais;1
 /data/bankingAgents/locations/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;false;
 /data/bankingAgents/locations/phones;phones;;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
