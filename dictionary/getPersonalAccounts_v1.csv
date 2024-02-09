@@ -14,8 +14,12 @@ Conta de pagamento pré-paga: segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'de
 ";Texto;;Obrigatório;Obrigatório;;"CONTA_DEPOSITO_A_VISTA 
 CONTA_POUPANCA 
 CONTA_PAGAMENTO_PRE_PAGA";1;1;"";Não permitido;string;CONTA_DEPOSITO_A_VISTA;
-/data/fees;fees;Objeto que reúne informações de tarifas de serviços.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/fees/priorityServices;priorityServices;Lista das Tarifas cobradas sobre Serviços Prioritários;Lista;;Obrigatório;Opcional;;;1;40;"";Não permitido;array;;
+/data/fees;fees;Objeto que reúne informações de tarifas de serviços.;Objeto;;Opcional;Obrigatório;;;0;1;"";Não permitido;object;;
+/data/fees/priorityServices;priorityServices;"Lista das tarifas cobradas sobre serviços prioritários. 
+
+[Restrição] Obrigatório quando ""type"" for igual ""CONTA_DEPOSITO_A_VISTA"" ou ""CONTA_POUPANCA""
+";Lista;;Condicional;Obrigatório;;;1;40;" Obrigatório quando ""type"" for igual ""CONTA_DEPOSITO_A_VISTA"" ou ""CONTA_POUPANCA""
+";Não permitido;array;;
 /data/fees/priorityServices/name;name;Nome dos Serviços prioritários, segundo Resolução 3.919 do Bacen, para pessoa natural.;Texto;;Obrigatório;Obrigatório;;"CONFECCAO_CADASTRO_INICIO_RELACIONAMENTO 
 FORNECIMENTO_2_VIA_CARTAO_FUNCAO_DEBITO 
 FORNECIMENTO_2_VIA_CARTAO_FUNCAO_MOVIMENTACAO_CONTA_POUPANCA 
