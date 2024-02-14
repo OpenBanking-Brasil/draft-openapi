@@ -185,6 +185,9 @@ info:
       Existem dois `endpoints` para cancelamento de pagamentos, um deles é o _PATCH /pix/payments/{paymentId}_ e o outro é o _PATCH /pix/payments/consents/{consentId}_.
       - O _PATCH /pix/payments/{paymentId}_ deve ser utilizado para o cancelamento de um pagamento de forma unitária. Não deve ser utilizado para o cancelamento de todos os agendamentos recorrentes associados a um consentimento.
       - O _PATCH /pix/payments/consents/{consentId}_ deve ser utilizado no cancelamento de todas as ocorrências de pagamentos agendados presentes em uma recorrência de pagamentos. Todos os pagamentos associados ao consentimento informado e passíveis de cancelamento (ainda não liquidados, com os status PDNG e SCHD) deverão ser cancelados.
+      
+      ## Quantidade máxima permitida para agendamentos recorrentes
+      A quantidade máxima de pagamentos que podem transitar do iniciador para o detentor são de 60 pagamentos, independente do modelo de recorrência definido no consentimento, respeitando o prazo máximo de dois anos para agendamentos.
   version: 4.0.0
   license:
     name: Apache 2.0
@@ -2646,7 +2649,7 @@ components:
               type: integer
               format: int32
               minimum: 2
-              maximum: 730
+              maximum: 60
               example: 3
     ScheduleWeekly:
       type: object
@@ -2684,7 +2687,7 @@ components:
               type: integer
               format: int32
               minimum: 2
-              maximum: 104
+              maximum: 60
               example: 10
     ScheduleMonthly:
       type: object
@@ -2735,7 +2738,7 @@ components:
             dates:
               description: Define os dias em que estão planejadas as ocorrências das liquidações.
               type: array
-              maxItems: 730
+              maxItems: 60
               minItems: 2
               example: ['2023-08-23', '2023-09-26']
               items:
