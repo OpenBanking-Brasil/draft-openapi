@@ -2635,6 +2635,7 @@ components:
             - quantity
           properties:
             startDate:
+              description: Define o início da vigência da recorrência.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -2660,6 +2661,7 @@ components:
             - quantity
           properties:
             dayOfWeek:
+              description: Define o dia da semana planejado para a ocorrência das liquidações.
               type: string
               enum:
                 - SEGUNDA_FEIRA
@@ -2671,6 +2673,7 @@ components:
                 - DOMINGO
               example: QUINTA_FEIRA
             startDate:
+              description: Define o início da vigência da recorrência.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -2696,17 +2699,20 @@ components:
             - quantity
           properties:
             dayOfMonth:
+              description: Define o dia do mês planejado para a ocorrência das liquidações.
               type: integer
               minimum: 1
               maximum: 31
               example: 10
             startDate:
+              description: Define o início da vigência da recorrência.
               type: string
               format: date
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               maxLength: 10
               example: '2023-08-23'
             quantity:
+              description: Define a quantidade de pagamentos que serão enviados para liquidação.
               type: integer
               format: int32
               minimum: 2
@@ -2727,6 +2733,7 @@ components:
             - additionalInformation
           properties:
             dates:
+              description: Define os dias em que estão planejadas as ocorrências das liquidações.
               type: array
               maxItems: 730
               minItems: 2
