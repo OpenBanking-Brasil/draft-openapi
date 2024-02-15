@@ -134,7 +134,16 @@ components:
         - cnpjNumber
         - name
         - maximumAdministrationFee
+      x-regulatory-required:
+        - cnpjNumber
+        - name
+        - maximumAdministrationFee
         - typePerformanceFee
+        - maximumPerformanceFee
+        - eligibilityRule
+        - minimumContributionAmount
+        - minimumMathematicalProvisionAmount
+        - currency
       properties:
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
@@ -159,8 +168,6 @@ components:
           enum:
             - DIRETAMENTE
             - INDIRETAMENTE
-            - NAO_APLICA
-            - NA
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
                - Tipo de taxa de performance
@@ -185,7 +192,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo de Contribuição
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
           maxLength: 21
         minimumMathematicalProvisionAmount:
@@ -193,7 +200,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo do Saldo Provisão matemática
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
           maxLength: 21
         currency:
@@ -202,7 +209,10 @@ components:
     SurvivalPensionMinimumRequirements:
       type: object
       required:
+        - contractingMinRequirement
+      x-regulatory-required:
         - contractType
+        - participantQualified
         - contractingMinRequirement
       properties:
         contractType:
@@ -211,13 +221,11 @@ components:
             - COLETIVO_AVERBADO
             - COLETIVO_INSTITUIDO
             - INDIVIDUAL
-            - NA
           description: |
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo Averbado;
             2. Coletivo instituído;
             3. Individual.
-            4. NA
           example: COLETIVO_AVERBADO
         participantQualified:
           type: boolean
@@ -235,17 +243,28 @@ components:
     CnpjNumber:
       type: string
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
-      pattern: '^(\d{14})$|^(NA)$'
+      pattern: '^\d{14}$'
       example: '13456789000112'
     RiskProducts:
       type: object
       required:
         - name
         - code
-        - modality
         - coverages
         - termsAndConditions
+        - contributionPayment
+        - minimumRequirement
+      x-regulatory-required:
+        - name
+        - code
+        - modality
+        - assistanceTypes
+        - additional
+        - pmbacRemuneration
         - premiumUpdateIndex
+        - ageAdjustment
+        - financialRegimeContractType
+        - reclaim
         - otherGuaranteedValues
         - contributionPayment
         - minimumRequirement
@@ -312,24 +331,30 @@ components:
               1. Pessoa Natural
               2. Pessoa Jurídica
               3. Ambas (Pessoa Natural e Jurídica)
-              4. NA
           maxLength: 23
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
-            - NA
           example: PESSOA_NATURAL
     SurvivalProducts:
       type: object
       required:
         - name
         - code
-        - segment
-        - modality
         - defferalPeriod
         - grantPeriodBenefit
         - costs
+      x-regulatory-required:
+        - name
+        - code
+        - segment
+        - modality
+        - type
+        - defferalPeriod
+        - grantPeriodBenefit
+        - costs
+        - minimumRequirement
         - targetAudience
       properties:
         name:
@@ -350,22 +375,18 @@ components:
             Segmento do qual se trata o produto contratado
             1. Seguro de Pessoas
             2. Previdência
-            3. NA
           enum:
             - SEGURO_PESSOAS
             - PREVIDENCIA
-            - NA
           example: PREVIDENCIA
         modality:
           type: string
           description: |
             1. Contribuição Variável;
             2. Benefício Definido.
-            3. NA
           enum:
             - CONTRIBUICAO_VARIAVEL
             - BENEFICIO_DEFINIDO
-            - NA
           example: BENEFICIO_DEFINIDO
         additionalInfo:
           type: string
@@ -394,9 +415,18 @@ components:
       description: Período de Diferimento
       required:
         - interestRate
+        - otherMinimumPerformanceGarantees
+        - reversalFinancialResults
+        - redemptionPaymentTerm
+        - portabilityPaymentTerm
+      x-regulatory-required:
+        - interestRate
         - updateIndex
         - otherMinimumPerformanceGarantees
         - reversalFinancialResults
+        - permissionExtraordinaryContributions
+        - permissionScheduledFinancialPayments
+        - gracePeriod
         - redemptionPaymentTerm
         - portabilityPaymentTerm
       properties:
@@ -490,7 +520,6 @@ components:
         11. VRI
         12. VDR
         13. Demais produtos de Previdência.
-        14. NA
       enum:
         - PGBL
         - PRGP
@@ -505,7 +534,6 @@ components:
         - VRI
         - VDR
         - DEMAIS_PRODUTOS_PREVIDENCIA
-        - NA
     SurvivalPensionGracePeriod:
       type: object
       description: Prazo de carência
@@ -514,6 +542,11 @@ components:
         - betweenRedemptionRequests
         - portability
         - betweenPortabilityRequests
+      x-regulatory-required:
+        - redemption
+        - betweenRedemptionRequests
+        - portability
+        - betweenPortabilityRequests 
       properties:
         redemption:
           type: number
@@ -544,6 +577,9 @@ components:
       required:
         - loadingAntecipated
         - loadingLate
+      x-regulatory-required:
+        - loadingAntecipated
+        - loadingLate
       properties:
         loadingAntecipated:
           $ref: '#/components/schemas/SurvivalPensionLoadingAntecipated'
@@ -554,6 +590,9 @@ components:
       type: object
       description: Carregamento antecipado.
       required:
+        - minValue
+        - maxValue
+      x-regulatory-required:
         - minValue
         - maxValue
       properties:
@@ -578,6 +617,9 @@ components:
       required:
         - minValue
         - maxValue
+      x-regulatory-required:
+        - minValue
+        - maxValue
       properties:
         minValue:
           type: string
@@ -596,6 +638,10 @@ components:
       additionalProperties: false
     SurvivalPensionMinimumPremium:
       type: object
+      x-regulatory-required:
+        - currency
+        - periodicity
+        - amount
       description: Valor mínimo de prêmio/contribuição
       properties:
         currency:
@@ -613,11 +659,10 @@ components:
             - SEMESTRAL
             - ANUAL
             - UNICO
-            - NA
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           description: Valor mínimo em R$ de prêmio/ contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único).
           example: '250.00'
       additionalProperties: false
@@ -626,6 +671,11 @@ components:
       description: Período de concessão do benefício
       required:
         - incomeModalities
+        - interestRate
+        - reversalFinancialResults
+      x-regulatory-required:
+        - incomeModalities
+        - biometricTable
         - interestRate
         - updateIndex
         - reversalFinancialResults
@@ -760,6 +810,10 @@ components:
         - brand
         - name
         - cnpjNumber
+      x-regulatory-required:
+        - brand
+        - name
+        - cnpjNumber
       properties:
         brand:
           type: string
@@ -786,13 +840,17 @@ components:
             - Ambos obrigatórios.
           type: string
           maxLength: 1024
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))|(NA)$'
+          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
     RiskSociety:
       type: object
       description: Conjunto de informações relativas à seguradora do produto de open insurance
       required:
+        - name
+        - cnpjNumber
+        - products
+      x-regulatory-required:
         - name
         - cnpjNumber
       properties:
@@ -823,6 +881,10 @@ components:
       required:
         - name
         - cnpjNumber
+        - products
+      x-regulatory-required:
+        - name 
+        - cnpjNumber
       properties:
         name:
           type: string
@@ -850,14 +912,12 @@ components:
       description: |
         Listagem do pagamento para cada benefício:
           1. Quantidade determinada de parcelas;
-          2. Até o fim de ciclo determinado;
-          3. NA.
+          2. Até o fim de ciclo determinado.
 
         Observação: Se for pagamento único, este campo não deve ser informado.
       enum:
         - QUANTIDADE_DETERMINADA_PARCELAS
         - FIM_CICLO_DETERMINADO
-        - NA
       example: QUANTIDADE_DETERMINADA_PARCELAS
     SurvivalPensionEnumTargetAudience:
       type: string
@@ -866,15 +926,13 @@ components:
 
           1. Pessoa Natural
           2. Pessoa Jurídica
-          3. NA
       enum:
         - PESSOA_NATURAL
         - PESSOA_JURIDICA
-        - NA
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
-      description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li><li>NA</li></ol>
+      description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>
       enum:
         - FUNERAL
         - PRESTAMISTA
@@ -893,12 +951,12 @@ components:
         - PENSAO_MENORES_24
         - PENSAO_CONJUGE_VITALICIA
         - PENSAO_CONJUGE_TEMPORARIA
-        - NA
       example: FUNERAL
     Coverage:
       type: object
-      required:
+      x-regulatory-required:
         - type
+        - attributes
       properties:
         type:
           $ref: '#/components/schemas/EnumRiskPensionCoverageType'
@@ -924,7 +982,6 @@ components:
         - MORTE
         - INVALIDEZ
         - OUTROS
-        - NA
       example: MORTE
     CoverageAttributes:
       type: object
@@ -932,6 +989,13 @@ components:
       required:
         - minValue
         - maxValue
+        - indemnifiableDeadline
+        - gracePeriod
+        - excludedRisksURL
+      x-regulatory-required:
+        - minValue
+        - maxValue
+        - indemnifiablePeriod
         - indemnifiableDeadline
         - indemnityPaymentMethod
         - gracePeriod
@@ -952,6 +1016,9 @@ components:
           $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
         gracePeriod:
           type: object
+          x-regulatory-required:
+            - amount
+            - unit
           description: Período de carência da cobertura
           properties:
             amount:
@@ -979,6 +1046,8 @@ components:
       type: object
       required:
         - amount
+      x-regulatory-required:
+        - amount
         - unit
       properties:
         amount:
@@ -995,13 +1064,16 @@ components:
       required:
         - susepProcessNumber
         - detail
+      x-regulatory-required:
+        - susepProcessNumber
+        - detail
       properties:
         susepProcessNumber:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
           minLength: 2
           maxLength: 20
-          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
+          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$'
           example: 15414.622222/2222-22
         detail:
           type: string
@@ -1017,17 +1089,17 @@ components:
         2. IGP-M (FGV);
         3. INPC (IBGE).
         4. Não se aplica
-        5. NA
       enum:
         - IPCA
         - IGP_M
         - INPC
         - NAO_SE_APLICA
-        - NA
       example: IPCA
     RiskPensionReclaim:
       type: object
       required:
+        - gracePeriod
+      x-regulatory-required:
         - gracePeriod
       properties:
         table:
@@ -1050,12 +1122,15 @@ components:
       required:
         - amount
         - currency
+      x-regulatory-required:
+        - amount
+        - currency
       description: 'Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
       properties:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -1065,12 +1140,15 @@ components:
       required:
         - amount
         - currency
+      x-regulatory-required:
+        - amount
+        - currency
       description: 'Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
       properties:
         amount:
           type: string
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -1078,6 +1156,8 @@ components:
     RiskPensionMinimumRequirement:
       type: object
       required:
+        - contractingMinRequirement
+      x-regulatory-required:
         - contractType
         - contractingMinRequirement
       properties:
@@ -1087,11 +1167,9 @@ components:
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo;
             2. Individual.
-            3. NA
           enum:
             - COLETIVO
             - INDIVIDUAL
-            - NA
           example: COLETIVO
         contractingMinRequirement:
           type: string
@@ -1102,6 +1180,10 @@ components:
     RiskPensionReclaimTableItem:
       type: object
       required:
+        - initialMonthRange
+        - finalMonthRange
+        - percentage
+      x-regulatory-required:
         - initialMonthRange
         - finalMonthRange
         - percentage
@@ -1126,6 +1208,9 @@ components:
       type: object
       required:
         - interestRate
+      x-regulatory-required:
+        - interestRate
+        - updateIndexes
       properties:
         interestRate:
           type: string
@@ -1156,6 +1241,9 @@ components:
       required:
         - criterias
         - frequency
+      x-regulatory-required:
+        - criterias
+        - frequency
       properties:
         criterias:
           type: array
@@ -1183,7 +1271,7 @@ components:
       additionalProperties: false
     CurrencyCode:
       type: string
-      pattern: '^([A-Z]{3})$|^(NA)$'
+      pattern: '^([A-Z]{3})$'
       maxLength: 3
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
       example: BRL
@@ -1201,7 +1289,6 @@ components:
         - SUICIDIO
         - ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR
         - OUTROS
-        - NA
       example: ATO_RECONHECIMENTO_PERIGOSO
     EnumAssistanceType:
       type: string
@@ -1263,7 +1350,6 @@ components:
         - VIAGEM
         - VITIMA
         - OUTROS
-        - NA
       example: ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
     EnumAdditional:
       type: string
@@ -1273,16 +1359,14 @@ components:
         - SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
         - OUTROS
         - NAO_HA
-        - NA
       example: SORTEIO
     EnumGracePeriodUnit:
       type: string
-      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li><li>NA</li></ol>
+      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>
       enum:
         - DIAS
         - MESES
         - NAO_APLICA
-        - NA
       example: MESES
     RiskPensionEnumGracePeriodUnit:
       type: string
@@ -1290,13 +1374,9 @@ components:
         Informar o critério de carência para resgate:
         1. Dias;
         2. Meses;
-        3. Não se aplica.
-        4. NA
       enum:
         - DIAS
         - MESES
-        - NAO_APLICA
-        - NA
       example: MESES
     RiskPensionEnumFinancialRegime:
       type: string
@@ -1305,13 +1385,11 @@ components:
           1. Repartição simples
           2. Repartição Capitais Cobertura
           3. Capitalização
-          4. NA
       example: REPARTICAO_SIMPLES
       enum:
         - REPARTICAO_SIMPLES
         - REPARTICAO_CAPITAIS
         - CAPITALIZACAO
-        - NA
     RiskPensionEnumPremiumUpdateIndex:
       type: string
       description: Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício
@@ -1319,14 +1397,15 @@ components:
         - IPCA
         - IGPM
         - INPC
-        - NA
       example: IPCA
     RiskPensionEnumContributionPayment:
       type: object
-      description: Pagamento da contribuição.
-      required:
+      x-regulatory-required:
         - contributionPaymentMethod
+        - contributionPaymentMethodAdditionalInfo
         - contributionPeriodicity
+        - contributionPeriodicityAdditionalInfo
+      description: Pagamento da contribuição.
       properties:
         contributionPaymentMethod:
           type: string
@@ -1342,7 +1421,6 @@ components:
              - CONSIGNACAO_FOLHA_PAGAMENTO
              - PONTOS_PROGRAMA_BENEFICIO
              - OUTROS
-             - NA
           enum:
             - CARTAO_CREDITO
             - DEBITO_CONTA
@@ -1353,7 +1431,6 @@ components:
             - CONSIGNACAO_FOLHA_PAGAMENTO
             - PONTOS_PROGRAMA_BENEFICIO
             - OUTROS
-            - NA
         contributionPaymentMethodAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
@@ -1375,7 +1452,6 @@ components:
             - SEMESTRAL
             - BIMESTRAL
             - OUTROS
-            - NA
           enum:
             - MENSAL
             - UNICA
@@ -1384,7 +1460,6 @@ components:
             - SEMESTRAL
             - BIMESTRAL
             - OUTROS
-            - NA
         contributionPeriodicityAdditionalInfo:
           type: string
           pattern: '[\w\W\s]*'
@@ -1401,24 +1476,18 @@ components:
         Modalidade de pagamento da indenização, a considerar os domínios abaixo:
           1. Único
           2. Sob a forma de renda
-          3. NA
       enum:
         - UNICO
         - SOB_FORMA_RENDA
-        - NA
       example: UNICO
     RiskPensionEnumOtherGuaranteedValues:
       type: string
       description: |
         1. Saldamento
         2. Benefício Prolongado
-        3. Não se aplica
-        4. NA
       enum:
         - SALDAMENTO
         - BENEFICIO_PROLONGADO
-        - NAO_APLICA
-        - NA
       example: SALDAMENTO
     RiskPensionEnumProfitModality:
       type: string
@@ -1427,7 +1496,6 @@ components:
       enum:
         - PAGAMENTO_UNICO
         - FORMA_RENDA
-        - NA
       example: PAGAMENTO_UNICO
     ResponseErrorMetaSingle:
       type: object
