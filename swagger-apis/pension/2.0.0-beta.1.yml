@@ -156,6 +156,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
             - Nome Fantasia
+          minLength: 1
           maxLength: 80
           example: EMPRESAAPREV
         maximumAdministrationFee:
@@ -198,6 +199,7 @@ components:
               - Valor Mínimo de Contribuição
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
+          minLength: 1
           maxLength: 21
         minimumMathematicalProvisionAmount:
           type: string
@@ -206,6 +208,7 @@ components:
               - Valor Mínimo do Saldo Provisão matemática
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
+          minLength: 1
           maxLength: 21
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -240,6 +243,7 @@ components:
           example: true
         contractingMinRequirement:
           type: string
+          minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL)
           example: 'https://openinsurance.com.br/aaa'
@@ -247,6 +251,8 @@ components:
     CnpjNumber:
       type: string
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+      minLength: 14
+      maxLength: 14
       pattern: '^\d{14}$'
       example: '13456789000112'
     RiskProducts:
@@ -276,11 +282,13 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
           maxLength: 80
           description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
           example: Produto A
         code:
           type: string
+          minLength: 1
           maxLength: 80
           description: Código único a ser definido pela sociedade.
           example: '0001'
@@ -368,12 +376,14 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
           maxLength: 80
           description: |
             Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.
           example: Produto A
         code:
           type: string
+          minLength: 1
           maxLength: 80
           description: |
             Código único a ser definido pela sociedade.
@@ -401,6 +411,7 @@ components:
           type: string
           description: Campo aberto (possibilidade de incluir URL)
           example: 'https://openinsurance.com.br/aaa'
+          minLength: 1
           maxLength: 1024
         termsAndConditions:
           type: array
@@ -843,11 +854,13 @@ components:
         brand:
           type: string
           description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          minLength: 1
           maxLength: 80
           example: Organização
         name:
           type: string
           description: Nome do participante do Open Finance.
+          minLength: 1
           maxLength: 80
           example: Organização A1
         cnpjNumber:
@@ -882,6 +895,7 @@ components:
         name:
           type: string
           description: Nome da Sociedade Seguradora.
+          minLength: 1
           maxLength: 80
           example: Society A1
         cnpjNumber:
@@ -914,6 +928,7 @@ components:
         name:
           type: string
           description: Nome da Sociedade Seguradora.
+          minLength: 1
           maxLength: 80
           example: Society A1
         cnpjNumber:
@@ -1064,6 +1079,7 @@ components:
             $ref: '#/components/schemas/EnumExcludedRisks'
         excludedRisksURL:
           type: string
+          minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL).
           example: 'https://openinsurance.com.br/aaa'
@@ -1100,13 +1116,14 @@ components:
         susepProcessNumber:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
-          minLength: 2
+          minLength: 1
           maxLength: 20
           pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$'
           example: 15414.622222/2222-22
         detail:
           type: string
           description: 'Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL)'
+          minLength: 1
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
@@ -1204,6 +1221,7 @@ components:
         contractingMinRequirement:
           type: string
           description: Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).
+          minLength: 1
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
@@ -1307,6 +1325,7 @@ components:
     CurrencyCode:
       type: string
       pattern: '^([A-Z]{3})$'
+      minLength: 3
       maxLength: 3
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
       example: BRL
@@ -1470,6 +1489,7 @@ components:
           type: string
           pattern: '[\w\W\s]*'
           example: Informações adicionais
+          minLength: 1
           maxLength: 140
           description: |
             Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
@@ -1499,6 +1519,7 @@ components:
           type: string
           pattern: '[\w\W\s]*'
           example: Informações adicionais
+          minLength: 1
           maxLength: 140
           description: |
             Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.

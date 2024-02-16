@@ -1,9 +1,9 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;Opcional;;;1;2147483647;"";Não permitido;array;;
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização;
-/data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;
-/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
+/data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização;1
+/data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;1
+/data/participant/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;14
 /data/participant/urlComplementaryList;urlComplementaryList;"Espera-se que valor de retorno, após acesso ao link ‘urlComplementaryList’, deve ser array de objeto com a estrutura abaixo:
 
 - ‘name’ com o valor contido no campo ‘LegalEntityName’ conforme cadastro no diretório;
@@ -15,12 +15,12 @@
 - Ambos obrigatórios.
 ";Texto;1024;Opcional;Opcional;^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$;;0;1;"";Não permitido;string;https://empresaa1.com/companies;
 /data/society;society;Conjunto de informações relativas à seguradora do produto de open insurance;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/society/name;name;Nome da Sociedade Seguradora.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Society A1;
-/data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
+/data/society/name;name;Nome da Sociedade Seguradora.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Society A1;1
+/data/society/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;14
 /data/society/brand;brand;Nome da Marca reportada pelo participante do Open Insurance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Marca no OPIN.;1
 /data/society/products;products;Lista de produtos de uma empresa.;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
-/data/society/products/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Produto A;
-/data/society/products/code;code;Código único a ser definido pela sociedade.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;0001;
+/data/society/products/name;name;Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Produto A;1
+/data/society/products/code;code;Código único a ser definido pela sociedade.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;0001;1
 /data/society/products/modality;modality;<ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>;Texto;;Opcional;Obrigatório;;"FUNERAL 
 PRESTAMISTA 
 VIAGEM 
@@ -48,10 +48,10 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/society/products/coverages/attributes;attributes;Atributos da cobertura;Objeto;;Opcional;Obrigatório;;;0;1;"";Não permitido;object;;
 /data/society/products/coverages/attributes/minValue;minValue;Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/products/coverages/attributes/minValue/amount;amount;;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;
-/data/society/products/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
+/data/society/products/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/products/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;
-/data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
+/data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/indemnifiablePeriod;indemnifiablePeriod;"Listagem do pagamento para cada benefício:
   1. Quantidade determinada de parcelas;
   2. Até o fim de ciclo determinado.
@@ -80,7 +80,7 @@ EPIDEMIAS_PANDEMIAS
 SUICIDIO 
 ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR 
 OUTROS";0;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
-/data/society/products/coverages/attributes/excludedRisksURL;excludedRisksURL;Campo aberto (possibilidade de incluir URL).;Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
+/data/society/products/coverages/attributes/excludedRisksURL;excludedRisksURL;Campo aberto (possibilidade de incluir URL).;Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
 /data/society/products/coverages/attributes/profitModality;profitModality;"Modalidade de pagamento da indenização.
 ";Texto;;Opcional;Obrigatório;;"PAGAMENTO_UNICO 
 FORMA_RENDA";0;1;"";Não permitido;string;PAGAMENTO_UNICO;
@@ -147,8 +147,8 @@ SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
 OUTROS 
 NAO_HA";0;1;"";Não permitido;string;SORTEIO;
 /data/society/products/termsAndConditions;termsAndConditions;;Lista;;Obrigatório;Opcional;;;1;2147483647;"";Não permitido;array;;
-/data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;2
-/data/society/products/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
+/data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;1
+/data/society/products/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
 /data/society/products/pmbacRemuneration;pmbacRemuneration;;Objeto;;Opcional;Obrigatório;;;0;1;"";Não permitido;object;;
 /data/society/products/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/pmbacRemuneration/updateIndexes;updateIndexes;;Lista;;Opcional;Obrigatório;;"IPCA 
@@ -216,7 +216,7 @@ OUTROS";0;1;"";Não permitido;string;CARTAO_CREDITO;
 
 [Restrição] Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
 ";Texto;140;Condicional;Obrigatório;[\w\W\s]*;;0;1;" Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
-";Não permitido;string;Informações adicionais;
+";Não permitido;string;Informações adicionais;1
 /data/society/products/contributionPayment/contributionPeriodicity;contributionPeriodicity;"Periodicidade de pagamento da contribuição.
 - MENSAL
 - UNICA
@@ -236,14 +236,14 @@ OUTROS";0;1;"";Não permitido;string;MENSAL;
 
 [Restrição] Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
 ";Texto;140;Condicional;Obrigatório;[\w\W\s]*;;0;1;" Obrigatório quando 'contributionPeriodicity' for igual 'OUTROS'.
-";Não permitido;string;Informações adicionais;
+";Não permitido;string;Informações adicionais;1
 /data/society/products/minimumRequirement;minimumRequirement;;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/products/minimumRequirement/contractType;contractType;"O tipo de serviço contratado. A considerar os domínios abaixo:
 1. Coletivo;
 2. Individual.
 ";Texto;;Opcional;Obrigatório;;"COLETIVO 
 INDIVIDUAL";0;1;"";Não permitido;string;COLETIVO;
-/data/society/products/minimumRequirement/contractingMinRequirement;contractingMinRequirement;Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).;Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
+/data/society/products/minimumRequirement/contractingMinRequirement;contractingMinRequirement;Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).;Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
 /data/society/products/targetAudience;targetAudience;"A considerar os domínios abaixo:
 
   1. Pessoa Natural
