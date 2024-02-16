@@ -512,6 +512,7 @@ components:
           type: number
           description: Prazo em dias para pagamento da portabilidade (entre empresas diferentes).
           example: 20
+          minimum: 0
           maximum: 9999
         investmentFunds:
           type: array
@@ -569,22 +570,26 @@ components:
           description: |
             Prazo em dias de carência para resgate Para Coletivos: Valor máximo da carência.
           example: 100
+          minimum: 0
           maximum: 9999
         betweenRedemptionRequests:
           type: number
           description: |
             Prazo em dias de carência entre pedidos de resgate Para Coletivos: Valor máximo da carência
           example: 30
+          minimum: 0
           maximum: 9999
         portability:
           type: number
           description: Prazo em dias de carência para portabilidade (entre empresas diferentes).
           example: 12
+          minimum: 0
           maximum: 9999
         betweenPortabilityRequests:
           type: number
           description: Prazo em dias de carência entre pedidos de portabilidade (entre empresas diferentes).
           example: 15
+          minimum: 0
           maximum: 9999
       additionalProperties: false
     SurvivalPensionCosts:
@@ -1077,6 +1082,7 @@ components:
           format: int64
           description: Informar o prazo de carência
           example: 90
+          minimum: 0
           maximum: 9999999999
         unit:
           $ref: '#/components/schemas/RiskPensionEnumGracePeriodUnit'
