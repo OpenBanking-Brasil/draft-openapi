@@ -1,5 +1,5 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Obrigatório por Regulação;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;;Lista;;Obrigatório;Opcional;;;1;N;"";Não permitido;array;;
+/data;data;;Lista;;Obrigatório;Opcional;;;1;2147483647;"";Não permitido;array;;
 /data/participant;participant;Conjunto de informações relativas ao participante do produto de Open Finance;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/participant/brand;brand;Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a 'marca' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização;
 /data/participant/name;name;Nome do participante do Open Finance.;Texto;80;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;Organização A1;
@@ -33,7 +33,7 @@ PREVIDENCIA";0;1;"";Não permitido;string;PREVIDENCIA;
 ";Texto;;Opcional;Obrigatório;;"CONTRIBUICAO_VARIAVEL 
 BENEFICIO_DEFINIDO";0;1;"";Não permitido;string;BENEFICIO_DEFINIDO;
 /data/society/products/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL);Texto;1024;Opcional;Opcional;;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
-/data/society/products/termsAndConditions;termsAndConditions;;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;
+/data/society/products/termsAndConditions;termsAndConditions;;Lista;;Opcional;Opcional;;;1;2147483647;"";Não permitido;array;;
 /data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;2
 /data/society/products/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;
 /data/society/products/type;type;"1.  PGBL
@@ -75,7 +75,7 @@ INPC
 NAO_SE_APLICA";0;1;"";Não permitido;string;IPCA;
 /data/society/products/defferalPeriod/otherMinimumPerformanceGarantees;otherMinimumPerformanceGarantees;Para produtos do tipo PDR e VDR, indicação do índice de ampla divulgação utilizados como garantia mínima de desempenho.;Texto;12;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;SELIC;
 /data/society/products/defferalPeriod/reversalFinancialResults;reversalFinancialResults;Percentual de reversão de excedente financeiro na concessão. Em %.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
-/data/society/products/defferalPeriod/minimumPremiums;minimumPremiums;;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
+/data/society/products/defferalPeriod/minimumPremiums;minimumPremiums;;Lista;;Opcional;Opcional;;;0;2147483647;"";Não permitido;array;;
 /data/society/products/defferalPeriod/minimumPremiums/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;
 /data/society/products/defferalPeriod/minimumPremiums/periodicity;periodicity;;Texto;;Opcional;Obrigatório;;"DIARIO 
 SEMANAL 
@@ -98,7 +98,7 @@ CONSIGNACAO_FOLHA_PAGAMENTO
 PONTOS_PROGRAMA_BENEFICIO 
 TED_DOC 
 OUTROS 
-NA";0;N;"";Não permitido;array;CARTAO_CREDITO;
+NA";0;2147483647;"";Não permitido;array;CARTAO_CREDITO;
 /data/society/products/defferalPeriod/permissionExtraordinaryContributions;permissionExtraordinaryContributions;"Se ficam permitidos aportes extraordinários. A considerar os seguintes domínios:
 1. true
 2. false
@@ -116,7 +116,7 @@ NA";0;N;"";Não permitido;array;CARTAO_CREDITO;
 /data/society/products/defferalPeriod/gracePeriod/betweenPortabilityRequests;betweenPortabilityRequests;Prazo em dias de carência entre pedidos de portabilidade (entre empresas diferentes).;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;15;
 /data/society/products/defferalPeriod/redemptionPaymentTerm;redemptionPaymentTerm;Prazo em dias para pagamento do resgate;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/society/products/defferalPeriod/portabilityPaymentTerm;portabilityPaymentTerm;Prazo em dias para pagamento da portabilidade (entre empresas diferentes).;Número;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;number;20;
-/data/society/products/defferalPeriod/investmentFunds;investmentFunds;;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
+/data/society/products/defferalPeriod/investmentFunds;investmentFunds;;Lista;;Opcional;Opcional;;;0;2147483647;"";Não permitido;array;;
 /data/society/products/defferalPeriod/investmentFunds/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
 /data/society/products/defferalPeriod/investmentFunds/name;name;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
 - Nome Fantasia
@@ -153,7 +153,7 @@ RENDA_VITALICIA_REVERSIVEL_BENEFICIARIO_INDICADO
 RENDA_VITALICIA_CONJUGE_CONTINUIDADE_MENORES 
 RENDA_VITALICIA_MINIMO_GARANTIDO 
 RENDA_VITALICIA_PRAZO_MINIMO_GRANTIDO 
-NA";1;N;"";Não permitido;array;PAGAMENTO_UNICO;
+NA";1;2147483647;"";Não permitido;array;PAGAMENTO_UNICO;
 /data/society/products/grantPeriodBenefit/biometricTable;biometricTable;;Lista;;Opcional;Obrigatório;;"AT_2000_MALE 
 AT_2000_FEMALE 
 AT_2000_MALE_FEMALE 
@@ -169,7 +169,7 @@ AT_83_MALE_FEMALE
 BR_EMSSB_MALE 
 BR_EMSSB_FEMALE 
 BR_EMSSB_MALE_FEMALE 
-NA";0;N;"";Não permitido;array;AT_2000_MALE;
+NA";0;2147483647;"";Não permitido;array;AT_2000_MALE;
 /data/society/products/grantPeriodBenefit/interestRate;interestRate;Taxa de juros garantida utilizada para conversão em renda. Em %;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/grantPeriodBenefit/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
 1. IPCA (IBGE);
@@ -181,7 +181,7 @@ IGP_M
 INPC 
 NAO_SE_APLICA";0;1;"";Não permitido;string;IPCA;
 /data/society/products/grantPeriodBenefit/reversalFinancialResults;reversalFinancialResults;Percentual de reversão de excedente financeiro na concessão. Em %.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
-/data/society/products/grantPeriodBenefit/investmentFunds;investmentFunds;;Lista;;Opcional;Opcional;;;0;N;"";Não permitido;array;;
+/data/society/products/grantPeriodBenefit/investmentFunds;investmentFunds;;Lista;;Opcional;Opcional;;;0;2147483647;"";Não permitido;array;;
 /data/society/products/grantPeriodBenefit/investmentFunds/cnpjNumber;cnpjNumber;O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;;Obrigatório;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;13456789000112;
 /data/society/products/grantPeriodBenefit/investmentFunds/name;name;"Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
 - Nome Fantasia
