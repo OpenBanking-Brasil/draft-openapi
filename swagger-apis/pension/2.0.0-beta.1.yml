@@ -359,7 +359,7 @@ components:
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
           example: PESSOA_NATURAL
-    SurvivalProducts:
+    SurvivalProducts: 
       type: object
       required:
         - name
@@ -1156,12 +1156,10 @@ components:
         1. IPCA (IBGE);
         2. IGP-M (FGV);
         3. INPC (IBGE).
-        4. Não se aplica
       enum:
         - IPCA
         - IGP_M
         - INPC
-        - NAO_SE_APLICA
       example: IPCA
     RiskPensionReclaim:
       type: object
@@ -1442,15 +1440,16 @@ components:
         - SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO
         - SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
         - OUTROS
-        - NAO_HA
       example: SORTEIO
     EnumGracePeriodUnit:
       type: string
-      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li></ol>
+      description: |
+        Informar o critério de carência para a cobertura:
+          1. Dias
+          2. Meses
       enum:
         - DIAS
         - MESES
-        - NAO_APLICA
       example: MESES
     RiskPensionEnumGracePeriodUnit:
       type: string
