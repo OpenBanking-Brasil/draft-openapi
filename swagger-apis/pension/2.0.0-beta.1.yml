@@ -682,13 +682,13 @@ components:
       type: object
       x-regulatory-required:
         - currency
-        - periodicity
+        - periodicityDescription
         - amount
       description: Valor mínimo de prêmio/contribuição
       properties:
         currency:
           $ref: '#/components/schemas/CurrencyCode'
-        periodicity:
+        periodicityDescription:
           type: string
           minLength: 1
           maxLength: 20
@@ -1128,10 +1128,10 @@ components:
       type: object
       required:
         - susepProcessNumber
-        - detail
+        - contractTermsConditions
       x-regulatory-required:
         - susepProcessNumber
-        - detail
+        - contractTermsConditions
       properties:
         susepProcessNumber:
           type: string
@@ -1140,7 +1140,7 @@ components:
           maxLength: 20
           pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$'
           example: 15414.622222/2222-22
-        detail:
+        contractTermsConditions:
           type: string
           description: 'Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL)'
           minLength: 1

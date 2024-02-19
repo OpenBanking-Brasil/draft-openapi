@@ -35,7 +35,7 @@ BENEFICIO_DEFINIDO";0;1;"";Não permitido;string;BENEFICIO_DEFINIDO;1
 /data/society/products/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL);Texto;1024;Opcional;Opcional;;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
 /data/society/products/termsAndConditions;termsAndConditions;;Lista;;Opcional;Opcional;;;1;2147483647;"";Não permitido;array;;
 /data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;1
-/data/society/products/termsAndConditions/detail;detail;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
+/data/society/products/termsAndConditions/contractTermsConditions;contractTermsConditions;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
 /data/society/products/type;type;"1.  PGBL
 2.  PRGP
 3.  PAGP
@@ -77,7 +77,7 @@ NAO_SE_APLICA";0;1;"";Não permitido;string;IPCA;1
 /data/society/products/defferalPeriod/reversalFinancialResults;reversalFinancialResults;Percentual de reversão de excedente financeiro na concessão. Em %.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/defferalPeriod/minimumPremiums;minimumPremiums;;Lista;;Opcional;Opcional;;;0;2147483647;"";Não permitido;array;;
 /data/society/products/defferalPeriod/minimumPremiums/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;3
-/data/society/products/defferalPeriod/minimumPremiums/periodicity;periodicity;;Texto;20;Opcional;Obrigatório;;"DIARIO 
+/data/society/products/defferalPeriod/minimumPremiums/periodicityDescription;periodicityDescription;;Texto;20;Opcional;Obrigatório;;"DIARIO 
 SEMANAL 
 QUINZENAL 
 MENSAL 
