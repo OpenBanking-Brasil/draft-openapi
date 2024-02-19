@@ -156,6 +156,7 @@ components:
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando:
             - Nome Fantasia
+          minLength: 1
           maxLength: 80
           example: EMPRESAAPREV
         maximumAdministrationFee:
@@ -169,6 +170,8 @@ components:
           minLength: 8
         typePerformanceFee:
           type: string
+          minLength: 1
+          maxLength: 20
           enum:
             - DIRETAMENTE
             - INDIRETAMENTE
@@ -193,12 +196,13 @@ components:
           example: true
         minimumContributionAmount:
           type: string
+          minLength: 1
+          maxLength: 21
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo de Contribuição
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
-          maxLength: 21
         minimumMathematicalProvisionAmount:
           type: string
           description: |
@@ -206,6 +210,7 @@ components:
               - Valor Mínimo do Saldo Provisão matemática
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
+          minLength: 1
           maxLength: 21
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -221,6 +226,8 @@ components:
       properties:
         contractType:
           type: string
+          minLength: 1
+          maxLength: 30
           enum:
             - COLETIVO_AVERBADO
             - COLETIVO_INSTITUIDO
@@ -240,6 +247,7 @@ components:
           example: true
         contractingMinRequirement:
           type: string
+          minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL)
           example: 'https://openinsurance.com.br/aaa'
@@ -247,6 +255,8 @@ components:
     CnpjNumber:
       type: string
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+      minLength: 14
+      maxLength: 14
       pattern: '^\d{14}$'
       example: '13456789000112'
     RiskProducts:
@@ -276,11 +286,13 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
           maxLength: 80
           description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
           example: Produto A
         code:
           type: string
+          minLength: 1
           maxLength: 80
           description: Código único a ser definido pela sociedade.
           example: '0001'
@@ -334,13 +346,14 @@ components:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
           type: string
+          minLength: 1
+          maxLength: 23
           description: |
             A considerar os domínios abaixo:
 
               1. Pessoa Natural
               2. Pessoa Jurídica
               3. Ambas (Pessoa Natural e Jurídica)
-          maxLength: 23
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
@@ -368,18 +381,22 @@ components:
       properties:
         name:
           type: string
+          minLength: 1
           maxLength: 80
           description: |
             Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.
           example: Produto A
         code:
           type: string
+          minLength: 1
           maxLength: 80
           description: |
             Código único a ser definido pela sociedade.
           example: '0001'
         segment:
           type: string
+          minLength: 1
+          maxLength: 20
           description: |
             Segmento do qual se trata o produto contratado
             1. Seguro de Pessoas
@@ -390,6 +407,8 @@ components:
           example: PREVIDENCIA
         modality:
           type: string
+          minLength: 1
+          maxLength: 20
           description: |
             1. Contribuição Variável;
             2. Benefício Definido.
@@ -401,6 +420,7 @@ components:
           type: string
           description: Campo aberto (possibilidade de incluir URL)
           example: 'https://openinsurance.com.br/aaa'
+          minLength: 1
           maxLength: 1024
         termsAndConditions:
           type: array
@@ -453,6 +473,7 @@ components:
           type: string
           description: 'Para produtos do tipo PDR e VDR, indicação do índice de ampla divulgação utilizados como garantia mínima de desempenho.'
           example: SELIC
+          minLength: 1
           maxLength: 12
         reversalFinancialResults:
           type: string
@@ -669,6 +690,8 @@ components:
           $ref: '#/components/schemas/CurrencyCode'
         periodicity:
           type: string
+          minLength: 1
+          maxLength: 20
           example: MENSAL
           enum:
             - DIARIO
@@ -843,11 +866,13 @@ components:
         brand:
           type: string
           description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
+          minLength: 1
           maxLength: 80
           example: Organização
         name:
           type: string
           description: Nome do participante do Open Finance.
+          minLength: 1
           maxLength: 80
           example: Organização A1
         cnpjNumber:
@@ -882,6 +907,7 @@ components:
         name:
           type: string
           description: Nome da Sociedade Seguradora.
+          minLength: 1
           maxLength: 80
           example: Society A1
         cnpjNumber:
@@ -914,6 +940,7 @@ components:
         name:
           type: string
           description: Nome da Sociedade Seguradora.
+          minLength: 1
           maxLength: 80
           example: Society A1
         cnpjNumber:
@@ -934,6 +961,8 @@ components:
       additionalProperties: false
     RiskPensionEnumIndemnifiablePeriodType:
       type: string
+      minLength: 1
+      maxLength: 80
       description: |
         Listagem do pagamento para cada benefício:
           1. Quantidade determinada de parcelas;
@@ -946,6 +975,8 @@ components:
       example: QUANTIDADE_DETERMINADA_PARCELAS
     SurvivalPensionEnumTargetAudience:
       type: string
+      minLength: 1
+      maxLength: 30
       description: |
         A considerar os domínios abaixo:
 
@@ -957,6 +988,8 @@ components:
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
+      minLength: 1
+      maxLength: 80
       description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>
       enum:
         - FUNERAL
@@ -1004,6 +1037,8 @@ components:
       additionalProperties: false
     EnumRiskPensionCoverageType:
       type: string
+      minLength: 1
+      maxLength: 20
       description: 'É o conjunto dos riscos cobertos elencados na apólice. (RESOLUÇÃO CNSP Nº 341/2016). Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela Tipo de Cobertura.'
       enum:
         - MORTE
@@ -1064,6 +1099,7 @@ components:
             $ref: '#/components/schemas/EnumExcludedRisks'
         excludedRisksURL:
           type: string
+          minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL).
           example: 'https://openinsurance.com.br/aaa'
@@ -1100,18 +1136,21 @@ components:
         susepProcessNumber:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
-          minLength: 2
+          minLength: 1
           maxLength: 20
           pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$'
           example: 15414.622222/2222-22
         detail:
           type: string
           description: 'Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL)'
+          minLength: 1
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     UpdateIndex:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
         1. IPCA (IBGE);
@@ -1193,6 +1232,8 @@ components:
       properties:
         contractType:
           type: string
+          minLength: 1
+          maxLength: 20
           description: |
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo;
@@ -1204,6 +1245,7 @@ components:
         contractingMinRequirement:
           type: string
           description: Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).
+          minLength: 1
           maxLength: 1024
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
@@ -1307,11 +1349,14 @@ components:
     CurrencyCode:
       type: string
       pattern: '^([A-Z]{3})$'
+      minLength: 3
       maxLength: 3
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
       example: BRL
     EnumExcludedRisks:
       type: string
+      minLength: 1
+      maxLength: 50
       description: Listagem para indicar quais serão o(s) risco(s) excluído(s) aplicável(is) à(s) cobertura(s).
       enum:
         - ATO_RECONHECIMENTO_PERIGOSO
@@ -1327,6 +1372,8 @@ components:
       example: ATO_RECONHECIMENTO_PERIGOSO
     EnumAssistanceType:
       type: string
+      minLength: 1
+      maxLength: 80
       description: 'Lista padronizada de tipo de assistências ofertadas vinculadas ao produto. Por exemplo, Funeral, Bicicleta, Assistência PET – Tabela padrão a ser consolidada com retorno das empresas com a relação de assistências, permitindo um campo ‘Outros’ para assistências não contempladas na tabela padronizada.'
       enum:
         - ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
@@ -1388,6 +1435,8 @@ components:
       example: ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
     EnumAdditional:
       type: string
+      minLength: 1
+      maxLength: 80
       enum:
         - SORTEIO
         - SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO
@@ -1405,6 +1454,8 @@ components:
       example: MESES
     RiskPensionEnumGracePeriodUnit:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Informar o critério de carência para resgate:
         1. Dias;
@@ -1415,6 +1466,8 @@ components:
       example: MESES
     RiskPensionEnumFinancialRegime:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Listagem de regime financeiro para cada combinação de modalidade/cobertura do produto indicando:
           1. Repartição simples
@@ -1427,6 +1480,8 @@ components:
         - CAPITALIZACAO
     RiskPensionEnumPremiumUpdateIndex:
       type: string
+      minLength: 1
+      maxLength: 20
       description: Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício
       enum:
         - IPCA
@@ -1444,6 +1499,8 @@ components:
       properties:
         contributionPaymentMethod:
           type: string
+          minLength: 1
+          maxLength: 80
           example: CARTAO_CREDITO
           description: |
             Forma de pagamento da contribuição.
@@ -1470,6 +1527,7 @@ components:
           type: string
           pattern: '[\w\W\s]*'
           example: Informações adicionais
+          minLength: 1
           maxLength: 140
           description: |
             Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
@@ -1477,6 +1535,8 @@ components:
             [Restrição] Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
         contributionPeriodicity:
           type: string
+          minLength: 1
+          maxLength: 80
           example: MENSAL
           description: |
             Periodicidade de pagamento da contribuição.
@@ -1499,6 +1559,7 @@ components:
           type: string
           pattern: '[\w\W\s]*'
           example: Informações adicionais
+          minLength: 1
           maxLength: 140
           description: |
             Campo livre para preenchimento das informações adicionais referente ao contributionPaymentMethod.
@@ -1507,6 +1568,8 @@ components:
       additionalProperties: false
     RiskPensionEnumIndemnityPaymentMethod:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Modalidade de pagamento da indenização, a considerar os domínios abaixo:
           1. Único
@@ -1517,6 +1580,8 @@ components:
       example: UNICO
     RiskPensionEnumOtherGuaranteedValues:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         1. Saldamento
         2. Benefício Prolongado
@@ -1526,6 +1591,8 @@ components:
       example: SALDAMENTO
     RiskPensionEnumProfitModality:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Modalidade de pagamento da indenização.
       enum:
