@@ -170,6 +170,8 @@ components:
           minLength: 8
         typePerformanceFee:
           type: string
+          minLength: 1
+          maxLength: 20
           enum:
             - DIRETAMENTE
             - INDIRETAMENTE
@@ -194,13 +196,13 @@ components:
           example: true
         minimumContributionAmount:
           type: string
+          minLength: 1
+          maxLength: 21
           description: |
             Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação, contemplando: 
               - Valor Mínimo de Contribuição
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
-          minLength: 1
-          maxLength: 21
         minimumMathematicalProvisionAmount:
           type: string
           description: |
@@ -224,6 +226,8 @@ components:
       properties:
         contractType:
           type: string
+          minLength: 1
+          maxLength: 30
           enum:
             - COLETIVO_AVERBADO
             - COLETIVO_INSTITUIDO
@@ -342,13 +346,14 @@ components:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
           type: string
+          minLength: 1
+          maxLength: 23
           description: |
             A considerar os domínios abaixo:
 
               1. Pessoa Natural
               2. Pessoa Jurídica
               3. Ambas (Pessoa Natural e Jurídica)
-          maxLength: 23
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
@@ -390,6 +395,8 @@ components:
           example: '0001'
         segment:
           type: string
+          minLength: 1
+          maxLength: 20
           description: |
             Segmento do qual se trata o produto contratado
             1. Seguro de Pessoas
@@ -400,6 +407,8 @@ components:
           example: PREVIDENCIA
         modality:
           type: string
+          minLength: 1
+          maxLength: 20
           description: |
             1. Contribuição Variável;
             2. Benefício Definido.
@@ -464,6 +473,7 @@ components:
           type: string
           description: 'Para produtos do tipo PDR e VDR, indicação do índice de ampla divulgação utilizados como garantia mínima de desempenho.'
           example: SELIC
+          minLength: 1
           maxLength: 12
         reversalFinancialResults:
           type: string
@@ -680,6 +690,8 @@ components:
           $ref: '#/components/schemas/CurrencyCode'
         periodicity:
           type: string
+          minLength: 1
+          maxLength: 20
           example: MENSAL
           enum:
             - DIARIO
@@ -949,6 +961,8 @@ components:
       additionalProperties: false
     RiskPensionEnumIndemnifiablePeriodType:
       type: string
+      minLength: 1
+      maxLength: 80
       description: |
         Listagem do pagamento para cada benefício:
           1. Quantidade determinada de parcelas;
@@ -961,6 +975,8 @@ components:
       example: QUANTIDADE_DETERMINADA_PARCELAS
     SurvivalPensionEnumTargetAudience:
       type: string
+      minLength: 1
+      maxLength: 30
       description: |
         A considerar os domínios abaixo:
 
@@ -972,6 +988,8 @@ components:
       example: PESSOA_NATURAL
     EnumProductModality:
       type: string
+      minLength: 1
+      maxLength: 80
       description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li></ol>
       enum:
         - FUNERAL
@@ -1019,6 +1037,8 @@ components:
       additionalProperties: false
     EnumRiskPensionCoverageType:
       type: string
+      minLength: 1
+      maxLength: 20
       description: 'É o conjunto dos riscos cobertos elencados na apólice. (RESOLUÇÃO CNSP Nº 341/2016). Listagem de coberturas incluídas no produto que deve observar a relação discriminada de coberturas, conforme Tabela Tipo de Cobertura.'
       enum:
         - MORTE
@@ -1129,6 +1149,8 @@ components:
       additionalProperties: false
     UpdateIndex:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
         1. IPCA (IBGE);
@@ -1210,6 +1232,8 @@ components:
       properties:
         contractType:
           type: string
+          minLength: 1
+          maxLength: 20
           description: |
             O tipo de serviço contratado. A considerar os domínios abaixo:
             1. Coletivo;
@@ -1331,6 +1355,8 @@ components:
       example: BRL
     EnumExcludedRisks:
       type: string
+      minLength: 1
+      maxLength: 50
       description: Listagem para indicar quais serão o(s) risco(s) excluído(s) aplicável(is) à(s) cobertura(s).
       enum:
         - ATO_RECONHECIMENTO_PERIGOSO
@@ -1346,6 +1372,8 @@ components:
       example: ATO_RECONHECIMENTO_PERIGOSO
     EnumAssistanceType:
       type: string
+      minLength: 1
+      maxLength: 80
       description: 'Lista padronizada de tipo de assistências ofertadas vinculadas ao produto. Por exemplo, Funeral, Bicicleta, Assistência PET – Tabela padrão a ser consolidada com retorno das empresas com a relação de assistências, permitindo um campo ‘Outros’ para assistências não contempladas na tabela padronizada.'
       enum:
         - ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
@@ -1407,6 +1435,8 @@ components:
       example: ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
     EnumAdditional:
       type: string
+      minLength: 1
+      maxLength: 80
       enum:
         - SORTEIO
         - SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO
@@ -1424,6 +1454,8 @@ components:
       example: MESES
     RiskPensionEnumGracePeriodUnit:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Informar o critério de carência para resgate:
         1. Dias;
@@ -1434,6 +1466,8 @@ components:
       example: MESES
     RiskPensionEnumFinancialRegime:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Listagem de regime financeiro para cada combinação de modalidade/cobertura do produto indicando:
           1. Repartição simples
@@ -1446,6 +1480,8 @@ components:
         - CAPITALIZACAO
     RiskPensionEnumPremiumUpdateIndex:
       type: string
+      minLength: 1
+      maxLength: 20
       description: Índice utilizado na atualização do prêmio/contribuição e do capital segurado/benefício
       enum:
         - IPCA
@@ -1463,6 +1499,8 @@ components:
       properties:
         contributionPaymentMethod:
           type: string
+          minLength: 1
+          maxLength: 80
           example: CARTAO_CREDITO
           description: |
             Forma de pagamento da contribuição.
@@ -1497,6 +1535,8 @@ components:
             [Restrição] Obrigatório quando 'contributionPaymentMethod' for igual 'OUTROS'. 
         contributionPeriodicity:
           type: string
+          minLength: 1
+          maxLength: 80
           example: MENSAL
           description: |
             Periodicidade de pagamento da contribuição.
@@ -1528,6 +1568,8 @@ components:
       additionalProperties: false
     RiskPensionEnumIndemnityPaymentMethod:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Modalidade de pagamento da indenização, a considerar os domínios abaixo:
           1. Único
@@ -1538,6 +1580,8 @@ components:
       example: UNICO
     RiskPensionEnumOtherGuaranteedValues:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         1. Saldamento
         2. Benefício Prolongado
@@ -1547,6 +1591,8 @@ components:
       example: SALDAMENTO
     RiskPensionEnumProfitModality:
       type: string
+      minLength: 1
+      maxLength: 20
       description: |
         Modalidade de pagamento da indenização.
       enum:
