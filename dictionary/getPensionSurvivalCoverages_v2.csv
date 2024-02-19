@@ -34,7 +34,7 @@ PREVIDENCIA";0;1;"";Não permitido;string;PREVIDENCIA;1
 BENEFICIO_DEFINIDO";0;1;"";Não permitido;string;BENEFICIO_DEFINIDO;1
 /data/society/products/additionalInfo;additionalInfo;Campo aberto (possibilidade de incluir URL);Texto;1024;Opcional;Opcional;;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
 /data/society/products/termsAndConditions;termsAndConditions;;Lista;;Opcional;Opcional;;;1;2147483647;"";Não permitido;array;;
-/data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;20;Obrigatório;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;1
+/data/society/products/termsAndConditions/susepProcessNumber;susepProcessNumber;"Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.";Texto;30;Obrigatório;Obrigatório;^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$;;1;1;"";Não permitido;string;15414.622222/2222-22;1
 /data/society/products/termsAndConditions/contractTermsConditions;contractTermsConditions;Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL);Texto;1024;Obrigatório;Obrigatório;;;1;1;"";Não permitido;string;https://openinsurance.com.br/aaa;1
 /data/society/products/type;type;"1.  PGBL
 2.  PRGP
@@ -49,7 +49,7 @@ BENEFICIO_DEFINIDO";0;1;"";Não permitido;string;BENEFICIO_DEFINIDO;1
 11. VRI
 12. VDR
 13. Demais produtos de Previdência.
-";Texto;;Opcional;Obrigatório;;"PGBL 
+";Texto;80;Opcional;Obrigatório;;"PGBL 
 PRGP 
 PAGP 
 PRSA 
@@ -61,7 +61,7 @@ VAGP
 VRSA 
 VRI 
 VDR 
-DEMAIS_PRODUTOS_PREVIDENCIA";0;1;"";Não permitido;string;;
+DEMAIS_PRODUTOS_PREVIDENCIA";0;1;"";Não permitido;string;;1
 /data/society/products/defferalPeriod;defferalPeriod;Período de Diferimento;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/society/products/defferalPeriod/interestRate;interestRate;Taxa de juros mensal garantida que remunera o plano durante a fase de diferimento/acumulação.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/defferalPeriod/updateIndex;updateIndex;"Índice utilizado na atualização do prêmio e do capital segurado, caso critério de atualização por meio de índice:
