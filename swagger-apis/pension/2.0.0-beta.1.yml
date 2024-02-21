@@ -508,6 +508,15 @@ components:
               - OUTROS
               - NA
             example: CARTAO_CREDITO
+        premiumPaymentMethodsAdditionalInfo:
+          type: string
+          description: |
+            Campo livre para preenchimento das informações adicionais referente a descrição do meio de pagamento.
+            
+            [Restrição] Obrigatório quando ""premiumPaymentMethods"" for igual 'OUTROS'
+          minLength: 1
+          maxLength: 144
+          example: Informações adicionais
         permissionExtraordinaryContributions:
           description: |
             Se ficam permitidos aportes extraordinários. A considerar os seguintes domínios:
@@ -1036,6 +1045,16 @@ components:
             - outros
         attributes:
           $ref: '#/components/schemas/CoverageAttributes'
+        coveragePeriod:
+          type: array
+          description: Mapeamento dos regimes financeiros associados a cada modalidade e cobertura do produto
+          items:
+            type: string
+            enum:
+              - VITALICIA
+              - TEMPORARIA
+          example: 
+            - TEMPORARIA
       additionalProperties: false
     EnumRiskPensionCoverageType:
       type: string
