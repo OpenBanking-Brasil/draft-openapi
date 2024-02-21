@@ -187,7 +187,8 @@ info:
       - O _PATCH /pix/payments/consents/{consentId}_ deve ser utilizado no cancelamento de todas as ocorrências de pagamentos agendados presentes em uma recorrência de pagamentos. Todos os pagamentos associados ao consentimento informado e passíveis de cancelamento (ainda não liquidados, com os status PDNG e SCHD) deverão ser cancelados.
       
       ## Quantidade máxima permitida para agendamentos recorrentes
-      A quantidade máxima de pagamentos que podem transitar do iniciador para o detentor são de 60 pagamentos, independente do modelo de recorrência definido no consentimento, respeitando o prazo máximo de dois anos para agendamentos.
+      A quantidade máxima de pagamentos que podem transitar do iniciador para o detentor são de 60 pagamentos, independente do modelo de recorrência definido no consentimento, respeitando o prazo máximo de dois anos para agendamentos. 
+      Caso a opção de /recorrência enviada pelo iniciador não respeite a regra acima, o detentor deve retornar o erro 422 "PARAMETRO_INVALIDO" com o detalhe "Quantidade permitida de pagamentos excedida". 
   version: 4.0.0-rc.2
   license:
     name: Apache 2.0
