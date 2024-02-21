@@ -23,10 +23,10 @@ info:
         - Qualquer pagamento deve ser contado para a última fatura fechada.
     ### `/accounts/{creditCardAccountId}/bills/{billId}/transactions`
       - description:
-        - A lista a retornar se refere a transações após base 2/clearing/conciliado
+        - A lista a retornar se refere a transações após conciliado
     ### `/accounts/{creditCardAccountId}/transactions`
       - description:
-        - A lista a retornar se refere a transações após base 2/clearing/conciliado
+        - A lista a retornar se refere a transações após conciliado
 
     ## Permissions necessárias para a API Credit-cards-accounts
 
@@ -255,7 +255,7 @@ paths:
       operationId: creditCardsGetAccountsCreditCardAccountIdBillsBillIdTransactions
       description: |
         Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId e billId mantida pelo cliente na instituição transmissora. 
-        A lista a retornar se refere a transações após base 2/clearing/conciliado
+        A lista a retornar se refere a transações após conciliado.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -362,9 +362,9 @@ paths:
         - Credit Card
       summary: Obtém a lista de transações da conta identificada por creditCardAccountId.
       operationId: creditCardsGetAccountsCreditCardAccountIdTransactions
-      description: |-
-        Método para obter a lista de transações da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
-        A lista a retornar se refere a transações após base 2/clearing/conciliado
+      description: |
+        Método para obter a lista de transações histórica (últimos 12 meses, ou recorte desse período) da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora. 
+        A lista a retornar se refere a transações após conciliado.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -420,7 +420,9 @@ paths:
         - Credit Card
       summary: Obtém a lista de transações recentes (últimos 7 dias) da conta identificada por creditCardAccountId.
       operationId: creditCardsGetAccountsCreditCardAccountIdTransactionsCurrent
-      description: Método para obter a lista de transações recentes (últimos 7 dias) da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora.
+      description: |
+        Método para obter a lista de transações recentes (últimos 7 dias) da conta de pagamento pós-paga identificada por creditCardAccountId mantida pelo cliente na instituição transmissora. 
+        A lista a retornar se refere a transações após conciliado.
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
