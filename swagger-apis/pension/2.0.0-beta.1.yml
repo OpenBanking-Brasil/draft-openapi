@@ -84,6 +84,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente ao produto previdência
           minItems: 1
           maxItems: 2147483647
           items:
@@ -112,6 +113,7 @@ components:
       properties:
         data:
           type: array
+          description: Conjunto de informações referente ao produto previdência
           minItems: 1
           maxItems: 2147483647
           items:
@@ -217,6 +219,7 @@ components:
       additionalProperties: false
     SurvivalPensionMinimumRequirements:
       type: object
+      description: Requerimento mínimo do serviço contratado
       required:
         - contractingMinRequirement
       x-regulatory-required:
@@ -300,6 +303,7 @@ components:
           $ref: '#/components/schemas/EnumProductModality'
         coverages:
           type: array
+          description: Conjunto de informações referente a cobertura
           minItems: 1
           maxItems: 2147483647
           items:
@@ -324,6 +328,7 @@ components:
           $ref: '#/components/schemas/EnumAdditional'
         termsAndConditions:
           type: array
+          description: Conjunto de informações referente aos termos e condições conforme número do processo SUSEP
           minItems: 1
           maxItems: 2147483647
           items:
@@ -424,6 +429,7 @@ components:
           maxLength: 1024
         termsAndConditions:
           type: array
+          description: Conjunto de informações referente aos termos e condições conforme número do processo SUSEP
           items:
             $ref: '#/components/schemas/TermsAndConditions'
           minItems: 1
@@ -484,12 +490,14 @@ components:
           example: '0.019800'
         minimumPremiums:
           type: array
+          description: Valor mínimo do prêmio/contribuição aceita pela sociedade ao plano (identificar valor mensal e/ou aporte único)
           minItems: 0
           maxItems: 2147483647
           items:
             $ref: '#/components/schemas/SurvivalPensionMinimumPremium'
         premiumPaymentMethods:
           type: array
+          description: Meio de pagamento escolhido pelo segurado
           minItems: 0
           maxItems: 2147483647
           items:
@@ -546,6 +554,7 @@ components:
           maximum: 9999
         investmentFunds:
           type: array
+          description: Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação ou de concessão
           minItems: 0
           maxItems: 2147483647
           items:
@@ -730,6 +739,7 @@ components:
       properties:
         incomeModalities:
           type: array
+          description: Modalidades de renda disponíveis para contratação. A considerar os seguintes domínios
           minItems: 1
           maxItems: 2147483647
           items:
@@ -765,6 +775,7 @@ components:
             example: PAGAMENTO_UNICO
         biometricTable:
           type: array
+          description: Obrigatório caso modalidade de renda seja diferente de (PAGAMENTO_UNICO, RENDA_PRAZO_CERTO). Tábua biométrica é o instrumento que mede a duração da vida humana (também conhecida como tábua de mortalidade) ou a probabilidade de entrada em invalidez e é um parâmetro utilizado para tarifar os planos de previdência complementar aberta.
           minItems: 0
           maxItems: 2147483647
           items:
@@ -808,6 +819,7 @@ components:
           example: '0.019800'
         investmentFunds:
           type: array
+          description: Lista com as informações do(s) Fundo(s) de Investimento(s) disponíveis para o período de diferimento/acumulação ou de concessão.
           minItems: 0
           maxItems: 2147483647
           items:
@@ -1123,6 +1135,7 @@ components:
       additionalProperties: false
     RiskPensionGracePeriod:
       type: object
+      description: Período de carência
       required:
         - amount
       x-regulatory-required:
@@ -1178,6 +1191,7 @@ components:
       example: IPCA
     RiskPensionReclaim:
       type: object
+      description: Resgate
       required:
         - gracePeriod
       x-regulatory-required:
@@ -1185,6 +1199,7 @@ components:
       properties:
         table:
           type: array
+          description: Percentual de resgate para PMBaC para cada conjunto aplicável
           items:
             $ref: '#/components/schemas/RiskPensionReclaimTableItem'
           minItems: 1
@@ -1211,6 +1226,7 @@ components:
       properties:
         amount:
           type: string
+          description: Valor mínimo/máximo de cobertura diária ou parcelada
           maxLength: 21
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
@@ -1229,6 +1245,7 @@ components:
       properties:
         amount:
           type: string
+          description: Valor mínimo/máximo de cobertura diária ou parcelada
           maxLength: 21
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
@@ -1237,6 +1254,7 @@ components:
       additionalProperties: false
     RiskPensionMinimumRequirement:
       type: object
+      description: Requisitos mínimos
       required:
         - contractingMinRequirement
       x-regulatory-required:
@@ -1275,11 +1293,13 @@ components:
       properties:
         initialMonthRange:
           type: integer
+          description: Mês inicial do range
           minimum: 1
           maximum: 12
           example: 1
         finalMonthRange:
           type: integer
+          description: Mês final do range
           minimum: 1
           maximum: 12
           example: 12
@@ -1293,6 +1313,7 @@ components:
       additionalProperties: false
     RiskPensionEnumPmbacRemuneration:
       type: object
+      description: Atualização/ Remuneração da PMBaC
       required:
         - interestRate
       x-regulatory-required:
@@ -1308,6 +1329,7 @@ components:
           example: '0.019800'
         updateIndexes:
           type: array
+          description: Índice utilizado na atualização da PMBaC
           minItems: 0
           maxItems: 2147483647
           items:
@@ -1327,6 +1349,7 @@ components:
       additionalProperties: false
     AgeAdjustment:
       type: object
+      description: Reenquadramento etário
       required:
         - criterias
         - frequency
@@ -1336,6 +1359,7 @@ components:
       properties:
         criterias:
           type: array
+          description: Critério para reenquadramento etário
           minItems: 1
           maxItems: 2147483647
           items:
