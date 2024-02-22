@@ -539,7 +539,7 @@ components:
           maximum: 9999
           example: 10
         portabilityPaymentTerm:
-          type: number
+          type: integer
           description: Prazo em dias para pagamento da portabilidade (entre empresas diferentes).
           example: 20
           minimum: 0
@@ -598,27 +598,27 @@ components:
         - betweenPortabilityRequests 
       properties:
         redemption:
-          type: number
+          type: integer
           description: |
             Prazo em dias de carência para resgate Para Coletivos: Valor máximo da carência.
           example: 100
           minimum: 0
           maximum: 9999
         betweenRedemptionRequests:
-          type: number
+          type: integer
           description: |
             Prazo em dias de carência entre pedidos de resgate Para Coletivos: Valor máximo da carência
           example: 30
           minimum: 0
           maximum: 9999
         portability:
-          type: number
+          type: integer
           description: Prazo em dias de carência para portabilidade (entre empresas diferentes).
           example: 12
           minimum: 0
           maximum: 9999
         betweenPortabilityRequests:
-          type: number
+          type: integer
           description: Prazo em dias de carência entre pedidos de portabilidade (entre empresas diferentes).
           example: 15
           minimum: 0
@@ -700,20 +700,12 @@ components:
         currency:
           $ref: '#/components/schemas/CurrencyCode'
         periodicityDescription:
+          description: Descrição da periodicidade do prêmio/contribuição
           type: string
-          minLength: 1
-          maxLength: 20
+          minLength: 5
+          maxLength: 15
+          pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: MENSAL
-          enum:
-            - DIARIO
-            - SEMANAL
-            - QUINZENAL
-            - MENSAL
-            - BIMESTRAL
-            - TRIMESTRAL
-            - SEMESTRAL
-            - ANUAL
-            - UNICO
         amount:
           type: string
           maxLength: 21
