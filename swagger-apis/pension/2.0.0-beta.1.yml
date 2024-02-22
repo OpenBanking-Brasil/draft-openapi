@@ -324,8 +324,8 @@ components:
           description: Lista a ser preenchida pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'.
           example:
             - Assistance additional info.
-        additional:
-          $ref: '#/components/schemas/EnumAdditional'
+        planAdditional:
+          $ref: '#/components/schemas/EnumPlanAdditional'
         termsAndConditions:
           type: array
           description: Conjunto de informações referente aos termos e condições conforme número do processo SUSEP
@@ -1470,8 +1470,9 @@ components:
         - VITIMA
         - OUTROS
       example: ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA
-    EnumAdditional:
+    EnumPlanAdditional:
       type: string
+      description: Adicional do plano
       minLength: 1
       maxLength: 80
       enum:
