@@ -583,6 +583,7 @@ components:
         - VRI
         - VDR
         - DEMAIS_PRODUTOS_PREVIDENCIA
+      example: PGBL
     SurvivalPensionGracePeriod:
       type: object
       description: Prazo de carência
@@ -1087,6 +1088,7 @@ components:
         indemnifiableDeadline:
           type: integer
           description: Número máximo de parcelas indenizáveis. Caso seja relacionado a parcelas.
+          example: 1
         indemnityPaymentMethod:
           $ref: '#/components/schemas/RiskPensionEnumIndemnityPaymentMethod'
         gracePeriod:
