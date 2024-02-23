@@ -1508,7 +1508,10 @@ components:
       type: object
       description: |
         Objeto que contém a identificação da conta de origem do pagador. As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. 
-        Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.  
+        Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.
+
+        [Restrições]
+        - Objeto obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
       required:
         - ispb
         - number
@@ -1554,7 +1557,6 @@ components:
             Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no município de cadastro do usuário pagador no detentor.
 
             [Restrições]
-            - Objeto obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
             - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
     EndToEndId:
       type: string
