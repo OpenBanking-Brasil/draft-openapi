@@ -712,8 +712,8 @@ components:
         periodicityDescription:
           description: Descrição da periodicidade do prêmio/contribuição
           type: string
-          minLength: 5
-          maxLength: 15
+          minLength: 1
+          maxLength: 20
           pattern: ^(?!\s)[\w\W\s]*[^\s]$
           example: MENSAL
         amount:
@@ -1577,7 +1577,7 @@ components:
         contributionPeriodicity:
           type: string
           minLength: 1
-          maxLength: 80
+          maxLength: 20
           example: MENSAL
           description: |
             Periodicidade de pagamento da contribuição.
