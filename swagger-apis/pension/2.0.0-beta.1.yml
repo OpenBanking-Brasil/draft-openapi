@@ -205,6 +205,12 @@ components:
               - Valor Mínimo de Contribuição
           pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '1000.00'
+        minimumContributionValue:
+          type: number
+          description: Valor Mínimo de Aporte de Portabilidade. Caso a Regra de Elegibilidade SIM.​
+          minimum: 0
+          maximum: 2147483647
+          example: 1
         minimumMathematicalProvisionAmount:
           type: string
           description: |
@@ -347,6 +353,9 @@ components:
           $ref: '#/components/schemas/RiskPensionEnumOtherGuaranteedValues'
         contributionPayment:
           $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
+        contributionTax:
+          type: string
+          description: Distribuição de frequência relativa aos valores referentes às taxas cobradas​
         minimumRequirement:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
@@ -481,6 +490,13 @@ components:
           example: SELIC
           minLength: 1
           maxLength: 12
+        otherMinGuaranteesPercentage:
+          type: string
+          description: Para produtos do tipo PDR e VDR, indicação do percentual do índice de ampla divulgação utilizados como garantia mínima de desempenho. Exemplo 1.000000 igual a 100 por cento.
+          pattern: ^(\d{1}\.\d{6})$
+          minLength: 8
+          maxLength: 8
+          example: '1.000000'
         reversalFinancialResults:
           type: string
           maxLength: 9
@@ -1031,6 +1047,7 @@ components:
       x-regulatory-required:
         - type
         - attributes
+        - coveragePeriod
       properties:
         type:
           $ref: '#/components/schemas/EnumRiskPensionCoverageType'
