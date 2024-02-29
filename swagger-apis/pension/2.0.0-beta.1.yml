@@ -355,7 +355,7 @@ components:
           $ref: '#/components/schemas/RiskPensionEnumContributionPayment'
         contributionTax:
           type: string
-          description: Distribuição de frequência relativa aos valores referentes às taxas cobradas​
+          description: Distribuição de frequência relativa aos valores referentes às taxas cobradas
         minimumRequirement:
           $ref: '#/components/schemas/RiskPensionMinimumRequirement'
         targetAudience:
@@ -1044,10 +1044,11 @@ components:
       example: FUNERAL
     Coverage:
       type: object
+      required:
+        - coveragePeriod
       x-regulatory-required:
         - type
         - attributes
-        - coveragePeriod
       properties:
         type:
           $ref: '#/components/schemas/EnumRiskPensionCoverageType'
