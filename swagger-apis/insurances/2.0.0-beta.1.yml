@@ -59,11 +59,13 @@ components:
           type: string
           description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Organização
         name:
           type: string
           description: Nome do participante do Open Finance.
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Organização A1
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
@@ -137,7 +139,7 @@ components:
         details:
           type: string
           maxLength: 500
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Descrições adicionais do período de carência
       additionalProperties: false
     TermsAndConditionsItem:
@@ -157,6 +159,7 @@ components:
           type: string
           description: 'Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL)'
           maxLength: 1024
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     EnumProductModality:
@@ -390,9 +393,9 @@ components:
           $ref: '#/components/schemas/PersonalInsuranceGracePeriod'
         differentiatedGracePeriod:
           type: string
-          description: 'Campo aberto para detalhamento de período de carência diferenciado, se houver.'
+          description: Campo aberto para detalhamento de período de carência diferenciado, se houver.
           maxLength: 500
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 90 DIAS
         deductibleDays:
           type: integer
@@ -442,6 +445,7 @@ components:
           type: string
           description: Campo aberto (possibilidade de incluir URL)
           maxLength: 1024
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 'https://openinsurance.com.br/aaa'
         allowApartPurchase:
           type: boolean
@@ -545,6 +549,7 @@ components:
           type: string
           description: 'Distribuição de frequência relativa aos valores referentes às taxas cobradas, nos termos do Anexo III.'
           maxLength: 500
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
       additionalProperties: false
     EnumPersonalInsurancePremiumPaymentFrequency:
       type: string
@@ -582,6 +587,7 @@ components:
           type: string
           description: Campo aberto (possibilidade de incluir URL)
           maxLength: 1024
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     PersonalInsuranceGracePeriod:
@@ -598,7 +604,7 @@ components:
         details:
           type: string
           maxLength: 500
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Descrições adicionais do período de carência
       additionalProperties: false
     PersonalInsuranceReclaim:
@@ -616,12 +622,11 @@ components:
         differenciatedPercentage:
           description: Campo aberto (possibilidade de incluir URL)
           type: string
-          pattern: '[\w\W\s]*'
-          example: |
-            https://openinsurance.com.br/aaa’
-            Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL
-            Exemplo: Cobertura X: a partir de 25 meses = 100%
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 1024
+          example: 'https://openinsurance.com.br/aaa
+            Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL
+            Exemplo: Cobertura X: a partir de 25 meses = 100%'
       additionalProperties: false
     PersonalInsuranceReclaimTableItem:
       type: object
@@ -751,6 +756,7 @@ components:
           type: string
           description: Nome da Sociedade Seguradora.
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Society A1
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
@@ -758,6 +764,7 @@ components:
           type: string
           description: 'Nome da marca reportada pela sociedade seguradora participante do Open Finance. O conceito a que se refere a marca é em essência uma promessa das sociedades sob ela em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Marca
         products:
           type: array
@@ -784,11 +791,13 @@ components:
           type: string
           description: 'Nome comercial do produto, pelo qual é identificado nos canais de distribuição e atendimento da sociedade.'
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Produto A
         code:
           type: string
           description: Código único a ser definido pela sociedade.
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: '0001'
         category:
           type: string
