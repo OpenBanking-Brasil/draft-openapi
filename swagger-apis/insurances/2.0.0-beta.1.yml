@@ -246,6 +246,8 @@ components:
         frequency:
           type: integer
           description: 'Período em anos, caso critério de reenquadramento após ou a cada período em anos.'
+          minimum: 0
+          maximum: 2147483647
           example: 10
       additionalProperties: false
     InsurancePensionEnumFinancialRegime:
@@ -396,6 +398,8 @@ components:
         maximumQtyIndemnifiableInstallments:
           type: integer
           description: 'Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.'
+          minimum: 0
+          maximum: 2147483647
           example: 10
         gracePeriod:
           $ref: '#/components/schemas/PersonalInsuranceGracePeriod'
@@ -409,10 +413,14 @@ components:
         deductibleDays:
           type: integer
           description: Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.
+          minimum: 0
+          maximum: 2147483647
           example: 10
         differentiatedDeductibleDays:
           type: integer
           description: 'Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade. Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.'
+          minimum: 0
+          maximum: 2147483647
           example: 15
         deductible:
           type: object
@@ -612,7 +620,8 @@ components:
           minLength: 1
           maxLength: 500
           example: 90
-          maximum: 9999999999
+          minimum: 0
+          maximum: 2147483647
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
         details:
@@ -652,9 +661,13 @@ components:
       properties:
         initialMonthRange:
           type: integer
+          minimum: 0
+          maximum: 12
           example: 1
         finalMonthRange:
           type: integer
+          minimum: 0
+          maximum: 12
           example: 12
         percentage:
           type: string
@@ -998,7 +1011,8 @@ components:
           format: int64
           description: Informar o prazo de carência
           example: 90
-          maximum: 9999999999
+          minimum: 0
+          maximum: 2147483647
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
       additionalProperties: false
