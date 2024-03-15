@@ -141,7 +141,8 @@ components:
           format: int64
           description: Informar o prazo de carência
           example: 90
-          maximum: 9999999999
+          minimum: 0
+          maximum: 2147483647
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
         details:
