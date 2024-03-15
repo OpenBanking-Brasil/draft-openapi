@@ -54,6 +54,10 @@ components:
         - brand
         - name
         - cnpjNumber
+      x-regulatory-required:
+        - brand
+        - name
+        - cnpjNumber
       properties:
         brand:
           type: string
@@ -81,7 +85,7 @@ components:
             - Ambos obrigatórios. 
           minLength: 0
           maxLength: 1024
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$|^(NA)$'
+          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
     CnpjNumber:
@@ -89,11 +93,11 @@ components:
       description: 'O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
       minLength: 14
       maxLength: 14
-      pattern: '^(\d{14})$|^(NA)$'
+      pattern: '^(\d{14})$'
       example: '13456789000112'
     CurrencyCode:
       type: string
-      pattern: '^([A-Z]{3})$|^(NA)$'
+      pattern: '^([A-Z]{3})$'
       minLength: 3
       maxLength: 3
       description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
@@ -103,13 +107,16 @@ components:
       required:
         - amount
         - currency
+      x-regulatory-required:
+        - amount
+        - currency
       description: 'Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
       properties:
         amount:
           type: string
           minLength: 1
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -119,13 +126,16 @@ components:
       required:
         - amount
         - currency
+      x-regulatory-required:
+        - amount
+        - currency
       description: 'Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
       properties:
         amount:
           type: string
           minLength: 1
           maxLength: 21
-          pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+          pattern: '^(\d{1,16}\.\d{2,4})$'
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
@@ -134,7 +144,10 @@ components:
       type: object
       required:
         - amount
+      x-regulatory-required:
+        - amount
         - unit
+        - details
       properties:
         amount:
           type: integer
@@ -157,13 +170,16 @@ components:
       required:
         - susepProcessNumber
         - detail
+      x-regulatory-required:
+        - susepProcessNumber
+        - detail
       properties:
         susepProcessNumber:
           type: string
           description: 'Sequência numérica utilizada para consulta dos processos eletrônicos na SUSEP, com caracteres especiais, conforme campo de consulta no site da SUSEP (XXXXX.XXXXXX/XXXX-XX)<br>Observação&#58; Mascaras da SUSEP – Serão permitidos todas as máscaras de Produtos. Limitar pelos códigos das Máscaras.'
           minLength: 2
           maxLength: 20
-          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$|^(NA)$'
+          pattern: '^(\d{5}\.\d{6}\/\d{4}-\d{2}$|^\d{2}\.\d{6}\/\d{2}-\d{2}$|^\d{3}-\d{5}\/\d{2}$|^\d{5}\.\d{6}\/\d{2}-\d{2})$'
           example: 15414.622222/2222-22
         detail:
           type: string
@@ -175,7 +191,24 @@ components:
       additionalProperties: false
     EnumProductModality:
       type: string
-      description: <ol><li>Funeral</li><li>Prestamista (exceto Habitacional e Rural)</li><li>Viagem</li><li>Educacional</li><li>Dotal (Misto e Puro)</li><li>Acidentes Pessoais</li><li>Vida</li><li>Perda do Certificado de Habilitação de Voo – PCHV</li><li>Doenças Graves ou Doença Terminal</li><li>Desemprego/ Perda de Renda</li><li>Eventos Aleatórios</li><li>Pecúlio</li><li>Pensão prazo certo</li><li>Pensão menores 21 anos</li><li>Pensão menores 24 anos</li><li>Pensão cônjuge vitalícia</li><li>Pensão cônjuge temporária</li><li>NA</li></ol>
+      description: |
+        - Funeral
+        - Prestamista (exceto Habitacional e Rural)
+        - Viagem
+        - Educacional
+        - Dotal (Misto e Puro)
+        - Acidentes Pessoais
+        - Vida
+        - Perda do Certificado de Habilitação de Voo – PCHV
+        - Doenças Graves ou Doença Terminal
+        - Desemprego/ Perda de Renda
+        - Eventos Aleatórios
+        - Pecúlio
+        - Pensão prazo certo
+        - Pensão menores 21 anos
+        - Pensão menores 24 anos
+        - Pensão cônjuge vitalícia
+        - Pensão cônjuge temporária
       enum:
         - FUNERAL
         - PRESTAMISTA
@@ -194,19 +227,24 @@ components:
         - PENSAO_MENORES_24
         - PENSAO_CONJUGE_VITALICIA
         - PENSAO_CONJUGE_TEMPORARIA
-        - NA
       example: FUNERAL
     EnumGracePeriodUnit:
       type: string
-      description: Informar o critério de carência para a cobertura&#58;<br><ol><li>Dias</li><li>Meses</li><li>Não se aplica</li><li>NA</li></ol>
+      description: |
+        Informar o critério de carência para a cobertura
+          - Dias 
+          - Meses
+          - Não se aplica
       enum:
         - DIAS
         - MESES
         - NAO_APLICA
-        - NA
       example: MESES
     InsurancePensionEnumPmbacRemuneration:
       type: object
+      x-regulatory-required:
+        - interestRate
+        - updateIndexes
       properties:
         interestRate:
           type: string
@@ -223,6 +261,9 @@ components:
     AgeAdjustment:
       type: object
       required:
+        - criterias
+        - frequency
+      x-regulatory-required:
         - criterias
         - frequency
       properties:
@@ -260,13 +301,11 @@ components:
           1. Repartição simples
           2. Repartição Capitais Cobertura
           3. Capitalização
-          4. NA
       example: REPARTICAO_SIMPLES
       enum:
         - REPARTICAO_SIMPLES
         - REPARTICAO_CAPITAIS
         - CAPITALIZACAO
-        - NA
     EnumInsurancePersonalBenefitRecalculationUpdateIndex:
       type: string
       description: |
@@ -275,7 +314,6 @@ components:
         - IPCA
         - IGP_M
         - INPC
-        - NA
       example: IPCA
     EnumPersonalUpdateIndex:
       type: string
@@ -284,12 +322,10 @@ components:
           1. IPCA (IBGE)
           2. IGP-M (FGV)
           3. INPC (IBGE)
-          4. NA
       enum:
         - IPCA
         - IGP_M
         - INPC
-        - NA
       example: IPCA
     OpenDataMeta:
       type: object
@@ -340,8 +376,9 @@ components:
       additionalProperties: false
     PersonalCoverageItem:
       type: object
-      required:
+      x-regulatory-required:
         - type
+        - typeAdditionalInfos
       properties:
         type:
           $ref: '#/components/schemas/EnumInsurancePersonalCoverageTypePersonal'
@@ -366,7 +403,6 @@ components:
       type: object
       required:
         - indemnityPaymentMethods
-        - indemnityPaymentFrequencies
         - minValue
         - maxValue
         - indemnifiablePeriods
@@ -374,7 +410,19 @@ components:
         - gracePeriod
         - deductibleDays
         - deductible
+      x-regulatory-required:
+        - indemnityPaymentMethods
+        - indemnityPaymentFrequencies
+        - indemnifiablePeriods
+        - maximumQtyIndemnifiableInstallments
+        - differentiatedGracePeriod
+        - deductibleDays
+        - differentiatedDeductibleDays
+        - deductible
+        - differentiatedDeductible
         - excludedRisks
+        - excludedRisksURL
+        - allowApartPurchase
       properties:
         indemnityPaymentMethods:
           description: Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.
@@ -438,13 +486,16 @@ components:
           required:
             - amount
             - currency
+          x-regulatory-required:
+            - amount
+            - currency
           description: Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.
           properties:
             amount:
               type: string
               minLength: 1
               maxLength: 21
-              pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+              pattern: '^(\d{1,16}\.\d{2,4})$'
               example: '0.01'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
@@ -454,13 +505,16 @@ components:
           required:
             - amount
             - currency
+          x-regulatory-required:
+            - amount
+            - currency
           description: 'Detalhamento da franquia em reais diferentes para cada cobertura que exista alguma especificidade.<br>Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.'
           properties:
             amount:
               type: string
               minLength: 1
               maxLength: 21
-              pattern: '^(\d{1,16}\.\d{2,4})$|^(NA)$'
+              pattern: '^(\d{1,16}\.\d{2,4})$'
               example: '0.01'
             currency:
               $ref: '#/components/schemas/CurrencyCode'
@@ -489,7 +543,6 @@ components:
       enum:
         - INDENIZACAO_UNICA
         - DIARIA_OU_PARCELA
-        - NA
       example: INDENIZACAO_UNICA
     EnumExcludedRisks:
       type: string
@@ -505,7 +558,6 @@ components:
         - SUICIDIO
         - ATO_ILICITO_DOLOSO_PRATICADO_CONTROLADOR
         - OUTROS
-        - NA
       example: ATO_RECONHECIMENTO_PERIGOSO
     EnumPersonalInsuranceOtherGuaranteedValues:
       type: string
@@ -513,12 +565,10 @@ components:
         1. Saldamento
         2. Benefício Prolongado
         3. Não se aplica
-        4. NA
       enum:
         - SALDAMENTO
         - BENEFICIO_PROLONGADO
         - NAO_APLICA
-        - NA
       example: SALDAMENTO
     EnumPersonalInsuranceIndemnityPaymentMethod:
       type: string
@@ -526,11 +576,9 @@ components:
         Modalidade de pagamento da indenização, a considerar os domínios abaixo:
           1. Único
           2. Sob a forma de renda
-          3. NA
       enum:
         - UNICO
         - SOB_FORMA_RENDA
-        - NA
       example: UNICO
     EnumPersonalInsuranceIndemnityPaymentIncome:
       type: string
@@ -545,7 +593,6 @@ components:
           7. Vitalícia reversível
           8. Vitalícia com o mínimo garantido
           9. Vitalícia reversível como mínimo garantido
-          10. NA
       enum:
         - CERTA
         - TEMPORARIA
@@ -556,13 +603,13 @@ components:
         - VITALICIA_REVERSIVEL
         - VITALICIA_MINIMO_GARANTIDO
         - VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
-        - NA
       example: CERTA
     PersonalInsurancePremiumPayment:
       type: object
-      required:
+      x-regulatory-required:
         - paymentMethods
         - frequencies
+        - contributionTax
       properties:
         paymentMethods:
           type: array
@@ -593,7 +640,6 @@ components:
           6. Semestral
           7. Fracionado
           8. Outra
-          9. NA
       enum:
         - DIARIA
         - MENSAL
@@ -603,11 +649,12 @@ components:
         - SEMESTRAL
         - FRACIONADO
         - OUTRA
-        - NA
       example: DIARIA
     PersonalInsuranceMinimumRequirement:
       type: object
       required:
+        - contractingMinRequirement
+      x-regulatory-required:
         - contractType
         - contractingMinRequirement
       properties:
@@ -623,6 +670,10 @@ components:
       additionalProperties: false
     PersonalInsuranceGracePeriod:
       type: object
+      x-regulatory-required:
+        - amount
+        - unit
+        - details
       properties:
         amount:
           type: integer
@@ -646,6 +697,8 @@ components:
       type: object
       required:
         - gracePeriod
+      x-regulatory-required:
+        - differenciatedPercentage
       properties:
         table:
           type: array
@@ -668,6 +721,10 @@ components:
     PersonalInsuranceReclaimTableItem:
       type: object
       required:
+        - initialMonthRange
+        - finalMonthRange
+        - percentage
+      x-regulatory-required:
         - initialMonthRange
         - finalMonthRange
         - percentage
@@ -743,7 +800,6 @@ components:
         - DOENCA_GRAVE
         - TRANSLADO_MEDICO
         - OUTROS
-        - NA
       example: INVALIDEZ_PERMANENTE_TOTAL_PARCIAL
     EnumPremiumPaymentMethodTypePersonal:
       type: string
@@ -758,7 +814,6 @@ components:
           7. Consignação em Folha de Pagamento
           8. Pontos de Programa de Benefício
           9. Regra de Parceiro
-          10. NA
       enum:
         - CARTAO_CREDITO
         - CARTAO_DEBITO
@@ -769,7 +824,6 @@ components:
         - CONSIGNACAO_FOLHA_PAGAMENTO
         - PONTOS_PROGRAMA_BENEFICIO
         - REGRA_PARCEIRO
-        - NA
       example: CARTAO_CREDITO
     EnumContractTypePersonal:
       type: string
@@ -777,16 +831,19 @@ components:
         A considerar os domínios abaixo:
           1. Coletivo;
           2. Individual
-          3. NA
       enum:
         - COLETIVO
         - INDIVIDUAL
-        - NA
       example: COLETIVO
     PersonalInsuranceSociety:
       type: object
       description: Conjunto de informações relativas à seguradora do produto de open insurance
       required:
+        - name
+        - cnpjNumber
+        - brand
+        - products 
+      x-regulatory-required:
         - name
         - cnpjNumber
         - brand
@@ -819,13 +876,25 @@ components:
       required:
         - name
         - code
-        - modality
         - coverages
         - additionals
         - termsAndConditions
         - terms
+      x-regulatory-required:
+        - name
+        - code
+        - category
+        - modality
+        - assistanceTypes
+        - assistanceTypesAdditionalInfos
+        - additionals
+        - globalCapital
+        - terms
         - financialRegimes
+        - otherGuaranteedValues
+        - allowPortability
         - indemnityPaymentMethods
+        - indemnityPaymentIncomes
         - targetAudience
       properties:
         name:
@@ -844,11 +913,13 @@ components:
           example: '0001'
         category:
           type: string
-          description: Indicar a categoria do Produto&#58;<br><ol><li>Tradicional</li><li>Microsseguro</li><li>NA</li></ol>
+          description: |
+            Indicar a categoria do Produto
+              - Tradicional
+              - Microsseguro
           enum:
             - TRADICIONAL
             - MICROSSEGURO
-            - NA
           example: TRADICIONAL
         modality:
           $ref: '#/components/schemas/EnumProductModality'
@@ -1016,16 +1087,16 @@ components:
               1. Pessoa Natural
               2. Pessoa Jurídica
               3. Ambas (Pessoa Natural e Jurídica)
-              4. NA
           enum:
             - PESSOA_NATURAL
             - PESSOA_JURIDICA
             - PESSOA_NATURAL_JURIDICA
-            - NA
           example: PESSOA_NATURAL
     PersonalInsurancePortabilityGraceTime:
       type: object
       required:
+        - amount
+      x-regulatory-required:
         - amount
         - unit
       properties:
@@ -1043,6 +1114,9 @@ components:
       type: object
       required:
         - criterias
+      x-regulatory-required:
+        - criterias
+        - updateIndexes
       properties:
         criterias:
           type: array
