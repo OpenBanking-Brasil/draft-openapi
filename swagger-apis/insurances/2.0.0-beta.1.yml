@@ -228,6 +228,8 @@ components:
       properties:
         criterias:
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
             description: |
@@ -316,6 +318,8 @@ components:
       properties:
         data:
           type: array
+          minItems: 1
+          maxItems: 2147483647
           items:
             $ref: '#/components/schemas/PersonalInsuranceData'
         links:
@@ -343,6 +347,8 @@ components:
           $ref: '#/components/schemas/EnumInsurancePersonalCoverageTypePersonal'
         typeAdditionalInfos:
           type: array
+          minItems: 1
+          maxItems: 2147483647
           description: |
             Lista de textos para complementar informação relativa ao campo type, quando for selecionada a opção 'OUTROS'.
             Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a opção 'OUTROS'
@@ -373,6 +379,8 @@ components:
         indemnityPaymentMethods:
           description: Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
             enum:
@@ -392,6 +400,8 @@ components:
         indemnifiablePeriods:
           description: Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
             maxLength: 50
@@ -639,9 +649,10 @@ components:
       properties:
         table:
           type: array
+          minItems: 1
+          maxItems: 2147483647
           items:
             $ref: '#/components/schemas/PersonalInsuranceReclaimTableItem'
-          minItems: 1
         gracePeriod:
           $ref: '#/components/schemas/GracePeriod'
         differenciatedPercentage:
@@ -843,11 +854,14 @@ components:
           $ref: '#/components/schemas/EnumProductModality'
         coverages:
           type: array
+          minItems: 1
+          maxItems: 2147483647
           items:
             $ref: '#/components/schemas/PersonalCoverageItem'
-          minItems: 1
         assistanceTypes:
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
             description: 'Lista padronizada de tipo de assistências ofertadas vinculadas ao produto. Por exemplo, Funeral, Bicicleta, Assistência PET – Tabela padrão a ser consolidada com retorno das empresas com a relação de assistências, permitindo um campo ‘Outros’ para assistências não contempladas na tabela padronizada.'
@@ -913,12 +927,16 @@ components:
         assistanceTypesAdditionalInfos:
           description: Lista a ser preenchido pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência'
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
           example:
             - Assistance additional info.
         additionals:
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
             enum:
@@ -931,9 +949,10 @@ components:
             example: SORTEIO
         termsAndConditions:
           type: array
+          minItems: 1
+          maxItems: 2147483647
           items:
             $ref: '#/components/schemas/TermsAndConditionsItem'
-          minItems: 1
         globalCapital:
           type: boolean
           description: |
@@ -943,6 +962,8 @@ components:
           example: true
         terms:
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
             description: Define o prazo do plano contratado<br><ol><li>Vitalícia</li><li>Temporária - prazo fixo</li><li>Temporária – intermitente</li><li>NA</li></ol>
@@ -1025,6 +1046,8 @@ components:
       properties:
         criterias:
           type: array
+          minItems: 0
+          maxItems: 2147483647
           items:
             type: string
             enum:
