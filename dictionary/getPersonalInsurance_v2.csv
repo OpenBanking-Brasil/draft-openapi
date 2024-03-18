@@ -122,7 +122,8 @@ DIARIA_OU_PARCELA";0;N;"";Não permitido;array;INDENIZACAO_UNICA;
 /data/society/products/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/society/products/coverages/attributes/maxValue/amount;amount;;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;1
 /data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
-/data/society/products/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.;Lista;50;Obrigatório;Obrigatório;;;0;2147483647;"";Não permitido;array;ATE_FIM_CICLO_DETERMINADO;
+/data/society/products/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.;Lista;;Obrigatório;Obrigatório;;"QUANTIDADE_DETERMINADA_DE_PARCELAS 
+ATE_FIM_CICLO_DETERMINADO";0;2147483647;"";Não permitido;array;ATE_FIM_CICLO_DETERMINADO;
 /data/society/products/coverages/attributes/maximumQtyIndemnifiableInstallments;maximumQtyIndemnifiableInstallments;Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/society/products/coverages/attributes/gracePeriod;gracePeriod;;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
 /data/society/products/coverages/attributes/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;500;Opcional;Obrigatório;;;0;1;"";Não permitido;integer;90;1
@@ -235,9 +236,13 @@ TEMPORARIA_INTERMITENTE
 NA";0;2147483647;"";Não permitido;array;VITALICIA;
 /data/society/products/pmbacRemuneration;pmbacRemuneration;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/society/products/pmbacRemuneration/interestRate;interestRate;Taxa de juros para capitalização da PMBaC;Texto;9;Opcional;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;0;1;"";Não permitido;string;0.019800;8
-/data/society/products/pmbacRemuneration/updateIndexes;updateIndexes;;Lista;;Opcional;Obrigatório;;"IPCA 
-IGP_M 
-INPC";0;N;"";Não permitido;array;IPCA;
+/data/society/products/pmbacRemuneration/updateIndexes;updateIndexes;;Lista;;Opcional;Obrigatório;;"IPC-FGV 
+IGP-DI-FGV 
+IPCA-IBGE 
+IGPM-FGV 
+INPC-IBGE 
+TR 
+OUTROS";0;N;"";Não permitido;array;IPCA;
 /data/society/products/benefitRecalculation;benefitRecalculation;;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/society/products/benefitRecalculation/criterias;criterias;;Lista;;Obrigatório;Obrigatório;;"INDICE 
 VINCULADO_SALDO_DEVEDOR 
@@ -307,7 +312,9 @@ BOLETO_BANCARIO
 PIX 
 CONSIGNACAO_FOLHA_PAGAMENTO 
 PONTOS_PROGRAMA_BENEFICIO 
-REGRA_PARCEIRO";1;N;"";Não permitido;array;CARTAO_CREDITO;
+REGRA_PARCEIRO 
+TED_DOC 
+OUTROS";1;N;"";Não permitido;array;CARTAO_CREDITO;
 /data/society/products/premiumPayment/frequencies;frequencies;;Lista;;Opcional;Obrigatório;;"DIARIA 
 MENSAL 
 UNICA 
