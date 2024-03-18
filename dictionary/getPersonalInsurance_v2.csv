@@ -315,6 +315,11 @@ PONTOS_PROGRAMA_BENEFICIO
 REGRA_PARCEIRO 
 TED_DOC 
 OUTROS";1;N;"";Não permitido;array;CARTAO_CREDITO;
+/data/society/products/premiumPayment/paymentMethodAdittionalInfo;paymentMethodAdittionalInfo;"Campo livre para preenchimento das informações adicionais referente ao ""paymentMethod"". 
+
+[Restrição] Obrigatório quando ""paymentMethod"" for igual 'OUTROS'.
+";Texto;144;Condicional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório quando ""paymentMethod"" for igual 'OUTROS'.
+";Não permitido;string;Informações Adicionais.;
 /data/society/products/premiumPayment/frequencies;frequencies;;Lista;;Opcional;Obrigatório;;"DIARIA 
 MENSAL 
 UNICA 
