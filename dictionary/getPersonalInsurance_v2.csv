@@ -113,7 +113,7 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/society/products/coverages/attributes/indemnityPaymentMethods;indemnityPaymentMethods;Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.;Lista;;Obrigatório;Obrigatório;;"PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO 
 REEMBOLSO_DESPESAS 
 PRESTACAO_SERVICOS 
-NA";0;2147483647;"";Não permitido;array;;
+NA";0;2147483647;"";Não permitido;array;PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO.;
 /data/society/products/coverages/attributes/indemnityPaymentFrequencies;indemnityPaymentFrequencies;Listagem de tipos de frequência de pagamento de indenização para cada combinação de modalidade/cobertura do produto.;Lista;;Opcional;Obrigatório;;"INDENIZACAO_UNICA 
 DIARIA_OU_PARCELA";0;N;"";Não permitido;array;INDENIZACAO_UNICA;
 /data/society/products/coverages/attributes/minValue;minValue;Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
@@ -158,7 +158,7 @@ OUTROS";0;N;"";Não permitido;array;ATO_RECONHECIMENTO_PERIGOSO;
 /data/society/products/coverages/attributes/allowApartPurchase;allowApartPurchase;"Indicar se a cobertura pode ser contratada isoladamente ou não:
   1. true
   2. false
-";Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;;
+";Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;true;
 /data/society/products/assistanceTypes;assistanceTypes;;Lista;;Opcional;Obrigatório;;"ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA 
 ARQUITETO_VIRTUAL 
 ASSESSORIA_FINANCEIRA 
@@ -282,7 +282,7 @@ BENEFICIO_PROLONGADO
 NAO_APLICA";0;N;"";Não permitido;array;SALDAMENTO;
 /data/society/products/allowPortability;allowPortability;"1. true
 2. false
-";Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;;
+";Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;true;
 /data/society/products/portabilityGraceTime;portabilityGraceTime;Período de carência (Somente informado se Regime Financeiro for igual a Capitalização).;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
 /data/society/products/portabilityGraceTime/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;90;
 /data/society/products/portabilityGraceTime/unit;unit;"Informar o critério de carência para a cobertura
