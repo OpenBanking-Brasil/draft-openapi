@@ -626,6 +626,15 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/EnumPremiumPaymentMethodTypePersonal'
+        paymentMethodAdittionalInfo:
+          type: string
+          description: |
+            Campo livre para preenchimento das informações adicionais referente ao "paymentMethod". 
+
+            [Restrição] Obrigatório quando "paymentMethod" for igual 'OUTROS'.
+          maxLength: 144
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          example: Informações Adicionais.
         frequencies:
           type: array
           minItems: 1
