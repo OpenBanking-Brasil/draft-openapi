@@ -319,13 +319,21 @@ components:
       type: string
       description: |
         Índice utilizado na atualização da PMBaC:
-          1. IPCA (IBGE)
-          2. IGP-M (FGV)
-          3. INPC (IBGE)
+          1. IPC-FGV
+          2. IGP-DI-FGV
+          3. IPCA-IBGE
+          4. IGPM-FGV
+          5. INPC-IBGE
+          6. TR
+          7. OUTROS
       enum:
-        - IPCA
-        - IGP_M
-        - INPC
+        - IPC-FGV
+        - IGP-DI-FGV
+        - IPCA-IBGE
+        - IGPM-FGV
+        - INPC-IBGE
+        - TR
+        - OUTROS
       example: IPCA
     OpenDataMeta:
       type: object
@@ -452,7 +460,9 @@ components:
           maxItems: 2147483647
           items:
             type: string
-            maxLength: 50
+            enum:
+              - QUANTIDADE_DETERMINADA_DE_PARCELAS
+              - ATE_FIM_CICLO_DETERMINADO
             example: ATE_FIM_CICLO_DETERMINADO
         maximumQtyIndemnifiableInstallments:
           type: integer
@@ -814,6 +824,8 @@ components:
           7. Consignação em Folha de Pagamento
           8. Pontos de Programa de Benefício
           9. Regra de Parceiro
+          10. TED e DOC
+          11. Outros
       enum:
         - CARTAO_CREDITO
         - CARTAO_DEBITO
@@ -824,6 +836,8 @@ components:
         - CONSIGNACAO_FOLHA_PAGAMENTO
         - PONTOS_PROGRAMA_BENEFICIO
         - REGRA_PARCEIRO
+        - TED_DOC
+        - OUTROS
       example: CARTAO_CREDITO
     EnumContractTypePersonal:
       type: string
