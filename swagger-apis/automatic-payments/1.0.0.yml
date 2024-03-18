@@ -96,7 +96,7 @@ info:
           &emsp;4.2.2.1 Saldo do usuário: Valida se a conta selecionada possui saldo suficiente para realizar o pagamento (SALDO_INSUFICIENTE);  
           &emsp;4.2.2.2 Limites da transação: Valida se valor (ou quantidade de transações) ultrapassa faixa de limite parametrizada na detentora na conta do cliente pagador (VALOR_ACIMA_LIMITE);  
           &emsp;4.2.2.3 Valor informado: Valida se valor enviado é válido para o consentimento associado ao pagamento (VALOR_INVALIDO);  
-          &emsp;4.2.2.4 Status Consentimento: Valida se status de consentimento é diferente de “AUTHORISED” (CONSENTIMENTO_INVALIDO);  
+          &emsp;4.2.2.4 Status Consentimento: Valida se o consentimento encontra-se em um dos estados finais “CONSUMED”, “REVOKED” ou “REJECTED" (CONSENTIMENTO_INVALIDO);   
           &emsp;4.2.2.5 Demais validações não explicitamente informadas (ex. suspeita de fraude): (NAO_INFORMADO);  
           &emsp;4.2.2.6 Divergência entre pagamento e consentimento: Valida se dados do pagamento são diferentes dos dados do consentimento (PAGAMENTO_DIVERGENTE_CONSENTIMENTO)  
           &emsp;4.2.2.7 Recusado pela detentora: Valida se pagamento foi recusado pela detentora (PAGAMENTO_RECUSADO_DETENTORA), com a descrição do motivo de recusa;  
@@ -104,7 +104,8 @@ info:
           &emsp;4.2.2.9 Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI) (PAGAMENTO_RECUSADO_SPI);  
           &emsp;4.2.2.10 Idempotência: Valida se há divergência entre chave de idempotência e informações enviadas (ERRO_IDEMPOTENCIA);  
           &emsp;4.2.2.11 Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
-          &emsp;4.2.2.12 Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO).  
+          &emsp;4.2.2.12 Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);   
+          &emsp;4.2.2.13 Consentimento pendente de autorização: Consentimento em “PARTIALLY_ACCEPTED” aguardando aprovação de múltiplas alçadas (CONSENTIMENTO_PENDENTE_AUTORIZACAO).
 
     5. **Validações na consulta do pagamento (_GET /pix/recurring-payments/{recurringPaymentId}_ e _GET /pix/recurring-payments_)**  
       5.1 **Casos de erro relacionados às permissões de segurança para acesso à API (ex. certificado, access_token)**  
@@ -124,7 +125,7 @@ info:
         &ensp;6.1.9 - Erro de infraestrutura na consulta ao ICP: Ocorreu uma falha de infraestrutura durante a consulta ao ICP (FALHA_INFRAESTRUTURA_ICP);  
         &ensp;6.1.10 - Erro de infraestrutura na comunicação com o PSP do recebedor: Ocorreu uma falha de infraestrutura durante a comunicação com o PSP do recebedor (FALHA_INFRAESTRUTURA_PSP_RECEBEDOR);  
         &ensp;6.1.11 - Erro de infraestrutura interno na detentora: Ocorreu uma falha de infraestrutura interna na detentora durante o processamento do pagamento (FALHA_INFRAESTRUTURA_DETENTORA);  
-        &ensp;6.1.12 - Status Consentimento: Valida se status de consentimento é diferente de “AUTHORISED” (CONSENTIMENTO_INVALIDO);  
+        &ensp;6.1.12 - Status Consentimento: Valida se o consentimento encontra-se em um dos estados finais “CONSUMED”, “REVOKED” ou “REJECTED" (CONSENTIMENTO_INVALIDO);  
         &ensp;6.1.13 - Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
         &ensp;6.1.14 - Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO).  
         &ensp;6.1.15 - Titularidade Inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE)  
@@ -139,9 +140,12 @@ info:
         - OwnerStatistics.Spi.FraudMarkers.OtherFrauds.d90
         - OwnerStatistics.Spi.FraudMarkers.UnknownFrauds.d90
 
-    ## Limites transacionais para Transferências Inteligentes
+    ## Limites transacionais e crédito pré-aprovado para Transferências inteligentes
 
-    - As transferências inteligentes são categorizadas como um Pix Imediato entre diferentes contas de mesma titularidade. Sendo assim, a tratativa a ser dada aos limites definidos no consentimento desse produto devem ser as mesmas que a instituição aplica para os limites do arranjo Pix.
+    - Existem três tipos de limites para o produto Transferências inteligentes
+      - Crédito pré-aprovado (cheque especial): Caso o cliente possua o produto, poderá utilizá-lo durante as transações associadas ao produto Transferências inteligentes.
+      - Limite do Pix atrelado à conta do cliente: Limite de transações definido individualmente para cada conta do cliente, conforme regras de dias e horários do arranjo Pix.
+      - Limites do consentimento: Configurado ou não pelo cliente em momento de criação do consentimento, podendo ser dependente ou não de um período.
     - O cálculo do limite periódico disponível ao cliente deve seguir da seguinte maneira, considerando os cenários e
     exemplos:
       - Limite Diário (Ex.: R$ 100,00): Este limite controla as transferências realizadas dentro de um único dia, considerando o período das 00:00h até as 23:59h. Por exemplo, se um usuário transferir R$ 50,00 às 10:00h, ele ainda terá R$ 50,00 disponíveis para transferências até a meia-noite do mesmo dia;
@@ -683,6 +687,7 @@ components:
                   - LIMITE_PERIODO_VALOR_EXCEDIDO
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
                   - CONSENTIMENTO_INVALIDO
+                  - CONSENTIMENTO_PENDENTE_AUTORIZACAO
                   - PARAMETRO_NAO_INFORMADO
                   - PARAMETRO_INVALIDO
                   - NAO_INFORMADO
@@ -699,7 +704,8 @@ components:
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
-                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final).
+                  - CONSENTIMENTO_PENDENTE_AUTORIZACAO: Consentimento pendente autorização de múltiplas alçadas (status “PARTIALLY_ACCEPTED”).
                   - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
                   - PARAMETRO_INVALIDO: Parâmetro inválido.
                   - NAO_INFORMADO: Não informada pela detentora de conta.
@@ -720,7 +726,8 @@ components:
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
-                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final).
+                  - CONSENTIMENTO_PENDENTE_AUTORIZACAO: Consentimento pendente autorização de múltiplas alçadas (status “PARTIALLY_ACCEPTED”).
                   - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
                   - PARAMETRO_INVALIDO: Parâmetro inválido.
                   - NAO_INFORMADO: Não informada pela detentora de conta.
@@ -741,7 +748,8 @@ components:
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
-                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (status não é "authorised" ou está expirado).
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final).
+                  - CONSENTIMENTO_PENDENTE_AUTORIZACAO: Consentimento pendente autorização de múltiplas alçadas (status “PARTIALLY_ACCEPTED”).
                   - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
                   - PARAMETRO_INVALIDO: Parâmetro inválido.
                   - NAO_INFORMADO: Não informada pela detentora de conta.
@@ -1995,7 +2003,7 @@ components:
             - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
             - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
             - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
-            - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado);
+            - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final);
             - FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI);
             - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP);
             - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
@@ -2027,7 +2035,7 @@ components:
             - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
             - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
             - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
-            - CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de "AUTHORISED" ou está expirado);
+            - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final);
             - FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI);
             - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP);
             - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
