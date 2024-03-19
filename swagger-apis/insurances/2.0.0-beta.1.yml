@@ -113,6 +113,7 @@ components:
       description: 'Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
       properties:
         amount:
+          description: Campo sem descrição na API em OPIN.
           type: string
           minLength: 1
           maxLength: 21
@@ -132,6 +133,7 @@ components:
       description: 'Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.'
       properties:
         amount:
+          description: Campo sem descrição na API em OPIN.
           type: string
           minLength: 1
           maxLength: 21
@@ -141,6 +143,7 @@ components:
           $ref: '#/components/schemas/CurrencyCode'
       additionalProperties: false
     GracePeriod:
+      description: Período de carência.
       type: object
       required:
         - amount
@@ -159,6 +162,7 @@ components:
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
         details:
+          description: Descrições adicionais do período de carência.
           type: string
           minLength: 1
           maxLength: 500
@@ -242,6 +246,7 @@ components:
       example: MESES
     InsurancePensionEnumPmbacRemuneration:
       type: object
+      description: Somente informado se Regime Financeiro for igual a Capitalização.
       x-regulatory-required:
         - interestRate
         - updateIndexes
@@ -259,6 +264,7 @@ components:
             $ref: '#/components/schemas/EnumPersonalUpdateIndex'
       additionalProperties: false
     AgeAdjustment:
+      description: Campo sem descrição na API em OPIN.
       type: object
       required:
         - criterias
@@ -361,6 +367,7 @@ components:
         - meta
       properties:
         data:
+          description: Conjunto de informações referente ao produto Seguros Pessoais.
           type: array
           minItems: 1
           maxItems: 2147483647
@@ -408,6 +415,7 @@ components:
           $ref: '#/components/schemas/PersonalCoverageItemAttributes'
       additionalProperties: false
     PersonalCoverageItemAttributes:
+      description: Informações referente as características da cobertura do seguro.
       type: object
       required:
         - indemnityPaymentMethods
@@ -502,6 +510,7 @@ components:
           description: Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.
           properties:
             amount:
+              description: Valor de dedução.
               type: string
               minLength: 1
               maxLength: 21
@@ -521,6 +530,7 @@ components:
           description: 'Detalhamento da franquia em reais diferentes para cada cobertura que exista alguma especificidade.<br>Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.'
           properties:
             amount:
+              description: Campo sem descrição na API em OPIN.
               type: string
               minLength: 1
               maxLength: 21
@@ -615,6 +625,7 @@ components:
         - VITALICIA_REVERSIVEL_MINIMO_GARANTIDO
       example: CERTA
     PersonalInsurancePremiumPayment:
+      description: Campo sem descrição na API em OPIN.
       type: object
       x-regulatory-required:
         - paymentMethods
@@ -670,6 +681,7 @@ components:
         - OUTRA
       example: DIARIA
     PersonalInsuranceMinimumRequirement:
+      description: Campo sem descrição na API em OPIN.
       type: object
       required:
         - contractingMinRequirement
@@ -688,6 +700,7 @@ components:
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     PersonalInsuranceGracePeriod:
+      description: Período de Carência.
       type: object
       x-regulatory-required:
         - amount
@@ -706,6 +719,7 @@ components:
         unit:
           $ref: '#/components/schemas/EnumGracePeriodUnit'
         details:
+          description: Descrições adicionais do período de carência.
           type: string
           minLength: 1
           maxLength: 500
@@ -713,6 +727,7 @@ components:
           example: Descrições adicionais do período de carência
       additionalProperties: false
     PersonalInsuranceReclaim:
+      description: Somente informado se Regime Financeiro for igual a Capitalização.
       type: object
       required:
         - gracePeriod
@@ -720,6 +735,7 @@ components:
         - differenciatedPercentage
       properties:
         table:
+          description: Listagem de percentuais de resgate da PMBaC para cada conjunto de prazo aplicável e para cada combinação de modalidade/cobertura estruturados em regime de capitalização.
           type: array
           minItems: 1
           maxItems: 2147483647
@@ -749,11 +765,13 @@ components:
         - percentage
       properties:
         initialMonthRange:
+          description: Mês inicial do range.
           type: integer
           minimum: 0
           maximum: 12
           example: 1
         finalMonthRange:
+          description: Mês final do range.
           type: integer
           minimum: 0
           maximum: 12
@@ -947,6 +965,7 @@ components:
         modality:
           $ref: '#/components/schemas/EnumProductModality'
         coverages:
+          description: Informações referente a cobertura do seguro.
           type: array
           minItems: 1
           maxItems: 2147483647
@@ -1029,6 +1048,7 @@ components:
             - Assistance additional info.
         additionals:
           type: array
+          description: Campo sem descrição na API em OPIN.
           minItems: 0
           maxItems: 2147483647
           items:
@@ -1043,6 +1063,7 @@ components:
             example: SORTEIO
         termsAndConditions:
           type: array
+          description: Termos e condições do produto Seguros.
           minItems: 1
           maxItems: 2147483647
           items:
@@ -1116,6 +1137,7 @@ components:
             - PESSOA_NATURAL_JURIDICA
           example: PESSOA_NATURAL
     PersonalInsurancePortabilityGraceTime:
+      description: Período de carência (Somente informado se Regime Financeiro for igual a Capitalização).
       type: object
       required:
         - amount
@@ -1135,6 +1157,7 @@ components:
       additionalProperties: false
     BenefitRecalculation:
       type: object
+      description: Campo sem descrição na API em OPIN.
       required:
         - criterias
       x-regulatory-required:
@@ -1143,6 +1166,7 @@ components:
       properties:
         criterias:
           type: array
+          description: Campo sem descrição na API em OPIN.
           minItems: 0
           maxItems: 2147483647
           items:
