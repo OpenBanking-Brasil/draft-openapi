@@ -483,7 +483,7 @@ components:
               example: USD
         operationOutstandingBalance:
           type: object
-          description: Valor do saldo da operação a liquidar em moeda estrangeira. Objeto de envio obrigatório para eventos criados (eventDate) a partir de 15/04/2024 nos casos de operações de câmbio com liquidação futura.
+          description: Valor do saldo da operação a liquidar em moeda estrangeira. Objeto de envio obrigatório nos casos de operações de câmbio com liquidação futura.
           required:
             - amount
             - currency
@@ -632,7 +632,7 @@ components:
               example: USD
         operationOutstandingBalance:
           type: object
-          description: Valor do saldo da operação, após evento, a liquidar em moeda estrangeira. Objeto de envio obrigatório nos casos de operações de câmbio com liquidação futura.
+          description: Valor do saldo da operação a liquidar em moeda estrangeira. Objeto de envio obrigatório para eventos criados (eventDate) a partir de 15/04/2024 nos casos de operações de câmbio com liquidação futura.
           required:
             - amount
             - currency
