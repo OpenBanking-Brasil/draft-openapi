@@ -271,15 +271,12 @@ CAPITALIZACAO";0;N;"";Não permitido;array;REPARTICAO_SIMPLES;
 /data/society/products/reclaim/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura
   - Dias 
   - Meses
-  - Não se aplica
 ";Texto;;Opcional;Obrigatório;;"DIAS 
-MESES 
-NAO_APLICA";0;1;"";Não permitido;string;MESES;
-/data/society/products/reclaim/gracePeriod/details;details;Descrições adicionais do período de carência.;Texto;500;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Descrições adicionais do período de carência;1
+MESES";0;1;"";Não permitido;string;;
+/data/society/products/reclaim/details;details;Descrições adicionais do período de carência.;Texto;500;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Descrições adicionais do período de carência;1
 /data/society/products/reclaim/differenciatedPercentage;differenciatedPercentage;Campo aberto (possibilidade de incluir URL);Texto;1024;Opcional;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;https://openinsurance.com.br/aaa Obs.: Exceção de cobertura ou critério definido acima será descrito aqui na URL Exemplo: Cobertura X: a partir de 25 meses = 100%;1
 /data/society/products/otherGuaranteedValues;otherGuaranteedValues;;Lista;;Opcional;Obrigatório;;"SALDAMENTO 
-BENEFICIO_PROLONGADO 
-NAO_APLICA";0;N;"";Não permitido;array;SALDAMENTO;
+BENEFICIO_PROLONGADO";0;N;"";Não permitido;array;SALDAMENTO;
 /data/society/products/allowPortability;allowPortability;"1. true
 2. false
 ";Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;true;
@@ -288,10 +285,8 @@ NAO_APLICA";0;N;"";Não permitido;array;SALDAMENTO;
 /data/society/products/portabilityGraceTime/unit;unit;"Informar o critério de carência para a cobertura
   - Dias 
   - Meses
-  - Não se aplica
 ";Texto;;Opcional;Obrigatório;;"DIAS 
-MESES 
-NAO_APLICA";0;1;"";Não permitido;string;MESES;
+MESES";0;1;"";Não permitido;string;;
 /data/society/products/indemnityPaymentMethods;indemnityPaymentMethods;;Lista;;Opcional;Obrigatório;;"UNICO 
 SOB_FORMA_RENDA";0;N;"";Não permitido;array;UNICO;
 /data/society/products/indemnityPaymentIncomes;indemnityPaymentIncomes;;Lista;;Opcional;Obrigatório;;"CERTA 
