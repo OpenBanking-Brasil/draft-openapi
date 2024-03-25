@@ -253,7 +253,7 @@ components:
       properties:
         interestRate:
           type: string
-          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$'
           description: Taxa de juros para capitalização da PMBaC
           minLength: 8
           maxLength: 9
@@ -806,7 +806,7 @@ components:
           example: 12
         percentage:
           type: string
-          pattern: '^(\d{1}\.\d{6})$|^(-1.000000)$'
+          pattern: '^(\d{1}\.\d{6})$'
           minLength: 8
           maxLength: 9
           description: Percentual de faixa de resgate.
