@@ -47,11 +47,11 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 ";Lista;100;Opcional;Opcional;;;0;2147483647;"";Não permitido;array;;
 /data/society/products/coverages/attributes;attributes;Atributos da cobertura;Objeto;;Opcional;Obrigatório;;;0;1;"";Não permitido;object;;
 /data/society/products/coverages/attributes/minValue;minValue;Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/society/products/coverages/attributes/minValue/amount;amount;Valor mínimo/máximo de cobertura diária ou parcelada;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;
-/data/society/products/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
+/data/society/products/coverages/attributes/minValue/amount;amount;Valor mínimo/máximo de cobertura diária ou parcelada;Texto;21;Opcional;Obrigatório;^(\d{1,16}\.\d{2,4})$;;0;1;"";Não permitido;string;0.01;
+/data/society/products/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/society/products/coverages/attributes/maxValue/amount;amount;Valor mínimo/máximo de cobertura diária ou parcelada;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;
-/data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
+/data/society/products/coverages/attributes/maxValue/amount;amount;Valor mínimo/máximo de cobertura diária ou parcelada;Texto;21;Opcional;Obrigatório;^(\d{1,16}\.\d{2,4})$;;0;1;"";Não permitido;string;0.01;
+/data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/indemnifiablePeriod;indemnifiablePeriod;"Listagem do pagamento para cada benefício:
   1. Quantidade determinada de parcelas;
   2. Até o fim de ciclo determinado.
@@ -181,7 +181,7 @@ CAPITALIZACAO";0;1;"";Não permitido;string;REPARTICAO_SIMPLES;1
 /data/society/products/reclaim/table/finalMonthRange;finalMonthRange;Mês final do range;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;12;
 /data/society/products/reclaim/table/percentage;percentage;Percentual de faixa de resgate.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$|^(-1.000000)$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/reclaim/gracePeriod;gracePeriod;Período de carência;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/society/products/reclaim/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;90;
+/data/society/products/reclaim/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;Obrigatório;;;0;1;"";Não permitido;integer;90;
 /data/society/products/reclaim/gracePeriod/unit;unit;"Informar o critério de carência para resgate:
 1. Dias;
 2. Meses;
