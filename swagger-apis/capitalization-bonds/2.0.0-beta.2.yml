@@ -109,12 +109,14 @@ components:
           description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
           minLength: 1
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Organização
         name:
           type: string
           description: Nome do participante do Open Finance.
           minLength: 1
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Organização A1
         cnpjNumber:
           type: string
@@ -223,6 +225,7 @@ components:
           description: |
             Campo livre para preenchimento das informações adicionais referente ao requerimento mínimo. Pode-se incluir URL.
           maxLength: 1024
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://ACME.exemplo/capitalizacao/tradicional/pdf/condicoes_gerais'
         targetAudience:
           type: string
@@ -286,6 +289,7 @@ components:
           type: string
           description: Campo aberto para representar as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto, conforme Circular SUSEP 321/06. Pode-se incluir URL que apresenta esse termos e condições.
           maxLength: 1024
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     CapitalizationBondsProductQuota:
