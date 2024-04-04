@@ -259,6 +259,7 @@ components:
           minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL)
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     CnpjNumber:
@@ -900,12 +901,14 @@ components:
           description: 'Nome da marca reportada pelo participante do Open Finance. O conceito a que se refere a ''marca'' é em essência uma promessa da empresa em fornecer uma série específica de atributos, benefícios e serviços uniformes aos clientes.'
           minLength: 1
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Organização
         name:
           type: string
           description: Nome do participante do Open Finance.
           minLength: 1
           maxLength: 80
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Organização A1
         cnpjNumber:
           $ref: '#/components/schemas/CnpjNumber'
@@ -1147,6 +1150,7 @@ components:
           minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL).
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
         profitModality:
           $ref: '#/components/schemas/RiskPensionEnumProfitModality'
@@ -1191,6 +1195,7 @@ components:
           description: 'Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL)'
           minLength: 1
           maxLength: 1024
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     UpdateIndex:
@@ -1296,6 +1301,7 @@ components:
           description: Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).
           minLength: 1
           maxLength: 1024
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     RiskPensionReclaimTableItem:
