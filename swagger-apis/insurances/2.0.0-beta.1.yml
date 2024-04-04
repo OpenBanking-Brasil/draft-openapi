@@ -104,9 +104,6 @@ components:
       example: BRL
     InsurancePensionMinValue:
       type: object
-      required:
-        - amount
-        - currency
       x-regulatory-required:
         - amount
         - currency
@@ -124,9 +121,6 @@ components:
       additionalProperties: false
     InsurancePensionMaxValue:
       type: object
-      required:
-        - amount
-        - currency
       x-regulatory-required:
         - amount
         - currency
@@ -141,33 +135,6 @@ components:
           example: '0.01'
         currency:
           $ref: '#/components/schemas/CurrencyCode'
-      additionalProperties: false
-    GracePeriod:
-      description: Período de carência.
-      type: object
-      required:
-        - amount
-      x-regulatory-required:
-        - amount
-        - unit
-        - details
-      properties:
-        amount:
-          type: integer
-          format: int64
-          description: Informar o prazo de carência
-          example: 90
-          minimum: 0
-          maximum: 2147483647
-        unit:
-          $ref: '#/components/schemas/EnumGracePeriodUnit'
-        details:
-          description: Descrições adicionais do período de carência.
-          type: string
-          minLength: 1
-          maxLength: 500
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-          example: Descrições adicionais do período de carência
       additionalProperties: false
     TermsAndConditionsItem:
       type: object
@@ -449,7 +416,7 @@ components:
               - REEMBOLSO_DESPESAS
               - PRESTACAO_SERVICOS
               - NA
-            example: PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO.
+            example: PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO
         indemnityPaymentFrequencies:
           description: Listagem de tipos de frequência de pagamento de indenização para cada combinação de modalidade/cobertura do produto.
           type: array
@@ -499,9 +466,6 @@ components:
           example: 15
         deductible:
           type: object
-          required:
-            - amount
-            - currency
           x-regulatory-required:
             - amount
             - currency
@@ -519,9 +483,6 @@ components:
           additionalProperties: false
         differentiatedDeductible:
           type: object
-          required:
-            - amount
-            - currency
           x-regulatory-required:
             - amount
             - currency
@@ -741,8 +702,6 @@ components:
         gracePeriod:
           description: Período de carência.
           type: object
-          required:
-            - amount
           x-regulatory-required:
             - amount
             - unit
@@ -1167,8 +1126,6 @@ components:
     PersonalInsurancePortabilityGraceTime:
       description: Período de carência (Somente informado se Regime Financeiro for igual a Capitalização).
       type: object
-      required:
-        - amount
       x-regulatory-required:
         - amount
         - unit
