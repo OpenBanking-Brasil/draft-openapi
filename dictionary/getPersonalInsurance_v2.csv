@@ -113,15 +113,15 @@ Restrição: Campo de preenchimento obrigatório se 'type' estiver preenchida a 
 /data/society/products/coverages/attributes/indemnityPaymentMethods;indemnityPaymentMethods;Listagem da forma de pagamento da indenização para cada combinação de modalidade/cobertura do produto.;Lista;;Obrigatório;Obrigatório;;"PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO 
 REEMBOLSO_DESPESAS 
 PRESTACAO_SERVICOS 
-NA";0;2147483647;"";Não permitido;array;PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO.;
+NA";0;2147483647;"";Não permitido;array;PAGAMENTO_CAPITAL_SEGURADO_VALOR_MONETARIO;
 /data/society/products/coverages/attributes/indemnityPaymentFrequencies;indemnityPaymentFrequencies;Listagem de tipos de frequência de pagamento de indenização para cada combinação de modalidade/cobertura do produto.;Lista;;Opcional;Obrigatório;;"INDENIZACAO_UNICA 
 DIARIA_OU_PARCELA";0;N;"";Não permitido;array;INDENIZACAO_UNICA;
 /data/society/products/coverages/attributes/minValue;minValue;Listagem do valor mínimo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/society/products/coverages/attributes/minValue/amount;amount;Campo sem descrição na API em OPIN.;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;1
-/data/society/products/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
+/data/society/products/coverages/attributes/minValue/amount;amount;Campo sem descrição na API em OPIN.;Texto;21;Opcional;Obrigatório;^(\d{1,16}\.\d{2,4})$;;0;1;"";Não permitido;string;0.01;1
+/data/society/products/coverages/attributes/minValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/maxValue;maxValue;Listagem do valor máximo de cobertura (Capital Segurado), diária ou parcela aceito pela sociedade para cada combinação de modalidade/cobertura do produto.<br>Conforme moeda.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/society/products/coverages/attributes/maxValue/amount;amount;Campo sem descrição na API em OPIN.;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;1
-/data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
+/data/society/products/coverages/attributes/maxValue/amount;amount;Campo sem descrição na API em OPIN.;Texto;21;Opcional;Obrigatório;^(\d{1,16}\.\d{2,4})$;;0;1;"";Não permitido;string;0.01;1
+/data/society/products/coverages/attributes/maxValue/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/indemnifiablePeriods;indemnifiablePeriods;Listagem de período indenizável para cada combinação de modalidade/cobertura do produto.;Lista;;Obrigatório;Obrigatório;;"QUANTIDADE_DETERMINADA_DE_PARCELAS 
 ATE_FIM_CICLO_DETERMINADO";0;2147483647;"";Não permitido;array;ATE_FIM_CICLO_DETERMINADO;
 /data/society/products/coverages/attributes/maximumQtyIndemnifiableInstallments;maximumQtyIndemnifiableInstallments;Caso o período indenizável seja relacionado a parcelas, listagem de número máximo de parcelas indenizáveis para cada combinação de modalidade/ cobertura do produto.;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;10;
@@ -139,11 +139,11 @@ NAO_APLICA";0;1;"";Não permitido;string;MESES;
 /data/society/products/coverages/attributes/deductibleDays;deductibleDays;Listagem de franquia em dias para cada combinação de modalidade/cobertura do produto.;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;10;
 /data/society/products/coverages/attributes/differentiatedDeductibleDays;differentiatedDeductibleDays;Detalhamento da franquia em dias diferentes para cada cobertura que exista alguma especificidade. Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.;Inteiro;;Opcional;Obrigatório;;;0;1;"";Não permitido;integer;15;
 /data/society/products/coverages/attributes/deductible;deductible;Listagem de franquia em reais para cada combinação de modalidade/cobertura do produto.;Objeto;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/society/products/coverages/attributes/deductible/amount;amount;Valor de dedução.;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;1
-/data/society/products/coverages/attributes/deductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
+/data/society/products/coverages/attributes/deductible/amount;amount;Valor de dedução.;Texto;21;Opcional;Obrigatório;^(\d{1,16}\.\d{2,4})$;;0;1;"";Não permitido;string;0.01;1
+/data/society/products/coverages/attributes/deductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/differentiatedDeductible;differentiatedDeductible;Detalhamento da franquia em reais diferentes para cada cobertura que exista alguma especificidade.<br>Caso a seguradora não tenha essa diferenciação, não retornará nada no campo.;Objeto;;Opcional;Obrigatório;;;0;1;"";Não permitido;object;;
-/data/society/products/coverages/attributes/differentiatedDeductible/amount;amount;Campo sem descrição na API em OPIN.;Texto;21;Obrigatório;Obrigatório;^(\d{1,16}\.\d{2,4})$;;1;1;"";Não permitido;string;0.01;1
-/data/society/products/coverages/attributes/differentiatedDeductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;3
+/data/society/products/coverages/attributes/differentiatedDeductible/amount;amount;Campo sem descrição na API em OPIN.;Texto;21;Opcional;Obrigatório;^(\d{1,16}\.\d{2,4})$;;0;1;"";Não permitido;string;0.01;1
+/data/society/products/coverages/attributes/differentiatedDeductible/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Opcional;Obrigatório;^([A-Z]{3})$;;0;1;"";Não permitido;string;BRL;3
 /data/society/products/coverages/attributes/excludedRisks;excludedRisks;;Lista;;Opcional;Obrigatório;;"ATO_RECONHECIMENTO_PERIGOSO 
 ATO_ILICITO_DOLOSO_PRATICADO_SEGURADO 
 OPERACOES_GUERRA 
@@ -217,7 +217,7 @@ VITIMA
 OUTROS 
 NA";0;2147483647;"";Não permitido;array;ACOMPANHANTE_CASO_HOSPITALIZACAO_PROLONGADA;
 /data/society/products/assistanceTypesAdditionalInfos;assistanceTypesAdditionalInfos;Lista a ser preenchido pelas participantes quando houver 'Outros' no campo 'Tipo de Assistência';Lista;;Opcional;Obrigatório;;;0;2147483647;"";Não permitido;array;;
-/data/society/products/additionalServices​;additionalServices​;Lista dos serviços adicionais associado ao produto.;Lista;;Obrigatório;Obrigatório;;"SORTEIO 
+/data/society/products/additionalServices;additionalServices;Lista dos serviços adicionais associado ao produto.;Lista;;Obrigatório;Obrigatório;;"SORTEIO 
 SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO 
 SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO 
 OUTROS 
@@ -267,7 +267,7 @@ CAPITALIZACAO";0;N;"";Não permitido;array;REPARTICAO_SIMPLES;
 /data/society/products/reclaim/table/finalMonthRange;finalMonthRange;Mês final do range.;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;12;
 /data/society/products/reclaim/table/percentage;percentage;Percentual de faixa de resgate.;Texto;9;Obrigatório;Obrigatório;^(\d{1}\.\d{6})$;;1;1;"";Não permitido;string;0.019800;8
 /data/society/products/reclaim/gracePeriod;gracePeriod;Período de carência.;Objeto;;Obrigatório;Opcional;;;1;1;"";Não permitido;object;;
-/data/society/products/reclaim/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;90;
+/data/society/products/reclaim/gracePeriod/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;Obrigatório;;;0;1;"";Não permitido;integer;90;
 /data/society/products/reclaim/gracePeriod/unit;unit;"Informar o critério de carência para a cobertura
   - Dias 
   - Meses
@@ -281,7 +281,7 @@ BENEFICIO_PROLONGADO";0;N;"";Não permitido;array;SALDAMENTO;
 2. false
 ";Booleano;;Opcional;Obrigatório;;;0;1;"";Não permitido;boolean;true;
 /data/society/products/portabilityGraceTime;portabilityGraceTime;Período de carência (Somente informado se Regime Financeiro for igual a Capitalização).;Objeto;;Opcional;Opcional;;;0;1;"";Não permitido;object;;
-/data/society/products/portabilityGraceTime/amount;amount;Informar o prazo de carência;Inteiro;;Obrigatório;Obrigatório;;;1;1;"";Não permitido;integer;90;
+/data/society/products/portabilityGraceTime/amount;amount;Informar o prazo de carência;Inteiro;;Opcional;Obrigatório;;;0;1;"";Não permitido;integer;90;
 /data/society/products/portabilityGraceTime/unit;unit;"Informar o critério de carência para a cobertura
   - Dias 
   - Meses
