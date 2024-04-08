@@ -3,7 +3,7 @@ info:
   title: API Seguros - Open Finance Brasil
   description: |
     As APIs descritas neste documento são referentes a API de Seguros da fase OpenInsurance do Open Finance Brasil.
-  version: 2.0.0-beta.1
+  version: 2.0.0-beta.2
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -104,9 +104,6 @@ components:
       example: BRL
     InsurancePensionMinValue:
       type: object
-      required:
-        - amount
-        - currency
       x-regulatory-required:
         - amount
         - currency
@@ -124,9 +121,6 @@ components:
       additionalProperties: false
     InsurancePensionMaxValue:
       type: object
-      required:
-        - amount
-        - currency
       x-regulatory-required:
         - amount
         - currency
@@ -489,9 +483,6 @@ components:
           additionalProperties: false
         differentiatedDeductible:
           type: object
-          required:
-            - amount
-            - currency
           x-regulatory-required:
             - amount
             - currency
@@ -711,8 +702,6 @@ components:
         gracePeriod:
           description: Período de carência.
           type: object
-          required:
-            - amount
           x-regulatory-required:
             - amount
             - unit
@@ -1137,8 +1126,6 @@ components:
     PersonalInsurancePortabilityGraceTime:
       description: Período de carência (Somente informado se Regime Financeiro for igual a Capitalização).
       type: object
-      required:
-        - amount
       x-regulatory-required:
         - amount
         - unit
