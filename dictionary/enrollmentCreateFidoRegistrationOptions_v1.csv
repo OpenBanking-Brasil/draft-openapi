@@ -17,7 +17,7 @@ Informações mais detalhadas sobre a construção de namespaces devem ser consu
 /data/user/id;id;Identificador único do usuário sob registro em formato base64. A conversão deste valor para o formato original (BufferSource ou ArrayBuffer) não deve ultrapassar 64 bytes.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/user/name;name;Identificador do usuário human-readable.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/user/displayName;displayName;Identificador do usuário para fins de apresentação.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
-/data/challenge;challenge;Sequência de bytes aleatórios gerados pelo servidor FIDO2. Deve ser o valor em formato base64url.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
+/data/challenge;challenge;Sequência de bytes aleatórios gerados pelo servidor FIDO2. Deve ser o valor em formato base64url sem padding.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;;
 /data/pubKeyCredParams;pubKeyCredParams;;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/pubKeyCredParams/alg;alg;Identificador do algoritmo (COSE);Inteiro;;Obrigatório;;;1;1;"";Não permitido;integer;-7;
 /data/pubKeyCredParams/type;type;Identificador do tipo de credencial.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;public-key;
@@ -32,5 +32,3 @@ Informações mais detalhadas sobre a construção de namespaces devem ser consu
 /data/authenticatorSelection/residentKey;residentKey;Indica o requisito de verificação do usuário.;Texto;;Opcional;;;0;1;"";Não permitido;string;;
 /data/attestation;attestation;Indica o tipo de attestation que o autenticador pode utilizar.;Texto;;Opcional;;;0;1;"";Não permitido;string;none, indirect, direct, enterprise;
 /data/attestationFormats;attestationFormats;Indica as preferências de formato sobre o campo attestation.;Lista;;Opcional;;;0;N;"";Não permitido;array;packed, tpm, android-key, android-safetynet, fido-u2f, apple, none;
-/data/extensions;extensions;Campo de extensão com opções que variam por plataforma.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/extensions/additionalProperties;additionalProperties;;Texto;;Opcional;;;0;1;"";Não permitido;string;;
