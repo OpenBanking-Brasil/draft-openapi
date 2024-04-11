@@ -307,7 +307,7 @@ components:
         - INPC-IBGE
         - TR
         - OUTROS
-      example: IPCA
+      example: IPC-FGV​
     OpenDataMeta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -374,7 +374,7 @@ components:
           items:
             type: string
             maxLength: 100
-          example: Informações Adicionais
+          example: [Informações Adicionais]
         attributes:
           $ref: '#/components/schemas/PersonalCoverageItemAttributes'
       additionalProperties: false
@@ -1031,7 +1031,7 @@ components:
           maxItems: 2147483647
           items:
             type: string
-          example: Informações Adicionais
+          example: [Informações Adicionais]
         additionalServices:
           type: array
           description: Lista dos serviços adicionais associado ao produto.
