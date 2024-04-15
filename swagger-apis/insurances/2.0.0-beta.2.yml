@@ -1032,7 +1032,6 @@ components:
               - SERVICOS_ASSISTENCIAS_COMPLEMENTARES_PAGO
               - SERVICOS_ASSISTENCIA_COMPLEMENTARES_GRATUITO
               - OUTROS
-              - NAO_HA
             example: SORTEIO
         termsAndConditions:
           type: array
@@ -1054,7 +1053,11 @@ components:
           maxItems: 2147483647
           items:
             type: string
-            description: Define o prazo do plano contratado<br><ol><li>Vitalícia</li><li>Temporária - prazo fixo</li><li>Temporária – intermitente</li><li>NA</li></ol>
+            description: |
+              Define o prazo do plano contratado
+              1. Vitalícia
+              2. Temporária - prazo fixo
+              3. Temporária – intermitente
             enum:
               - VITALICIA
               - TEMPORARIA_PRAZO_FIXO
