@@ -151,7 +151,7 @@ components:
         - contributionPayment
         - finalRedemptionRate
         - draws
-        - additionalInfo
+        - additionalDetails
       x-regulatory-required:
         - modality
         - costType
@@ -215,7 +215,7 @@ components:
           minItems: 1
           items:
             $ref: '#/components/schemas/CapitalizationBondsProductPrizeDraw'
-        additionalInfo:
+        additionalDetails:
           type: string
           description: Campo livre para preenchimento das informações adicionais referente ao produto da sociedade seguradora participante do OPIN. Pode-se incluir URL.
           maxLength: 1024
