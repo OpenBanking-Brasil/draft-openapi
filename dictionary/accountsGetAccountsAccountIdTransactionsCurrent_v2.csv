@@ -46,7 +46,10 @@ OUTROS";1;1;"";Não permitido;string;PIX;
 /data/transactionDateTime;transactionDateTime;"Data e hora original da transação.
 ";Texto;24;Obrigatório;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;1;1;"";Não permitido;string;2016-01-29T12:29:03.374Z;
 /data/partieCnpjCpf;partieCnpjCpf;"Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação). Com a IN BCB nº 371, a partir de 02/05/23, o envio das informações de identificação de contraparte tornou-se obrigatória para transações de pagamento. Para maiores detalhes, favor consultar a página `Orientações - Contas`.
-";Texto;14;Opcional;^\d{11}$|^\d{14}$;;0;1;"";Não permitido;string;43908445778;
+
+[Restrição] Quando o ""type“ for preenchido com valor FOLHA_PAGAMENTO e a transmissora for a responsável pelo pagamento de salário (banco-folha), o partieCnpjCpf informado deve ser do empregador relacionado.
+";Texto;14;Condicional;^\d{11}$|^\d{14}$;;0;1;" Quando o ""type“ for preenchido com valor FOLHA_PAGAMENTO e a transmissora for a responsável pelo pagamento de salário (banco-folha), o partieCnpjCpf informado deve ser do empregador relacionado.
+";Não permitido;string;43908445778;
 /data/partiePersonType;partiePersonType;"Identificação do Tipo de Pessoa da pessoa envolvida na transação.   
 Pessoa Natural - Informar CPF no campo “payerCnpjCpf”.   
 Pessoa Jurídica - Informar CNPJ no campo “payerCnpjCpf”.
