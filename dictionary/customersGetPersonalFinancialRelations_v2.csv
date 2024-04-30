@@ -75,3 +75,17 @@ Obs.: a portabilidade não é explicitamente encerrada, ou seja, a IF para a qua
 
 Obs.: somente devem ser compartilhadas solicitações aprovadas, mesmo que de forma compulsória.
 ";Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;;
+/data/paychecksBankLink;paychecksBankLink;"Lista de informações de contas salário relacionadas com vínculos empregatícios, existentes ou que já existiram, firmados entre o cliente pessoa natural e um ou mais empregadores. Cada vínculo é associado a uma conta salário aberta mantida no banco-folha (instituição transmissora).
+
+Obs: como empregadores antigos podem não ter solicitado o fechamento da conta salário, não é possível garantir que os dados informados sejam do empregador atual.
+";Lista;;Opcional;;;0;N;"";Não permitido;array;;
+/data/paychecksBankLink/employerName;employerName;"Nome do empregador conforme registrado na abertura da conta salário.
+";Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;;2
+/data/paychecksBankLink/employerCnpjCpf;employerCnpjCpf;"Documento do empregador (CNPJ/CPF), conforme registrado na abertura da conta salário.
+";Texto;14;Obrigatório;^\d{14}$|^\d{11}$;;1;1;"";Não permitido;string;;
+/data/paychecksBankLink/paycheckBankCnpj;paycheckBankCnpj;"CNPJ da instituição financeira contratada para prestar serviço de pagamento de salário (banco-folha).
+";Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;;
+/data/paychecksBankLink/paycheckBankIspb;paycheckBankIspb;"Número ISPB (Identificador do Sistema de Pagamentos Brasileiros) do instituição financeira contratada para prestar serviço de pagamento de salário (banco-folha).
+";Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;;
+/data/paychecksBankLink/accountOpeningDate;accountOpeningDate;"Data de abertura da conta salário.
+";Data;10;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"";Não permitido;string;;
