@@ -1,0 +1,18 @@
+name: Auto merge em pull request nas branchs aggr
+on:
+  pull_request:
+    branches: [aggr-*]
+    types:
+      - opened
+jobs:
+  merge_pull_request:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Auto merge espelho-openapi para aggr
+        env: 
+          GH_TOKEN: ${{ secrets.AREADEV_INTEGRATION }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ github.head_ref }}" = "espelho-openapi" && "$origin_url" == *"https://github.com/Sensedia/draft-openapi"* ]; then
+            gh pr merge ${{ github.event.pull_request.number }} --merge
+          fi
