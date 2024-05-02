@@ -1,0 +1,30 @@
+  name: Criar pull request para aggr
+  on:
+    push:
+      branches:
+        - espelho-openapi
+  jobs:
+    create_pull_request:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Creating pull request to aggr
+          env:
+            GH_TOKEN: ${{ secrets.AREADEV_INTEGRATION }}
+          run: |
+            origin_url=$(git config --get remote.origin.url)
+
+            # Verifica se o URL do repositório de origem contém o nome do repositório original
+            if [[ "$origin_url" == *"https://github.com/Sensedia/draft-openapi"* ]]; then
+              git fetch --all
+              features=$(git branch -r | grep -i "aggr" | sed -e "s/.*origin\///g; /merge/d" | tr "\n" " ")
+              eval "featureArray=($features)"
+
+              # create merge branches            
+              for featureBranch in ${featureArray[@]}
+              do
+                gh pr create -B $featureBranch -H espelho-openapi --title 'Atualização espelho-openapi' --body ''
+
+                sleep 5
+              done
+            fi        
