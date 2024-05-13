@@ -693,7 +693,7 @@ components:
 
             [Restrição] O preenchimento é obrigatório quando for diferente de 55. 
         areaCode:
-          $ref: '#/components/schemas/EnumAreaCode'
+          $ref: '#/components/schemas/AreaCode'
         number:
           type: string
           maxLength: 13
@@ -1054,7 +1054,7 @@ components:
 
         Conta de pagamento pré-paga - segundo CIRCULAR Nº 3.680, BCB de  2013, é a 'destinada à execução de transações de pagamento em moeda eletrônica realizadas com base em fundos denominados em reais previamente aportados'.
       example: CONTA_DEPOSITO_A_VISTA
-    EnumAreaCode:
+    AreaCode:
       type: string
       example: '19'
       description: Número de DDD (Discagem Direta à Distância) do telefone do cliente - se houver
