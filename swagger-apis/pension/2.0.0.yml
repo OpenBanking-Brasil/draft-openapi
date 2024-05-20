@@ -254,10 +254,10 @@ components:
           example: true
         contractingMinRequirement:
           type: string
+          format: url
           minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL)
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     CnpjNumber:
@@ -840,39 +840,34 @@ components:
       properties:
         self:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
-          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
-          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
-          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
-          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v2/resource'
-          pattern: '^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
       additionalProperties: false
     PensionParticipant:
       type: object
@@ -914,8 +909,8 @@ components:
 
             - Ambos obrigatórios.
           type: string
+          format: url
           maxLength: 1024
-          pattern: '^((https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*))$'
           example: 'https://empresaa1.com/companies'
       additionalProperties: false
     RiskSociety:
@@ -1130,10 +1125,10 @@ components:
             $ref: '#/components/schemas/EnumExcludedRisks'
         excludedRisksURL:
           type: string
+          format: url
           minLength: 1
           maxLength: 1024
           description: Campo aberto (possibilidade de incluir URL).
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
         profitModality:
           $ref: '#/components/schemas/RiskPensionEnumProfitModality'
@@ -1173,10 +1168,10 @@ components:
           example: 15414.622222/2222-22
         contractTermsConditions:
           type: string
+          format: url
           description: 'Representam as Condições Gerais, Condições Especiais e Condições ou Cláusulas Particulares de um mesmo produto. (Circular SUSEP 321/06). Campo aberto (possibilidade de incluir URL)'
           minLength: 1
           maxLength: 1024
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     UpdateIndex:
@@ -1269,10 +1264,10 @@ components:
           example: COLETIVO
         contractingMinRequirement:
           type: string
+          format: url
           description: Campo aberto contendo todos os requisitos mínimos para contratação (possibilidade de incluir URL).
           minLength: 1
           maxLength: 1024
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
           example: 'https://openinsurance.com.br/aaa'
       additionalProperties: false
     RiskPensionReclaimTableItem:
