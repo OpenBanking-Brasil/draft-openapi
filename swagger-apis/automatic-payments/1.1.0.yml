@@ -3743,7 +3743,10 @@ components:
               minLength: 11
               maxLength: 14
               example: '11111111111111'
-              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+              description: |
+                Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
+                O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
+                Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
             rel:
               type: string
               enum:
@@ -3886,7 +3889,10 @@ components:
               minLength: 11
               maxLength: 14
               example: '11111111111111'
-              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
+              description: |
+                Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
+                O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
+                Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
             rel:
               type: string
               enum:

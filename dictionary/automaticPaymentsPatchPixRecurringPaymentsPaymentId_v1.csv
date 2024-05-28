@@ -210,6 +210,9 @@ Essa informação permitirá ao recebedor identificar e correlacionar a transfer
 Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
 ";Texto;35;Opcional;^[a-zA-Z0-9]{1,35}$;;0;1;"";Não permitido;string;E00038166201907261559y6j6;
 /data/document;document;Informações do documento identificador do recebedor da transação.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/document/identification;identification;Número do documento de identificação oficial do titular pessoa natural ou jurídica.;Texto;14;Obrigatório;^(?:\d{11}|\d{14})$;;1;1;"";Não permitido;string;11111111111111;11
+/data/document/identification;identification;"Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
+O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
+Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+";Texto;14;Obrigatório;^(?:\d{11}|\d{14})$;;1;1;"";Não permitido;string;11111111111111;11
 /data/document/rel;rel;Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.;Texto;;Obrigatório;;"CPF 
 CNPJ";1;1;"";Não permitido;string;CNPJ;
