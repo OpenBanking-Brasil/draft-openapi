@@ -521,6 +521,17 @@ paths:
         - OAuth2ClientCredentials:
             - payments
 components:
+  headers:
+      xFapiInteractionId:
+        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser "espelhado" pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          minLength: 1
+          maxLength: 36
+          format: uuid
+          example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
   schemas:
     422ResponseErrorCreateConsent:
       type: object
@@ -2763,12 +2774,11 @@ components:
               example: Todas quintas e domingos por 6 meses
     XFapiInteractionId:
       type: string
-      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+      format: uuid
       minLength: 1
       maxLength: 36
-      format: uuid
+      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
-      description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
   parameters:
     consentId:
       name: consentId
@@ -2904,7 +2914,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     BadRequestPayments:
       description: 'Seguir as orientações presentes na descrição da API, subitem 1.2.3'
       content:
@@ -2914,7 +2924,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     BadRequestPixPayments:
       description: 'Seguir as orientações presentes na descrição da API, subitem 2.1.3.'
       content:
@@ -2924,7 +2934,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
@@ -2934,7 +2944,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
@@ -2944,7 +2954,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
@@ -2954,7 +2964,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     NotAcceptable:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
@@ -2964,7 +2974,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
@@ -2974,7 +2984,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     SiteIsOverloaded:
       description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
       content:
@@ -3000,7 +3010,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     UnprocessableEntityConsents:
       description: 'Seguir as orientações presentes na descrição da API, item 1.3 e seus subitens.'
       content:
@@ -3020,7 +3030,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     UnprocessableEntityPixPayments:
       description: 'Seguir as orientações presentes na descrição deste endpoint.'
       content:
@@ -3040,7 +3050,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
@@ -3050,7 +3060,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     UnsupportedMediaType:
       description: O formato do payload não é um formato suportado.
       content:
@@ -3060,13 +3070,13 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
     201PaymentsConsentsConsentCreated:
       description: Consentimento de pagamento criado com sucesso.
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/parameters/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -3076,7 +3086,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/parameters/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -3086,7 +3096,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/parameters/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -3096,7 +3106,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/parameters/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -3106,7 +3116,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/parameters/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -3116,7 +3126,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
-            $ref: '#/components/parameters/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionId'
       content:
         application/jwt:
           schema:
