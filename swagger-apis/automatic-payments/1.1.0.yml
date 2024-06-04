@@ -3631,6 +3631,7 @@ components:
         - cnpjInitiator
         - payment
         - document
+        - localInstrument
       properties:
         recurringPaymentId:
           type: string
@@ -3765,6 +3766,31 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
+        proxy:
+          type: string
+          description: |
+            Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
+            No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
+            No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
+            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
+            Esta validação é opcional caso o localInstrument for igual a INIC.
+
+            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+          pattern: '[\w\W\s]*'
+          example: '11221131242'
+        localInstrument:
+          type: string
+          description: |
+            Especifica a forma de iniciação do pagamento
+            - MANU - Inserção manual de dados da conta transacional
+            - DICT - Inserção manual de chave Pix
+            - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+          enum:
+            - MANU
+            - DICT
+            - INIC
+          example: DICT
     ResponseRecurringPaymentsDataPatch:
       type: object
       required:
@@ -3777,6 +3803,7 @@ components:
         - cnpjInitiator
         - payment
         - document
+        - localInstrument
       properties:
         recurringPaymentId:
           type: string
@@ -3911,6 +3938,31 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
+        proxy:
+          type: string
+          description: |
+            Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
+            No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
+            No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
+            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
+            Esta validação é opcional caso o localInstrument for igual a INIC.
+
+            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+          pattern: '[\w\W\s]*'
+          example: '11221131242'
+        localInstrument:
+          type: string
+          description: |
+            Especifica a forma de iniciação do pagamento
+            - MANU - Inserção manual de dados da conta transacional
+            - DICT - Inserção manual de chave Pix
+            - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+          enum:
+            - MANU
+            - DICT
+            - INIC
+          example: DICT
     XFapiInteractionId:
       type: string
       format: uuid
