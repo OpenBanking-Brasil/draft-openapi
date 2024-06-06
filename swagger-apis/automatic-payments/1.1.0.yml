@@ -1217,7 +1217,7 @@ components:
             lastLoginDateTime:
               type: string
               format: date-time
-              description: Data e hora do último login do cliente na iniciadora
+              description: Data e hora da última interação do cliente com o aplicativo/sistema da instituição iniciadora.
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
             pixKeyRegistrationDateTime:
               type: string
@@ -2532,7 +2532,7 @@ components:
       minItems: 1
       items:
         type: object
-        description: Objeto contendo os dados do recebedor (creditor).
+        description: Objeto contendo os dados do recebedor (creditor). Em casos de transferências inteligentes para clientes PJ, os CNPJs informados devem possuir a mesma raiz do CNPJ enviado no campo /data/businessEntity/document/identification. Em casos de transferências inteligentes para clientes PN, deve-se aceitar apenas um item no array e este item deve conter as informações do recebedor. O CPF informado deve ser o mesmo do /data/loggedUser/document/identification. Caso alguma das regras mencionadas não sejam seguidas, o detentor deve rejeitar a solicitação (sincronamente) com o erro DETALHE_PAGAMENTO_INVALIDO, e o detalhe deve ser preenchido com a informação referente ao erro.
         required:
           - personType
           - cpfCnpj
@@ -2785,6 +2785,7 @@ components:
             - loggedUser
             - status
             - creditors
+            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -2818,7 +2819,7 @@ components:
               $ref: '#/components/schemas/Creditors'
             startDateTime:
               description: |
-                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação RFC- 3339, sempre com a utilização de timezone UTC(UTC time format).
+                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format) sempre com a utilização de timezone UTC(UTC time format).
                 
                 [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime. Caso o campo /data/startDateTime enviado seja anterior ao valor do campo /data/creationDateTime, o detentor deve substituir o valor do campo /data/startDateTime pelo valor do campo /data/creationDateTime. 
               type: string
@@ -2939,6 +2940,7 @@ components:
             - loggedUser
             - status
             - creditors
+            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -3093,6 +3095,7 @@ components:
             - loggedUser
             - status
             - creditors
+            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -3628,6 +3631,7 @@ components:
         - cnpjInitiator
         - payment
         - document
+        - localInstrument
       properties:
         recurringPaymentId:
           type: string
@@ -3762,6 +3766,31 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
+        proxy:
+          type: string
+          description: |
+            Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
+            No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
+            No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
+            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
+            Esta validação é opcional caso o localInstrument for igual a INIC.
+
+            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+          pattern: '[\w\W\s]*'
+          example: '11221131242'
+        localInstrument:
+          type: string
+          description: |
+            Especifica a forma de iniciação do pagamento
+            - MANU - Inserção manual de dados da conta transacional
+            - DICT - Inserção manual de chave Pix
+            - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+          enum:
+            - MANU
+            - DICT
+            - INIC
+          example: DICT
     ResponseRecurringPaymentsDataPatch:
       type: object
       required:
@@ -3774,6 +3803,7 @@ components:
         - cnpjInitiator
         - payment
         - document
+        - localInstrument
       properties:
         recurringPaymentId:
           type: string
@@ -3908,6 +3938,31 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
+        proxy:
+          type: string
+          description: |
+            Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
+            No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
+            No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
+            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
+            Esta validação é opcional caso o localInstrument for igual a INIC.
+
+            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+          pattern: '[\w\W\s]*'
+          example: '11221131242'
+        localInstrument:
+          type: string
+          description: |
+            Especifica a forma de iniciação do pagamento
+            - MANU - Inserção manual de dados da conta transacional
+            - DICT - Inserção manual de chave Pix
+            - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+          enum:
+            - MANU
+            - DICT
+            - INIC
+          example: DICT
     XFapiInteractionId:
       type: string
       format: uuid
