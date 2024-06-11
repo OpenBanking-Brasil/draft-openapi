@@ -54,11 +54,11 @@ OUTROS";0;1;" Preenchimento obrigatório se o tipo transação selecionado for '
 /data/chargeIdentificator;chargeIdentificator;"Número da parcela que está sendo informada.
 
 [Restrição] Preenchimento obrigatório se Tipo de Pagamento (paymentType) selecionada for 'A_PRAZO'.
-";Número;;Condicional;;;0;1;" Preenchimento obrigatório se Tipo de Pagamento (paymentType) selecionada for 'A_PRAZO'.
-";Não permitido;number;12;
+";Número;999;Condicional;;;0;1;" Preenchimento obrigatório se Tipo de Pagamento (paymentType) selecionada for 'A_PRAZO'.
+";Não permitido;number;12;1
 /data/chargeNumber;chargeNumber;"Quantidade de parcelas.   
 [Restrição] O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
-";Número;;Condicional;;;0;1;" O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
+";Número;999;Condicional;;;0;1;" O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
 ";Não permitido;number;12;
 /data/brazilianAmount;brazilianAmount;"Valor da transação expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais, em moeda corrente do Brasil. Deve ser o valor de amount convertido para BRL (em caso de compra internacional) ou o mesmo valor de amount (em caso de compra nacional).
 ";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -72,4 +72,4 @@ OUTROS";0;1;" Preenchimento obrigatório se o tipo transação selecionado for '
 ";Date Hora;24;Obrigatório;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;1;1;"";Não permitido;string;2016-01-29T12:29:03.374Z;
 /data/billPostDate;billPostDate;Data em que a transação foi inserida na fatura;Data;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2021-05-21;
 /data/payeeMCC;payeeMCC;"O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
-";Número;;Opcional;;;0;1;"";Não permitido;number;5137;
+";Número;2147483647;Opcional;;;0;1;"";Não permitido;number;5137;
