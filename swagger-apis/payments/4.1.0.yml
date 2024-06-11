@@ -1617,11 +1617,10 @@ components:
       properties:
         self:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     LinkSinglePost:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -1630,11 +1629,10 @@ components:
       properties:
         self:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: URI completo para o primeiro item presente na resposta.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     PaymentConsent:
       type: object
       description: Objeto contendo dados de pagamento para consentimento.
