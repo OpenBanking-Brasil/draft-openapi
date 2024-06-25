@@ -159,7 +159,7 @@ paths:
       tags:
         - Unarranged Accounts Overdraft
       summary: Obtém a lista de garantias vinculadas ao contrato de adiantamento a depositantes identificado por contractId
-      description: Método para obter a lista de garantias vinculadas ao contrato de adiantamento a depositantes identificado por contractId mantido pelo cliente na instituição transmissora
+      description: Método para obter a lista de garantias vinculadas ao contrato de adiantamento a depositantes identificado por contractId mantido pelo cliente na instituição transmissora. Para os produtos que não possuam garantias deve-se retornar HTTP Status 200 com o objeto “data” vazio, sem nenhum atributo interno.
       operationId: unarrangedAccountsOverdraftGetContractsContractIdWarranties
       parameters:
         - $ref: '#/components/parameters/contractId'
