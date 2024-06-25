@@ -1077,7 +1077,7 @@ components:
         paymentId:
           type: string
           maxLength: 100
-          pattern: '[\w\W\s]*'
+          pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
           example: Parcela regular
           description: Identificador de pagamento de responsabilidade de cada Instituição transmissora.
         isOverParcelPayment:
