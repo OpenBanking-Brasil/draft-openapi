@@ -160,7 +160,7 @@ paths:
       tags:
         - Financings
       summary: Obtém a lista de garantias vinculadas ao contrato de financiamento identificado por contractId
-      description: Método para obter a lista de garantias vinculadas ao contrato de financiamento identificado por contractId mantido pelo cliente na instituição transmissora
+      description: Método para obter a lista de garantias vinculadas ao contrato de empréstimo identificado por contractId mantido pelo cliente na instituição transmissora. Para os produtos que não possuam garantias deve-se retornar HTTP Status 200 com o objeto “data” vazio, sem nenhum atributo interno.
       operationId: financingsGetContractsContractIdWarranties
       parameters:
         - $ref: '#/components/parameters/contractId'
