@@ -63,6 +63,7 @@ OUTROS";1;1;"";Não permitido;string;SAC;
 ";Texto;200;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Informações complementares relativa à amortização do tipo 'OUTROS';
 /data/interestRates;interestRates;"Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.  
 Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita.
+Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
 ";Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/interestRates/taxType;taxType;"""Tipo de Taxa (vide  Enum)
 - NOMINAL (taxa nominal é uma taxa de juros em que a unidade referencial não coincide com a unidade de tempo da capitalização. Ela é sempre fornecida em termos anuais, e seus períodos de capitalização podem ser diários, mensais, trimestrais ou semestrais. p.ex. Uma taxa de 12% ao ano com capitalização mensal)
@@ -117,6 +118,7 @@ OUTROS_INDEXADORES";0;1;"";Não permitido;string;TJLP;
 /data/interestRates/preFixedRate;preFixedRate;"Taxa pré fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. 
 
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
 ";Texto;9;Obrigatório;^\d{1,2}\.\d{6}$;;1;1;"";Não permitido;string;0.600000;8
 /data/interestRates/postFixedRate;postFixedRate;"Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. 
 
