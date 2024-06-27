@@ -68,6 +68,8 @@ Motivo da rejeição do pagamento. Informações complementares sobre o motivo d
 - LIMITE_PERIODO_VALOR_EXCEDIDO
 - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
 - TITULARIDADE_INCONSISTENTE
+- LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+- LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
 
 [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -84,7 +86,9 @@ FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
 FALHA_INFRAESTRUTURA_DETENTORA 
 LIMITE_PERIODO_VALOR_EXCEDIDO 
 LIMITE_PERIODO_QUANTIDADE_EXCEDIDO 
-TITULARIDADE_INCONSISTENTE";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
+TITULARIDADE_INCONSISTENTE 
+LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO 
+LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
 
@@ -103,6 +107,8 @@ TITULARIDADE_INCONSISTENTE";1;1;" Esse motivo deverá ser enviado quando o campo
 - LIMITE_PERIODO_VALOR_EXCEDIDO – A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
 - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO – A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
 - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração.
+- LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
+- LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/payment;payment;Objeto contendo as informações do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/payment/amount;amount;"Valor da transação com 2 casas decimais.
