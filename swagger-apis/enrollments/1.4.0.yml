@@ -1061,7 +1061,14 @@ components:
           properties:
             deviceId:
               type: string
-              description: ID único do dispositivo gerado pela plataforma.
+              description: |
+                ID único do dispositivo gerado pela plataforma.
+
+                Utiliza-se a propriedade do sistema que identifica a combinação de usuário logado, chave de assinatura do aplicativo e dispositivo.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID).
+
+                [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor/).
               example: 00aa11bb22cc33dd
             isRootedDevice:
               type: boolean
@@ -1077,24 +1084,47 @@ components:
             elapsedTimeSinceBoot:
               type: integer
               format: int64
-              description: Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+              description: |
+                Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/SystemClock#elapsedRealtime%28%29).
+
+                [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/kernel/kern/).
               example: 6356027
             osVersion:
               type: string
-              description: Versão do sistema operacional.
+              description: |
+                Versão do sistema operacional.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/Build.VERSION#RELEASE).
+                [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620043-systemversion/).
               example: "14"
             userTimeZoneOffset:
               type: string
               description: |
-                Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
+                Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]. O formato especificado permite a omissão da parte correspondente aos minutos, caso esta última tenha valor zero. Assim, ambos os valores '-03:00' e '-03' são válidos e representam o mesmo fuso horário.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/java/time/ZonedDateTime#getOffset()) ou, para versões anteriores à 8.0, [link](https://developer.android.com/reference/java/util/TimeZone#getOffset(long)).
+
+                [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/foundation/timezone/).
               example: '-03'
             language:
               type: string
-              description: Indica o idioma do dispositivo no formato ISO 639-1.
+              description: |
+                Indica o idioma do dispositivo no formato ISO 639-1.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/java/util/Locale#getLanguage()).
+                [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/foundation/locale/languagecode/).
               example: 'pt'
             screenDimensions:
               type: object
-              description: Dimensões da tela do dispositivo
+              description: |
+                	
+                Dimensões que o aplicativo ocupa na tela do dispositivo.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/android/view/WindowMetrics#getBounds()), ou, para versões anteriores à 11, [link](https://developer.android.com/reference/android/util/DisplayMetrics).
+
+                [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/metal/mtlrasterizationratemap/3088873-screensize/).
               required:
                 - height
                 - width
@@ -1116,6 +1146,14 @@ components:
               example: 2023-08-20
             geolocation:
               type: object
+              description: |
+                Localização do usuário, obtida com seu consentimento.
+
+                [Android] Informação obtida através do [link](https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient#public-abstract-tasklocation-getlastlocation) considerando as permissões necessárias.
+
+                [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/corelocation/).
+
+                [Restrição] A ITP deve solicitar ao usuário a permissão para compartilhamento de sua localização. Este campo poderá ser omitido caso o GPS esteja indisponível, isto é, sem sinal, ou em dispositivos sem o hardware necessário; ou caso o usuário negue o consentimento.
               properties:
                 latitude:
                   type: number
@@ -1135,6 +1173,10 @@ components:
               description: |
                 Indica chamada ativa no momento do vínculo.
 
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/android/media/AudioManager#getMode()).
+
+                [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/callkit/).
+
                 [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
               example: false
             isDevModeEnabled:
@@ -1143,7 +1185,14 @@ components:
               example: false
             isMockGPS:
               type: boolean
-              description: Indica se o dispositivo está usando um GPS falso.
+              description: |
+                Indica se o dispositivo está usando um GPS falso. Deve ser enviado sempre que exista o campo geolocation com tipo `COARSE` ou `FINE`.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/android/location/Location.html#isMock()) ou, para versões anteriores à 12, [link](https://developer.android.com/reference/android/location/Location.html#isFromMockProvider()).
+
+                [iOS] Informação obtida através dos links:
+                sourceInformation, [link](https://developer.apple.com/documentation/corelocation/cllocation/3861803-sourceinformation).
+                isSimulatedBySoftware, [link](https://developer.apple.com/documentation/corelocation/cllocationsourceinformation/3861807-issimulatedbysoftware).
               example: false
             isEmulated:
               type: boolean
@@ -1155,7 +1204,12 @@ components:
               example: false
             isCharging:
               type: boolean
-              description: Indica se a bateria do dispositivo está sendo carregada.
+              description: |
+                Indica se a bateria do dispositivo está sendo carregada.
+
+                [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/BatteryManager).
+
+                [iOS] Informações obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620045-batterymonitoringenabled/).
               example: false
             antennaInformation:
               type: string
@@ -1168,9 +1222,11 @@ components:
             integrity:
               type: object
               description: |
-                Informa a integridade do dispositivo e app.  
-                No Android, conforme documentação [Play API Integrity](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
-                No iOS, conforme documentação [App Attest](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity).
+                Informa a integridade do dispositivo e app.
+
+                [Android] Conforme documentação Play API Integrity, [link](https://developer.android.com/google/play/integrity/overview?hl=pt-br).
+
+                [iOS] Conforme documentação App Attest, [link](https://developer.android.com/google/play/integrity/overview?hl=pt-br).
               properties:
                 appRecognitionVerdict:
                   type: string
@@ -1213,7 +1269,14 @@ components:
               properties:
                 deviceId:
                   type: string
-                  description: ID único do dispositivo gerado pela plataforma.
+                  description: |
+                    ID único do dispositivo gerado pela plataforma.
+
+                    Utiliza-se a propriedade do sistema que identifica a combinação de usuário logado, chave de assinatura do aplicativo e dispositivo.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID).
+
+                    [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor/).
                 isRootedDevice:
                   type: boolean
                   description: Indica se o dispositivo atualmente está com permissão de “root”.
@@ -1227,22 +1290,44 @@ components:
                 elapsedTimeSinceBoot:
                   type: integer
                   format: int64
-                  description: Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+                  description: |
+                    Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/SystemClock#elapsedRealtime%28%29).
+
+                    [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/kernel/kern/).
                 osVersion:
                   type: string
-                  description: Versão do sistema operacional.
+                  description: |
+                    Versão do sistema operacional.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/Build.VERSION#RELEASE).
+                    [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620043-systemversion/).
                 userTimeZoneOffset:
                   type: string
                   description: |
-                    Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]
+                    Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]. O formato especificado permite a omissão da parte correspondente aos minutos, caso esta última tenha valor zero. Assim, ambos os valores '-03:00' e '-03' são válidos e representam o mesmo fuso horário.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/java/time/ZonedDateTime#getOffset()) ou, para versões anteriores à 8.0, [link](https://developer.android.com/reference/java/util/TimeZone#getOffset(long)).
+
+                    [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/foundation/timezone/).
                   example: '-03'
                 language:
                   type: string
-                  description: Indica o idioma do dispositivo no formato ISO 639-1.
+                  description: |
+                    Indica o idioma do dispositivo no formato ISO 639-1.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/java/util/Locale#getLanguage()).
+                    [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/foundation/locale/languagecode/).
                   example: 'pt'
                 screenDimensions:
                   type: object
-                  description: Dimensões da tela do dispositivo
+                  description: |
+                    Dimensões que o aplicativo ocupa na tela do dispositivo.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/android/view/WindowMetrics#getBounds()), ou, para versões anteriores à 11, [link](https://developer.android.com/reference/android/util/DisplayMetrics).
+
+                    [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/metal/mtlrasterizationratemap/3088873-screensize/).
                   required:
                     - height
                     - width
@@ -1261,6 +1346,14 @@ components:
                   example: 2023-09-01
                 geolocation:
                   type: object
+                  description: |
+                    Localização do usuário, obtida com seu consentimento.
+
+                    [Android] Informação obtida através do [link](https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient#public-abstract-tasklocation-getlastlocation) considerando as permissões necessárias.
+
+                    [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/corelocation/).
+
+                    [Restrição] A ITP deve solicitar ao usuário a permissão para compartilhamento de sua localização. Este campo poderá ser omitido caso o GPS esteja indisponível, isto é, sem sinal, ou em dispositivos sem o hardware necessário; ou caso o usuário negue o consentimento.
                   properties:
                     latitude:
                       type: number
@@ -1276,14 +1369,25 @@ components:
                   type: boolean
                   description: |
                     Indica chamada ativa no momento do vínculo.
-    
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/android/media/AudioManager#getMode()).
+
+                    [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/callkit/).
+
                     [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado
                 isDevModeEnabled:
                   type: boolean
                   description: Indica se o dispositivo está em modo de desenvolvedor.
                 isMockGPS:
                   type: boolean
-                  description: Indica se o dispositivo está usando um GPS falso.
+                  description: |
+                    Indica se o dispositivo está usando um GPS falso. Deve ser enviado sempre que exista o campo geolocation com tipo `COARSE` ou `FINE`.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/android/location/Location.html#isMock()) ou, para versões anteriores à 12, [link](https://developer.android.com/reference/android/location/Location.html#isFromMockProvider()).
+
+                    [iOS] Informação obtida através dos links:
+                    sourceInformation, [link](https://developer.apple.com/documentation/corelocation/cllocation/3861803-sourceinformation).
+                    isSimulatedBySoftware, [link](https://developer.apple.com/documentation/corelocation/cllocationsourceinformation/3861807-issimulatedbysoftware).
                 isEmulated:
                   type: boolean
                   description: Indica se o dispositivo é emulado ou real.
@@ -1292,7 +1396,12 @@ components:
                   description: Indica o uso do MonkeyRunner.
                 isCharging:
                   type: boolean
-                  description: Indica se a bateria do dispositivo está sendo carregada.
+                  description: |
+                    Indica se a bateria do dispositivo está sendo carregada.
+
+                    [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/BatteryManager).
+
+                    [iOS] Informações obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620045-batterymonitoringenabled/).
                 antennaInformation:
                   type: string
                   description: Indica em qual antena o dispositivo está conectado.
@@ -1302,9 +1411,11 @@ components:
                 integrity:
                   type: object
                   description: |
-                    Informa a integridade do dispositivo e app.  
-                    No Android, conforme documentação [Play API Integrity](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
-                    No iOS, conforme documentação [App Attest](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity).
+                    Informa a integridade do dispositivo e app.
+
+                    [Android] Conforme documentação Play API Integrity, [link](https://developer.android.com/google/play/integrity/overview?hl=pt-br).
+
+                    [iOS] Conforme documentação App Attest, [link](https://developer.android.com/google/play/integrity/overview?hl=pt-br).
                   properties:
                     appRecognitionVerdict:
                       type: string
