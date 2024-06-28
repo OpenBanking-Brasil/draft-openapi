@@ -1220,10 +1220,7 @@ components:
           maxLength: 9
           minLength: 8
           description: |
-            Taxa pré fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. 
-
-            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
-            Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
+            Taxa pré-fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
           example: '0.600000'
         postFixedRate:
           type: string
@@ -1232,9 +1229,7 @@ components:
           maxLength: 9
           minLength: 8
           description: |
-            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. 
-
-            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+            Taxa pós-fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
           example: '0.550000'
         additionalInfo:
           type: string
@@ -1395,9 +1390,11 @@ components:
               example: '2021-05-21T08:30:00Z'
     XFapiInteractionId:
       type: string
-      pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
-      maxLength: 100
-      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação. Se fornecido, o transmissor deve "reproduzir" esse valor no cabeçalho de resposta.'
+      format: uuid
+      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+      maxLength: 36
+      description: 'Um UID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+      example: "d78fc4e5-37ca-4da3-adf2-9b082bf92280"
   parameters:
     Authorization:
       name: Authorization
