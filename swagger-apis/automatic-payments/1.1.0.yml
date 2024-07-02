@@ -778,6 +778,7 @@ components:
                   - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
+                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateRecurringPaymentsPaymentId:
@@ -1751,7 +1752,7 @@ components:
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - TITULARIDADE_INCONSISTENTE
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -1795,7 +1796,7 @@ components:
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
