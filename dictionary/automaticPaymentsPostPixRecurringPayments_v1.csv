@@ -224,12 +224,14 @@ INIC";1;1;"";Não permitido;string;DICT;
 /data/proxy;proxy;"Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
 No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
 No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
-Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
-Esta validação é opcional caso o localInstrument for igual a INIC.
+No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na RFC4122.
 
-[Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
-";Texto;;Condicional;[\w\W\s]*;;0;1;" Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+[Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
+
+[Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
+";Texto;;Condicional;[\w\W\s]*;;0;1;" Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
+
+[Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
 ";Não permitido;string;11221131242;
 /data/transactionIdentification;transactionIdentification;"Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
 Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
