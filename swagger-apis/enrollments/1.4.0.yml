@@ -506,8 +506,9 @@ paths:
       operationId: authorizeConsent
       description: |
         Autorização de um consentimento de pagamentos em status `AWAITING_AUTHORISATION` a partir do access_token emitido pela jornada sem redirecionamento e envio de sinais de risco.  
-        O consentimento de pagamento deve transitar ao status `AUTHORISED` na execução com sucesso desse método.  
-        Em caso de falha, o status do consentimento do pagamento precisa transitar para o status `REJECTED`.
+        Caso o consentimento possua múltiplos aprovadores, deve ser movido para `PARTIALLY_ACCEPTED` após a primeira aprovação, até que todas as aprovações necessárias sejam coletadas e ele transite para `AUTHORISED`.  
+        Caso de aprovação única, o consentimento deve transitar, pós autorização, direto para `AUTHORISED`.
+        Em caso de falha em algum dos cenários, o status do consentimento do pagamento precisa transitar para o status `REJECTED`.
       parameters:
         - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
