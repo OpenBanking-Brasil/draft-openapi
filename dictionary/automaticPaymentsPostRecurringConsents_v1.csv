@@ -282,28 +282,28 @@ TRAN";1;1;"";Não permitido;string;CACC;
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos.
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos.
 ";Não permitido;object;;
-/data/recurringConfiguration/sweeping/periodicLimits/day/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um dia.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;2;
+/data/recurringConfiguration/sweeping/periodicLimits/day/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um dia.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;2;1
 /data/recurringConfiguration/sweeping/periodicLimits/day/transactionLimit;transactionLimit;Valor máximo a ser transacionado diariamente.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/sweeping/periodicLimits/week;week;"Configurar limite transacional semanal determinado pelo usuário pagador.
 
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Não permitido;object;;
-/data/recurringConfiguration/sweeping/periodicLimits/week/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante uma semana.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;10;
+/data/recurringConfiguration/sweeping/periodicLimits/week/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante uma semana.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;10;1
 /data/recurringConfiguration/sweeping/periodicLimits/week/transactionLimit;transactionLimit;Valor máximo a ser transacionado semanalmente.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/sweeping/periodicLimits/month;month;"Configurar limite transacional mensal determinado pelo usuário pagador.
 
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Não permitido;object;;
-/data/recurringConfiguration/sweeping/periodicLimits/month/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um mês.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;30;
+/data/recurringConfiguration/sweeping/periodicLimits/month/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um mês.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;30;1
 /data/recurringConfiguration/sweeping/periodicLimits/month/transactionLimit;transactionLimit;Valor máximo a ser transacionado mensalmente.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/sweeping/periodicLimits/year;year;"Configurar limite transacional anual determinado pelo usuário pagador.
 
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Não permitido;object;;
-/data/recurringConfiguration/sweeping/periodicLimits/year/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um ano.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;100;
+/data/recurringConfiguration/sweeping/periodicLimits/year/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um ano.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;100;1
 /data/recurringConfiguration/sweeping/periodicLimits/year/transactionLimit;transactionLimit;Valor máximo a ser transacionado por um ano, a partir da data definida no campo `/data/startDateTime`.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/vrp;vrp;Definição da configuração de recorrência para realização de transações de valores variáveis;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/vrp/transactionLimit;transactionLimit;Limite máximo de valor permitido para cada transação de pagamento.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
@@ -316,26 +316,26 @@ TRAN";1;1;"";Não permitido;string;CACC;
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos.
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos.
 ";Não permitido;object;;
-/data/recurringConfiguration/vrp/periodicLimits/day/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um dia.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;2;
+/data/recurringConfiguration/vrp/periodicLimits/day/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um dia.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;2;1
 /data/recurringConfiguration/vrp/periodicLimits/day/transactionLimit;transactionLimit;Valor máximo a ser transacionado diariamente.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/vrp/periodicLimits/week;week;"Configurar limite transacional semanal determinado pelo usuário pagador.
 
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Não permitido;object;;
-/data/recurringConfiguration/vrp/periodicLimits/week/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante uma semana.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;10;
+/data/recurringConfiguration/vrp/periodicLimits/week/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante uma semana.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;10;1
 /data/recurringConfiguration/vrp/periodicLimits/week/transactionLimit;transactionLimit;Valor máximo a ser transacionado semanalmente.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/vrp/periodicLimits/month;month;"Configurar limite transacional mensal determinado pelo usuário pagador.
 
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Não permitido;object;;
-/data/recurringConfiguration/vrp/periodicLimits/month/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um mês.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;30;
+/data/recurringConfiguration/vrp/periodicLimits/month/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um mês.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;30;1
 /data/recurringConfiguration/vrp/periodicLimits/month/transactionLimit;transactionLimit;Valor máximo a ser transacionado mensalmente.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/vrp/periodicLimits/year;year;"Configurar limite transacional anual determinado pelo usuário pagador.
 
 [Restrição] Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Objeto;;Condicional;;;0;1;" Caso enviado o objeto, ao menos um dos campos (`quantityLimit` ou `transactionLimit`) devem ser preenchidos
 ";Não permitido;object;;
-/data/recurringConfiguration/vrp/periodicLimits/year/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um ano.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;100;
+/data/recurringConfiguration/vrp/periodicLimits/year/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um ano.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;100;1
 /data/recurringConfiguration/vrp/periodicLimits/year/transactionLimit;transactionLimit;Valor máximo a ser transacionado por um ano, a partir da data definida no campo `/data/startDateTime`.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
