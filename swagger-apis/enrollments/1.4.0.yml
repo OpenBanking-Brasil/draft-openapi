@@ -1078,9 +1078,11 @@ components:
               type: number
               format: double
               description: |
-               Indica o nível de brilho da tela do dispositivo.  
-               Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
-               Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+               Indica o nível de brilho da tela do dispositivo.
+
+               [Android] O valor é inteiro, tipicamente entre 0 a 255, podendo a faixa de valores variar de acordo com o fabricante do celular. Referência no [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
+
+               [iOS] O valor é ponto flutuante entre “0.0” e “1.0”. Referência no [link](https://developer.apple.com/documentation/uikit/uiscreen/).
               example: 255
             elapsedTimeSinceBoot:
               type: integer
@@ -1284,9 +1286,11 @@ components:
                   type: number
                   format: double
                   description: |
-                   Indica o nível de brilho da tela do dispositivo.  
-                   Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
-                   Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+                    Indica o nível de brilho da tela do dispositivo.
+
+                    [Android] O valor é inteiro, tipicamente entre 0 a 255, podendo a faixa de valores variar de acordo com o fabricante do celular. Referência no [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
+
+                    [iOS] O valor é ponto flutuante entre “0.0” e “1.0”. Referência no [link](https://developer.apple.com/documentation/uikit/uiscreen/).
                 elapsedTimeSinceBoot:
                   type: integer
                   format: int64
