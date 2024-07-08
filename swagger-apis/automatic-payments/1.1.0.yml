@@ -94,7 +94,7 @@ info:
           &emsp;4.2.1.2 Formatação de parâmetros: Valida se parâmetros informados obedecem a formatação especificada (PARAMETRO_INVALIDO).  
         &ensp;4.2.2 Semânticos  
           &emsp;4.2.2.1 Saldo do usuário: Valida se a conta selecionada possui saldo suficiente para realizar o pagamento (SALDO_INSUFICIENTE);  
-          &emsp;4.2.2.2 Limites da transação: Valida se valor (ou quantidade de transações) ultrapassa faixa de limite parametrizada na detentora na conta do cliente pagador (VALOR_ACIMA_LIMITE);  
+          &emsp;4.2.2.2 Limites da transação: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente (VALOR_ACIMA_LIMITE);  
           &emsp;4.2.2.3 Valor informado: Valida se valor enviado é válido para o consentimento associado ao pagamento (VALOR_INVALIDO);  
           &emsp;4.2.2.4 Status Consentimento: Valida se o consentimento encontra-se em um dos estados finais “CONSUMED”, “REVOKED” ou “REJECTED" (CONSENTIMENTO_INVALIDO);   
           &emsp;4.2.2.5 Demais validações não explicitamente informadas (ex. suspeita de fraude): (NAO_INFORMADO);  
@@ -106,7 +106,8 @@ info:
           &emsp;4.2.2.11 Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
           &emsp;4.2.2.12 Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);   
           &emsp;4.2.2.13 Consentimento pendente de autorização: Consentimento em “PARTIALLY_ACCEPTED” aguardando aprovação de múltiplas alçadas (CONSENTIMENTO_PENDENTE_AUTORIZACAO);  
-          &emsp;4.2.2.14 Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO).  
+          &emsp;4.2.2.14 Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
+          &emsp;4.2.2.15 Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO).  
 
     5. **Validações na consulta do pagamento (_GET /pix/recurring-payments/{recurringPaymentId}_ e _GET /pix/recurring-payments_)**  
       5.1 **Casos de erro relacionados às permissões de segurança para acesso à API (ex. certificado, access_token)**  
@@ -116,7 +117,7 @@ info:
     6. **Demais validações executadas durante o processamento assíncrono do pagamento pela detentora, poderão ser consultados pela iniciadora através dos endpoints _GET /pix/recurring-payments/{recurringPaymentId}_ e _GET /pix/recurring-payments_ previstos com retorno HTTP Code 200 - OK com status RJCT (Rejected) e rejectionReason conforme abaixo (detalhamento adicional na documentação técnica da API):**  
       6.1 **Demais validações durante o processamento assíncrono:**  
         &ensp;6.1.1 - Saldo do usuário: Valida se a conta selecionada possui saldo suficiente para realizar o pagamento (SALDO_INSUFICIENTE);  
-        &ensp;6.1.2 - Limites da transação: Valida se valor (ou quantidade de transações) ultrapassa faixa de limite parametrizada na detentora (VALOR_ACIMA_LIMITE);  
+        &ensp;6.1.2 - Limites da transação: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente (VALOR_ACIMA_LIMITE);  
         &ensp;6.1.3 - Valor informado: Valida se valor enviado é válido para o consentimento do pagamento (VALOR_INVALIDO);  
         &ensp;6.1.4 - Demais validações não explicitamente informadas (ex. suspeita de fraude): (NAO_INFORMADO);  
         &ensp;6.1.5 - Divergência entre pagamento e consentimento: Valida se dados do pagamento são diferentes dos dados do consentimento (PAGAMENTO_DIVERGENTE_CONSENTIMENTO);  
@@ -130,7 +131,8 @@ info:
         &ensp;6.1.13 - Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
         &ensp;6.1.14 - Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);  
         &ensp;6.1.15 - Titularidade Inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE);  
-        &ensp;6.1.16 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO).  
+        &ensp;6.1.16 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
+        &ensp;6.1.17 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO).  
 
     ## Validações antifraude da Transferências Inteligentes
 
@@ -148,13 +150,15 @@ info:
       - Crédito pré-aprovado (cheque especial): Caso o cliente possua o produto, poderá utilizá-lo durante as transações associadas ao produto Transferências inteligentes.
       - Limite do Pix atrelado à conta do cliente: Limite de transações definido individualmente para cada conta do cliente, conforme regras de dias e horários do arranjo Pix.
       - Limites do consentimento: Configurado ou não pelo cliente em momento de criação do consentimento, podendo ser dependente ou não de um período.
-    - O cálculo do limite periódico disponível ao cliente deve seguir da seguinte maneira, considerando os cenários e
-    exemplos:
+    - O cálculo do limite periódico disponível ao cliente deve ocorrer da seguinte maneira, considerando os cenários, exemplos e o horário de Brasília:
       - Limite Diário (Ex.: R$ 100,00): Este limite controla as transferências realizadas dentro de um único dia, considerando o período das 00:00h até as 23:59h. Por exemplo, se um usuário transferir R$ 50,00 às 10:00h, ele ainda terá R$ 50,00 disponíveis para transferências até a meia-noite do mesmo dia;
       - Limite Semanal (Ex.: R$ 1.000,00): O limite semanal abrange o período de uma semana inteira, começando às 00:00h de domingo e terminando às 23:59h do sábado. Por exemplo, se um usuário transferir R$ 200,00 na terça-feira e R$ 500,00 na quinta-feira, ele ainda poderá transferir até R$ 300,00 até o final do sábado;
       - Limite Mensal (Ex.: R$ 10.000,00): Este limite mensal é calculado do primeiro ao último dia de cada mês. Por exemplo, em um mês, se o usuário transferir R$ 2.000,00 na primeira semana e R$ 3.000,00 na segunda semana, ele ainda terá R$ 5.000,00 disponíveis para transferências pelo restante do mês;
       - Limite Anual (Ex.: R$ 50.000,00): O limite anual conta do primeiro dia de janeiro ao último dia de dezembro. Por exemplo, se um usuário transferir R$ 10.000,00 até março, mais R$ 15.000,00 até junho e mais R$ 20.000,00 até setembro, ele só poderá transferir outros R$ 5.000,00 até o final do ano;
-      - Esses limites ajudam a gerenciar as transferências de fundos, garantindo que não excedam os montantes estabelecidos para cada período. Cada limite é independente e é recalculado conforme sua respectiva janela de tempo se reinicia.
+      - Esses limites ajudam a gerenciar as transferências de fundos, garantindo que não excedam os montantes estabelecidos para cada período. Cada limite é independente e é recalculado conforme sua respectiva janela de tempo se reinicia. Apenas pagamentos realizados com sucesso (em status ACSC) devem ser considerados para o cálculo dos limites do consentimento.
+    
+    ## Sobre a quantidade de consentimentos que podem ser criados:
+    Não há limitações relacionadas a quantidade de consentimentos que podem ser criados entre uma mesma ITP, conta de débito e titularidade. Fica a cargo da instituição iniciadora solicitar, sempre que julgar necessário para atendimento do usuário, a criação de um novo consentimento.
   version: 1.1.0
   license:
     name: Apache 2.0
@@ -705,6 +709,7 @@ components:
                   - PAGAMENTO_RECUSADO_SPI
                   - ERRO_IDEMPOTENCIA
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
                 example: SALDO_INSUFICIENTE
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
@@ -724,6 +729,7 @@ components:
                   - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
+                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
               title:
                 type: string
                 maxLength: 255
@@ -747,6 +753,7 @@ components:
                   - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
+                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: Limite de transação excedido.
               detail:
                 type: string
                 maxLength: 2048
@@ -770,6 +777,7 @@ components:
                   - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
+                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateRecurringPaymentsPaymentId:
@@ -1033,11 +1041,11 @@ components:
             Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
             No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
             No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
-            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
-            Esta validação é opcional caso o localInstrument for igual a INIC.
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122).
 
-            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+            [Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
+
+            [Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
           pattern: '[\w\W\s]*'
           example: '11221131242'
         transactionIdentification:
@@ -1721,6 +1729,8 @@ components:
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - TITULARIDADE_INCONSISTENTE
+        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1740,6 +1750,8 @@ components:
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - TITULARIDADE_INCONSISTENTE
+        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -1761,6 +1773,8 @@ components:
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
+
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1781,6 +1795,7 @@ components:
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -1898,59 +1913,6 @@ components:
               $ref: '#/components/schemas/ConsentRejectionReason'
         riskSignals:
           $ref: '#/components/schemas/RiskSignalsConsents'
-        creditors:
-          type: array
-          minItems: 1
-          items:
-            type: object
-            description: Objeto contendo os dados do recebedor (creditor).
-            properties:
-              name:
-                type: string
-                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
-                maxLength: 120
-                example: Marco Antonio de Brito
-                description: |
-                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
-                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
-        startDateTime:
-          description: |
-            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-
-            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
-          type: string
-          format: date-time
-          example: '2021-05-21T08:30:00Z'
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          maxLength: 20
-        expirationDateTime:
-          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-          type: string
-          format: date-time
-          example: '2021-05-21T08:30:00Z'
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          maxLength: 20
-        automatic:
-          type: object
-          description: Definição da configuração de recorrência para pagamentos automáticos
-          properties:
-            transactionLimit:
-              type: string
-              pattern: '^((\d{1,16}\.\d{2}))$'
-              minLength: 4
-              maxLength: 19
-              example: '1000000.12'
-              description: Valor da transação com 2 casas decimais.
-            dayOfMonth:
-              type: integer
-              format: int32
-              minimum: 1
-              maximum: 31
-              example: 10
-              description: |
-                Dia fixo do mês que está prevista a transação.
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
     ConsentRejectionReason:
       type: object
       description: |
@@ -2014,7 +1976,7 @@ components:
             Detalhe sobre o código identificador do motivo de rejeição.
 
             - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
-            - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
+            - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente;
             - VALOR_INVALIDO: O valor enviado não é válido; 
             - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
             - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
@@ -2028,6 +1990,8 @@ components:
             - LIMITE_PERIODO_VALOR_EXCEDIDO – A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
             - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO – A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
             - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração.
+            - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
+            - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
     RejectionReason:
       type: object
       description: |
@@ -2046,7 +2010,7 @@ components:
             Detalhe sobre o código identificador do motivo de rejeição.
 
             - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
-            - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
+            - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente;
             - VALOR_INVALIDO: O valor enviado não é válido; 
             - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
             - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
@@ -2060,7 +2024,47 @@ components:
             - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração
             - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
             - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
-            - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
+            - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.       
+            - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
+    ConsentEdition:
+      type: object
+      properties:
+        riskSignals:
+          $ref: '#/components/schemas/RiskSignalsConsents'
+        creditors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: Objeto contendo os dados do recebedor (creditor).
+            properties:
+              name:
+                type: string
+                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+                maxLength: 120
+                example: Marco Antonio de Brito
+                description: |
+                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
+                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+        startDateTime:
+          description: |
+            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        expirationDateTime:
+          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        recurringConfiguration:
+              $ref: '#/components/schemas/RecurringConfiguration'
     ConsentRevocation:
       type: object
       properties:
@@ -2105,59 +2109,6 @@ components:
               $ref: '#/components/schemas/ConsentRevokedReason'
         riskSignals:
           $ref: '#/components/schemas/RiskSignalsConsents'
-        creditors:
-          type: array
-          minItems: 1
-          items:
-            type: object
-            description: Objeto contendo os dados do recebedor (creditor).
-            properties:
-              name:
-                type: string
-                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
-                maxLength: 120
-                example: Marco Antonio de Brito
-                description: |
-                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
-                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
-        startDateTime:
-          description: |
-            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-
-            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
-          type: string
-          format: date-time
-          example: '2021-05-21T08:30:00Z'
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          maxLength: 20
-        expirationDateTime:
-          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-          type: string
-          format: date-time
-          example: '2021-05-21T08:30:00Z'
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          maxLength: 20
-        automatic:
-          type: object
-          description: Definição da configuração de recorrência para pagamentos automáticos
-          properties:
-            transactionLimit:
-              type: string
-              pattern: '^((\d{1,16}\.\d{2}))$'
-              minLength: 4
-              maxLength: 19
-              example: '1000000.12'
-              description: Valor da transação com 2 casas decimais.
-            dayOfMonth:
-              type: integer
-              format: int32
-              minimum: 1
-              maximum: 31
-              example: 10
-              description: |
-                Dia fixo do mês que está prevista a transação.
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
     ConsentRevokedReason:
       type: object
       description: |
@@ -2472,6 +2423,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 2
           description: Quantidade limite de transações permitidas para ocorrer durante um dia.
         transactionLimit:
@@ -2490,6 +2442,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 10
           description: Quantidade limite de transações permitidas para ocorrer durante uma semana.
         transactionLimit:
@@ -2508,6 +2461,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 30
           description: Quantidade limite de transações permitidas para ocorrer durante um mês.
         transactionLimit:
@@ -2526,6 +2480,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 100
           description: Quantidade limite de transações permitidas para ocorrer durante um ano. 
         transactionLimit:
@@ -2826,7 +2781,7 @@ components:
               $ref: '#/components/schemas/Creditors'
             startDateTime:
               description: |
-                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format) sempre com a utilização de timezone UTC(UTC time format).
+                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
                 
                 [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime. Caso o campo /data/startDateTime enviado seja anterior ao valor do campo /data/creationDateTime, o detentor deve substituir o valor do campo /data/startDateTime pelo valor do campo /data/creationDateTime. 
               type: string
@@ -3287,8 +3242,9 @@ components:
         - data
       properties:
         data:
-          description: Objeto contendo as informações de rejeição e revogação dos consentimentos
+          description: Objeto contendo as informações de rejeição, revogação e edição dos consentimentos
           oneOf:
+            - $ref: '#/components/schemas/ConsentEdition'
             - $ref: '#/components/schemas/ConsentRevocation'
             - $ref: '#/components/schemas/ConsentRejection'
     ResponseRecurringPaymentsIdPost:
@@ -3586,11 +3542,11 @@ components:
             Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
             No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
             No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
-            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
-            Esta validação é opcional caso o localInstrument for igual a INIC.
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122).
 
-            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+            [Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
+
+            [Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
           pattern: '[\w\W\s]*'
           example: '11221131242'
         transactionIdentification:
