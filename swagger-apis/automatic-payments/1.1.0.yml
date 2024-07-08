@@ -2416,7 +2416,6 @@ components:
                   $ref: '#/components/schemas/Year'
     Day:
       type: object
-      minItems: 1
       description: |
         Configurar limite transacional diário determinado pelo usuário pagador.
         
@@ -2424,6 +2423,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 2
           description: Quantidade limite de transações permitidas para ocorrer durante um dia.
         transactionLimit:
@@ -2435,7 +2435,6 @@ components:
           description: Valor máximo a ser transacionado diariamente.
     Week:
       type: object
-      minItems: 1
       description: |
         Configurar limite transacional semanal determinado pelo usuário pagador.
         
@@ -2443,6 +2442,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 10
           description: Quantidade limite de transações permitidas para ocorrer durante uma semana.
         transactionLimit:
@@ -2454,7 +2454,6 @@ components:
           description: Valor máximo a ser transacionado semanalmente.
     Month:
       type: object
-      minItems: 1
       description: |
         Configurar limite transacional mensal determinado pelo usuário pagador.
         
@@ -2462,6 +2461,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 30
           description: Quantidade limite de transações permitidas para ocorrer durante um mês.
         transactionLimit:
@@ -2473,7 +2473,6 @@ components:
           description: Valor máximo a ser transacionado mensalmente.
     Year:
       type: object
-      minItems: 1
       description: |
         Configurar limite transacional anual determinado pelo usuário pagador.
         
@@ -2481,6 +2480,7 @@ components:
       properties:
         quantityLimit:
           type: integer
+          minimum: 1
           example: 100
           description: Quantidade limite de transações permitidas para ocorrer durante um ano. 
         transactionLimit:
