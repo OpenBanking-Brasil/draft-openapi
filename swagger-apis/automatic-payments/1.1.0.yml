@@ -2416,6 +2416,7 @@ components:
                   $ref: '#/components/schemas/Year'
     Day:
       type: object
+      minItems: 1
       description: |
         Configurar limite transacional diário determinado pelo usuário pagador.
         
@@ -2434,6 +2435,7 @@ components:
           description: Valor máximo a ser transacionado diariamente.
     Week:
       type: object
+      minItems: 1
       description: |
         Configurar limite transacional semanal determinado pelo usuário pagador.
         
@@ -2452,6 +2454,7 @@ components:
           description: Valor máximo a ser transacionado semanalmente.
     Month:
       type: object
+      minItems: 1
       description: |
         Configurar limite transacional mensal determinado pelo usuário pagador.
         
@@ -2470,6 +2473,7 @@ components:
           description: Valor máximo a ser transacionado mensalmente.
     Year:
       type: object
+      minItems: 1
       description: |
         Configurar limite transacional anual determinado pelo usuário pagador.
         
