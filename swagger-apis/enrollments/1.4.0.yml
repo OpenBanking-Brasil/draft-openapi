@@ -1473,14 +1473,8 @@ components:
                       description: Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de conta.
                 clientExtensionResults:
                   type: object
-                  description: Estrutura para extensão de resultados 
-                  properties:
-                    additionalProp1:
-                      type: string
-                      description: Propriedade adicional.
-                    additionalProp2:
-                      type: string
-                      description: Propriedade adicional.
+                  description: Estrutura para extensão de resultados
+                  additionalProperties: true
     DebtorAccount:
       type: object
       description: |
@@ -1654,8 +1648,7 @@ components:
             clientExtensionResults:
               type: object
               description: Extensões da credencial, específicas por plataforma
-              additionalProperties:
-                type: string
+              additionalProperties: true
     EnrollmentFidoOptionsInput:
       type: object
       required:
@@ -1734,8 +1727,7 @@ components:
             extensions:
               type: object
               description: Campo de extensão com opções que variam por plataforma.
-              additionalProperties:
-                type: string
+              additionalProperties: true
         meta:
           $ref: '#/components/schemas/Meta'
     EnrollmentFidoSignOptions:
@@ -1771,8 +1763,7 @@ components:
             extensions:
               type: object
               description: Campo de extensão com opções que variam por plataforma.
-              additionalProperties:
-                type: string
+              additionalProperties: true
         meta:
           $ref: '#/components/schemas/Meta'
     EnumAccountPaymentsType:
