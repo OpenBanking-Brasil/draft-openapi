@@ -523,7 +523,17 @@ paths:
 components:
   headers:
       xFapiInteractionId:
-        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser "espelhado" pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
+        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          minLength: 1
+          maxLength: 36
+          format: uuid
+          example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+      xFapiInteractionIdBadRequest:
+        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, ou enviado inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
         required: true
         schema:
           type: string
@@ -2920,7 +2930,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-            $ref: '#/components/headers/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionIdBadRequest'
     BadRequestPixPayments:
       description: 'Seguir as orientações presentes na descrição da API, subitem 2.1.3.'
       content:
@@ -2945,9 +2955,6 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
-      headers:
-        x-fapi-interaction-id:
-            $ref: '#/components/headers/xFapiInteractionId'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
