@@ -562,7 +562,12 @@ components:
   headers:
     XFapiInteractionId:
       description: |
-          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora..
+          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
+      schema:
+        $ref: '#/components/schemas/XFapiInteractionId'
+    XFapiInteractionIdBadRequest:
+      description: |
+          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, ou enviado inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
       schema:
         $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
@@ -4087,7 +4092,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionIdBadRequest'
     BadRequestPaymentsConsents:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL'
       content:
@@ -4096,7 +4101,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionIdBadRequest'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
