@@ -506,8 +506,9 @@ paths:
       operationId: authorizeConsent
       description: |
         Autorização de um consentimento de pagamentos em status `AWAITING_AUTHORISATION` a partir do access_token emitido pela jornada sem redirecionamento e envio de sinais de risco.  
-        O consentimento de pagamento deve transitar ao status `AUTHORISED` na execução com sucesso desse método.  
-        Em caso de falha, o status do consentimento do pagamento precisa transitar para o status `REJECTED`.
+        Caso o consentimento possua múltiplos aprovadores, deve ser movido para `PARTIALLY_ACCEPTED` após a primeira aprovação, até que todas as aprovações necessárias sejam coletadas e ele transite para `AUTHORISED`.  
+        Caso de aprovação única, o consentimento deve transitar, pós autorização, direto para `AUTHORISED`.
+        Em caso de falha em algum dos cenários, o status do consentimento do pagamento precisa transitar para o status `REJECTED`.
       parameters:
         - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
@@ -1078,9 +1079,11 @@ components:
               type: number
               format: double
               description: |
-               Indica o nível de brilho da tela do dispositivo.  
-               Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
-               Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+               Indica o nível de brilho da tela do dispositivo.
+
+               [Android] O valor é inteiro, tipicamente entre 0 a 255, podendo a faixa de valores variar de acordo com o fabricante do celular. Referência no [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
+
+               [iOS] O valor é ponto flutuante entre “0.0” e “1.0”. Referência no [link](https://developer.apple.com/documentation/uikit/uiscreen/).
               example: 255
             elapsedTimeSinceBoot:
               type: integer
@@ -1129,7 +1132,6 @@ components:
               required:
                 - height
                 - width
-              example: 255
               properties:
                 height:
                   type: integer
@@ -1169,7 +1171,7 @@ components:
                     - FINE
                     - INFERRED
                   example: FINE
-            isCallInProgress:
+            isCallingProgress:
               type: boolean
               description: |
                 Indica chamada ativa no momento do vínculo.
@@ -1215,7 +1217,7 @@ components:
             antennaInformation:
               type: string
               description: Indica em qual antena o dispositivo está conectado.
-              example: "CellIdentityLte:{ mCi=2******60 mPci=274 mTac=5***1 mEarfcn=9510 mBands=[28] mBandwidth=2147483647 mMcc=724 mMnc=10 mAlphaLong=VIVO AlphaShort=VIVO mAdditionalPlmns={} mCsgInfo=null}, CellIdentityLte:{ mCi=1*****01 mPci=361 mTac=3***6 mEarfcn=9410 mBands=[28] mBandwidth=2147483647 mMcc=724 mMnc=03 mAlphaLong=TIMBRASIL mAlphaShort=TIMBRASIL mAdditionalPlmns={} mCsgInfo=null}"
+              example: "CellIdentityLte:{ mCi=2******60 mPci=274 mTac=5***1 mEarfcn=9510 mBands=[28] mBandwidth=2147483647 mMcc=724 mMnc=10 mAlphaLong=VIVO mAlphaShort=VIVO mAdditionalPlmns={} mCsgInfo=null}, CellIdentityLte:{ mCi=1*****01 mPci=361 mTac=3***6 mEarfcn=9410 mBands=[28] mBandwidth=2147483647 mMcc=724 mMnc=03 mAlphaLong=TIMBRASIL mAlphaShort=TIMBRASIL mAdditionalPlmns={} mCsgInfo=null}"
             isUsbConnected:
               type: boolean
               description: Indica se o dispositivo está conectado a outro dispositivo via USB.
@@ -1285,9 +1287,11 @@ components:
                   type: number
                   format: double
                   description: |
-                   Indica o nível de brilho da tela do dispositivo.  
-                   Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
-                   Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+                    Indica o nível de brilho da tela do dispositivo.
+
+                    [Android] O valor é inteiro, tipicamente entre 0 a 255, podendo a faixa de valores variar de acordo com o fabricante do celular. Referência no [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
+
+                    [iOS] O valor é ponto flutuante entre “0.0” e “1.0”. Referência no [link](https://developer.apple.com/documentation/uikit/uiscreen/).
                 elapsedTimeSinceBoot:
                   type: integer
                   format: int64
@@ -1366,7 +1370,7 @@ components:
                         - COARSE
                         - FINE
                         - INFERRED
-                isCallInProgress:
+                isCallingProgress:
                   type: boolean
                   description: |
                     Indica chamada ativa no momento do vínculo.
@@ -1469,14 +1473,8 @@ components:
                       description: Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de conta.
                 clientExtensionResults:
                   type: object
-                  description: Estrutura para extensão de resultados 
-                  properties:
-                    additionalProp1:
-                      type: string
-                      description: Propriedade adicional.
-                    additionalProp2:
-                      type: string
-                      description: Propriedade adicional.
+                  description: Estrutura para extensão de resultados
+                  additionalProperties: true
     DebtorAccount:
       type: object
       description: |
@@ -1650,8 +1648,7 @@ components:
             clientExtensionResults:
               type: object
               description: Extensões da credencial, específicas por plataforma
-              additionalProperties:
-                type: string
+              additionalProperties: true
     EnrollmentFidoOptionsInput:
       type: object
       required:
@@ -1730,8 +1727,7 @@ components:
             extensions:
               type: object
               description: Campo de extensão com opções que variam por plataforma.
-              additionalProperties:
-                type: string
+              additionalProperties: true
         meta:
           $ref: '#/components/schemas/Meta'
     EnrollmentFidoSignOptions:
@@ -1767,8 +1763,7 @@ components:
             extensions:
               type: object
               description: Campo de extensão com opções que variam por plataforma.
-              additionalProperties:
-                type: string
+              additionalProperties: true
         meta:
           $ref: '#/components/schemas/Meta'
     EnumAccountPaymentsType:
@@ -1946,11 +1941,10 @@ components:
       properties:
         self:
           type: string
-          format: uri
+          format: url
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     ResponseError:
       type: object
       required:
