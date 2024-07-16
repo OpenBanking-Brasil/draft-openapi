@@ -2637,6 +2637,7 @@ components:
           description: Define a política de agendamento único.
           required:
             - date
+            - additionalInformation
           properties:
             date:
               type: string
@@ -2651,6 +2652,12 @@ components:
                 [Restrição] Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em 
                 relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+730 corridos a 
                 partir da data do consentimento, também considerando o fuso horário de Brasília.
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Agendamento único de transação
     ScheduleDaily:
       type: object
       required:
@@ -2661,6 +2668,7 @@ components:
           required:
             - startDate
             - quantity
+            - additionalInformation
           properties:
             startDate:
               description: Define o início da vigência da recorrência.
@@ -2676,6 +2684,12 @@ components:
               minimum: 2
               maximum: 60
               example: 3
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Diário, até 31/12/2023
     ScheduleWeekly:
       type: object
       required:
@@ -2687,6 +2701,7 @@ components:
             - dayOfWeek
             - startDate
             - quantity
+            - additionalInformation
           properties:
             dayOfWeek:
               description: Define o dia da semana planejado para a ocorrência das liquidações.
@@ -2714,6 +2729,12 @@ components:
               minimum: 2
               maximum: 60
               example: 10
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Semanal, até 31/12/2023
     ScheduleMonthly:
       type: object
       required:
@@ -2725,6 +2746,7 @@ components:
             - dayOfMonth
             - startDate
             - quantity
+            - additionalInformation
           properties:
             dayOfMonth:
               description: Define o dia do mês planejado para a ocorrência das liquidações.
@@ -2746,6 +2768,12 @@ components:
               minimum: 2
               maximum: 24
               example: 24
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Mensal, até 18/12/2023
     ScheduleCustom:
       type: object
       required:
