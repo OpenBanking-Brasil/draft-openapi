@@ -76,9 +76,11 @@ partir da data do consentimento, também considerando o fuso horário de Brasíl
 relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+730 corridos a 
 partir da data do consentimento, também considerando o fuso horário de Brasília.
 ";Não permitido;string;2023-08-23;
+/data/payment/schedule/single/additionalInformation;additionalInformation;Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.;Texto;255;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Agendamento único de transação;
 /data/payment/schedule/daily;daily;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/payment/schedule/daily/startDate;startDate;Define o início da vigência da recorrência.;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
 /data/payment/schedule/daily/quantity;quantity;Define a quantidade de pagamentos que serão enviados para liquidação.;Inteiro;60;Obrigatório;;;1;1;"";Não permitido;integer;3;2
+/data/payment/schedule/daily/additionalInformation;additionalInformation;Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.;Texto;255;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Diário, até 31/12/2023;
 /data/payment/schedule/weekly;weekly;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/payment/schedule/weekly/dayOfWeek;dayOfWeek;Define o dia da semana planejado para a ocorrência das liquidações.;Texto;;Obrigatório;;"SEGUNDA_FEIRA 
 TERCA_FEIRA 
@@ -89,10 +91,12 @@ SABADO
 DOMINGO";1;1;"";Não permitido;string;QUINTA_FEIRA;
 /data/payment/schedule/weekly/startDate;startDate;Define o início da vigência da recorrência.;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
 /data/payment/schedule/weekly/quantity;quantity;Define a quantidade de pagamentos que serão enviados para liquidação.;Inteiro;60;Obrigatório;;;1;1;"";Não permitido;integer;10;2
+/data/payment/schedule/weekly/additionalInformation;additionalInformation;Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.;Texto;255;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Semanal, até 31/12/2023;
 /data/payment/schedule/monthly;monthly;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/payment/schedule/monthly/dayOfMonth;dayOfMonth;Define o dia do mês planejado para a ocorrência das liquidações.;Inteiro;31;Obrigatório;;;1;1;"";Não permitido;integer;10;1
 /data/payment/schedule/monthly/startDate;startDate;Define o início da vigência da recorrência.;Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-08-23;
 /data/payment/schedule/monthly/quantity;quantity;Define a quantidade de pagamentos que serão enviados para liquidação.;Inteiro;24;Obrigatório;;;1;1;"";Não permitido;integer;24;2
+/data/payment/schedule/monthly/additionalInformation;additionalInformation;Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.;Texto;255;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Mensal, até 18/12/2023;
 /data/payment/schedule/custom;custom;"[Restrição] As datas enviadas na lista de datas (array “dates”) não podem ser repetidas. 
 Caso datas repetidas sejam enviadas, o detentor deve rejeitar a criação do consentimento, informando o erro PARAMETRO_INVALIDO.
 ";Objeto;;Obrigatório;;;1;1;" As datas enviadas na lista de datas (array “dates”) não podem ser repetidas. 
