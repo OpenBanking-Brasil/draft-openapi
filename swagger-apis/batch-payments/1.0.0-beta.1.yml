@@ -50,6 +50,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+      - OAuth2ClientCredentials:
+          - payments
   /consents/{consentId}:
     get:
       tags:
@@ -72,6 +75,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+      - OAuth2ClientCredentials:
+          - payments
     patch:
       tags:
         - Consents
@@ -101,6 +107,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+      - OAuth2ClientCredentials:
+          - payments
   /consents/{consentId}/draft-payments:
     post:
       tags:
@@ -131,6 +140,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+      - OAuth2ClientCredentials:
+          - payments
     get:
       tags:
         - Draft Payments
@@ -148,6 +160,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+        - OAuth2ClientCredentials:
+          - payments
     patch:
       tags:
         - Draft Payments
@@ -172,6 +187,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+        - OAuth2ClientCredentials:
+          - payments
   /consents/{consentId}/payments:
     post:
       tags:
@@ -202,6 +220,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+        - OAuth2AuthorizationCode:
+            - openid
+            - payments
+            - 'consent:consentId'
     get:
       tags:
         - Payments
@@ -223,6 +246,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+        - OAuth2ClientCredentials:
+          - payments
   /consents/{consentId}/payments/{paymentId}:
     get:
       tags:
@@ -245,6 +271,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+        - OAuth2ClientCredentials:
+          - payments
     patch:
       tags:
         - Payments
@@ -274,6 +303,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ResponseError'
+      security:
+        - OAuth2ClientCredentials:
+          - payments
 components:
   schemas:
     CreateConsent:
