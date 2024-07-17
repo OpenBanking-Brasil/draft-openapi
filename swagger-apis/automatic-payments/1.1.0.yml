@@ -562,7 +562,12 @@ components:
   headers:
     XFapiInteractionId:
       description: |
-          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora..
+          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
+      schema:
+        $ref: '#/components/schemas/XFapiInteractionId'
+    XFapiInteractionIdBadRequest:
+      description: |
+          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, ou enviado inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
       schema:
         $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
@@ -714,7 +719,7 @@ components:
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
                   - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+                  - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente.
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
@@ -738,7 +743,7 @@ components:
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
                   - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+                  - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente.
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
@@ -762,7 +767,7 @@ components:
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
                   - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
+                  - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente.
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
@@ -954,6 +959,7 @@ components:
         - endToEndId
         - date
         - payment
+        - creditorAccount
         - cnpjInitiator
         - localInstrument
         - document
@@ -986,7 +992,7 @@ components:
         payment:
           $ref: '#/components/schemas/PaymentPix'
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccountPost'
+          $ref: '#/components/schemas/CreditorAccount'
         remittanceInformation:
           type: string
           maxLength: 140
@@ -1179,7 +1185,7 @@ components:
                     - COARSE
                     - FINE
                     - INFERRED
-            isCallInProgress:
+            isCallingProgress:
               type: boolean
               description: |
                 Indica chamada ativa no momento do vínculo.
@@ -1327,7 +1333,7 @@ components:
                 - COARSE
                 - FINE
                 - INFERRED
-        isCallInProgress:
+        isCallingProgress:
           type: boolean
           description: |
             Indica chamada ativa no momento do vínculo.
@@ -1408,56 +1414,14 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountTypeConsents'
-    CreditorAccountPost:
+    CreditorAccount:
       type: object
       description: |
         Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
 
-        [Restrição] Se localInstrument for igual a MANU, o campo creditorAccount deve ser preenchido.
+        [Restrição] Se localInstrument for igual a MANU, o campo creditorAccount deve ser preenchido
       required:
         - ispb
-        - issuer
-        - number
-        - accountType
-      properties:
-        ispb:
-          type: string
-          minLength: 8
-          maxLength: 8
-          pattern: '^[0-9]{8}$'
-          example: '12345678'
-          description: |
-            Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
-        issuer:
-          type: string
-          minLength: 1
-          maxLength: 4
-          pattern: '^[0-9]{1,4}$'
-          example: '1774'
-          description: |
-            Código da Agência emissora da conta sem dígito. 
-            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
-            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
-            
-            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
-        number:
-          type: string
-          minLength: 1
-          maxLength: 20
-          pattern: '^[0-9]{1,20}$'
-          example: '1234567890'
-          description: |
-            Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
-            se houver valor alfanumérico, este deve ser convertido para 0.
-        accountType:
-          $ref: '#/components/schemas/EnumAccountTypePayments'
-    CreditorAccount:
-      type: object
-      description: |
-        Objeto que contém a identificação da conta de destino do beneficiário/recebedor. 
-      required:
-        - ispb
-        - issuer
         - number
         - accountType
       properties:
@@ -2063,8 +2027,27 @@ components:
           example: '2021-05-21T08:30:00Z'
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
-        recurringConfiguration:
-              $ref: '#/components/schemas/RecurringConfiguration'
+        automatic:
+          type: object
+          description: Definição da configuração de recorrência para pagamentos automáticos
+          properties:
+            transactionLimit:
+              description: Valor da transação com 2 casas decimais.
+              type: string
+              pattern: ^((\d{1,16}\.\d{2}))$
+              minLength: 4
+              maxLength: 19
+              example: "1000000.12"
+            dayOfMonth:
+              description: |
+                Dia fixo do mês que está prevista a transação.
+              
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 31
+              example: 10
     ConsentRevocation:
       type: object
       properties:
@@ -3421,6 +3404,7 @@ components:
         - status
         - cnpjInitiator
         - payment
+        - creditorAccount
         - localInstrument
         - document
       properties:
@@ -3508,7 +3492,7 @@ components:
           description: |
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccountPost'
+          $ref: '#/components/schemas/CreditorAccount'
         debtorAccount:
             $ref: '#/components/schemas/DebtorAccount'
         cancellation:
@@ -3593,6 +3577,7 @@ components:
         - status
         - cnpjInitiator
         - payment
+        - creditorAccount
         - document
         - localInstrument
       properties:
@@ -3765,6 +3750,7 @@ components:
         - status
         - cnpjInitiator
         - payment
+        - creditorAccount
         - document
         - localInstrument
       properties:
@@ -4106,7 +4092,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionIdBadRequest'
     BadRequestPaymentsConsents:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL'
       content:
@@ -4115,7 +4101,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionIdBadRequest'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
