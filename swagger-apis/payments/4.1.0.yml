@@ -523,7 +523,17 @@ paths:
 components:
   headers:
       xFapiInteractionId:
-        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser "espelhado" pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
+        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          minLength: 1
+          maxLength: 36
+          format: uuid
+          example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+      xFapiInteractionIdBadRequest:
+        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, ou enviado inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
         required: true
         schema:
           type: string
@@ -2627,6 +2637,7 @@ components:
           description: Define a política de agendamento único.
           required:
             - date
+            - additionalInformation
           properties:
             date:
               type: string
@@ -2641,6 +2652,12 @@ components:
                 [Restrição] Esse campo deverá sempre ser no mínimo D+1 corrido, ou seja, a data imediatamente posterior em 
                 relação a data do consentimento considerando o fuso horário de Brasília e deverá ser no máximo D+730 corridos a 
                 partir da data do consentimento, também considerando o fuso horário de Brasília.
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Agendamento único de transação
     ScheduleDaily:
       type: object
       required:
@@ -2651,6 +2668,7 @@ components:
           required:
             - startDate
             - quantity
+            - additionalInformation
           properties:
             startDate:
               description: Define o início da vigência da recorrência.
@@ -2666,6 +2684,12 @@ components:
               minimum: 2
               maximum: 60
               example: 3
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Diário, até 31/12/2023
     ScheduleWeekly:
       type: object
       required:
@@ -2677,6 +2701,7 @@ components:
             - dayOfWeek
             - startDate
             - quantity
+            - additionalInformation
           properties:
             dayOfWeek:
               description: Define o dia da semana planejado para a ocorrência das liquidações.
@@ -2704,6 +2729,12 @@ components:
               minimum: 2
               maximum: 60
               example: 10
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Semanal, até 31/12/2023
     ScheduleMonthly:
       type: object
       required:
@@ -2715,6 +2746,7 @@ components:
             - dayOfMonth
             - startDate
             - quantity
+            - additionalInformation
           properties:
             dayOfMonth:
               description: Define o dia do mês planejado para a ocorrência das liquidações.
@@ -2736,6 +2768,12 @@ components:
               minimum: 2
               maximum: 24
               example: 24
+            additionalInformation:
+              type: string
+              description: Texto livre para Iniciador preencher de forma compreensível pelo usuário aprovador/pagador. O texto pode ser utilizado pelo detentor para exibição do resumo da transação durante aprovação do usuário aprovador/pagador.
+              pattern: '[\w\W\s]*'
+              maxLength: 255
+              example: Mensal, até 18/12/2023
     ScheduleCustom:
       type: object
       required:
@@ -2920,7 +2958,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-            $ref: '#/components/headers/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionIdBadRequest'
     BadRequestPixPayments:
       description: 'Seguir as orientações presentes na descrição da API, subitem 2.1.3.'
       content:
@@ -2945,9 +2983,6 @@ components:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
-      headers:
-        x-fapi-interaction-id:
-            $ref: '#/components/headers/xFapiInteractionId'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
