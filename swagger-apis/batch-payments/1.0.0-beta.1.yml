@@ -332,6 +332,8 @@ components:
               description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -358,6 +360,8 @@ components:
                 [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -398,6 +402,7 @@ components:
                 totalAmount:
                   description: Valor total da soma de todos os valores que serão enviados para os pagamentos informados pelo inciador de pagamentos.
                   type: string
+                  minimum: 4
                   maxLength: 19
                   pattern: '^((\d{1,16}\.\d{2}))$'
                   example: '100000.12'
@@ -423,8 +428,8 @@ components:
             consentId:
               description: |
                 Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. 
-                Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: o namespace(urn) o identificador associado ao namespace da instituição transmissora (bancoex).  o identificador específico dentro do namespace (C1DD33123).  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: o namespace(urn) o identificador associado ao namespace da instituição transmissora (bancoex).  o identificador específico dentro do namespace (C1DD33123).  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
               type: string
               maxLength: 256
               pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
@@ -440,7 +445,14 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               example: '2021-05-21T08:30:00Z'
             status:
-              description: Status atual do consentimento de acordo com a máquina de estados  AWAITING_CONFIGURATION - Aguardando configuração de pagamentos  AWAITING_AUTHORISATION - Aguardando autorização  PARTIALLY_ACCEPTED - Parcialmente aceito  AUTHORISED - Autorizado  REJECTED - Rejeitado  CONSUMED - Consumido
+              description: |
+                Status atual do consentimento de acordo com a máquina de estados  
+                - AWAITING_CONFIGURATION - Aguardando configuração de pagamentos  
+                - AWAITING_AUTHORISATION - Aguardando autorização  
+                - PARTIALLY_ACCEPTED - Parcialmente aceito  
+                - AUTHORISED - Autorizado  
+                - REJECTED - Rejeitado  
+                - CONSUMED - Consumido
               type: string
               enum:
                - AWAITING_CONFIGURATION
@@ -454,6 +466,8 @@ components:
               description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -480,6 +494,8 @@ components:
                 [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -519,6 +535,7 @@ components:
                 totalAmount:
                   description: Valor total da soma de todos os valores que serão enviados para os pagamentos informados pelo inciador de pagamentos.
                   type: string
+                  minimum: 4
                   maxLength: 19
                   pattern: '^((\d{1,16}\.\d{2}))$'
                   example: '100000.12'
@@ -1543,6 +1560,7 @@ components:
         ispb:
           description: Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
           type: string
+          minLength: 8
           maxLength: 8
           pattern: '^[0-9]{8}$'
           example: '12345678'
@@ -1552,12 +1570,14 @@ components:
           
             [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
           type: string
+          minLength: 1
           maxLength: 4
           pattern: '^[0-9]{1,4}$'
           example: '1774'
         number:
           description: Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), se houver valor alfanumérico, este deve ser convertido para 0.
           type: string
+          minLength: 1
           maxLength: 20
           pattern: '^[0-9]{1,20}$'
           example: '1234567890'
@@ -1701,7 +1721,7 @@ components:
           example: '2021-05-21T08:30:00Z'
     MetaSingle:
       type: object
-      description: Meta informações referente a API requisitada.
+      description: Meta informação referente a API requisitada.
       required:
         - requestDateTime
       properties:
