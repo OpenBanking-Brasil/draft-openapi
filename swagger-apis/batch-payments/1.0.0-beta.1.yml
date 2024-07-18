@@ -1403,20 +1403,31 @@ components:
             - FIDO_FLOW
           example: 'HYBRID_FLOW'
     Rejection:
+      description: |
+        Motivos de rejeição do consentimento.
+
+        [Restrição] Preenchimento obrigatório quando /data/status for enviado igual a REJECTED
       type: object
       required:
         - rejectedBy
         - rejectedFrom
         - rejectedAt
+        - reason
       properties:
         rejectedBy:
           type: string
+          enum:
+            - USUARIO
+            - INICIADORA
+            - DETENTORA
           example: 'INICIADORA'
         rejectedFrom:
           type: string
           example: 'DETENTORA'
         rejectedAt:
+          description: Data e hora em que ocorreu a rejeição do consentimento.
           type: string
+          format: $date-time
           example: '2021-05-21T08:30:00Z'
         reason:
           type: object
@@ -1425,6 +1436,7 @@ components:
             - detail
           properties:
             code:
+              description: Código descritivo do motivo de rejeição do consentimento.
               type: string
               enum:
                 - NAO_INFORMADO
@@ -1435,6 +1447,7 @@ components:
                 - CONTA_NAO_PERMITE_PAGAMENTO
               example: 'VALOR_ACIMA_LIMITE'
             detail:
+              description: Detalhes do erro representado pelo código.
               type: string
               example: |
                 Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
@@ -1520,9 +1533,8 @@ components:
         [Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a "REVOKED".
       type: object
       required:
-        - rejectedBy
-        - rejectedFrom
-        - rejectedAt
+        - revokedBy
+        - revokedFrom
       properties:
         revokedBy:
           description: Quem iniciou a solicitação de revogação.
