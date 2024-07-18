@@ -187,6 +187,10 @@ paths:
       description: Para modificar apenas o estado de um consentimento para REVOKED, REJECTED ou AWAITING_AUTHORISATION
       parameters:
         - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
       requestBody:
         content:
           application/jwt:
