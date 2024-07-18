@@ -731,7 +731,7 @@ components:
                 type: string
                 format: date-time
                 maxLength: 10
-                example: '44197'
+                example: '1/1/2021'
               creationDateTime:
                 description: Data e hora em que o recurso foi criado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339) sempre com a utilização de timezone UTC(UTC time format).
                 type: string
@@ -778,7 +778,7 @@ components:
               amount:
                 description: Valor da transação com 2 casas decimais.
                 type: string
-                pattern: '^((\d{1,16}\.\d{2}))$'
+                pattern: '^((\\d{1,16}\\.\\d{2}))$'
                 minLength: 4
                 maxLength: 19
                 example: '100000.12'
@@ -796,7 +796,7 @@ components:
         data:
           type: array
           minItems: 1
-          maxItems: 1
+          maxItems: 500
           items:
             required:
               - date
@@ -811,7 +811,7 @@ components:
               date:
                 description: Dia previsto para a realização da tentativa de liquidação.
                 type: string
-                format: date-time
+                format: date
                 maxLength: 10
                 example: '01/01/2021'
               creationDateTime:
@@ -822,6 +822,7 @@ components:
               draftPaymentId:
                 description: Identificador único do rascunho de pagamento.
                 type: string
+                format: uuid
                 example: '61709a24-be94-4401-88cb-e457cbe13808'
               personType:
                 description: Tipo de titular pessoa natural ou juridica a quem se referem os dados de recebedor (creditor).
@@ -1673,35 +1674,30 @@ components:
       properties:
         self:
           type: string
-          format: uri
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
-          format: uri
           maxLength: 2000
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
-          format: uri
           maxLength: 2000
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
-          format: uri
           maxLength: 2000
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
-          format: uri
           maxLength: 2000
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
@@ -1730,12 +1726,10 @@ components:
         totalRecords:
           type: integer
           format: int32
-          description: Número total de registros no resultado
           example: 1
         totalPages:
           type: integer
           format: int32
-          description: Número total de páginas no resultado
           example: 1
         requestDateTime:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
