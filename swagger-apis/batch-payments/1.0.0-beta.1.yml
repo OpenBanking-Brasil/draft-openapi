@@ -1336,16 +1336,24 @@ components:
       type: object
       required:
         - type
+        - localInstrument
         - currency
         - amount
       properties:
+        type:
+          description: Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
+          type: string
+          enum:
+            - PIX
+          example: PIX
         localInstrument:
           description: |
             Especifica a forma de iniciação do pagamento:
-            MANU - Inserção manual de dados da conta transacional
-            DICT - Inserção manual de chave Pix
-            QRDN - QR code dinâmico
-            INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
+
+             - MANU - Inserção manual de dados da conta transacional
+             - DICT - Inserção manual de chave Pix
+             - QRDN - QR code dinâmico
+             - INIC - I'ndica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
           type: string
           enum: 
             - MANU
@@ -1356,13 +1364,13 @@ components:
         currency:
           description: Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'. Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
           type: string
-          pattern: '^((\d{1,16}\.\d{2}))$'
-          minLength: 4
-          maxLength: 19
-          example: '100000.12'
+          pattern: '^([A-Z]{3})$'
+          example: 'BRL'
         amount:
           description: Valor da transação com 2 casas decimais.
           type: string
+          minLength: 4
+          maxLength: 19
           pattern: '^((\d{1,16}\.\d{2}))$'
           example: '100000.12'
         creditorAccount: 
@@ -1389,11 +1397,11 @@ components:
 
             [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
 
-            MANU - O campo transactionIdentification não deve ser preenchido.
-            DICT - O campo transactionIdentification não deve ser preenchido.
-            INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-            QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-            QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
+            - MANU - O campo transactionIdentification não deve ser preenchido.
+            - DICT - O campo transactionIdentification não deve ser preenchido.
+            - INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+            - QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+            - QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
           type: string
           pattern: '^[a-zA-Z0-9]{1,35}$'
           maxLength: 35
@@ -1407,17 +1415,6 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 512
           example: '00020104141234567890123426660014BR.GOV.BCB.PIX014466756C616E6F32303139406578616D706C652E636F6D27300012 BR.COM.OUTRO011001234567895204000053039865406123.455802BR5915NOMEDORECEBEDOR6008BRASILIA61087007490062 530515RP12345678-201950300017BR.GOV.BCB.BRCODE01051.0.080450014BR.GOV.BCB.PIX0123PADRAO.URL.PIX/0123AB CD81390012BR.COM.OUTRO01190123.ABCD.3456.WXYZ6304EB76'
-        authorisationFlow:
-          description: |
-            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
-          
-            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
-          type: string
-          enum:
-            - HYBRID_FLOW
-            - CIBA_FLOW
-            - FIDO_FLOW
-          example: 'HYBRID_FLOW'
     Rejection:
       description: |
         Motivos de rejeição do consentimento.
@@ -1483,7 +1480,7 @@ components:
         - reason
         - cancelledFrom
         - cancelledAt
-        - cancellationBy
+        - cancelledBy
       properties:
         reason:
           description: |
@@ -1515,9 +1512,10 @@ components:
           description: Data e hora que foi realizado o cancelamento, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.
           type: string
           format: date-time
+          maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
-        cancellationBy:
+        cancelledBy:
           description: Informação relacionada ao usuário pagador que solicitou o cancelamento do pagamento.
           type: string
           required:
@@ -1650,8 +1648,8 @@ components:
           description: |
             Código da Agência emissora da conta sem dígito. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória). [Restrição] Preenchimento obrigatório para os seguintes tipos de conta:
 
-            CACC (CONTA_DEPOSITO_A_VISTA)
-            SVGS (CONTA_POUPANCA)
+            - CACC (CONTA_DEPOSITO_A_VISTA)
+            - SVGS (CONTA_POUPANCA)
           type: string
           pattern: '^[0-9]{1,4}$'
           minLength: 1
@@ -1668,9 +1666,9 @@ components:
           description: |
             Tipos de contas usadas para pagamento. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Segue descrição de cada valor do ENUM.
 
-            CACC - Current - Conta Corrente.
-            SVGS - Savings - Conta de Poupança.
-            TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+            - CACC - Current - Conta Corrente.
+            - SVGS - Savings - Conta de Poupança.
+            - TRAN - TransactingAccount - Conta de Pagamento pré-paga.
           type: string
           enum:
             - CACC
