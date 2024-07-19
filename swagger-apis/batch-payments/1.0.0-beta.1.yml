@@ -157,6 +157,16 @@ paths:
       description: Para consultar consentimentos
       parameters:
         - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/draftPaymentId'
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/200GetConsentsDraft'
@@ -177,6 +187,10 @@ paths:
       description: Para modificar apenas o estado de um consentimento para REVOKED, REJECTED ou AWAITING_AUTHORISATION
       parameters:
         - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
       requestBody:
         content:
           application/jwt:
@@ -245,6 +259,12 @@ paths:
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/draftPaymentId'
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/200GetConsentsPayments'
@@ -332,6 +352,8 @@ components:
               description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -358,6 +380,8 @@ components:
                 [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -398,6 +422,7 @@ components:
                 totalAmount:
                   description: Valor total da soma de todos os valores que serão enviados para os pagamentos informados pelo inciador de pagamentos.
                   type: string
+                  minLength: 4
                   maxLength: 19
                   pattern: '^((\d{1,16}\.\d{2}))$'
                   example: '100000.12'
@@ -423,8 +448,8 @@ components:
             consentId:
               description: |
                 Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. 
-                Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: o namespace(urn) o identificador associado ao namespace da instituição transmissora (bancoex).  o identificador específico dentro do namespace (C1DD33123).  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: o namespace(urn) o identificador associado ao namespace da instituição transmissora (bancoex).  o identificador específico dentro do namespace (C1DD33123).  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
               type: string
               maxLength: 256
               pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
@@ -440,7 +465,14 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               example: '2021-05-21T08:30:00Z'
             status:
-              description: Status atual do consentimento de acordo com a máquina de estados  AWAITING_CONFIGURATION - Aguardando configuração de pagamentos  AWAITING_AUTHORISATION - Aguardando autorização  PARTIALLY_ACCEPTED - Parcialmente aceito  AUTHORISED - Autorizado  REJECTED - Rejeitado  CONSUMED - Consumido
+              description: |
+                Status atual do consentimento de acordo com a máquina de estados  
+                - AWAITING_CONFIGURATION - Aguardando configuração de pagamentos  
+                - AWAITING_AUTHORISATION - Aguardando autorização  
+                - PARTIALLY_ACCEPTED - Parcialmente aceito  
+                - AUTHORISED - Autorizado  
+                - REJECTED - Rejeitado  
+                - CONSUMED - Consumido
               type: string
               enum:
                - AWAITING_CONFIGURATION
@@ -454,6 +486,8 @@ components:
               description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -480,6 +514,8 @@ components:
                 [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -519,6 +555,7 @@ components:
                 totalAmount:
                   description: Valor total da soma de todos os valores que serão enviados para os pagamentos informados pelo inciador de pagamentos.
                   type: string
+                  minLength: 4
                   maxLength: 19
                   pattern: '^((\d{1,16}\.\d{2}))$'
                   example: '100000.12'
@@ -550,8 +587,8 @@ components:
             consentId:
               description: |
                 Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. 
-                Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
-                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: o namespace(urn) o identificador associado ao namespace da instituição transmissora (bancoex).  o identificador específico dentro do namespace (C1DD33123).  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+                Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
+                Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: o namespace(urn) o identificador associado ao namespace da instituição transmissora (bancoex).  o identificador específico dentro do namespace (C1DD33123).  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
               type: string
               maxLength: 256
               pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
@@ -567,7 +604,14 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               example: '2021-05-21T08:30:00Z'
             status:
-              description: Status atual do consentimento de acordo com a máquina de estados  AWAITING_CONFIGURATION - Aguardando configuração de pagamentos  AWAITING_AUTHORISATION - Aguardando autorização  PARTIALLY_ACCEPTED - Parcialmente aceito  AUTHORISED - Autorizado  REJECTED - Rejeitado  CONSUMED - Consumido
+              description: |
+                Status atual do consentimento de acordo com a máquina de estados  
+                - AWAITING_CONFIGURATION - Aguardando configuração de pagamentos  
+                - AWAITING_AUTHORISATION - Aguardando autorização  
+                - PARTIALLY_ACCEPTED - Parcialmente aceito 
+                - AUTHORISED - Autorizado  
+                - REJECTED - Rejeitado  
+                - CONSUMED - Consumido
               type: string
               enum:
                - AWAITING_CONFIGURATION
@@ -581,6 +625,8 @@ components:
               description: Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -607,6 +653,8 @@ components:
                 [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
               type: object
               format: io
+              required:
+                - document
               properties:
                 document:
                   type: object
@@ -646,6 +694,7 @@ components:
                 totalAmount:
                   description: Valor total da soma de todos os valores que serão enviados para os pagamentos informados pelo inciador de pagamentos.
                   type: string
+                  minLength: 4
                   maxLength: 19
                   pattern: '^((\d{1,16}\.\d{2}))$'
                   example: '100000.12'
@@ -702,7 +751,7 @@ components:
                 type: string
                 format: date-time
                 maxLength: 10
-                example: '44197'
+                example: '1/1/2021'
               creationDateTime:
                 description: Data e hora em que o recurso foi criado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339) sempre com a utilização de timezone UTC(UTC time format).
                 type: string
@@ -749,7 +798,7 @@ components:
               amount:
                 description: Valor da transação com 2 casas decimais.
                 type: string
-                pattern: '^((\d{1,16}\.\d{2}))$'
+                pattern: '^((\\d{1,16}\\.\\d{2}))$'
                 minLength: 4
                 maxLength: 19
                 example: '100000.12'
@@ -767,7 +816,7 @@ components:
         data:
           type: array
           minItems: 1
-          maxItems: 1
+          maxItems: 500
           items:
             required:
               - date
@@ -782,7 +831,7 @@ components:
               date:
                 description: Dia previsto para a realização da tentativa de liquidação.
                 type: string
-                format: date-time
+                format: date
                 maxLength: 10
                 example: '01/01/2021'
               creationDateTime:
@@ -793,6 +842,7 @@ components:
               draftPaymentId:
                 description: Identificador único do rascunho de pagamento.
                 type: string
+                format: uuid
                 example: '61709a24-be94-4401-88cb-e457cbe13808'
               personType:
                 description: Tipo de titular pessoa natural ou juridica a quem se referem os dados de recebedor (creditor).
@@ -847,7 +897,7 @@ components:
         data:
           type: array
           minItems: 1
-          maxItems: 1
+          maxItems: 500
           items:
             required:
               - date
@@ -862,7 +912,7 @@ components:
               date:
                 description: Dia previsto para a realização da tentativa de liquidação.
                 type: string
-                format: date-time
+                format: date
                 maxLength: 10
                 example: '01/01/2021'
               creationDateTime:
@@ -873,6 +923,7 @@ components:
               draftPaymentId:
                 description: Identificador único do rascunho de pagamento.
                 type: string
+                format: uuid
                 example: '61709a24-be94-4401-88cb-e457cbe13808'
               personType:
                 description: Tipo de titular pessoa natural ou juridica a quem se referem os dados de recebedor (creditor).
@@ -925,39 +976,43 @@ components:
         - data
       properties:
         data:
-          type: object
-          properties:
-            draftPaymentId:
-              description: Identificador único do rascunho de pagamento. Será utilizado no pagamento para checar quais os parâmetros de pagamento e do consentimento.
-              type: string
-              format: uuid
-              example: '61709a24-be94-4401-88cb-e457cbe13808'
-            endToEndId:
-              description: |
-                Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
-                “E” - fixo (1 caractere);
-                xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
-                yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
-                kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
-              type: string
-              pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
-              minLength: 32
-              maxLength: 32
-              example: 'E9040088820210128000800123873170'
-            cnpjInitiator:
-              description: CNPJ do Iniciado.
-              type: string
-              pattern: '^\d{14}$'
-              maxLength: 14
-              example: '50685362000135'
-            remittanceInformation:
-              description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
-              type: string
-              pattern: '[\w\W\s]*'
-              maxLength: 140
-              example: 'Pagamento da nota XPTO035-002.'
-            payment:
-              $ref: '#/components/schemas/Payment'
+          type: array
+          minItems: 1
+          maxItems: 50
+          items:
+            type: object
+            properties:
+              draftPaymentId:
+                description: Identificador único do rascunho de pagamento. Será utilizado no pagamento para checar quais os parâmetros de pagamento e do consentimento.
+                type: string
+                format: uuid
+                example: '61709a24-be94-4401-88cb-e457cbe13808'
+              endToEndId:
+                description: |
+                  Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
+                  “E” - fixo (1 caractere);
+                  xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
+                  yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
+                  kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
+                type: string
+                pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
+                minLength: 32
+                maxLength: 32
+                example: 'E9040088820210128000800123873170'
+              cnpjInitiator:
+                description: CNPJ do Iniciado.
+                type: string
+                pattern: '^\d{14}$'
+                maxLength: 14
+                example: '50685362000135'
+              remittanceInformation:
+                description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 140
+                example: 'Pagamento da nota XPTO035-002.'
+              payment:
+                $ref: '#/components/schemas/Payment'
     ConsentsConsentIdPayments:
       type: object
       required:
@@ -972,9 +1027,9 @@ components:
               description: |
                 Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
 
-                o namespace(urn)
-                o identificador associado ao namespace da instituição transmissora (bancoex)
-                o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+                - o namespace(urn)
+                - o identificador associado ao namespace da instituição transmissora (bancoex)
+                - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
               type: string
               pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
               maxLength: 256
@@ -994,10 +1049,10 @@ components:
               description: |
                 Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
 
-                “E” - fixo (1 caractere);
-                xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
-                yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
-                kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
+                - “E” - fixo (1 caractere);
+                - xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
+                - yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
+                - kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
               type: string
               pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
               minLength: 32
@@ -1007,17 +1062,17 @@ components:
               description: |
                 Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
 
-                Letras minúsculas, de 'a' a 'z'
-                Letras maiúsculas, de 'A' a 'z'
-                Dígitos decimais, de '0' a '9'
+                - Letras minúsculas, de 'a' a 'z'
+                - Letras maiúsculas, de 'A' a 'z'
+                - Dígitos decimais, de '0' a '9'
 
                 [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
 
-                MANU - O campo transactionIdentification não deve ser preenchido.
-                DICT - O campo transactionIdentification não deve ser preenchido.
-                INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-                QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-                QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
+                - MANU - O campo transactionIdentification não deve ser preenchido.
+                - DICT - O campo transactionIdentification não deve ser preenchido.
+                - INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+                - QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+                - QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
               type: string
               pattern: '^[a-zA-Z0-9]{1,35}$'
               maxLength: 35
@@ -1291,16 +1346,24 @@ components:
       type: object
       required:
         - type
+        - localInstrument
         - currency
         - amount
       properties:
+        type:
+          description: Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
+          type: string
+          enum:
+            - PIX
+          example: PIX
         localInstrument:
           description: |
             Especifica a forma de iniciação do pagamento:
-            MANU - Inserção manual de dados da conta transacional
-            DICT - Inserção manual de chave Pix
-            QRDN - QR code dinâmico
-            INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
+
+             - MANU - Inserção manual de dados da conta transacional
+             - DICT - Inserção manual de chave Pix
+             - QRDN - QR code dinâmico
+             - INIC - I'ndica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
           type: string
           enum: 
             - MANU
@@ -1311,13 +1374,13 @@ components:
         currency:
           description: Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'. Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
           type: string
-          pattern: '^((\d{1,16}\.\d{2}))$'
-          minLength: 4
-          maxLength: 19
-          example: '100000.12'
+          pattern: '^([A-Z]{3})$'
+          example: 'BRL'
         amount:
           description: Valor da transação com 2 casas decimais.
           type: string
+          minLength: 4
+          maxLength: 19
           pattern: '^((\d{1,16}\.\d{2}))$'
           example: '100000.12'
         creditorAccount: 
@@ -1338,17 +1401,17 @@ components:
           description: |
             Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
 
-            Letras minúsculas, de 'a' a 'z'
-            Letras maiúsculas, de 'A' a 'z'
-            Dígitos decimais, de '0' a '9'
+            - Letras minúsculas, de 'a' a 'z'
+            - Letras maiúsculas, de 'A' a 'z'
+            - Dígitos decimais, de '0' a '9'
 
             [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
 
-            MANU - O campo transactionIdentification não deve ser preenchido.
-            DICT - O campo transactionIdentification não deve ser preenchido.
-            INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-            QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-            QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
+            - MANU - O campo transactionIdentification não deve ser preenchido.
+            - DICT - O campo transactionIdentification não deve ser preenchido.
+            - INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+            - QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+            - QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
           type: string
           pattern: '^[a-zA-Z0-9]{1,35}$'
           maxLength: 35
@@ -1362,32 +1425,32 @@ components:
           pattern: '[\w\W\s]*'
           maxLength: 512
           example: '00020104141234567890123426660014BR.GOV.BCB.PIX014466756C616E6F32303139406578616D706C652E636F6D27300012 BR.COM.OUTRO011001234567895204000053039865406123.455802BR5915NOMEDORECEBEDOR6008BRASILIA61087007490062 530515RP12345678-201950300017BR.GOV.BCB.BRCODE01051.0.080450014BR.GOV.BCB.PIX0123PADRAO.URL.PIX/0123AB CD81390012BR.COM.OUTRO01190123.ABCD.3456.WXYZ6304EB76'
-        authorisationFlow:
-          description: |
-            Campo condicional utilizado para identificar o fluxo de autorização em que o pagamento foi solicitado.
-          
-            [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
-          type: string
-          enum:
-            - HYBRID_FLOW
-            - CIBA_FLOW
-            - FIDO_FLOW
-          example: 'HYBRID_FLOW'
     Rejection:
+      description: |
+        Motivos de rejeição do consentimento.
+
+        [Restrição] Preenchimento obrigatório quando /data/status for enviado igual a REJECTED
       type: object
       required:
         - rejectedBy
         - rejectedFrom
         - rejectedAt
+        - reason
       properties:
         rejectedBy:
           type: string
+          enum:
+            - USUARIO
+            - INICIADORA
+            - DETENTORA
           example: 'INICIADORA'
         rejectedFrom:
           type: string
           example: 'DETENTORA'
         rejectedAt:
+          description: Data e hora em que ocorreu a rejeição do consentimento.
           type: string
+          format: $date-time
           example: '2021-05-21T08:30:00Z'
         reason:
           type: object
@@ -1396,6 +1459,7 @@ components:
             - detail
           properties:
             code:
+              description: Código descritivo do motivo de rejeição do consentimento.
               type: string
               enum:
                 - NAO_INFORMADO
@@ -1406,6 +1470,7 @@ components:
                 - CONTA_NAO_PERMITE_PAGAMENTO
               example: 'VALOR_ACIMA_LIMITE'
             detail:
+              description: Detalhes do erro representado pelo código.
               type: string
               example: |
                 Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
@@ -1425,7 +1490,7 @@ components:
         - reason
         - cancelledFrom
         - cancelledAt
-        - cancellationBy
+        - cancelledBy
       properties:
         reason:
           description: |
@@ -1457,9 +1522,10 @@ components:
           description: Data e hora que foi realizado o cancelamento, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.
           type: string
           format: date-time
+          maxLength: 20
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           example: '2021-05-21T08:30:00Z'
-        cancellationBy:
+        cancelledBy:
           description: Informação relacionada ao usuário pagador que solicitou o cancelamento do pagamento.
           type: string
           required:
@@ -1491,9 +1557,8 @@ components:
         [Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a "REVOKED".
       type: object
       required:
-        - rejectedBy
-        - rejectedFrom
-        - rejectedAt
+        - revokedBy
+        - revokedFrom
       properties:
         revokedBy:
           description: Quem iniciou a solicitação de revogação.
@@ -1536,13 +1601,14 @@ components:
       type: object
       format: io
       required:
-            - ispb
-            - number
-            - accountType
+        - ispb
+        - number
+        - accountType
       properties:
         ispb:
           description: Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
           type: string
+          minLength: 8
           maxLength: 8
           pattern: '^[0-9]{8}$'
           example: '12345678'
@@ -1552,12 +1618,14 @@ components:
           
             [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
           type: string
+          minLength: 1
           maxLength: 4
           pattern: '^[0-9]{1,4}$'
           example: '1774'
         number:
           description: Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), se houver valor alfanumérico, este deve ser convertido para 0.
           type: string
+          minLength: 1
           maxLength: 20
           pattern: '^[0-9]{1,20}$'
           example: '1234567890'
@@ -1590,8 +1658,8 @@ components:
           description: |
             Código da Agência emissora da conta sem dígito. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória). [Restrição] Preenchimento obrigatório para os seguintes tipos de conta:
 
-            CACC (CONTA_DEPOSITO_A_VISTA)
-            SVGS (CONTA_POUPANCA)
+            - CACC (CONTA_DEPOSITO_A_VISTA)
+            - SVGS (CONTA_POUPANCA)
           type: string
           pattern: '^[0-9]{1,4}$'
           minLength: 1
@@ -1608,9 +1676,9 @@ components:
           description: |
             Tipos de contas usadas para pagamento. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. Segue descrição de cada valor do ENUM.
 
-            CACC - Current - Conta Corrente.
-            SVGS - Savings - Conta de Poupança.
-            TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+            - CACC - Current - Conta Corrente.
+            - SVGS - Savings - Conta de Poupança.
+            - TRAN - TransactingAccount - Conta de Pagamento pré-paga.
           type: string
           enum:
             - CACC
@@ -1629,35 +1697,30 @@ components:
       properties:
         self:
           type: string
-          format: uri
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
-          format: uri
           maxLength: 2000
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
-          format: uri
           maxLength: 2000
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
-          format: uri
           maxLength: 2000
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
-          format: uri
           maxLength: 2000
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
@@ -1686,12 +1749,10 @@ components:
         totalRecords:
           type: integer
           format: int32
-          description: Número total de registros no resultado
           example: 1
         totalPages:
           type: integer
           format: int32
-          description: Número total de páginas no resultado
           example: 1
         requestDateTime:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
@@ -1701,7 +1762,7 @@ components:
           example: '2021-05-21T08:30:00Z'
     MetaSingle:
       type: object
-      description: Meta informações referente a API requisitada.
+      description: Meta informação referente a API requisitada.
       required:
         - requestDateTime
       properties:
@@ -1709,7 +1770,6 @@ components:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
           type: string
           maxLength: 20
-          format: date-time
           example: '2021-05-21T08:30:00Z'
     ResponseErrorPostConsent:
       type: object
@@ -2058,6 +2118,63 @@ components:
         minLength: 1
         maxLength: 40
         pattern: ^(?!\s)(.*)(\S)$
+    draftPaymentId:
+      description: Identificador único do rascunho de pagamento.
+      name: draftPaymentId
+      in: query
+      schema:
+        type: string
+        pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$
+        minLength: 1
+        maxLength: 256
+    startDate:
+      name: startDate
+      in: query
+      description: Data inicial de corte da ocorrência do pagamento ligada ao consentimento de longa duração.
+      required: false
+      schema:
+        type: string
+        pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+        minLength: 10
+        maxLength: 10
+    endDate:
+      name: endDate
+      in: query
+      description: Data final de corte para recuperação da ocorrência do pagamento ligada ao consentimento de longa duração.
+      required: false
+      schema:
+        type: string
+        pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+        minLength: 10
+        maxLength: 10
+    page:
+      name: page
+      in: query
+      description: Número da página que está sendo requisitada (o valor da primeira página é 1).
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+        maximum: 2147483647
+        format: int32
+    pageSize:
+      name: page-size
+      in: query
+      description: Quantidade total de registros por páginas.
+      schema:
+        type: integer
+        default: 25
+        minimum: 1
+        format: int32
+        maximum: 1000
+    pagination-key:
+      name: pagination-key
+      in: query
+      description: 'Identificador de rechamada, utilizado para evitar a contagem de chamadas ao endpoint durante a paginação.'
+      schema:
+        type: string
+        maxLength: 2048
+        pattern: '[\w\W\s]*'
   responses:
     201Consents:
       description: '\-'
