@@ -976,39 +976,43 @@ components:
         - data
       properties:
         data:
-          type: object
-          properties:
-            draftPaymentId:
-              description: Identificador único do rascunho de pagamento. Será utilizado no pagamento para checar quais os parâmetros de pagamento e do consentimento.
-              type: string
-              format: uuid
-              example: '61709a24-be94-4401-88cb-e457cbe13808'
-            endToEndId:
-              description: |
-                Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
-                “E” - fixo (1 caractere);
-                xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
-                yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
-                kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
-              type: string
-              pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
-              minLength: 32
-              maxLength: 32
-              example: 'E9040088820210128000800123873170'
-            cnpjInitiator:
-              description: CNPJ do Iniciado.
-              type: string
-              pattern: '^\d{14}$'
-              maxLength: 14
-              example: '50685362000135'
-            remittanceInformation:
-              description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
-              type: string
-              pattern: '[\w\W\s]*'
-              maxLength: 140
-              example: 'Pagamento da nota XPTO035-002.'
-            payment:
-              $ref: '#/components/schemas/Payment'
+          type: array
+          minItems: 1
+          maxItems: 50
+          items:
+            type: object
+            properties:
+              draftPaymentId:
+                description: Identificador único do rascunho de pagamento. Será utilizado no pagamento para checar quais os parâmetros de pagamento e do consentimento.
+                type: string
+                format: uuid
+                example: '61709a24-be94-4401-88cb-e457cbe13808'
+              endToEndId:
+                description: |
+                  Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
+                  “E” - fixo (1 caractere);
+                  xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
+                  yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
+                  kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
+                type: string
+                pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
+                minLength: 32
+                maxLength: 32
+                example: 'E9040088820210128000800123873170'
+              cnpjInitiator:
+                description: CNPJ do Iniciado.
+                type: string
+                pattern: '^\d{14}$'
+                maxLength: 14
+                example: '50685362000135'
+              remittanceInformation:
+                description: Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 140
+                example: 'Pagamento da nota XPTO035-002.'
+              payment:
+                $ref: '#/components/schemas/Payment'
     ConsentsConsentIdPayments:
       type: object
       required:
@@ -1766,7 +1770,6 @@ components:
           description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
           type: string
           maxLength: 20
-          format: date-time
           example: '2021-05-21T08:30:00Z'
     ResponseErrorPostConsent:
       type: object
