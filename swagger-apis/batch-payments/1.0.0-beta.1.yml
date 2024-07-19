@@ -259,6 +259,12 @@ paths:
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/draftPaymentId'
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/200GetConsentsPayments'
@@ -1017,9 +1023,9 @@ components:
               description: |
                 Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
 
-                o namespace(urn)
-                o identificador associado ao namespace da instituição transmissora (bancoex)
-                o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+                - o namespace(urn)
+                - o identificador associado ao namespace da instituição transmissora (bancoex)
+                - o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
               type: string
               pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
               maxLength: 256
@@ -1039,10 +1045,10 @@ components:
               description: |
                 Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
 
-                “E” - fixo (1 caractere);
-                xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
-                yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
-                kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
+                - “E” - fixo (1 caractere);
+                - xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
+                - yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
+                - kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
               type: string
               pattern: '^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$'
               minLength: 32
@@ -1052,17 +1058,17 @@ components:
               description: |
                 Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
 
-                Letras minúsculas, de 'a' a 'z'
-                Letras maiúsculas, de 'A' a 'z'
-                Dígitos decimais, de '0' a '9'
+                - Letras minúsculas, de 'a' a 'z'
+                - Letras maiúsculas, de 'A' a 'z'
+                - Dígitos decimais, de '0' a '9'
 
                 [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
 
-                MANU - O campo transactionIdentification não deve ser preenchido.
-                DICT - O campo transactionIdentification não deve ser preenchido.
-                INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-                QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
-                QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
+                - MANU - O campo transactionIdentification não deve ser preenchido.
+                - DICT - O campo transactionIdentification não deve ser preenchido.
+                - INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+                - QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+                - QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
               type: string
               pattern: '^[a-zA-Z0-9]{1,35}$'
               maxLength: 35
@@ -1391,9 +1397,9 @@ components:
           description: |
             Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
 
-            Letras minúsculas, de 'a' a 'z'
-            Letras maiúsculas, de 'A' a 'z'
-            Dígitos decimais, de '0' a '9'
+            - Letras minúsculas, de 'a' a 'z'
+            - Letras maiúsculas, de 'A' a 'z'
+            - Dígitos decimais, de '0' a '9'
 
             [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
 
