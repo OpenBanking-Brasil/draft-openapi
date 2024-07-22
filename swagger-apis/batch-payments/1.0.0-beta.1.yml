@@ -1312,11 +1312,57 @@ components:
                   - detail
                 properties:
                   code:
-                    description: Define o código da razão pela qual o pagamento foi rejeitado.
+                    description: |
+                      Define o código da razão pela qual o pagamento foi rejeitado.
+
+                      - SALDO INSUFICIENTE
+                      - VALOR ACIMA_LIMITE
+                      - VALOR_INVALIDO
+                      - QRCODE_INVALIDO
+                      - ORCODE VALOR DIVERGENTE
+                      - NAO_INFORMADO
+                      - DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
+                      - PAGAMENTO_RECUSADO_SPI
+                      - FALHA_INFRAESTRUTURA_SPI
+                      - FALHA_INFRAESTRUTURA_DICT
+                      - FALHA_INFRAESTRUTURA_ICP
                     type: string
+                    enum:
+                      - SALDO INSUFICIENTE
+                      - VALOR ACIMA_LIMITE
+                      - VALOR_INVALIDO
+                      - QRCODE_INVALIDO
+                      - ORCODE VALOR DIVERGENTE
+                      - NAO_INFORMADO
+                      - DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
+                      - PAGAMENTO_RECUSADO_SPI
+                      - FALHA_INFRAESTRUTURA_SPI
+                      - FALHA_INFRAESTRUTURA_DICT
+                      - FALHA_INFRAESTRUTURA_ICP
                     example: 'SALDO_INSUFICIENTE'
                   detail:
-                    description: Contém informações adicionais ao pagamento rejeitado.
+                    description: |
+                      Contém informações adicionais ao pagamento rejeitado.
+
+                      - SALDO INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
+                      - VALOR ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente. 
+                      - VALOR_INVALIDO: O valor enviado não é válido.
+                      - QRCODE_INVALIDO: O QRCode utilizado para a iniciação de pagamento não é válido.
+                      - ORCODE VALOR DIVERGENTE: O valor enviado no pagamento diverge do informado QR Code.
+                      - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
+                      - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de negócio.
+                      - PAGAMENTO_RECUSADO_DETENTORA: [Descrição do motivo de recusa].
+                      - PAGAMENTO_RECUSADO_SPI: [Código de erro conforme tabela de dominios reason PACS.002].
+                      - FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI).
+                      - FALHA_INFRAESTRUTURA_DICT: Indica uma falha no Diretório de Identificadores de Contas Transacionais (DICT).
+                      - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP).
+                      - FALHA INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento.
+                      - FALHA INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos.
+                      - CONTAS_ORIGEM_DESTINO_IGUAIS: Indica uma tentativa de pagamento onde a conta origem e a conta de destino são iguais.
+                      - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final "CONSUMED", "REJECTED" ou "REVOKED").
+                      - RASCUNHO_DIVERGENTE: O [nome_do_campo] do pagamento está divergente do enviado no rascunho de pagamento.
+                      - RASCUNHO_TENTATIVAS_EXCEDIDAS: A tentativa de pagamento para esse rascunho não pode ser realizada pois a quantidade máxima de tentativas foi excedida.
+                      - PAGAMENTO_REALIZADO: A tentativa de pagamento para o draftPaymentld não pode ser realizada pois o mesmo já foi liquidado.
                     type: string
                     example: 'string'
               cancellation:
