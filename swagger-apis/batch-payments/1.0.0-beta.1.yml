@@ -1507,7 +1507,15 @@ components:
             - detail
           properties:
             code:
-              description: Código descritivo do motivo de rejeição do consentimento.
+              description: |
+                Código descritivo do motivo de rejeição do consentimento.
+
+                - NAO_INFORMADO
+                - FALHA_INFRAESTRUTURA
+                - TEMPO_EXPIRADO_AUTORIZACAO
+                - REJEITADO_USUARIO
+                - VALOR_ACIMA_LIMITE
+                - CONTA_NAO_PERMITE_PAGAMENTO
               type: string
               enum:
                 - NAO_INFORMADO
@@ -1518,16 +1526,17 @@ components:
                 - CONTA_NAO_PERMITE_PAGAMENTO
               example: 'VALOR_ACIMA_LIMITE'
             detail:
-              description: Detalhes do erro representado pelo código.
-              type: string
-              example: |
-                Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
+              description: |
+                Detalhes do erro representado pelo código.
+
                 - NAO_INFORMADO: Não informada pela detentora de conta;
                 - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
                 - TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo;
                 - REJEITADO_USUARIO: O usuário rejeitou a autorização do consentimento;
                 - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente;
                 - CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
+              type: string
+              example: 'VALOR_ACIMA_LIMITE'
     Cancellation:
       description: |
         Objeto que contém os dados referentes ao usuário pagador que solicitou o cancelamento, o canal utilizado por ele e o motivo.
