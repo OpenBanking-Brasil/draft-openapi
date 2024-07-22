@@ -432,7 +432,7 @@ components:
                   example: '100000.12'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
-    201Consents:
+    Response201Consents:
       type: object
       required:
         - data
@@ -812,7 +812,7 @@ components:
                 pattern: '[\w\W\s]*'
                 maxLength: 140
                 example: 'Pagamento da nota XPTO035-002'
-    201ConsentsDraft:
+    Response201ConsentsDraft:
       type: object
       required:
         - data
@@ -1125,7 +1125,7 @@ components:
           $ref: '#/components/schemas/LinksSingle'
         meta:
           $ref: '#/components/schemas/MetaSingle'
-    201ConsentIdPayments:
+    Response201ConsentIdPayments:
       type: object
       required:
         - data
@@ -2310,7 +2310,7 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-              $ref: '#/components/schemas/201Consents'
+              $ref: '#/components/schemas/Response201Consents'
     200GetConsentsConsentId:
       description: '\-'
       content:
@@ -2322,7 +2322,7 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/201ConsentsDraft'
+            $ref: '#/components/schemas/Response201ConsentsDraft'
     200GetConsentsDraft:
       description: '\-'
       content:
@@ -2334,7 +2334,7 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-              $ref: '#/components/schemas/201ConsentIdPayments'
+              $ref: '#/components/schemas/Response201ConsentIdPayments'
     200GetConsentsPayments:
       description: '\-'
       content:
