@@ -236,6 +236,8 @@ paths:
       responses:
         '201':
           $ref: '#/components/responses/201ConsentsPayments'
+        '422':
+          $ref: '#/components/responses/UnprocessablePatch'
         default:
           description: Erro inesperado.
           content:
@@ -325,6 +327,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/200GetConsentsPaymentId'
+        '422':
+          $ref: '#/components/responses/UnprocessablePatch'
         default:
           description: Erro inesperado.
           content:
@@ -428,7 +432,7 @@ components:
                   example: '100000.12'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
-    201Consents:
+    Response201Consents:
       type: object
       required:
         - data
@@ -808,7 +812,7 @@ components:
                 pattern: '[\w\W\s]*'
                 maxLength: 140
                 example: 'Pagamento da nota XPTO035-002'
-    201ConsentsDraft:
+    Response201ConsentsDraft:
       type: object
       required:
         - data
@@ -1121,7 +1125,7 @@ components:
           $ref: '#/components/schemas/LinksSingle'
         meta:
           $ref: '#/components/schemas/MetaSingle'
-    201ConsentIdPayments:
+    Response201ConsentIdPayments:
       type: object
       required:
         - data
@@ -1310,11 +1314,57 @@ components:
                   - detail
                 properties:
                   code:
-                    description: Define o código da razão pela qual o pagamento foi rejeitado.
+                    description: |
+                      Define o código da razão pela qual o pagamento foi rejeitado.
+
+                      - SALDO INSUFICIENTE
+                      - VALOR ACIMA_LIMITE
+                      - VALOR_INVALIDO
+                      - QRCODE_INVALIDO
+                      - ORCODE VALOR DIVERGENTE
+                      - NAO_INFORMADO
+                      - DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
+                      - PAGAMENTO_RECUSADO_SPI
+                      - FALHA_INFRAESTRUTURA_SPI
+                      - FALHA_INFRAESTRUTURA_DICT
+                      - FALHA_INFRAESTRUTURA_ICP
                     type: string
+                    enum:
+                      - SALDO INSUFICIENTE
+                      - VALOR ACIMA_LIMITE
+                      - VALOR_INVALIDO
+                      - QRCODE_INVALIDO
+                      - ORCODE VALOR DIVERGENTE
+                      - NAO_INFORMADO
+                      - DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
+                      - PAGAMENTO_RECUSADO_SPI
+                      - FALHA_INFRAESTRUTURA_SPI
+                      - FALHA_INFRAESTRUTURA_DICT
+                      - FALHA_INFRAESTRUTURA_ICP
                     example: 'SALDO_INSUFICIENTE'
                   detail:
-                    description: Contém informações adicionais ao pagamento rejeitado.
+                    description: |
+                      Contém informações adicionais ao pagamento rejeitado.
+
+                      - SALDO INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
+                      - VALOR ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente. 
+                      - VALOR_INVALIDO: O valor enviado não é válido.
+                      - QRCODE_INVALIDO: O QRCode utilizado para a iniciação de pagamento não é válido.
+                      - ORCODE VALOR DIVERGENTE: O valor enviado no pagamento diverge do informado QR Code.
+                      - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
+                      - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de negócio.
+                      - PAGAMENTO_RECUSADO_DETENTORA: [Descrição do motivo de recusa].
+                      - PAGAMENTO_RECUSADO_SPI: [Código de erro conforme tabela de dominios reason PACS.002].
+                      - FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI).
+                      - FALHA_INFRAESTRUTURA_DICT: Indica uma falha no Diretório de Identificadores de Contas Transacionais (DICT).
+                      - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP).
+                      - FALHA INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento.
+                      - FALHA INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos.
+                      - CONTAS_ORIGEM_DESTINO_IGUAIS: Indica uma tentativa de pagamento onde a conta origem e a conta de destino são iguais.
+                      - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final "CONSUMED", "REJECTED" ou "REVOKED").
+                      - RASCUNHO_DIVERGENTE: O [nome_do_campo] do pagamento está divergente do enviado no rascunho de pagamento.
+                      - RASCUNHO_TENTATIVAS_EXCEDIDAS: A tentativa de pagamento para esse rascunho não pode ser realizada pois a quantidade máxima de tentativas foi excedida.
+                      - PAGAMENTO_REALIZADO: A tentativa de pagamento para o draftPaymentld não pode ser realizada pois o mesmo já foi liquidado.
                     type: string
                     example: 'string'
               cancellation:
@@ -1459,7 +1509,15 @@ components:
             - detail
           properties:
             code:
-              description: Código descritivo do motivo de rejeição do consentimento.
+              description: |
+                Código descritivo do motivo de rejeição do consentimento.
+
+                - NAO_INFORMADO
+                - FALHA_INFRAESTRUTURA
+                - TEMPO_EXPIRADO_AUTORIZACAO
+                - REJEITADO_USUARIO
+                - VALOR_ACIMA_LIMITE
+                - CONTA_NAO_PERMITE_PAGAMENTO
               type: string
               enum:
                 - NAO_INFORMADO
@@ -1470,16 +1528,17 @@ components:
                 - CONTA_NAO_PERMITE_PAGAMENTO
               example: 'VALOR_ACIMA_LIMITE'
             detail:
-              description: Detalhes do erro representado pelo código.
-              type: string
-              example: |
-                Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
+              description: |
+                Detalhes do erro representado pelo código.
+
                 - NAO_INFORMADO: Não informada pela detentora de conta;
                 - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
                 - TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo;
                 - REJEITADO_USUARIO: O usuário rejeitou a autorização do consentimento;
                 - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente;
                 - CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
+              type: string
+              example: 'VALOR_ACIMA_LIMITE'
     Cancellation:
       description: |
         Objeto que contém os dados referentes ao usuário pagador que solicitou o cancelamento, o canal utilizado por ele e o motivo.
@@ -2010,6 +2069,54 @@ components:
                   - RASCUNHO_NAO_ENCONTRADO: Um ou mais dos identificadores de rascunho enviados (`draftPaymentId`) não foram encontrados para edição.
         meta:
           $ref: '#/components/schemas/Meta'
+    ResponseErrorPatch:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 1
+          maxItems: 3
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                type: string
+                enum:
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                  - CONSENTIMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                  - RASCUNHO_NAO_ENCONTRADO
+                example: PARAMETRO_INVALIDO
+                description: |
+                  Define o código da razão pela qual o consentimento foi rejeitado.
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
+                  - CONSENTIMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
+                  - RASCUNHO_NAO_ENCONTRADO
+              detail:
+                type: string
+                maxLength: 2048
+                pattern: '[\w\W\s]*'
+                example: 'Forma de pagamento [Modalidade] não suportada.'
+                description: |
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento não permite cancelamento.
+                  - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final "CONSUMED", "REJECTED" OU "REVOKED").
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedecer às regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
+                  - RASCUNHO_NAO_ENCONTRADO: Um ou mais dos identificadores de rascunho enviados ('draftPaymentId') não foram encontrados para edição.
+        meta:
+          $ref: '#/components/schemas/Meta'
     ResponseError:
       type: object
       required:
@@ -2175,13 +2282,35 @@ components:
         type: string
         maxLength: 2048
         pattern: '[\w\W\s]*'
+  securitySchemes:
+    OAuth2ClientCredentials:
+      type: oauth2
+      description: |
+        Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.  
+        Apenas pagamentos iniciados pela mesma iniciadora de pagamentos podem ser consultados ou cancelados através de modelo client credentials.
+      flows:
+        clientCredentials:
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            payments: Escopo necessário para acesso à API Payment Initiation.
+    OAuth2AuthorizationCode:
+      type: oauth2
+      description: Fluxo OAuth necessário para que a iniciadora possa iniciar pagamentos. Requer o processo de redirecionamento e autenticação do usuário.
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://authserver.example/token'
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            payments: Escopo necessário para acesso à API Payment Initiation.
+            openid: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
+            'consent:consentId': Escopo contendo o identificador único do consentimento criado para a iniciação de pagamento solicitada
   responses:
     201Consents:
       description: '\-'
       content:
         application/json; charset=utf-8:
           schema:
-              $ref: '#/components/schemas/201Consents'
+              $ref: '#/components/schemas/Response201Consents'
     200GetConsentsConsentId:
       description: '\-'
       content:
@@ -2193,7 +2322,7 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/201ConsentsDraft'
+            $ref: '#/components/schemas/Response201ConsentsDraft'
     200GetConsentsDraft:
       description: '\-'
       content:
@@ -2205,7 +2334,7 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-              $ref: '#/components/schemas/201ConsentIdPayments'
+              $ref: '#/components/schemas/Response201ConsentIdPayments'
     200GetConsentsPayments:
       description: '\-'
       content:
@@ -2242,6 +2371,12 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseErrorPatchDraft'
+    UnprocessablePatch:
+      description: Seguir as orientações presentes na descrição da API, item 1.3 do _header_ da API e seus subitens
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorPatch'
     Default:
       description: '\-'
       content:
