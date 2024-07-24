@@ -17,8 +17,9 @@ servers:
   - url: 'https://apih.banco.com.br/open-banking//v1'
     description: Servidor de Homologação
 tags:
-  - name: Batch Payments
-    description: Operações para consulta das informações de Pagamentos em lote
+  - name: Consents
+  - name: Draft Payments
+  - name: Payments
 paths:
   /consents:
     post:
@@ -55,7 +56,7 @@ paths:
       security:
       - OAuth2ClientCredentials:
           - payments
-  /consents/{consentId}:
+  '/consents/{consentId}':
     get:
       tags:
         - Consents
@@ -63,6 +64,7 @@ paths:
       operationId: automaticPaymentsGetRecurringConfiguration
       description: Para consultar consentimentos
       parameters:
+        - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -87,6 +89,8 @@ paths:
       operationId: batchPaymentPatchBatchConsentConsentId
       description: Para modificar apenas o estado de um consentimento para REVOKED, REJECTED ou AWAITING_AUTHORISATION
       parameters:
+        - $ref: '#/components/parameters/consentId'
+
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -114,7 +118,7 @@ paths:
       security:
       - OAuth2ClientCredentials:
           - payments
-  /consents/{consentId}/draft-payments:
+  '/consents/{consentId}/draft-payments':
     post:
       tags:
         - Draft Payments
@@ -122,6 +126,7 @@ paths:
       operationId: batchPaymentsPostConsentDraftPayments
       description: Para criar novos rascunhos de pagamentos associados a um consentimento
       parameters:
+        - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -156,6 +161,7 @@ paths:
       operationId: batchPaymentsGetConsentDraftPayments
       description: Para consultar consentimentos
       parameters:
+        - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -186,6 +192,7 @@ paths:
       operationId: batchPaymentPatchBatchConsentConsentId
       description: Para modificar apenas o estado de um consentimento para REVOKED, REJECTED ou AWAITING_AUTHORISATION
       parameters:
+        - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -212,7 +219,7 @@ paths:
       security:
         - OAuth2ClientCredentials:
           - payments
-  /consents/{consentId}/payments:
+  '/consents/{consentId}/payments':
     post:
       tags:
         - Payments
@@ -220,6 +227,7 @@ paths:
       operationId: batchPaymentsPostConsentPayments
       description: Para novas solicitações de execução de pagamentos
       parameters:
+        - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -256,6 +264,7 @@ paths:
       operationId: batchPaymentsGetConsentPayments
       description: Para permitir a consulta resumida de um conjunto de pagamentos de uma única vez, respeitando os filtros informados
       parameters:
+        - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -279,7 +288,7 @@ paths:
       security:
         - OAuth2ClientCredentials:
           - payments
-  /consents/{consentId}/payments/{paymentId}:
+  '/consents/{consentId}/payments/{paymentId}':
     get:
       tags:
         - Payments
@@ -287,6 +296,8 @@ paths:
       operationId: batchPaymentsGetConsentPaymentsPaymentId
       description: Para permitir a consulta completa de um único pagamento
       parameters:
+        - $ref: '#/components/parameters/consentId'
+        - $ref: '#/components/parameters/paymentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -311,6 +322,8 @@ paths:
       operationId: batchPaymentsPatchConsentPaymentsPaymentId
       description: Para permitir um cancelamento de solicitação de pagamento ainda não concluída
       parameters:
+        - $ref: '#/components/parameters/consentId'
+        - $ref: '#/components/parameters/paymentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -822,6 +835,7 @@ components:
           minItems: 1
           maxItems: 500
           items:
+            type: object
             required:
               - date
               - creationDateTime
@@ -903,6 +917,7 @@ components:
           minItems: 1
           maxItems: 500
           items:
+            type: object
             required:
               - date
               - creationDateTime
@@ -1137,6 +1152,7 @@ components:
           minItems: 1
           maxItems: 1
           items:
+            type: object
             properties:
               consentId:
                 description: |
@@ -1239,6 +1255,7 @@ components:
           minItems: 1
           maxItems: 1
           items:
+            type: object
             properties:
               consentId:
                 description: |
@@ -2166,6 +2183,34 @@ components:
               description: Número total de páginas no resultado
               example: 1
   parameters:
+    consentId:
+      name: consentId
+      in: path
+      description: |
+        O consentId é o identificador único do consentimento e deverá ser um URN - Uniform Resource Name.  
+        Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource 
+        Identifier - URI - que é atribuído sob o URI scheme "urn" e um namespace URN específico, com a intenção de que o URN 
+        seja um identificador de recurso persistente e independente da localização.  
+        Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+        - o namespace(urn)
+        - o identificador associado ao namespace da instituição transnmissora (bancoex) 
+        - o identificador específico dentro do namespace (C1DD33123).  
+        Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+      required: true
+      schema:
+        type: string
+        pattern: '^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*''%\/?#]+$'
+        minLength: 1
+        maxLength: 256
+    paymentId:
+      name: paymentId
+      in: path
+      description: Identificador da operação de pagamento.
+      required: true
+      schema:
+        type: string
+        pattern: '^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$'
+        maxLength: 100
     Authorization:
       name: Authorization
       in: header
@@ -2308,43 +2353,43 @@ components:
     201Consents:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
               $ref: '#/components/schemas/Response201Consents'
     200GetConsentsConsentId:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
               $ref: '#/components/schemas/ConsentsConsentId'
     201ConsentsDraft:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
             $ref: '#/components/schemas/Response201ConsentsDraft'
     200GetConsentsDraft:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
               $ref: '#/components/schemas/ConsentsConsentIdDraft'
     201ConsentsPayments:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
               $ref: '#/components/schemas/Response201ConsentIdPayments'
     200GetConsentsPayments:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
               $ref: '#/components/schemas/ConsentsConsentIdPayments'
     200GetConsentsPaymentId:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
               $ref: '#/components/schemas/ConsentsConsentIdPaymentId'
     UnprocessablePostConsents:
@@ -2380,6 +2425,6 @@ components:
     Default:
       description: '\-'
       content:
-        application/json; charset=utf-8:
+        application/json:
           schema:
             $ref: '#/components/schemas/ResponseError'
