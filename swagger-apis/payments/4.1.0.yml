@@ -2808,13 +2808,6 @@ components:
               pattern: '[\w\W\s]*'
               maxLength: 255
               example: Todas quintas e domingos por 6 meses
-    XFapiInteractionId:
-      type: string
-      format: uuid
-      minLength: 1
-      maxLength: 36
-      pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-      example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
   parameters:
     consentId:
       name: consentId
@@ -2949,7 +2942,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-            $ref: '#/components/headers/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionIdBadRequest'
     BadRequestPayments:
       description: 'Seguir as orientações presentes na descrição da API, subitem 1.2.3'
       content:
