@@ -3644,29 +3644,7 @@ components:
 
             1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
-          type: string
-          enum:
-            - RCVD
-            - CANC
-            - ACCP
-            - ACPD
-            - RJCT
-            - ACSC
-            - PDNG
-            - SCHD
-          example: PDNG
-          description: |
-            Estado atual do pagamento. O estado evolui na seguinte ordem:
-            - RCVD (Received) - Indica que a requisição de pagamento foi recebida com sucesso pela detentora, mas ainda há validações a serem feitas antes de ser submetida para liquidação.
-            - CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
-            - ACCP( Accepted Customer Profile) - Indica que todas as verificações necessárias já foram realizadas pela detentora e que a transação está pronta para ser enviada para liquidação (no SPI se for Pix para outra instituição ou internamente se for para outra conta na mesma instituição).
-            - ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
-            - RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
-            - ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
-            - PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise. Não se aplica para Transferências inteligentes.
-            - SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.  
-            Em caso insucesso:
-            - RJCT (REJECTED) - Instrução de pagamento rejeitada.
+          $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
           $ref: '#/components/schemas/RejectionReason'
         cnpjInitiator:
