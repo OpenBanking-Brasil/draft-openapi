@@ -1,10 +1,10 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Lista;;Obrigatório;;;1;1;"";Não permitido;array;;
-/data/consentId;consentId;"Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na RFC8141 é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme ""urn"" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+/data/consentId;consentId;"Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme ""urn"" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
 
 o namespace(urn)
 o identificador associado ao namespace da instituição transmissora (bancoex)
-o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na RFC8141.
+o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
 ";Texto;256;Opcional;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;0;1;"";Não permitido;string;urn:bancoex:C1DD33123;
 /data/paymentId;paymentId;Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. O paymentId deve ser diferente do endToEndId. Este é o identificador que deverá ser utilizado na consulta ao status e cancelamento da iniciação de pagamento efetuada.;Texto;100;Opcional;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;0;1;"";Não permitido;string;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;
 /data/draftPaymentId;draftPaymentId;Identificador único do rascunho de pagamento.;Texto;;Opcional;;;0;1;"";Não permitido;string;61709a24-be94-4401-88cb-e457cbe13808;
@@ -40,17 +40,17 @@ PDNG";0;1;"";Não permitido;string;PDNG;
 /data/cancellation/reason;reason;"O preenchimento desse campo para retorno, deve ocorrer pela detentora de contas a partir do status em que o pagamento estiver no momento da solicitação do cancelamento (ex. Status de pagamento = PDNG, campo deve ser preenchido com enum CANCELADO_PENDENCIA)
 Valores possíveis:
 
-CANCELADO_PENDENCIA - Pagamento cancelado enquanto estava na situação PDNG
-CANCELADO_AGENDAMENTO - Pagamento cancelado enquanto estava na situação SCHD
-CANCELADO_MULTIPLAS_ALCADAS - Pagamento cancelado enquanto estava na situação PATC
+- CANCELADO_PENDENCIA - Pagamento cancelado enquanto estava na situação PDNG
+- CANCELADO_AGENDAMENTO - Pagamento cancelado enquanto estava na situação SCHD
+- CANCELADO_MULTIPLAS_ALCADAS - Pagamento cancelado enquanto estava na situação PATC
 ";Texto;;Obrigatório;;"CANCELADO_PENDENCIA 
 CANCELADO_AGENDAMENTO 
 CANCELADO_MULTIPLAS_ALCADAS";1;1;"";Não permitido;string;CANCELADO_PENDENCIA;
 /data/cancellation/cancelledFrom;cancelledFrom;"Campo utilizado para informar o meio pelo qual foi realizado o cancelamento.
 Valores possíveis:
 
-INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
-DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
+- INICIADORA - Pagamento cancelado pelo usuário pagador nos canais da iniciadora
+- DETENTORA - Pagamento cancelado pelo usuário pagador nos canais da detentora
 ";Texto;;Obrigatório;;"INICIADORA 
 DETENTORA";1;1;"";Não permitido;string;INICIADORA;
 /data/cancellation/cancelledAt;cancelledAt;Data e hora que foi realizado o cancelamento, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.;Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
@@ -62,7 +62,7 @@ DETENTORA";1;1;"";Não permitido;string;INICIADORA;
  - MANU - Inserção manual de dados da conta transacional
  - DICT - Inserção manual de chave Pix
  - QRDN - QR code dinâmico
- - INIC - I'ndica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
+ - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido.
 ";Texto;;Obrigatório;;"MANU 
 DICT 
 INIC 
@@ -100,7 +100,7 @@ No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme
 /data/payment/transactionIdentification;transactionIdentification;"Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
 
 - Letras minúsculas, de 'a' a 'z'
-- Letras maiúsculas, de 'A' a 'z'
+- Letras maiúsculas, de 'A' a 'Z'
 - Dígitos decimais, de '0' a '9'
 
 [Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
