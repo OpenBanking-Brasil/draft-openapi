@@ -32,8 +32,8 @@ PDNG";0;1;"";Não permitido;string;PDNG;
 ";Não permitido;object;;
 /data/rejectionReason/code;code;"Define o código da razão pela qual o pagamento foi rejeitado.
 
-- SALDO INSUFICIENTE
-- VALOR ACIMA_LIMITE
+- SALDO_INSUFICIENTE
+- VALOR_ACIMA_LIMITE
 - VALOR_INVALIDO
 - QRCODE_INVALIDO
 - ORCODE VALOR DIVERGENTE
@@ -43,8 +43,15 @@ PDNG";0;1;"";Não permitido;string;PDNG;
 - FALHA_INFRAESTRUTURA_SPI
 - FALHA_INFRAESTRUTURA_DICT
 - FALHA_INFRAESTRUTURA_ICP
-";Texto;;Obrigatório;;"SALDO INSUFICIENTE 
-VALOR ACIMA_LIMITE 
+- FALHA INFRAESTRUTURA_PSP_RECEBEDOR
+- FALHA INFRAESTRUTURA_DETENTORA
+- CONTAS_ORIGEM_DESTINO_IGUAIS
+- CONSENTIMENTO_INVALIDO
+- RASCUNHO_DIVERGENTE
+- RASCUNHO_TENTATIVAS_EXCEDIDAS
+- PAGAMENTO_REALIZADO
+";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
+VALOR_ACIMA_LIMITE 
 VALOR_INVALIDO 
 QRCODE_INVALIDO 
 ORCODE VALOR DIVERGENTE 
@@ -53,11 +60,18 @@ DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
 PAGAMENTO_RECUSADO_SPI 
 FALHA_INFRAESTRUTURA_SPI 
 FALHA_INFRAESTRUTURA_DICT 
-FALHA_INFRAESTRUTURA_ICP";1;1;"";Não permitido;string;SALDO_INSUFICIENTE;
+FALHA_INFRAESTRUTURA_ICP 
+FALHA INFRAESTRUTURA_PSP_RECEBEDOR 
+FALHA INFRAESTRUTURA_DETENTORA 
+CONTAS_ORIGEM_DESTINO_IGUAIS 
+CONSENTIMENTO_INVALIDO 
+RASCUNHO_DIVERGENTE 
+RASCUNHO_TENTATIVAS_EXCEDIDAS 
+PAGAMENTO_REALIZADO";1;1;"";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Contém informações adicionais ao pagamento rejeitado.
 
-- SALDO INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-- VALOR ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente. 
+- SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
+- VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente. 
 - VALOR_INVALIDO: O valor enviado não é válido.
 - QRCODE_INVALIDO: O QRCode utilizado para a iniciação de pagamento não é válido.
 - ORCODE VALOR DIVERGENTE: O valor enviado no pagamento diverge do informado QR Code.
