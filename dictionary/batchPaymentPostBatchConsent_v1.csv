@@ -2,7 +2,11 @@
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/consentId;consentId;"Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. 
 Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme ""urn"" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
-Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: o namespace(urn) o identificador associado ao namespace da instituição transmissora (bancoex).  o identificador específico dentro do namespace (C1DD33123).  Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: 
+- o namespace(urn) 
+- o identificador associado ao namespace da instituição transmissora (bancoex).  
+- o identificador específico dentro do namespace (C1DD33123).  
+Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
 ";Texto;256;Obrigatório;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;1;1;"";Não permitido;string;urn:bancoex:C1DD33123;
 /data/creationDateTime;creationDateTime;;Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
 /data/statusUpdateDateTime;statusUpdateDateTime;;Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
@@ -45,7 +49,7 @@ INICIADORA
 DETENTORA";1;1;"";Não permitido;string;INICIADORA;
 /data/rejection/rejectedFrom;rejectedFrom;;Texto;;Obrigatório;;;1;1;"";Não permitido;string;DETENTORA;
 /data/rejection/rejectedAt;rejectedAt;Data e hora em que ocorreu a rejeição do consentimento.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
-/data/rejection/reason;reason;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/rejection/reason;reason;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/rejection/reason/code;code;"Código descritivo do motivo de rejeição do consentimento.
 
 - NAO_INFORMADO
