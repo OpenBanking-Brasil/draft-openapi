@@ -5,7 +5,7 @@ info:
     Família de API para permitir o pagamento sem redirecionamento via Open Finance Brasil.  
     Permite tanto o gerenciamento dos dispositivos vinculados as contas quanto a autorização de consentimentos criados via fluxo sem redirecionamento.
     
-  version: 1.4.0
+  version: 2.0.0-beta.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -14,9 +14,9 @@ info:
     email: squad-jornada@openfinancebrasil.org.br
     url: 'https://openfinancebrasil.atlassian.net/wiki/spaces/OF'
 servers:
-  - url: 'https://mtls-api.banco.com.br/open-banking/enrollments/v1'
+  - url: 'https://mtls-api.banco.com.br/open-banking/enrollments/v2'
     description: Servidor de Produção
-  - url: 'https://mtls-api.hml.banco.com.br/open-banking/enrollments/v1'
+  - url: 'https://mtls-api.hml.banco.com.br/open-banking/enrollments/v2'
     description: Servidor de Homologação
 tags:
   - name: Vínculo de dispositivo
@@ -562,10 +562,15 @@ paths:
 components:
   headers:
     xFapiInteractionId:
-      description: |
-        Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-      schema:
-        $ref: '#/components/schemas/XFapiInteractionId'
+        description: |
+          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
+        schema:
+          $ref: '#/components/schemas/XFapiInteractionId'
+    xFapiInteractionIdBadRequest:
+        description: |
+          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser "espelhado" pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora.
+        schema:
+          $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
     422ResponseErrorCreateEnrollment:
       type: object
@@ -1944,7 +1949,7 @@ components:
           format: url
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
     ResponseError:
       type: object
       required:
@@ -2205,7 +2210,6 @@ components:
       maxLength: 36
       pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
-      description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
   parameters:
     consentId:
       name: consentId
@@ -2336,10 +2340,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionIdBadRequest'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
@@ -2348,10 +2349,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
     ForbiddenEnrollments:
       description: |
         O token tem escopo incorreto ou uma política de segurança foi violada.
@@ -2362,10 +2360,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
@@ -2380,10 +2375,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
     NotAcceptable:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
@@ -2392,10 +2384,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
@@ -2404,10 +2393,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
     SiteIsOverloaded:
       description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
       content:
@@ -2497,10 +2483,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
     UnsupportedMediaType:
       description: O formato do payload não é um formato suportado.
       content:
@@ -2509,18 +2492,12 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
     201EnrollmentsCreated:
       description: Vínculo de conta criado com sucesso.
       headers:
         x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/xFapiInteractionId'
       content:
         application/jwt:
           schema:
