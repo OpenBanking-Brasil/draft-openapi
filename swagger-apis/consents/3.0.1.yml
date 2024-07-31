@@ -1182,13 +1182,15 @@ components:
                   - PERMISSOES_PJ_INCORRETAS
                   - PERMISSAO_PF_PJ_EM_CONJUNTO
                   - COMBINACAO_PERMISSOES_INCORRETA
+
+                  Para o erro referente a envio de data de expiração maior que um ano, diferente de prazo indeterminado (data vazia) ou data referente ao passado, de forma temporária, deve ser informado um code genérico. Em um momento posterior será adicionado um code definitivo para descrição deste erro.
               title:
-                description: Título legível por humanos deste erro específico
+                description: Título legível por humanos deste erro específico. Para o erro de data de expiração maior que um ano, diferente de prazo indeterminado (data vazia) ou data referente ao passado, o título deve deixar claro o motivo do erro, não importando o code usado.
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 255
               detail:
-                description: Descrição legível por humanos deste erro específico
+                description: Descrição legível por humanos deste erro específico. Para o erro de data de expiração maior que um ano, diferente de prazo indeterminado (data vazia) ou data referente ao passado, a descrição deve deixar clara o motivo do erro não importando o code usado.
                 type: string
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
