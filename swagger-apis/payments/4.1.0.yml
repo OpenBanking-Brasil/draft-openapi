@@ -542,6 +542,16 @@ components:
           maxLength: 36
           format: uuid
           example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+      xFapiInteractionIdBadRequestPixPayments:
+        description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, ou enviado inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+        required: true
+        schema:
+          type: string
+          pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+          minLength: 1
+          maxLength: 36
+          format: uuid
+          example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
   schemas:
     422ResponseErrorCreateConsent:
       type: object
@@ -2960,7 +2970,7 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-            $ref: '#/components/headers/xFapiInteractionId'
+            $ref: '#/components/headers/xFapiInteractionIdBadRequestPixPayments'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
