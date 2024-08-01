@@ -1351,7 +1351,7 @@ components:
                       - VALOR_ACIMA_LIMITE
                       - VALOR_INVALIDO
                       - QRCODE_INVALIDO
-                      - ORCODE VALOR DIVERGENTE
+                      - QRCODE_VALOR_DIVERGENTE
                       - NAO_INFORMADO
                       - DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
                       - PAGAMENTO_RECUSADO_SPI
@@ -1371,7 +1371,7 @@ components:
                       - VALOR_ACIMA_LIMITE
                       - VALOR_INVALIDO
                       - QRCODE_INVALIDO
-                      - ORCODE VALOR DIVERGENTE
+                      - QRCODE_VALOR_DIVERGENTE
                       - NAO_INFORMADO
                       - DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
                       - PAGAMENTO_RECUSADO_SPI
@@ -1394,7 +1394,7 @@ components:
                       - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente. 
                       - VALOR_INVALIDO: O valor enviado não é válido.
                       - QRCODE_INVALIDO: O QRCode utilizado para a iniciação de pagamento não é válido.
-                      - ORCODE VALOR DIVERGENTE: O valor enviado no pagamento diverge do informado QR Code.
+                      - QRCODE_VALOR_DIVERGENTE: O valor enviado no pagamento diverge do informado QR Code.
                       - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta.
                       - DETALHE_PAGAMENTO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de negócio.
                       - PAGAMENTO_RECUSADO_DETENTORA: [Descrição do motivo de recusa].
@@ -2247,6 +2247,8 @@ components:
                   - VALOR_INVALIDO
                   - QRCODE_INVALIDO
                   - QRCODE_VALOR_DIVERGENTE
+                  - CONSENTIMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
                   - PARAMETRO_INVALIDO
                   - NAO_INFORMADO
                   - DETALHE_PAGAMENTO_INVALIDO
@@ -2263,6 +2265,8 @@ components:
                   - VALOR_INVALIDO
                   - QRCODE_INVALIDO
                   - QRCODE_VALOR_DIVERGENTE
+                  - CONSENTIMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
                   - PARAMETRO_INVALIDO
                   - NAO_INFORMADO
                   - DETALHE_PAGAMENTO_INVALIDO
@@ -2282,6 +2286,8 @@ components:
                   - VALOR_INVALIDO - O valor enviado não é válido.
                   - QRCODE_INVALIDO - Validação de expiração, validação de vencimento, ou validação adicional no QR Code.
                   - QRCODE_VALOR_DIVERGENTE - O valor enviado diverge do informado QR Code.
+                  - CONSENTIMENTO_INVALIDO - Consentimento inválido (em status final "CONSUMED", "REJECTED" ou "REVOKED").
+                  - PARAMETRO_NAO_INFORMADO - Parâmetro [nome_campo] obrigatório não informado.
                   - PARAMETRO_INVALIDO - Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
                   - NAO_INFORMADO - Não reportado/identificado pela instituição detentora de conta.
                   - DETALHE_PAGAMENTO_INVALIDO - Detalhe do pagamento inválido.
