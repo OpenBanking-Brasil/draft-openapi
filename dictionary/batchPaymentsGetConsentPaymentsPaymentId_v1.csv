@@ -38,13 +38,13 @@ PDNG";0;1;"";Não permitido;string;PDNG;
 - QRCODE_INVALIDO
 - QRCODE_VALOR_DIVERGENTE
 - NAO_INFORMADO
-- DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
+- DETALHE_PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
 - PAGAMENTO_RECUSADO_SPI
 - FALHA_INFRAESTRUTURA_SPI
 - FALHA_INFRAESTRUTURA_DICT
 - FALHA_INFRAESTRUTURA_ICP
-- FALHA INFRAESTRUTURA_PSP_RECEBEDOR
-- FALHA INFRAESTRUTURA_DETENTORA
+- FALHA_NFRAESTRUTURA_PSP_RECEBEDOR
+- FALHA_NFRAESTRUTURA_DETENTORA
 - CONTAS_ORIGEM_DESTINO_IGUAIS
 - CONSENTIMENTO_INVALIDO
 - RASCUNHO_DIVERGENTE
@@ -56,13 +56,13 @@ VALOR_INVALIDO
 QRCODE_INVALIDO 
 QRCODE_VALOR_DIVERGENTE 
 NAO_INFORMADO 
-DETALHE PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA 
+DETALHE_PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA 
 PAGAMENTO_RECUSADO_SPI 
 FALHA_INFRAESTRUTURA_SPI 
 FALHA_INFRAESTRUTURA_DICT 
 FALHA_INFRAESTRUTURA_ICP 
-FALHA INFRAESTRUTURA_PSP_RECEBEDOR 
-FALHA INFRAESTRUTURA_DETENTORA 
+FALHA_NFRAESTRUTURA_PSP_RECEBEDOR 
+FALHA_NFRAESTRUTURA_DETENTORA 
 CONTAS_ORIGEM_DESTINO_IGUAIS 
 CONSENTIMENTO_INVALIDO 
 RASCUNHO_DIVERGENTE 
@@ -82,13 +82,13 @@ PAGAMENTO_REALIZADO";1;1;"";Não permitido;string;SALDO_INSUFICIENTE;
 - FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI).
 - FALHA_INFRAESTRUTURA_DICT: Indica uma falha no Diretório de Identificadores de Contas Transacionais (DICT).
 - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP).
-- FALHA INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento.
-- FALHA INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos.
+- FALHA_NFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento.
+- FALHA_NFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos.
 - CONTAS_ORIGEM_DESTINO_IGUAIS: Indica uma tentativa de pagamento onde a conta origem e a conta de destino são iguais.
 - CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final ""CONSUMED"", ""REJECTED"" ou ""REVOKED"").
 - RASCUNHO_DIVERGENTE: O [nome_do_campo] do pagamento está divergente do enviado no rascunho de pagamento.
 - RASCUNHO_TENTATIVAS_EXCEDIDAS: A tentativa de pagamento para esse rascunho não pode ser realizada pois a quantidade máxima de tentativas foi excedida.
-- PAGAMENTO_REALIZADO: A tentativa de pagamento para o draftPaymentld não pode ser realizada pois o mesmo já foi liquidado.
+- PAGAMENTO_REALIZADO: A tentativa de pagamento para o draftPaymentId não pode ser realizada pois o mesmo já foi liquidado.
 ";Texto;;Obrigatório;;;1;1;"";Não permitido;string;string;
 /data/cancellation;cancellation;"Objeto que contém os dados referentes ao usuário pagador que solicitou o cancelamento, o canal utilizado por ele e o motivo.
 
