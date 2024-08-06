@@ -1353,13 +1353,14 @@ components:
                       - QRCODE_INVALIDO
                       - QRCODE_VALOR_DIVERGENTE
                       - NAO_INFORMADO
-                      - DETALHE_PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
+                      - DETALHE_PAGAMENTO_INVALIDO 
+                      - PAGAMENTO_RECUSADO_DETENTORA
                       - PAGAMENTO_RECUSADO_SPI
                       - FALHA_INFRAESTRUTURA_SPI
                       - FALHA_INFRAESTRUTURA_DICT
                       - FALHA_INFRAESTRUTURA_ICP
-                      - FALHA_NFRAESTRUTURA_PSP_RECEBEDOR
-                      - FALHA_NFRAESTRUTURA_DETENTORA
+                      - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
+                      - FALHA_INFRAESTRUTURA_DETENTORA
                       - CONTAS_ORIGEM_DESTINO_IGUAIS
                       - CONSENTIMENTO_INVALIDO
                       - RASCUNHO_DIVERGENTE
@@ -1367,23 +1368,24 @@ components:
                       - PAGAMENTO_REALIZADO
                     type: string
                     enum:
-                      - SALDO_INSUFICIENTE
-                      - VALOR_ACIMA_LIMITE
-                      - VALOR_INVALIDO
-                      - QRCODE_INVALIDO
-                      - QRCODE_VALOR_DIVERGENTE
-                      - NAO_INFORMADO
-                      - DETALHE_PAGAMENTO_INVALIDO PAGAMENTO_RECUSADO_DETENTORA
-                      - PAGAMENTO_RECUSADO_SPI
-                      - FALHA_INFRAESTRUTURA_SPI
-                      - FALHA_INFRAESTRUTURA_DICT
-                      - FALHA_INFRAESTRUTURA_ICP
-                      - FALHA_NFRAESTRUTURA_PSP_RECEBEDOR
-                      - FALHA_NFRAESTRUTURA_DETENTORA
-                      - CONTAS_ORIGEM_DESTINO_IGUAIS
-                      - CONSENTIMENTO_INVALIDO
-                      - RASCUNHO_DIVERGENTE
-                      - RASCUNHO_TENTATIVAS_EXCEDIDAS
+                      - SALDO_INSUFICIENTE,
+                      - VALOR_ACIMA_LIMITE,
+                      - VALOR_INVALIDO,
+                      - QRCODE_INVALIDO,
+                      - QRCODE_VALOR_DIVERGENTE,
+                      - NAO_INFORMADO,
+                      - DETALHE_PAGAMENTO_INVALIDO,
+                      - PAGAMENTO_RECUSADO_DETENTORA,
+                      - PAGAMENTO_RECUSADO_SPI,
+                      - FALHA_INFRAESTRUTURA_SPI,
+                      - FALHA_INFRAESTRUTURA_DICT,
+                      - FALHA_INFRAESTRUTURA_ICP,
+                      - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR,
+                      - FALHA_INFRAESTRUTURA_DETENTORA,
+                      - CONTAS_ORIGEM_DESTINO_IGUAIS,
+                      - CONSENTIMENTO_INVALIDO,
+                      - RASCUNHO_DIVERGENTE,
+                      - RASCUNHO_TENTATIVAS_EXCEDIDAS,
                       - PAGAMENTO_REALIZADO
                     example: 'SALDO_INSUFICIENTE'
                   detail:
