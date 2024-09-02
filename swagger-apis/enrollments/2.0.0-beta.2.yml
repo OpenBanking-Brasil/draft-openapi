@@ -770,11 +770,13 @@ components:
                 type: string
                 enum:
                   - STATUS_VINCULO_INVALIDO
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
 
                   - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
               title:
                 type: string
                 maxLength: 255
@@ -784,6 +786,7 @@ components:
                   Título específico do erro reportado, de acordo com o código enviado:
 
                   - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
               detail:
                 type: string
                 maxLength: 2048
@@ -793,6 +796,7 @@ components:
                   Descrição específica do erro de acordo com o código reportado:
 
                   - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorFidoSignOptions:
