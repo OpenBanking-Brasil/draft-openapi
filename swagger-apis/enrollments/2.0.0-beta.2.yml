@@ -508,7 +508,8 @@ paths:
         Autorização de um consentimento de pagamentos em status `AWAITING_AUTHORISATION` a partir do access_token emitido pela jornada sem redirecionamento e envio de sinais de risco. 
         Para pagamentos de alçadas únicas, o consentimento de pagamento deve transitar ao status `AUTHORISED` na execução com sucesso desse método. 
         Para pagamentos com múltiplas alçadas aprovadoras, o consentimento de pagamento ficará em `PARTIALLY_ACCEPTED` até que todos tenham autorizado. 
-        Em caso de falha de negócio (HTTP Status Code 422), o consentimento de pagamento precisa transitar para o status `REJECTED` e seguir os motivos de rejeição presentes na API de Pagamentos
+        Em caso de falha de negócio (HTTP Status Code 422), o consentimento de pagamento precisa transitar para o status `REJECTED` e seguir os motivos de rejeição presentes na API de pagamentos.
+        Caso a detentora identifique que a conta de débito informada pelo iniciador na criação do consentimento diverge da conta de débito vinculada ao dispositivo, o detentor deve retornar o erro HTTP 422 com código `CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO` e rejeitar o consentimento com o motivo `CONTA_NAO_PERMITE_PAGAMENTO`. Se o iniciador, durante a criação do consentimento, omitir a conta de débito, o detentor deve considerar a conta de débito associada ao vínculo para o preenchimento do objeto `/data/debtorAccount`, presente no consentimento, após a sua autorização.
       parameters:
         - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
@@ -956,17 +957,16 @@ components:
                   - STATUS_CONSENTIMENTO_INVALIDO
                   - RISCO
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
 
-                  • STATUS_VINCULO_INVALIDO: O vínculo de conta não possui status AUTHORISED.
-                  
-                  • STATUS_CONSENTIMENTO_INVALIDO: O consentimento de pagamentos não possui status AWAITING_AUTHORISATION.
-                  
-                  • RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.                  
-                  
-                  • FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - STATUS_VINCULO_INVALIDO: O vínculo de conta não possui status AUTHORISED.
+                  - STATUS_CONSENTIMENTO_INVALIDO: O consentimento de pagamentos não possui status AWAITING_AUTHORISATION.
+                  - RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.                  
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: A conta de débito informada pelo iniciador não condiz com a conta de débito vinculada ao dispositivo.
               title:
                 type: string
                 maxLength: 255
@@ -975,13 +975,11 @@ components:
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
 
-                  • STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
-                  
-                  • STATUS_CONSENTIMENTO_INVALIDO: Status do consentimento inválido.
-                  
-                  • RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.
-                  
-                  • FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Falta de sinais obrigatórios para a plataforma do usuário.
+                  - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
+                  - STATUS_CONSENTIMENTO_INVALIDO: Status do consentimento inválido.
+                  - RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Falta de sinais obrigatórios para a plataforma do usuário.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: A conta de débito informada pelo iniciador não condiz com a conta de débito vinculada ao dispositivo.
               detail:
                 type: string
                 maxLength: 2048
@@ -990,13 +988,11 @@ components:
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
 
-                  • STATUS_VINCULO_INVALIDO: O vínculo de conta não possui status AUTHORISED.
-                  
-                  • STATUS_CONSENTIMENTO_INVALIDO: O consentimento de pagamentos não possui status AWAITING_AUTHORISATION.
-                  
-                  • RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.
-                  
-                  • FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - STATUS_VINCULO_INVALIDO: O vínculo de conta não possui status AUTHORISED.
+                  - STATUS_CONSENTIMENTO_INVALIDO: O consentimento de pagamentos não possui status AWAITING_AUTHORISATION.
+                  - RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.
+                  - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: A conta de débito informada pelo iniciador não condiz com a conta de débito vinculada ao dispositivo.
         meta:
           $ref: '#/components/schemas/Meta'
     BusinessEntity:
