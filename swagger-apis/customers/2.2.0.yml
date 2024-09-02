@@ -470,9 +470,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/PartiesParticipation'
-          minItems: 1
+          minItems: 0
           description: |
-            Lista relativa às informações das partes envolvidas, como: sócio e /ou administrador
+            Lista relativa às informações das partes envolvidas, como: sócio e/ou administrador. Objeto de envio obrigatório para todos os CNPJs que possuam sócios e/ou administradores no cadastro do QSA (Quadro de Sócios e Administradores)
         contacts:
           $ref: '#/components/schemas/BusinessContacts'
     BusinessProcurator:
