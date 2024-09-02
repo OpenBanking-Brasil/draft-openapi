@@ -38,7 +38,7 @@ headers = {
   'COLUMN_15' => 'Tamanho mínimo'
 }
 
-headersXregulatory = {
+headersPeS = {
   'COLUMN_1'  => 'Xpath',
   'COLUMN_2'  => 'Nome',
   'COLUMN_3'  => 'Definição',
@@ -198,14 +198,11 @@ oas['paths'].each_with_index do |(path, methods)|
 
           if field['minItems'] == nil
             min_items = field['isRequired'] ? 1 : 0
+            max_items = 1
           end
 
-          if field['type'] == 'array' 
-            if field['maxItems'] == nil
-              max_items = 'N'
-            end
-          else
-            max_items = 1
+          if field['type'] == 'array' and field['maxItems'] == nil
+            max_items = 'N'
           end
 
           if restriction != '' && options[:conditional] && !field['isRequired']
@@ -214,22 +211,23 @@ oas['paths'].each_with_index do |(path, methods)|
 
           if $isRegulatoryRequiredAPI
             row = {
-              headersXregulatory['COLUMN_1']   => field['path'],
-              headersXregulatory['COLUMN_2']   => field['name'],
-              headersXregulatory['COLUMN_3']   => field['description'],
-              headersXregulatory['COLUMN_4']   => format_type(data_type),
-              headersXregulatory['COLUMN_5']   => field['maxLength'] ? field['maxLength'] : field['maximum'],
-              headersXregulatory['COLUMN_6']   => mandatory,
-              headersXregulatory['COLUMN_7']   => regulatoryMandatory,
-              headersXregulatory['COLUMN_8']   => field['pattern'],
-              headersXregulatory['COLUMN_9']   => format_enum(field['enum']),
-              headersXregulatory['COLUMN_10']  => min_items,
-              headersXregulatory['COLUMN_11']  => max_items,
-              headersXregulatory['COLUMN_12']  => restriction,
-              headersXregulatory['COLUMN_13']  => field['nullable'] ? "Permitido" : "Não permitido",
-              headersXregulatory['COLUMN_14']  => field['type'],
-              headersXregulatory['COLUMN_15']  => field['example'],
-              headersXregulatory['COLUMN_16']  => field['minLength'] ? field['minLength'] : field['minimum']
+
+              headersPeS['COLUMN_1']   => field['path'],
+              headersPeS['COLUMN_2']   => field['name'],
+              headersPeS['COLUMN_3']   => field['description'],
+              headersPeS['COLUMN_4']   => format_type(data_type),
+              headersPeS['COLUMN_5']   => field['maxLength'],
+              headersPeS['COLUMN_6']   => mandatory,
+              headersPeS['COLUMN_7']   => regulatoryMandatory,
+              headersPeS['COLUMN_8']   => field['pattern'],
+              headersPeS['COLUMN_9']   => format_enum(field['enum']),
+              headersPeS['COLUMN_10']  => min_items,
+              headersPeS['COLUMN_11']  => max_items,
+              headersPeS['COLUMN_12']  => restriction,
+              headersPeS['COLUMN_13']  => field['nullable'] ? "Permitido" : "Não permitido",
+              headersPeS['COLUMN_14']  => field['type'],
+              headersPeS['COLUMN_15']  => field['example'],
+              headersPeS['COLUMN_16']  => field['minLength']
             }
           else
             row = {
@@ -259,7 +257,7 @@ oas['paths'].each_with_index do |(path, methods)|
     filename = output_path + spec['operationId'] + "_" + version + '.csv'
     puts '  ├── Writing file ' + filename
     if $isRegulatoryRequiredAPI
-      generate_csv(filename, headersXregulatory, rows)
+      generate_csv(filename, headersPeS, rows)
     else
       generate_csv(filename, headers, rows)
     end

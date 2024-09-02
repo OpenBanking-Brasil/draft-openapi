@@ -1,0 +1,50 @@
+﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
+/data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/consentId;consentId;"Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme ""urn"" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos:
+
+- o namespace(urn)
+- o identificador associado ao namespace da instituição transmissora (bancoex)
+- o identificador específico dentro do namespace (C1DD33123). Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+";Texto;256;Opcional;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;0;1;"";Não permitido;string;urn:bancoex:C1DD33123;
+/data/paymentId;paymentId;Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. O paymentId deve ser diferente do endToEndId. Este é o identificador que deverá ser utilizado na consulta ao status e cancelamento da iniciação de pagamento efetuada.;Texto;100;Opcional;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;0;1;"";Não permitido;string;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;
+/data/draftPaymentId;draftPaymentId;Identificador único do rascunho de pagamento.;Texto;;Opcional;;;0;1;"";Não permitido;string;61709a24-be94-4401-88cb-e457cbe13808;
+/data/endToEndId;endToEndId;"Deve ser preenchido no formato padrão ExxxxxxxxyyyyMMddHHmmkkkkkkkkkkk (32 caracteres; “case sensitive”, isso é, diferencia letras maiúsculas e minúsculas), sendo:
+
+- “E” - fixo (1 caractere);
+- xxxxxxxx - identificação do agente que gerou o 'EndToEndId', podendo ser: o ISPB do participante direto ou o ISPB do participante indireto (8 caracteres numéricos [0-9]);
+- yyyyMMddHHmm - data, hora e minuto (12 caracteres), seguindo o horário UTC, da submissão da ordem de pagamento, caso a liquidação seja prioritária, ou prevista para o envio da ordem ao sistema de liquidação, caso seja realizado um agendamento. Para ordens prioritárias e não prioritárias, aceita-se o preenchimento, pelo agente que gerou o 'EndToEndId', com uma tolerância máxima de 12 horas, para o futuro e para o passado, em relação ao horário efetivo de processamento da ordem pelo SPI;
+- kkkkkkkkkkk - sequencial criado pelo agente que gerou o 'EndToEndId' (11 caracteres alfanuméricos [a-z/A-Z/0-9]). Deve ser único dentro de cada “yyyyMMddHHmm”. Admite-se que o 'EndToEndId' seja gerado pelo participante direto, pelo participante indireto ou pelo iniciador de pagamento. Ele deve ser único, não podendo ser repetido em qualquer outra operação enviada ao SPI. No caso de Pix agendamento, a iniciadora deverá, no que tange a composição do endToEndId, utilizar a data para a qual o Pix está sendo agendado e horário fixo 15:00 UTC, que dará para a detentora a janela de efetivação de 00:00 e 23:59 do horário de Brasília.
+";Texto;32;Opcional;^([E])([0-9]{8})([0-9]{4})(0[1-9]|1[0-2])(0[1-9]|[1-2][0-9]|3[0-1])(2[0-3]|[01][0-9])([0-5][0-9])([a-zA-Z0-9]{11})$;;0;1;"";Não permitido;string;E9040088820210128000800123873170;32
+/data/transactionIdentification;transactionIdentification;"Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:
+
+- Letras minúsculas, de 'a' a 'z'
+- Letras maiúsculas, de 'A' a 'Z'
+- Dígitos decimais, de '0' a '9'
+
+[Restrição] Preenchimento condicional de acordo com o conteúdo do campo localInstument:
+
+- MANU - O campo transactionIdentification não deve ser preenchido.
+- DICT - O campo transactionIdentification não deve ser preenchido.
+- INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+- QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+- QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
+";Texto;35;Condicional;^[a-zA-Z0-9]{1,35}$;;0;1;" Preenchimento condicional de acordo com o conteúdo do campo localInstument:
+
+- MANU - O campo transactionIdentification não deve ser preenchido.
+- DICT - O campo transactionIdentification não deve ser preenchido.
+- INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+- QRES - Caso o QR Code estático possua o dado preenchido, o campo transactionIdentification deverá ser preenchido com este valor, caso o QR Code não possua o o campo transactionIdentification não deverá ser preenchido. O deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
+- QRDN - Será obrigatório seu preenchimento com o do payload JSON do QR Code dinâmico. O deve conter entre 26 e 35 caracteres alfanuméricos ([a-z|A-Z|0-9]). A detentora de conta deve validar se a condicionalidade e o formato do campo foram atendidas pela iniciadora de pagamento.
+";Não permitido;string;E00038166201907261559y6j6;
+/data/creationDateTime;creationDateTime;Data e hora em que o recurso foi criado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).;Texto;;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;0;1;"";Não permitido;string;2020-07-21T08:30:00Z;
+/data/statusUpdateDateTime;statusUpdateDateTime;Data e hora em que o recurso foi criado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).;Texto;;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;0;1;"";Não permitido;string;2020-07-21T08:30:00Z;
+/data/status;status;Estado atual da solicitação de liquidação de pagamentos;Texto;;Opcional;;"RCVD 
+CANC 
+ACCP 
+ACPD 
+RJCT 
+ACSC 
+PDNG";0;1;"";Não permitido;string;PDNG;
+/data/payment;payment;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/payment/currency;currency;Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'. Todos os valores monetários informados estão representados com a moeda vigente do Brasil.;Texto;;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
+/data/payment/amount;amount;Valor da transação com 2 casas decimais.;Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
