@@ -2008,7 +2008,6 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
-            - expirationDateTime
             - loggedUser
           properties:
             enrollmentId:
@@ -2040,7 +2039,10 @@ components:
               example: '2023-07-12T08:30:00Z'
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
-              description: O instante de expiração deste vínculo de conta, de acordo com a regulação vigente.
+              description: |
+                Data e hora definida pelo usuário em que o vínculo do dispositivo deve expirar, perdendo sua validade.
+                
+                [Restrição] Campo obrigatório que deverá ser retornado quando o vínculo de dispositivo estiver ou passar pelo estado AUTHORISED;
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
@@ -2067,7 +2069,6 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
-            - expirationDateTime
             - loggedUser
           properties:
             enrollmentId:
@@ -2099,7 +2100,10 @@ components:
               example: '2023-07-12T08:30:00Z'
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
-              description: O instante de expiração deste vínculo de conta, de acordo com a regulação vigente.
+              description: |
+                Data e hora definida pelo usuário em que o vínculo do dispositivo deve expirar, perdendo sua validade.
+
+                [Restrição] Campo obrigatório que deverá ser retornado quando o vínculo de dispositivo estiver ou passar pelo estado AUTHORISED;
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
