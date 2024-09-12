@@ -594,13 +594,17 @@ components:
                 enum:
                   - PERMISSOES_INVALIDAS
                   - CONTA_INVALIDA
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
                 example: PERMISSOES_INVALIDAS
                 description: |
                   Códigos de erros previstos na criação do vínculo de conta:
-                  
-                  • PERMISSOES_INVALIDAS: As permissões associadas ao vínculo de conta não contêm "PAYMENTS_INITIATE".
-                  
-                  • CONTA_INVALIDA: A conta informada inexiste ou não é compatível com o fluxo de não-redirecionamento.
+                  - PERMISSOES_INVALIDAS: As permissões associadas ao vínculo de conta não contêm "PAYMENTS_INITIATE".
+                  - CONTA_INVALIDA: A conta informada inexiste ou não é compatível com o fluxo de não-redirecionamento.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -608,10 +612,11 @@ components:
                 example: Permissões inválidas
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-                  
-                  • PERMISSOES_INVALIDAS: Permissões inválidas.
-                  
-                  • CONTA_INVALIDA: Conta inválida.
+                  - PERMISSOES_INVALIDAS: Permissões inválidas.
+                  - CONTA_INVALIDA: Conta inválida.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -619,10 +624,11 @@ components:
                 example: 'Permissões inválidas'
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-                  
-                  • PERMISSOES_INVALIDAS: As permissões associadas ao vínculo de conta não contêm "PAYMENTS_INITIATE" ou contêm valores não suportados para esta operação.  
-                  
-                  • CONTA_INVALIDA: A conta informada inexiste ou não é compatível com o fluxo de não-redirecionamento.
+                  - PERMISSOES_INVALIDAS: As permissões associadas ao vínculo de conta não contêm "PAYMENTS_INITIATE" ou contêm valores não suportados para esta operação.  
+                  - CONTA_INVALIDA: A conta informada inexiste ou não é compatível com o fluxo de não-redirecionamento.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCancelEnrollment:
@@ -649,19 +655,20 @@ components:
                   - REJEITADO_OUTRO_SEM_DETALHES
                   - MOTIVO_REVOGACAO
                   - REVOGADO_OUTRO_SEM_DETALHES
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
                 example: STATUS_INVALIDO
                 description: |
                   Códigos de erros previstos no cancelamento do vínculo de conta:
-
-                  • STATUS_INVALIDO: O status do vínculo de conta não permite cancelamento.
-                  
-                  • MOTIVO_REJEICAO: A rejeição do vínculo de conta exige um motivo associado.
-                  
-                  • REJEITADO_OUTRO_SEM_DETALHES: O uso do motivo REJEITADO_OUTRO, deve estar acompanhado de descrição (additionalInformation).
-                  
-                  • MOTIVO_REVOGACAO: A revogação do vínculo de conta exige um motivo associado.
-                  
-                  • REVOGADO_OUTRO_SEM_DETALHES: O uso do motivo REVOGADO_OUTRO deve estar acompanhado de descrição (additionalInformation)
+                  - STATUS_INVALIDO: O status do vínculo de conta não permite cancelamento.
+                  - MOTIVO_REJEICAO: A rejeição do vínculo de conta exige um motivo associado.
+                  - REJEITADO_OUTRO_SEM_DETALHES: O uso do motivo REJEITADO_OUTRO, deve estar acompanhado de descrição (additionalInformation).
+                  - MOTIVO_REVOGACAO: A revogação do vínculo de conta exige um motivo associado.
+                  - REVOGADO_OUTRO_SEM_DETALHES: O uso do motivo REVOGADO_OUTRO deve estar acompanhado de descrição (additionalInformation)
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -669,16 +676,14 @@ components:
                 example: Permissões inválidas
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • STATUS_INVALIDO: Status inválido.
-                  
-                  • MOTIVO_REJEICAO: Motivo de rejeição não especificado.
-
-                  • REJEITADO_OUTRO_SEM_DETALHES: O campo additionalInformation é obrigatório.
-
-                  • MOTIVO_REVOGACAO: Motivo de revogação não especificado.
-
-                  • REVOGADO_OUTRO_SEM_DETALHES: O campo additionalInformation é obrigatório.
+                  - STATUS_INVALIDO: Status inválido.
+                  - MOTIVO_REJEICAO: Motivo de rejeição não especificado.
+                  - REJEITADO_OUTRO_SEM_DETALHES: O campo additionalInformation é obrigatório.
+                  - MOTIVO_REVOGACAO: Motivo de revogação não especificado.
+                  - REVOGADO_OUTRO_SEM_DETALHES: O campo additionalInformation é obrigatório.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -686,16 +691,14 @@ components:
                 example: 'Permissões inválidas'
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • STATUS_INVALIDO: O status do vínculo de conta não permite cancelamento.
-                  
-                  • MOTIVO_REJEICAO: A rejeição do vínculo de conta deve estar associada a um motivo de rejeição.
-
-                  • REJEITADO_OUTRO_SEM_DETALHES: O uso do motivo REJEITADO_OUTRO, deve estar acompanhado de descrição (additionalInformation).
-
-                  • MOTIVO_REVOGACAO: A revogação do vínculo de conta deve estar associada a um motivo de revogação.
-
-                  • REVOGADO_OUTRO_SEM_DETALHES: O uso do motivo REVOGADO_OUTRO deve estar acompanhado de descrição (additionalInformation)
+                  - STATUS_INVALIDO: O status do vínculo de conta não permite cancelamento.
+                  - MOTIVO_REJEICAO: A rejeição do vínculo de conta deve estar associada a um motivo de rejeição.
+                  - REJEITADO_OUTRO_SEM_DETALHES: O uso do motivo REJEITADO_OUTRO, deve estar acompanhado de descrição (additionalInformation).
+                  - MOTIVO_REVOGACAO: A revogação do vínculo de conta deve estar associada a um motivo de revogação.
+                  - REVOGADO_OUTRO_SEM_DETALHES: O uso do motivo REVOGADO_OUTRO deve estar acompanhado de descrição (additionalInformation)
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorFidoRegistrationOptions:
@@ -719,13 +722,17 @@ components:
                 enum:
                   - RP_INVALIDA
                   - STATUS_VINCULO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
-
-                  • RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
-                  
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -733,10 +740,11 @@ components:
                 example: Permissões inválidas
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • RP_INVALIDA: Relying party inválida.
-                  
-                  • STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
+                  - RP_INVALIDA: Relying party inválida.
+                  - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -744,10 +752,11 @@ components:
                 example: 'Permissões inválidas'
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
-                  
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorRiskSignals:
@@ -771,12 +780,18 @@ components:
                 enum:
                   - STATUS_VINCULO_INVALIDO
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
 
                   - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -787,6 +802,9 @@ components:
 
                   - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -797,6 +815,9 @@ components:
 
                   - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é incompatível com a operação.
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorFidoSignOptions:
@@ -821,15 +842,18 @@ components:
                   - RP_INVALIDA
                   - STATUS_VINCULO_INVALIDO
                   - STATUS_CONSENTIMENTO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
-
-                  • RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
-                  
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite assinatura. 
-                  
-                  • STATUS_CONSENTIMENTO_INVALIDO: O status do consentimento não permite autorização.
+                  - RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite assinatura. 
+                  - STATUS_CONSENTIMENTO_INVALIDO: O status do consentimento não permite autorização.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -837,12 +861,12 @@ components:
                 example: Permissões inválidas
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • RP_INVALIDA: Relying party inválida.
-                  
-                  • STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
-                  
-                  • STATUS_CONSENTIMENTO_INVALIDO: Status do consentimento de pagamento inválido.
+                  - RP_INVALIDA: Relying party inválida.
+                  - STATUS_VINCULO_INVALIDO: Status do vínculo de conta inválido.
+                  - STATUS_CONSENTIMENTO_INVALIDO: Status do consentimento de pagamento inválido.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -850,12 +874,12 @@ components:
                 example: 'Permissões inválidas'
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
-                  
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite assinatura. 
-                  
-                  • STATUS_CONSENTIMENTO_INVALIDO: O status do consentimento não permite autorização.
+                  - RP_INVALIDA: O identificador da Relying Party informado não pode ser verificado.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite assinatura. 
+                  - STATUS_CONSENTIMENTO_INVALIDO: O status do consentimento não permite autorização.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorFidoRegistration:
@@ -883,21 +907,21 @@ components:
                   - CHALLENGE_INVALIDO
                   - PUBLIC_KEY_INVALIDA
                   - EXTENSION_INVALIDA
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
-
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
-                  
-                  • ORIGEM_FIDO_INVALIDA: O valor contido no campo [response.clientDataJSON.origin](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) não pode ser verificado. 
-                  
-                  • RP_INVALIDA: O valor contido no campo [data.response.attestationObject.authData.rpIdHash](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) não pode ser verificado. 
-                  
-                  • CHALLENGE_INVALIDO: O campo [response.clientDataJSON.challenge](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) possui valor codificado diferente do valor gerado pelo servidor.
-                  
-                  • PUBLIC_KEY_INVALIDA: A chave pública enviada é incompatível com as definições do servidor FIDO2.
-                  
-                  • EXTENSION_INVALIDA: As extensões extraídas são incompatíveis com as diretrizes de segurança do servidor FIDO2.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - ORIGEM_FIDO_INVALIDA: O valor contido no campo [response.clientDataJSON.origin](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) não pode ser verificado. 
+                  - RP_INVALIDA: O valor contido no campo [data.response.attestationObject.authData.rpIdHash](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) não pode ser verificado. 
+                  - CHALLENGE_INVALIDO: O campo [response.clientDataJSON.challenge](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) possui valor codificado diferente do valor gerado pelo servidor.
+                  - PUBLIC_KEY_INVALIDA: A chave pública enviada é incompatível com as definições do servidor FIDO2.
+                  - EXTENSION_INVALIDA: As extensões extraídas são incompatíveis com as diretrizes de segurança do servidor FIDO2.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -905,18 +929,15 @@ components:
                 example: Permissões inválidas
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
-
-                  • STATUS_VINCULO_INVALIDO: Status inválido do vínculo de conta.
-                  
-                  • ORIGEM_FIDO_INVALIDA: "Origin" não pode ser verificada. 
-                  
-                  • RP_INVALIDA: "RpIdHash" não pode ser verificado.
-                  
-                  • CHALLENGE_INVALIDO: Challenge inválido.
-                  
-                  • PUBLIC_KEY_INVALIDA: Chave pública inválida.
-                  
-                  • EXTENSION_INVALIDA: Extensões inválidas.
+                  - STATUS_VINCULO_INVALIDO: Status inválido do vínculo de conta.
+                  - ORIGEM_FIDO_INVALIDA: "Origin" não pode ser verificada. 
+                  - RP_INVALIDA: "RpIdHash" não pode ser verificado.
+                  - CHALLENGE_INVALIDO: Challenge inválido.
+                  - PUBLIC_KEY_INVALIDA: Chave pública inválida.
+                  - EXTENSION_INVALIDA: Extensões inválidas.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -924,18 +945,15 @@ components:
                 example: 'Permissões inválidas'
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
-
-                  • STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
-                  
-                  • ORIGEM_FIDO_INVALIDA: O valor contido no campo [response.clientDataJSON.origin](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) não pode ser verificado.
-                  
-                  • RP_INVALIDA: O valor contido no campo [response.attestationObject.authData.rpIdHash](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) não pode ser verificado.
-                  
-                  • CHALLENGE_INVALIDO: O campo [response.clientDataJSON.challenge](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) possui valor codificado diferente do valor gerado pelo servidor.
-                  
-                  • PUBLIC_KEY_INVALIDA: A chave pública enviada é incompatível com as definições do servidor FIDO2.
-                  
-                  • EXTENSION_INVALIDA: As extensões extraídas são incompatíveis com as diretrizes de segurança do servidor FIDO2.
+                  - STATUS_VINCULO_INVALIDO: O status do vínculo de conta é tal que não permite o registro de nova credencial.
+                  - ORIGEM_FIDO_INVALIDA: O valor contido no campo [response.clientDataJSON.origin](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) não pode ser verificado.
+                  - RP_INVALIDA: O valor contido no campo [response.attestationObject.authData.rpIdHash](https://www.w3.org/TR/webauthn-2/#sctn-authenticator-data) não pode ser verificado.
+                  - CHALLENGE_INVALIDO: O campo [response.clientDataJSON.challenge](https://www.w3.org/TR/webauthn-2/#dom-authenticatorresponse-clientdatajson) possui valor codificado diferente do valor gerado pelo servidor.
+                  - PUBLIC_KEY_INVALIDA: A chave pública enviada é incompatível com as definições do servidor FIDO2.
+                  - EXTENSION_INVALIDA: As extensões extraídas são incompatíveis com as diretrizes de segurança do servidor FIDO2.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseConsentsAuthorization:
@@ -962,6 +980,9 @@ components:
                   - RISCO
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA
                   - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO
+                  - PARAMETRO_NAO_INFORMADO
+                  - PARAMETRO_INVALIDO
+                  - ERRO_IDEMPOTENCIA
                 example: STATUS_VINCULO_INVALIDO
                 description: |
                   Códigos de erros previstos:
@@ -971,6 +992,9 @@ components:
                   - RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.                  
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
                   - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: A conta de débito informada pelo iniciador não condiz com a conta de débito vinculada ao dispositivo.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               title:
                 type: string
                 maxLength: 255
@@ -984,6 +1008,9 @@ components:
                   - RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Falta de sinais obrigatórios para a plataforma do usuário.
                   - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: A conta de débito informada pelo iniciador não condiz com a conta de débito vinculada ao dispositivo.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro inválido.
+                  - ERRO_IDEMPOTENCIA: Erro idempotência.
               detail:
                 type: string
                 maxLength: 2048
@@ -997,6 +1024,9 @@ components:
                   - RISCO: Validação síncrona dos sinais de risco impediram a ativação do consentimento.
                   - FALTAM_SINAIS_OBRIGATORIOS_DA_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
                   - CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO: A conta de débito informada pelo iniciador não condiz com a conta de débito vinculada ao dispositivo.
+                  - PARAMETRO_NAO_INFORMADO: Parâmetro [nome_campo] obrigatório não informado.
+                  - PARAMETRO_INVALIDO: Parâmetro [nome_campo] não obedece as regras de formatação esperadas.
+                  - ERRO_IDEMPOTENCIA: Conteúdo da mensagem (claim data) diverge do conteúdo associado a esta chave de idempotência (x-idempotency-key).
         meta:
           $ref: '#/components/schemas/Meta'
     BusinessEntity:
@@ -2008,7 +2038,6 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
-            - expirationDateTime
             - loggedUser
           properties:
             enrollmentId:
@@ -2040,7 +2069,10 @@ components:
               example: '2023-07-12T08:30:00Z'
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
-              description: O instante de expiração deste vínculo de conta, de acordo com a regulação vigente.
+              description: |
+                Data e hora definida pelo usuário em que o vínculo do dispositivo deve expirar, perdendo sua validade.
+                
+                [Restrição] Campo obrigatório que deverá ser retornado quando o vínculo de dispositivo estiver ou passar pelo estado AUTHORISED;
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
@@ -2067,7 +2099,6 @@ components:
             - status
             - statusUpdateDateTime
             - permissions
-            - expirationDateTime
             - loggedUser
           properties:
             enrollmentId:
@@ -2099,7 +2130,10 @@ components:
               example: '2023-07-12T08:30:00Z'
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
-              description: O instante de expiração deste vínculo de conta, de acordo com a regulação vigente.
+              description: |
+                Data e hora definida pelo usuário em que o vínculo do dispositivo deve expirar, perdendo sua validade.
+
+                [Restrição] Campo obrigatório que deverá ser retornado quando o vínculo de dispositivo estiver ou passar pelo estado AUTHORISED;
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
