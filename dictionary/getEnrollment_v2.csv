@@ -125,3 +125,6 @@ servindo como referência para a iniciadora evitar a criação de consentimentos
 [Restrição] Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
 ";Texto;19;Condicional;^((\d{1,16}\.\d{2}))$;;0;1;" Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
 ";Não permitido;string;100000.12;4
+/data/enrollmentName;enrollmentName;"[Restrição] Deve ser preenchido sempre que o usuário pagador inserir alguma informação no nome do vínculo/dispositivo tanto no iniciador como no detentor de conta
+";Texto;140;Condicional;[\w\W\s]*;;0;1;" Deve ser preenchido sempre que o usuário pagador inserir alguma informação no nome do vínculo/dispositivo tanto no iniciador como no detentor de conta
+";Não permitido;string;Nome Dispositivo;
