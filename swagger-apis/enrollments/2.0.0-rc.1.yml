@@ -1076,6 +1076,13 @@ components:
               $ref: '#/components/schemas/BusinessEntity'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
+            enrollmentName:
+              description: |
+                [Restrição] Deve ser preenchido sempre que o usuário pagador inserir alguma informação no nome do vínculo/dispositivo tanto no iniciador como no detentor de conta
+              type: string
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+              example: Nome Dispositivo
     RiskSignals:
       type: object
       required:
@@ -1086,9 +1093,6 @@ components:
           description: Informa a integridade do dispositivo e app
           required:
             - deviceId
-            - isRootedDevice
-            - screenBrightness
-            - elapsedTimeSinceBoot
             - osVersion
             - userTimeZoneOffset
             - language
@@ -1108,7 +1112,10 @@ components:
               example: 00aa11bb22cc33dd
             isRootedDevice:
               type: boolean
-              description: Indica se o dispositivo atualmente está com permissão de “root”.
+              description: |
+                Indica se o dispositivo atualmente está com permissão de “root”.
+ 
+                [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante a vinculação de conta ou realização do pagamento for Android ou iOS.
               example: false
             screenBrightness:
               type: number
@@ -1119,6 +1126,8 @@ components:
                [Android] O valor é inteiro, tipicamente entre 0 a 255, podendo a faixa de valores variar de acordo com o fabricante do celular. Referência no [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
 
                [iOS] O valor é ponto flutuante entre “0.0” e “1.0”. Referência no [link](https://developer.apple.com/documentation/uikit/uiscreen/).
+
+               [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante a vinculação de conta ou realização do pagamento for Android ou iOS.
               example: 255
             elapsedTimeSinceBoot:
               type: integer
@@ -1129,6 +1138,8 @@ components:
                 [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/SystemClock#elapsedRealtime%28%29).
 
                 [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/kernel/kern/).
+
+                [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante a vinculação de conta ou realização do pagamento for Android ou iOS.
               example: 6356027
             osVersion:
               type: string
@@ -1292,9 +1303,6 @@ components:
               type: object
               required:
                 - deviceId
-                - isRootedDevice
-                - screenBrightness
-                - elapsedTimeSinceBoot
                 - osVersion
                 - userTimeZoneOffset
                 - language
@@ -1316,7 +1324,10 @@ components:
                     [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor/).
                 isRootedDevice:
                   type: boolean
-                  description: Indica se o dispositivo atualmente está com permissão de “root”.
+                  description: |
+                    Indica se o dispositivo atualmente está com permissão de “root”.
+
+                    [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante a vinculação de conta ou realização do pagamento for Android ou iOS.
                 screenBrightness:
                   type: number
                   format: double
@@ -1326,6 +1337,8 @@ components:
                     [Android] O valor é inteiro, tipicamente entre 0 a 255, podendo a faixa de valores variar de acordo com o fabricante do celular. Referência no [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
 
                     [iOS] O valor é ponto flutuante entre “0.0” e “1.0”. Referência no [link](https://developer.apple.com/documentation/uikit/uiscreen/).
+
+                    [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante a vinculação de conta ou realização do pagamento for Android ou iOS.
                 elapsedTimeSinceBoot:
                   type: integer
                   format: int64
@@ -1335,6 +1348,8 @@ components:
                     [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/SystemClock#elapsedRealtime%28%29).
 
                     [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/kernel/kern/).
+
+                    [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante a vinculação de conta ou realização do pagamento for Android ou iOS.
                 osVersion:
                   type: string
                   description: |
@@ -1897,7 +1912,9 @@ components:
       properties:
         id:
           type: string
-          description: Identificador único do usuário sob registro em formato base64. A conversão deste valor para o formato original (BufferSource ou ArrayBuffer) não deve ultrapassar 64 bytes.
+          description: |
+            Identificador único do usuário sob registro em formato base64. A conversão deste valor para o formato original (BufferSource ou ArrayBuffer) não deve ultrapassar 64 bytes. 
+            O identificador único deve ser opaco, ou seja, não deve carregar pessoais sobre o usuário, por exemplo (não exaustivo) um UUID RFC4122 cumpre com os requisitos desse campo
         name:
           type: string
           description: Identificador do usuário human-readable.
@@ -2079,6 +2096,13 @@ components:
               $ref: '#/components/schemas/BusinessEntity'
             debtorAccount:
               $ref: '#/components/schemas/DebtorAccount'
+            enrollmentName:
+              description: |
+                [Restrição] Deve ser preenchido sempre que o usuário pagador inserir alguma informação no nome do vínculo/dispositivo tanto no iniciador como no detentor de conta
+              type: string
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+              example: Nome Dispositivo
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2232,6 +2256,13 @@ components:
                 servindo como referência para a iniciadora evitar a criação de consentimentos para valores tais que, garantidamente, não serão autorizados.
 
                 [Restrição] Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
+            enrollmentName:
+              description: |
+                [Restrição] Deve ser preenchido sempre que o usuário pagador inserir alguma informação no nome do vínculo/dispositivo tanto no iniciador como no detentor de conta
+              type: string
+              pattern: '[\w\W\s]*'
+              maxLength: 140
+              example: Nome Dispositivo
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
