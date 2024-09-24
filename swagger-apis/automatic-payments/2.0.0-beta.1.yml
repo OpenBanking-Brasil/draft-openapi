@@ -2235,6 +2235,16 @@ components:
               $ref: '#/components/schemas/ContractDebtor'
             immediatePayment:
               $ref: '#/components/schemas/ImmediatePayment'
+            minimumVariableAmount:
+              type: string
+              pattern: ^((\d{1,16}\.\d{2}))$
+              minLength: 4
+              maxLength: 19
+              example: '100000.12'
+              description: |
+                Valor definido pelo usuário recebedor. Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, 
+                ele não poderá ser inferior ao piso definido pelo usuário recebedor. 
+                Não pode ser preenchido nas autorizações de valor fixo.
     ContractDebtor:
       type: object
       description: Informações sobre o cliente devedor do contrato.
