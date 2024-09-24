@@ -94,7 +94,7 @@ info:
           &emsp;4.2.1.2 Formatação de parâmetros: Valida se parâmetros informados obedecem a formatação especificada (PARAMETRO_INVALIDO).  
         &ensp;4.2.2 Semânticos  
           &emsp;4.2.2.1 Saldo do usuário: Valida se a conta selecionada possui saldo suficiente para realizar o pagamento (SALDO_INSUFICIENTE);  
-          &emsp;4.2.2.2 Limites da transação: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente (VALOR_ACIMA_LIMITE);  
+          &emsp;4.2.2.2 Limites da transação: Valida se valor (ou quantidade de transações) ultrapassa faixa de limite parametrizada na detentora na conta do cliente pagador (VALOR_ACIMA_LIMITE);  
           &emsp;4.2.2.3 Valor informado: Valida se valor enviado é válido para o consentimento associado ao pagamento (VALOR_INVALIDO);  
           &emsp;4.2.2.4 Status Consentimento: Valida se o consentimento encontra-se em um dos estados finais “CONSUMED”, “REVOKED” ou “REJECTED" (CONSENTIMENTO_INVALIDO);   
           &emsp;4.2.2.5 Demais validações não explicitamente informadas (ex. suspeita de fraude): (NAO_INFORMADO);  
@@ -105,9 +105,7 @@ info:
           &emsp;4.2.2.10 Idempotência: Valida se há divergência entre chave de idempotência e informações enviadas (ERRO_IDEMPOTENCIA);  
           &emsp;4.2.2.11 Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
           &emsp;4.2.2.12 Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);   
-          &emsp;4.2.2.13 Consentimento pendente de autorização: Consentimento em “PARTIALLY_ACCEPTED” aguardando aprovação de múltiplas alçadas (CONSENTIMENTO_PENDENTE_AUTORIZACAO);  
-          &emsp;4.2.2.14 Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
-          &emsp;4.2.2.15 Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO).  
+          &emsp;4.2.2.13 Consentimento pendente de autorização: Consentimento em “PARTIALLY_ACCEPTED” aguardando aprovação de múltiplas alçadas (CONSENTIMENTO_PENDENTE_AUTORIZACAO).
 
     5. **Validações na consulta do pagamento (_GET /pix/recurring-payments/{recurringPaymentId}_ e _GET /pix/recurring-payments_)**  
       5.1 **Casos de erro relacionados às permissões de segurança para acesso à API (ex. certificado, access_token)**  
@@ -117,7 +115,7 @@ info:
     6. **Demais validações executadas durante o processamento assíncrono do pagamento pela detentora, poderão ser consultados pela iniciadora através dos endpoints _GET /pix/recurring-payments/{recurringPaymentId}_ e _GET /pix/recurring-payments_ previstos com retorno HTTP Code 200 - OK com status RJCT (Rejected) e rejectionReason conforme abaixo (detalhamento adicional na documentação técnica da API):**  
       6.1 **Demais validações durante o processamento assíncrono:**  
         &ensp;6.1.1 - Saldo do usuário: Valida se a conta selecionada possui saldo suficiente para realizar o pagamento (SALDO_INSUFICIENTE);  
-        &ensp;6.1.2 - Limites da transação: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente (VALOR_ACIMA_LIMITE);  
+        &ensp;6.1.2 - Limites da transação: Valida se valor (ou quantidade de transações) ultrapassa faixa de limite parametrizada na detentora (VALOR_ACIMA_LIMITE);  
         &ensp;6.1.3 - Valor informado: Valida se valor enviado é válido para o consentimento do pagamento (VALOR_INVALIDO);  
         &ensp;6.1.4 - Demais validações não explicitamente informadas (ex. suspeita de fraude): (NAO_INFORMADO);  
         &ensp;6.1.5 - Divergência entre pagamento e consentimento: Valida se dados do pagamento são diferentes dos dados do consentimento (PAGAMENTO_DIVERGENTE_CONSENTIMENTO);  
@@ -129,10 +127,8 @@ info:
         &ensp;6.1.11 - Erro de infraestrutura interno na detentora: Ocorreu uma falha de infraestrutura interna na detentora durante o processamento do pagamento (FALHA_INFRAESTRUTURA_DETENTORA);  
         &ensp;6.1.12 - Status Consentimento: Valida se o consentimento encontra-se em um dos estados finais “CONSUMED”, “REVOKED” ou “REJECTED" (CONSENTIMENTO_INVALIDO);  
         &ensp;6.1.13 - Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
-        &ensp;6.1.14 - Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);  
-        &ensp;6.1.15 - Titularidade Inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE);  
-        &ensp;6.1.16 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
-        &ensp;6.1.17 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO).  
+        &ensp;6.1.14 - Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO).  
+        &ensp;6.1.15 - Titularidade Inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE)  
 
     ## Validações antifraude da Transferências Inteligentes
 
@@ -150,15 +146,13 @@ info:
       - Crédito pré-aprovado (cheque especial): Caso o cliente possua o produto, poderá utilizá-lo durante as transações associadas ao produto Transferências inteligentes.
       - Limite do Pix atrelado à conta do cliente: Limite de transações definido individualmente para cada conta do cliente, conforme regras de dias e horários do arranjo Pix.
       - Limites do consentimento: Configurado ou não pelo cliente em momento de criação do consentimento, podendo ser dependente ou não de um período.
-    - O cálculo do limite periódico disponível ao cliente deve ocorrer da seguinte maneira, considerando os cenários, exemplos e o horário de Brasília:
+    - O cálculo do limite periódico disponível ao cliente deve seguir da seguinte maneira, considerando os cenários e
+    exemplos:
       - Limite Diário (Ex.: R$ 100,00): Este limite controla as transferências realizadas dentro de um único dia, considerando o período das 00:00h até as 23:59h. Por exemplo, se um usuário transferir R$ 50,00 às 10:00h, ele ainda terá R$ 50,00 disponíveis para transferências até a meia-noite do mesmo dia;
       - Limite Semanal (Ex.: R$ 1.000,00): O limite semanal abrange o período de uma semana inteira, começando às 00:00h de domingo e terminando às 23:59h do sábado. Por exemplo, se um usuário transferir R$ 200,00 na terça-feira e R$ 500,00 na quinta-feira, ele ainda poderá transferir até R$ 300,00 até o final do sábado;
       - Limite Mensal (Ex.: R$ 10.000,00): Este limite mensal é calculado do primeiro ao último dia de cada mês. Por exemplo, em um mês, se o usuário transferir R$ 2.000,00 na primeira semana e R$ 3.000,00 na segunda semana, ele ainda terá R$ 5.000,00 disponíveis para transferências pelo restante do mês;
       - Limite Anual (Ex.: R$ 50.000,00): O limite anual conta do primeiro dia de janeiro ao último dia de dezembro. Por exemplo, se um usuário transferir R$ 10.000,00 até março, mais R$ 15.000,00 até junho e mais R$ 20.000,00 até setembro, ele só poderá transferir outros R$ 5.000,00 até o final do ano;
-      - Esses limites ajudam a gerenciar as transferências de fundos, garantindo que não excedam os montantes estabelecidos para cada período. Cada limite é independente e é recalculado conforme sua respectiva janela de tempo se reinicia. Apenas pagamentos realizados com sucesso (em status ACSC) devem ser considerados para o cálculo dos limites do consentimento.
-    
-    ## Sobre a quantidade de consentimentos que podem ser criados:
-    Não há limitações relacionadas a quantidade de consentimentos que podem ser criados entre uma mesma ITP, conta de débito e titularidade. Fica a cargo da instituição iniciadora solicitar, sempre que julgar necessário para atendimento do usuário, a criação de um novo consentimento.
+      - Esses limites ajudam a gerenciar as transferências de fundos, garantindo que não excedam os montantes estabelecidos para cada período. Cada limite é independente e é recalculado conforme sua respectiva janela de tempo se reinicia.
   version: 2.0.0-beta.1
   license:
     name: Apache 2.0
@@ -559,17 +553,6 @@ paths:
         - OAuth2ClientCredentials:
             - recurring-payments
 components:
-  headers:
-    XFapiInteractionId:
-      description: |
-          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta.
-      schema:
-        $ref: '#/components/schemas/XFapiInteractionId'
-    XFapiInteractionIdBadRequest:
-      description: |
-          Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, ou enviado inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
-      schema:
-        $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
     ResponseErrorCreateConsent:
       type: object
@@ -713,13 +696,11 @@ components:
                   - PAGAMENTO_RECUSADO_DETENTORA
                   - PAGAMENTO_RECUSADO_SPI
                   - ERRO_IDEMPOTENCIA
-                  - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
                 example: SALDO_INSUFICIENTE
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
                   - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-                  - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente.
+                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
@@ -733,8 +714,6 @@ components:
                   - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
                   - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
-                  - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
-                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
               title:
                 type: string
                 maxLength: 255
@@ -743,7 +722,7 @@ components:
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:
                   - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-                  - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente.
+                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
@@ -757,8 +736,6 @@ components:
                   - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
                   - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
-                  - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
-                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: Limite de transação excedido.
               detail:
                 type: string
                 maxLength: 2048
@@ -767,7 +744,7 @@ components:
                 description: |
                   Descrição específica do erro de acordo com o código reportado:
                   - SALDO_INSUFICIENTE: Esta conta não possui saldo suficiente para realizar o pagamento.
-                  - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente.
+                  - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente.
                   - VALOR_INVALIDO: O valor enviado não é válido para o QR Code informado.
                   - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
                   - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
@@ -781,8 +758,6 @@ components:
                   - PAGAMENTO_RECUSADO_DETENTORA: Pagamento recusado pela detentora de conta.
                   - PAGAMENTO_RECUSADO_SPI: Pagamento recusado no Sistema de Pagamentos Instantâneos (SPI).
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
-                  - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
-                  - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateRecurringPaymentsPaymentId:
@@ -877,8 +852,8 @@ components:
             startDateTime:
               description: |
                 Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-                
-                [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime.
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -959,7 +934,6 @@ components:
         - endToEndId
         - date
         - payment
-        - creditorAccount
         - cnpjInitiator
         - localInstrument
         - document
@@ -992,7 +966,7 @@ components:
         payment:
           $ref: '#/components/schemas/PaymentPix'
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccount'
+          $ref: '#/components/schemas/CreditorAccountPost'
         remittanceInformation:
           type: string
           maxLength: 140
@@ -1006,16 +980,6 @@ components:
           maxLength: 14
           example: '50685362000135'
           description: CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
-
-            Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         authorisationFlow:
           type: string
           enum:
@@ -1047,11 +1011,11 @@ components:
             Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
             No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
             No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122).
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
+            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
+            Esta validação é opcional caso o localInstrument for igual a INIC.
 
-            [Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
-
-            [Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
+            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
           pattern: '[\w\W\s]*'
           example: '11221131242'
         transactionIdentification:
@@ -1070,7 +1034,7 @@ components:
             - INIC - O campo transactionIdentification deve ser preenchido obrigatoriamente e deve conter até 25 caracteres alfanuméricos ([a-z|A-Z|0-9]).
         document:
           type: object
-          description: Informações do documento identificador do recebedor da transação.
+          description: Informações do documento identificador.
           required:
             - identification
             - rel
@@ -1081,10 +1045,7 @@ components:
               minLength: 11
               maxLength: 14
               example: '11111111111111'
-              description: |
-                Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
-                O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
-                Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
             rel:
               type: string
               enum:
@@ -1185,7 +1146,7 @@ components:
                     - COARSE
                     - FINE
                     - INFERRED
-            isCallingProgress:
+            isCallInProgress:
               type: boolean
               description: |
                 Indica chamada ativa no momento do vínculo.
@@ -1237,7 +1198,7 @@ components:
             lastLoginDateTime:
               type: string
               format: date-time
-              description: Data e hora da última interação do cliente com o aplicativo/sistema da instituição iniciadora.
+              description: Data e hora do último login do cliente na iniciadora
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
             pixKeyRegistrationDateTime:
               type: string
@@ -1333,7 +1294,7 @@ components:
                 - COARSE
                 - FINE
                 - INFERRED
-        isCallingProgress:
+        isCallInProgress:
           type: boolean
           description: |
             Indica chamada ativa no momento do vínculo.
@@ -1414,12 +1375,56 @@ components:
             se houver valor alfanumérico, este deve ser convertido para 0.
         accountType:
           $ref: '#/components/schemas/EnumAccountTypeConsents'
-    CreditorAccount:
+    CreditorAccountPost:
       type: object
       description: |
         Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
+
+        [Restrição] Se localInstrument for igual a MANU, o campo creditorAccount deve ser preenchido.
       required:
         - ispb
+        - issuer
+        - number
+        - accountType
+      properties:
+        ispb:
+          type: string
+          minLength: 8
+          maxLength: 8
+          pattern: '^[0-9]{8}$'
+          example: '12345678'
+          description: |
+            Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+        issuer:
+          type: string
+          minLength: 1
+          maxLength: 4
+          pattern: '^[0-9]{1,4}$'
+          example: '1774'
+          description: |
+            Código da Agência emissora da conta sem dígito. 
+            (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+            no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+            
+            [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+        number:
+          type: string
+          minLength: 1
+          maxLength: 20
+          pattern: '^[0-9]{1,20}$'
+          example: '1234567890'
+          description: |
+            Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
+            se houver valor alfanumérico, este deve ser convertido para 0.
+        accountType:
+          $ref: '#/components/schemas/EnumAccountTypePayments'
+    CreditorAccount:
+      type: object
+      description: |
+        Objeto que contém a identificação da conta de destino do beneficiário/recebedor. 
+      required:
+        - ispb
+        - issuer
         - number
         - accountType
       properties:
@@ -1630,8 +1635,8 @@ components:
     EnumPaymentCancellationStatusType:
       type: string
       enum:
-        - CANC
-      example: CANC
+        - REJECTED
+      example: REJECTED
       description: |
         Estado para qual o pagamento deverá transitar
     EnumPaymentPersonType:
@@ -1662,7 +1667,7 @@ components:
         - ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
         - RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
         - ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
-        - PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise. Não se aplica para Transferências inteligentes.
+        - PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
         - SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.  
         Em caso insucesso:
         - RJCT (REJECTED) - Instrução de pagamento rejeitada.
@@ -1691,8 +1696,6 @@ components:
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - TITULARIDADE_INCONSISTENTE
-        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1712,8 +1715,6 @@ components:
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - TITULARIDADE_INCONSISTENTE
-        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -1734,9 +1735,6 @@ components:
         - TITULARIDADE_INCONSISTENTE
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
-        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
-
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1756,8 +1754,6 @@ components:
         - TITULARIDADE_INCONSISTENTE
         - LIMITE_PERIODO_VALOR_EXCEDIDO
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
-        - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
-        - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -1765,6 +1761,7 @@ components:
       enum:
         - CANCELADO_PENDENCIA
         - CANCELADO_AGENDAMENTO
+        - CANCELADO_MULTIPLAS_ALCADAS
       example: CANCELADO_PENDENCIA
       description: |
         O preenchimento desse campo para retorno, deve ocorrer pela detentora de contas a partir do status em que o pagamento estiver no momento da solicitação do cancelamento (ex. Status de pagamento = PDNG, campo deve ser preenchido com enum CANCELADO_PENDENCIA)
@@ -1774,6 +1771,8 @@ components:
         CANCELADO_PENDENCIA - Pagamento cancelado enquanto estava na situação PDNG
 
         CANCELADO_AGENDAMENTO - Pagamento cancelado enquanto estava na situação SCHD
+
+        CANCELADO_MULTIPLAS_ALCADAS - Pagamento cancelado enquanto estava na situação PATC
     EnumPaymentCancellationFromType:
       type: string
       enum:
@@ -1872,6 +1871,59 @@ components:
               $ref: '#/components/schemas/ConsentRejectionReason'
         riskSignals:
           $ref: '#/components/schemas/RiskSignalsConsents'
+        creditors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: Objeto contendo os dados do recebedor (creditor).
+            properties:
+              name:
+                type: string
+                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+                maxLength: 120
+                example: Marco Antonio de Brito
+                description: |
+                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
+                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+        startDateTime:
+          description: |
+            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        expirationDateTime:
+          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        automatic:
+          type: object
+          description: Definição da configuração de recorrência para pagamentos automáticos
+          properties:
+            transactionLimit:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '1000000.12'
+              description: Valor da transação com 2 casas decimais.
+            dayOfMonth:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 31
+              example: 10
+              description: |
+                Dia fixo do mês que está prevista a transação.
+
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
     ConsentRejectionReason:
       type: object
       description: |
@@ -1935,7 +1987,7 @@ components:
             Detalhe sobre o código identificador do motivo de rejeição.
 
             - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
-            - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente;
+            - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
             - VALOR_INVALIDO: O valor enviado não é válido; 
             - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
             - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
@@ -1949,8 +2001,6 @@ components:
             - LIMITE_PERIODO_VALOR_EXCEDIDO – A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
             - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO – A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
             - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração.
-            - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
-            - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
     RejectionReason:
       type: object
       description: |
@@ -1969,7 +2019,7 @@ components:
             Detalhe sobre o código identificador do motivo de rejeição.
 
             - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
-            - VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente;
+            - VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
             - VALOR_INVALIDO: O valor enviado não é válido; 
             - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
             - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
@@ -1981,68 +2031,9 @@ components:
             - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
             - FALHA_INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos;
             - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração
-            - LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
-            - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
-            - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.       
-            - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
-    ConsentEdition:
-      type: object
-      properties:
-        riskSignals:
-          $ref: '#/components/schemas/RiskSignalsConsents'
-        creditors:
-          type: array
-          minItems: 1
-          items:
-            type: object
-            description: Objeto contendo os dados do recebedor (creditor).
-            properties:
-              name:
-                type: string
-                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
-                maxLength: 120
-                example: Marco Antonio de Brito
-                description: |
-                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
-                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
-        startDateTime:
-          description: |
-            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-
-            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
-          type: string
-          format: date-time
-          example: '2021-05-21T08:30:00Z'
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          maxLength: 20
-        expirationDateTime:
-          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-          type: string
-          format: date-time
-          example: '2021-05-21T08:30:00Z'
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          maxLength: 20
-        automatic:
-          type: object
-          description: Definição da configuração de recorrência para pagamentos automáticos
-          properties:
-            transactionLimit:
-              description: Valor da transação com 2 casas decimais.
-              type: string
-              pattern: ^((\d{1,16}\.\d{2}))$
-              minLength: 4
-              maxLength: 19
-              example: "1000000.12"
-            dayOfMonth:
-              description: |
-                Dia fixo do mês que está prevista a transação.
-              
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
-              type: integer
-              format: int32
-              minimum: 1
-              maximum: 31
-              example: 10
+            - LIMITE_PERIODO_VALOR_EXCEDIDO – A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
+            - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO – A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
+            
     ConsentRevocation:
       type: object
       properties:
@@ -2087,6 +2078,59 @@ components:
               $ref: '#/components/schemas/ConsentRevokedReason'
         riskSignals:
           $ref: '#/components/schemas/RiskSignalsConsents'
+        creditors:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            description: Objeto contendo os dados do recebedor (creditor).
+            properties:
+              name:
+                type: string
+                pattern: ^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$
+                maxLength: 120
+                example: Marco Antonio de Brito
+                description: |
+                  Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
+                  Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
+        startDateTime:
+          description: |
+            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+            [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        expirationDateTime:
+          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          type: string
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+          maxLength: 20
+        automatic:
+          type: object
+          description: Definição da configuração de recorrência para pagamentos automáticos
+          properties:
+            transactionLimit:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '1000000.12'
+              description: Valor da transação com 2 casas decimais.
+            dayOfMonth:
+              type: integer
+              format: int32
+              minimum: 1
+              maximum: 31
+              example: 10
+              description: |
+                Dia fixo do mês que está prevista a transação.
+
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
     ConsentRevokedReason:
       type: object
       description: |
@@ -2143,20 +2187,26 @@ components:
               maxLength: 35
               example: XE00038166201907261559y6j6
               description: Identificador do contrato de transação
-            amount:
+            fixedAmount:
               type: string
               pattern: '^((\d{1,16}\.\d{2}))$'
               minLength: 4
               maxLength: 19
               example: '100000.12'
-              description: Valor da transação com 2 casas decimais.
-            transactionLimit:
+              description: |
+                Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
+            maximumVariableAmount:
               type: string
               pattern: '^((\d{1,16}\.\d{2}))$'
               minLength: 4
               maxLength: 19
               example: '1000000.12'
-              description: Valor da transação com 2 casas decimais.
+              description: |
+                Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
             period:
               type: string
               enum:
@@ -2235,6 +2285,16 @@ components:
               $ref: '#/components/schemas/ContractDebtor'
             immediatePayment:
               $ref: '#/components/schemas/ImmediatePayment'
+            minimumVariableAmount:
+              type: string
+              pattern: ^((\d{1,16}\.\d{2}))$
+              minLength: 4
+              maxLength: 19
+              example: '100000.12'
+              description: |
+                Valor definido pelo usuário recebedor. Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, 
+                ele não poderá ser inferior ao piso definido pelo usuário recebedor. 
+                Não pode ser preenchido nas autorizações de valor fixo.
     ContractDebtor:
       type: object
       description: Informações sobre o cliente devedor do contrato.
@@ -2401,7 +2461,6 @@ components:
       properties:
         quantityLimit:
           type: integer
-          minimum: 1
           example: 2
           description: Quantidade limite de transações permitidas para ocorrer durante um dia.
         transactionLimit:
@@ -2420,7 +2479,6 @@ components:
       properties:
         quantityLimit:
           type: integer
-          minimum: 1
           example: 10
           description: Quantidade limite de transações permitidas para ocorrer durante uma semana.
         transactionLimit:
@@ -2439,7 +2497,6 @@ components:
       properties:
         quantityLimit:
           type: integer
-          minimum: 1
           example: 30
           description: Quantidade limite de transações permitidas para ocorrer durante um mês.
         transactionLimit:
@@ -2458,7 +2515,6 @@ components:
       properties:
         quantityLimit:
           type: integer
-          minimum: 1
           example: 100
           description: Quantidade limite de transações permitidas para ocorrer durante um ano. 
         transactionLimit:
@@ -2473,7 +2529,7 @@ components:
       minItems: 1
       items:
         type: object
-        description: Objeto contendo os dados do recebedor (creditor). Em casos de transferências inteligentes para clientes PJ, os CNPJs informados devem possuir a mesma raiz do CNPJ enviado no campo /data/businessEntity/document/identification. Em casos de transferências inteligentes para clientes PN, deve-se aceitar apenas um item no array e este item deve conter as informações do recebedor. O CPF informado deve ser o mesmo do /data/loggedUser/document/identification. Caso alguma das regras mencionadas não sejam seguidas, o detentor deve rejeitar a solicitação (sincronamente) com o erro DETALHE_PAGAMENTO_INVALIDO, e o detalhe deve ser preenchido com a informação referente ao erro.
+        description: Objeto contendo os dados do recebedor (creditor).
         required:
           - personType
           - cpfCnpj
@@ -2545,10 +2601,11 @@ components:
       properties:
         self:
           type: string
-          format: url
+          format: uri
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
+          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     PaymentPix:
       type: object
       description: Objeto contendo as informações do pagamento.
@@ -2725,7 +2782,6 @@ components:
             - loggedUser
             - status
             - creditors
-            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -2746,9 +2802,7 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
               description: |
-                Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format). 
-
-                [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime. Caso o campo /data/startDateTime enviado seja anterior ao valor do campo /data/creationDateTime, o detentor deve substituir o valor do campo /data/startDateTime pelo valor do campo /data/creationDateTime
+                Data e hora em que o consentimento teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
@@ -2760,8 +2814,8 @@ components:
             startDateTime:
               description: |
                 Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-                
-                [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime. Caso o campo /data/startDateTime enviado seja anterior ao valor do campo /data/creationDateTime, o detentor deve substituir o valor do campo /data/startDateTime pelo valor do campo /data/creationDateTime. 
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -2860,6 +2914,17 @@ components:
                       example: O usuário rejeitou a autorização do consentimento 
             recurringConfiguration:
               $ref: '#/components/schemas/RecurringConfiguration'
+            authorisedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi autorizado.
+
+                [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -2880,7 +2945,6 @@ components:
             - loggedUser
             - status
             - creditors
-            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -2913,8 +2977,8 @@ components:
             startDateTime:
               description: |
                 Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-                
-                [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime. Caso o campo /data/startDateTime enviado seja anterior ao valor do campo /data/creationDateTime, o detentor deve substituir o valor do campo /data/startDateTime pelo valor do campo /data/creationDateTime. 
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -3015,6 +3079,17 @@ components:
               $ref: '#/components/schemas/RecurringConfiguration'
             riskSignals:
               $ref: '#/components/schemas/RiskSignalsConsents'
+            authorisedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi autorizado.
+
+                [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3035,7 +3110,6 @@ components:
             - loggedUser
             - status
             - creditors
-            - startDateTime
             - creationDateTime
             - recurringConfiguration
           properties:
@@ -3068,8 +3142,8 @@ components:
             startDateTime:
               description: |
                 Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-                
-                [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime. Caso o campo /data/startDateTime enviado seja anterior ao valor do campo /data/creationDateTime, o detentor deve substituir o valor do campo /data/startDateTime pelo valor do campo /data/creationDateTime. 
+
+                [Restrição] Preenchimento obrigatório quando o consentimento de pagamento passa a valer em data (dia e hora) futura.
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
@@ -3210,6 +3284,17 @@ components:
               $ref: '#/components/schemas/RecurringConfiguration'
             riskSignals:
               $ref: '#/components/schemas/RiskSignalsConsents'
+            authorisedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi autorizado.
+
+                [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3220,9 +3305,8 @@ components:
         - data
       properties:
         data:
-          description: Objeto contendo as informações de rejeição, revogação e edição dos consentimentos
+          description: Objeto contendo as informações de rejeição e revogação dos consentimentos
           oneOf:
-            - $ref: '#/components/schemas/ConsentEdition'
             - $ref: '#/components/schemas/ConsentRevocation'
             - $ref: '#/components/schemas/ConsentRejection'
     ResponseRecurringPaymentsIdPost:
@@ -3369,7 +3453,7 @@ components:
               Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
           document:
             type: object
-            description: Informações do documento.
+            description: Informações do documento identificador.
             required:
               - identification
               - rel
@@ -3399,7 +3483,6 @@ components:
         - status
         - cnpjInitiator
         - payment
-        - creditorAccount
         - localInstrument
         - document
       properties:
@@ -3457,16 +3540,6 @@ components:
             Data e hora em que o pagamento teve o status atualizado. 
             Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
             sempre com a utilização de timezone UTC(UTC time format).
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
-
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
           $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
@@ -3487,7 +3560,7 @@ components:
           description: |
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccount'
+          $ref: '#/components/schemas/CreditorAccountPost'
         debtorAccount:
             $ref: '#/components/schemas/DebtorAccount'
         cancellation:
@@ -3521,11 +3594,11 @@ components:
             Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
             No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
             No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122).
+            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
+            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
+            Esta validação é opcional caso o localInstrument for igual a INIC.
 
-            [Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
-
-            [Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
+            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
           pattern: '[\w\W\s]*'
           example: '11221131242'
         transactionIdentification:
@@ -3539,7 +3612,7 @@ components:
             Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
         document:
           type: object
-          description: Informações do documento identificador do recebedor da transação.
+          description: Informações do documento identificador.
           required:
             - identification
             - rel
@@ -3550,10 +3623,7 @@ components:
               minLength: 11
               maxLength: 14
               example: '11111111111111'
-              description: |
-                Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
-                O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
-                Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
             rel:
               type: string
               enum:
@@ -3572,9 +3642,7 @@ components:
         - status
         - cnpjInitiator
         - payment
-        - creditorAccount
         - document
-        - localInstrument
       properties:
         recurringPaymentId:
           type: string
@@ -3630,16 +3698,6 @@ components:
             Data e hora em que o pagamento teve o status atualizado. 
             Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
             sempre com a utilização de timezone UTC(UTC time format).
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
-
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
           $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
@@ -3687,7 +3745,7 @@ components:
             Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
         document:
           type: object
-          description: Informações do documento identificador do recebedor da transação.
+          description: Informações do documento identificador.
           required:
             - identification
             - rel
@@ -3698,10 +3756,7 @@ components:
               minLength: 11
               maxLength: 14
               example: '11111111111111'
-              description: |
-                Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
-                O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
-                Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
             rel:
               type: string
               enum:
@@ -3709,31 +3764,6 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
-        proxy:
-          type: string
-          description: |
-            Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
-            No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
-            No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
-            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
-            Esta validação é opcional caso o localInstrument for igual a INIC.
-
-            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
-          pattern: '[\w\W\s]*'
-          example: '11221131242'
-        localInstrument:
-          type: string
-          description: |
-            Especifica a forma de iniciação do pagamento
-            - MANU - Inserção manual de dados da conta transacional
-            - DICT - Inserção manual de chave Pix
-            - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
-          enum:
-            - MANU
-            - DICT
-            - INIC
-          example: DICT
     ResponseRecurringPaymentsDataPatch:
       type: object
       required:
@@ -3745,9 +3775,7 @@ components:
         - status
         - cnpjInitiator
         - payment
-        - creditorAccount
         - document
-        - localInstrument
       properties:
         recurringPaymentId:
           type: string
@@ -3803,16 +3831,6 @@ components:
             Data e hora em que o pagamento teve o status atualizado. 
             Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
             sempre com a utilização de timezone UTC(UTC time format).
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
-
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
           $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
@@ -3860,7 +3878,7 @@ components:
             Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
         document:
           type: object
-          description: Informações do documento identificador do recebedor da transação.
+          description: Informações do documento identificador.
           required:
             - identification
             - rel
@@ -3871,10 +3889,7 @@ components:
               minLength: 11
               maxLength: 14
               example: '11111111111111'
-              description: |
-                Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
-                O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
-                Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+              description: Número do documento de identificação oficial do titular pessoa natural ou jurídica.
             rel:
               type: string
               enum:
@@ -3882,31 +3897,6 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.  
-        proxy:
-          type: string
-          description: |
-            Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
-            No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
-            No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-            No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
-            Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
-            Esta validação é opcional caso o localInstrument for igual a INIC.
-
-            [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
-          pattern: '[\w\W\s]*'
-          example: '11221131242'
-        localInstrument:
-          type: string
-          description: |
-            Especifica a forma de iniciação do pagamento
-            - MANU - Inserção manual de dados da conta transacional
-            - DICT - Inserção manual de chave Pix
-            - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
-          enum:
-            - MANU
-            - DICT
-            - INIC
-          example: DICT
     XFapiInteractionId:
       type: string
       format: uuid
@@ -4026,7 +4016,7 @@ components:
     xFapiInteractionId:
       name: x-fapi-interaction-id
       in: header
-      description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. A iniciadora deve acatar o valor recebido da detentora..
+      description: Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
       required: true
       schema:
         type: string
@@ -4087,7 +4077,10 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionIdBadRequest'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     BadRequestPaymentsConsents:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL'
       content:
@@ -4096,7 +4089,10 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionIdBadRequest'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     Forbidden:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
@@ -4105,19 +4101,34 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     InternalServerError:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
+      headers:
+        x-fapi-interaction-id:
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     GatewayTimeoutWithAdditionalProperties:
       description: A requisição não foi atendida dentro do tempo limite estabelecido
       content:
         application/json; charset=utf-8:
           schema:
             $ref: '#/components/schemas/ResponseError'
+      headers:
+        x-fapi-interaction-id:
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     MethodNotAllowed:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
@@ -4126,7 +4137,10 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     NotAcceptable:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
@@ -4135,7 +4149,10 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     NotFound:
       description: O recurso solicitado não existe ou não foi implementado
       content:
@@ -4144,7 +4161,10 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     SiteIsOverloaded:
       description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
       content:
@@ -4169,7 +4189,10 @@ components:
                   requestDateTime: '2021-05-21T08:30:00Z'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     UnprocessableEntityRecurringPaymentsPaymentId:
       description: Seguir as orientações presentes na descrição do endpoint
       content:
@@ -4188,7 +4211,10 @@ components:
                   requestDateTime: '2021-05-21T08:30:00Z'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     UnprocessableEntityRecurringConsents:
       description: Seguir as orientações presentes na descrição deste endpoint
       content:
@@ -4197,7 +4223,10 @@ components:
             $ref: '#/components/schemas/422ResponseErrorRecurringConsents'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     UnprocessableConsents:
       description: Seguir as orientações presentes na descrição da API, item 1.3 do _header_ da API e seus subitens
       content:
@@ -4206,7 +4235,10 @@ components:
             $ref: '#/components/schemas/ResponseErrorCreateConsent'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     Unauthorized:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
@@ -4215,12 +4247,18 @@ components:
             $ref: '#/components/schemas/ResponseError'
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
     RecurringConsentsConsentId:
       description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -4229,7 +4267,10 @@ components:
       description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -4238,7 +4279,10 @@ components:
       description: Objeto contendo as informações de consentimento para a iniciação de pagamento individual.
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -4247,7 +4291,10 @@ components:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -4256,7 +4303,10 @@ components:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -4265,7 +4315,10 @@ components:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/jwt:
           schema:
@@ -4274,7 +4327,10 @@ components:
       description: Dados de iniciação de pagamento Pix obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
-          $ref: '#/components/headers/XFapiInteractionId'
+          description: |
+             Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela iniciadora (client) e o seu valor deve ser “espelhado” pela detentora (server) no cabeçalho de resposta. Caso não seja enviado pela iniciadora, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400. Caso recebido um valor inválido, a detentora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP status code 400 ou 422 (com o código PARAMETRO_INVALIDO). A iniciadora deve acatar o valor gerado pelo detentor e recebido na resposta.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
       content:
         application/jwt:
           schema:
