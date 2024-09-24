@@ -2564,7 +2564,7 @@ components:
           format: url
           maxLength: 2000
           description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+          example: 'https://api.banco.com.br/open-banking/api/v2/resource'
     PaymentPix:
       type: object
       description: Objeto contendo as informações do pagamento.
@@ -3473,16 +3473,6 @@ components:
             Data e hora em que o pagamento teve o status atualizado. 
             Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
             sempre com a utilização de timezone UTC(UTC time format).
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
-
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
           $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
@@ -3646,16 +3636,6 @@ components:
             Data e hora em que o pagamento teve o status atualizado. 
             Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
             sempre com a utilização de timezone UTC(UTC time format).
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
-
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
           $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
@@ -3819,16 +3799,6 @@ components:
             Data e hora em que o pagamento teve o status atualizado. 
             Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), 
             sempre com a utilização de timezone UTC(UTC time format).
-        ibgeTownCode:
-          type: string
-          minLength: 7
-          maxLength: 7
-          pattern: '^\d{7}$'
-          example: '5300108'
-          description: |
-            O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
-
-            1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
         status:
           $ref: '#/components/schemas/EnumPaymentStatusType'
         rejectionReason:
