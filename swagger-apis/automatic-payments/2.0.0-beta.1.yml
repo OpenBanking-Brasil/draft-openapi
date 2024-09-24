@@ -2143,20 +2143,26 @@ components:
               maxLength: 35
               example: XE00038166201907261559y6j6
               description: Identificador do contrato de transação
-            amount:
+            fixedAmount:
               type: string
               pattern: '^((\d{1,16}\.\d{2}))$'
               minLength: 4
               maxLength: 19
               example: '100000.12'
-              description: Valor da transação com 2 casas decimais.
-            transactionLimit:
+              description: |
+                Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
+            maximumVariableAmount:
               type: string
               pattern: '^((\d{1,16}\.\d{2}))$'
               minLength: 4
               maxLength: 19
               example: '1000000.12'
-              description: Valor da transação com 2 casas decimais.
+              description: |
+                Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
             period:
               type: string
               enum:
