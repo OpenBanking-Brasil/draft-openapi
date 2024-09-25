@@ -1103,9 +1103,6 @@ components:
           type: object
           required:
             - deviceId
-            - isRootedDevice
-            - screenBrightness
-            - elapsedTimeSinceBoot
             - osVersion
             - userTimeZoneOffset
             - language
@@ -1122,7 +1119,10 @@ components:
               example: 00000000-54b3-e7c7-0000-000046bffd97
             isRootedDevice:
               type: boolean
-              description: Indica se o dispositivo atualmente está com permissão de “root”.
+              description: |
+                Indica se o dispositivo atualmente está com permissão de “root”.
+
+                [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante o pagamento for Android ou iOS.
               example: false
             screenBrightness:
               type: number
@@ -1131,10 +1131,15 @@ components:
                 Indica o nível de brilho da tela do dispositivo.  
                 Em dispositivos Android o valor é um inteiro, entre 0 e 255, inclusive;  
                 Em dispositivos iOS o valor é um ponto flutuante entre 0.0 e 1.0.
+
+                [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante o pagamento for Android ou iOS.
             elapsedTimeSinceBoot:
               type: integer
               format: int64
-              description: Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+              description: |
+                Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+
+                [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário durante o pagamento for Android ou iOS.
             osVersion:
               type: string
               description: Versão do sistema operacional.
