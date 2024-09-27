@@ -1036,6 +1036,8 @@ components:
             - MANU - Inserção manual de dados da conta transacional
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
@@ -2046,9 +2048,9 @@ components:
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
             dayOfMonth:
               description: |
-                Dia fixo do mês que está prevista a transação.
+                Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
               
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
               type: integer
               format: int32
               minimum: 1
@@ -2181,6 +2183,8 @@ components:
                 - SEMANAL
                 - MENSAL
                 - ANUAL
+                - SEMESTRAL
+                - TRIMESTRAL
               example: DIARIO
               description: |
                 Define a periodicidade permitida para realização de transações
@@ -2188,6 +2192,8 @@ components:
                 - SEMANAL
                 - MENSAL
                 - ANUAL
+                - SEMESTRAL
+                - TRIMESTRAL
             dayOfMonth:
               type: integer
               format: int32
@@ -2195,9 +2201,9 @@ components:
               maximum: 31
               example: 10
               description: |
-                Dia fixo do mês que está prevista a transação.
+                Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
 
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL ou ANUAL.
+                [Restrição] Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
             dayOfWeek:
               type: string
               enum:
@@ -2206,6 +2212,8 @@ components:
                 - QUARTA_FEIRA
                 - QUINTA_FEIRA
                 - SEXTA_FEIRA
+                - SABADO
+                - DOMINGO
               example: 'SEGUNDA_FEIRA'
               description: |
                 Dia da semana que está prevista a transação.
@@ -2214,6 +2222,8 @@ components:
                 - QUARTA_FEIRA
                 - QUINTA_FEIRA
                 - SEXTA_FEIRA
+                - SABADO
+                - DOMINGO
 
                 [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
             month:
@@ -2233,7 +2243,7 @@ components:
                 - DEZEMBRO
               example: 'JANEIRO'
               description: |
-                Mês previstos para ocorrer transações.
+                Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
                 - JANEIRO
                 - FEVEREIRO
                 - MARCO
@@ -2247,7 +2257,7 @@ components:
                 - NOVEMBRO
                 - DEZEMBRO
 
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a ANUAL
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
             immediatePayment:
@@ -2259,8 +2269,8 @@ components:
               maxLength: 19
               example: '100000.12'
               description: |
-                Valor definido pelo usuário recebedor. Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, 
-                ele não poderá ser inferior ao piso definido pelo usuário recebedor. 
+                Valor definido pelo usuário recebedor. 
+                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
                 Não pode ser preenchido nas autorizações de valor fixo.
     ContractDebtor:
       type: object
@@ -3563,6 +3573,8 @@ components:
             - MANU - Inserção manual de dados da conta transacional
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
@@ -3772,6 +3784,8 @@ components:
             - MANU - Inserção manual de dados da conta transacional
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
@@ -3935,6 +3949,8 @@ components:
             - MANU - Inserção manual de dados da conta transacional
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
+
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
