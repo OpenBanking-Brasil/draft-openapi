@@ -172,7 +172,7 @@ REVOGADO_RECEBEDOR";1;1;"";Não permitido;string;REVOGADO_RECEBEDOR;
 /data/recurringConfiguration;;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic;automatic;Definição da configuração de recorrência para pagamentos automáticos;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/contractId;contractId;Identificador do contrato de transação;Texto;35;Obrigatório;^[a-zA-Z0-9]{1,35}$;;1;1;"";Não permitido;string;XE00038166201907261559y6j6;1
-/data/recurringConfiguration/automatic/fixedAmount;fixedAmount;"Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos. 
+/data/recurringConfiguration/automatic/fixedAmount;fixedAmount;"Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos, ou não sujeitos a alteração durante a vigência do consentimento. 
 
 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
 ";Texto;19;Condicional;^((\d{1,16}\.\d{2}))$;;0;1;" Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
