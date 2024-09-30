@@ -180,18 +180,16 @@ REVOGADO_RECEBEDOR";1;1;"";Não permitido;string;REVOGADO_RECEBEDOR;
 ";Texto;19;Condicional;^((\d{1,16}\.\d{2}))$;;0;1;" Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
 ";Não permitido;string;1000000.12;4
 /data/recurringConfiguration/automatic/period;period;"Define a periodicidade permitida para realização de transações
-- DIARIO
 - SEMANAL
 - MENSAL
 - ANUAL
 - SEMESTRAL
 - TRIMESTRAL
-";Texto;;Obrigatório;;"DIARIO 
-SEMANAL 
+";Texto;;Obrigatório;;"SEMANAL 
 MENSAL 
 ANUAL 
 SEMESTRAL 
-TRIMESTRAL";1;1;"";Não permitido;string;DIARIO;
+TRIMESTRAL";1;1;"";Não permitido;string;SEMANAL;
 /data/recurringConfiguration/automatic/dayOfMonth;dayOfMonth;"Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
 
 [Restrição] Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
