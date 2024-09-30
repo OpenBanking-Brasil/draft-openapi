@@ -209,10 +209,10 @@ FIDO_FLOW";0;1;" Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não 
 - DICT - Inserção manual de chave Pix
 - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
 
-[Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
+[Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo ""/data/recurringConfiguration""), apenas o método MANU é permitido.
 ";Texto;;Obrigatório;;"MANU 
 DICT 
-INIC";1;1;" Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
+INIC";1;1;" Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo ""/data/recurringConfiguration""), apenas o método MANU é permitido.
 ";Não permitido;string;DICT;
 /data/proxy;proxy;"Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
 No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 

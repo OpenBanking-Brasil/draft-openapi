@@ -1037,7 +1037,7 @@ components:
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
 
-            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo "/data/recurringConfiguration"), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
@@ -2163,7 +2163,7 @@ components:
               maxLength: 19
               example: '100000.12'
               description: |
-                Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos. 
+                Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos, ou não sujeitos a alteração durante a vigência do consentimento. 
                 
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
             maximumVariableAmount:
@@ -2179,16 +2179,14 @@ components:
             period:
               type: string
               enum:
-                - DIARIO
                 - SEMANAL
                 - MENSAL
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
-              example: DIARIO
+              example: SEMANAL
               description: |
                 Define a periodicidade permitida para realização de transações
-                - DIARIO
                 - SEMANAL
                 - MENSAL
                 - ANUAL
@@ -3574,7 +3572,7 @@ components:
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
 
-            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo "/data/recurringConfiguration"), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
@@ -3785,7 +3783,7 @@ components:
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
 
-            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo "/data/recurringConfiguration"), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
@@ -3950,7 +3948,7 @@ components:
             - DICT - Inserção manual de chave Pix
             - INIC - Indica que o recebedor (creditor) contratou o Iniciador de Pagamentos especificamente para realizar iniciações de pagamento em que o beneficiário é previamente conhecido
 
-            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo `/data/recurringConfiguration``), apenas o método MANU é permitido.
+            [Restrição] Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo "/data/recurringConfiguration"), apenas o método MANU é permitido.
           enum:
             - MANU
             - DICT
