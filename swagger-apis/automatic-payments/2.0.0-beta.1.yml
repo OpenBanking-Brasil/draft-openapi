@@ -2163,6 +2163,7 @@ components:
             - contractId
             - period
             - contractDebtor
+            - isRetryAccepted
           properties:
             contractId:
               type: string
@@ -2285,6 +2286,10 @@ components:
                 Valor definido pelo usuário recebedor. 
                 Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
                 Não pode ser preenchido nas autorizações de valor fixo.
+            isRetryAccepted:
+              type: boolean
+              description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
+              example: false
     ContractDebtor:
       type: object
       description: Informações sobre o cliente devedor do contrato.
