@@ -2375,6 +2375,8 @@ components:
         sweeping:
           type: object
           description: Definição da configuração de recorrência para transferências automáticas de fundos.
+          required: 
+            - useOverdraftLimit
           properties:
             totalAllowedAmount:
               type: string
@@ -2392,6 +2394,11 @@ components:
               description: Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
+            useOverdraftLimit:
+              type: boolean
+              default: true
+              example: true
+              description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
     PeriodicLimits:
       type: object
       description: Limites transacionais por período determinado pelo usuário pagador.
