@@ -1183,6 +1183,8 @@ components:
                   - PERMISSOES_PJ_INCORRETAS
                   - PERMISSAO_PF_PJ_EM_CONJUNTO
                   - COMBINACAO_PERMISSOES_INCORRETA
+                  - DATA_EXPIRACAO_INVALIDA
+                  - ERRO_NAO_MAPEADO
                 example: SEM_PERMISSOES_FUNCIONAIS_RESTANTES
                 description: |
                   - SEM_PERMISSOES_FUNCIONAIS_RESTANTES
@@ -1190,6 +1192,8 @@ components:
                   - PERMISSOES_PJ_INCORRETAS
                   - PERMISSAO_PF_PJ_EM_CONJUNTO
                   - COMBINACAO_PERMISSOES_INCORRETA
+                  - DATA_EXPIRACAO_INVALIDA
+                  - ERRO_NAO_MAPEADO
 
                   A opção “ERRO_NAO_MAPEADO” só deve ser utilizada caso não haja um code especifico mapeado para o erro.
               title:
@@ -1226,12 +1230,14 @@ components:
                   - DEPENDE_MULTIPLA_ALCADA
                   - ESTADO_CONSENTIMENTO_INVALIDO
                   - DATA_EXPIRACAO_INVALIDA
+                  - ERRO_NAO_MAPEADO
                 example: DEPENDE_MULTIPLA_ALCADA
                 description: |
                  Códigos de erros previstos na durante o processo de extensão do consentimento:
                   - DEPENDE_MULTIPLA_ALCADA: Necessário aprovação de múltipla alçada.
                   - ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.
                   - DATA_EXPIRACAO_INVALIDA: Nova data para expiração do consentimento é inválida.
+                  - ERRO_NAO_MAPEADO: Utilizado quando não houver um code de erro definido.
               title:
                 type: string
                 maxLength: 255
@@ -1242,6 +1248,7 @@ components:
                   - DEPENDE_MULTIPLA_ALCADA: Necessário aprovação de múltipla alçada.
                   - ESTADO_CONSENTIMENTO_INVALIDO: Estado inválido do consentimento.
                   - DATA_EXPIRACAO_INVALIDA: Nova data para expiração do consentimento é inválida.
+                  - ERRO_NAO_MAPEADO: Utilizado quando não houver um code de erro definido. O texto deve deixar claro o motivo do erro ocorrido.
               detail:
                 type: string
                 maxLength: 2048
@@ -1252,6 +1259,7 @@ components:
                   - DEPENDE_MULTIPLA_ALCADA: O consentimento informado não pode ser renovado sem redirecionamento porque depende de múltipla alçada para aprovação.
                   - ESTADO_CONSENTIMENTO_INVALIDO: O consentimento informado não pode ser renovado sem redirecionamento porque está em um estado que não permite a renovação.
                   - DATA_EXPIRACAO_INVALIDA: O consentimento informado não pode ser renovado pois a nova data de expiração não segue a convenção do ecossistema.
+                  - ERRO_NAO_MAPEADO: Utilizado quando não houver um code de erro definido. O texto deve deixar claro o motivo do erro ocorrido.
         meta:
           $ref: '#/components/schemas/Meta'
     LoggedUser:
