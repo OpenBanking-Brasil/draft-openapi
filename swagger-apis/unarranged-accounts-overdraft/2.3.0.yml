@@ -1123,13 +1123,13 @@ components:
             Data de vencimento primeira parcela do principal
         CET:
           type: string
-          pattern: '^\d{1,2}\.\d{6}$'
+          pattern: '^\d{1,6}\.\d{6}$'
           format: double
           description: |
             CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas). 
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. sEste valor representa 15%. O valor 1 representa 100%).
-          maxLength: 9
+          maxLength: 13
           minLength: 8
           example: '0.290000'
         amortizationScheduled:
