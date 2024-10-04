@@ -735,10 +735,10 @@ components:
         CET:
           type: string
           format: double
-          maxLength: 9
+          maxLength: 13
           minLength: 8
           example: '0.290000'
-          pattern: '^\d{1,2}\.\d{6}$'
+          pattern: '^\d{1,6}\.\d{6}$'
           description: |
             CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
 
@@ -1110,8 +1110,8 @@ components:
         paidAmount:
           type: string
           format: double
-          pattern: '^\d{1,15}\.\d{2,4}$'
-          maxLength: 20
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
           minLength: 4
           example: '1000.0400'
           description: |
@@ -1203,8 +1203,8 @@ components:
         chargeAmount:
           type: string
           format: double
-          pattern: '^\d{1,15}\.\d{2,4}$'
-          maxLength: 20
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
           minLength: 4
           example: '1000.0400'
           description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
