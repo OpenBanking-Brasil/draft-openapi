@@ -38,6 +38,11 @@ info:
     ambiente da detentora de conta, é necessário o envio de indicadores de risco. 
     Esta medida visa proporcionar à detentora de conta as informações necessárias para decidir sobre os ajustes no consentimento de forma segura
 
+    ## Validações para pagamentos recorrentes
+
+    Caso o usuário pagador tenha agendado recorrências para os dias 29, 30 ou 31 de cada mês e o dia previsto não exista no respectivo mês, o iniciador deve enviar a ordem de pagamento para liquidação com o endToEndId representando o dia seguinte à data prevista para a liquidação. 
+    Se identificado pelo detentor que a data enviada no endToEndId corresponde a um dia inexistente, ele deve rejeitar o pagamento
+
     ## Validações
  
     Durante a jornada de iniciação de pagamento, diferentes validações são necessárias pela instituição detentora de conta e devem ocorrer conforme a seguir:
@@ -108,6 +113,7 @@ info:
           &emsp;4.2.2.13 Consentimento pendente de autorização: Consentimento em “PARTIALLY_ACCEPTED” aguardando aprovação de múltiplas alçadas (CONSENTIMENTO_PENDENTE_AUTORIZACAO);  
           &emsp;4.2.2.14 Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
           &emsp;4.2.2.15 Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO).  
+          &emsp;4.2.2.16 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
 
     5. **Validações na consulta do pagamento (_GET /pix/recurring-payments/{recurringPaymentId}_ e _GET /pix/recurring-payments_)**  
       5.1 **Casos de erro relacionados às permissões de segurança para acesso à API (ex. certificado, access_token)**  
@@ -132,7 +138,8 @@ info:
         &ensp;6.1.14 - Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);  
         &ensp;6.1.15 - Titularidade Inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE);  
         &ensp;6.1.16 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
-        &ensp;6.1.17 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO).  
+        &ensp;6.1.17 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
+        &ensp;6.1.18 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
 
     ## Validações antifraude da Transferências Inteligentes
 
@@ -159,6 +166,8 @@ info:
     
     ## Sobre a quantidade de consentimentos que podem ser criados:
     Não há limitações relacionadas a quantidade de consentimentos que podem ser criados entre uma mesma ITP, conta de débito e titularidade. Fica a cargo da instituição iniciadora solicitar, sempre que julgar necessário para atendimento do usuário, a criação de um novo consentimento.
+    
+    Demais validações executadas durante o processamento assíncrono do pagamento pela detentora, poderão ser consultados pela iniciadora através dos endpoints GET /pix/recurring-payments/{recurringPaymentId} e GET /pix/recurring-payments previstos com retorno HTTP Code 200 - OK com status RJCT (Rejected) e rejectionReason conforme abaixo (detalhamento adicional na documentação técnica da API):”
   version: 2.0.0-beta.1
   license:
     name: Apache 2.0
@@ -715,6 +724,7 @@ components:
                   - ERRO_IDEMPOTENCIA
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
+                  - LIMITE_TENTATIVAS_EXCEDIDO
                 example: SALDO_INSUFICIENTE
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
@@ -735,6 +745,7 @@ components:
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
+                  - LIMITE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
               title:
                 type: string
                 maxLength: 255
@@ -759,6 +770,7 @@ components:
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: Limite de transação excedido.
+                  - LIMITE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
               detail:
                 type: string
                 maxLength: 2048
@@ -783,6 +795,7 @@ components:
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
+                  - LIMITE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateRecurringPaymentsPaymentId:
@@ -1094,6 +1107,8 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     RiskSignalsPayments:
       type: object
       description: |
@@ -1557,6 +1572,16 @@ components:
 
             [Restrições]
             - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
+    LastRetryRecurringPaymentIds: 
+      type: array
+      minItems: 0
+      maxItems: 4
+      description: |
+        Conjunto de recurringPaymentIds correspondentes às tentativas de pagamentos anteriores.
+
+        [Restrições]
+        Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
+        Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
     EndToEndId:
       type: string
       minLength: 32
@@ -1743,7 +1768,7 @@ components:
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
-
+        - LIMITE_TENTATIVAS_EXCEDIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1765,6 +1790,7 @@ components:
         - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
+        - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -1992,6 +2018,7 @@ components:
             - LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
             - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.       
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
+            - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
     ConsentEdition:
       type: object
       properties:
@@ -2148,6 +2175,7 @@ components:
             - contractId
             - period
             - contractDebtor
+            - isRetryAccepted
           properties:
             contractId:
               type: string
@@ -2270,6 +2298,10 @@ components:
                 Valor definido pelo usuário recebedor. 
                 Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
                 Não pode ser preenchido nas autorizações de valor fixo.
+            isRetryAccepted:
+              type: boolean
+              description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
+              example: false
     ContractDebtor:
       type: object
       description: Informações sobre o cliente devedor do contrato.
@@ -2355,6 +2387,8 @@ components:
         sweeping:
           type: object
           description: Definição da configuração de recorrência para transferências automáticas de fundos.
+          required: 
+            - useOverdraftLimit
           properties:
             totalAllowedAmount:
               type: string
@@ -2372,6 +2406,11 @@ components:
               description: Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.
             periodicLimits:
               $ref: "#/components/schemas/PeriodicLimits"
+            useOverdraftLimit:
+              type: boolean
+              default: true
+              example: true
+              description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
     PeriodicLimits:
       type: object
       description: Limites transacionais por período determinado pelo usuário pagador.
@@ -3459,6 +3498,8 @@ components:
                   - CNPJ
                 example: 'CNPJ'
                 description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
+          lastRetryRecurringPaymentIds:
+            $ref: '#/components/schemas/LastRetryRecurringPaymentIds'  
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -3624,6 +3665,8 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     ResponseRecurringPaymentsDataRead:
       type: object
       required:
@@ -3789,6 +3832,8 @@ components:
             - DICT
             - INIC
           example: DICT
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     ResponseRecurringPaymentsDataPatch:
       type: object
       required:
@@ -3954,6 +3999,8 @@ components:
             - DICT
             - INIC
           example: DICT
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     XFapiInteractionId:
       type: string
       format: uuid

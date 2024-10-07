@@ -288,6 +288,7 @@ TRAN";1;1;"";Não permitido;string;CACC;
 Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
 Não pode ser preenchido nas autorizações de valor fixo.
 ";Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
+/data/recurringConfiguration/automatic/isRetryAccepted;isRetryAccepted;Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
 /data/recurringConfiguration/sweeping;sweeping;Definição da configuração de recorrência para transferências automáticas de fundos.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/sweeping/totalAllowedAmount;totalAllowedAmount;Valor máximo a ser atingido pelo somatório de todas as transações que utilizam o consentimento autorizado pelo cliente. Caso o valor seja superado, a detentora de conta deve negar a transação solicitada pela iniciadora.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/sweeping/transactionLimit;transactionLimit;Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;1000000.12;4
@@ -320,6 +321,7 @@ Não pode ser preenchido nas autorizações de valor fixo.
 ";Não permitido;object;;
 /data/recurringConfiguration/sweeping/periodicLimits/year/quantityLimit;quantityLimit;Quantidade limite de transações permitidas para ocorrer durante um ano.;Inteiro;;Opcional;;;0;1;"";Não permitido;integer;100;1
 /data/recurringConfiguration/sweeping/periodicLimits/year/transactionLimit;transactionLimit;Valor máximo a ser transacionado por um ano, a partir da data definida no campo `/data/startDateTime`.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
+/data/recurringConfiguration/sweeping/useOverdraftLimit;useOverdraftLimit;Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;true;
 /data/recurringConfiguration/vrp;vrp;Definição da configuração de recorrência para realização de transações de valores variáveis;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/vrp/transactionLimit;transactionLimit;Limite máximo de valor permitido para cada transação de pagamento.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/vrp/globalLimits;globalLimits;"Limite transacional máximo para pagamentos, após atingir este valor, o consentimento deve ir para o status ""CONSUMED"".";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
