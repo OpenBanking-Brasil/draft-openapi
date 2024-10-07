@@ -193,29 +193,6 @@ MENSAL
 ANUAL 
 SEMESTRAL 
 TRIMESTRAL";1;1;"";Não permitido;string;SEMANAL;
-/data/recurringConfiguration/automatic/dayOfMonth;dayOfMonth;"Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
-
-[Restrição] Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-";Inteiro;31;Condicional;;;0;1;" Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-";Não permitido;integer;10;1
-/data/recurringConfiguration/automatic/dayOfWeek;dayOfWeek;"Dia da semana que está prevista a transação.
-- SEGUNDA_FEIRA
-- TERCA_FEIRA
-- QUARTA_FEIRA
-- QUINTA_FEIRA
-- SEXTA_FEIRA
-- SABADO
-- DOMINGO
-
-[Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
-";Texto;;Condicional;;"SEGUNDA_FEIRA 
-TERCA_FEIRA 
-QUARTA_FEIRA 
-QUINTA_FEIRA 
-SEXTA_FEIRA 
-SABADO 
-DOMINGO";0;1;" Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
-";Não permitido;string;SEGUNDA_FEIRA;
 /data/recurringConfiguration/automatic/month;month;"Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
 - JANEIRO
 - FEVEREIRO
