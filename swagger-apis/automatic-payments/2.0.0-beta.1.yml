@@ -1107,6 +1107,8 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     RiskSignalsPayments:
       type: object
       description: |
@@ -1570,6 +1572,16 @@ components:
 
             [Restrições]
             - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
+    LastRetryRecurringPaymentIds: 
+      type: array
+      minItems: 0
+      maxItems: 4
+      description: |
+        Conjunto de recurringPaymentIds correspondentes às tentativas de pagamentos anteriores.
+
+        [Restrições]
+        Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
+        Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
     EndToEndId:
       type: string
       minLength: 32
@@ -3486,6 +3498,8 @@ components:
                   - CNPJ
                 example: 'CNPJ'
                 description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
+          lastRetryRecurringPaymentIds:
+            $ref: '#/components/schemas/LastRetryRecurringPaymentIds'  
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -3651,6 +3665,8 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     ResponseRecurringPaymentsDataRead:
       type: object
       required:
@@ -3816,6 +3832,8 @@ components:
             - DICT
             - INIC
           example: DICT
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     ResponseRecurringPaymentsDataPatch:
       type: object
       required:
@@ -3981,6 +3999,8 @@ components:
             - DICT
             - INIC
           example: DICT
+        lastRetryRecurringPaymentIds:
+          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
     XFapiInteractionId:
       type: string
       format: uuid
