@@ -128,3 +128,12 @@ Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:L
 /data/document/identification;identification;Número do documento de identificação oficial do titular pessoa natural ou jurídica.;Texto;14;Obrigatório;^(?:\d{11}|\d{14})$;;1;1;"";Não permitido;string;11111111111111;11
 /data/document/rel;rel;Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.;Texto;;Obrigatório;;"CPF 
 CNPJ";1;1;"";Não permitido;string;CNPJ;
+/data/lastRetryRecurringPaymentIds;lastRetryRecurringPaymentIds;"Conjunto de recurringPaymentIds correspondentes às tentativas de pagamentos anteriores.
+
+[Restrições]
+Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
+Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
+";Lista;100;Condicional;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;0;4;"
+Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
+Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
+";Não permitido;array;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;1

@@ -241,3 +241,12 @@ Esta validação é opcional caso o localInstrument for igual a INIC.
 DICT 
 INIC";1;1;" Caso consentimento associado a tentativa de pagamento seja para Pix automático (objeto “automatic” selecionado no oneOf do campo ""/data/recurringConfiguration""), apenas o método MANU é permitido.
 ";Não permitido;string;DICT;
+/data/lastRetryRecurringPaymentIds;lastRetryRecurringPaymentIds;"Conjunto de recurringPaymentIds correspondentes às tentativas de pagamentos anteriores.
+
+[Restrições]
+Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
+Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
+";Lista;100;Condicional;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;0;4;"
+Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
+Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
+";Não permitido;array;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;1
