@@ -137,9 +137,10 @@ info:
         &ensp;6.1.13 - Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
         &ensp;6.1.14 - Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);  
         &ensp;6.1.15 - Titularidade Inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE);  
-        &ensp;6.1.16 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
-        &ensp;6.1.17 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
-        &ensp;6.1.18 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
+        &ensp;6.1.16 - Consentimento revogado: O pagamento estava associado a um consentimento que foi revogado (CONSENTIMENTO_REVOGADO);  
+        &ensp;6.1.17 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
+        &ensp;6.1.18 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
+        &ensp;6.1.19 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
 
     ## Validações antifraude da Transferências Inteligentes
 
@@ -1725,6 +1726,7 @@ components:
         - TITULARIDADE_INCONSISTENTE
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
+        - CONSENTIMENTO_REVOGADO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1746,6 +1748,7 @@ components:
         - TITULARIDADE_INCONSISTENTE
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
+        - CONSENTIMENTO_REVOGADO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -1769,6 +1772,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
         - LIMITE_TENTATIVAS_EXCEDIDO
+        - CONSENTIMENTO_REVOGADO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1791,6 +1795,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
         - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
+        - CONSENTIMENTO_REVOGADO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -1984,6 +1989,7 @@ components:
             - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração.
             - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
+            - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
     RejectionReason:
       type: object
       description: |
@@ -2019,6 +2025,7 @@ components:
             - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.       
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
             - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
+            - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
     ConsentEdition:
       type: object
       properties:
