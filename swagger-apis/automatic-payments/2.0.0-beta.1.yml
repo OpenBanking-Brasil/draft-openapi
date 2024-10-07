@@ -2251,8 +2251,8 @@ components:
                 [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
-            immediatePayment:
-              $ref: '#/components/schemas/ImmediatePayment'
+            firstPayment:
+              $ref: '#/components/schemas/FirstPayment'
             minimumVariableAmount:
               type: string
               pattern: ^((\d{1,16}\.\d{2}))$
@@ -2298,9 +2298,14 @@ components:
                 description: Tipo do documento de identificação oficial do cliente devedor do contrato.
                 example: CNPJ
                 pattern: '^[A-Z]{4}$'
-    ImmediatePayment:
+    FirstPayment:
       type: object
-      description: Definições para transação imediata.
+      description: |
+        Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador.
+
+        - A conta de crédito informada deve pertencer ao mesmo CNPJ informado no campo “/data/creditors/cpfCnpj”
+        - A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. 
+        Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200)
       required:
         - type
         - date
