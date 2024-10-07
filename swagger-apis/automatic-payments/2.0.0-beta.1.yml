@@ -137,9 +137,10 @@ info:
         &ensp;6.1.13 - Limite valor excedido por período: Foi atingido o valor limite permitido pelo usuário por um determinado período de tempo no consentimento do pagamento (LIMITE_PERIODO_VALOR_EXCEDIDO);  
         &ensp;6.1.14 - Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);  
         &ensp;6.1.15 - Titularidade Inconsistente: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração. Caso a liquidação seja negada pelo PSP Recebedor com erro BE01, cabe a detentora de conta mudar o status do pagamento para RJCT com essa reason (TITULARIDADE_INCONSISTENTE);  
-        &ensp;6.1.16 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
-        &ensp;6.1.17 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
-        &ensp;6.1.18 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
+        &ensp;6.1.16 - Consentimento revogado: O pagamento estava associado a um consentimento que foi revogado (CONSENTIMENTO_REVOGADO);  
+        &ensp;6.1.17 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
+        &ensp;6.1.18 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
+        &ensp;6.1.19 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
 
     ## Validações antifraude da Transferências Inteligentes
 
@@ -1582,6 +1583,16 @@ components:
         [Restrições]
         Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
         Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
+      items:
+        type: string
+        minLength: 1
+        maxLength: 100
+        pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+        example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
+        description: |
+          Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. 
+          O recurringPaymentId deve ser diferente do endToEndId.
+          Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
     EndToEndId:
       type: string
       minLength: 32
@@ -1725,6 +1736,7 @@ components:
         - TITULARIDADE_INCONSISTENTE
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
+        - CONSENTIMENTO_REVOGADO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1746,6 +1758,7 @@ components:
         - TITULARIDADE_INCONSISTENTE
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
+        - CONSENTIMENTO_REVOGADO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -1769,6 +1782,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
         - LIMITE_TENTATIVAS_EXCEDIDO
+        - CONSENTIMENTO_REVOGADO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1791,6 +1805,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
         - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
+        - CONSENTIMENTO_REVOGADO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -1984,6 +1999,7 @@ components:
             - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração.
             - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
+            - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
     RejectionReason:
       type: object
       description: |
@@ -2019,6 +2035,7 @@ components:
             - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.       
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
             - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
+            - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
     ConsentEdition:
       type: object
       properties:
@@ -2073,16 +2090,6 @@ components:
                 Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
                 
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
-            dayOfMonth:
-              description: |
-                Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
-              
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-              type: integer
-              format: int32
-              minimum: 1
-              maximum: 31
-              example: 10
     ConsentRevocation:
       type: object
       properties:
@@ -2220,38 +2227,6 @@ components:
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
-            dayOfMonth:
-              type: integer
-              format: int32
-              minimum: 1
-              maximum: 31
-              example: 10
-              description: |
-                Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
-
-                [Restrição] Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-            dayOfWeek:
-              type: string
-              enum:
-                - SEGUNDA_FEIRA
-                - TERCA_FEIRA
-                - QUARTA_FEIRA
-                - QUINTA_FEIRA
-                - SEXTA_FEIRA
-                - SABADO
-                - DOMINGO
-              example: 'SEGUNDA_FEIRA'
-              description: |
-                Dia da semana que está prevista a transação.
-                - SEGUNDA_FEIRA
-                - TERCA_FEIRA
-                - QUARTA_FEIRA
-                - QUINTA_FEIRA
-                - SEXTA_FEIRA
-                - SABADO
-                - DOMINGO
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
             month:
               type: string
               enum:
@@ -2286,8 +2261,8 @@ components:
                 [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
-            immediatePayment:
-              $ref: '#/components/schemas/ImmediatePayment'
+            firstPayment:
+              $ref: '#/components/schemas/FirstPayment'
             minimumVariableAmount:
               type: string
               pattern: ^((\d{1,16}\.\d{2}))$
@@ -2333,9 +2308,14 @@ components:
                 description: Tipo do documento de identificação oficial do cliente devedor do contrato.
                 example: CNPJ
                 pattern: '^[A-Z]{4}$'
-    ImmediatePayment:
+    FirstPayment:
       type: object
-      description: Definições para transação imediata.
+      description: |
+        Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador.
+
+        - A conta de crédito informada deve pertencer ao mesmo CNPJ informado no campo “/data/creditors/cpfCnpj”
+        - A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. 
+        Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200)
       required:
         - type
         - date

@@ -193,29 +193,6 @@ MENSAL
 ANUAL 
 SEMESTRAL 
 TRIMESTRAL";1;1;"";Não permitido;string;SEMANAL;
-/data/recurringConfiguration/automatic/dayOfMonth;dayOfMonth;"Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
-
-[Restrição] Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-";Inteiro;31;Condicional;;;0;1;" Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-";Não permitido;integer;10;1
-/data/recurringConfiguration/automatic/dayOfWeek;dayOfWeek;"Dia da semana que está prevista a transação.
-- SEGUNDA_FEIRA
-- TERCA_FEIRA
-- QUARTA_FEIRA
-- QUINTA_FEIRA
-- SEXTA_FEIRA
-- SABADO
-- DOMINGO
-
-[Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
-";Texto;;Condicional;;"SEGUNDA_FEIRA 
-TERCA_FEIRA 
-QUARTA_FEIRA 
-QUINTA_FEIRA 
-SEXTA_FEIRA 
-SABADO 
-DOMINGO";0;1;" Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
-";Não permitido;string;SEGUNDA_FEIRA;
 /data/recurringConfiguration/automatic/month;month;"Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
 - JANEIRO
 - FEVEREIRO
@@ -249,34 +226,39 @@ DEZEMBRO";0;1;" Campo deve ser enviado quando o campo `/data/recurringConfigurat
 /data/recurringConfiguration/automatic/contractDebtor/document;document;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/contractDebtor/document/identification;identification;Número do documento de identificação oficial do cliente devedor do contrato.;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;11111111111111;
 /data/recurringConfiguration/automatic/contractDebtor/document/rel;rel;Tipo do documento de identificação oficial do cliente devedor do contrato.;Texto;4;Obrigatório;^[A-Z]{4}$;;1;1;"";Não permitido;string;CNPJ;
-/data/recurringConfiguration/automatic/immediatePayment;immediatePayment;Definições para transação imediata.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/recurringConfiguration/automatic/immediatePayment/type;type;"Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
+/data/recurringConfiguration/automatic/firstPayment;firstPayment;"Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador.
+
+- A conta de crédito informada deve pertencer ao mesmo CNPJ informado no campo “/data/creditors/cpfCnpj”
+- A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. 
+Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200)
+";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/recurringConfiguration/automatic/firstPayment/type;type;"Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
 ";Texto;;Obrigatório;;PIX;1;1;"";Não permitido;string;PIX;
-/data/recurringConfiguration/automatic/immediatePayment/date;date;"Define a data alvo da liquidação do pagamento.
+/data/recurringConfiguration/automatic/firstPayment/date;date;"Define a data alvo da liquidação do pagamento.
 O fuso horário de Brasília deve ser utilizado para criação e racionalização sobre os dados deste campo.
 ";Data;10;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2021-01-01;
-/data/recurringConfiguration/automatic/immediatePayment/currency;currency;"Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.
+/data/recurringConfiguration/automatic/firstPayment/currency;currency;"Código da moeda nacional segundo modelo ISO-4217, ou seja, 'BRL'.
 Todos os valores monetários informados estão representados com a moeda vigente do Brasil.
 ";Texto;3;Obrigatório;^([A-Z]{3})$;;1;1;"";Não permitido;string;BRL;
-/data/recurringConfiguration/automatic/immediatePayment/amount;amount;"Valor da transação com 2 casas decimais.
+/data/recurringConfiguration/automatic/firstPayment/amount;amount;"Valor da transação com 2 casas decimais.
 ";Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
-/data/recurringConfiguration/automatic/immediatePayment/remittanceInformation;remittanceInformation;"Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
+/data/recurringConfiguration/automatic/firstPayment/remittanceInformation;remittanceInformation;"Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
 ";Texto;140;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Pagamento da nota RSTO035-002;
-/data/recurringConfiguration/automatic/immediatePayment/creditorAccount;creditorAccount;"Recebe os dados de conta do usuário recebedor. 
+/data/recurringConfiguration/automatic/firstPayment/creditorAccount;creditorAccount;"Recebe os dados de conta do usuário recebedor. 
 ";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/recurringConfiguration/automatic/immediatePayment/creditorAccount/ispb;ispb;"Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+/data/recurringConfiguration/automatic/firstPayment/creditorAccount/ispb;ispb;"Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
 ";Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;12345678;8
-/data/recurringConfiguration/automatic/immediatePayment/creditorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito. 
+/data/recurringConfiguration/automatic/firstPayment/creditorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito. 
 (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
 no exercício de atividades da instituição, não podendo ser móvel ou transitória).
 
 [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
 ";Texto;4;Obrigatório;^[0-9]{1,4}$;;1;1;" Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
 ";Não permitido;string;1774;1
-/data/recurringConfiguration/automatic/immediatePayment/creditorAccount/number;number;"Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), 
+/data/recurringConfiguration/automatic/firstPayment/creditorAccount/number;number;"Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), 
 se houver valor alfanumérico, este deve ser convertido para 0.
 ";Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
-/data/recurringConfiguration/automatic/immediatePayment/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento. 
+/data/recurringConfiguration/automatic/firstPayment/creditorAccount/accountType;accountType;"Tipos de contas usadas para pagamento. 
 Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, 
 conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica.  
 Segue descrição de cada valor do ENUM.
