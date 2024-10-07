@@ -2080,16 +2080,6 @@ components:
                 Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
                 
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
-            dayOfMonth:
-              description: |
-                Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
-              
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-              type: integer
-              format: int32
-              minimum: 1
-              maximum: 31
-              example: 10
     ConsentRevocation:
       type: object
       properties:
@@ -2227,38 +2217,6 @@ components:
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
-            dayOfMonth:
-              type: integer
-              format: int32
-              minimum: 1
-              maximum: 31
-              example: 10
-              description: |
-                Dia fixo do mês que está prevista a transação. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o dia do mês selecionado no campo `/data/recurringConfiguration/automatic/month` em que ocorrerá primeira cobrança.
-
-                [Restrição] Campo deve ser enviado quando o campo /data/recurringConfiguration/automatic/period for igual a MENSAL, TRIMESTRAL, SEMESTRAL ou ANUAL.
-            dayOfWeek:
-              type: string
-              enum:
-                - SEGUNDA_FEIRA
-                - TERCA_FEIRA
-                - QUARTA_FEIRA
-                - QUINTA_FEIRA
-                - SEXTA_FEIRA
-                - SABADO
-                - DOMINGO
-              example: 'SEGUNDA_FEIRA'
-              description: |
-                Dia da semana que está prevista a transação.
-                - SEGUNDA_FEIRA
-                - TERCA_FEIRA
-                - QUARTA_FEIRA
-                - QUINTA_FEIRA
-                - SEXTA_FEIRA
-                - SABADO
-                - DOMINGO
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a SEMANAL.
             month:
               type: string
               enum:
