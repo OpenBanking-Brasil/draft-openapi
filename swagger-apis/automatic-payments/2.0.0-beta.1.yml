@@ -771,7 +771,7 @@ components:
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: Limite de transação excedido.
-                  - LIMITE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
+                  - LIMITE_DE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
               detail:
                 type: string
                 maxLength: 2048
@@ -1737,6 +1737,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
         - CONSENTIMENTO_REVOGADO
+        - LIMITE_TENTATIVAS_EXCEDIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1759,6 +1760,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
         - CONSENTIMENTO_REVOGADO
+        - LIMITE_TENTATIVAS_EXCEDIDO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -2000,6 +2002,7 @@ components:
             - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
             - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
+            - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido
     RejectionReason:
       type: object
       description: |
