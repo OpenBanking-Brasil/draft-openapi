@@ -771,7 +771,7 @@ components:
                   - ERRO_IDEMPOTENCIA: Erro idempotência.
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: Limite de transação excedido.
-                  - LIMITE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
+                  - LIMITE_TENTATIVAS_EXCEDIDO: Limite de tentativas excedido.
               detail:
                 type: string
                 maxLength: 2048
@@ -956,8 +956,8 @@ components:
               type: object
               description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
               oneOf:
-                - $ref: '#/components/schemas/Automatic'
-                - $ref: '#/components/schemas/Sweeping'
+                - $ref: '#/components/schemas/AutomaticRequest'
+                - $ref: '#/components/schemas/SweepingRequest'
                 - $ref: '#/components/schemas/Vrp'
     CreateRecurringPixPayment:
       type: object
@@ -1737,6 +1737,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
         - CONSENTIMENTO_REVOGADO
+        - LIMITE_TENTATIVAS_EXCEDIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1759,6 +1760,7 @@ components:
         - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
         - CONSENTIMENTO_REVOGADO
+        - LIMITE_TENTATIVAS_EXCEDIDO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -2000,6 +2002,7 @@ components:
             - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
             - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
+            - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido
     RejectionReason:
       type: object
       description: |
@@ -2039,8 +2042,6 @@ components:
     ConsentEdition:
       type: object
       properties:
-        riskSignals:
-          $ref: '#/components/schemas/RiskSignalsConsents'
         creditors:
           type: array
           minItems: 1
@@ -2076,20 +2077,18 @@ components:
           example: '2021-05-21T08:30:00Z'
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
-        automatic:
-          type: object
-          description: Definição da configuração de recorrência para pagamentos automáticos
-          properties:
-            maximumVariableAmount:
-              type: string
-              pattern: '^((\d{1,16}\.\d{2}))$'
-              minLength: 4
-              maxLength: 19
-              example: '1000000.12'
-              description: |
-                Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
-                
-                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
+        useOverdraftLimit:
+          type: boolean
+          default: true
+          example: true
+          description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
+        transactionLimit:
+          type: string
+          pattern: '^((\d{1,16}\.\d{2}))$'
+          minLength: 4
+          maxLength: 19
+          example: '100000.12'
+          description: Limite máximo de valor permitido para cada transação de pagamento.
     ConsentRevocation:
       type: object
       properties:
@@ -2170,7 +2169,7 @@ components:
         - $ref: '#/components/schemas/Automatic'
         - $ref: '#/components/schemas/Sweeping'
         - $ref: '#/components/schemas/Vrp'
-    Automatic:
+    AutomaticRequest: 
       type: object
       required:
         - automatic
@@ -2277,6 +2276,119 @@ components:
               type: boolean
               description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
               example: false
+    Automatic:
+      type: object
+      required:
+        - automatic
+      properties:
+        automatic:
+          type: object
+          description: Definição da configuração de recorrência para pagamentos automáticos
+          required:
+            - contractId
+            - period
+            - contractDebtor
+            - isRetryAccepted
+            - useOverdraftLimit
+          properties:
+            contractId:
+              type: string
+              pattern: '^[a-zA-Z0-9]{1,35}$'
+              minLength: 1
+              maxLength: 35
+              example: XE00038166201907261559y6j6
+              description: Identificador do contrato de transação
+            fixedAmount:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '100000.12'
+              description: |
+                Valor fixo de cobrança, caso preenchido, representa um consentimento para pagamentos de valores fixos, ou não sujeitos a alteração durante a vigência do consentimento. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/maximumVariableAmount”
+            maximumVariableAmount:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '1000000.12'
+              description: |
+                Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
+                
+                [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
+            period:
+              type: string
+              enum:
+                - SEMANAL
+                - MENSAL
+                - ANUAL
+                - SEMESTRAL
+                - TRIMESTRAL
+              example: SEMANAL
+              description: |
+                Define a periodicidade permitida para realização de transações
+                - SEMANAL
+                - MENSAL
+                - ANUAL
+                - SEMESTRAL
+                - TRIMESTRAL
+            month:
+              type: string
+              enum:
+                - JANEIRO
+                - FEVEREIRO
+                - MARCO
+                - ABRIL
+                - MAIO
+                - JUNHO
+                - JULHO
+                - AGOSTO
+                - SETEMBRO
+                - OUTUBRO
+                - NOVEMBRO
+                - DEZEMBRO
+              example: 'JANEIRO'
+              description: |
+                Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
+                - JANEIRO
+                - FEVEREIRO
+                - MARCO
+                - ABRIL
+                - MAIO
+                - JUNHO
+                - JULHO
+                - AGOSTO
+                - SETEMBRO
+                - OUTUBRO
+                - NOVEMBRO
+                - DEZEMBRO
+
+                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
+            contractDebtor:
+              $ref: '#/components/schemas/ContractDebtor'
+            firstPayment:
+              $ref: '#/components/schemas/FirstPayment'
+            minimumVariableAmount:
+              type: string
+              pattern: ^((\d{1,16}\.\d{2}))$
+              minLength: 4
+              maxLength: 19
+              example: '100000.12'
+              description: |
+                Valor definido pelo usuário recebedor. 
+                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
+                Não pode ser preenchido nas autorizações de valor fixo.
+            isRetryAccepted:
+              type: boolean
+              description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
+              example: false
+            useOverdraftLimit:
+              type: boolean
+              default: true
+              example: true
+              description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
     ContractDebtor:
       type: object
       description: Informações sobre o cliente devedor do contrato.
@@ -2359,6 +2471,31 @@ components:
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
           $ref: '#/components/schemas/PostCreditorAccount'
+    SweepingRequest:
+      type: object
+      required:
+        - sweeping
+      properties:
+        sweeping:
+          type: object
+          description: Definição da configuração de recorrência para transferências automáticas de fundos.
+          properties:
+            totalAllowedAmount:
+              type: string
+              minLength: 4
+              maxLength: 19
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              example: '100000.12'
+              description: Valor máximo a ser atingido pelo somatório de todas as transações que utilizam o consentimento autorizado pelo cliente. Caso o valor seja superado, a detentora de conta deve negar a transação solicitada pela iniciadora.
+            transactionLimit:
+              type: string
+              pattern: '^((\d{1,16}\.\d{2}))$'
+              minLength: 4
+              maxLength: 19
+              example: '1000000.12'
+              description: Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.
+            periodicLimits:
+              $ref: "#/components/schemas/PeriodicLimits"
     Sweeping:
       type: object
       required:
