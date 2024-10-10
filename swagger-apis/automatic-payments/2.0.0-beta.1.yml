@@ -2042,6 +2042,8 @@ components:
     ConsentEdition:
       type: object
       properties:
+        riskSignals:
+          $ref: '#/components/schemas/RiskSignalsConsents'
         creditors:
           type: array
           minItems: 1
@@ -2077,18 +2079,22 @@ components:
           example: '2021-05-21T08:30:00Z'
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
           maxLength: 20
-        useOverdraftLimit:
-          type: boolean
-          default: true
-          example: true
-          description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
-        transactionLimit:
-          type: string
-          pattern: '^((\d{1,16}\.\d{2}))$'
-          minLength: 4
-          maxLength: 19
-          example: '100000.12'
-          description: Limite máximo de valor permitido para cada transação de pagamento.
+        recurringConfiguration:
+          type: object
+          description: Campo destinado a configuração dos diferentes produtos de pagamentos recorrentes.
+          properties:
+            automatic:
+              type: object
+              description: Definição da configuração de recorrência para pagamentos automáticos
+              properties:
+                maximumVariableAmount:
+                  type: string
+                  pattern: '^((\d{1,16}\.\d{2}))$'
+                  minLength: 4
+                  maxLength: 19
+                  example: '1000000.12'
+                  description: |
+                    Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis.
     ConsentRevocation:
       type: object
       properties:
