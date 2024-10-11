@@ -2087,9 +2087,11 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
               description: |
-                Data e hora definida pelo usuário em que o vínculo do dispositivo deve expirar, perdendo sua validade.
+                Data e hora de expiração da permissão. Reflete a data limite de validade do vínculo. 
+                Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
                 
-                [Restrição] Campo obrigatório que deverá ser retornado quando o vínculo de dispositivo estiver ou passar pelo estado AUTHORISED;
+                [Restrição] De preenchimento obrigatório nos casos em que houver validade determinada. 
+                Em casos de vínculo com prazo indeterminado, o campo não deve ser preenchido.
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
@@ -2155,9 +2157,11 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
               description: |
-                Data e hora definida pelo usuário em que o vínculo do dispositivo deve expirar, perdendo sua validade.
-
-                [Restrição] Campo obrigatório que deverá ser retornado quando o vínculo de dispositivo estiver ou passar pelo estado AUTHORISED;
+                Data e hora de expiração da permissão. Reflete a data limite de validade do vínculo. 
+                Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC (UTC time format).
+                
+                [Restrição] De preenchimento obrigatório nos casos em que houver validade determinada. 
+                Em casos de vínculo com prazo indeterminado, o campo não deve ser preenchido.
             loggedUser:
               $ref: '#/components/schemas/LoggedUser'
             businessEntity:
