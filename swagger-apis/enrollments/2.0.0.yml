@@ -509,7 +509,9 @@ paths:
         Para pagamentos de alçadas únicas, o consentimento de pagamento deve transitar ao status `AUTHORISED` na execução com sucesso desse método. 
         Para pagamentos com múltiplas alçadas aprovadoras, o consentimento de pagamento ficará em `PARTIALLY_ACCEPTED` até que todos tenham autorizado. 
         Em caso de falha de negócio (HTTP Status Code 422), o consentimento de pagamento precisa transitar para o status `REJECTED` e seguir os motivos de rejeição presentes na API de pagamentos.
-        Caso a detentora identifique que a conta de débito informada pelo iniciador na criação do consentimento diverge da conta de débito vinculada ao dispositivo, o detentor deve retornar o erro HTTP 422 com código `CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO` e rejeitar o consentimento com o motivo `CONTA_NAO_PERMITE_PAGAMENTO`. Se o iniciador, durante a criação do consentimento, omitir a conta de débito, o detentor deve considerar a conta de débito associada ao vínculo para o preenchimento do objeto `/data/debtorAccount`, presente no consentimento, após a sua autorização.
+        Caso a detentora identifique que a conta de débito informada pelo iniciador na criação do consentimento diverge da conta de débito vinculada ao dispositivo, o detentor deve retornar o erro HTTP 422 com código `CONTA_DEBITO_DIVERGENTE_CONSENTIMENTO_VINCULO` e rejeitar o consentimento com o motivo `CONTA_NAO_PERMITE_PAGAMENTO`. 
+        Se o iniciador, durante a criação do consentimento, omitir a conta de débito, o detentor deve considerar a conta de débito associada ao vínculo para o preenchimento do objeto `/data/debtorAccount`, presente no consentimento, após a sua autorização.
+        Os limites relacionados ao vínculo devem ser validados apenas em momento de liquidação do pagamento, independente dele ser agendado ou imediato.
       parameters:
         - $ref: '#/components/parameters/consentId'
         - $ref: '#/components/parameters/Authorization'
