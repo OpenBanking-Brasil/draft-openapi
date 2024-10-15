@@ -439,7 +439,7 @@ components:
         brandName:
           type: string
           maxLength: 80
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: |
             Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).
           example: Organização A
@@ -675,14 +675,14 @@ components:
           description: |
             Denominação da Tarifa pactuada.
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Saque a descoberto
         feeCode:
           type: string
           description: |
             Sigla identificadora da tarifa pactuada.
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Saque descoberto
         feeAmount:
           type: string
@@ -703,7 +703,7 @@ components:
           $ref: '#/components/schemas/ChargeType'
         chargeAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Informações adicionais sobre encargos.
           description: |
             Campo para informações adicionais.
@@ -892,13 +892,13 @@ components:
         feeName:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: Denominação da Tarifa pactuada
           example: Excesso em Conta
         feeCode:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: Sigla identificadora da tarifa pactuada
           example: EXCESSO_CONTA
         feeChargeType:
@@ -984,7 +984,7 @@ components:
           $ref: '#/components/schemas/ChargeType'
         chargeAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 140
           example: Informações adicionais
           description: |
@@ -1042,7 +1042,7 @@ components:
         productName:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: AD
           description: |
             Denominação/Identificação do nome da Modalidade da Operação de Crédito divulgado ao cliente
@@ -1107,7 +1107,7 @@ components:
           $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
         instalmentPeriodicityAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 50
           example: Informações adicionais sobre periodicidade
           description: |
@@ -1149,7 +1149,7 @@ components:
           example: SAC
         amortizationScheduledAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 200
           example: Informações complementares relativa à amortização do tipo 'OUTROS'
           description: |
@@ -1207,7 +1207,7 @@ components:
         referentialRateIndexerAdditionalInfo:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Informações adicionais
           description: |
             Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
@@ -1233,7 +1233,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 1200
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Informações adicionais
           description: |
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
