@@ -958,7 +958,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 1200
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Informações adicionais
           description: |
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 

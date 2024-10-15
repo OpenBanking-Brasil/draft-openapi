@@ -140,7 +140,7 @@ OUTROS_INDEXADORES";0;1;"";Não permitido;string;TJLP;
 /data/interestRates/additionalInfo;additionalInfo;"Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
 
 [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
-";Texto;1200;Condicional;[\w\W\s]*;;0;1;" Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
+";Texto;1200;Condicional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
 ";Não permitido;string;Informações adicionais;
 /data/contractedFees;contractedFees;Lista que traz as informações das tarifas pactuadas no contrato.;Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/contractedFees/feeName;feeName;Denominação da Tarifa pactuada;Texto;140;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Renovação de cadastro;
