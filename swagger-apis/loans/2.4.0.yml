@@ -720,7 +720,7 @@ components:
         productName:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Crédito Pessoal Consignado
           description: |
             Denominação/Identificação do nome da Modalidade da Operação de Crédito divulgado ao cliente
@@ -787,7 +787,7 @@ components:
           $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
         instalmentPeriodicityAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 50
           example: Informações adicionais sobre periodicidade
           description: |
@@ -822,7 +822,7 @@ components:
           $ref: '#/components/schemas/EnumContractAmortizationScheduled'
         amortizationScheduledAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 200
           example: Informações complementares relativa à amortização do tipo 'OUTROS'
           description: |
@@ -870,13 +870,13 @@ components:
         feeName:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: Denominação da Tarifa pactuada
           example: Renovação de cadastro
         feeCode:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           description: Sigla identificadora da tarifa pactuada
           example: CADASTRO
         feeChargeType:
@@ -935,7 +935,7 @@ components:
             Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
             [Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionada o tipo ou subtipo OUTRO.
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Informações adicionais
         preFixedRate:
           type: string
@@ -974,7 +974,7 @@ components:
           $ref: '#/components/schemas/EnumContractFinanceChargeType'
         chargeAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 140
           example: Informações adicionais
           description: |
@@ -1004,7 +1004,7 @@ components:
             Campo para informações adicionais.
 
             [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Informações adicionais sobre encargos.
         chargeRate:
           type: string
@@ -1104,7 +1104,7 @@ components:
           description: 'Identifica de forma única o contrato da operação de crédito do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
         brandName:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           maxLength: 80
           example: Organização A
           description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
@@ -1247,14 +1247,14 @@ components:
         feeName:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Reavaliação periódica do bem
           description: |
             Denominação da Tarifa pactuada.
         feeCode:
           type: string
           maxLength: 140
-          pattern: '[\w\W\s]*'
+          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: aval_bem
           description: |
             Sigla identificadora da tarifa pactuada.
