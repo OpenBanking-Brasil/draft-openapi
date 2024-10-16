@@ -520,6 +520,7 @@ paths:
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
         - $ref: '#/components/parameters/XIdempotencyKey'
+        - $ref: '#/components/parameters/x-bcb-nfc'
       requestBody:
         required: true
         description: Payload para criação de vínculo de conta.
@@ -2315,6 +2316,13 @@ components:
         Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
       schema:
         $ref: '#/components/schemas/enrollmentId'
+    x-bcb-nfc:
+      name: x-bcb-nfc
+      in: header
+      description: O campo representa uma transação iniciada via NFC. O envio desse campo é obrigatório nesse cenário. As detentoras devem armazenar a informação e correlacioná-la com o consentimento e o pagamento originado.
+      required: false
+      schema:
+        type: boolean
     Authorization:
       name: Authorization
       in: header
