@@ -1058,6 +1058,8 @@ components:
             [Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
 
             [Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
+
+            [Restrição] Caso o campo “/data/localInstrument” seja enviado como “MANU”, o campo “/data/proxy” não deve ser informado
           pattern: '[\w\W\s]*'
           example: '11221131242'
         transactionIdentification:
@@ -3751,6 +3753,8 @@ components:
             [Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
 
             [Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
+
+            [Restrição] Caso o campo “/data/localInstrument” seja enviado como “MANU”, o campo “/data/proxy” não deve ser informado
           pattern: '[\w\W\s]*'
           example: '11221131242'
         transactionIdentification:
@@ -3937,6 +3941,8 @@ components:
             Esta validação é opcional caso o localInstrument for igual a INIC.
 
             [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+
+            [Restrição] Caso o campo “/data/localInstrument” seja enviado como “MANU”, o campo “/data/proxy” não deve ser informado
           pattern: '[\w\W\s]*'
           example: '11221131242'
         localInstrument:
@@ -4104,6 +4110,8 @@ components:
             Esta validação é opcional caso o localInstrument for igual a INIC.
 
             [Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+
+            [Restrição] Caso o campo “/data/localInstrument” seja enviado como “MANU”, o campo “/data/proxy” não deve ser informado
           pattern: '[\w\W\s]*'
           example: '11221131242'
         localInstrument:
