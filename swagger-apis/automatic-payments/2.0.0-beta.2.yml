@@ -1388,13 +1388,12 @@ components:
             deviceRecognitionVerdict:
               type: string
               description: Informa a integridade do dispositivo
-    PostCreditorAccount:
+    CreditorAccountConsent:
       type: object
       description: |
         Recebe os dados de conta do usuário recebedor. 
       required:
         - ispb
-        - issuer
         - number
         - accountType
       properties:
@@ -2486,7 +2485,7 @@ components:
           description: |
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
-          $ref: '#/components/schemas/PostCreditorAccount'
+          $ref: '#/components/schemas/CreditorAccountConsent'
     SweepingRequest:
       type: object
       required:
