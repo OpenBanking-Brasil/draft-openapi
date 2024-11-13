@@ -300,7 +300,7 @@ paths:
         - Demais orientações referentes a revogação podem ser encontrados no header da API, tópico “Validações”, item 3.
 
         2 - Informações sobre a edição: 
-        - Os campos que são passíveis de edição e suas regras podem ser encontrados através do [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/198410772);
+        - Os campos que são passíveis de edição e suas regras podem ser encontrados através do [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/628195665);
         - A edição é possível apenas em casos de consentimento para Pix Automático (“automatic” escolhido no oneOf do objeto “recurringConfiguration”);
         - O envio do item "/data/creditors/name" atualizará o nome do recebedor em todos os elementos do array.
 
@@ -1388,13 +1388,12 @@ components:
             deviceRecognitionVerdict:
               type: string
               description: Informa a integridade do dispositivo
-    PostCreditorAccount:
+    CreditorAccountConsent:
       type: object
       description: |
         Recebe os dados de conta do usuário recebedor. 
       required:
         - ispb
-        - issuer
         - number
         - accountType
       properties:
@@ -2486,7 +2485,7 @@ components:
           description: |
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
-          $ref: '#/components/schemas/PostCreditorAccount'
+          $ref: '#/components/schemas/CreditorAccountConsent'
     SweepingRequest:
       type: object
       required:
