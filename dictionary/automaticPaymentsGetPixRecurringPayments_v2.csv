@@ -72,6 +72,7 @@ Motivo da rejeição do pagamento. Informações complementares sobre o motivo d
 - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
 - CONSENTIMENTO_REVOGADO
 - LIMITE_TENTATIVAS_EXCEDIDO
+- FORA_PRAZO_PERMITIDO
 
 [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -92,7 +93,8 @@ TITULARIDADE_INCONSISTENTE
 LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO 
 LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO 
 CONSENTIMENTO_REVOGADO 
-LIMITE_TENTATIVAS_EXCEDIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
+LIMITE_TENTATIVAS_EXCEDIDO 
+FORA_PRAZO_PERMITIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
 
@@ -115,6 +117,7 @@ LIMITE_TENTATIVAS_EXCEDIDO";1;1;" Esse motivo deverá ser enviado quando o campo
 - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
 - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido
+- FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/payment;payment;Objeto contendo as informações do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/payment/amount;amount;"Valor da transação com 2 casas decimais.
