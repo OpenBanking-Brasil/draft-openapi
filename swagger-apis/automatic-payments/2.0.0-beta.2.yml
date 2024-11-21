@@ -1102,6 +1102,31 @@ components:
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     RiskSignalsPayments:
       type: object
       description: |
@@ -3611,7 +3636,32 @@ components:
                 example: 'CNPJ'
                 description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
           lastRetryRecurringPaymentIds:
-            $ref: '#/components/schemas/LastRetryRecurringPaymentIds'  
+            $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+          paymentReference:
+            type: string
+            maxLength: 10
+            description: |
+              Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+              
+              - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+              - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+              - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+              - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+                - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+                - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+                - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+                - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+              - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+                - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+                - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+              - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+                - Exemplo de Formatos:
+                  - Primeiro pagamento: "zero"
+                  - Semanal: "W50-2024"
+                  - Mensal: "M09-2024"
+                  - Trimestral: "Q3-2024"
+                  - Semestral: "S2-2024"
+                  - Anual: "Y2024"
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -3781,6 +3831,31 @@ components:
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     ResponseRecurringPaymentsDataRead:
       type: object
       required:
@@ -3950,6 +4025,31 @@ components:
           example: DICT
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     ResponseRecurringPaymentsDataPatch:
       type: object
       required:
@@ -4119,6 +4219,31 @@ components:
           example: DICT
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     XFapiInteractionId:
       type: string
       format: uuid
