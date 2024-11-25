@@ -1115,8 +1115,8 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
-        lastRetryRecurringPaymentIds:
-          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        originalRecurringPaymentId:
+          $ref: '#/components/schemas/originalRecurringPaymentId'
         paymentReference:
           type: string
           maxLength: 10
@@ -1604,26 +1604,20 @@ components:
 
             [Restrições]
             - Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
-    LastRetryRecurringPaymentIds: 
-      type: array
-      minItems: 0
-      maxItems: 7
+    originalRecurringPaymentId: 
+      type: string
       description: |
-        Conjunto de recurringPaymentIds correspondentes às tentativas de pagamentos anteriores.
+        Campo que contém o código ou o identificador da tentativa original de pagamento que falhou. 
+        A tentativa de pagamento original é a primeira tentativa (Intradia – Primeira Tentativa, vide documentação) realizada para o pagamento de uma determinada recorrência. 
+        Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. 
+        O recurringPaymentId deve ser diferente do endToEndId. 
+        Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
 
-        [Restrições]
-        Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
-        Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
-      items:
-        type: string
-        minLength: 1
-        maxLength: 100
-        pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
-        example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
-        description: |
-          Código ou identificador único informado pela instituição detentora da conta para representar a iniciação de pagamento. 
-          O recurringPaymentId deve ser diferente do endToEndId.
-          Este é o identificador que deverá ser utilizado na consulta ao status da iniciação de pagamento efetuada.
+        [Restrição] Este campo é de envio obrigatório pela Iniciadora quando for uma nova tentativa de liquidação de pagamento que falhou anteriormente.
+      minLength: 1
+      maxLength: 100
+      pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+      example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
     EndToEndId:
       type: string
       minLength: 32
@@ -3682,8 +3676,8 @@ components:
                   - CNPJ
                 example: 'CNPJ'
                 description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
-          lastRetryRecurringPaymentIds:
-            $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+          originalRecurringPaymentId:
+            $ref: '#/components/schemas/originalRecurringPaymentId'
           paymentReference:
             type: string
             maxLength: 10
@@ -3882,8 +3876,8 @@ components:
                 - CNPJ
               example: 'CNPJ'
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
-        lastRetryRecurringPaymentIds:
-          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        originalRecurringPaymentId:
+          $ref: '#/components/schemas/originalRecurringPaymentId'
         paymentReference:
           type: string
           maxLength: 10
@@ -4082,8 +4076,8 @@ components:
             - DICT
             - INIC
           example: DICT
-        lastRetryRecurringPaymentIds:
-          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        originalRecurringPaymentId:
+          $ref: '#/components/schemas/originalRecurringPaymentId'
         paymentReference:
           type: string
           maxLength: 10
@@ -4282,8 +4276,8 @@ components:
             - DICT
             - INIC
           example: DICT
-        lastRetryRecurringPaymentIds:
-          $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        originalRecurringPaymentId:
+          $ref: '#/components/schemas/originalRecurringPaymentId'
         paymentReference:
           type: string
           maxLength: 10
