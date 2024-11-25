@@ -437,6 +437,7 @@ paths:
         - $ref: '#/components/parameters/recurringConsentId'
         - $ref: '#/components/parameters/startDate'
         - $ref: '#/components/parameters/endDate'
+        - $ref: '#/components/parameters/originalRecurringPaymentId'
       responses:
         '200':
           $ref: '#/components/responses/200RecurringPixPaymentRead'
@@ -4379,6 +4380,20 @@ components:
         pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
         minLength: 10
         maxLength: 10
+    originalRecurringPaymentId:
+      name: originalRecurringPaymentId
+      in: query
+      description: |
+        Campo que contém o código ou o identificador da tentativa original de pagamento que falhou. 
+        Código ou identificador único criado pela instituição detentora da conta para representar a iniciação de pagamento. 
+        Caso informado, devem ser retornados todos os pagamentos associados ao identificador informado, sendo eles o pagamento original (dono do identificador) e as novas tentativas que enviaram o identificador na sua requisição, indicando que representam nova tentativa.
+      required: false
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 100
+        pattern: ^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$
+        example: TXpRMU9UQTROMWhZV2xSU1FUazJSMDl
     Authorization:
       name: Authorization
       in: header
