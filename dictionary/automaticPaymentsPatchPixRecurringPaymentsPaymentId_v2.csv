@@ -72,6 +72,7 @@ Motivo da rejeição do pagamento. Informações complementares sobre o motivo d
 - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
 - CONSENTIMENTO_REVOGADO
+- FORA_PRAZO_PERMITIDO
 
 [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -92,7 +93,8 @@ LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
 LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO 
 LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO 
 LIMITE_TENTATIVAS_EXCEDIDO 
-CONSENTIMENTO_REVOGADO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
+CONSENTIMENTO_REVOGADO 
+FORA_PRAZO_PERMITIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
 
@@ -115,6 +117,7 @@ CONSENTIMENTO_REVOGADO";1;1;" Esse motivo deverá ser enviado quando o campo `/d
 - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
 - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
+- FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/cnpjInitiator;cnpjInitiator;CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
 /data/payment;payment;Objeto contendo as informações do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -250,7 +253,29 @@ INIC";1;1;" Caso consentimento associado a tentativa de pagamento seja para Pix 
 [Restrições]
 Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
 Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
-";Lista;100;Condicional;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;0;4;"
+";Lista;100;Condicional;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;0;7;"
 Este campo é de preenchimento obrigatório pela detentora quando for uma tentativa de pagamento com erro ou falha.
 Este campo é de envio obrigatório pela iniciadora quando for uma tentativa de pagamento que falhou anteriormente.
 ";Não permitido;array;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;1
+/data/paymentReference;paymentReference;"Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+
+- Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+- Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: ""W50-2024"".
+- Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: ""M09-2024"".
+- Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+  - Janeiro a Março: Q1-$ano (ex.: ""Q1-2024"").
+  - Abril a Junho: Q2-$ano (ex.: ""Q2-2024"").
+  - Julho a Setembro: Q3-$ano (ex.: ""Q3-2024"").
+  - Outubro a Dezembro: Q4-$ano (ex.: ""Q4-2024"")
+- Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+  - Janeiro a Junho: S1-$ano (ex.: ""S1-2024"").
+  - Julho a Dezembro: S2-$ano (ex.: ""S2-2024"").
+- Anual: Use “Y$ano”, apenas com o ano. Exemplo: ""Y2024"".
+  - Exemplo de Formatos:
+    - Primeiro pagamento: ""zero""
+    - Semanal: ""W50-2024""
+    - Mensal: ""M09-2024""
+    - Trimestral: ""Q3-2024""
+    - Semestral: ""S2-2024""
+    - Anual: ""Y2024""
+";Texto;10;Opcional;;;0;1;"";Não permitido;string;;
