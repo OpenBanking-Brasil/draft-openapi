@@ -112,8 +112,9 @@ info:
           &emsp;4.2.2.12 Limite quantidade excedida por período: A quantidade de cobranças atingiu o limite determinado pelo usuário na criação do consentimento (LIMITE_PERIODO_QUANTIDADE_EXCEDIDO);   
           &emsp;4.2.2.13 Consentimento pendente de autorização: Consentimento em “PARTIALLY_ACCEPTED” aguardando aprovação de múltiplas alçadas (CONSENTIMENTO_PENDENTE_AUTORIZACAO);  
           &emsp;4.2.2.14 Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
-          &emsp;4.2.2.15 Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO).  
-          &emsp;4.2.2.16 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
+          &emsp;4.2.2.15 Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
+          &emsp;4.2.2.16 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO);  
+          &emsp;4.2.2.17 Fora do prazo permitido: A tentativa de agendamento foi realizada fora do horário ou período permitido e não pode ser aceita pela instituição detentora (FORA_PRAZO_PERMITIDO).
 
     5. **Validações na consulta do pagamento (_GET /pix/recurring-payments/{recurringPaymentId}_ e _GET /pix/recurring-payments_)**  
       5.1 **Casos de erro relacionados às permissões de segurança para acesso à API (ex. certificado, access_token)**  
@@ -140,7 +141,8 @@ info:
         &ensp;6.1.16 - Consentimento revogado: O pagamento estava associado a um consentimento que foi revogado (CONSENTIMENTO_REVOGADO);  
         &ensp;6.1.17 - Limite global excedido: O consentimento encontrasse autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite global parametrizado pelo usuário durante a criação do consentimento (LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO);  
         &ensp;6.1.18 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
-        &ensp;6.1.19 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO).
+        &ensp;6.1.19 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO);  
+        &ensp;6.1.20 Fora do prazo permitido: A tentativa de agendamento foi realizada fora do horário ou período permitido e não pode ser aceita pela instituição detentora (FORA_PRAZO_PERMITIDO).
 
     ## Validações antifraude da Transferências Inteligentes
 
@@ -163,7 +165,7 @@ info:
       - Limite Semanal (Ex.: R$ 1.000,00): O limite semanal abrange o período de uma semana inteira, começando às 00:00h de domingo e terminando às 23:59h do sábado. Por exemplo, se um usuário transferir R$ 200,00 na terça-feira e R$ 500,00 na quinta-feira, ele ainda poderá transferir até R$ 300,00 até o final do sábado;
       - Limite Mensal (Ex.: R$ 10.000,00): Este limite mensal é calculado do primeiro ao último dia de cada mês. Por exemplo, em um mês, se o usuário transferir R$ 2.000,00 na primeira semana e R$ 3.000,00 na segunda semana, ele ainda terá R$ 5.000,00 disponíveis para transferências pelo restante do mês;
       - Limite Anual (Ex.: R$ 50.000,00): O limite anual conta do primeiro dia de janeiro ao último dia de dezembro. Por exemplo, se um usuário transferir R$ 10.000,00 até março, mais R$ 15.000,00 até junho e mais R$ 20.000,00 até setembro, ele só poderá transferir outros R$ 5.000,00 até o final do ano;
-      - Esses limites ajudam a gerenciar as transferências de fundos, garantindo que não excedam os montantes estabelecidos para cada período. Cada limite é independente e é recalculado conforme sua respectiva janela de tempo se reinicia. Apenas pagamentos realizados com sucesso (em status ACSC) devem ser considerados para o cálculo dos limites do consentimento.
+      - Esses limites ajudam a gerenciar as transferências de fundos, garantindo que não excedam os montantes estabelecidos para cada período. Cada limite é independente e é recalculado conforme sua respectiva janela de tempo se reinicia. Todos os pagamentos com status diferente de RJCT ou CANC devem ser considerados para o cálculo dos limites do consentimento.
     
     ## Sobre a quantidade de consentimentos que podem ser criados:
     Não há limitações relacionadas a quantidade de consentimentos que podem ser criados entre uma mesma ITP, conta de débito e titularidade. Fica a cargo da instituição iniciadora solicitar, sempre que julgar necessário para atendimento do usuário, a criação de um novo consentimento.
@@ -726,6 +728,7 @@ components:
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
                   - LIMITE_TENTATIVAS_EXCEDIDO
+                  - FORA_PRAZO_PERMITIDO
                 example: SALDO_INSUFICIENTE
                 description: |
                   Códigos de erros previstos na criação da iniciação de pagamento:
@@ -747,6 +750,7 @@ components:
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
                   - LIMITE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
+                  - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
               title:
                 type: string
                 maxLength: 255
@@ -772,6 +776,7 @@ components:
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: Limite total excedido
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: Limite de transação excedido.
                   - LIMITE_TENTATIVAS_EXCEDIDO: Limite de tentativas excedido.
+                  - FORA_PRAZO_PERMITIDO: Tentativa fora do prazo.
               detail:
                 type: string
                 maxLength: 2048
@@ -797,6 +802,7 @@ components:
                   - LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.
                   - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
                   - LIMITE_TENTATIVAS_EXCEDIDO: O limite de tentativas para liquidação do pagamento permitidas pelo arranjo foi excedido.
+                  - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreateRecurringPaymentsPaymentId:
@@ -1102,6 +1108,31 @@ components:
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     RiskSignalsPayments:
       type: object
       description: |
@@ -1567,7 +1598,7 @@ components:
     LastRetryRecurringPaymentIds: 
       type: array
       minItems: 0
-      maxItems: 4
+      maxItems: 7
       description: |
         Conjunto de recurringPaymentIds correspondentes às tentativas de pagamentos anteriores.
 
@@ -1729,6 +1760,7 @@ components:
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
         - CONSENTIMENTO_REVOGADO
         - LIMITE_TENTATIVAS_EXCEDIDO
+        - FORA_PRAZO_PERMITIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1752,6 +1784,7 @@ components:
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação
         - CONSENTIMENTO_REVOGADO
         - LIMITE_TENTATIVAS_EXCEDIDO
+        - FORA_PRAZO_PERMITIDO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -1776,6 +1809,7 @@ components:
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
         - LIMITE_TENTATIVAS_EXCEDIDO
         - CONSENTIMENTO_REVOGADO
+        - FORA_PRAZO_PERMITIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1799,6 +1833,7 @@ components:
         - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
         - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
         - CONSENTIMENTO_REVOGADO
+        - FORA_PRAZO_PERMITIDO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -1994,6 +2029,7 @@ components:
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
             - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
             - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido
+            - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
     RejectionReason:
       type: object
       description: |
@@ -2030,6 +2066,7 @@ components:
             - LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
             - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
             - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
+            - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
     ConsentEdition:
       type: object
       properties:
@@ -2053,16 +2090,6 @@ components:
                 description: |
                   Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
                   Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
-        startDateTime:
-          description: |
-            Data e hora em que o consentimento deve passar a ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-
-            [Restrição] Caso esse campo não seja enviado pelo iniciador na requisição, o detentor deve preencher esse campo com o mesmo valor atribuído ao campo /data/creationDateTime. Caso o campo /data/startDateTime enviado seja anterior ao valor do campo /data/creationDateTime, o detentor deve substituir o valor do campo /data/startDateTime pelo valor do campo /data/creationDateTime.
-          type: string
-          format: date-time
-          example: '2021-05-21T08:30:00Z'
-          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
-          maxLength: 20
         expirationDateTime:
           description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
           type: string
@@ -3621,7 +3648,32 @@ components:
                 example: 'CNPJ'
                 description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
           lastRetryRecurringPaymentIds:
-            $ref: '#/components/schemas/LastRetryRecurringPaymentIds'  
+            $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+          paymentReference:
+            type: string
+            maxLength: 10
+            description: |
+              Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+              
+              - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+              - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+              - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+              - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+                - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+                - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+                - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+                - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+              - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+                - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+                - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+              - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+                - Exemplo de Formatos:
+                  - Primeiro pagamento: "zero"
+                  - Semanal: "W50-2024"
+                  - Mensal: "M09-2024"
+                  - Trimestral: "Q3-2024"
+                  - Semestral: "S2-2024"
+                  - Anual: "Y2024"
     ResponseRecurringPaymentsPostData:
       type: object
       required:
@@ -3791,6 +3843,31 @@ components:
               description: Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     ResponseRecurringPaymentsDataRead:
       type: object
       required:
@@ -3960,6 +4037,31 @@ components:
           example: DICT
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     ResponseRecurringPaymentsDataPatch:
       type: object
       required:
@@ -4129,6 +4231,31 @@ components:
           example: DICT
         lastRetryRecurringPaymentIds:
           $ref: '#/components/schemas/LastRetryRecurringPaymentIds'
+        paymentReference:
+          type: string
+          maxLength: 10
+          description: |
+            Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+            
+            - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+            - Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: "W50-2024".
+            - Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: "M09-2024".
+            - Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+              - Janeiro a Março: Q1-$ano (ex.: "Q1-2024").
+              - Abril a Junho: Q2-$ano (ex.: "Q2-2024").
+              - Julho a Setembro: Q3-$ano (ex.: "Q3-2024").
+              - Outubro a Dezembro: Q4-$ano (ex.: "Q4-2024")
+            - Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+              - Janeiro a Junho: S1-$ano (ex.: "S1-2024").
+              - Julho a Dezembro: S2-$ano (ex.: "S2-2024").
+            - Anual: Use “Y$ano”, apenas com o ano. Exemplo: "Y2024".
+              - Exemplo de Formatos:
+                - Primeiro pagamento: "zero"
+                - Semanal: "W50-2024"
+                - Mensal: "M09-2024"
+                - Trimestral: "Q3-2024"
+                - Semestral: "S2-2024"
+                - Anual: "Y2024"
     XFapiInteractionId:
       type: string
       format: uuid
