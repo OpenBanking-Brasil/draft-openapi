@@ -34,9 +34,12 @@ info:
     
     ## Validações da edição do consentimento recorrente para o produto Pix Automático
 
-    Para permitir a edição dos campos de um consentimento na iniciadora sem que se faça necessário o redirecionamento para o 
-    ambiente da detentora de conta, é necessário o envio de indicadores de risco. 
-    Esta medida visa proporcionar à detentora de conta as informações necessárias para decidir sobre os ajustes no consentimento de forma segura
+    - Para permitir a edição dos campos de um consentimento na iniciadora sem que se faça necessário o redirecionamento para o ambiente da detentora de conta, é necessário o envio de indicadores de risco. 
+    Esta medida visa proporcionar à detentora de conta as informações necessárias para decidir sobre os ajustes no consentimento de forma segura.
+    - Além disso, para permitir o correto entendimento da transação pela detentora, o endpoint dedicado a isso (PATCH /recurring-consents/{recurringConsentId}) possui características de obrigatoriedade de campos, na sua requisição, diferentes do endpoint de criação de consentimentos. Durante a edição do consentimento, a instituição iniciadora deverá informar todos os campos que foram marcados como obrigatórios e também os campos que não deseja alterar(enviando o valor atual do campo), também podendo altera-los, se assim desejar.
+    - Caso a requisição seja para tornar o prazo de expiração do consentimento e/ou o valor máximo do pagamento variável indeterminados, estes devem ser omitidos da requisição, e todos os outros campos devem ser informados.
+    - Caso o prazo de expiração e/ou o valor máximo do pagamento variável já sejam indeterminados, estes não devem ser informados, mantendo seu valor atual.
+    - Detalhes dos cenários e campos que podem ser editados podem ser encontrados na página de [Edição do consentimento - [SV] Pagamentos Automáticos](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/628195665)
 
     ## Validações para pagamentos recorrentes
 
@@ -2069,6 +2072,9 @@ components:
             - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
     ConsentEdition:
       type: object
+      required:
+        - riskSignals
+        - creditors
       properties:
         riskSignals:
           $ref: '#/components/schemas/RiskSignalsConsents'
@@ -2091,7 +2097,13 @@ components:
                   Em caso de pessoa natural deve ser informado o nome completo do titular da conta do recebedor.  
                   Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
         expirationDateTime:
-          description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+          description: |
+            Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+
+            [Restrição] 
+            Caso esse campo não seja enviado, a instituição detentora deve considerar a extensão do prazo para um período indeterminado; 
+            
+            Caso enviado, esse campo deve ser, no mínimo, D+1, sendo D o dia da requisição.
           type: string
           format: date-time
           example: '2021-05-21T08:30:00Z'
@@ -2113,6 +2125,11 @@ components:
                   example: '1000000.12'
                   description: |
                     Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis.
+
+                    [Restrição] 
+                    Caso esse campo não seja enviado, a instituição detentora deve considerar o valor máximo do pagamento variável como indefinido;
+                    
+                    Caso informado, o valor desse campo não deve ser inferior ao valor definido no campo "/data/recurringConfiguration/automatic/minimumVariableAmount".
     ConsentRevocation:
       type: object
       properties:
