@@ -157,20 +157,21 @@ Este é o identificador que deverá ser utilizado na consulta ao status da inici
 [Restrição] Este campo é de envio obrigatório pela Iniciadora quando for uma nova tentativa de liquidação de pagamento que falhou anteriormente.
 ";Texto;100;Condicional;^[a-zA-Z0-9][a-zA-Z0-9\-]{0,99}$;;0;1;" Este campo é de envio obrigatório pela Iniciadora quando for uma nova tentativa de liquidação de pagamento que falhou anteriormente.
 ";Não permitido;string;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;1
-/data/paymentReference;paymentReference;"Representa o período ao qual a tentativa de pagamento pertence. Este dado é de caráter informativo. O preenchimento deve seguir as regras abaixo:
+/data/paymentReference;paymentReference;"[Restrição]
+Campo de preenchimento obrigatório caso seja um pagamento de Pix automático, caso não respeitado, a instituição detentora deve retornar erro HTTP 422 com o código DETALHE_PAGAMENTO_INVALIDO.
 
 - Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
-- Semanal: Preencha com “W$numSemana-$ano”, onde “$numSemana” representa o número da semana no ano. Exemplo: ""W50-2024"".
-- Mensal: Use “M$mês-$ano”, onde “$mês” representa o mês com dois dígitos. Exemplo: ""M09-2024"".
-- Trimestral: Utilize “Q$trimestre-$ano”, onde “$trimestre” indica o trimestre do ano (1 a 4).
+- Semanal: Preencha com W$numSemana-$ano, onde $numSemana representa o número da semana no ano. Exemplo: ""W50-2024"".
+- Mensal: Use M$mês-$ano, onde $mês representa o mês com dois dígitos. Exemplo: ""M09-2024"".
+- Trimestral: Utilize Q$trimestre-$ano, onde $trimestre indica o trimestre do ano (1 a 4).
   - Janeiro a Março: Q1-$ano (ex.: ""Q1-2024"").
   - Abril a Junho: Q2-$ano (ex.: ""Q2-2024"").
   - Julho a Setembro: Q3-$ano (ex.: ""Q3-2024"").
-  - Outubro a Dezembro: Q4-$ano (ex.: ""Q4-2024"")
-- Semestral: Utilize “$semestre-$ano”, onde “$semestre” indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+  - Outubro a Dezembro: Q4-$ano (ex.: ""Q4-2024"").
+- Semestral: Utilize $semestre-$ano, onde $semestre indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
   - Janeiro a Junho: S1-$ano (ex.: ""S1-2024"").
   - Julho a Dezembro: S2-$ano (ex.: ""S2-2024"").
-- Anual: Use “Y$ano”, apenas com o ano. Exemplo: ""Y2024"".
+- Anual: Use Y$ano, apenas com o ano. Exemplo: ""Y2024"".
   - Exemplo de Formatos:
     - Primeiro pagamento: ""zero""
     - Semanal: ""W50-2024""
@@ -178,4 +179,26 @@ Este é o identificador que deverá ser utilizado na consulta ao status da inici
     - Trimestral: ""Q3-2024""
     - Semestral: ""S2-2024""
     - Anual: ""Y2024""
-";Texto;10;Opcional;;;0;1;"";Não permitido;string;;
+";Texto;10;Condicional;;;0;1;"
+Campo de preenchimento obrigatório caso seja um pagamento de Pix automático, caso não respeitado, a instituição detentora deve retornar erro HTTP 422 com o código DETALHE_PAGAMENTO_INVALIDO.
+
+- Primeiro pagamento: Se for o pagamento inicial especificado em “/data/firstPayment”, preencha o campo com a string fixa “zero”.
+- Semanal: Preencha com W$numSemana-$ano, onde $numSemana representa o número da semana no ano. Exemplo: ""W50-2024"".
+- Mensal: Use M$mês-$ano, onde $mês representa o mês com dois dígitos. Exemplo: ""M09-2024"".
+- Trimestral: Utilize Q$trimestre-$ano, onde $trimestre indica o trimestre do ano (1 a 4).
+  - Janeiro a Março: Q1-$ano (ex.: ""Q1-2024"").
+  - Abril a Junho: Q2-$ano (ex.: ""Q2-2024"").
+  - Julho a Setembro: Q3-$ano (ex.: ""Q3-2024"").
+  - Outubro a Dezembro: Q4-$ano (ex.: ""Q4-2024"").
+- Semestral: Utilize $semestre-$ano, onde $semestre indica o semestre do ano (1 para janeiro a junho e 2 para julho a dezembro).
+  - Janeiro a Junho: S1-$ano (ex.: ""S1-2024"").
+  - Julho a Dezembro: S2-$ano (ex.: ""S2-2024"").
+- Anual: Use Y$ano, apenas com o ano. Exemplo: ""Y2024"".
+  - Exemplo de Formatos:
+    - Primeiro pagamento: ""zero""
+    - Semanal: ""W50-2024""
+    - Mensal: ""M09-2024""
+    - Trimestral: ""Q3-2024""
+    - Semestral: ""S2-2024""
+    - Anual: ""Y2024""
+";Não permitido;string;;
