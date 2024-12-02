@@ -3146,6 +3146,18 @@ components:
                 Data e hora em que o consentimento foi autorizado.
 
                 [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
+            updatedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi atualizado pelo usuário pagador. 
+                O campo deve ser atualizado pelo detentor sempre que o consentimento for editado. 
+                Caso a edição seja realizada a partir do iniciador, o detentor deve preencher com a data e hora (UTC) em que recebeu a solicitação de edição. 
+                A edição só é permitida para o produto Pix automático.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3301,6 +3313,18 @@ components:
                 Data e hora em que o consentimento foi autorizado.
 
                 [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
+            updatedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi atualizado pelo usuário pagador. 
+                O campo deve ser atualizado pelo detentor sempre que o consentimento for editado. 
+                Caso a edição seja realizada a partir do iniciador, o detentor deve preencher com a data e hora (UTC) em que recebeu a solicitação de edição. 
+                A edição só é permitida para o produto Pix automático.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3496,6 +3520,18 @@ components:
                 Data e hora em que o consentimento foi autorizado.
 
                 [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
+            updatedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi atualizado pelo usuário pagador. 
+                O campo deve ser atualizado pelo detentor sempre que o consentimento for editado. 
+                Caso a edição seja realizada a partir do iniciador, o detentor deve preencher com a data e hora (UTC) em que recebeu a solicitação de edição. 
+                A edição só é permitida para o produto Pix automático.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
