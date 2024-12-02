@@ -1048,7 +1048,7 @@ components:
             
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         riskSignals:
-          $ref: '#/components/schemas/RiskSignalsPayments'
+          $ref: '#/components/schemas/RiskSignalsPayments' 
         localInstrument:
           type: string
           description: |
@@ -1294,7 +1294,9 @@ components:
             lastLoginDateTime:
               type: string
               format: date-time
-              description: Data e hora da última interação do cliente com o aplicativo/sistema da instituição iniciadora.
+              description: |
+                Caso o usuário pagador tenha acesso ao ambiente da iniciadora de pagamentos, utilizar data e hora da última interação do cliente com seu aplicativo/sistema. 
+                Para casos onde a iniciadora de pagamentos presta serviços a um terceiro, deve-se enviar o horário que o pagador logou na aplicação do terceiro.
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
             pixKeyRegistrationDateTime:
               type: string
