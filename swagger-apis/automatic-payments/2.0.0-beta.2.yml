@@ -40,6 +40,7 @@ info:
     - Caso a requisição seja para tornar o prazo de expiração do consentimento e/ou o valor máximo do pagamento variável indeterminados, estes devem ser omitidos da requisição, e todos os outros campos devem ser informados.
     - Caso o prazo de expiração e/ou o valor máximo do pagamento variável já sejam indeterminados, estes não devem ser informados, mantendo seu valor atual.
     - Detalhes dos cenários e campos que podem ser editados podem ser encontrados na página de [Edição do consentimento - [SV] Pagamentos Automáticos](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/718405977)
+    - Se a edição do consentimento for realizada via iniciador (chamando o endpoint PATCH /recurring-consents/{recurringConsentId}) o detentor deverá validar se o usuário solicitante possui poderes plenos sobre o consentimento, isso significa que a alteração realizada por ele não precisará passar por outros aprovadores.
 
     ## Validações para pagamentos recorrentes
 
@@ -676,6 +677,7 @@ components:
                 enum:
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO
                   - CAMPO_NAO_PERMITIDO
+                  - PERMISSAO_INSUFICIENTE
                 example: CAMPO_NAO_PERMITIDO
               title:
                 type: string
@@ -686,6 +688,7 @@ components:
                   Título específico do erro reportado, de acordo com o código enviado:  
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
+                  - Permissão insuficiente para edição.
               detail:
                 type: string
                 maxLength: 2048
@@ -695,6 +698,7 @@ components:
                   Descrição específica do erro de acordo com o código reportado:  
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
+                  - PERMISSAO_INSUFICIENTE: Consentimento possui múltiplas alçadas aprovadoras e não permite a edição pelo usuário atual.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
@@ -2262,7 +2266,7 @@ components:
                 Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
                 
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
-            period:
+            interval:
               type: string
               enum:
                 - SEMANAL
@@ -2278,38 +2282,6 @@ components:
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
-            month:
-              type: string
-              enum:
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-              example: 'JANEIRO'
-              description: |
-                Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
             firstPayment:
@@ -2379,7 +2351,7 @@ components:
                 Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
                 
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
-            period:
+            interval:
               type: string
               enum:
                 - SEMANAL
@@ -2395,38 +2367,6 @@ components:
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
-            month:
-              type: string
-              enum:
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-              example: 'JANEIRO'
-              description: |
-                Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
             firstPayment:
@@ -2482,13 +2422,13 @@ components:
                 maxLength: 14
                 description: Número do documento de identificação oficial do cliente devedor do contrato.
                 example: '11111111111111'
-                pattern: '^\d{14}$'
+                pattern: '^(?:\d{11}|\d{14})$'
               rel:
                 type: string
-                maxLength: 4
                 description: Tipo do documento de identificação oficial do cliente devedor do contrato.
-                example: CNPJ
-                pattern: '^[A-Z]{4}$'
+                enum:
+                  - CPF
+                  - CNPJ
     FirstPayment:
       type: object
       description: |
@@ -3342,7 +3282,6 @@ components:
           required:
             - recurringConsentId
             - statusUpdateDateTime
-            - loggedUser
             - status
             - creditors
             - creationDateTime
