@@ -40,6 +40,7 @@ info:
     - Caso a requisição seja para tornar o prazo de expiração do consentimento e/ou o valor máximo do pagamento variável indeterminados, estes devem ser omitidos da requisição, e todos os outros campos devem ser informados.
     - Caso o prazo de expiração e/ou o valor máximo do pagamento variável já sejam indeterminados, estes não devem ser informados, mantendo seu valor atual.
     - Detalhes dos cenários e campos que podem ser editados podem ser encontrados na página de [Edição do consentimento - [SV] Pagamentos Automáticos](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/718405977)
+    - Se a edição do consentimento for realizada via iniciador (chamando o endpoint PATCH /recurring-consents/{recurringConsentId}) o detentor deverá validar se o usuário solicitante possui poderes plenos sobre o consentimento, isso significa que a alteração realizada por ele não precisará passar por outros aprovadores.
 
     ## Validações para pagamentos recorrentes
 
@@ -676,6 +677,7 @@ components:
                 enum:
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO
                   - CAMPO_NAO_PERMITIDO
+                  - PERMISSAO_INSUFICIENTE
                 example: CAMPO_NAO_PERMITIDO
               title:
                 type: string
@@ -686,6 +688,7 @@ components:
                   Título específico do erro reportado, de acordo com o código enviado:  
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
+                  - Permissão insuficiente para edição.
               detail:
                 type: string
                 maxLength: 2048
@@ -695,6 +698,7 @@ components:
                   Descrição específica do erro de acordo com o código reportado:  
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
+                  - PERMISSAO_INSUFICIENTE: Consentimento possui múltiplas alçadas aprovadoras e não permite a edição pelo usuário atual.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
@@ -3342,7 +3346,6 @@ components:
           required:
             - recurringConsentId
             - statusUpdateDateTime
-            - loggedUser
             - status
             - creditors
             - creationDateTime

@@ -8,7 +8,7 @@ Considerando a string urn:bancoex:C1DD33123 como exemplo para `recurringConsentI
 ";Texto;256;Obrigatório;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;1;1;"";Não permitido;string;;
 /data/statusUpdateDateTime;statusUpdateDateTime;"Data e hora em que o consentimento teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
 ";Date Hora;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
-/data/loggedUser;loggedUser;Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/loggedUser;loggedUser;Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/loggedUser/document;document;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/loggedUser/document/identification;identification;Número do documento de identificação oficial do usuário.;Texto;11;Obrigatório;^\d{11}$;;1;1;"";Não permitido;string;11111111111;
 /data/loggedUser/document/rel;rel;Tipo do documento de identificação oficial do usuário.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;CPF;
