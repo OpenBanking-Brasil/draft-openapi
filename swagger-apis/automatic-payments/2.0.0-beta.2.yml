@@ -2422,13 +2422,13 @@ components:
                 maxLength: 14
                 description: Número do documento de identificação oficial do cliente devedor do contrato.
                 example: '11111111111111'
-                pattern: '^\d{14}$'
+                pattern: '^(?:\d{11}|\d{14})$'
               rel:
                 type: string
-                maxLength: 4
                 description: Tipo do documento de identificação oficial do cliente devedor do contrato.
-                example: CNPJ
-                pattern: '^[A-Z]{4}$'
+                enum:
+                  - CPF
+                  - CNPJ
     FirstPayment:
       type: object
       description: |
