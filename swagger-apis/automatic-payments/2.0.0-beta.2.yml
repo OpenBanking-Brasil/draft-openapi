@@ -2144,7 +2144,7 @@ components:
                     Caso esse campo não seja enviado, a instituição detentora deve considerar o valor máximo do pagamento variável como indefinido;
                     
                     Caso informado, o valor desse campo não deve ser inferior ao valor definido no campo "/data/recurringConfiguration/automatic/minimumVariableAmount".
-        LoggedUser:
+        loggedUser:
           type: object
           description: |
             Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
@@ -2171,7 +2171,7 @@ components:
                   description: Tipo do documento de identificação oficial do usuário.
                   example: CPF
                   pattern: '^[A-Z]{3}$'
-        BusinessEntity:
+        businessEntity:
           type: object
           description: |
             "Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. 
