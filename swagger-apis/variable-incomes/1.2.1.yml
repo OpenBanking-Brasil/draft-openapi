@@ -12,6 +12,8 @@ info:
     Em relação ao aluguel de ações: neste momento não faz parte do escopo de compartilhamento a carteira/posição de aluguel do cliente (ativos alugados e movimentações relacionadas a esses ativos). 
     Apenas deve ser compartilhado as transações de pagamento ou recebimento de juros oriundos dos contratos de ações alugadas (ou doadas) pelos clientes.
 
+    Em relação aos produtos FIAGRO e FII: quando negociados em balcão, estão fora do escopo do Open Finance.
+
     Para o identificador do investimento (investmentId) deve ser adotado o seguinte comportamento:
 
     - Após 12 meses sem movimentações e com quantidade de ativos zerada, o resourceId correspondente ao investmentId em questão deve passar ao status UNAVAILABLE (considerando consentimento válido);
@@ -23,11 +25,11 @@ info:
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        | CLASSE DE ATIVOS     | PRODUTO                       | SUBPRODUTO           | DENOMINAÇÃO                       |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
-       | Renda Variável       | Fundos de Investimentos       |     -                | FIAGRO                            |
+       | Renda Variável       | Fundos de Investimentos       |     -                | FIAGRO Listado                    |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        | Renda Variável       | Ações                         | Subscrição           | Bonus / Direito / Recibo          |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
-       | Renda Variável       | Fundos de Investimentos       | Fundo imobiliario    | FII                               |
+       | Renda Variável       | Fundos de Investimentos       | Fundo imobiliario    | FII Listado                       |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
        | Renda Variável       | Ações                         | À vista              | ON / PN / UNIT                    |
        |----------------------|-------------------------------|----------------------|-----------------------------------|
