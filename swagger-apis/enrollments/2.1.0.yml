@@ -1905,7 +1905,7 @@ components:
           description: Identificador único da Relying Party. Esse campo deve ser preenchido com o valor que é enviado na requisição no campo /data/rp.
         name:
           type: string
-          description: Nome amigável da Relying Party para exibição aos usuários. Pode ser obtido através do Software Statement Assertion, atributo software_client_name.
+          description: Nome amigável da Relying Party para exibição aos usuários. Deve ser obtido através do Software Statement Assertion, atributo software_client_name.
     FidoUser:
       type: object
       required:
@@ -1923,7 +1923,7 @@ components:
           description: Identificador do usuário human-readable.
         displayName:
           type: string
-          description: Identificador do usuário para fins de apresentação.
+          description: Identificador do usuário para fins de apresentação. Deve ser formado pelo nome social, se existente, ou nome e sobrenome do cadastro do cliente no detentor de contas.
     FidoPublicKeyCredentialCreationOptions:
       type: object
       required:
