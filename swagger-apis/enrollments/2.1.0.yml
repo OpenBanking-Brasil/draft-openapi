@@ -1528,7 +1528,9 @@ components:
                     userHandle:
                       type: string
                       format: bytes
-                      description: Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de conta.
+                      description: |
+                        Nome de usuário que foi enviado durante a criação da credencial. Deve ser enviado no formato base64url para a detentora de conta. 
+                        Caso o autenticador FIDO2 não retorne este campo, a iniciadora deve enviar uma string vazia à detentora de conta.
                 clientExtensionResults:
                   type: object
                   description: Estrutura para extensão de resultados
