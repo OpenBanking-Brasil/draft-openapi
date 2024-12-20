@@ -2261,8 +2261,7 @@ components:
               description: |
                 Limite diário cumulativo para este vínculo de conta. Este limite não garante a autorização de iniciações de pagamento;
                 servindo como referência para a iniciadora evitar a criação de consentimentos para valores tais que, garantidamente, não serão autorizados.
-
-                [Restrição] Campo de preenchimento obrigatório pelos participantes quando o campo `status` for preenchido com os valores `AUTHORISED` ou `AWAITING_ENROLLMENT`.
+                Este campo só estará presente quando o usuário, durante a autorização do vínculo, definir um valor máximo diário diferente do seu limite Pix disponível para o dia.
             enrollmentName:
               description: |
                 [Restrição] Deve ser preenchido sempre que o usuário pagador inserir alguma informação no nome do vínculo/dispositivo tanto no iniciador como no detentor de conta
