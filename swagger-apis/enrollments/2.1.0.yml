@@ -5,6 +5,12 @@ info:
     Família de API para permitir o pagamento sem redirecionamento via Open Finance Brasil.  
     Permite tanto o gerenciamento dos dispositivos vinculados as contas quanto a autorização de consentimentos criados via fluxo sem redirecionamento.
     
+    ## Validação de origin nos endpoints FIDO
+
+    Durante o cadastro do cliente (DCR/DCM), o software statement assertion possui um atributo nomeado software_origin_uris. 
+    Esse atributo armazena as origens permitidas para utilização do protocolo FIDO. 
+    Nas chamadas que possuem o argumento clientDataJSON (fido-registration e authorise), o atributo origin deve ser extraído do clientDataJSON e deve ser realizada a verificação se a origin do mesmo está contida no software_origin_uris informado no momento do DCR/DCM. 
+    Caso a instituição iniciadora altere ou inclua o valor do atributo software_origin_uris, será necessária realização de um novo processo de DCM com as detentoras
   version: 2.1.0
   license:
     name: Apache 2.0
