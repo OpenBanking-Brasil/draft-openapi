@@ -114,6 +114,7 @@ DETENTORA";1;1;"";Não permitido;string;DETENTORA;
 - CONTA_NAO_PERMITE_PAGAMENTO
 - SALDO_INSUFICIENTE
 - VALOR_ACIMA_LIMITE
+- AUTENTICACAO_DIVERGENTE
 ";Texto;;Obrigatório;;"NAO_INFORMADO 
 FALHA_INFRAESTRUTURA 
 TEMPO_EXPIRADO_AUTORIZACAO 
@@ -121,7 +122,8 @@ REJEITADO_USUARIO
 CONTAS_ORIGEM_DESTINO_IGUAIS 
 CONTA_NAO_PERMITE_PAGAMENTO 
 SALDO_INSUFICIENTE 
-VALOR_ACIMA_LIMITE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
+VALOR_ACIMA_LIMITE 
+AUTENTICACAO_DIVERGENTE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
 /data/rejection/reason/detail;detail;"Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
 - NAO_INFORMADO: Não informada pela detentora de conta;
 - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
@@ -131,6 +133,7 @@ VALOR_ACIMA_LIMITE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
 - CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
 - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
 - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido para permitir a realização de transações pelo cliente;
+- AUTENTICACAO_DIVERGENTE : Usuário autenticado no detentor diverge do usuário autenticado no iniciador;
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;O usuário rejeitou a autorização do consentimento;
 /data/revocation;revocation;"Objeto contendo as informações de revogação dos consentimentos.
 
@@ -180,22 +183,18 @@ REVOGADO_RECEBEDOR";1;1;"";Não permitido;string;REVOGADO_RECEBEDOR;
 - ANUAL
 - SEMESTRAL
 - TRIMESTRAL
-";Texto;;Opcional;;"SEMANAL 
+";Texto;;Obrigatório;;"SEMANAL 
 MENSAL 
 ANUAL 
 SEMESTRAL 
-TRIMESTRAL";0;1;"";Não permitido;string;SEMANAL;
+TRIMESTRAL";1;1;"";Não permitido;string;SEMANAL;
 /data/recurringConfiguration/automatic/contractDebtor;contractDebtor;Informações sobre o cliente devedor do contrato.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/contractDebtor/name;name;Em caso de pessoa natural deve ser informado o nome completo do titular devedor do contrato.;Texto;120;Obrigatório;^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$;;1;1;"";Não permitido;string;Policarpo Quaresma;
 /data/recurringConfiguration/automatic/contractDebtor/document;document;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/contractDebtor/document/identification;identification;Número do documento de identificação oficial do cliente devedor do contrato.;Texto;14;Obrigatório;^(?:\d{11}|\d{14})$;;1;1;"";Não permitido;string;11111111111111;
 /data/recurringConfiguration/automatic/contractDebtor/document/rel;rel;Tipo do documento de identificação oficial do cliente devedor do contrato.;Texto;;Obrigatório;;"CPF 
 CNPJ";1;1;"";Não permitido;string;;
-/data/recurringConfiguration/automatic/firstPayment;firstPayment;"Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador.
-
-- A conta de crédito informada deve pertencer ao mesmo CNPJ informado no campo “/data/creditors/cpfCnpj”
-- A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. 
-Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200)
+/data/recurringConfiguration/automatic/firstPayment;firstPayment;"Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador. Para casos em que conta recebedora e conta pagadora pertencem ao mesmo detentor, este deve garantir que a conta de crédito informada pertence ao titular do CNPJ enviado no campo “/data/creditors/cpfCnpj”. A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200). 
 ";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/firstPayment/type;type;"Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
 ";Texto;;Obrigatório;;PIX;1;1;"";Não permitido;string;PIX;
