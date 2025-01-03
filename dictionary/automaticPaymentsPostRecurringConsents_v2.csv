@@ -117,6 +117,7 @@ DETENTORA";1;1;"";Não permitido;string;DETENTORA;
 - CONTA_NAO_PERMITE_PAGAMENTO
 - SALDO_INSUFICIENTE
 - VALOR_ACIMA_LIMITE
+- AUTENTICACAO_DIVERGENTE
 ";Texto;;Obrigatório;;"NAO_INFORMADO 
 FALHA_INFRAESTRUTURA 
 TEMPO_EXPIRADO_AUTORIZACAO 
@@ -124,7 +125,8 @@ REJEITADO_USUARIO
 CONTAS_ORIGEM_DESTINO_IGUAIS 
 CONTA_NAO_PERMITE_PAGAMENTO 
 SALDO_INSUFICIENTE 
-VALOR_ACIMA_LIMITE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
+VALOR_ACIMA_LIMITE 
+AUTENTICACAO_DIVERGENTE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
 /data/rejection/reason/detail;detail;"Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
 - NAO_INFORMADO: Não informada pela detentora de conta;
 - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
@@ -134,6 +136,7 @@ VALOR_ACIMA_LIMITE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
 - CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
 - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
 - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido para permitir a realização de transações pelo cliente;
+- AUTENTICACAO_DIVERGENTE : Usuário autenticado no detentor diverge do usuário autenticado no iniciador;
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;O usuário rejeitou a autorização do consentimento;
 /data/revocation;revocation;"Objeto contendo as informações de revogação dos consentimentos.
 
