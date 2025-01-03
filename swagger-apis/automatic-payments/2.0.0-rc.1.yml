@@ -2292,7 +2292,7 @@ components:
           description: Definição da configuração de recorrência para pagamentos automáticos
           required:
             - contractId
-            - period
+            - interval
             - contractDebtor
             - isRetryAccepted
             - referenceStartDateTime
@@ -2376,7 +2376,7 @@ components:
           description: Definição da configuração de recorrência para pagamentos automáticos
           required:
             - contractId
-            - period
+            - interval
             - contractDebtor
             - isRetryAccepted
             - useOverdraftLimit
@@ -2541,8 +2541,6 @@ components:
       properties:
         sweeping:
           type: object
-          required:
-            - startDateTime
           description: Definição da configuração de recorrência para transferências automáticas de fundos.
           properties:
             totalAllowedAmount:
