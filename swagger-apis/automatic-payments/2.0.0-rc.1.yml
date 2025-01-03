@@ -39,7 +39,8 @@ info:
     - Além disso, para permitir o correto entendimento da transação pela detentora, o endpoint dedicado a isso (PATCH /recurring-consents/{recurringConsentId}) possui características de obrigatoriedade de campos, na sua requisição, diferentes do endpoint de criação de consentimentos. Durante a edição do consentimento, a instituição iniciadora deverá informar todos os campos que foram marcados como obrigatórios e também os campos que não deseja alterar(enviando o valor atual do campo), também podendo altera-los, se assim desejar.
     - Caso a requisição seja para tornar o prazo de expiração do consentimento e/ou o valor máximo do pagamento variável indeterminados, estes devem ser omitidos da requisição, e todos os outros campos devem ser informados.
     - Caso o prazo de expiração e/ou o valor máximo do pagamento variável já sejam indeterminados, estes não devem ser informados, mantendo seu valor atual.
-    - Detalhes dos cenários e campos que podem ser editados podem ser encontrados na página de [Edição do consentimento - [SV] Pagamentos Automáticos](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/628195665)
+    - Detalhes dos cenários e campos que podem ser editados podem ser encontrados na página de [Edição do consentimento - [SV] Pagamentos Automáticos](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/718405977)
+    - Se a edição do consentimento for realizada via iniciador (chamando o endpoint PATCH /recurring-consents/{recurringConsentId}) o detentor deverá validar se o usuário solicitante possui poderes plenos sobre o consentimento, isso significa que a alteração realizada por ele não precisará passar por outros aprovadores.
 
     ## Validações para pagamentos recorrentes
 
@@ -96,7 +97,7 @@ info:
         &ensp;4.1.3 Validação de assinatura da mensagem: Valida se assinatura das mensagens enviadas está correta – HTTP Code 400 (BAD_SIGNATURE);  
         &ensp;4.1.4 Validação de Claims (exceto data);  
           &emsp;4.1.4.1 Valida se dados (aud, iss, iat e jti) são válidos - HTTP status code 403 – (INVALID_CLIENT);  
-          &emsp;4.1.4.2 Valida reuso de jti - HTTP Code 403 (INVALID_CLIENT). 
+          &emsp;4.1.4.2 Valida reuso de jti - HTTP Code 403 (INVALID_CLIENT).  
         &ensp;4.1.5 Detalhe tentativa inválida: Valida se os parâmetros informados condizem com a tentativa original de pagamento (DETALHE_TENTATIVA_INVALIDO).  
       4.2 **Casos de erro sintáticos e semânticos, previstos com retorno HTTP Code 422 - Unprocessable Entity (detalhamento adicional na documentação técnica da API):**  
         &ensp;4.2.1 Sintáticos  
@@ -677,6 +678,7 @@ components:
                 enum:
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO
                   - CAMPO_NAO_PERMITIDO
+                  - PERMISSAO_INSUFICIENTE
                 example: CAMPO_NAO_PERMITIDO
               title:
                 type: string
@@ -687,6 +689,7 @@ components:
                   Título específico do erro reportado, de acordo com o código enviado:  
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
+                  - Permissão insuficiente para edição.
               detail:
                 type: string
                 maxLength: 2048
@@ -696,6 +699,7 @@ components:
                   Descrição específica do erro de acordo com o código reportado:  
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
+                  - PERMISSAO_INSUFICIENTE: Consentimento possui múltiplas alçadas aprovadoras e não permite a edição pelo usuário atual.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
@@ -1049,7 +1053,7 @@ components:
             
             [Restrição] Se CIBA ou FIDO, preenchimento obrigatório. Caso o campo não esteja presente no payload, subentende-se que o fluxo de autorização utilizado é o HYBRID_FLOW.
         riskSignals:
-          $ref: '#/components/schemas/RiskSignalsPayments'
+          $ref: '#/components/schemas/RiskSignalsPayments' 
         localInstrument:
           type: string
           description: |
@@ -1295,7 +1299,9 @@ components:
             lastLoginDateTime:
               type: string
               format: date-time
-              description: Data e hora da última interação do cliente com o aplicativo/sistema da instituição iniciadora.
+              description: |
+                Caso o usuário pagador tenha acesso ao ambiente da iniciadora de pagamentos, utilizar data e hora da última interação do cliente com seu aplicativo/sistema. 
+                Para casos onde a iniciadora de pagamentos presta serviços a um terceiro, deve-se enviar o horário que o pagador logou na aplicação do terceiro.
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
             pixKeyRegistrationDateTime:
               type: string
@@ -2142,6 +2148,60 @@ components:
                     Caso esse campo não seja enviado, a instituição detentora deve considerar o valor máximo do pagamento variável como indefinido;
                     
                     Caso informado, o valor desse campo não deve ser inferior ao valor definido no campo "/data/recurringConfiguration/automatic/minimumVariableAmount".
+        loggedUser:
+          type: object
+          description: |
+            Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.
+
+            [Restrição] Objeto de envio obrigatório para a edição dos parâmetros do consentimento, exceto para o caso de edição exclusiva do campo “/data/creditors/name”.
+          required:
+            - document
+          properties:
+            document:
+              type: object
+              required:
+                - identification
+                - rel
+              properties:
+                identification:
+                  type: string
+                  maxLength: 11
+                  description: Número do documento de identificação oficial do usuário.
+                  example: '11111111111'
+                  pattern: '^\d{11}$'
+                rel:
+                  type: string
+                  maxLength: 3
+                  description: Tipo do documento de identificação oficial do usuário.
+                  example: CPF
+                  pattern: '^[A-Z]{3}$'
+        businessEntity:
+          type: object
+          description: |
+            Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento. 
+
+            [Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
+          required:
+            - document
+          properties:
+            document:
+              type: object
+              required:
+                - identification
+                - rel
+              properties:
+                identification:
+                  type: string
+                  maxLength: 14
+                  description: Número do documento de identificação oficial do titular pessoa jurídica.
+                  example: '11111111111111'
+                  pattern: '^\d{14}$'
+                rel:
+                  type: string
+                  maxLength: 4
+                  description: Tipo do documento de identificação oficial do titular pessoa jurídica.
+                  example: CNPJ
+                  pattern: '^[A-Z]{4}$'
     ConsentRevocation:
       type: object
       properties:
@@ -2232,7 +2292,7 @@ components:
           description: Definição da configuração de recorrência para pagamentos automáticos
           required:
             - contractId
-            - period
+            - interval
             - contractDebtor
             - isRetryAccepted
             - referenceStartDateTime
@@ -2264,7 +2324,7 @@ components:
                 Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
                 
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
-            period:
+            interval:
               type: string
               enum:
                 - SEMANAL
@@ -2280,38 +2340,6 @@ components:
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
-            month:
-              type: string
-              enum:
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-              example: 'JANEIRO'
-              description: |
-                Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
             firstPayment:
@@ -2348,7 +2376,7 @@ components:
           description: Definição da configuração de recorrência para pagamentos automáticos
           required:
             - contractId
-            - period
+            - interval
             - contractDebtor
             - isRetryAccepted
             - useOverdraftLimit
@@ -2381,7 +2409,7 @@ components:
                 Valor máximo permitido por cobrança, caso preenchido, representa um consentimento para pagamentos de valores variáveis. 
                 
                 [Restrição] Excludente com o campo “/data/recurringConfiguration/automatic/fixedAmount”
-            period:
+            interval:
               type: string
               enum:
                 - SEMANAL
@@ -2397,38 +2425,6 @@ components:
                 - ANUAL
                 - SEMESTRAL
                 - TRIMESTRAL
-            month:
-              type: string
-              enum:
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-              example: 'JANEIRO'
-              description: |
-                Mês previstos para ocorrer transações. Caso consentimento seja para pagamentos trimestrais ou semestrais, o campo representa o mês da primeira cobrança.
-                - JANEIRO
-                - FEVEREIRO
-                - MARCO
-                - ABRIL
-                - MAIO
-                - JUNHO
-                - JULHO
-                - AGOSTO
-                - SETEMBRO
-                - OUTUBRO
-                - NOVEMBRO
-                - DEZEMBRO
-
-                [Restrição] Campo deve ser enviado quando o campo `/data/recurringConfiguration/automatic/period` for igual a TRIMESTRAL, SEMESTRAL ou ANUAL
             contractDebtor:
               $ref: '#/components/schemas/ContractDebtor'
             firstPayment:
@@ -2484,13 +2480,13 @@ components:
                 maxLength: 14
                 description: Número do documento de identificação oficial do cliente devedor do contrato.
                 example: '11111111111111'
-                pattern: '^\d{14}$'
+                pattern: '^(?:\d{11}|\d{14})$'
               rel:
                 type: string
-                maxLength: 4
                 description: Tipo do documento de identificação oficial do cliente devedor do contrato.
-                example: CNPJ
-                pattern: '^[A-Z]{4}$'
+                enum:
+                  - CPF
+                  - CNPJ
     FirstPayment:
       type: object
       description: |
@@ -2545,8 +2541,6 @@ components:
       properties:
         sweeping:
           type: object
-          required:
-            - startDateTime
           description: Definição da configuração de recorrência para transferências automáticas de fundos.
           properties:
             totalAllowedAmount:
@@ -3144,6 +3138,18 @@ components:
                 Data e hora em que o consentimento foi autorizado.
 
                 [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
+            updatedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi atualizado pelo usuário pagador. 
+                O campo deve ser atualizado pelo detentor sempre que o consentimento for editado. 
+                Caso a edição seja realizada a partir do iniciador, o detentor deve preencher com a data e hora (UTC) em que recebeu a solicitação de edição. 
+                A edição só é permitida para o produto Pix automático.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3299,6 +3305,18 @@ components:
                 Data e hora em que o consentimento foi autorizado.
 
                 [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
+            updatedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi atualizado pelo usuário pagador. 
+                O campo deve ser atualizado pelo detentor sempre que o consentimento for editado. 
+                Caso a edição seja realizada a partir do iniciador, o detentor deve preencher com a data e hora (UTC) em que recebeu a solicitação de edição. 
+                A edição só é permitida para o produto Pix automático.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
@@ -3316,7 +3334,6 @@ components:
           required:
             - recurringConsentId
             - statusUpdateDateTime
-            - loggedUser
             - status
             - creditors
             - creationDateTime
@@ -3494,6 +3511,18 @@ components:
                 Data e hora em que o consentimento foi autorizado.
 
                 [Restrição] Campo de envio obrigatório quando consentimento transitar para AUTHORISED.
+            updatedAtDateTime:
+              type: string
+              format: date-time
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              minLength: 20
+              maxLength: 20
+              example: '2021-05-21T08:30:00Z'
+              description: |
+                Data e hora em que o consentimento foi atualizado pelo usuário pagador. 
+                O campo deve ser atualizado pelo detentor sempre que o consentimento for editado. 
+                Caso a edição seja realizada a partir do iniciador, o detentor deve preencher com a data e hora (UTC) em que recebeu a solicitação de edição. 
+                A edição só é permitida para o produto Pix automático.
         links:
           $ref: '#/components/schemas/LinkSingle'
         meta:
