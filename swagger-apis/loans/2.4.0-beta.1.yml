@@ -563,7 +563,19 @@ components:
         - TRIBUTOS_RECEITAS_ORCAMENTARIAS
         - VEICULOS
         - VEICULOS_AUTOMOTORES
-      example: NOTAS_PROMISSORIAS_OUTROS_DIREITOS_CREDITO
+      example: NOTAS_PROMISSORIAS_OUTROS_DIREITOS_CREDITO   
+    EnumContractProductSubTypeCategory:
+      type: string
+      description: |
+        Categoria para classificação específica relacionada com a submodalidade do produto.
+        O preenchimento com o enum `CREDITO_PESSOAL_CLEAN`, quando aplicável, será obrigatório a partir da versão 2.4.0 da API Empréstimos.
+        O enum `CONSIGNADO_SIAPE` será obrigatório em data posterior.
+        Demais submodalidades devem ser classificadas na opção `OUTRO`.
+      enum:
+        - CREDITO_PESSOAL_CLEAN
+        - CONSIGNADO_SIAPE
+        - OUTRO
+      example: CREDITO_PESSOAL_CLEAN
     EnumWarrantyType:
       type: string
       description: 'Denominação/Identificação do tipo da garantia que avaliza a Modalidade da Operação de Crédito contratada  (Doc 3040, Anexo 12)'
@@ -693,6 +705,7 @@ components:
         - interestRates
         - contractedFees
         - contractedFinanceCharges
+        - productSubTypeCategory
       properties:
         contractNumber:
           type: string
@@ -728,6 +741,8 @@ components:
           $ref: '#/components/schemas/EnumContractProductTypeLoans'
         productSubType:
           $ref: '#/components/schemas/EnumContractProductSubTypeLoans'
+        productSubTypeCategory:
+          $ref: '#/components/schemas/EnumContractProductSubTypeCategory'
         contractDate:
           type: string
           format: date
@@ -896,7 +911,7 @@ components:
           example: '100000.0400'
         feeRate:
           type: string
-          pattern: '^[01]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           format: double
           maxLength: 8
           minLength: 8
@@ -1094,6 +1109,7 @@ components:
         - productType
         - productSubType
         - ipocCode
+        - productSubTypeCategory
       properties:
         contractId:
           type: string
@@ -1118,6 +1134,8 @@ components:
           $ref: '#/components/schemas/EnumContractProductTypeLoans'
         productSubType:
           $ref: '#/components/schemas/EnumContractProductSubTypeLoans'
+        productSubTypeCategory:
+            $ref: '#/components/schemas/EnumContractProductSubTypeCategory'
         ipocCode:
           type: string
           maxLength: 67
@@ -1133,7 +1151,7 @@ components:
               1. Para clientes pessoa física com CPF (tipo de cliente = 1), informar as 11 (onze) posições do CPF;
               2. Para clientes pessoa jurídica com CNPJ (tipo de cliente = 2), informar as 8 (oito) posições iniciais do CNPJ;
               3. Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
-            - **Código do contrato:** 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
+            - **Código do contrato:** 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.          
     LoansPayments:
       type: object
       description: Conjunto de informações referentes aos pagamentos realizados de uma operação de crédito de empréstimos.
