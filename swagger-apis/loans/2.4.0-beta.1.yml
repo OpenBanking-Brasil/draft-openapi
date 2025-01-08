@@ -38,7 +38,7 @@ info:
     ### `/contracts/{contractId}/payments`
       - permissions:
         - GET: **LOANS_PAYMENTS_READ**
-  version: 2.4.0
+  version: 2.4.0-beta.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -430,7 +430,9 @@ components:
     EnumContractReferentialRateIndexerSubType:
       type: string
       description: |
-        "Sub tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040"
+        "Sub tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040.
+
+        [Restrição] Caso no campo postFixedRate seja informado um valor aplicável ao contrato, o envio deste campo será obrigatório.”"
       enum:
         - SEM_SUB_TIPO_INDEXADOR
         - PRE_FIXADO
@@ -563,7 +565,19 @@ components:
         - TRIBUTOS_RECEITAS_ORCAMENTARIAS
         - VEICULOS
         - VEICULOS_AUTOMOTORES
-      example: NOTAS_PROMISSORIAS_OUTROS_DIREITOS_CREDITO
+      example: NOTAS_PROMISSORIAS_OUTROS_DIREITOS_CREDITO   
+    EnumContractProductSubTypeCategory:
+      type: string
+      description: |
+        Categoria para classificação específica relacionada com a submodalidade do produto.
+        O preenchimento com o enum `CREDITO_PESSOAL_CLEAN`, quando aplicável, será obrigatório a partir da versão 2.4.0 da API Empréstimos.
+        O enum `CONSIGNADO_SIAPE` será obrigatório em data posterior.
+        Demais submodalidades devem ser classificadas na opção `OUTRO`.
+      enum:
+        - CREDITO_PESSOAL_CLEAN
+        - CONSIGNADO_SIAPE
+        - OUTRO
+      example: CREDITO_PESSOAL_CLEAN
     EnumWarrantyType:
       type: string
       description: 'Denominação/Identificação do tipo da garantia que avaliza a Modalidade da Operação de Crédito contratada  (Doc 3040, Anexo 12)'
@@ -693,6 +707,7 @@ components:
         - interestRates
         - contractedFees
         - contractedFinanceCharges
+        - productSubTypeCategory
       properties:
         contractNumber:
           type: string
@@ -728,6 +743,8 @@ components:
           $ref: '#/components/schemas/EnumContractProductTypeLoans'
         productSubType:
           $ref: '#/components/schemas/EnumContractProductSubTypeLoans'
+        productSubTypeCategory:
+          $ref: '#/components/schemas/EnumContractProductSubTypeCategory'
         contractDate:
           type: string
           format: date
@@ -781,8 +798,8 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2028-01-15'
           description: |
-            Data de vencimento Final da operação. Especificação RFC-3339.
-            Informação deve ser enviada caso ela exista.
+            Data do último vencimento da operação, seguindo a especificação RFC-3339.
+            Informação deve ser enviada caso ela exista. Especialmente para contratos repactuados, deve-se alterar a data para a do último vencimento.
         instalmentPeriodicity:
           $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
         instalmentPeriodicityAdditionalInfo:
@@ -841,8 +858,7 @@ components:
         interestRates:
           type: array
           description: |
-            Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.  
-            Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita.
+            Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito. Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita. Para o produto CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN) deve-se obrigatoriamente conter a taxa nominal e efetiva (campo “taxType”) com periodicidade a.a. (ao ano), podendo, adicionalmente, também conter uma periodicidade diferente.
           items:
             $ref: '#/components/schemas/LoansContractInterestRate'
           minItems: 0
@@ -858,6 +874,17 @@ components:
           items:
             $ref: '#/components/schemas/LoansFinanceCharge'
           minItems: 0
+        nextInstalmentAmount:
+          type: string
+          format: double
+          pattern: '^\d{1,15}\.\d{2,4}$'
+          maxLength: 20
+          minLength: 4
+          example: '1000.0400'
+          description: >
+            Informa o valor da próxima parcela à vencer. Para contratos liquidados, retornar zero, seguindo o pattern.  
+            [Restrição]  
+            O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
     LoansContractedFee:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -953,7 +980,7 @@ components:
           maxLength: 9
           minLength: 8
           description: |
-            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000)
+            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000). Para taxas pós fixadas necessário informar o indexador (campo referentialRateIndexerSubType).
           example: '0.550000'
         additionalInfo:
           type: string
@@ -1094,6 +1121,7 @@ components:
         - productType
         - productSubType
         - ipocCode
+        - productSubTypeCategory
       properties:
         contractId:
           type: string
@@ -1118,6 +1146,8 @@ components:
           $ref: '#/components/schemas/EnumContractProductTypeLoans'
         productSubType:
           $ref: '#/components/schemas/EnumContractProductSubTypeLoans'
+        productSubTypeCategory:
+            $ref: '#/components/schemas/EnumContractProductSubTypeCategory'
         ipocCode:
           type: string
           maxLength: 67
@@ -1133,7 +1163,7 @@ components:
               1. Para clientes pessoa física com CPF (tipo de cliente = 1), informar as 11 (onze) posições do CPF;
               2. Para clientes pessoa jurídica com CNPJ (tipo de cliente = 2), informar as 8 (oito) posições iniciais do CNPJ;
               3. Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
-            - **Código do contrato:** 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
+            - **Código do contrato:** 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.          
     LoansPayments:
       type: object
       description: Conjunto de informações referentes aos pagamentos realizados de uma operação de crédito de empréstimos.
@@ -1160,6 +1190,14 @@ components:
           items:
             $ref: '#/components/schemas/LoansReleases'
           description: Lista dos pagamentos realizados no período
+        lastUpdatedcontractOutstandingBalanceDateTime:
+          type: string
+          format: date-time
+          description: |
+            Data e hora da última atualização do valor do campo contractOutstandingBalance, conforme especificação RFC-3339, formato UTC. [Restrição] O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
+          minLength: 20
+          maxLength: 20
+          example: 2021-05-21T08:30:00Z
     LoansReleases:
       type: object
       description: Lista dos pagamentos realizados no período
