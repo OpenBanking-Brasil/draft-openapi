@@ -432,7 +432,7 @@ components:
       description: |
         "Sub tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040.
 
-        [Restrição] Caso no campo postFixedRate seja informado um valor aplicável ao contrato, o envio deste campo será obrigatório.”"
+        [Restrição] Caso no campo postFixedRate seja informado um valor aplicável ao contrato, o envio deste campo será obrigatório."
       enum:
         - SEM_SUB_TIPO_INDEXADOR
         - PRE_FIXADO
@@ -569,10 +569,7 @@ components:
     EnumContractProductSubTypeCategory:
       type: string
       description: |
-        Categoria para classificação específica relacionada com a submodalidade do produto.
-        O preenchimento com o enum `CREDITO_PESSOAL_CLEAN`, quando aplicável, será obrigatório a partir da versão 2.4.0 da API Empréstimos.
-        O enum `CONSIGNADO_SIAPE` será obrigatório em data posterior.
-        Demais submodalidades devem ser classificadas na opção `OUTRO`.
+        Categoria para classificação específica relacionada com a submodalidade do produto. Atenção: o preenchimento com o enum CREDITO_PESSOAL_CLEAN, quando aplicável, será obrigatório à partir da publicação da versão 2.4.0 da API Empréstimos, já o enum CONSIGNADO_SIAPE passará a ser de envio obrigatório em data posterior. Demais submodalidades devem ser classificadas na opção OUTROS
       enum:
         - CREDITO_PESSOAL_CLEAN
         - CONSIGNADO_SIAPE
@@ -1197,7 +1194,7 @@ components:
             Data e hora da última atualização do valor do campo contractOutstandingBalance, conforme especificação RFC-3339, formato UTC. [Restrição] O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
           minLength: 20
           maxLength: 20
-          example: 2021-05-21T08:30:00Z
+          example: "2021-05-21T08:30:00Z"
     LoansReleases:
       type: object
       description: Lista dos pagamentos realizados no período
