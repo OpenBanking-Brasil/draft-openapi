@@ -38,7 +38,7 @@ info:
     ### `/contracts/{contractId}/payments`
       - permissions:
         - GET: **UNARRANGED_ACCOUNTS_OVERDRAFT_PAYMENTS_READ**
-  version: 2.4.0
+  version: 2.5.0
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -918,7 +918,7 @@ components:
             [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
         feeRate:
           type: string
-          pattern: '^[01]\.\d{6}$'
+          pattern: '^\d{1}\.\d{6}$'
           format: double
           maxLength: 8
           minLength: 8
