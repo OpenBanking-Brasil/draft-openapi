@@ -174,10 +174,9 @@ info:
       - Limite Anual (Ex.: R$ 50.000,00): O limite anual conta do primeiro dia de janeiro ao último dia de dezembro. Por exemplo, se um usuário transferir R$ 10.000,00 até março, mais R$ 15.000,00 até junho e mais R$ 20.000,00 até setembro, ele só poderá transferir outros R$ 5.000,00 até o final do ano;
       - Esses limites ajudam a gerenciar as transferências de fundos, garantindo que não excedam os montantes estabelecidos para cada período. Cada limite é independente e é recalculado conforme sua respectiva janela de tempo se reinicia. Todos os pagamentos com status diferente de RJCT ou CANC devem ser considerados para o cálculo dos limites do consentimento.
     
-    ## Sobre a quantidade de consentimentos que podem ser criados:
+    ## Sobre a quantidade de consentimentos que podem ser criados
     Não há limitações relacionadas a quantidade de consentimentos que podem ser criados entre uma mesma ITP, conta de débito e titularidade. Fica a cargo da instituição iniciadora solicitar, sempre que julgar necessário para atendimento do usuário, a criação de um novo consentimento.
     
-    Demais validações executadas durante o processamento assíncrono do pagamento pela detentora, poderão ser consultados pela iniciadora através dos endpoints GET /pix/recurring-payments/{recurringPaymentId} e GET /pix/recurring-payments previstos com retorno HTTP Code 200 - OK com status RJCT (Rejected) e rejectionReason conforme abaixo (detalhamento adicional na documentação técnica da API):”
   version: 2.0.0-rc.1
   license:
     name: Apache 2.0
@@ -2166,15 +2165,15 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Número do documento de identificação oficial do usuário.
+                  description: Número do documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica.
                   example: '11111111111'
-                  pattern: '^\d{11}$'
+                  pattern: '^(?:\d{11}|\d{14})$'
                 rel:
                   type: string
-                  maxLength: 3
-                  description: Tipo do documento de identificação oficial do usuário.
-                  example: CPF
-                  pattern: '^[A-Z]{3}$'
+                  description: Tipo de documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica.
+                  enum:
+                    - CPF
+                    - CNPJ
         businessEntity:
           type: object
           description: |
@@ -2887,15 +2886,15 @@ components:
                     identification:
                       type: string
                       maxLength: 11
-                      description: Número do documento de identificação oficial do usuário.
+                      description: Número do documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica
                       example: '11111111111'
-                      pattern: '^\d{11}$'
+                      pattern: '^(?:\d{11}|\d{14})$'
                     rel:
                       type: string
-                      maxLength: 3
-                      description: Tipo do documento de identificação oficial do usuário.
-                      example: CPF
-                      pattern: '^[A-Z]{3}$'
+                      description: Tipo de documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica.
+                      enum:
+                        - CPF
+                        - CNPJ
     PixPaymentCancellation:
       type: object
       description: |
@@ -3534,10 +3533,9 @@ components:
       properties:
         data:
           description: Objeto contendo as informações de rejeição, revogação e edição dos consentimentos
-          oneOf:
-            - $ref: '#/components/schemas/ConsentEdition'
-            - $ref: '#/components/schemas/ConsentRevocation'
-            - $ref: '#/components/schemas/ConsentRejection'
+          properties:
+            ConsentEdition:
+              $ref: '#/components/schemas/ConsentEdition'
     ResponseRecurringPaymentsIdPost:
       type: object
       required:
