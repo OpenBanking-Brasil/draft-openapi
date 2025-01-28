@@ -130,7 +130,7 @@ end
 
 # Write headers and rows on given filename
 def generate_csv(filename, headers, rows)
-  CSV.open(filename,'w', {:col_sep => ";"}) do |file|
+  CSV.open(filename, 'w', col_sep: ";") do |file|
     file << headers.values
     rows.each do |row|
       file << row.values
@@ -218,7 +218,7 @@ oas['paths'].each_with_index do |(path, methods)|
               headersXregulatory['COLUMN_2']   => field['name'],
               headersXregulatory['COLUMN_3']   => field['description'],
               headersXregulatory['COLUMN_4']   => format_type(data_type),
-              headersXregulatory['COLUMN_5']   => field['maxLength'],
+              headersXregulatory['COLUMN_5']   => field['maxLength'] ? field['maxLength'] : field['maximum'],
               headersXregulatory['COLUMN_6']   => mandatory,
               headersXregulatory['COLUMN_7']   => regulatoryMandatory,
               headersXregulatory['COLUMN_8']   => field['pattern'],
@@ -229,7 +229,7 @@ oas['paths'].each_with_index do |(path, methods)|
               headersXregulatory['COLUMN_13']  => field['nullable'] ? "Permitido" : "Não permitido",
               headersXregulatory['COLUMN_14']  => field['type'],
               headersXregulatory['COLUMN_15']  => field['example'],
-              headersXregulatory['COLUMN_16']  => field['minLength']
+              headersXregulatory['COLUMN_16']  => field['minLength'] ? field['minLength'] : field['minimum']
             }
           else
             row = {
@@ -237,7 +237,7 @@ oas['paths'].each_with_index do |(path, methods)|
               headers['COLUMN_2']   => field['name'],
               headers['COLUMN_3']   => field['description'],
               headers['COLUMN_4']   => format_type(data_type),
-              headers['COLUMN_5']   => field['maxLength'],
+              headers['COLUMN_5']   => field['maxLength'] ? field['maxLength'] : field['maximum'],
               headers['COLUMN_6']   => mandatory,
               headers['COLUMN_7']   => field['pattern'],
               headers['COLUMN_8']   => format_enum(field['enum']),
@@ -247,7 +247,7 @@ oas['paths'].each_with_index do |(path, methods)|
               headers['COLUMN_12']  => field['nullable'] ? "Permitido" : "Não permitido",
               headers['COLUMN_13']  => field['type'],
               headers['COLUMN_14']  => field['example'],
-              headers['COLUMN_15']  => field['minLength']
+              headers['COLUMN_15']  => field['minLength'] ? field['minLength'] : field['minimum']
             }
           end
           rows.push row
@@ -255,7 +255,7 @@ oas['paths'].each_with_index do |(path, methods)|
       end
     end
 
-    version = "v" + oas['info']['version'].split(/\./, 3).first
+    version = "v" + oas['info']['version'].split(/-/, 2).first
     filename = output_path + spec['operationId'] + "_" + version + '.csv'
     puts '  ├── Writing file ' + filename
     if $isRegulatoryRequiredAPI
