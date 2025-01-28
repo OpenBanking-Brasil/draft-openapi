@@ -130,7 +130,7 @@ end
 
 # Write headers and rows on given filename
 def generate_csv(filename, headers, rows)
-  CSV.open(filename,'w', {:col_sep => ";"}) do |file|
+  CSV.open(filename, 'w', col_sep: ";") do |file|
     file << headers.values
     rows.each do |row|
       file << row.values
@@ -252,7 +252,7 @@ oas['paths'].each_with_index do |(path, methods)|
       end
     end
 
-    version = "v" + oas['info']['version'].split(/\./, 3).first
+    version = "v" + oas['info']['version'].split(/-/, 2).first
     filename = output_path + spec['operationId'] + "_" + version + '.csv'
     puts '  ├── Writing file ' + filename
     if $isRegulatoryRequiredAPI
