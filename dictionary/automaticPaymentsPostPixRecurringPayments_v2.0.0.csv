@@ -74,6 +74,7 @@ Motivo da rejeição do pagamento. Informações complementares sobre o motivo d
 - CONSENTIMENTO_REVOGADO
 - FORA_PRAZO_PERMITIDO
 - DETALHE_TENTATIVA_INVALIDO
+- DETALHE_PAGAMENTO_INVALIDO
 
 [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -96,7 +97,8 @@ LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO
 LIMITE_TENTATIVAS_EXCEDIDO 
 CONSENTIMENTO_REVOGADO 
 FORA_PRAZO_PERMITIDO 
-DETALHE_TENTATIVA_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
+DETALHE_TENTATIVA_INVALIDO 
+DETALHE_PAGAMENTO_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
 
@@ -120,7 +122,8 @@ DETALHE_TENTATIVA_INVALIDO";1;1;" Esse motivo deverá ser enviado quando o campo
 - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
 - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
 - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
-- DETALHE_TENTATIVA_INVALIDO : O parâmetro [nome_do(s)_campo(s)] inseridos para a nova tentativa de pagamento não condizem com o pagamento original que falhou e não são permitidos na nova tentativa de pagamento.
+- DETALHE_TENTATIVA_INVALIDO: O parâmetro [nome_do(s)_campo(s)] inseridos para a nova tentativa de pagamento não condizem com o pagamento original que falhou e não são permitidos na nova tentativa de pagamento.
+- DETALHE_PAGAMENTO_INVALIDO: Valida se determinado parâmetro informado obedece as regras de negócio.
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/cnpjInitiator;cnpjInitiator;CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
 /data/payment;payment;Objeto contendo as informações do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
