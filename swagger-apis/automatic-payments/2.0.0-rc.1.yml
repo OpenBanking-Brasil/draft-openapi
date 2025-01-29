@@ -1961,8 +1961,6 @@ components:
                 - DETENTORA
             reason:
               $ref: '#/components/schemas/ConsentRejectionReason'
-        riskSignals:
-          $ref: '#/components/schemas/RiskSignalsConsents'
     ConsentRejectionReason:
       type: object
       description: |
@@ -2090,11 +2088,8 @@ components:
     ConsentEdition:
       type: object
       required:
-        - riskSignals
         - creditors
       properties:
-        riskSignals:
-          $ref: '#/components/schemas/RiskSignalsConsents'
         creditors:
           type: array
           minItems: 1
@@ -2243,8 +2238,6 @@ components:
                 - DETENTORA
             reason:
               $ref: '#/components/schemas/ConsentRevokedReason'
-        riskSignals:
-          $ref: '#/components/schemas/RiskSignalsConsents'
     ConsentRevokedReason:
       type: object
       description: |
@@ -3533,9 +3526,10 @@ components:
       properties:
         data:
           description: Objeto contendo as informações de rejeição, revogação e edição dos consentimentos
-          properties:
-            ConsentEdition:
-              $ref: '#/components/schemas/ConsentEdition'
+          oneOf:
+            - $ref: '#/components/schemas/ConsentEdition'
+            - $ref: '#/components/schemas/ConsentRevocation'
+            - $ref: '#/components/schemas/ConsentRejection'
     ResponseRecurringPaymentsIdPost:
       type: object
       required:
