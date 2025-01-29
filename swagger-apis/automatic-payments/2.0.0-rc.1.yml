@@ -679,6 +679,7 @@ components:
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO
                   - CAMPO_NAO_PERMITIDO
                   - PERMISSAO_INSUFICIENTE
+                  - DETALHE_EDICAO_INVALIDO
                 example: CAMPO_NAO_PERMITIDO
               title:
                 type: string
@@ -690,6 +691,7 @@ components:
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
                   - Permissão insuficiente para edição.
+                  - DETALHE_EDICAO_INVALIDO: A tentativa de edição do consentimento não respeitou as regras de negócio descritas nos campos.
               detail:
                 type: string
                 maxLength: 2048
@@ -700,6 +702,7 @@ components:
                   - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
                   - PERMISSAO_INSUFICIENTE: Consentimento possui múltiplas alçadas aprovadoras e não permite a edição pelo usuário atual.
+                  - DETALHE_EDICAO_INVALIDO: A tentativa de edição do consentimento não respeitou as regras de negócio descritas nos campos.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
@@ -2117,12 +2120,11 @@ components:
                   Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasia da conta do recebedor.
         expirationDateTime:
           description: |
-            Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-
-            [Restrição] 
-            Caso esse campo não seja enviado, a instituição detentora deve considerar a extensão do prazo para um período indeterminado; 
+            Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format). 
             
-            Caso enviado, esse campo deve ser, no mínimo, D+1, sendo D o dia da requisição.
+            [Restrição] Caso esse campo não seja enviado, a instituição detentora deve considerar a extensão do prazo para um período indeterminado; ou; 
+            
+            Caso enviado, esse campo deve ser, no mínimo, D, sendo D o dia da requisição.
           type: string
           format: date-time
           example: '2021-05-21T08:30:00Z'
