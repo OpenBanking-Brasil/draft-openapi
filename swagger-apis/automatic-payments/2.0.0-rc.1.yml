@@ -2294,7 +2294,7 @@ components:
             - interval
             - contractDebtor
             - isRetryAccepted
-            - referenceStartDateTime
+            - referenceStartDate
           properties:
             contractId:
               type: string
@@ -2357,14 +2357,14 @@ components:
               type: boolean
               description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
               example: false
-            referenceStartDateTime:
+            referenceStartDate:
               type: string
-              format: date-time
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               description: |
                 Representa a data prevista para a primeira ocorrência de um pagamento associado a recorrência. 
                 Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-              example: '2023-05-21T08:30:00Z'
+              example: '2023-05-21'
     Automatic:
       type: object
       required:
@@ -2379,7 +2379,7 @@ components:
             - contractDebtor
             - isRetryAccepted
             - useOverdraftLimit
-            - referenceStartDateTime
+            - referenceStartDate
           properties:
             contractId:
               type: string
@@ -2447,14 +2447,14 @@ components:
               default: true
               example: true
               description: Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.
-            referenceStartDateTime:
+            referenceStartDate:
               type: string
-              format: date-time
-              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+              format: date
+              pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
               description: |
                 Representa a data prevista para a primeira ocorrência de um pagamento associado a recorrência. 
                 Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-              example: '2023-05-21T08:30:00Z'
+              example: '2023-05-21'
     ContractDebtor:
       type: object
       description: Informações sobre o cliente devedor do contrato.
