@@ -2927,15 +2927,15 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Número do documento do usuário pagador responsável pelo cancelamento do pagamento.
+                  description: Número do documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica.
                   example: '11111111111'
-                  pattern: '^\d{11}$'
+                  pattern: '^(?:\d{11}|\d{14})$'
                 rel:
                   type: string
-                  maxLength: 3
-                  description: Tipo do documento do usuário pagador responsável pelo cancelamento do pagamento.
-                  example: CPF
-                  pattern: '^[A-Z]{3}$'
+                  description: Tipo de documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica.
+                  enum:
+                    - CPF
+                    - CNPJ
     ResponseError:
       type: object
       required:
