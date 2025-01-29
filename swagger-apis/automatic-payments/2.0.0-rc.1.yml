@@ -149,7 +149,8 @@ info:
         &ensp;6.1.18 - Limite de transação excedido: O consentimento encontra-se autorizado e o valor solicitado para cobrança ultrapassa a faixa de limite de valor por transação parametrizado pelo usuário na criação do consentimento (LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO);  
         &ensp;6.1.19 Limite de retentativas atingido: Valida se todas as tentativas de liquidação permitidas já foram realizadas (LIMITE_TENTATIVA_EXCEDIDO);  
         &ensp;6.1.20 Fora do prazo permitido: A tentativa de agendamento foi realizada fora do horário ou período permitido e não pode ser aceita pela instituição detentora (FORA_PRAZO_PERMITIDO);  
-        &ensp;6.1.21 Detalhe tentativa inválida: Valida se os parâmetros informados condizem com a tentativa original de pagamento (DETALHE_TENTATIVA_INVALIDO).
+        &ensp;6.1.21 Detalhe tentativa inválida: Valida se os parâmetros informados condizem com a tentativa original de pagamento (DETALHE_TENTATIVA_INVALIDO);
+        &ensp;6.1.22 Detalhes do pagamento: Valida se determinado parâmetro informado obedece as regras de negócio (DETALHE_PAGAMENTO_INVALIDO).
 
     ## Validações antifraude da Transferências Inteligentes
 
@@ -1773,6 +1774,7 @@ components:
         - LIMITE_TENTATIVAS_EXCEDIDO
         - FORA_PRAZO_PERMITIDO
         - DETALHE_TENTATIVA_INVALIDO
+        - DETALHE_PAGAMENTO_INVALIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1798,6 +1800,7 @@ components:
         - LIMITE_TENTATIVAS_EXCEDIDO
         - FORA_PRAZO_PERMITIDO
         - DETALHE_TENTATIVA_INVALIDO
+        - DETALHE_PAGAMENTO_INVALIDO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumRejectionReasonCode:
@@ -1824,6 +1827,7 @@ components:
         - CONSENTIMENTO_REVOGADO
         - FORA_PRAZO_PERMITIDO
         - DETALHE_TENTATIVA_INVALIDO
+        - DETALHE_PAGAMENTO_INVALIDO
       example: SALDO_INSUFICIENTE
       description: |
         Código identificador do motivo de rejeição.
@@ -1849,6 +1853,7 @@ components:
         - CONSENTIMENTO_REVOGADO
         - FORA_PRAZO_PERMITIDO
         - DETALHE_TENTATIVA_INVALIDO
+        - DETALHE_PAGAMENTO_INVALIDO
 
         [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
     EnumPaymentCancellationReasonType:
@@ -2046,7 +2051,8 @@ components:
             - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
             - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido
             - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
-            - DETALHE_TENTATIVA_INVALIDO : O parâmetro [nome_do(s)_campo(s)] inseridos para a nova tentativa de pagamento não condizem com o pagamento original que falhou e não são permitidos na nova tentativa de pagamento.
+            - DETALHE_TENTATIVA_INVALIDO: O parâmetro [nome_do(s)_campo(s)] inseridos para a nova tentativa de pagamento não condizem com o pagamento original que falhou e não são permitidos na nova tentativa de pagamento.
+            - DETALHE_PAGAMENTO_INVALIDO: Valida se determinado parâmetro informado obedece as regras de negócio
     RejectionReason:
       type: object
       description: |
@@ -2084,7 +2090,8 @@ components:
             - LIMITE_TENTATIVAS_EXCEDIDO: O máximo de tentativas de liquidação permitidas pelo arranjo foi atingido.
             - CONSENTIMENTO_REVOGADO: O pagamento estava associado a um consentimento que foi revogado.
             - FORA_PRAZO_PERMITIDO: O horário ou período da requisição não permite o agendamento pelo detentor.
-            - DETALHE_TENTATIVA_INVALIDO : O parâmetro [nome_do(s)_campo(s)] inseridos para a nova tentativa de pagamento não condizem com o pagamento original que falhou e não são permitidos na nova tentativa de pagamento.
+            - DETALHE_TENTATIVA_INVALIDO: O parâmetro [nome_do(s)_campo(s)] inseridos para a nova tentativa de pagamento não condizem com o pagamento original que falhou e não são permitidos na nova tentativa de pagamento.
+            - DETALHE_PAGAMENTO_INVALIDO: Valida se determinado parâmetro informado obedece as regras de negócio.
     ConsentEdition:
       type: object
       required:
