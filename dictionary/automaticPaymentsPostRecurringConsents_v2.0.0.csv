@@ -81,13 +81,6 @@ Segue descrição de cada valor do ENUM.
 ";Texto;;Obrigatório;;"CACC 
 SVGS 
 TRAN";1;1;"";Não permitido;string;CACC;
-/data/debtorAccount/ibgeTownCode;ibgeTownCode;"Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no município de cadastro do usuário pagador no detentor.
-
-[Restrições]
-- Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
-";Texto;7;Condicional;^\d{7}$;;0;1;"
-- Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
-";Não permitido;string;5300108;7
 /data/rejection;rejection;"Objeto contendo as informações de rejeição dos consentimentos.
 
 [Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a ""REJECTED"".
