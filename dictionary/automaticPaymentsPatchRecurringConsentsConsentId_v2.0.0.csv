@@ -81,9 +81,9 @@ TRAN";1;1;"";Não permitido;string;CACC;
 /data/debtorAccount/ibgeTownCode;ibgeTownCode;"Campo utilizado pela iniciadora para cálculo do dia útil de liquidação do pagamento (vide especificação do endToEndId) baseado no município de cadastro do usuário pagador no detentor.
 
 [Restrições]
-- Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
+Campo de preenchimento obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”, e o consentimento passar pelo estado AUTHORISED.
 ";Texto;7;Condicional;^\d{7}$;;0;1;"
-- Campo obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”. 
+Campo de preenchimento obrigatório quando o oneOf utilizado do recurringConfiguration for “automatic”, e o consentimento passar pelo estado AUTHORISED.
 ";Não permitido;string;5300108;7
 /data/rejection;rejection;"Objeto contendo as informações de rejeição dos consentimentos.
 
@@ -114,6 +114,7 @@ DETENTORA";1;1;"";Não permitido;string;DETENTORA;
 - CONTA_NAO_PERMITE_PAGAMENTO
 - SALDO_INSUFICIENTE
 - VALOR_ACIMA_LIMITE
+- AUTENTICACAO_DIVERGENTE
 ";Texto;;Obrigatório;;"NAO_INFORMADO 
 FALHA_INFRAESTRUTURA 
 TEMPO_EXPIRADO_AUTORIZACAO 
@@ -121,7 +122,8 @@ REJEITADO_USUARIO
 CONTAS_ORIGEM_DESTINO_IGUAIS 
 CONTA_NAO_PERMITE_PAGAMENTO 
 SALDO_INSUFICIENTE 
-VALOR_ACIMA_LIMITE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
+VALOR_ACIMA_LIMITE 
+AUTENTICACAO_DIVERGENTE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
 /data/rejection/reason/detail;detail;"Detalhe sobre o motivo de rejeição indicado no campo `/data/rejection/reason/code`
 - NAO_INFORMADO: Não informada pela detentora de conta;
 - FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
@@ -131,6 +133,7 @@ VALOR_ACIMA_LIMITE";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
 - CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
 - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
 - VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido para permitir a realização de transações pelo cliente;
+- AUTENTICACAO_DIVERGENTE : Usuário autenticado no detentor diverge do usuário autenticado no iniciador;
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;O usuário rejeitou a autorização do consentimento;
 /data/revocation;revocation;"Objeto contendo as informações de revogação dos consentimentos.
 
@@ -180,22 +183,18 @@ REVOGADO_RECEBEDOR";1;1;"";Não permitido;string;REVOGADO_RECEBEDOR;
 - ANUAL
 - SEMESTRAL
 - TRIMESTRAL
-";Texto;;Opcional;;"SEMANAL 
+";Texto;;Obrigatório;;"SEMANAL 
 MENSAL 
 ANUAL 
 SEMESTRAL 
-TRIMESTRAL";0;1;"";Não permitido;string;SEMANAL;
+TRIMESTRAL";1;1;"";Não permitido;string;SEMANAL;
 /data/recurringConfiguration/automatic/contractDebtor;contractDebtor;Informações sobre o cliente devedor do contrato.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/contractDebtor/name;name;Em caso de pessoa natural deve ser informado o nome completo do titular devedor do contrato.;Texto;120;Obrigatório;^([A-Za-zÀ-ÖØ-öø-ÿ,.@:&*+_<>()!?/\\$%\d' -]+)$;;1;1;"";Não permitido;string;Policarpo Quaresma;
 /data/recurringConfiguration/automatic/contractDebtor/document;document;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/contractDebtor/document/identification;identification;Número do documento de identificação oficial do cliente devedor do contrato.;Texto;14;Obrigatório;^(?:\d{11}|\d{14})$;;1;1;"";Não permitido;string;11111111111111;
 /data/recurringConfiguration/automatic/contractDebtor/document/rel;rel;Tipo do documento de identificação oficial do cliente devedor do contrato.;Texto;;Obrigatório;;"CPF 
 CNPJ";1;1;"";Não permitido;string;;
-/data/recurringConfiguration/automatic/firstPayment;firstPayment;"Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador.
-
-- A conta de crédito informada deve pertencer ao mesmo CNPJ informado no campo “/data/creditors/cpfCnpj”
-- A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. 
-Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200)
+/data/recurringConfiguration/automatic/firstPayment;firstPayment;"Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador. Para casos em que conta recebedora e conta pagadora pertencem ao mesmo detentor, este deve garantir que a conta de crédito informada pertence ao titular do CNPJ enviado no campo “/data/creditors/cpfCnpj”. A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200). 
 ";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/recurringConfiguration/automatic/firstPayment/type;type;"Este campo define o tipo de pagamento que será iniciado após a autorização do consentimento.
 ";Texto;;Obrigatório;;PIX;1;1;"";Não permitido;string;PIX;
@@ -240,9 +239,9 @@ Não pode ser preenchido nas autorizações de valor fixo.
 ";Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/automatic/isRetryAccepted;isRetryAccepted;Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;false;
 /data/recurringConfiguration/automatic/useOverdraftLimit;useOverdraftLimit;Indica se o usuário pagador autorizou a utilização de limite pré-aprovado (cheque especial) na sua conta para realização de pagamentos, caso o cliente possua o produto.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;true;
-/data/recurringConfiguration/automatic/referenceStartDateTime;referenceStartDateTime;"Representa a data prevista para a primeira ocorrência de um pagamento associado a recorrência. 
+/data/recurringConfiguration/automatic/referenceStartDate;referenceStartDate;"Representa a data prevista para a primeira ocorrência de um pagamento associado a recorrência. 
 Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-";Date Hora;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2023-05-21T08:30:00Z;
+";Data;;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2023-05-21;
 /data/recurringConfiguration/sweeping;sweeping;Definição da configuração de recorrência para transferências automáticas de fundos.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/recurringConfiguration/sweeping/totalAllowedAmount;totalAllowedAmount;Valor máximo a ser atingido pelo somatório de todas as transações que utilizam o consentimento autorizado pelo cliente. Caso o valor seja superado, a detentora de conta deve negar a transação solicitada pela iniciadora.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;100000.12;4
 /data/recurringConfiguration/sweeping/transactionLimit;transactionLimit;Valor máximo para cada transação de pagamento associada a esse consentimento. Caso valor do pagamento seja maior que esse limite, a detentora de contas deve rejeitar a transação de pagamento.;Texto;19;Opcional;^((\d{1,16}\.\d{2}))$;;0;1;"";Não permitido;string;1000000.12;4
@@ -371,3 +370,10 @@ O campo deve ser atualizado pelo detentor sempre que o consentimento for editado
 Caso a edição seja realizada a partir do iniciador, o detentor deve preencher com a data e hora (UTC) em que recebeu a solicitação de edição. 
 A edição só é permitida para o produto Pix automático.
 ";Date Hora;20;Opcional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;0;1;"";Não permitido;string;2021-05-21T08:30:00Z;20
+/data/approvalDueDate;approvalDueDate;"Representa a data máxima para aprovação de um consentimento que encontra-se (ou passou) pelo estado PARTIALLY_ACCEPTED. A aprovação deve ocorrer até as 23:59h do dia informado, caso contrário, consentimento deve ser rejeitado.
+
+[Restrição]
+Deve ser preenchido pela instituição detentora sempre que um consentimento estiver (ou passado) no estado PARTIALLY_ACCEPTED
+";Data;;Condicional;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;0;1;"
+Deve ser preenchido pela instituição detentora sempre que um consentimento estiver (ou passado) no estado PARTIALLY_ACCEPTED
+";Não permitido;string;2024-12-25;
