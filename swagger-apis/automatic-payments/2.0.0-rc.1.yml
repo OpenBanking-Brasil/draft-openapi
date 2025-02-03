@@ -695,6 +695,7 @@ components:
                   - CAMPO_NAO_PERMITIDO
                   - PERMISSAO_INSUFICIENTE
                   - DETALHE_EDICAO_INVALIDO
+                  - FALTAM_SINAIS_OBRIGATORIOS_PLATAFORMA
                 example: CAMPO_NAO_PERMITIDO
               title:
                 type: string
@@ -707,6 +708,7 @@ components:
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
                   - Permissão insuficiente para edição.
                   - DETALHE_EDICAO_INVALIDO: A tentativa de edição do consentimento não respeitou as regras de negócio descritas nos campos.
+                  - FALTAM_SINAIS_OBRIGATORIOS_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
               detail:
                 type: string
                 maxLength: 2048
@@ -718,6 +720,7 @@ components:
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
                   - PERMISSAO_INSUFICIENTE: Consentimento possui múltiplas alçadas aprovadoras e não permite a edição pelo usuário atual.
                   - DETALHE_EDICAO_INVALIDO: A tentativa de edição do consentimento não respeitou as regras de negócio descritas nos campos.
+                  - FALTAM_SINAIS_OBRIGATORIOS_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
@@ -1455,6 +1458,192 @@ components:
             deviceRecognitionVerdict:
               type: string
               description: Informa a integridade do dispositivo
+    RiskSignalsConsentEdition:
+      type: object
+      required:
+        - deviceId
+        - osVersion
+        - userTimeZoneOffset
+        - language
+        - screenDimensions
+        - accountTenure
+      description: |
+        Sinais de risco para iniciação de pagamentos automáticos
+
+        [Restrição] Deve ser enviado quando o consentimento for para o produto Pix Automático (O objeto "/data/recurringConfiguration/automatic" usado no oneOf). Só estará presente após a primeira edição do consentimento de longa duração.
+      properties:
+        deviceId:
+          type: string
+          description: |
+            ID único do dispositivo gerado pela plataforma.
+
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/android/provider/Settings.Secure#ANDROID_ID).
+            
+            [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620059-identifierforvendor/).
+          example: 00000000-54b3-e7c7-0000-000046bffd97
+        isRootedDevice:
+          type: boolean
+          description: |
+            Indica se o dispositivo atualmente está com permissão de “root”.
+            
+            [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo usuário for Android ou iOS.
+          example: false
+        screenBrightness:
+          type: number
+          format: double
+          description: |
+            Indica o nível de brilho da tela do dispositivo.
+            
+            [Android] O valor é inteiro, tipicamente entre 0 a 255, podendo a faixa de valores variar de acordo com o fabricante do celular. Referência no [link](https://developer.android.com/reference/android/provider/Settings.System#SCREEN_BRIGHTNESS).
+            
+            [iOS] O valor é ponto flutuante entre “0.0” e “1.0”. Referência no [link](https://developer.apple.com/documentation/kernel/kern/).
+            
+            [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo for Android ou iOS.
+        elapsedTimeSinceBoot:
+          type: integer
+          format: int64
+          description: |
+            Indica por quanto tempo (em milissegundos) o dispositivo está ligado.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/SystemClock#elapsedRealtime%28%29).
+            
+            [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/kernel/kern/).
+            
+            [Restrição] Campos de envio obrigatório quando o sistema operacional utilizado pelo for Android ou iOS.
+        osVersion:
+          type: string
+          description: |
+            Versão do sistema operacional.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/Build.VERSION#RELEASE).
+            
+            [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620043-systemversion/).
+        userTimeZoneOffset:
+          type: string
+          description: |
+            Indica a configuração de fuso horário do dispositivo do usuário, com o formato UTC offset: ±hh[:mm]. O formato especificado permite a omissão da parte correspondente aos minutos, caso esta última tenha valor zero. Assim, ambos os valores '-03:00' e '-03' são válidos e representam o mesmo fuso horário.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/java/time/ZonedDateTime#getOffset()) ou, para versões anteriores à 8.0, [link](https://developer.android.com/reference/java/util/TimeZone#getOffset(long)).
+            
+            [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/foundation/timezone/).
+        language:
+          type: string
+          description: |
+            Indica o idioma do dispositivo no formato ISO 639-1.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/java/util/Locale#getLanguage()).
+            
+            [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/foundation/locale/languagecode/).
+        screenDimensions:
+          type: object
+          description: |
+            Dimensões que o aplicativo ocupa na tela do dispositivo.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/android/view/WindowMetrics#getBounds()), ou, para versões anteriores à 11, [link](https://developer.android.com/reference/android/util/DisplayMetrics).
+            
+            [iOS] - Informação obtida através do [link](https://developer.apple.com/documentation/metal/mtlrasterizationratemap/3088873-screensize/).
+          required:
+            - height
+            - width
+          properties:
+            height:
+              type: integer
+              format: int64
+              description: Altura da tela, em pixels.
+            width:
+              type: integer
+              format: int64
+              description: Largura da tela, em pixels.
+        accountTenure:
+          type: string
+          format: date
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
+          description: Data de cadastro do cliente na iniciadora.
+        geolocation:
+          type: object
+          description: |
+            Localização do usuário, obtida com seu consentimento.
+            
+            [Android] Informação obtida através do [link](https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient#public-abstract-tasklocation-getlastlocation) considerando as permissões necessárias.
+            
+            [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/corelocation/).
+            
+            [Restrição] A ITP deve solicitar ao usuário a permissão para compartilhamento de sua localização. 
+            Este campo poderá ser omitido caso o GPS esteja indisponível, isto é, sem sinal, ou em dispositivos sem o hardware necessário; ou caso o usuário negue o consentimento para coleta do dado.
+          properties:
+            latitude:
+              type: number
+              format: double
+              description: Coordenada latitudial do cliente enquanto logado na iniciadora
+            longitude:
+              type: number
+              format: double
+              description: Coordenada longitudinal do cliente enquanto logado na iniciadora
+            type:
+              type: string
+              description: |
+                Tipo de mecanismo utilizado na geração da geolocalização
+              enum:
+                - COARSE
+                - FINE
+                - INFERRED
+        isCallingProgress:
+          type: boolean
+          description: |
+            Indica chamada ativa no momento da solicitação.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/android/media/AudioManager#getMode()).
+            
+            [iOS] Informação obtida através do [link](https://developer.apple.com/documentation/callkit/).
+            
+            [Restrição] Caso o sinal de risco esteja disponível (cliente permitiu que fosse coletado), o mesmo deverá ser enviado.
+        isDevModeEnabled:
+          type: boolean
+          description: Indica se o dispositivo está em modo de desenvolvedor.
+        isMockGPS:
+          type: boolean
+          description: |
+            Indica se o dispositivo está usando um GPS falso. Deve ser enviado sempre que exista o campo geolocation com tipo COARSE ou FINE.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/android/location/Location.html#isMock()) ou, para versões anteriores à 12, [link](https://developer.android.com/reference/android/location/Location.html#isFromMockProvider()).
+            
+            [iOS] Informação obtida através dos links: sourceInformation, [link](https://developer.apple.com/documentation/corelocation/cllocation/3861803-sourceinformation). isSimulatedBySoftware, [link](https://developer.apple.com/documentation/corelocation/cllocationsourceinformation/3861807-issimulatedbysoftware).
+        isEmulated:
+          type: boolean
+          description: Indica se o dispositivo é emulado ou real.
+        isMonkeyRunner:
+          type: boolean
+          description: Indica o uso do MonkeyRunner.
+        isCharging:
+          type: boolean
+          description: |
+            Indica se a bateria do dispositivo está sendo carregada.
+            
+            [Android] Informação obtida através do [link](https://developer.android.com/reference/android/os/BatteryManager).
+            
+            [iOS] Informações obtida através do [link](https://developer.apple.com/documentation/uikit/uidevice/1620045-batterymonitoringenabled/).
+        antennaInformation:
+          type: string
+          description: Indica em qual antena o dispositivo está conectado.
+          example: 'CellIdentityLte:{ mCi=2******60 mPci=274 mTac=5***1 mEarfcn=9510 mBands=[28] mBandwidth=2147483647 mMcc=724 mMnc=10 mAlphaLong=VIVO mAlphaShort=VIVO mAdditionalPlmns={} mCsgInfo=null}, CellIdentityLte:{ mCi=1*****01 mPci=361 mTac=3***6 mEarfcn=9410 mBands=[28]mBandwidth=2147483647 mMcc=724 mMnc=03 mAlphaLong=TIMBRASIL mAlphaShort=TIMBRASIL mAdditionalPlmns={} mCsgInfo=null}'
+        isUsbConnected:
+          type: boolean
+          description: Indica se o dispositivo está conectado a outro dispositivo via USB.
+        integrity:
+          type: object
+          description: |
+            Informa a integridade do dispositivo e app.  
+            No Android, conforme documentação Play API Integrity - [Android](https://developer.android.com/google/play/integrity/overview?hl=pt-br).  
+            No iOS, conforme documentação App Attest [iOS](https://developer.apple.com/documentation/devicecheck/establishing_your_app_s_integrity)
+          properties:
+            appRecognitionVerdict:
+              type: string
+              description: Informa a integridade do app
+              example: PLAY_RECOGNIZED
+            deviceRecognitionVerdict:
+              type: string
+              description: Informa a integridade do dispositivo
+              example: '[\"MEETS_DEVICE_INTEGRITY\"]'
     CreditorAccountConsent:
       type: object
       description: |
@@ -2115,8 +2304,11 @@ components:
     ConsentEdition:
       type: object
       required:
+        - riskSignals
         - creditors
       properties:
+        riskSignals:
+          $ref: '#/components/schemas/RiskSignalsConsentEdition'
         creditors:
           type: array
           minItems: 1
