@@ -593,46 +593,6 @@ components:
         - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
         - ACORDOS_COMPENSACAO
       example: CESSAO_DIREITOS_CREDITORIOS
-    LinksContractId:
-      type: object
-      description: Referências para outros recusos da API requisitada.
-      required:
-        - self
-      properties:
-        self:
-          type: string
-          format: url
-          maxLength: 2000
-          description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-        first:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        prev:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        next:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        last:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     Links:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -1420,7 +1380,7 @@ components:
         data:
           $ref: '#/components/schemas/LoansContract'
         links:
-          $ref: '#/components/schemas/LinksContractId'
+          $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
     ResponseLoansInstalments:
