@@ -569,7 +569,7 @@ components:
     EnumContractProductSubTypeCategory:
       type: string
       description: |
-        Categoria para classificação específica relacionada com a submodalidade do produto. Atenção: o preenchimento com o enum CREDITO_PESSOAL_CLEAN, quando aplicável, será obrigatório à partir da publicação da versão 2.4.0 da API Empréstimos, já o enum CONSIGNADO_SIAPE passará a ser de envio obrigatório em data posterior. Demais submodalidades devem ser classificadas na opção OUTROS
+        Categoria para classificação específica relacionada com a submodalidade do produto. Atenção: o preenchimento com o enum CREDITO_PESSOAL_CLEAN, quando aplicável, será obrigatório à partir da publicação da versão 2.5.0 da API Empréstimos, já o enum CONSIGNADO_SIAPE passará a ser de envio obrigatório em data posterior. Demais submodalidades devem ser classificadas na opção OUTROS
       enum:
         - CREDITO_PESSOAL_CLEAN
         - CONSIGNADO_SIAPE
@@ -593,46 +593,6 @@ components:
         - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
         - ACORDOS_COMPENSACAO
       example: CESSAO_DIREITOS_CREDITORIOS
-    LinksContractId:
-      type: object
-      description: Referências para outros recusos da API requisitada.
-      required:
-        - self
-      properties:
-        self:
-          type: string
-          format: url
-          maxLength: 2000
-          description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-        first:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        prev:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        next:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        last:
-          type: string
-          format: uri
-          maxLength: 2000
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     Links:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -938,8 +898,6 @@ components:
         - taxPeriodicity
         - calculation
         - referentialRateIndexerType
-        - preFixedRate
-        - postFixedRate
       properties:
         taxType:
           $ref: '#/components/schemas/EnumContractTaxType'
@@ -969,7 +927,9 @@ components:
           minLength: 8
           example: '0.600000'
           description: |
-            Taxa pré fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
+            Taxa pré fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+            
+            [Restrição] Este campo é de envio obrigatório caso não seja enviado o campo postFixedRate.
         postFixedRate:
           type: string
           pattern: '^\d{1,2}\.\d{6}$'
@@ -977,7 +937,9 @@ components:
           maxLength: 9
           minLength: 8
           description: |
-            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000). Para taxas pós fixadas necessário informar o indexador (campo referentialRateIndexerSubType).
+            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Para taxas pós fixadas necessário informar o indexador (campo referentialRateIndexerSubType).
+            
+            [Restrição] Este campo é de envio obrigatório caso não seja enviado o campo preFixedRate.
           example: '0.550000'
         additionalInfo:
           type: string
@@ -1418,7 +1380,7 @@ components:
         data:
           $ref: '#/components/schemas/LoansContract'
         links:
-          $ref: '#/components/schemas/LinksContractId'
+          $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
     ResponseLoansInstalments:
@@ -1472,6 +1434,11 @@ components:
       maxLength: 36
       example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
       description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+    XV:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0
+      description: 'Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2'        
   parameters:
     Authorization:
       name: Authorization
@@ -1581,6 +1548,9 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          schema:
+            $ref: '#/components/schemas/XV'
       content:
         application/json:
           schema:
@@ -1591,6 +1561,9 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          schema:
+            $ref: '#/components/schemas/XV'
       content:
         application/json:
           schema:
@@ -1601,6 +1574,9 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          schema:
+            $ref: '#/components/schemas/XV'
       content:
         application/json:
           schema:
@@ -1611,6 +1587,9 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          schema:
+            $ref: '#/components/schemas/XV'
       content:
         application/json:
           schema:
@@ -1621,6 +1600,9 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          schema:
+            $ref: '#/components/schemas/XV'
       content:
         application/json:
           schema:
