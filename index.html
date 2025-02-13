@@ -1,111 +1,338 @@
 <html>
+    <head>
+        <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css"
+        />
 
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+        <style>
+            .container {
+                margin-top: 100px;
+            }
 
-    <style>
-        .container {
-            margin-top: 100px;
-        }
+            p {
+                text-align: center;
+                font-size: 30pt;
+                font-weight: bold;
+            }
 
-        p {
-            text-align: center;
-            font-size: 30pt;
-            font-weight: bold;
-        }
+            a:hover {
+                text-decoration: none;
+            }
+            
+            .gt-head {
+                width: 100%;
+                margin: auto;
+                padding: 10px;
+                margin-bottom: 10px;
+                font-size: 20pt;
+                float: left;
+            }
 
-        a:hover {
-            text-decoration: none;
-        }
+            .api-list-item-api-name{
+                text-align: left;
+                font-size: 17pt;
+                font-style: italic;
+            }
 
-        .api-list-item a {
-            color: white;
-        }
+            .api-list-item a {
+                color: white;
+            }
 
-        .api-list-item {
-            width: 100%;
-            margin: auto;
-            padding: 10px;
-            margin-bottom: 10px;
-        }
+            .api-list-item-api-address{
+                text-align: left;
+                font-size: 15pt;
+            }
 
-        .api-list-item:nth-child(odd) {
-            background-color: #005f78;
-        }
+            .api-list-item {
+                width: 100%;
+                margin: auto;
+                padding: 10px;
+                margin-bottom: 10px;
+            }
 
-        .api-list-item:nth-child(even) {
-            background-color: #157D96;
-        }
-    </style>
-</head>
+            .api-list-item:nth-child(odd) {
+                background-color: #005f78;
+            }
 
-<body onload="createApisLinks()">
-    <div class="container">
+            .api-list-item:nth-child(even) {
+                background-color: #157d96;
+            }
+        </style>
+    </head>
 
-    </div>
+    <body onload="createApisLinks()">
+        <div class="container"></div>
+        <script>
+            function createApisLinks() {
+                const apisByGT = [
+                {
+                    gtName: "GT - Dados do Cliente",
+                    apis: [
+                        {
+                            apiName: "Consentimento",
+                            api: "consents",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Resources",
+                            api: "resources",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Dados Cadastrais",
+                            api: "customers",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Cartão de Crédito",
+                            api: "credit-cards",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Contas",
+                            api: "accounts",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Câmbio",
+                            api: "exchanges",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Operações de crédito - Empréstimos",
+                            api: "loans",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Operações de crédito - Financiamento",
+                            api: "financings",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Operações de crédito - Adiantamento a Depositantes",
+                            api: "unarranged-accounts-overdraft",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Operações de crédito - Direitos Creditórios Descontados",
+                            api: "invoice-financings",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Investimentos - Renda Fixa Bancária",
+                            api: "bank-fixed-incomes",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Investimentos - Renda Fixa Crédito",
+                            api: "credit-fixed-incomes",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Investimentos - Renda Variável",
+                            api: "variable-incomes",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Investimentos - Títulos do Tesouro Direto",
+                            api: "treasure-titles",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Investimentos - Fundos de Investimento",
+                            api: "funds",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        }
+                    ],
+                },
+                {
+                    gtName: "GT - Serviços",
+                    apis: [
+                        {
+                            apiName: "Pagamentos",
+                            api: "payments",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Pagamentos Automáticos",
+                            api: "automatic-payments",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Pagamentos em Lotes",
+                            api: "batch-payments",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Pagamentos sem Redirecionamento",
+                            api: "enrollments",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Webhook",
+                            api: "webhook",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        }
+                    ],
+                },
+                {
+                    gtName: "GT - Dados abertos",
+                    apis: [
+                        {
+                            apiName: "Produtos e Serviços",
+                            api: "products-services",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Canais de Atendimentos",
+                            api: "channels",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Títulos de Capitalização",
+                            api: "capitalization-bonds",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Investimentos",
+                            api: "investments",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Câmbio",
+                            api: "exchange",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Credenciamento",
+                            api: "acquiring-services",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Previdência",
+                            api: "pension",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Seguros",
+                            api: "insurances",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Opendata - Contas",
+                            api: "opendata-accounts",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Opendata - Cartão de Crédito",
+                            api: "opendata-creditcards",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Opendata - Direitos Creditórios Descontados",
+                            api: "opendata-invoicefinancings",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Opendata - Empréstimos",
+                            api: "opendata-loans",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Opendata - Financiamento",
+                            api: "opendata-financings",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Opendata - Adiantamento a Depositantes",
+                            api: "opendata-unarranged",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        },
+                        {
+                            apiName: "Admin",
+                            api: "admin",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        }, 
+                        {
+                            apiName: "Comuns",
+                            api: "common",
+                            confluenceProd : "",
+                            confluenceDraft:""
+                        }
+                    ],
+                },
+                ];
 
-    <script>
-        function createApisLinks() {
-            const apis = [
-                'accounts',
-                'acquiring-services',
-                'admin',
-                'autonatic-payments',
-                'batch-payments',
-                'bank-fixed-incomes',
-                'capitalization-bonds',
-                'channels',
-                'common',
-                'consents',
-                'credit-cards',
-                'credit-fixed-incomes',
-                'customers',
-                'enrollments',
-                'exchange',
-                'exchanges',
-                'funds',
-                'financings',
-                'insurances',
-                'investments',
-                'invoice-financings',
-                'loans',
-                'opendata-loans',
-                'opendata-creditcards',
-                'opendata-financings', 
-                'opendata-invoicefinancings',
-                'opendata-creditcards',  
-                'opendata-accounts',
-                'participants',
-                'payments',
-                'pension',
-                'products-services',
-                'resources',
-                'unarranged-accounts-overdraft',
-                'treasure-titles',
-                'variable-incomes',
-                'webhook',
-            ]
+                let html = "<p>Open API</p>";
 
-            let html = '<p>Open API</p>';
+                apisByGT.forEach((gt) => {
+                    apisSorted = gt.apis.sort((a, b) => {
+                        if (a.apiName > b.apiName)
+                            return 1;
+                        if (a.apiName < b.apiName)
+                            return -1;
+                        return 0;
+                    });
 
-            apis.forEach(api => {
-                html +=
-                    `  
-                    <div class="col-sm-2 api-list-item">
-                        <a href="swagger-apis/${api}">
-                            <div> 
-                                ${api}
-                            </div>
-                        </a>
-                    </div>
-                    `;
-            });
+                    let apiHtml = "";
+                    apisSorted.forEach((api) => {
+                        apiHtml += `<div class="col-sm-12 api-list-item">
+                                            <a href="swagger-apis/${api.api}">
+                                                <div class="api-list-item-api-name"> 
+                                                    ${api.apiName}
+                                                </div>
+                                                <div class="api-list-item-api-address">  
+                                                    ${api.api}
+                                                </div>
+                                            </a>
+                                        </div>`;
+                    });
 
-            const container = document.getElementsByClassName('container')[0];
-
-            container.innerHTML = html;
-        }
-    </script>
-</body>
-
+                    html += `  <div class="col-md-4 gt-head">
+                                    ${gt.gtName}
+                                ${apiHtml}
+                                </div>
+                            `;
+                });
+                const container = document.getElementsByClassName("container")[0];  
+                container.innerHTML = html;
+            }
+        </script>
+    </body>
 </html>

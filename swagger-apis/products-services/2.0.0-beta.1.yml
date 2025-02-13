@@ -2,7 +2,7 @@
 info:
   title: API's OpenData do Open Finance Brasil
   description: As API's descritas neste documento são referentes as API's da fase OpenData do Open Finance Brasil.
-  version: y.y.y
+  version: 2.0.0-beta.1
   contact:
     url: 'https://servicedesk.openbankingbrasil.org.br/Login.jsp?navLanguage=pt-BR'
 servers:
@@ -1534,12 +1534,15 @@ components:
                 - OUTROS
               description: 'Categoria atribuída a um cartão de pagamento, sob uma certa denominação, que lhe agrega um conjunto de vantagens, diferenciando-o de acordo com o perfil do portador. Essa categoria é definida pelo BACEN e está contida no documento de nome ''Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento  Emissores'''
               example: PLATINUM
-            additionalInfo:
+            typeAdditionalInfo:
               type: string
-              maxLength: 50
+              maxLength: 140
               pattern: '[\w\W\s]*'
-              description: 'Informações complementares se tipo de Cartão ''OUTROS''. Campo deve ser obrigatoriamente preenchido se selecionado ''OUTROS'''
-              example: 'NA'
+              description: |
+                Campo livre para preenchimento das informações adicionais referente ao campo type.
+
+                [Restrição] Obrigatório quando "type” for igual “OUTROS“.
+              example: 'Informações adicionais'
         creditCard:
           type: object
           required:
@@ -1560,12 +1563,15 @@ components:
                 - OUTRAS
               description: 'Categoria de Bandeiras de Cartões de Crédito (Instituidor do arranjo de pagamento). Bandeira é a detentora de todos os direitos e deveres da utilização da marca estampada no cartão, inclusive as bandeiras pertencentes aos emissores. p.ex. "American Express", "Diners Club" Essas bandeiras estão definidas em documento do BACEN de nome "Elaboração e Remessa de Informações Relativas aos Cartões de Pagamento  Emissores"'
               example: MASTERCARD
-            additionalInfo:
+            networkAdditionalInfo:
               type: string
-              maxLength: 50
+              maxLength: 140
               pattern: '[\w\W\s]*'
-              description: "Texto livre para especificar categoria de bandeira marcada como 'OUTRAS'. Campo deve ser obrigatoriamente preenchido se campo network vier selecionado como 'OUTROS'"
-              example: 'NA'
+              description: |
+                Campo livre para preenchimento das informações adicionais referente ao campo network.
+
+                [Restrição] Obrigatório quando "network” for igual “OUTROS“.
+              example: 'Informações adicionais'
     CreditCardRewardsProgram:
       type: object
       required:
@@ -1656,12 +1662,15 @@ components:
             - OUTROS
           description: Lista de outras operações de crédito
           example: SAQUE_A_CREDITO
-        additionalInfo:
+        codeAdditionalInfo:
           type: string
-          maxLength: 50
+          maxLength: 140
           pattern: '[\w\W\s]*'
-          description: Campo Texto para descrever outras operações de crédito marcadas como 'OUTROS'. Se o campo 'code' vier selecionado com 'OUTROS' é obrigatório o preenchimento do additionalInfo
-          example: NA
+          description: |
+            Campo livre para preenchimento das informações adicionais referente ao campo code.
+
+            [Restrição] Obrigatório quando "code ” for igual “OUTROS“.
+          example: 'Informações adicionais'
     PersonalCreditCardResponse:
       type: object
       required:
