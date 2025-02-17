@@ -316,6 +316,7 @@ paths:
         - Os campos que são passíveis de edição e suas regras podem ser encontrados através do [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/628195665);
         - A edição é possível apenas em casos de consentimento para Pix Automático (“automatic” escolhido no oneOf do objeto “recurringConfiguration”);
         - O envio do item "/data/creditors/name" atualizará o nome do recebedor em todos os elementos do array.
+        - Caso seja editado o prazo de expiração do consentimento e já existam pagamentos agendados para dias posteriores à nova data definida, estes pagamentos devem ser cancelados.
 
         3 - Informações sobre a rejeição:  
         - Caso haja necessidade de cancelamento de um consentimento ainda não autorizado, o iniciador poderá chamar o endpoint para mover o consentimento para REJECTED.
