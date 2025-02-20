@@ -28,6 +28,7 @@ tags:
     description:  Permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições. 
   - name: Concurrency Management
     description: 'Para evitar o envio de múltiplas solicitações de portabilidade para o mesmo contrato, as instituições devem implementar mecanismos que permitam: recusar solicitações simultâneas de portabilidade de crédito referentes ao mesmo contrato, seja por meio da registradora ou do Open Finance Brasil (OFB), priorizando sempre a solicitação mais antiga.'
+  - name: Account data
 paths:
   /portabilities:
     post:
@@ -147,6 +148,48 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/OKResponsePortabilitiesByPortabilityId'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+  /account-data:
+    get:
+      tags:
+        - Account data
+      summary: Obtém os dados necessários para realização do pagamento da operação via TED.
+      description: Método responsável por recuperar informações de contas  para realização do pagamento via TED.
+      operationId: getAccountDataCreditPortability
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAccountData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1141,6 +1184,42 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'                             
+    ResponseAccountData:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Dados para realização do pagamento da operação via TED
+          required:
+            - strCode
+          properties:
+            strCode:
+              type: object
+              required:
+                - ispb
+                - agency
+                - accountNumber
+              properties:
+                ispb:
+                  type: number
+                  example: 68741
+                  description: Número do ISPB da Instituição credora
+                agency:
+                  type: number
+                  description: Número da Agência creditada
+                  example: 65784
+                accountNumber:
+                  type: number
+                  description: Número da conta bancária da credora
+                  example: 15324
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
     LoansContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -1526,6 +1605,23 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponsePortabilitiesByPortabilityId'
+    OKResponseAccountData:
+      description: Dados para realização do pagamento da operação via TED.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseAccountData'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       headers:
