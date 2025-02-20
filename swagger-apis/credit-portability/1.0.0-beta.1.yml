@@ -29,6 +29,7 @@ tags:
   - name: Concurrency Management
     description: 'Para evitar o envio de múltiplas solicitações de portabilidade para o mesmo contrato, as instituições devem implementar mecanismos que permitam: recusar solicitações simultâneas de portabilidade de crédito referentes ao mesmo contrato, seja por meio da registradora ou do Open Finance Brasil (OFB), priorizando sempre a solicitação mais antiga.'
   - name: Account data
+  - name: Payments
 paths:
   /portabilities:
     post:
@@ -216,6 +217,62 @@ paths:
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
+  /portabilities/{portabilityId}/payment:
+    post:
+      tags:
+        - Payments
+      summary: Comunica a Instituição Credora a respeito da liquidação da portabilidade de crédito.
+      description: Comunica a Instituição Credora a respeito da liquidação da portabilidade de crédito.
+      operationId: creditPortabilityPostPortabilitiesPayment
+      parameters:
+        - $ref: '#/components/parameters/portabilityId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: '#/components/schemas/RequestCreditPortabilityPayment'
+        description: Payload para comunicar a liquidação efetuada pela proponente a credora e iniciar a proxima etapa do fluxo de portabilidade de crédito.
+        required: true
+      responses:
+        '202':
+          $ref: '#/components/responses/POSTResponseCreditPortabilityPayment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+      - NonRedirectAuthorizationCode:
+            - openid
+            - 'enrollment:enrollmentId'
+            - payments
+            - nrp-consents
 components:
   schemas:
     RequestCreditPortability:
@@ -1367,6 +1424,108 @@ components:
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
 
             [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
+    RequestCreditPortabilityPayment:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Objeto para notificar a respeito da liquidação efetuada pela proponente a credora
+          required:
+            - portabilityId
+            - paymentDateTime
+            - paymentAmount
+            - transactionId
+          properties:
+              portabilityId:
+                type: string
+                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                maxLength: 100
+                minLength: 1
+                example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
+                description: "Código identificador do pedido de portabilidade realizado."
+              paymentDateTime:
+                type: string
+                maxLength: 20
+                pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                example: "2020-07-21T08:30:00Z"
+                description: |
+                  Data e hora em que o pagamento a instituição credora foi realizado pela instituição proponente.
+              paymentAmount:
+                type: string
+                format: double
+                pattern: '^\d{1,15}\.\d{2,4}$'
+                maxLength: 20
+                minLength: 4
+                example: '1000.0400'
+                description: Valor pago para liquidação do contrato de empréstimo.
+              transactionId:
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 20
+                minLength: 1
+                example: 'STR20181108000000013'
+                description: |
+                  Identificador da transação utilizada para Proponente liquidar portabilidade de crédito com a Credora.
+                  
+                  No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)".
+    POSTResponseCreditPortabilityPayment:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          minItems: 0
+          description: Objeto para notificar a respeito da liquidação efetuada pela proponente a credora
+          required:
+            - portabilityId
+            - paymentDateTime
+            - paymentAmount
+            - transactionId
+          properties:
+              portabilityId:
+                type: string
+                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                maxLength: 100
+                minLength: 1
+                example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
+                description: "Código identificador do pedido de portabilidade realizado."
+              paymentDateTime:
+                type: string
+                maxLength: 20
+                pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                example: "2020-07-21T08:30:00Z"
+                description: |
+                  Data e hora em que o pagamento a instituição credora foi realizado pela instituição proponente.
+              paymentAmount:
+                type: string
+                format: double
+                pattern: '^\d{1,15}\.\d{2,4}$'
+                maxLength: 20
+                minLength: 4
+                example: '1000.0400'
+                description: Valor pago para liquidação do contrato de empréstimo.
+              transactionId:
+                type: string
+                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                maxLength: 20
+                minLength: 1
+                example: 'STR20181108000000013'
+                description: |
+                  Identificador da transação utilizada para Proponente liquidar portabilidade de crédito com a Credora.
+                  
+                  No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)".
+        meta:
+            type: object
+            properties:
+              requestDateTime:
+                description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+                type: string
+                maxLength: 20
+                format: date-time
+                example: '2021-05-21T08:30:00Z'
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -1553,6 +1712,18 @@ components:
           tokenUrl: 'https://authserver.example/token'
           scopes:
             credit-portability: Escopo necessário para acesso à API Portabilidade de Crédito.
+    NonRedirectAuthorizationCode:
+      type: oauth2
+      description: Fluxo OAuth necessário para que a Instituição Proponente possa solicitar o pedido de portabilidade sem redirecionamento.
+      flows:
+        authorizationCode:
+          authorizationUrl: 'https://authserver.example/token'
+          tokenUrl: 'https://authserver.example/token'
+          scopes:
+            payments: Escopo necessário para acesso à  API Payment Initiation.
+            openid: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
+            'enrollment:enrollmentId': Permite realizar atualização de um registro com a permissão do cliente.
+            nrp-consents: Consentimento para pagamentos sem redirecionamento.      
   responses:
     POSTResponseCreditPortability:
       description: Dados dos contratos de empréstimos obtidos com sucesso.
@@ -1622,6 +1793,23 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseAccountData'
+    POSTResponseCreditPortabilityPayment:
+      description: Dados dos contratos de empréstimos obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/POSTResponseCreditPortabilityPayment'
     BadRequest:
       description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
       headers:
