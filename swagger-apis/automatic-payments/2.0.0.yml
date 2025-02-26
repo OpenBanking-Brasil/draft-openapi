@@ -317,6 +317,8 @@ paths:
         - Os campos que são passíveis de edição e suas regras podem ser encontrados através do [link](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/628195665);
         - A edição é possível apenas em casos de consentimento para Pix Automático (“automatic” escolhido no oneOf do objeto “recurringConfiguration”);
         - O envio do item "/data/creditors/name" atualizará o nome do recebedor em todos os elementos do array.
+        - Caso consentimento seja de valor fixo (campo “/data/recurringConfiguration/automatic/fixedAmount” preenchido) não é permitida a edição do campo “/data/recurringConfiguration/automatic/maximumVariableAmount”.
+        - Caso o recebedor tenha definido um piso para o limite a ser estipulado pelo pagador (campo “/data/recurringConfiguration/automatic/minimumVariableAmount” preenchido), o valor máximo de limite por transação definido pelo usuário pagador (campo “/data/recurringConfiguration/automatic/maximumVariableAmount”) não pode ser menor que o valor estipulado pelo recebedor.
 
         3 - Informações sobre a rejeição:  
         - Caso haja necessidade de cancelamento de um consentimento ainda não autorizado, o iniciador poderá chamar o endpoint para mover o consentimento para REJECTED.
