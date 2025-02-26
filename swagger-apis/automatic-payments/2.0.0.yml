@@ -2563,8 +2563,9 @@ components:
               example: '100000.12'
               description: |
                 Valor definido pelo usuário recebedor. 
-                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
-                Não pode ser preenchido nas autorizações de valor fixo.
+                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização (campo “maximumVariableAmount”), ele não poderá ser inferior ao piso definido pelo usuário recebedor.
+                Não pode ser preenchido nas autorizações de valor fixo, ou seja, com campo “/data/recurringConfiguration/automatic/fixedAmount”. 
+                Não representa um valor mínimo de cobrança para o pagamento.
             isRetryAccepted:
               type: boolean
               description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
@@ -2648,8 +2649,9 @@ components:
               example: '100000.12'
               description: |
                 Valor definido pelo usuário recebedor. 
-                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização, ele não poderá ser inferior ao valor mínimo (piso) definido pelo usuário recebedor. 
-                Não pode ser preenchido nas autorizações de valor fixo.
+                Se o usuário pagador atribuir um valor máximo para os pagamentos daquela autorização (campo “maximumVariableAmount”), ele não poderá ser inferior ao piso definido pelo usuário recebedor.
+                Não pode ser preenchido nas autorizações de valor fixo, ou seja, com campo “/data/recurringConfiguration/automatic/fixedAmount”. 
+                Não representa um valor mínimo de cobrança para o pagamento.
             isRetryAccepted:
               type: boolean
               description: Indica se é permitido pelo cliente recebedor fazer tentativas de pagamento (extradia), conforme as regras estabelecidas no arranjo Pix.
