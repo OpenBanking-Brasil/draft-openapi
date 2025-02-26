@@ -1037,7 +1037,7 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-01-01'
-          description: Data em que o pagamento será realizado.
+          description: Data em que o pagamento será realizado. Uma string com a utilização de timezone UTC-3 (UTC time format).
         payment:
           $ref: '#/components/schemas/PaymentPix'
         creditorAccount:
@@ -3913,7 +3913,7 @@ components:
             maxLength: 10
             pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
             example: '2023-10-10'
-            description: Data em que o pagamento será realizado.
+            description: Data em que o pagamento será realizado. Uma string com a utilização de timezone UTC-3 (UTC time format).
           creationDateTime:
             type: string
             format: date-time
@@ -4059,7 +4059,7 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2023-10-10'
-          description: Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).
+          description: Data em que o pagamento será realizado. Uma string com a utilização de timezone UTC-3 (UTC time format).
         creationDateTime:
           type: string
           format: date-time
@@ -4260,7 +4260,7 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2023-10-10'
-          description: Data em que o pagamento será realizado.
+          description: Data em que o pagamento será realizado. Uma string com a utilização de timezone UTC-3 (UTC time format).
         creationDateTime:
           type: string
           format: date-time
@@ -4461,7 +4461,7 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2023-10-10'
-          description: Data em que o recurso foi criado. Uma string com a utilização de timezone UTC(UTC time format).
+          description: Data em que o pagamento será realizado. Uma string com a utilização de timezone UTC-3 (UTC time format).
         creationDateTime:
           type: string
           format: date-time
