@@ -65,6 +65,11 @@ Para o público PF (pessoa física) o campo é de envio obrigatório para contra
 - Em contratos anteriores a 2011 (para o público PJ); 
 - Público PJ de médio ou grande porte. 
 ";Texto;13;Obrigatório;^\d{1,6}\.\d{6}$;;1;1;"";Não permitido;string;0.290000;8
+/data/hasInsuranceContracted;hasInsuranceContracted;"Campo que identifica se existe seguro contratado para o Empréstimo, onde seguro contratado é true e não contratado é false.”​
+
+[Restrição] Este campo é de envio obrigatório caso o campo productSubTypeCategory seja preenchido CREDITO_PESSOAL_CLEAN.
+";Booleano;;Condicional;;;0;1;" Este campo é de envio obrigatório caso o campo productSubTypeCategory seja preenchido CREDITO_PESSOAL_CLEAN.
+";Não permitido;boolean;true;
 /data/amortizationScheduled;amortizationScheduled;"Sistema de amortização (Vide Enum):
 - SAC (Sistema de Amortização Constante) - É aquele em que o valor da amortização permanece igual até o final. Os juros cobrados sobre o parcelamento não entram nesta conta.
 - PRICE (Sistema Francês de Amortização) - As parcelas são fixas do início ao fim do contrato. Ou seja, todas as parcelas terão o mesmo valor, desde a primeira até a última. Nos primeiros pagamentos, a maior parte do valor da prestação corresponde aos juros. Ao longo do tempo, a taxa de juros vai decrescendo. Como o valor da prestação é fixo, com o passar das parcelas, o valor de amortização vai aumentando.
