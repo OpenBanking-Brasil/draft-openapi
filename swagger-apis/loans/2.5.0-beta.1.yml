@@ -792,6 +792,13 @@ components:
             - Em contratos anteriores a 2008 (para o público PF); 
             - Em contratos anteriores a 2011 (para o público PJ); 
             - Público PJ de médio ou grande porte. 
+        hasInsuranceContracted:
+          type: boolean
+          description: |
+            Campo que identifica se existe seguro contratado para o Empréstimo, onde seguro contratado é true e não contratado é false.”​
+            
+            [Restrição] Este campo é de envio obrigatório caso o campo productSubTypeCategory seja preenchido CREDITO_PESSOAL_CLEAN.
+          example: true
         amortizationScheduled:
           $ref: '#/components/schemas/EnumContractAmortizationScheduled'
         amortizationScheduledAdditionalInfo:
