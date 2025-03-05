@@ -1258,21 +1258,30 @@ components:
               type: object
               required:
                 - ispb
-                - agency
+                - branchCode
                 - accountNumber
               properties:
                 ispb:
-                  type: number
-                  example: 68741
+                  type: string
                   description: Número do ISPB da Instituição credora
-                agency:
-                  type: number
+                  pattern: '^[0-9]{8}$'
+                  example: '22896431'
+                branchCode:
+                  type: string
                   description: Número da Agência creditada
-                  example: 65784
+                  pattern: '^\d{4}$'
+                  example: '0001'
                 accountNumber:
-                  type: number
+                  type: string
                   description: Número da conta bancária da credora
-                  example: 15324
+                  pattern: '\d{8,20}$'
+                  example: '12345678'
+                checkDigit:
+                  type: string
+                  description: Dígito da conta
+                  maxLength: 1
+                  pattern: '^\w{1}$'
+                  example: 'X'
         links:
           $ref: '#/components/schemas/Links'
         meta:
