@@ -2380,15 +2380,14 @@ components:
                 identification:
                   type: string
                   maxLength: 11
-                  description: Número do documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica.
+                  description: Número do documento de identificação oficial do usuário logado na instituição iniciadora.
                   example: '11111111111'
-                  pattern: '^(?:\d{11}|\d{14})$'
+                  pattern: '^(\d{11})$'
                 rel:
                   type: string
-                  description: Tipo de documento de identificação oficial do pagador ou recebedor, pessoa natural ou jurídica.
+                  description: Tipo do documento de identificação oficial do usuário logado na instituição iniciadora.
                   enum:
                     - CPF
-                    - CNPJ
         businessEntity:
           type: object
           description: |
