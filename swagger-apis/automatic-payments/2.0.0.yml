@@ -319,6 +319,7 @@ paths:
         - O envio do item "/data/creditors/name" atualizará o nome do recebedor em todos os elementos do array.
         - Caso consentimento seja de valor fixo (campo “/data/recurringConfiguration/automatic/fixedAmount” preenchido) não é permitida a edição do campo “/data/recurringConfiguration/automatic/maximumVariableAmount”.
         - Caso o recebedor tenha definido um piso para o limite a ser estipulado pelo pagador (campo “/data/recurringConfiguration/automatic/minimumVariableAmount” preenchido), o valor máximo de limite por transação definido pelo usuário pagador (campo “/data/recurringConfiguration/automatic/maximumVariableAmount”) não pode ser menor que o valor estipulado pelo recebedor.
+        - Caso o seja editado o prazo de expiração do consentimento e já existam pagamentos agendados para dias posteriores a nova data definida, estes pagamentos devem ser cancelados.
 
         3 - Informações sobre a rejeição:  
         - Caso haja necessidade de cancelamento de um consentimento ainda não autorizado, o iniciador poderá chamar o endpoint para mover o consentimento para REJECTED.
