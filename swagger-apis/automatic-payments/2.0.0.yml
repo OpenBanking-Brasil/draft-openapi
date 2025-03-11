@@ -1043,7 +1043,47 @@ components:
         payment:
           $ref: '#/components/schemas/PaymentPix'
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccount'
+          type: object
+          description: |
+            Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
+
+            [Restrição] - Se /data/paymentReference = "zero", as informações da conta de crédito enviadas (/data/creditorAccount) devem ser iguais as presentes na conta de crédito informada na criação do consentimento(`/data/recurringConfiguration/automatic/firstPayment/creditorAccount`)
+          required:
+            - ispb
+            - number
+            - accountType
+          properties:
+            ispb:
+              type: string
+              minLength: 8
+              maxLength: 8
+              pattern: '^[0-9]{8}$'
+              example: '12345678'
+              description: |
+                Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+            issuer:
+              type: string
+              minLength: 1
+              maxLength: 4
+              pattern: '^[0-9]{1,4}$'
+              example: '1774'
+              description: |
+                Código da Agência emissora da conta sem dígito. 
+                (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+                no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+                
+                [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+            number:
+              type: string
+              minLength: 1
+              maxLength: 20
+              pattern: '^[0-9]{1,20}$'
+              example: '1234567890'
+              description: |
+                Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
+                se houver valor alfanumérico, este deve ser convertido para 0.
+            accountType:
+              $ref: '#/components/schemas/EnumAccountTypePayments'
         remittanceInformation:
           type: string
           maxLength: 140
@@ -2706,7 +2746,9 @@ components:
     FirstPayment:
       type: object
       description: |
-        Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador. Para casos em que conta recebedora e conta pagadora pertencem ao mesmo detentor, este deve garantir que a conta de crédito informada pertence ao titular do CNPJ enviado no campo “/data/creditors/cpfCnpj”. A conta de crédito informada no momento do primeiro pagamento deve ser a mesma informada dentro deste objeto. Caso não respeitado, o detentor deve rejeitar o pagamento com o motivo DETALHE_PAGAMENTO_INVALIDO, sincronamente (HTTP 422) ou assincronamente (HTTP 200). 
+        Definições para o primeiro pagamento. É considerado como o pagamento da adesão ao serviço pelo usuário pagador.
+        
+        [Restrição] Para casos em que conta recebedora e conta pagadora pertencem ao mesmo detentor (/data/debtorAccount/ispb = /data/recurringConfiguration/automatic/firstPayment/creditorAccount/ispb), o detentor deve garantir que a conta de crédito informada pertence ao titular do CNPJ enviado no campo “/data/creditors/cpfCnpj”.
       required:
         - type
         - date
@@ -4161,7 +4203,47 @@ components:
           description: |
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
-          $ref: '#/components/schemas/CreditorAccount'
+          type: object
+          description: |
+            Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
+
+            [Restrição] - Se /data/paymentReference = "zero", as informações da conta de crédito enviadas (/data/creditorAccount) devem ser iguais as presentes na conta de crédito informada na criação do consentimento(`/data/recurringConfiguration/automatic/firstPayment/creditorAccount`)
+          required:
+            - ispb
+            - number
+            - accountType
+          properties:
+            ispb:
+              type: string
+              minLength: 8
+              maxLength: 8
+              pattern: '^[0-9]{8}$'
+              example: '12345678'
+              description: |
+                Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
+            issuer:
+              type: string
+              minLength: 1
+              maxLength: 4
+              pattern: '^[0-9]{1,4}$'
+              example: '1774'
+              description: |
+                Código da Agência emissora da conta sem dígito. 
+                (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
+                no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+                
+                [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+            number:
+              type: string
+              minLength: 1
+              maxLength: 20
+              pattern: '^[0-9]{1,20}$'
+              example: '1234567890'
+              description: |
+                Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
+                se houver valor alfanumérico, este deve ser convertido para 0.
+            accountType:
+              $ref: '#/components/schemas/EnumAccountTypePayments'
         debtorAccount:
             $ref: '#/components/schemas/DebtorAccount'
         cancellation:
