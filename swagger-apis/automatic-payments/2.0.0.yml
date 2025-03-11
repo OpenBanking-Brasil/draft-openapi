@@ -2965,9 +2965,17 @@ components:
       items:
         type: object
         description: |
-          Objeto contendo os dados do recebedor (creditor). Em casos de transferências inteligentes para clientes PJ, os CNPJs informados devem possuir a mesma raiz do CNPJ enviado no campo /data/businessEntity/document/identification. Em casos de transferências inteligentes para clientes PN, deve-se aceitar apenas um item no array e este item deve conter as informações do recebedor. O CPF informado deve ser o mesmo do /data/loggedUser/document/identification. Caso alguma das regras mencionadas não sejam seguidas, o detentor deve rejeitar a solicitação (sincronamente) com o erro DETALHE_PAGAMENTO_INVALIDO, e o detalhe deve ser preenchido com a informação referente ao erro.
+          Objeto contendo os dados do recebedor (creditor).
 
-          [Restrição] Caso o consentimento de longa duração seja para o produto Pix Automático (“automatic” selecionado no oneOf do objeto “/data/recurringConfiguration”), apenas um recebedor é permitido e esse deve ser pessoa jurídica.
+          **Regras para Transferências inteligentes:**
+
+          1 - Para clientes pessoa física/natural: Deve aceitar apenas um item no array; e; O CPF informado deve ser o mesmo do `/data/loggedUser/document/identification`.
+
+          2 - Para clientes pessoa jurídica: Não há limite para quantidade de itens no array; e; O(s) CNPJ informado deve possuir a mesma raiz do CNPJ enviado no campo `/data/businessEntity/document/identification`
+
+          **Regras para Pix Automático:**
+
+          Apenas um item é permitido no array; e; O documento informado deve ser de um recebedor pessoa jurídica  
         required:
           - personType
           - cpfCnpj
