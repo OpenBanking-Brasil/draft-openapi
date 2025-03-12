@@ -1,12 +1,12 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;Conjunto de informações referentes à Proposta de Portabilidade de Crédito da Proponente para a Credora;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/portabilityId;portabilityId;Código identificador do pedido de portabilidade realizado.;Texto;100;Obrigatório;^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$;;1;1;"";Não permitido;string;54d5348c-1a3f-4ff4-a8a8-d0724fb806c6;1
-/data/customerContact;customerContact;Dados de contato do cliente;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
+/data/portabilityId;portabilityId;Código identificador do pedido de portabilidade realizado.;Texto;100;Obrigatório;^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$;;1;1;"";Não permitido;string;54d5348c-1a3f-4ff4-a8a8-d0724fb806c6;1
+/data/customerContact;customerContact;Dados de contato do cliente.;Lista;;Obrigatório;;;1;N;"";Não permitido;array;;
 /data/customerContact/type;type;Tipo do contato do cliente.;Texto;;Obrigatório;;"TELEFONE 
 EMAIL";1;1;"";Não permitido;string;;
 /data/customerContact/value;value;;Texto;;Obrigatório;^([1-9]{2}(?:[2-8]|9[0-9])[0-9]{3}[0-9]{4})|([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})$;;1;1;"";Não permitido;string;11999999999;
-/data/institution;institution;Informações sobre proponente e credora participantes do presente pedido de portabilidade de crédito;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/institution/creditor;creditor;Informações sobre a instituição credora;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/institution;institution;Informações sobre proponente e credora participantes do presente pedido de portabilidade de crédito.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/institution/creditor;creditor;Informações sobre a instituição credora.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/institution/creditor/companyName;companyName;Nome da Instituição Credora.;Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Instituição Credora;
 /data/institution/creditor/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;\d{14}$;;1;1;"";Não permitido;string;21128159000166;
 /data/institution/proposing;proposing;Informações sobre a instituição proponente;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -35,7 +35,7 @@ Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) po
 
 - Código do contrato: 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
 ";Texto;67;Obrigatório;^[\w\W]{22,67}$;;1;1;"";Não permitido;string;92792126019929279212650822221989319252576;22
-/data/proposedContract;proposedContract;Proposta da Proponente para Portabilidade de Crédito;Objeto;;Obrigatório;;;1;;"";Não permitido;object;;
+/data/proposedContract;proposedContract;Proposta da Proponente para Portabilidade de Crédito.;Objeto;;Obrigatório;;;1;;"";Não permitido;object;;
 /data/proposedContract/cet;cet;"CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
 
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
@@ -131,8 +131,8 @@ TRFC_PRE
 TRFC_POS 
 OUTROS_INDE";0;1;"";Não permitido;string;;
 /data/proposedContract/interestRates/referentialRateIndexerAdditionalInfo;referentialRateIndexerAdditionalInfo;"Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
-[Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionada o tipo ou subtipo OUTRO.
-";Texto;140;Condicional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionada o tipo ou subtipo OUTRO.
+[Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionado o tipo ou subtipo `OUTRO`.
+";Texto;140;Condicional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionado o tipo ou subtipo `OUTRO`.
 ";Não permitido;string;Informações adicionais;
 /data/proposedContract/interestRates/preFixedRate;preFixedRate;"Taxa pré fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
 ";Texto;9;Obrigatório;^\d{1,2}\.\d{6}$;;1;1;"";Não permitido;string;0.600000;8
@@ -185,7 +185,7 @@ OUTROS";1;1;"";Não permitido;string;JUROS_REMUNERATORIOS_POR_ATRASO;
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 ";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.070000;8
 /data/proposedContract/digitalSignatureProof;digitalSignatureProof;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/proposedContract/digitalSignatureProof/documentId;documentId;Código identificador do Documento assinado na instituição proponente.;Texto;100;Obrigatório;^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$;;1;1;"";Não permitido;string;54d5348c-1a3f-4ff4-a8a8-d0724fb806c6;1
+/data/proposedContract/digitalSignatureProof/documentId;documentId;Código identificador do Documento assinado na instituição proponente.;Texto;100;Obrigatório;^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$;;1;1;"";Não permitido;string;54d5348c-1a3f-4ff4-a8a8-d0724fb806c6;1
 /data/proposedContract/digitalSignatureProof/signatureDateTime;signatureDateTime;"Data e hora em que o contrato foi assinado pelo cliente  no canal digital da Instituição Proponente
 ";Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
 /data/status;status;"Informação sobre o status de um pedido de portabilidade de crédito, onde:
@@ -266,6 +266,6 @@ para discussão e mapeamento em futuras versões.
 
 [RESTRIÇÃO] Objeto de preenchimento obrigatório quando campo `reasonType` for igual a `RETENCAO_DO_CLIENTE`
 ";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
-/data/statusReason/digitalSignatureProof/documentId;documentId;Código identificador do Documento assinado na instituição proponente.;Texto;100;Obrigatório;^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$;;1;1;"";Não permitido;string;54d5348c-1a3f-4ff4-a8a8-d0724fb806c6;1
+/data/statusReason/digitalSignatureProof/documentId;documentId;Código identificador do Documento assinado na instituição proponente.;Texto;100;Obrigatório;^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$;;1;1;"";Não permitido;string;54d5348c-1a3f-4ff4-a8a8-d0724fb806c6;1
 /data/statusReason/digitalSignatureProof/signatureDateTime;signatureDateTime;"Data e hora em que o contrato foi assinado pelo cliente  no canal digital da Instituição Proponente
 ";Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
