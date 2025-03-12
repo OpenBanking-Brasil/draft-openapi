@@ -136,7 +136,7 @@ paths:
     get:
       tags:
         - Credit Portability
-      summary: Consulta portabilida de crédito através da propriedade portabilityId.
+      summary: Consulta portabilidade de crédito através da propriedade portabilityId.
       description: Endpoint responsável por consultar pedidos de portabilidade de crédito.
       operationId: creditPortabilityGetPortabilitiesByPortabilityId
       parameters:
@@ -788,16 +788,16 @@ components:
             - statusUpdateDateTime
           properties:
               portabilityId:
-                description: "Código identificador do pedido de portabilidade realizado."
+                description: Código identificador do pedido de portabilidade realizado.
                 type: string
-                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
                 maxLength: 100
                 minLength: 1
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
               customerContact:
                 type: array
                 minItems: 1
-                description: Dados de contato do cliente
+                description: Dados de contato do cliente.
                 items:
                   type: object
                   required:
@@ -816,14 +816,14 @@ components:
                       example: "11999999999"
               institution:
                 type: object
-                description: Informações sobre proponente e credora participantes do presente pedido de portabilidade de crédito
+                description: Informações sobre proponente e credora participantes do presente pedido de portabilidade de crédito.
                 required:
                   - creditor
                   - proposing
                 properties:
                   creditor:
                     type: object
-                    description: Informações sobre a instituição credora
+                    description: Informações sobre a instituição credora.
                     required:
                       - companyName
                       - companyCnpj
@@ -924,7 +924,7 @@ components:
               proposedContract:
                 type: object
                 minItems: 1
-                description: Proposta da Proponente para Portabilidade de Crédito
+                description: Proposta da Proponente para Portabilidade de Crédito.
                 required:
                   - cet
                   - amortizationScheduled
@@ -1096,7 +1096,7 @@ components:
                     properties:
                       documentId:
                         type: string
-                        pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
                         maxLength: 100
                         minLength: 1
                         example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
@@ -1220,7 +1220,7 @@ components:
                     properties:
                       documentId:
                         type: string
-                        pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
                         maxLength: 100
                         minLength: 1
                         example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
@@ -1400,7 +1400,7 @@ components:
           type: string
           description: |
             Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
-            [Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionada o tipo ou subtipo OUTRO.
+            [Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionado o tipo ou subtipo `OUTRO`.
           maxLength: 140
           pattern: '^(?!\s)[\w\W\s]*[^\s]$'
           example: Informações adicionais
@@ -1615,7 +1615,7 @@ components:
     Authorization:
       name: Authorization
       in: header
-      description: Cabeçalho HTTP padrão. Permite que as credenciais sejam fornecidas dependendo do tipo de recurso solicitado
+      description: Cabeçalho HTTP padrão. Permite que as credenciais sejam fornecidas dependendo do tipo de recurso solicitado.
       required: true
       schema:
         type: string
@@ -1769,7 +1769,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseConcurrancyManagement'
     OKResponsePortabilitiesByPortabilityId:
-      description: Dados dos contratos de empréstimos obtidos com sucesso.
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1820,7 +1820,7 @@ components:
           schema:
             $ref: '#/components/schemas/POSTResponseCreditPortabilityPayment'
     BadRequest:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
+      description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1837,7 +1837,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     Forbidden:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
+      description: O token tem escopo incorreto ou uma política de segurança foi violada.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1854,7 +1854,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     InternalServerError:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
+      description: Ocorreu um erro no gateway da API ou no microsserviço.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1871,7 +1871,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     GatewayTimeout:
-      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido
+      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1888,7 +1888,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     Locked:
-      description: Locked
+      description: Locked.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1905,7 +1905,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     MethodNotAllowed:
-      description: O consumidor tentou acessar o recurso com um método não suportado
+      description: O consumidor tentou acessar o recurso com um método não suportado.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1922,7 +1922,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     NotAcceptable:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
+      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1939,7 +1939,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     NotFound:
-      description: O recurso solicitado não existe ou não foi implementado
+      description: O recurso solicitado não existe ou não foi implementado.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1956,7 +1956,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     TooManyRequests:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
+      description: A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1973,7 +1973,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     Unauthorized:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
+      description: Cabeçalho de autenticação ausente/inválido ou token inválido.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -1990,7 +1990,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     UnprocessableEntity:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
+      description: A sintaxe da requisição está correta, mas não foi possível processar as instruções presentes.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -2007,7 +2007,7 @@ components:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     SiteIsOverloaded:
-      description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
+      description: O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.
       headers:
         x-fapi-interaction-id:
           description: |
