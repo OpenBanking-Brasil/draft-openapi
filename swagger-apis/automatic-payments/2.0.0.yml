@@ -3310,7 +3310,10 @@ components:
               pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
               maxLength: 20
             expirationDateTime:
-              description: Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              description: |
+                Data e hora em que o consentimento deve deixar de ser válido. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC (UTC time format).
+
+                [Restrição] Caso o consentimento seja para Pix Automático ("automatic" selecionado no oneOf "/data/recurringConfiguration/") o horário de expiração do consentimento precisa ser às 23:59:59 (UTC).
               type: string
               format: date-time
               example: '2021-05-21T08:30:00Z'
