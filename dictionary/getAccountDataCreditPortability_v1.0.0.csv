@@ -1,6 +1,7 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;Dados para realização do pagamento da operação via TED;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/strCode;strCode;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/strCode/ispb;ispb;Número do ISPB da Instituição credora;Número;;Obrigatório;;;1;1;"";Não permitido;number;68741;
-/data/strCode/agency;agency;Número da Agência creditada;Número;;Obrigatório;;;1;1;"";Não permitido;number;65784;
-/data/strCode/accountNumber;accountNumber;Número da conta bancária da credora;Número;;Obrigatório;;;1;1;"";Não permitido;number;15324;
+/data/strCode/ispb;ispb;Número do ISPB da Instituição credora;Texto;;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;22896431;
+/data/strCode/branchCode;branchCode;Número da Agência creditada;Texto;;Obrigatório;^\d{4}$;;1;1;"";Não permitido;string;0001;
+/data/strCode/accountNumber;accountNumber;Número da conta bancária da credora;Texto;;Obrigatório;\d{8,20}$;;1;1;"";Não permitido;string;12345678;
+/data/strCode/checkDigit;checkDigit;Dígito da conta;Texto;1;Opcional;^\w{1}$;;0;1;"";Não permitido;string;X;
