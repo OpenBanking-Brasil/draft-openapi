@@ -2364,8 +2364,11 @@ components:
           items:
             type: object
             description: |
-              Objeto contendo os dados do recebedor (creditor).
-
+              Objeto contendo os dados do recebedor (creditor). Em casos de transferências inteligentes para clientes PJ, os CNPJs informados devem possuir a mesma raiz do CNPJ enviado no campo /data/businessEntity/document/identification. 
+              Em casos de transferências inteligentes para clientes PN, deve-se aceitar apenas um item no array e este item deve conter as informações do recebedor. 
+              O CPF informado deve ser o mesmo do /data/loggedUser/document/identification. 
+              Caso alguma das regras mencionadas não sejam seguidas, o detentor deve rejeitar a solicitação (sincronamente) com o erro DETALHE_PAGAMENTO_INVALIDO, e o detalhe deve ser preenchido com a informação referente ao erro. 
+              
               [Restrição] Caso o consentimento de longa duração seja para o produto Pix Automático (“automatic” selecionado no oneOf do objeto “/data/recurringConfiguration”), apenas um recebedor é permitido e esse deve ser pessoa jurídica.
             properties:
               name:
@@ -3015,9 +3018,13 @@ components:
 
           **Regras para Transferências inteligentes:**
 
-          1 - Para clientes pessoa física/natural: Deve aceitar apenas um item no array; e; O CPF informado deve ser o mesmo do `/data/loggedUser/document/identification`.
+          1. Para clientes pessoa física/natural: 
+          - Deve aceitar apenas um item no array; e; 
+          - O CPF informado deve ser o mesmo do `/data/loggedUser/document/identification`.
 
-          2 - Para clientes pessoa jurídica: Não há limite para quantidade de itens no array; e; O(s) CNPJ informado deve possuir a mesma raiz do CNPJ enviado no campo `/data/businessEntity/document/identification`
+          2. Para clientes pessoa jurídica: 
+          - Não há limite para quantidade de itens no array; e; 
+          - O(s) CNPJ informado deve possuir a mesma raiz do CNPJ enviado no campo `/data/businessEntity/document/identification`
 
           **Regras para Pix Automático:**
 
@@ -4216,47 +4223,7 @@ components:
           description: |
             Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
         creditorAccount:
-          type: object
-          description: |
-            Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
-
-            [Restrição] - Se /data/paymentReference = "zero", as informações da conta de crédito enviadas (/data/creditorAccount) devem ser iguais as presentes na conta de crédito informada na criação do consentimento(`/data/recurringConfiguration/automatic/firstPayment/creditorAccount`)
-          required:
-            - ispb
-            - number
-            - accountType
-          properties:
-            ispb:
-              type: string
-              minLength: 8
-              maxLength: 8
-              pattern: '^[0-9]{8}$'
-              example: '12345678'
-              description: |
-                Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
-            issuer:
-              type: string
-              minLength: 1
-              maxLength: 4
-              pattern: '^[0-9]{1,4}$'
-              example: '1774'
-              description: |
-                Código da Agência emissora da conta sem dígito. 
-                (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, 
-                no exercício de atividades da instituição, não podendo ser móvel ou transitória).
-                
-                [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
-            number:
-              type: string
-              minLength: 1
-              maxLength: 20
-              pattern: '^[0-9]{1,20}$'
-              example: '1234567890'
-              description: |
-                Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
-                se houver valor alfanumérico, este deve ser convertido para 0.
-            accountType:
-              $ref: '#/components/schemas/EnumAccountTypePayments'
+          $ref: '#/components/schemas/CreditorAccount'
         debtorAccount:
             $ref: '#/components/schemas/DebtorAccount'
         cancellation:
