@@ -10,6 +10,43 @@ info:
       No contexto da API de Portabilidade de crédito, os payloads de mensagem que trafegam tanto por parte da instituição credora quanto por parte da instituição proponente devem estar assinados. Para o processo de assinatura destes payloads as instituições devem seguir as especificações de segurança publicadas no Portal do desenvolvedor  
         &nbsp;&nbsp;- Certificados exigidos para assinatura de mensagens: [[PT] Padrão de Certificados Open Finance Brasil 2.1](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/245694518/PT+Padr+o+de+Certificados+Open+Finance+Brasil+2.1)  
         &nbsp;&nbsp;- Como assinar o payload JWS: Como Assinar o Payload
+    
+    ## Controle de Acesso
+      Os endpoints da API de Portabilidade de Crédito devem utilizar client_credentials para solicitação do pedido de portabilidade de crédito, consulta ao pedido de portabilidade, comunicação a respeito da liquidação do contrato de empréstimo, cancelamento da portabilidade de crédito e atualização dos dados bancários.
+    
+    ## Validações para Portabilidade de Crédito
+    **- Validações (após o processo de DCR e obtenção de token client credential - não escopo dessa documentação):**   
+      &nbsp;Durante o processo de portabilidade de crédito, diferentes validações são necessárias pela instituição credora e devem ocorrer conforme a seguir:
+    
+    **- Casos de erro relacionados às permissões de segurança para acesso à API (ex. certificado, access_token, jwt, assinatura):**   
+      Validação de Certificado: Valida utilização de certificado correto durante processo de DCR - HTTP Code 401 (INVALID_CLIENT);   
+      Validação de Access_Token: Verifica se Access_Token utilizado está correto - HTTP Code 401 (UNAUTHORIZED);   
+      Validação de assinatura da mensagem: Valida se assinatura das mensagens enviadas está correta – HTTP Code 400 (BAD_SIGNATURE);   
+      Validação de Claims (exceto data);   
+        &emsp;- Valida se dados (aud, iss, iat e jti) são válidos - HTTP status code 403 - (INVALID_CLIENT);  
+        &emsp;- Valida reuso de jti - HTTP Code 403 (INVALID_CLIENT).
+        
+    ## Validações de erro sintáticos e semânticos, previstos com retorno HTTP Code 422 - Unprocessable Entity
+      **- Para todos os endpoints:**   
+        &nbsp;&nbsp;**Sintáticos**   
+          &emsp;- Envio de campos obrigatórios: Valida se todos os campos obrigatórios são informados (PARAMETRO_NAO_INFORMADO);   
+          &emsp;- Formatação de parâmetros: Valida se parâmetros informados obedecem a formatação especificada (PARAMETRO_INVALIDO).   
+          &emsp;- Demais validações não explicitamente informadas (NAO_INFORMADO)   
+    **- Para endpoint ([POST] /portabilities):**   
+        &nbsp;&nbsp;**Semânticos**   
+        &emsp;- Portabilidade em andamento: Valida se já existe um pedido de portabilidade de crédito para o contrato solicitado pelo trilho do OFB ou da Registradora (EM_ANDAMENTO);   
+        &emsp;- Prazo do empréstimo maior ao restante das parcelas a serem liquidadas no contrato original (PRAZO_ACIMA_LIMITE);   
+        &emsp;- ID de contrato inválida (CONTRATO_INVALIDO);   
+        &emsp;- Contrato não elegível para portabilidade dentro do trilho do OFB (CONTRATO_NAO_ELEGIVEL);   
+        &emsp;- Idempotência: Valida se há divergência entre chave de idempotência e informações enviadas (ERRO_IDEMPOTENCIA).   
+    **- Para endpoint ([POST] /portabilities/{portabilityId}/payment):**   
+      &nbsp;&nbsp;**Semânticos**   
+        &emsp;- Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE (PAGAMENTO_EFETUADO_FORA_PRAZO).   
+        Obs.: Caso o pagamento tenha sido feito por engano a Instituição Proponente deve solicitar o estorno.   
+    **- Para endpoint ([PATCH] /portabilities/{portabilityId}/cancel):**   
+      &nbsp;&nbsp;**Semânticos**   
+        &emsp;- Estado da portabilidade diferente de RECEIVED, PENDING ou ACCEPTED_SETTLEMENT_IN_PROGRESS (CANCELAMENTO_NÃO_EFETUADO).   
+        Obs.: De acordo com o PRD o usuário poderá cancelar o pedido de portabilidade até a etapa de liquidação, após esta etapa não será mais permitido o cancelamento da portabilidade   
   version: 1.0.0-beta.1
   license:
     name: Apache 2.0
