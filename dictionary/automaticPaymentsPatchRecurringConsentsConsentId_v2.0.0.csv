@@ -52,7 +52,12 @@ Em caso de pessoa jurídica deve ser informada a razão social ou o nome fantasi
 - Caso a ITP tenha coletado as informações de conta do usuário pagador, essas poderão ser enviadas no consentimento para a detentora neste objeto, ou; 
 - Se não coletado pelo ITP, o usuário pagador precisará definir durante a autorização do consentimento. 
 - Mesmo se enviado pela ITP, o usuário pagador pode alterar durante a autorização do consentimento
-";Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+
+[Restrições]
+- Objeto obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+";Objeto;;Condicional;;;0;1;"
+- Objeto obrigatório que deverá ser retornado quando o consentimento estiver ou passar pelo status AUTHORISED;
+";Não permitido;object;;
 /data/debtorAccount/ispb;ispb;"Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
 ";Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;12345678;8
 /data/debtorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito. 
