@@ -83,6 +83,105 @@ paths:
       security:
         - OAuth2ClientCredentials:
             - credit-portability
+  '/portabilities/{portabilityId}':
+    get:
+      tags:
+        - Credit Portability
+      summary: Consulta portabilidade de crédito através da propriedade portabilityId.
+      description: Endpoint responsável por consultar pedidos de portabilidade de crédito.
+      operationId: creditPortabilityGetPortabilitiesByPortabilityId
+      parameters:
+        - $ref: '#/components/parameters/portabilityId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponsePortabilitiesByPortabilityId'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+  '/portabilities/{portabilityId}/cancel':
+    patch:
+      tags:
+        - Credit Portability
+      summary: Comunica a Instituição Credora a respeito do cancelamento da portabilidade de crédito.
+      description: Comunica a Instituição Credora a respeito do cancelamento da portabilidade de crédito.
+      operationId: creditPortabilityPostPortabilitiesCancel
+      parameters:
+        - $ref: '#/components/parameters/portabilityId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: '#/components/schemas/RequestCreditPortabilityCancel'
+        description: Payload para comunicar a liquidação efetuada pela proponente a credora e iniciar a proxima etapa do fluxo de portabilidade de crédito.
+        required: true
+      responses:
+        '200':
+          $ref: '#/components/responses/PatchResponseCreditPortabilityCancel'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '423':
+          $ref: '#/components/responses/Locked'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+      - NonRedirectAuthorizationCode:
+            - openid
+            - 'enrollment:enrollmentId'
+            - payments
+            - nrp-consents
   '/concurrency-management/{contractId}':
     get:
       tags:
@@ -132,49 +231,6 @@ paths:
       security:
         - OAuth2ClientCredentials:
             - credit-portability
-  '/portabilities/{portabilityId}':
-    get:
-      tags:
-        - Credit Portability
-      summary: Consulta portabilidade de crédito através da propriedade portabilityId.
-      description: Endpoint responsável por consultar pedidos de portabilidade de crédito.
-      operationId: creditPortabilityGetPortabilitiesByPortabilityId
-      parameters:
-        - $ref: '#/components/parameters/portabilityId'
-        - $ref: '#/components/parameters/Authorization'
-        - $ref: '#/components/parameters/xFapiAuthDate'
-        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
-        - $ref: '#/components/parameters/xFapiInteractionId'
-        - $ref: '#/components/parameters/xCustomerUserAgent'
-      responses:
-        '200':
-          $ref: '#/components/responses/OKResponsePortabilitiesByPortabilityId'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '404':
-          $ref: '#/components/responses/NotFound'
-        '405':
-          $ref: '#/components/responses/MethodNotAllowed'
-        '406':
-          $ref: '#/components/responses/NotAcceptable'
-        '422':
-          $ref: '#/components/responses/UnprocessableEntity'
-        '423':
-          $ref: '#/components/responses/Locked'
-        '429':
-          $ref: '#/components/responses/TooManyRequests'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
-        '504':
-          $ref: '#/components/responses/GatewayTimeout'
-        '529':
-          $ref: '#/components/responses/SiteIsOverloaded'
-        default:
-          $ref: '#/components/responses/Default'
   /account-data:
     get:
       tags:
@@ -1432,6 +1488,61 @@ components:
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
 
             [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
+    RequestCreditPortabilityCancel:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Objeto para notificar a respeito da liquidação efetuada pela proponente a Credora.
+          required:
+            - reason
+          properties:
+            rejectedBy:
+              type: string
+              description: |
+                Informar usuário responsável pela rejeição da proposta, onde:
+
+                `PROPONETE ` - Indica que o pedido de portabilidade de crédito foi rejeitado pela proponente, seja porque a proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades.
+
+                `USUARIO` - Indica que o cliente cancelou o pedido de portabilidade de crédito.
+              enum:
+                - PROPONENTE
+                - USUARIO
+            reason:
+              type: object
+              description: Motivo de recusa do pedido de portabilidade
+              required:
+                - type
+              properties:
+                type:
+                  type: string
+                  description: |
+                    Motivo de recusa do pedido de portabilidade, onde:
+
+                    `CANCELADO_PELO_CLIENTE` - Cliente desiste do pedido da portabilidade
+
+                    `SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE` - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente
+
+                    `POLITICA_DE_CREDITO` - Proponente desiste da oferta ao cliente por políticas internas
+
+                    `OUTROS` - Motivo da rejeição não se encaixa nas opções disponíveis
+                  enum:
+                    - CANCELADO_PELO_CLIENTE
+                    - SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE
+                    - POLITICA_DE_CREDITO
+                    - OUTROS
+                typeAdditionalInfo:
+                  type: string
+                  maxLength: 144
+                  pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                  example: "Informações Adicionais"
+                  description: |
+                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
+                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
+
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`.
     RequestCreditPortabilityPayment:
       type: object
       required:
@@ -1479,6 +1590,63 @@ components:
                   Identificador da transação utilizada para Proponente liquidar portabilidade de crédito com a Credora.
                   
                   No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)".
+    PatchResponseCreditPortabilityCancel:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Objeto para notificar a respeito da liquidação efetuada pela proponente a Credora.
+          required:
+            - reason
+          properties:
+            rejectedBy:
+              type: string
+              description: |
+                Informar usuário responsável pela rejeição da proposta, onde:
+
+                `PROPONETE ` - Indica que o pedido de portabilidade de crédito foi rejeitado pela proponente, seja porque a proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades.
+
+                `USUARIO` - Indica que o cliente cancelou o pedido de portabilidade de crédito.
+              enum:
+                - PROPONENTE
+                - USUARIO
+            reason:
+              type: object
+              description: Motivo de recusa do pedido de portabilidade
+              required:
+                - type
+              properties:
+                type:
+                  type: string
+                  description: |
+                    Motivo de recusa do pedido de portabilidade, onde:
+
+                    `CANCELADO_PELO_CLIENTE` - Cliente desiste do pedido da portabilidade
+
+                    `SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE` - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente
+
+                    `POLITICA_DE_CREDITO` - Proponente desiste da oferta ao cliente por políticas internas
+
+                    `OUTROS` - Motivo da rejeição não se encaixa nas opções disponíveis
+                  enum:
+                    - CANCELADO_PELO_CLIENTE
+                    - SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE
+                    - POLITICA_DE_CREDITO
+                    - OUTROS
+                typeAdditionalInfo:
+                  type: string
+                  maxLength: 144
+                  pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                  example: "Informações Adicionais"
+                  description: |
+                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
+                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
+
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`.
+        meta:
+          $ref: '#/components/schemas/Meta'
     POSTResponseCreditPortabilityPayment:
       type: object
       required:
@@ -1803,6 +1971,23 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseAccountData'
+    PatchResponseCreditPortabilityCancel:
+      description: Dados da confirmação do cancelamento da portabilidade de crédito.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/PatchResponseCreditPortabilityCancel'
     POSTResponseCreditPortabilityPayment:
       description: Dados dos contratos de empréstimos obtidos com sucesso.
       headers:
