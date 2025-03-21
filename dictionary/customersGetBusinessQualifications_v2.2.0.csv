@@ -4,9 +4,7 @@
 ";Date Hora;20;Obrigatório;;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
 /data/economicActivities;economicActivities;Lista dos demais códigos relativos às demais atividades econômicas da empresa, segundo padrão CNAE (Classificação Nacional de Atividades Econômicas). De preenchimento obrigatório, se houver;Lista;;Opcional;;;0;N;"";Não permitido;array;;
 /data/economicActivities/code;code;"Traz o código do ramo da atividade principal da empresa consultada, segundo padrão CNAE (Classificação Nacional de Atividades Econômicas)
-
-[Observação] O campo sempre deve ser enviado com 7 caracteres, seguindo a classificação “CNAE-Subclasse 2.3”. Em casos em que o valor inicie com zeros, ele deve conter todos os caracteres, incluindo os zeros.
-";Texto;;Obrigatório;^\d{7}$;;1;1;"";Não permitido;string;0600001;
+";Texto;7;Obrigatório;^\d{7}$;;1;1;"";Não permitido;string;8599604;2
 /data/economicActivities/isMain;isMain;Indica se é o ramo principal de atividade da empresa quando true e se é o ramo secundário quando false. [Restrição] Somente uma ocorrência relativa ao código da atividade econômica principal deve trazer o valor true.;Booleano;;Obrigatório;;;1;1; Somente uma ocorrência relativa ao código da atividade econômica principal deve trazer o valor true.;Não permitido;boolean;true;
 /data/informedRevenue;informedRevenue;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
 /data/informedRevenue/frequency;frequency;"Traz a frequência ou período do faturamento informado.
