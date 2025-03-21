@@ -577,31 +577,16 @@ components:
                             - PERCENTUAL
                           example: MINIMO
                         feeAmount:
-                          type: object
-                          minItems: 1
+                          type: string
+                          format: double
+                          pattern: '^\d{1,15}\.\d{2,4}$'
+                          maxLength: 20
+                          minLength: 4
                           description: |
-                            Objeto para representar o valor monetário da tarifa pactuada no contrato.
-                            
+                            Valor monetário da tarifa pactuada no contrato. 
+                
                             [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
-                          required:
-                            - amount
-                            - currency
-                          properties:
-                            amount:
-                              type: string
-                              format: double
-                              maxLength: 20
-                              minLength: 4
-                              pattern: '^\d{1,15}\.\d{2,4}$'
-                              example: '1000.0400'
-                              description: Valor monetário da tarifa pactuada no contrato.
-                            currency:
-                              type: string
-                              maxLength: 3
-                              minLength: 3
-                              pattern: '^(\w{3}){1}$'
-                              example: 'BRL'
-                              description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                          example: '100000.0400'
                         feeRate:
                           type: string
                           pattern: '^\d{1}\.\d{6}$'
@@ -738,28 +723,12 @@ components:
                     description: Total de parcelas, segundo a periodicidade regular das parcelas referente à Modalidade de Crédito informada.
                     example: 30
                   instalmentAmount:
-                    type: object
-                    minItems: 1
-                    description: Objeto para representar o Valor da parcela regular da operação após portabilidade.
-                    required:
-                      - amount
-                      - currency
-                    properties:
-                      amount:
-                        type: string
-                        format: double
-                        maxLength: 20
-                        minLength: 4
-                        pattern: '^\d{1,15}\.\d{2,4}$'
-                        example: '1000.0400'
-                        description: Valor da parcela regular da operação após portabilidade. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
-                      currency:
-                        type: string
-                        maxLength: 3
-                        minLength: 3
-                        pattern: '^(\w{3}){1}$'
-                        example: 'BRL'
-                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                    type: string
+                    description: Valor da parcela regular da operação após portabilidade. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+                    maxLength: 20
+                    minLength: 4
+                    pattern: '^\d{1,15}\.\d{2,4}$'
+                    example: '1000.0400'
               creationDateTime:
                 type: string
                 description: |
@@ -1205,31 +1174,16 @@ components:
                             - PERCENTUAL
                           example: MINIMO
                         feeAmount:
-                          type: object
-                          minItems: 1
+                          type: string
+                          format: double
+                          pattern: '^\d{1,15}\.\d{2,4}$'
+                          maxLength: 20
+                          minLength: 4
                           description: |
-                            Objeto para representar o valor monetário da tarifa pactuada no contrato.
-                            
+                            Valor monetário da tarifa pactuada no contrato. 
+                
                             [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
-                          required:
-                            - amount
-                            - currency
-                          properties:
-                            amount:
-                              type: string
-                              format: double
-                              maxLength: 20
-                              minLength: 4
-                              pattern: '^\d{1,15}\.\d{2,4}$'
-                              example: '1000.0400'
-                              description: Valor monetário da tarifa pactuada no contrato.
-                            currency:
-                              type: string
-                              maxLength: 3
-                              minLength: 3
-                              pattern: '^(\w{3}){1}$'
-                              example: 'BRL'
-                              description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                          example: '100000.0400'
                         feeRate:
                           type: string
                           pattern: '^\d{1}\.\d{6}$'
@@ -1328,29 +1282,6 @@ components:
                     maxLength: 144
                     pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                     example: Informações Adicionais
-                  instalmentAmount:
-                    type: object
-                    minItems: 1
-                    description: Objeto para representar o Valor da parcela regular da operação após portabilidade.
-                    required:
-                      - amount
-                      - currency
-                    properties:
-                      amount:
-                        type: string
-                        format: double
-                        maxLength: 20
-                        minLength: 4
-                        pattern: '^\d{1,15}\.\d{2,4}$'
-                        example: '1000.0400'
-                        description: Valor da parcela regular da operação após portabilidade. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
-                      currency:
-                        type: string
-                        maxLength: 3
-                        minLength: 3
-                        pattern: '^(\w{3}){1}$'
-                        example: 'BRL'
-                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
                   dueDate:
                     type: string
                     description: Prazo (data de vencimento final) da operação. Especificação RFC-3339
@@ -1581,28 +1512,12 @@ components:
                     pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
                     example: '2020-07-21T08:30:00Z'
                   settlementAmount:
-                    type: object
-                    minItems: 1
-                    description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
-                    required:
-                      - amount
-                      - currency
-                    properties:
-                      amount:
-                        type: string
-                        format: double
-                        maxLength: 20
-                        minLength: 4
-                        pattern: '^\d{1,15}\.\d{2,4}$'
-                        example: '1000.0400'
-                        description: Valor pago para liquidação do contrato de empréstimo.
-                      currency:
-                        type: string
-                        maxLength: 3
-                        minLength: 3
-                        pattern: '^(\w{3}){1}$'
-                        example: 'BRL'
-                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                    type: string
+                    description: Valor pago para liquidação do contrato de empréstimo.
+                    maxLength: 20
+                    minLength: 4
+                    pattern: '^\d{1,15}\.\d{2,4}$'
+                    example: '1000.0400'
                   transactionId:
                     type: string
                     description: Identificador da transação utilizado para liquidar o contrato de empréstimo. No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Número de Controle da STR).
@@ -1891,28 +1806,13 @@ components:
                   Data e hora em que o pagamento à instituição credora foi realizado pela instituição proponente. 
                   Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC-0 (UTC time format)
               paymentAmount:
-                type: object
-                minItems: 1
-                description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
-                required:
-                  - amount
-                  - currency
-                properties:
-                  amount:
-                    type: string
-                    format: double
-                    maxLength: 20
-                    minLength: 4
-                    pattern: '^\d{1,15}\.\d{2,4}$'
-                    example: '1000.0400'
-                    description: Valor pago para liquidação do contrato de empréstimo.
-                  currency:
-                    type: string
-                    maxLength: 3
-                    minLength: 3
-                    pattern: '^(\w{3}){1}$'
-                    example: 'BRL'
-                    description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                type: string
+                format: double
+                pattern: '^\d{1,15}\.\d{2,4}$'
+                maxLength: 20
+                minLength: 4
+                example: '1000.0400'
+                description: Valor pago para liquidação do contrato de empréstimo.
               transactionId:
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
@@ -2011,28 +1911,13 @@ components:
                   Data e hora em que o pagamento à instituição credora foi realizado pela instituição proponente. 
                   Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC-0 (UTC time format)
               paymentAmount:
-                type: object
-                minItems: 1
-                description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
-                required:
-                  - amount
-                  - currency
-                properties:
-                  amount:
-                    type: string
-                    format: double
-                    maxLength: 20
-                    minLength: 4
-                    pattern: '^\d{1,15}\.\d{2,4}$'
-                    example: '1000.0400'
-                    description: Valor pago para liquidação do contrato de empréstimo.
-                  currency:
-                    type: string
-                    maxLength: 3
-                    minLength: 3
-                    pattern: '^(\w{3}){1}$'
-                    example: 'BRL'
-                    description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                type: string
+                format: double
+                pattern: '^\d{1,15}\.\d{2,4}$'
+                maxLength: 20
+                minLength: 4
+                example: '1000.0400'
+                description: Valor pago para liquidação do contrato de empréstimo.
               transactionId:
                 type: string
                 pattern: '^(?!\s)[\w\W\s]*[^\s]$'
