@@ -1149,7 +1149,9 @@ components:
           maxLength: 20
           minLength: 4
           example: '1000.0400'
-          description: Valor necessário para o cliente liquidar a dívida.
+          description: |
+            Valor necessário para o cliente liquidar a dívida, ou seja, este campo deve ser preenchido com o saldo devedor atualizado descrito no DDC (Documento Descritivo de Crédito). 
+            O valor a liquidar atualizado do dia deve ser ajustado para compartilhamento pela Transmissora até às 10:00 do mesmo dia, especialmente para Crédito Pessoal Clean, escopo de Portabilidade de Crédito, pois este valor é utilizado pela Receptora em papel de Proponente para pagamento à Transmissora em papel de Credora.
         releases:
           type: array
           minItems: 0
