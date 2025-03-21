@@ -1310,9 +1310,10 @@ components:
                     example: 30
                   instalmentPeriodicity:
                     type: string
-                    description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, semanal, quinzenal, mensal, bimestral, trimestral, semestral, annual.
+                    description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diario, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
                     enum:
                       - SEM_PERIODICIDADE_REGULAR
+                      - DIARIO
                       - SEMANAL
                       - QUINZENAL
                       - MENSAL
@@ -1320,14 +1321,7 @@ components:
                       - TRIMESTRAL
                       - SEMESTRAL
                       - ANUAL
-                      - OUTROS
                     example: SEM_PERIODICIDADE_REGULAR
-                  instalmentPeriodicityAdditionalInfo:
-                    type: string
-                    description: Campo obrigatório para complementar a informação relativa à periodicidade de pagamento regular quando tiver a opção OUTROS.
-                    maxLength: 144
-                    pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-                    example: Informações Adicionais
                   instalmentAmount:
                     type: object
                     minItems: 1
@@ -1396,13 +1390,10 @@ components:
                   Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
               statusReason:
                 type: object
-                required: 
-                  - reasonType
                 description: |
                   Motivo de recusa do pedido de portabilidade
                   
                   [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `status` for igual a `REJECTED` ou `CANCELADO` ou `PAYMENT_ISSUE`
-
                 properties: 
                   reasonType:
                     description: |
@@ -1445,7 +1436,6 @@ components:
                       - CLIENTE_COM_ACAO_JUDICIAL
                       - MODALIDADE_DA_OPERACAO_INCOMPATIVEL
                       - OUTROS
-                    
                   reasonTypeAdditionalInfo: 
                     description: |
                       Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito.
@@ -1456,8 +1446,7 @@ components:
                     type: string
                     maxLength: 144
                     pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-                    example: Informações Adicionais
-                    
+                    example: Informações Adicionais                   
                   digitalSignatureProof:
                     type: object
                     description: |
@@ -1482,6 +1471,15 @@ components:
                     required:
                       - documentId
                       - signatureDateTime
+                  paymentIssueDetail:
+                    type: string
+                    description: |
+                      Detalhes da inconsistência encontrada pela Instituição Credora na etapa de validação da liquidação do pedido de portabilidade de crédito. Devem ser mensagens claras, detalhadas, para compreensão entre Proponente e Credora, principalmente em casos que demandam ação por uma das partes.
+                      
+                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual `PAYMENT_ISSUE`
+                    maxLength: 200
+                    pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                    example: Valor disponibilizado é menor que o valor total a ser quitado. Credora está devolvendo o valor, e solicita pagamento do valor correto até o fim do dia.
               creationDateTime:
                 type: string
                 description: |
@@ -1608,7 +1606,7 @@ components:
                     description: Identificador da transação utilizado para liquidar o contrato de empréstimo. No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Número de Controle da STR).
                     maxLength: 20
                     minLength: 1
-                    pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,20}$'
                     example: 'STR20181108000000013'
         links:
           $ref: '#/components/schemas/Links'
