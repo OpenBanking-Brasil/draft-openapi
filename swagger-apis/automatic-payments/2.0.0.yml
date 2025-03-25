@@ -355,7 +355,7 @@ paths:
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityRecurringConsents'
+          $ref: '#/components/responses/UnprocessableEntityPatch'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -571,7 +571,7 @@ paths:
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntityRecurringPaymentsPaymentId'
+          $ref: '#/components/responses/UnprocessableEntityPixPatch'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -701,6 +701,8 @@ components:
                   - PERMISSAO_INSUFICIENTE
                   - DETALHE_EDICAO_INVALIDO
                   - FALTAM_SINAIS_OBRIGATORIOS_PLATAFORMA
+                  - PARAMETRO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
                 example: CAMPO_NAO_PERMITIDO
               title:
                 type: string
@@ -709,11 +711,13 @@ components:
                 example: O pagamento está com status que não permite o cancelamento.
                 description: |
                   Título específico do erro reportado, de acordo com o código enviado:  
-                  - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED")
+                  - CONSENTIMENTO_NAO_PERMITE_CANCELAMENTO: O status do consentimento não permite a realização do cancelamento (em status "CONSUMED" ou "REJECTED").
                   - CAMPO_NAO_PERMITIDO: O(s) campo(s) solicitado(s) para edição não podem ser editados.
-                  - Permissão insuficiente para edição.
+                  - PERMISSAO_INSUFICIENTE: Consentimento possui múltiplas alçadas aprovadoras e não permite a edição pelo usuário atual.
                   - DETALHE_EDICAO_INVALIDO: A tentativa de edição do consentimento não respeitou as regras de negócio descritas nos campos.
                   - FALTAM_SINAIS_OBRIGATORIOS_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - PARAMETRO_INVALIDO: Os parâmetros informados não obedecem a formatação especificada.
+                  - PARAMETRO_NAO_INFORMADO: Algum ou todos os campos obrigatórios não foram informados.
               detail:
                 type: string
                 maxLength: 2048
@@ -726,6 +730,8 @@ components:
                   - PERMISSAO_INSUFICIENTE: Consentimento possui múltiplas alçadas aprovadoras e não permite a edição pelo usuário atual.
                   - DETALHE_EDICAO_INVALIDO: A tentativa de edição do consentimento não respeitou as regras de negócio descritas nos campos.
                   - FALTAM_SINAIS_OBRIGATORIOS_PLATAFORMA: Os sinais obrigatórios para a plataforma do usuário não foram enviados em sua totalidade.
+                  - PARAMETRO_INVALIDO: Os parâmetros informados não obedecem a formatação especificada.
+                  - PARAMETRO_NAO_INFORMADO: Algum ou todos os campos obrigatórios não foram informados.
         meta:
           $ref: '#/components/schemas/Meta'
     422ResponseErrorCreatePixRecurringPayment:
@@ -867,26 +873,34 @@ components:
                 enum:
                   - PAGAMENTO_NAO_PERMITE_CANCELAMENTO
                   - CANCELAMENTO_FORA_PERIODO_PERMITIDO
+                  - PARAMETRO_INVALIDO
+                  - PARAMETRO_NAO_INFORMADO
                 example: PAGAMENTO_NAO_PERMITE_CANCELAMENTO
                 description: |
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento.
                   - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o cancelamento fora da janela de tempo permitido.
+                  - PARAMETRO_INVALIDO: Os parâmetros informados não obedecem a formatação especificada.
+                  - PARAMETRO_NAO_INFORMADO: Algum ou todos os campos obrigatórios não foram informados.
               title:
                 type: string
                 maxLength: 255
                 pattern: '[\w\W\s]*'
                 example: O pagamento está com um status que não permite o cancelamento.
                 description: |
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento.
                   - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o cancelamento fora da janela de tempo permitido.
+                  - PARAMETRO_INVALIDO: Os parâmetros informados não obedecem a formatação especificada.
+                  - PARAMETRO_NAO_INFORMADO: Algum ou todos os campos obrigatórios não foram informados.
               detail:
                 type: string
                 maxLength: 2048
                 pattern: '[\w\W\s]*'
                 example: O pagamento está com um status que não permite o cancelamento.
                 description: |
-                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento
+                  - PAGAMENTO_NAO_PERMITE_CANCELAMENTO: Pagamento está com um status que não permite cancelamento.
                   - CANCELAMENTO_FORA_PERIODO_PERMITIDO: O usuário solicitou o cancelamento fora da janela de tempo permitido.
+                  - PARAMETRO_INVALIDO: Os parâmetros informados não obedecem a formatação especificada.
+                  - PARAMETRO_NAO_INFORMADO: Algum ou todos os campos obrigatórios não foram informados.
         meta:
           $ref: '#/components/schemas/Meta'
     BusinessEntity:
@@ -5030,7 +5044,7 @@ components:
       headers:
         x-fapi-interaction-id:
           $ref: '#/components/headers/XFapiInteractionId'
-    UnprocessableEntityRecurringPaymentsPaymentId:
+    UnprocessableEntityPixPatch:
       description: Seguir as orientações presentes na descrição do endpoint
       content:
         application/jwt:
@@ -5049,7 +5063,7 @@ components:
       headers:
         x-fapi-interaction-id:
           $ref: '#/components/headers/XFapiInteractionId'
-    UnprocessableEntityRecurringConsents:
+    UnprocessableEntityPatch:
       description: Seguir as orientações presentes na descrição deste endpoint
       content:
         application/jwt:
