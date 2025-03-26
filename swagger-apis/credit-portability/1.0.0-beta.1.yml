@@ -790,7 +790,7 @@ components:
           properties:
               portabilityId:
                 type: string
-                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
                 maxLength: 100
                 minLength: 1
                 example: 54d5348c-1a3f-4ff4-a8a8-d0724fb806c6
@@ -1880,7 +1880,7 @@ components:
           properties:
               portabilityId:
                 type: string
-                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
                 maxLength: 100
                 minLength: 1
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
@@ -2004,7 +2004,7 @@ components:
           properties:
               portabilityId:
                 type: string
-                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
                 maxLength: 100
                 minLength: 1
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
@@ -2205,7 +2205,7 @@ components:
     xFapiCustomerIpAddress:
       name: x-fapi-customer-ip-address
       in: header
-      description: O endereço IP do usuário se estiver atualmente logado com a instituição proponente.
+      description: O endereço IP do usuário se estiver atualmente logado com o receptor.
       required: false
       schema:
         type: string
@@ -2227,11 +2227,11 @@ components:
     portabilityId:
       name: portabilityId
       in: path
-      description: Identificador do contrato para todos os tipos de operação de crédito.
+      description: Identificador do pedido de portabilidade de crédito.
       required: true
       schema:
         type: string
-        pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         maxLength: 100
   securitySchemes:
     OpenId:
@@ -2259,7 +2259,7 @@ components:
             nrp-consents: Consentimento para pagamentos sem redirecionamento.      
   responses:
     POSTResponseCreditPortability:
-      description: Dados dos contratos de empréstimos obtidos com sucesso.
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -2276,7 +2276,7 @@ components:
           schema:
             $ref: '#/components/schemas/POSTResponseCreditPortability'
     OKResponseConcurrancyManagement:
-      description: Dados dos contratos de empréstimos obtidos com sucesso.
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -2344,7 +2344,7 @@ components:
           schema:
             $ref: '#/components/schemas/PatchResponseCreditPortabilityCancel'
     POSTResponseCreditPortabilityPayment:
-      description: Dados dos contratos de empréstimos obtidos com sucesso.
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
