@@ -203,7 +203,7 @@ ANUAL";1;1;"";Não permitido;string;SEM_PERIODICIDADE_REGULAR;
 /data/proposedContract/instalmentAmount;instalmentAmount;Objeto para representar o Valor da parcela regular da operação após portabilidade.;Objeto;;Opcional;;;1;;"";Não permitido;object;;
 /data/proposedContract/instalmentAmount/amount;amount;Valor da parcela regular da operação após portabilidade. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0400;4
 /data/proposedContract/instalmentAmount/currency;currency;Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.;Texto;3;Obrigatório;^(\w{3}){1}$;;1;1;"";Não permitido;string;BRL;3
-/data/proposedContract/dueDate;dueDate;Prazo (data de vencimento final) da operação. Especificação RFC-3339;Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;20
+/data/proposedContract/dueDate;dueDate;Prazo (data de vencimento final) da operação. Especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339);Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;20
 /data/status;status;"Informação sobre o status de um pedido de portabilidade de crédito, onde:
 
 `RECEIVED` - Estado inicial. Indica que o pedido de portabilidade foi solicitado junto a instituição credora. O pedido deve permanecer neste estado até que o próximo dia útil (D+1) aonde começará a contar o prazo de 3 dias úteis para a etapa de contraproposta e o pedido de portabilidade deverá  ser movido para PENDING.
@@ -229,7 +229,7 @@ PORTABILITY_COMPLETED
 REJECTED 
 CANCELED 
 PAYMENT_ISSUE";1;1;"";Não permitido;string;;
-/data/statusUpdateDateTime;statusUpdateDateTime;"Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+/data/statusUpdateDateTime;statusUpdateDateTime;"Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
 ";Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2020-07-21T08:30:00Z;
 /data/statusReason;statusReason;"Motivo de recusa do pedido de portabilidade
 

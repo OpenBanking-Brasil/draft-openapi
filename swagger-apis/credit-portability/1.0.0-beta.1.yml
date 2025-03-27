@@ -898,7 +898,7 @@ components:
                     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
                     example: "2020-07-21T08:30:00Z"
                     description: |
-                      Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+                      Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
                       
                       [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `TRUE`
                   
@@ -1342,7 +1342,7 @@ components:
                         description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
                   dueDate:
                     type: string
-                    description: Prazo (data de vencimento final) da operação. Especificação RFC-3339
+                    description: Prazo (data de vencimento final) da operação. Especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339)
                     maxLength: 20
                     minLength: 20
                     pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
@@ -1382,7 +1382,7 @@ components:
                 pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
                 example: "2020-07-21T08:30:00Z"
                 description: |
-                  Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+                  Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
               statusReason:
                 type: object
                 description: |
@@ -2067,7 +2067,7 @@ components:
             type: object
             properties:
               requestDateTime:
-                description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+                description: 'Data e hora da consulta, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.'
                 type: string
                 maxLength: 20
                 format: date-time
