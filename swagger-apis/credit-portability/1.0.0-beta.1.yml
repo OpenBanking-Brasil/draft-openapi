@@ -13,7 +13,7 @@ info:
     
     ## Controle de Acesso
     - Os endpoints [GET] /portabilities/{portabilityId}, [GET] /account-data, [POST] /portabilities/{portabilityId}/payment, [PATCH] / portabilities/{portabilityId}/cancel da API de Portabilidade de crédito devem utilizar o escopo client_credentials
-    - Os endpoints [GET] /concurrency-management/{contractId} e [POST] /portabilities devem utilizar o escopo authorization_code para validar a permissions de LOANS
+    - Os endpoints [GET] /credit-operations/{contractId}/portability-eligibility e [POST] /portabilities devem utilizar o escopo authorization_code para validar a permissions de LOANS
     
     ## Validações para Portabilidade de Crédito
     **- Validações (após o processo de DCR e obtenção de token client credential - não escopo dessa documentação):**   
@@ -223,12 +223,12 @@ paths:
       security:
         - OAuth2ClientCredentials:
             - credit-portability
-  '/concurrency-management/{contractId}':
+  '/credit-operations/{contractId}/portability-eligibility':
     get:
       tags:
         - Concurrency Management
       summary: Informa se um contrato pertencente a um determinado cliente estará habilitado para a realização do pedido de portabilidade de crédito considerando a regra de só existir um pedido de portabilidade para um determinado contrato.
-      operationId: creditPortabilityGetConcurrencyManagementContratId
+      operationId: creditPortabilityGetCreditOperationsContratIdPortabilityEligibility
       description: Informa se o contrato está disponível para solicitação de portabilidade de crédito.
       parameters:
         - $ref: '#/components/parameters/contractId'
@@ -242,7 +242,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseConcurrancyManagement'
+          $ref: '#/components/responses/OKResponsePortabilityEligibility'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -825,7 +825,7 @@ components:
                 example: '2020-07-21T08:30:00Z'
         meta:
           $ref: '#/components/schemas/Meta'
-    ResponseConcurrancyManagement:
+    ResponsePortabilityEligibility:
       type: object
       required:
         - data
@@ -2275,7 +2275,7 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/POSTResponseCreditPortability'
-    OKResponseConcurrancyManagement:
+    OKResponsePortabilityEligibility:
       description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
@@ -2291,7 +2291,7 @@ components:
       content:
         application/jwt:
           schema:
-            $ref: '#/components/schemas/ResponseConcurrancyManagement'
+            $ref: '#/components/schemas/ResponsePortabilityEligibility'
     OKResponsePortabilitiesByPortabilityId:
       description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
