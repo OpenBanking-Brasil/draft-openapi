@@ -176,7 +176,7 @@ paths:
         - Credit Portability
       summary: Comunica a Instituição Credora a respeito do cancelamento da portabilidade de crédito.
       description: Comunica a Instituição Credora a respeito do cancelamento da portabilidade de crédito.
-      operationId: creditPortabilityPostPortabilitiesCancel
+      operationId: creditPortabilityPostPortabilitiesPortabilityIdCancel
       parameters:
         - $ref: '#/components/parameters/portabilityId'
         - $ref: '#/components/parameters/Authorization'
@@ -280,7 +280,7 @@ paths:
         - Account data
       summary: Obtém os dados necessários para realização do pagamento da operação via TED.
       description: Método responsável por recuperar informações de contas  para realização do pagamento via TED.
-      operationId: getAccountDataCreditPortability
+      operationId: creditPortabilityGetAccountData
       parameters:
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
@@ -325,7 +325,7 @@ paths:
         - Payments
       summary: Comunica a Instituição Credora a respeito da liquidação da portabilidade de crédito.
       description: Comunica a Instituição Credora a respeito da liquidação da portabilidade de crédito.
-      operationId: creditPortabilityPostPortabilitiesPayment
+      operationId: creditPortabilityPostPortabilitiesPortabilityIdPayment
       parameters:
         - $ref: '#/components/parameters/portabilityId'
         - $ref: '#/components/parameters/Authorization'
