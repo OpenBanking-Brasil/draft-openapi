@@ -1534,7 +1534,9 @@ components:
       description: |
         Sinais de risco para iniciação de pagamentos automáticos
 
-        [Restrição] Deve ser enviado quando o consentimento for para o produto Pix Automático (O objeto "/data/recurringConfiguration/automatic" usado no oneOf). Só estará presente após a primeira edição do consentimento de longa duração.
+        [Restrição] Deve ser enviado quando o consentimento for para o produto Pix Automático (O objeto "/data/recurringConfiguration/automatic" usado no oneOf). 
+        Só estará presente após a primeira edição do consentimento de longa duração. 
+        Objeto de envio obrigatório para a edição dos parâmetros do consentimento, exceto para o caso de edição exclusiva do campo “/data/creditors/name”.
       properties:
         deviceId:
           type: string
@@ -2313,7 +2315,6 @@ components:
     ConsentEdition:
       type: object
       required:
-        - riskSignals
         - creditors
       properties:
         riskSignals:
