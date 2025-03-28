@@ -12,7 +12,8 @@ info:
         &nbsp;&nbsp;- Como assinar o payload JWS: Como Assinar o Payload
     
     ## Controle de Acesso
-      Os endpoints da API de Portabilidade de Crédito devem utilizar client_credentials para solicitação do pedido de portabilidade de crédito, consulta ao pedido de portabilidade, comunicação a respeito da liquidação do contrato de empréstimo, cancelamento da portabilidade de crédito e atualização dos dados bancários.
+    - Os endpoints [GET] /portabilities/{portabilityId}, [GET] /account-data, [POST] /portabilities/{portabilityId}/payment, [PATCH] / portabilities/{portabilityId}/cancel da API de Portabilidade de crédito devem utilizar o escopo client_credentials
+    - Os endpoints [GET] /concurrency-management/{contractId} e [POST] /portabilities devem utilizar o escopo authorization_code para validar a permissions de LOANS
     
     ## Validações para Portabilidade de Crédito
     **- Validações (após o processo de DCR e obtenção de token client credential - não escopo dessa documentação):**   
@@ -118,8 +119,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2ClientCredentials:
-            - credit-portability
+        - OAuth2AuthorizationCodeLoans:
+            - openId
+            - 'consent:consentId'
+            - loans
   '/portabilities/{portabilityId}':
     get:
       tags:
@@ -163,6 +166,9 @@ paths:
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - credit-portability
   '/portabilities/{portabilityId}/cancel':
     patch:
       tags:
@@ -214,11 +220,8 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-      - NonRedirectAuthorizationCode:
-            - openid
-            - 'enrollment:enrollmentId'
-            - payments
-            - nrp-consents
+        - OAuth2ClientCredentials:
+            - credit-portability
   '/concurrency-management/{contractId}':
     get:
       tags:
@@ -266,8 +269,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2ClientCredentials:
-            - credit-portability
+        - OAuth2AuthorizationCodeLoans:
+            - openId
+            - 'consent:consentId'
+            - loans
   /account-data:
     get:
       tags:
@@ -310,6 +315,9 @@ paths:
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - credit-portability
   /portabilities/{portabilityId}/payment:
     post:
       tags:
@@ -361,11 +369,8 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-      - NonRedirectAuthorizationCode:
-            - openid
-            - 'enrollment:enrollmentId'
-            - payments
-            - nrp-consents
+        - OAuth2ClientCredentials:
+            - credit-portability
 components:
   schemas:
     RequestCreditPortability:
@@ -2245,18 +2250,15 @@ components:
           tokenUrl: 'https://authserver.example/token'
           scopes:
             credit-portability: Escopo necessário para acesso à API Portabilidade de Crédito.
-    NonRedirectAuthorizationCode:
+    OAuth2AuthorizationCodeLoans:
       type: oauth2
-      description: Fluxo OAuth necessário para que a Instituição Proponente possa solicitar o pedido de portabilidade sem redirecionamento.
+      description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
       flows:
         authorizationCode:
-          authorizationUrl: 'https://authserver.example/token'
+          authorizationUrl: 'https://authserver.example/authorization'
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            payments: Escopo necessário para acesso à  API Payment Initiation.
-            openid: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
-            'enrollment:enrollmentId': Permite realizar atualização de um registro com a permissão do cliente.
-            nrp-consents: Consentimento para pagamentos sem redirecionamento.      
+            loans: Escopo necessário para acesso à API Loans. O controle dos endpoints específicos é feito via permissions. 
   responses:
     POSTResponseCreditPortability:
       description: Dados dos contratos de empréstimo obtidos com sucesso.
