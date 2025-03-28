@@ -12,7 +12,8 @@ info:
         &nbsp;&nbsp;- Como assinar o payload JWS: Como Assinar o Payload
     
     ## Controle de Acesso
-      Os endpoints da API de Portabilidade de Crédito devem utilizar client_credentials para solicitação do pedido de portabilidade de crédito, consulta ao pedido de portabilidade, comunicação a respeito da liquidação do contrato de empréstimo, cancelamento da portabilidade de crédito e atualização dos dados bancários.
+    - Os endpoints [GET] /portabilities/{portabilityId}, [GET] /account-data, [POST] /portabilities/{portabilityId}/payment, [PATCH] / portabilities/{portabilityId}/cancel da API de Portabilidade de crédito devem utilizar o escopo client_credentials
+    - Os endpoints [GET] /credit-operations/{contractId}/portability-eligibility e [POST] /portabilities devem utilizar o escopo authorization_code para validar a permissions de LOANS
     
     ## Validações para Portabilidade de Crédito
     **- Validações (após o processo de DCR e obtenção de token client credential - não escopo dessa documentação):**   
@@ -38,7 +39,8 @@ info:
         &emsp;- Prazo do empréstimo maior ao restante das parcelas a serem liquidadas no contrato original (PRAZO_ACIMA_LIMITE);   
         &emsp;- ID de contrato inválida (CONTRATO_INVALIDO);   
         &emsp;- Contrato não elegível para portabilidade dentro do trilho do OFB (CONTRATO_NAO_ELEGIVEL);   
-        &emsp;- Idempotência: Valida se há divergência entre chave de idempotência e informações enviadas (ERRO_IDEMPOTENCIA).   
+        &emsp;- Idempotência: Valida se há divergência entre chave de idempotência e informações enviadas (ERRO_IDEMPOTENCIA);   
+        &emsp;- Evidência de assinatura do contrato: Valida se o objeto de assinatura do contrato foi preenchido pela instituição proponente devidamente, em caso de ausência (SEM_EVIDENCIA_ASSINATURA).   
     **- Para endpoint ([POST] /portabilities/{portabilityId}/payment):**   
       &nbsp;&nbsp;**Semânticos**   
         &emsp;- Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE (PAGAMENTO_EFETUADO_FORA_PRAZO).   
@@ -118,8 +120,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2ClientCredentials:
-            - credit-portability
+        - OAuth2AuthorizationCodeLoans:
+            - openId
+            - 'consent:consentId'
+            - loans
   '/portabilities/{portabilityId}':
     get:
       tags:
@@ -163,6 +167,9 @@ paths:
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - credit-portability
   '/portabilities/{portabilityId}/cancel':
     patch:
       tags:
@@ -214,17 +221,14 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-      - NonRedirectAuthorizationCode:
-            - openid
-            - 'enrollment:enrollmentId'
-            - payments
-            - nrp-consents
-  '/concurrency-management/{contractId}':
+        - OAuth2ClientCredentials:
+            - credit-portability
+  '/credit-operations/{contractId}/portability-eligibility':
     get:
       tags:
         - Concurrency Management
       summary: Informa se um contrato pertencente a um determinado cliente estará habilitado para a realização do pedido de portabilidade de crédito considerando a regra de só existir um pedido de portabilidade para um determinado contrato.
-      operationId: creditPortabilityGetConcurrencyManagementContratId
+      operationId: creditPortabilityGetCreditOperationsContratIdPortabilityEligibility
       description: Informa se o contrato está disponível para solicitação de portabilidade de crédito.
       parameters:
         - $ref: '#/components/parameters/contractId'
@@ -238,7 +242,7 @@ paths:
         - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
-          $ref: '#/components/responses/OKResponseConcurrancyManagement'
+          $ref: '#/components/responses/OKResponsePortabilityEligibility'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -266,8 +270,10 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-        - OAuth2ClientCredentials:
-            - credit-portability
+        - OAuth2AuthorizationCodeLoans:
+            - openId
+            - 'consent:consentId'
+            - loans
   /account-data:
     get:
       tags:
@@ -310,6 +316,9 @@ paths:
           $ref: '#/components/responses/SiteIsOverloaded'
         default:
           $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - credit-portability
   /portabilities/{portabilityId}/payment:
     post:
       tags:
@@ -361,11 +370,8 @@ paths:
         default:
           $ref: '#/components/responses/Default'
       security:
-      - NonRedirectAuthorizationCode:
-            - openid
-            - 'enrollment:enrollmentId'
-            - payments
-            - nrp-consents
+        - OAuth2ClientCredentials:
+            - credit-portability
 components:
   schemas:
     RequestCreditPortability:
@@ -518,9 +524,9 @@ components:
                   - digitalSignatureProof
                   - CET
                   - amortizationScheduled
-                  - instalmentPeriodicity
-                  - totalNumberOfInstalments
-                  - instalmentAmount
+                  - installmentPeriodicity
+                  - totalNumberOfInstallments
+                  - installmentAmount
                 properties:
                   interestRates:
                     type: array
@@ -719,7 +725,7 @@ components:
                       Informação relativa ao complemento da amortização
                       
                       [Restrição] Campo de preenchimento obrigatório quando o campo amortizationScheduled for igual `OUTROS`
-                  instalmentPeriodicity:
+                  installmentPeriodicity:
                     type: string
                     description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diário, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
                     example: SEM_PERIODICIDADE_REGULAR
@@ -733,12 +739,12 @@ components:
                       - TRIMESTRAL
                       - SEMESTRAL
                       - ANUAL
-                  totalNumberOfInstalments:
+                  totalNumberOfInstallments:
                     type: number
                     description: Total de parcelas, segundo a periodicidade regular das parcelas referente à Modalidade de Crédito informada.
                     maximum: 999999999
                     example: 30
-                  instalmentAmount:
+                  installmentAmount:
                     type: object
                     minItems: 1
                     description: Objeto para representar o Valor da parcela regular da operação após portabilidade.
@@ -765,7 +771,7 @@ components:
                 type: string
                 description: |
                   Data e hora em que a Proponente registrou a presente proposta (chamada ao POST /portabilities).
-                  Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC-0 (UTC time format).PPC-21
+                  Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC-0 (UTC time format).
                 maxLength: 20
                 minLength: 20
                 pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
@@ -790,7 +796,7 @@ components:
           properties:
               portabilityId:
                 type: string
-                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
                 maxLength: 100
                 minLength: 1
                 example: 54d5348c-1a3f-4ff4-a8a8-d0724fb806c6
@@ -808,18 +814,6 @@ components:
                   - REJECTED
                   - ACCEPTED_WITH_CHANGE
                   - CANCELED
-              strCode:
-                type: object
-                required:
-                  - isbpIfCredora
-                  - agency
-                properties:
-                  isbpIfCredora:
-                    type: number
-                    description: Número do ISBP da Instituição credora
-                  agency:
-                    type: number
-                    description: Número da Agência creditada
               creationDateTime:
                 type: string
                 description: |
@@ -831,7 +825,7 @@ components:
                 example: '2020-07-21T08:30:00Z'
         meta:
           $ref: '#/components/schemas/Meta'
-    ResponseConcurrancyManagement:
+    ResponsePortabilityEligibility:
       type: object
       required:
         - data
@@ -904,7 +898,7 @@ components:
                     pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
                     example: "2020-07-21T08:30:00Z"
                     description: |
-                      Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+                      Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
                       
                       [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `TRUE`
                   
@@ -1348,7 +1342,7 @@ components:
                         description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
                   dueDate:
                     type: string
-                    description: Prazo (data de vencimento final) da operação. Especificação RFC-3339
+                    description: Prazo (data de vencimento final) da operação. Especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339)
                     maxLength: 20
                     minLength: 20
                     pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
@@ -1388,7 +1382,7 @@ components:
                 pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
                 example: "2020-07-21T08:30:00Z"
                 description: |
-                  Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação RFC-3339, sempre com a utilização de timezone UTC(UTC time format).
+                  Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
               statusReason:
                 type: object
                 description: |
@@ -1631,29 +1625,48 @@ components:
               required:
                 - ispb
                 - branchCode
-                - accountNumber
+                - hasfinancialAgent
+                - number
               properties:
                 ispb:
+                  type: number
+                  description: Número do ISPB da Instituição credora a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                  example: 22896431
+                name:
                   type: string
-                  description: Número do ISPB da Instituição credora
-                  pattern: '^[0-9]{8}$'
-                  example: '22896431'
+                  description: |
+                    Nome do proprietário da conta a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                    
+                    [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
+                  pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                  maxLength: 80
+                  minLength: 1
+                  example: 'Instituicao Credora'
+                companyCnpj:
+                  type: string
+                  description: |
+                    CNPJ do proprietário da conta a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                    
+                    [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
+                  pattern: '\d{14}$'
+                  maxLength: 14
+                  minLength: 14
+                  example: '21128159000166'
                 branchCode:
-                  type: string
-                  description: Número da Agência creditada
-                  pattern: '^\d{4}$'
-                  example: '0001'
-                accountNumber:
-                  type: string
-                  description: Número da conta bancária da credora
-                  pattern: '\d{8,20}$'
-                  example: '12345678'
-                checkDigit:
-                  type: string
-                  description: Dígito da conta
-                  maxLength: 1
-                  pattern: '^\w{1}$'
-                  example: 'X'
+                  type: number
+                  description: Número da Agência creditada a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                  example: 0001
+                hasfinancialAgent:
+                  type: boolean
+                  description: Instituição trabalha com agente financeiro ao invés da conta reserva?
+                  example: true
+                number:
+                  type: number
+                  description: |
+                    Número da conta bancária da credora a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                    
+                    [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
+                  example: 12345678
         links:
           $ref: '#/components/schemas/Links'
         meta:
@@ -1829,11 +1842,7 @@ components:
                 - USUARIO
             reason:
               type: object
-              description: |
-                Informação adicional sobre rejeição de portabilidade de crédito. 
-                Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
-                
-                [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS
+              description: Motivo de recusa do pedido de portabilidade
               required:
                 - type
               properties:
@@ -1860,10 +1869,9 @@ components:
                   pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                   example: "Informações Adicionais"
                   description: |
-                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
-                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
-
-                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`.
+                    Informação adicional sobre rejeição de portabilidade de crédito. Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
+                    
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `type` for igual a `OUTROS`
     RequestCreditPortabilityPayment:
       type: object
       required:
@@ -1880,7 +1888,7 @@ components:
           properties:
               portabilityId:
                 type: string
-                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
                 maxLength: 100
                 minLength: 1
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
@@ -1950,11 +1958,7 @@ components:
                 - USUARIO
             reason:
               type: object
-              description: |
-                Informação adicional sobre rejeição de portabilidade de crédito. 
-                Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
-                
-                [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS
+              description: Motivo de recusa do pedido de portabilidade
               required:
                 - type
               properties:
@@ -1981,10 +1985,9 @@ components:
                   pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                   example: "Informações Adicionais"
                   description: |
-                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
-                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
-
-                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`.
+                    Informação adicional sobre rejeição de portabilidade de crédito. Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
+                    
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `type` for igual a `OUTROS`
         meta:
           $ref: '#/components/schemas/Meta'
     POSTResponseCreditPortabilityPayment:
@@ -2004,7 +2007,7 @@ components:
           properties:
               portabilityId:
                 type: string
-                pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
                 maxLength: 100
                 minLength: 1
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
@@ -2054,7 +2057,7 @@ components:
             type: object
             properties:
               requestDateTime:
-                description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+                description: 'Data e hora da consulta, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.'
                 type: string
                 maxLength: 20
                 format: date-time
@@ -2074,7 +2077,7 @@ components:
           example: '2021-05-21T08:30:00Z'
     Links:
       type: object
-      description: Referências para outros recusos da API requisitada.
+      description: Referências para outros recursos da API requisitada.
       required:
         - self
       properties:
@@ -2205,7 +2208,7 @@ components:
     xFapiCustomerIpAddress:
       name: x-fapi-customer-ip-address
       in: header
-      description: O endereço IP do usuário se estiver atualmente logado com a instituição proponente.
+      description: O endereço IP do usuário se estiver atualmente logado com o receptor.
       required: false
       schema:
         type: string
@@ -2227,11 +2230,11 @@ components:
     portabilityId:
       name: portabilityId
       in: path
-      description: Identificador do contrato para todos os tipos de operação de crédito.
+      description: Identificador do pedido de portabilidade de crédito.
       required: true
       schema:
         type: string
-        pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
         maxLength: 100
   securitySchemes:
     OpenId:
@@ -2245,21 +2248,18 @@ components:
           tokenUrl: 'https://authserver.example/token'
           scopes:
             credit-portability: Escopo necessário para acesso à API Portabilidade de Crédito.
-    NonRedirectAuthorizationCode:
+    OAuth2AuthorizationCodeLoans:
       type: oauth2
-      description: Fluxo OAuth necessário para que a Instituição Proponente possa solicitar o pedido de portabilidade sem redirecionamento.
+      description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
       flows:
         authorizationCode:
-          authorizationUrl: 'https://authserver.example/token'
+          authorizationUrl: 'https://authserver.example/authorization'
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            payments: Escopo necessário para acesso à  API Payment Initiation.
-            openid: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
-            'enrollment:enrollmentId': Permite realizar atualização de um registro com a permissão do cliente.
-            nrp-consents: Consentimento para pagamentos sem redirecionamento.      
+            loans: Escopo necessário para acesso à API Loans. O controle dos endpoints específicos é feito via permissions. 
   responses:
     POSTResponseCreditPortability:
-      description: Dados dos contratos de empréstimos obtidos com sucesso.
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -2275,8 +2275,8 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/POSTResponseCreditPortability'
-    OKResponseConcurrancyManagement:
-      description: Dados dos contratos de empréstimos obtidos com sucesso.
+    OKResponsePortabilityEligibility:
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -2291,7 +2291,7 @@ components:
       content:
         application/jwt:
           schema:
-            $ref: '#/components/schemas/ResponseConcurrancyManagement'
+            $ref: '#/components/schemas/ResponsePortabilityEligibility'
     OKResponsePortabilitiesByPortabilityId:
       description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
@@ -2344,7 +2344,7 @@ components:
           schema:
             $ref: '#/components/schemas/PatchResponseCreditPortabilityCancel'
     POSTResponseCreditPortabilityPayment:
-      description: Dados dos contratos de empréstimos obtidos com sucesso.
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
         x-fapi-interaction-id:
           description: |
@@ -2544,7 +2544,7 @@ components:
           schema:
             $ref: '#/components/schemas/X-V'
       content:
-        application/json; charset=utf-8:
+        application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     SiteIsOverloaded:
