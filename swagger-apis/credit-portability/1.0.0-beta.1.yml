@@ -1842,11 +1842,7 @@ components:
                 - USUARIO
             reason:
               type: object
-              description: |
-                Informação adicional sobre rejeição de portabilidade de crédito. 
-                Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
-                
-                [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS
+              description: Motivo de recusa do pedido de portabilidade
               required:
                 - type
               properties:
@@ -1873,10 +1869,9 @@ components:
                   pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                   example: "Informações Adicionais"
                   description: |
-                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
-                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
-
-                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`.
+                    Informação adicional sobre rejeição de portabilidade de crédito. Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
+                    
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `type` for igual a `OUTROS`
     RequestCreditPortabilityPayment:
       type: object
       required:
@@ -1963,11 +1958,7 @@ components:
                 - USUARIO
             reason:
               type: object
-              description: |
-                Informação adicional sobre rejeição de portabilidade de crédito. 
-                Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
-                
-                [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS
+              description: Motivo de recusa do pedido de portabilidade
               required:
                 - type
               properties:
@@ -1994,10 +1985,9 @@ components:
                   pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                   example: "Informações Adicionais"
                   description: |
-                    Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
-                    Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
-
-                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`.
+                    Informação adicional sobre rejeição de portabilidade de crédito. Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão para estrutura Open Finance para discussão e mapeamento em futuras versões.
+                    
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `type` for igual a `OUTROS`
         meta:
           $ref: '#/components/schemas/Meta'
     POSTResponseCreditPortabilityPayment:
