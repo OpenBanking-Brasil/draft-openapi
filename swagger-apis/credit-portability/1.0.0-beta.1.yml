@@ -1666,6 +1666,7 @@ components:
                     Número da conta bancária da credora a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
                     
                     [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
+                  pattern: '\d{8,20}$'
                   example: 12345678
         links:
           $ref: '#/components/schemas/Links'
