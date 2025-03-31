@@ -1048,7 +1048,7 @@ components:
                   - contractNumber
                   - ipocCode
                   - contractDate
-                  - paidInstalments
+                  - paidInstallments
                   - contractOutstandingBalance
                 properties:
                   contractId:
@@ -1098,9 +1098,9 @@ components:
                   - contractedFees
                   - contractedFinanceCharges
                   - digitalSignatureProof
-                  - totalNumberOfInstalments
-                  - instalmentPeriodicity
-                  - instalmentPeriodicityAdditionalInfo
+                  - totalNumberOfInstallments
+                  - installmentPeriodicity
+                  - installmentPeriodicityAdditionalInfo
                   - dueDate
                 properties:
                   cet:
@@ -1296,11 +1296,11 @@ components:
                     required:
                       - documentId
                       - signatureDateTime
-                  totalNumberOfInstalments:
+                  totalNumberOfInstallments:
                     type: number
                     description: total de parcelas, segundo a periodicidade regular das parcelas referente à Modalidade de Crédito informada.
                     example: 30
-                  instalmentPeriodicity:
+                  installmentPeriodicity:
                     type: string
                     description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diario, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
                     enum:
@@ -1314,7 +1314,7 @@ components:
                       - SEMESTRAL
                       - ANUAL
                     example: SEM_PERIODICIDADE_REGULAR
-                  instalmentAmount:
+                  installmentAmount:
                     type: object
                     minItems: 1
                     description: Objeto para representar o Valor da parcela regular da operação após portabilidade.
