@@ -914,7 +914,7 @@ components:
                         maxLength: 80
                         example: Empresa da Organização A              
                         description: |
-                          Nome da Instituição Proponente responsável pela pedido de portabilidade de credito anterior a atual consulta p.ex.Empresa A.
+                          Nome da Instituição Proponente responsável pelo pedido de portabilidade de credito anterior a atual consulta p.ex.Empresa A.
                           
                           [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`         
                   companyCnpj:
@@ -1058,7 +1058,7 @@ components:
                     minLength: 1
                     example: "92792126019929279212650822221989319252576"
                     description: "Identifica de forma única o contrato da operação de crédito do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora."
-                  contractNumber:
+                  contract
                     type: string
                     pattern:  ^[\w\W]{1,100}$
                     maxLength: 100
@@ -1623,7 +1623,7 @@ components:
                 - ispb
                 - branchCode
                 - hasfinancialAgent
-                - number
+                - accountNumber
               properties:
                 ispb:
                   type: number
@@ -1657,13 +1657,12 @@ components:
                   type: boolean
                   description: Instituição trabalha com agente financeiro ao invés da conta reserva?
                   example: true
-                number:
+                accountNumber:
                   type: number
                   description: |
                     Número da conta bancária da credora a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
                     
                     [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
-                  pattern: '\d{8,20}$'
                   example: 12345678
         links:
           $ref: '#/components/schemas/Links'
