@@ -825,7 +825,9 @@ components:
         interestRates:
           type: array
           description: |
-            Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito. Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita. Para o produto CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN) deve-se obrigatoriamente conter a taxa nominal e efetiva (campo “taxType”) com periodicidade a.a. (ao ano), podendo, adicionalmente, também conter uma periodicidade diferente.
+            Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito. 
+            Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita. 
+            Para contratos em renegociação a taxa de empréstimo compartilhada  deve se manter a taxa do contrato vigente, sendo alterada para a renegociada ao fim do processo de renegociação.
           items:
             $ref: '#/components/schemas/LoansContractInterestRate'
           minItems: 0
