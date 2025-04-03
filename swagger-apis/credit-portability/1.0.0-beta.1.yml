@@ -60,12 +60,14 @@ servers:
   - url: 'https://apih.banco.com.br/open-banking/credit-portability/v1'
     description: Servidor de Homologação
 tags:
-  - name: Credit Portability
-    description:  Permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições. 
+  - name: Account data
+    description: 'Informação dos dados bancários para liquidação de contrato via STR exclusiva do OFB.'
   - name: Concurrency Management
     description: 'Para evitar o envio de múltiplas solicitações de portabilidade para o mesmo contrato, as instituições devem implementar mecanismos que permitam: recusar solicitações simultâneas de portabilidade de crédito referentes ao mesmo contrato, seja por meio da registradora ou do Open Finance Brasil (OFB), priorizando sempre a solicitação mais antiga.'
-  - name: Account data
+  - name: Credit Portability
+    description: 'Permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições.'
   - name: Payments
+    description: 'Informa a Instituição Credora a respeito da liquidação efetuada através da STR exclusiva do OFB.'
 paths:
   /portabilities:
     post:
