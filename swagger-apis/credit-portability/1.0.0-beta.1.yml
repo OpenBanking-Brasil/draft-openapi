@@ -812,7 +812,7 @@ components:
                   - PORTABILITY_COMPLETED
                   - REJECTED
                   - ACCEPTED_WITH_CHANGE
-                  - CANCELLED
+                  - CANCELED
               creationDateTime:
                 type: string
                 description: |
@@ -1363,7 +1363,7 @@ components:
                   
                   `REJECTED` - Indica que o pedido de portabilidade de crédito foi rejeitado, seja porque o cliente aceitou a contraproposta, ou porque a proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades.
                   
-                  `CANCELLED` - Indica que o cliente cancelou o pedido de portabilidade de crédito.
+                  `CANCELED` - Indica que o cliente cancelou o pedido de portabilidade de crédito.
                   
                   `PAYMENT_ISSUE` - Indica que a portabilidade foi cancelada por inconsistência relacionada no pagamento da Instituição Proponente a Instituição Credora.
                 enum:
@@ -1373,7 +1373,7 @@ components:
                   - ACCEPTED_SETTLEMENT_COMPLETED
                   - PORTABILITY_COMPLETED
                   - REJECTED
-                  - CANCELLED
+                  - CANCELED
                   - PAYMENT_ISSUE
               statusUpdateDateTime:
                 type: string
@@ -1488,7 +1488,7 @@ components:
                 description: |
                   Objeto contendo detalhes do cancelamento do pedido de portabilidade de crédito junto a Instituição Credora.
 
-                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `REJECTED` ou `CANCELLED`
+                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `REJECTED` ou `CANCELED`
                 required:
                   - rejectedBy
                   - reason
