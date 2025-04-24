@@ -366,7 +366,7 @@ components:
           properties:
               customerContact:
                 type: array
-                minItems: 1
+                minItems: 0
                 description: Dados de contato do cliente
                 items:
                   type: object
@@ -761,12 +761,6 @@ components:
           minItems: 0
           description: Conjunto de informações de contratos de empréstimos/financiamentos mantidos pelo cliente na instituição credora e para os quais ele tenha fornecido consentimento
           required:
-            - contractId
-            - contractNumber
-            - ipocCode
-            - portability
-            - productType
-            - productSubType
             - creationDateTime
           properties:
               portabilityId:
@@ -940,7 +934,7 @@ components:
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
               customerContact:
                 type: array
-                minItems: 1
+                minItems: 0
                 description: Dados de contato do cliente.
                 items:
                   type: object
@@ -1025,9 +1019,6 @@ components:
                   - contractId
                   - contractNumber
                   - ipocCode
-                  - contractDate
-                  - paidInstallments
-                  - contractOutstandingBalance
                 properties:
                   contractId:
                     type: string
@@ -1078,7 +1069,6 @@ components:
                   - digitalSignatureProof
                   - totalNumberOfInstallments
                   - installmentPeriodicity
-                  - installmentPeriodicityAdditionalInfo
                   - dueDate
                 properties:
                   cet:
@@ -2071,7 +2061,7 @@ components:
       properties:
         errors:
           type: array
-          minItems: 1
+          minItems: 0
           maxItems: 13
           items:
             type: object
@@ -2233,7 +2223,9 @@ components:
           authorizationUrl: 'https://authserver.example/authorization'
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            loans: Escopo necessário para acesso à API Loans. O controle dos endpoints específicos é feito via permissions. 
+            loans: Escopo necessário para acesso à API Loans. O controle dos endpoints específicos é feito via permissions.
+            openId: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
+            'consent:consentId': Fluxo OAuth necessário para que a instituição proponente tenha acesso aos dados na instituição credora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
   responses:
     POSTResponseCreditPortability:
       description: Dados dos contratos de empréstimo obtidos com sucesso.
