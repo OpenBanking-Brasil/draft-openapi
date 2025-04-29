@@ -82,6 +82,7 @@ paths:
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/xIdempotencyKey'
       requestBody:
         content:
           application/jwt:
@@ -1591,7 +1592,6 @@ components:
                 - ispb
                 - branchCode
                 - hasfinancialAgent
-                - accountNumber
               properties:
                 ispb:
                   type: number
@@ -2162,6 +2162,16 @@ components:
         pattern: '[\w\W\s]*'
         minLength: 1
         maxLength: 100
+    xIdempotencyKey:
+      name: x-idempotency-key
+      in: header
+      description: Cabeçalho HTTP personalizado. Identificador de solicitação exclusivo para suportar a idempotência.
+      required: true
+      schema:
+        type: string
+        pattern: '^(?!\s)(.*)(\S)$'
+        minLength: 1
+        maxLength: 40
     xFapiAuthDate:
       name: x-fapi-auth-date
       in: header
