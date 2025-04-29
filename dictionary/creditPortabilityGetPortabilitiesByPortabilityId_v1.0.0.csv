@@ -74,7 +74,7 @@ EFETIVA";1;1;"";Não permitido;string;EFETIVA;
 - COMPOSTO (para cada período do contrato (diário, mensal, anual etc.), há um “novo capital” para a cobrança da taxa de juros contratada. Esse “novo capital” é a soma do capital e do juro cobrado no período anterior. Exemplo: em um empréstimo de R$1.000, com taxa de juros composta de 8% a.a., com duração de 2 anos, o total de juros será R$80 no primeiro ano. No segundo ano, os juros vão ser somados ao capital (R$1.000 + R$ 80 = R$ 1.080), resultando em juros de R$ 86 (8%de R$ 1.080))""
 ";Texto;;Obrigatório;;"SIMPLES 
 COMPOSTO";1;1;"";Não permitido;string;SIMPLES;
-/data/proposedContract/interestRates/EnumContractReferentialRateIndexerSubType;EnumContractReferentialRateIndexerSubType;"""Sub tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040""
+/data/proposedContract/interestRates/referentialRateIndexerSubType;referentialRateIndexerSubType;"""Sub tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040""
 ";Texto;;Opcional;;"SEM_SUB_TIPO_INDEXADOR 
 PRE_FIXADO 
 TR_TBF 
@@ -110,26 +110,6 @@ FLUTUANTES
 INDICES_PRECOS 
 CREDITO_RURAL 
 OUTROS_INDEXADORES";1;1;"";Não permitido;string;PRE_FIXADO;
-/data/proposedContract/interestRates/referentialRateIndexerSubType;referentialRateIndexerSubType;"""Sub tipos de taxas referenciais ou indexadores, conforme Anexo 5: Taxa referencial ou Indexador (Indx), do Documento 3040""
-";Texto;;Opcional;;"SEM_SUB_TIPO_INDEXADOR 
-PRE_FIXADO 
-TR_TBF 
-TJLP 
-LIBOR 
-TLP 
-OUTRAS_TAXAS_POS_FIXADAS 
-CDI 
-SELIC 
-OUTRAS_TAXAS_FLUTUANTES 
-IGPM 
-IPCA 
-IPCC 
-OUTROS_INDICES_PRECO 
-TCR_PRE 
-TCR_POS 
-TRFC_PRE 
-TRFC_POS 
-OUTROS_INDE";0;1;"";Não permitido;string;;
 /data/proposedContract/interestRates/referentialRateIndexerAdditionalInfo;referentialRateIndexerAdditionalInfo;"Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
 [Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionado o tipo ou subtipo `OUTRO`.
 ";Texto;140;Condicional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;" Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionado o tipo ou subtipo `OUTRO`.
