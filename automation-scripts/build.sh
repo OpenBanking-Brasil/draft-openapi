@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 PATH_PARM1="$1"
-PROJECT_ROOT_DIR=`git rev-parse --absolute-git-dir | cut -d '.' -f1`
+PROJECT_ROOT_DIR=`git rev-parse --absolute-git-dir | sed 's/\/\.git$//'`
 PATH_PARM1=$PROJECT_ROOT_DIR'/swagger-apis/'$PATH_PARM1
 echo 'Verificando arquivo: '$PATH_PARM1
 
