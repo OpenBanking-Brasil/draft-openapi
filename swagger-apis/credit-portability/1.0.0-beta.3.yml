@@ -1425,15 +1425,6 @@ components:
                     required:
                       - documentId
                       - signatureDateTime
-                  paymentIssueDetail:
-                    type: string
-                    description: |
-                      Detalhes da inconsistência encontrada pela Instituição Credora na etapa de validação da liquidação do pedido de portabilidade de crédito. Devem ser mensagens claras, detalhadas, para compreensão entre Proponente e Credora, principalmente em casos que demandam ação por uma das partes.
-                      
-                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual `PAYMENT_ISSUE`
-                    maxLength: 200
-                    pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-                    example: Valor disponibilizado é menor que o valor total a ser quitado. Credora está devolvendo o valor, e solicita pagamento do valor correto até o fim do dia.
               creationDateTime:
                 type: string
                 description: |
