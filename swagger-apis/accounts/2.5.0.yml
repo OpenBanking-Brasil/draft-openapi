@@ -666,7 +666,9 @@ components:
           maxLength: 1
           pattern: '[\w\W\s]*'
           description: |
-            Dígito da conta. [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré-paga. Nos casos em que a conta pré-paga possua dígito, o envio é obrigatório
+            Dígito da conta. 
+            
+            [Restrição] Obrigatoriamente deve ser preenchido quando o campo "type" for diferente de conta pré-paga. Nos casos em que a conta pré-paga possua dígito, o envio é obrigatório
           example: '4'
         type:
           $ref: '#/components/schemas/EnumAccountType'
