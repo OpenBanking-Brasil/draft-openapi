@@ -1548,7 +1548,10 @@ components:
                         description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
                   transactionId:
                     type: string
-                    description: Identificador da transação utilizado para liquidar o contrato de empréstimo. No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Número de Controle da STR).
+                    description: |
+                      Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
+                      
+                      No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
                     maxLength: 20
                     minLength: 1
                     pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,20}$'
@@ -1860,9 +1863,9 @@ components:
                 minLength: 1
                 example: 'STR20181108000000013'
                 description: |
-                  Identificador da transação utilizada para Proponente liquidar portabilidade de crédito com a Credora.
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
                   
-                  No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)".
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
     PatchResponseCreditPortabilityCancel:
       type: object
       required:
@@ -1981,9 +1984,9 @@ components:
                 minLength: 1
                 example: 'STR20181108000000013'
                 description: |
-                  Identificador da transação utilizada para Proponente liquidar portabilidade de crédito com a Credora.
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
                   
-                  No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)".
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
         meta:
             type: object
             properties:
