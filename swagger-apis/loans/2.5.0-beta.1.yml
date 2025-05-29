@@ -1157,11 +1157,21 @@ components:
           description: |
             Valor necessário para o cliente liquidar a dívida, ou seja, este campo deve ser preenchido com o saldo devedor atualizado descrito no DDC (Documento Descritivo de Crédito). 
             O valor a liquidar atualizado do dia deve ser ajustado para compartilhamento pela Transmissora até às 10:00 do mesmo dia, especialmente para Crédito Pessoal Clean, escopo de Portabilidade de Crédito, pois este valor é utilizado pela Receptora em papel de Proponente para pagamento à Transmissora em papel de Credora.
+        lastUpdatedcontractOutstandingBalanceDateTime:
+          type: string
+          format: date-time
+          description: |
+            Data e hora da última atualização do valor do campo contractOutstandingBalance, conforme especificação RFC-3339, formato UTC. 
+            
+            [Restrição] O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN na identificação da operação, no endpoint /contracts/{contractId}).
+          minLength: 20
+          maxLength: 20
+          example: "2021-05-21T08:30:00Z"
         totalRemainingAmount:
           description: |
             Valor total que falta para o cliente liquidar o contrato, considerando o somatório total de todas as parcelas a vencer e vencidas, bem como todas as taxas, tarifas e encargos das parcelas. Nos casos de contrato com taxas pós-fixadas, considerar apenas valores pré-fixados, visto que o cálculo pós-fixado ocorre apenas em momento futuro, e que o valor está sujeito às variações de seu indexador. 
             
-            [Restrição] O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
+            [Restrição] O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN na identificação da operação, no endpoint /contracts/{contractId}).
           type: string
           format: double
           pattern: '^\d{1,15}\.\d{2,4}$'
@@ -1174,14 +1184,6 @@ components:
           items:
             $ref: '#/components/schemas/LoansReleases'
           description: Lista dos pagamentos realizados no período
-        lastUpdatedcontractOutstandingBalanceDateTime:
-          type: string
-          format: date-time
-          description: |
-            Data e hora da última atualização do valor do campo contractOutstandingBalance, conforme especificação RFC-3339, formato UTC. [Restrição] O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
-          minLength: 20
-          maxLength: 20
-          example: "2021-05-21T08:30:00Z"
     LoansReleases:
       type: object
       description: Lista dos pagamentos realizados no período
