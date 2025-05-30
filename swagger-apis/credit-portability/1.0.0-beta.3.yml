@@ -40,6 +40,7 @@ info:
         &emsp;- Contrato não elegível para portabilidade dentro do trilho do OFB (CONTRATO_NAO_ELEGIVEL);   
         &emsp;- Idempotência: Valida se há divergência entre chave de idempotência e informações enviadas (ERRO_IDEMPOTENCIA);   
         &emsp;- Evidência de assinatura do contrato: Valida se o objeto de assinatura do contrato foi preenchido pela instituição proponente devidamente, em caso de ausência (SEM_EVIDENCIA_ASSINATURA).   
+        &emsp;- Periodicidade: Valida se não houve mudança na periodicidade entre o novo contrato e o contrato original, caso tenha sido alterado a periodicidade (PERIODICIDADE_INVALIDA).   
     **- Para endpoint ([POST] /portabilities/{portabilityId}/payment):**   
       &nbsp;&nbsp;**Semânticos**   
         &emsp;- Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE (PAGAMENTO_EFETUADO_FORA_PRAZO). Obs.: Caso o pagamento tenha sido feito por engano a Instituição Proponente deve solicitar o estorno.   
@@ -1504,7 +1505,7 @@ components:
                         maxLength: 144
                         pattern: '^(?!\s)[\w\W\s]*[^\s]$'
                         example: Informações Adicionais
-              receipt:
+              loanSettlementInstruction:
                 type: object
                 description: |
                   Objeto contendo o recibo de quitação do contrato original de empréstimo após finalizado o
@@ -1548,7 +1549,10 @@ components:
                         description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
                   transactionId:
                     type: string
-                    description: Identificador da transação utilizado para liquidar o contrato de empréstimo. No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Número de Controle da STR).
+                    description: |
+                      Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
+                      
+                      No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
                     maxLength: 20
                     minLength: 1
                     pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,20}$'
@@ -1754,6 +1758,7 @@ components:
           type: object
           description: Objeto para notificar a respeito da liquidação efetuada pela proponente a Credora.
           required:
+            - rejectedBy
             - reason
           properties:
             rejectedBy:
@@ -1859,9 +1864,9 @@ components:
                 minLength: 1
                 example: 'STR20181108000000013'
                 description: |
-                  Identificador da transação utilizada para Proponente liquidar portabilidade de crédito com a Credora.
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
                   
-                  No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)".
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
     PatchResponseCreditPortabilityCancel:
       type: object
       required:
@@ -1871,6 +1876,7 @@ components:
           type: object
           description: Objeto para notificar a respeito da liquidação efetuada pela proponente a Credora.
           required:
+            - rejectedBy
             - reason
           properties:
             rejectedBy:
@@ -1979,9 +1985,9 @@ components:
                 minLength: 1
                 example: 'STR20181108000000013'
                 description: |
-                  Identificador da transação utilizada para Proponente liquidar portabilidade de crédito com a Credora.
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
                   
-                  No contexto de STR0047, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)".
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
         meta:
             type: object
             properties:
