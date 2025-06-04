@@ -87,10 +87,10 @@ OUTROS";1;1;"";Não permitido;string;SAC;
 ";Texto;200;Opcional;^[^\s](.*[^\s])?$;;0;1;"";Não permitido;string;Informações complementares relativa à amortização do tipo 'OUTROS';
 /data/cnpjConsignee;cnpjConsignee;"CNPJ do consignante (CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica). 
 
-Deve-se ter apenas os números do CNPJ, sem máscara. 
+Deve-se ter apenas a representação alfanumérica do CNPJ, sem máscara.
 
 [Restrição] Informação adicional específica para quando o productSubType for igual a CREDITO_PESSOAL_COM_CONSIGNACAO
-";Texto;14;Condicional;^\d{14}$;;0;1;" Informação adicional específica para quando o productSubType for igual a CREDITO_PESSOAL_COM_CONSIGNACAO
+";Texto;14;Condicional;^[0-9A-Z]{12}[0-9]{2}$;;0;1;" Informação adicional específica para quando o productSubType for igual a CREDITO_PESSOAL_COM_CONSIGNACAO
 ";Não permitido;string;60500998000135;
 /data/interestRates;interestRates;"Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito. 
 Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita. 
