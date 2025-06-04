@@ -94,7 +94,8 @@ Deve-se ter apenas os números do CNPJ, sem máscara.
 ";Não permitido;string;60500998000135;
 /data/interestRates;interestRates;"Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito. 
 Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita. 
-Para contratos em renegociação a taxa de empréstimo compartilhada  deve se manter a taxa do contrato vigente, sendo alterada para a renegociada ao fim do processo de renegociação.
+Para contratos em renegociação, a taxa de empréstimo compartilhada deve se manter a taxa do contrato vigente, sendo alterada para a renegociada ao fim do processo de renegociação. 
+Para o produto CPC (campo `productSubTypeCategory` preenchido com `CREDITO_PESSOAL_CLEAN`) deve-se obrigatoriamente conter a taxa nominal e a taxa efetiva (campo `taxPeriodicity`) com periodicidade a.a. (ao ano), podendo adicionalmente conter, além das taxas nominal e efetiva ao ano, outras com outra periodicidade.
 ";Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/interestRates/taxType;taxType;"""Tipo de Taxa (vide  Enum)
 - NOMINAL (taxa nominal é uma taxa de juros em que a unidade referencial não coincide com a unidade de tempo da capitalização. Ela é sempre fornecida em termos anuais, e seus períodos de capitalização podem ser diários, mensais, trimestrais ou semestrais. p.ex. Uma taxa de 12% ao ano com capitalização mensal)
