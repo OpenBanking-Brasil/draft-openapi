@@ -40,6 +40,9 @@ info:
     ### `/accounts/{accountId}/overdraft-limits`
       - permissions:
         - GET: **ACCOUNTS_OVERDRAFT_LIMITS_READ**
+    ### `/accounts/{accountId}/reserved_balances`
+      - permissions:
+        - GET: **ACCOUNTS_BALANCES_READ**
 
     ## Data de imutabilidade por tipo de transação​
     O identificador de transações de contas é de envio obrigatório no Open Finance Brasil. De acordo com o tipo da transação deve haver o envio de um identificador único, estável e imutável em D0 ou D+1, conforme tabela abaixo
@@ -412,6 +415,57 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - accounts
+  '/accounts/{accountId}/reserved_balances':
+    get:
+      tags:
+        - Accounts
+      summary: Obtém os saldos reservados em produtos caixinhas/reserva.
+      operationId: accountsGetAccountsAccountIdReservedBalances
+      description: Método para obter os saldos reservados em produtos caixinhas/reserva.
+      parameters:
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAccountReservedBalances'
+        '400':
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
+        '401':
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
+        '403':
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
+        '404':
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
+        '406':
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
+        '423':
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
+        '429':
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
+        '500':
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
+        '504':
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
+        default:
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
+      security:
+        - OpenId:
+            - openid
+          OAuth2Security:
+            - 'consent:consentId'
+            - accounts
 components:
   schemas:
     AccountBalancesDataAutomaticallyInvestedAmount:
@@ -569,6 +623,135 @@ components:
             - Quando não existente uma data vinculada especificamente ao bloco, se assume a data e hora de atualização do cadastro como um todo.
 
             De toda forma, é preciso continuar respeitando o prazo máximo de tempestividade da API de Contas.
+    AccountReservedBalancesData:
+      type: array
+      description: Lista de caixinhas/reservas
+      minItems: 0
+      items:
+        type: object
+        required:
+          - reservedIndentification
+          - availableAmount
+        properties:
+          reservedName:
+            type: string
+            description: Nome dado pelo usuário para a reserva
+            pattern: '^[^\s][\w\W\s]*[^\s]$'
+            maxLength: 248
+            minLength: 5
+            example: Caixinha Paras Férias
+          reservedIndentification:
+            type: string
+            description: Identificador único da reserva
+            format: uuid
+            pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+            maxLength: 36
+            minLength: 1
+            example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+          availableAmount:
+            type: array
+            description: Saldo que se encontra disponível na reserva
+            minLength: 1
+            items:
+              type: object
+              required:
+                - amount
+                - currency
+              properties:
+                amount:
+                  type: string
+                  description: Valor relacionado ao objeto.
+                  format: double
+                  pattern: '^\d{1,15}\.\d{2,4}$'
+                  maxLength: 20
+                  minLength: 4
+                  example: '1000.0400'
+                currency:
+                  type: string
+                  description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
+                  pattern: '^[A-Z]{3}$'
+                  maxLength: 3
+                  example: BRL
+                remuneration:
+                  type: object
+                  description: Remuneração aplicada a reserva
+                  required:
+                    - rateType
+                    - indexer
+                    - calculation
+                    - ratePeriodicity
+                  properties:
+                    preFixedRate:
+                      type: string
+                      description: |
+                        Taxa de remuneração pré fixada para a reserva de saldo. p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). 
+                        
+                        [Restrição] Campo de preenchimento obrigatório pelas participantes quando campo `postFixedIndexerPercentage` não for preenchido
+                      format: double
+                      pattern: '^\d{1}\.\d{6}$'
+                      minLength: 8
+                      maxLength: 8
+                      example: '0.300000'
+                    postFixedIndexerPercentage:
+                      type: string
+                      description: |
+                        Percentual do indexador pós fixado para a reserva de saldo. p.ex. 0.014500. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%). 
+
+                        [Restrição] Campo de preenchimento obrigatório pelas participantes quando campo `preFixedRate` não for preenchido
+                      format: double
+                      pattern: '^\d{1}\.\d{6}$'
+                      minLength: 8
+                      maxLength: 8
+                      example: '0.300000'
+                    rateType:
+                      type: string
+                      description: Tipo da taxa de remuneração (linear ou exponencial)
+                      enum:
+                        - LINEAR
+                        - EXPONENCIAL
+                      example: LINEAR
+                    indexer:
+                      type: string
+                      description: Índice utilizado como referência para remuneração da reserva
+                      enum:
+                        - CDI
+                        - DI
+                        - TR
+                        - IPCA
+                        - IGP_M
+                        - IGP_DI
+                        - INPC
+                        - BCP
+                        - TLC
+                        - SELIC
+                        - PRE_FIXADO
+                        - OUTROS
+                      example: CDI
+                    calculation:
+                      type: string
+                      description: Base de cálculo (dias úteis ou dias corridos)
+                      enum:
+                        - DIAS_UTEIS
+                        - DIAS_CORRIDOS
+                      example: DIAS_UTEIS
+                    ratePeriodicity:
+                      type: string
+                      description: Periodicidade da taxa de remuneração (mensal, anual, diário, semestral)
+                      enum:
+                        - MENSAL
+                        - ANUAL
+                        - DIARIO
+                        - SEMESTRAL
+                      example: MENSAL
+                    indexerAdditionalInfo:
+                      type: string
+                      description: |
+                        Informações adicionais do indexador
+                        
+                        [Restrição] Campo de preenchimento obrigatório pelas participantes quando houver `Outros` no campo `indexer`
+                      pattern: '[\w\W\s]*'
+                      maxLength: 50
+                      example: Dólar
     AccountData:
       type: object
       required:
@@ -877,6 +1060,7 @@ components:
         - PORTABILIDADE_SALARIO
         - RESGATE_APLIC_FINANCEIRA
         - OPERACAO_CREDITO
+        - TRANSFERENCIA_SALDO_RESERVADO
         - OUTROS
       example: PIX
     Links:
@@ -1043,6 +1227,19 @@ components:
       properties:
         data:
           $ref: '#/components/schemas/AccountBalancesData'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ResponseReservedBalances:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/AccountReservedBalancesData'
         links:
           $ref: '#/components/schemas/Links'
         meta:
@@ -1363,6 +1560,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseAccountBalances'
+    OKResponseAccountReservedBalances:
+      description: Dados relativos aos saldos da conta identificada por accountId obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          required: true
+          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ResponseReservedBalances'
     OKResponseAccountTransactions:
       description: Dados da lista de transações da conta identificada por accountId obtidos com sucesso.
       headers:
