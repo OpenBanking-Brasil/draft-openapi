@@ -12,7 +12,7 @@ info:
         &nbsp;&nbsp;- Como assinar o payload JWS: [Como Assinar o Payload](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/905740608/Como+assinar+o+payload+-+PC+Portabilidade+de+Cr+dito+-+CPC)
     
     ## Controle de Acesso
-    - Os endpoints [GET] /portabilities/{portabilityId}, [GET] /account-data, [POST] /portabilities/{portabilityId}/payment, [PATCH] / portabilities/{portabilityId}/cancel da API de Portabilidade de crédito devem utilizar o escopo client_credentials
+    - Os endpoints [GET] /portabilities/{portabilityId}, [GET] /portabilities/{portabilityId}/account-data, [POST] /portabilities/{portabilityId}/payment, [PATCH] / portabilities/{portabilityId}/cancel da API de Portabilidade de crédito devem utilizar o escopo client_credentials
     - Os endpoints [GET] /credit-operations/{contractId}/portability-eligibility e [POST] /portabilities devem utilizar o escopo authorization_code para validar a permissions de LOANS
     
     ## Validações para Portabilidade de Crédito
@@ -256,7 +256,7 @@ paths:
             - openId
             - 'consent:consentId'
             - loans
-  /account-data:
+  /portabilities/{portabilityId}/account-data:
     get:
       tags:
         - Account data
@@ -264,6 +264,7 @@ paths:
       description: Método responsável por recuperar informações de contas  para realização do pagamento via TED.
       operationId: creditPortabilityGetAccountData
       parameters:
+        - $ref: '#/components/parameters/portabilityId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
