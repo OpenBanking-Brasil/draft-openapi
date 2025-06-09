@@ -408,7 +408,7 @@ components:
                         description: 'Nome da Instituição Credora.'
                       companyCnpj:
                         type: string
-                        pattern: '\d{14}$'
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
                         maxLength: 14
                         example: '21128159000166'
                         description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
@@ -427,7 +427,7 @@ components:
                         description: 'Nome da Instituição Proponente'
                       companyCnpj:
                         type: string
-                        pattern: '\d{14}$'
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
                         maxLength: 14
                         example: '21128159000166'
                         description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
@@ -887,7 +887,7 @@ components:
                           [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`         
                   companyCnpj:
                         type: string
-                        pattern: '\d{14}$'
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
                         maxLength: 14
                         minLength: 14
                         example: '21128159000166'
@@ -970,7 +970,7 @@ components:
                         description: 'Nome da Instituição Credora.'
                       companyCnpj:
                         type: string
-                        pattern: '\d{14}$'
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
                         maxLength: 14
                         example: '21128159000166'
                         description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
@@ -989,7 +989,7 @@ components:
                         description: 'Nome da Instituição Proponente'
                       companyCnpj:
                         type: string
-                        pattern: '\d{14}$'
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
                         maxLength: 14
                         example: '21128159000166'
                         description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
@@ -1595,7 +1595,7 @@ components:
                     CNPJ do proprietário da conta a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
                     
                     [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
-                  pattern: '\d{14}$'
+                  pattern: '^[0-9A-Z]{12}[0-9]{2}$'
                   maxLength: 14
                   minLength: 14
                   example: '21128159000166'

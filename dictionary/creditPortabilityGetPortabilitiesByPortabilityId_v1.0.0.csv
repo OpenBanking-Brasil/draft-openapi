@@ -8,10 +8,10 @@ EMAIL";1;1;"";Não permitido;string;;
 /data/institution;institution;Informações sobre proponente e credora participantes do presente pedido de portabilidade de crédito.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/institution/creditor;creditor;Informações sobre a instituição credora.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/institution/creditor/companyName;companyName;Nome da Instituição Credora.;Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Instituição Credora;
-/data/institution/creditor/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;\d{14}$;;1;1;"";Não permitido;string;21128159000166;
+/data/institution/creditor/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;^[0-9A-Z]{12}[0-9]{2}$;;1;1;"";Não permitido;string;21128159000166;
 /data/institution/proposing;proposing;Informações sobre a instituição proponente;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/institution/proposing/companyName;companyName;Nome da Instituição Proponente;Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Instituição Proponente;
-/data/institution/proposing/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;\d{14}$;;1;1;"";Não permitido;string;21128159000166;
+/data/institution/proposing/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;^[0-9A-Z]{12}[0-9]{2}$;;1;1;"";Não permitido;string;21128159000166;
 /data/institution/proposing/contact;contact;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/institution/proposing/contact/type;type;Tipo do contato da Instituição Proponente.;Texto;;Opcional;;"EMAIL 
 TELEFONE";0;1;"";Não permitido;string;;
