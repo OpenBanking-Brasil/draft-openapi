@@ -23,7 +23,12 @@ CREDITO_PESSOAL_COM_CONSIGNACAO
 MICROCREDITO_PRODUTIVO_ORIENTADO 
 CAPITAL_GIRO_PRAZO_VENCIMENTO_ATE_365_DIAS 
 CAPITAL_GIRO_PRAZO_VENCIMENTO_SUPERIOR_365_DIAS";1;1;"";Não permitido;string;CREDITO_PESSOAL_COM_CONSIGNACAO;
-/data/productSubTypeCategory;productSubTypeCategory;"Categoria para classificação específica relacionada com a submodalidade do produto.Atenção: o preenchimento com o enum CREDITO_PESSOAL_CLEAN, quando aplicável, será obrigatório à partir da publicação da versão 2.5.0 da API Empréstimos, já o enum CONSIGNADO_SIAPE passará a ser de envio obrigatório em data posterior. Demais submodalidades devem ser classificadas na opção OUTRO.
+/data/productSubTypeCategory;productSubTypeCategory;"Categoria destinada à classificação específica relacionada à submodalidade do produto.
+As orientações a seguir devem ser observadas para o correto preenchimento deste campo:
+* O preenchimento com o enum `CREDITO_PESSOAL_CLEAN` será obrigatório, a partir da publicação da versão 2.5.0 da API Empréstimos, **para contratos em aberto**, quando aplicável;
+* O enum `CONSIGNADO_SIAPE`, **que engloba todos os contratos consignados sob a regulamentação do Sistema Integrado de Administração de Recursos Humanos (Siape), apresentando informações de servidores estatutários, temporários, celetistas (CLT), entre outros**, será de envio obrigatório, a partir do início do piloto para crédito consignado;
+* Contratos liquidados até a entrada em produção (go live) da versão 2.5.0 poderão ser preenchidos com a opção OUTRO;
+* As demais submodalidades devem ser classificadas na opção `OUTRO`.
 ";Texto;;Obrigatório;;"CREDITO_PESSOAL_CLEAN 
 CONSIGNADO_SIAPE 
 OUTRO";1;1;"";Não permitido;string;CREDITO_PESSOAL_CLEAN;
