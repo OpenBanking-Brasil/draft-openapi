@@ -575,7 +575,9 @@ components:
           example: BRL
     AccountBalancesDataAvailableAmount:
       type: object
-      description: 'Saldo disponível para utilização imediata. No caso de conta de depósito a vista, sem considerar cheque especial e investimentos atrelados a conta. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.'
+      description: |
+        Saldo disponível para utilização imediata. Não considera cheque especial, investimentos automáticos atrelados a conta e nem reserva de saldo. 
+        Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
       required:
         - amount
         - currency
