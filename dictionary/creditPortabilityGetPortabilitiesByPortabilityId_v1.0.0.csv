@@ -8,10 +8,10 @@ EMAIL";1;1;"";Não permitido;string;;
 /data/institution;institution;Informações sobre proponente e credora participantes do presente pedido de portabilidade de crédito.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/institution/creditor;creditor;Informações sobre a instituição credora.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/institution/creditor/companyName;companyName;Nome da Instituição Credora.;Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Instituição Credora;
-/data/institution/creditor/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;\d{14}$;;1;1;"";Não permitido;string;21128159000166;
+/data/institution/creditor/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;^[0-9A-Z]{12}[0-9]{2}$;;1;1;"";Não permitido;string;21128159000166;
 /data/institution/proposing;proposing;Informações sobre a instituição proponente;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/institution/proposing/companyName;companyName;Nome da Instituição Proponente;Texto;80;Obrigatório;^(?!\s)[\w\W\s]*[^\s]$;;1;1;"";Não permitido;string;Instituição Proponente;
-/data/institution/proposing/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;\d{14}$;;1;1;"";Não permitido;string;21128159000166;
+/data/institution/proposing/companyCnpj;companyCnpj;Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.;Texto;14;Obrigatório;^[0-9A-Z]{12}[0-9]{2}$;;1;1;"";Não permitido;string;21128159000166;
 /data/institution/proposing/contact;contact;;Lista;;Opcional;;;1;N;"";Não permitido;array;;
 /data/institution/proposing/contact/type;type;Tipo do contato da Instituição Proponente.;Texto;;Opcional;;"EMAIL 
 TELEFONE";0;1;"";Não permitido;string;;
@@ -188,7 +188,7 @@ ANUAL";1;1;"";Não permitido;string;SEM_PERIODICIDADE_REGULAR;
 
 - `RECEIVED`: Estado inicial. Indica que o pedido de portabilidade foi solicitado junto a instituição credora. O pedido deve permanecer neste estado até que o próximo dia útil (D+1) aonde começará a contar o prazo de 3 dias úteis para a etapa de contraproposta e o pedido de portabilidade deverá ser movido para PENDING
 - `PENDING`: Indica que o pedido de portabilidade de crédito está na fase de contraproposta, onde a instituição credora poderá enviar uma contraproposta ou não para o cliente por qualquer canal (email, telefone, etc.) porém o aceite só deverá ser valido se o cliente aprovar no canal digital da instituição credora
-- `ACCEPTED_SETTLEMENT_IN_PROCESS`: Indica que a contraproposta não foi aceita pelo cliente e a instituição proponente terá que quitar o valor do contrato no mesmo dia em que o estado foi ativado
+- `ACCEPTED_SETTLEMENT_IN_PROGRESS`: Indica que a contraproposta não foi aceita pelo cliente e a instituição proponente terá que quitar o valor do contrato no mesmo dia em que o estado foi ativado
 - `ACCEPTED_SETTLEMENT_COMPLETED`: Indica que a instituição proponente já liquidou o contrato e comunicou a respeito a credora que está validando os dados do contratos bem como valores recebidos para a quitação do mesmo (nesta etapa a instituição credora tem 2 dias úteis para fornecer a confirmação e o recibo de quitação do contrato de empréstimo)
 - `PORTABILITY_COMPLETED`: Indica que o pedido de portabilidade foi concluído com sucesso
 - `REJECTED`: Indica que o pedido de portabilidade de crédito foi rejeitado, seja porque o cliente aceitou a contraproposta, ou porque a proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades
@@ -196,7 +196,7 @@ ANUAL";1;1;"";Não permitido;string;SEM_PERIODICIDADE_REGULAR;
 - `PAYMENT_ISSUE`: Indica que a Instituição Credora encontrou alguma inconsistência na liquidação efetuada e que a Instituição Proponente deverá realizar ajustes conforme sugerido pela Instituição Credora para solucionar a pendencia antes do cancelamento do pedido de portabilidade de crédito
 ";Texto;;Obrigatório;;"RECEIVED 
 PENDING 
-ACCEPTED_SETTLEMENT_IN_PROCESS 
+ACCEPTED_SETTLEMENT_IN_PROGRESS 
 ACCEPTED_SETTLEMENT_COMPLETED 
 PORTABILITY_COMPLETED 
 REJECTED 
