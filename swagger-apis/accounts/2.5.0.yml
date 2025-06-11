@@ -623,6 +623,16 @@ components:
             - Quando não existente uma data vinculada especificamente ao bloco, se assume a data e hora de atualização do cadastro como um todo.
 
             De toda forma, é preciso continuar respeitando o prazo máximo de tempestividade da API de Contas.
+        hasReservedBalance:
+          type: boolean
+          description: |
+            Informa se o cliente possui um saldo reservado. Caso o cliente possua reservas de saldo ativas, inclusive nos casos de saldo zerado, o valor enviado deve ser `TRUE`.
+            Caso o cliente não possua o produto, deve ser `FALSE`. Se o campo retornar `TRUE`, os dados do saldo reservado se encontram no endpoint `GET /accounts/{accountId}/reserved_balances`
+            
+            [Restrição] Campo de envio obrigatório pela transmissora que oferta produtos de reservas de saldo atrelados à conta. 
+            Este campo refere-se exclusivamente a saldos de reserva que não estão associados a investimentos. 
+            Produtos de investimentos devem ser reportados nas APIs de Investimentos.
+          example: true
     AccountReservedBalancesData:
       type: array
       description: Lista de caixinhas/reservas
