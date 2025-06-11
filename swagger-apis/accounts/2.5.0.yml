@@ -770,7 +770,6 @@ components:
         - type
         - compeCode
         - number
-        - checkDigit
         - accountId
       properties:
         brandName:
@@ -810,7 +809,10 @@ components:
           example: '94088392'
         checkDigit:
           type: string
-          description: Dígito da conta
+          description: |
+            Dígito da conta
+
+            [Restrição] Obrigatoriamente deve ser preenchido quando o campo `type` for diferente de conta pré-paga. Nos casos em que a conta pré-paga possua dígito, o envio é obrigatório.
           pattern: '[\w\W\s]*'
           maxLength: 1
           example: '4'
