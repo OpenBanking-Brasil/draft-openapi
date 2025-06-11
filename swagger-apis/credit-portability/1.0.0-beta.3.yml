@@ -1574,9 +1574,10 @@ components:
                 - hasFinancialAgent
               properties:
                 ispb:
-                  type: number
+                  type: string
+                  pattern: '^[0-9A-Z]{8}$'
                   description: Número do ISPB da Instituição credora a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
-                  example: 22896431
+                  example: '22896431'
                 name:
                   type: string
                   description: |
