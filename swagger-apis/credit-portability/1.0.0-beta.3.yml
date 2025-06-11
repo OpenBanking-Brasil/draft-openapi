@@ -499,7 +499,7 @@ components:
                   - digitalSignatureProof
                   - CET
                   - amortizationScheduled
-                  - installmentPeriodicity
+                  - instalmentPeriodicity
                   - totalNumberOfInstallments
                   - installmentAmount
                 properties:
@@ -700,7 +700,7 @@ components:
                       Informação relativa ao complemento da amortização
                       
                       [Restrição] Campo de preenchimento obrigatório quando o campo amortizationScheduled for igual `OUTROS`
-                  installmentPeriodicity:
+                  instalmentPeriodicity:
                     type: string
                     description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diário, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
                     example: SEM_PERIODICIDADE_REGULAR
@@ -1062,7 +1062,7 @@ components:
                   - contractedFinanceCharges
                   - digitalSignatureProof
                   - totalNumberOfInstallments
-                  - installmentPeriodicity
+                  - instalmentPeriodicity
                   - dueDate
                 properties:
                   CET:
@@ -1262,7 +1262,7 @@ components:
                     type: number
                     description: total de parcelas, segundo a periodicidade regular das parcelas referente à Modalidade de Crédito informada.
                     example: 30
-                  installmentPeriodicity:
+                  instalmentPeriodicity:
                     type: string
                     description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diario, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
                     enum:
