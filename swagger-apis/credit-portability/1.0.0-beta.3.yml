@@ -499,7 +499,7 @@ components:
                   - digitalSignatureProof
                   - CET
                   - amortizationScheduled
-                  - installmentPeriodicity
+                  - instalmentPeriodicity
                   - totalNumberOfInstallments
                   - installmentAmount
                 properties:
@@ -645,7 +645,7 @@ components:
                     properties:
                       documentId:
                         type: string
-                        pattern: ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+                        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
                         maxLength: 100
                         minLength: 1
                         example: 54d5348c-1a3f-4ff4-a8a8-d0724fb806c6
@@ -700,7 +700,7 @@ components:
                       Informação relativa ao complemento da amortização
                       
                       [Restrição] Campo de preenchimento obrigatório quando o campo amortizationScheduled for igual `OUTROS`
-                  installmentPeriodicity:
+                  instalmentPeriodicity:
                     type: string
                     description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diário, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
                     example: SEM_PERIODICIDADE_REGULAR
@@ -1062,7 +1062,7 @@ components:
                   - contractedFinanceCharges
                   - digitalSignatureProof
                   - totalNumberOfInstallments
-                  - installmentPeriodicity
+                  - instalmentPeriodicity
                   - dueDate
                 properties:
                   CET:
@@ -1262,7 +1262,7 @@ components:
                     type: number
                     description: total de parcelas, segundo a periodicidade regular das parcelas referente à Modalidade de Crédito informada.
                     example: 30
-                  installmentPeriodicity:
+                  instalmentPeriodicity:
                     type: string
                     description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diario, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
                     enum:
