@@ -575,7 +575,9 @@ components:
           example: BRL
     AccountBalancesDataAvailableAmount:
       type: object
-      description: 'Saldo disponível para utilização imediata. No caso de conta de depósito a vista, sem considerar cheque especial e investimentos atrelados a conta. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.'
+      description: |
+        Saldo disponível para utilização imediata. Não considera cheque especial, investimentos automáticos atrelados a conta e nem reserva de saldo. 
+        Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
       required:
         - amount
         - currency
@@ -623,6 +625,16 @@ components:
             - Quando não existente uma data vinculada especificamente ao bloco, se assume a data e hora de atualização do cadastro como um todo.
 
             De toda forma, é preciso continuar respeitando o prazo máximo de tempestividade da API de Contas.
+        hasReservedBalance:
+          type: boolean
+          description: |
+            Informa se o cliente possui um saldo reservado. Caso o cliente possua reservas de saldo ativas, inclusive nos casos de saldo zerado, o valor enviado deve ser `TRUE`.
+            Caso o cliente não possua o produto, deve ser `FALSE`. Se o campo retornar `TRUE`, os dados do saldo reservado se encontram no endpoint `GET /accounts/{accountId}/reserved_balances`
+            
+            [Restrição] Campo de envio obrigatório pela transmissora que oferta produtos de reservas de saldo atrelados à conta. 
+            Este campo refere-se exclusivamente a saldos de reserva que não estão associados a investimentos. 
+            Produtos de investimentos devem ser reportados nas APIs de Investimentos.
+          example: true
     AccountReservedBalancesData:
       type: array
       description: Lista de caixinhas/reservas
@@ -760,7 +772,6 @@ components:
         - type
         - compeCode
         - number
-        - checkDigit
         - accountId
       properties:
         brandName:
@@ -800,7 +811,10 @@ components:
           example: '94088392'
         checkDigit:
           type: string
-          description: Dígito da conta
+          description: |
+            Dígito da conta
+
+            [Restrição] Obrigatoriamente deve ser preenchido quando o campo `type` for diferente de conta pré-paga. Nos casos em que a conta pré-paga possua dígito, o envio é obrigatório.
           pattern: '[\w\W\s]*'
           maxLength: 1
           example: '4'
