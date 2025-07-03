@@ -211,6 +211,7 @@ OUTROS";1;1;"";Não permitido;string;JUROS_REMUNERATORIOS_POR_ATRASO;
 
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 ";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.070000;8
-/data/nextInstalmentAmount;nextInstalmentAmount;"Informa o valor da próxima parcela à vencer. Para contratos liquidados, retornar zero, seguindo o pattern.   [Restrição]   O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
-";Texto;20;Condicional;^\d{1,15}\.\d{2,4}$;;0;1;"   O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
+/data/nextInstalmentAmount;nextInstalmentAmount;"Informa o valor de face da próxima parcela à vencer. Para contratos liquidados, retornar zero, seguindo o pattern.  
+[Restrição]  O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com `CREDITO_PESSOAL_CLEAN`).
+";Texto;20;Condicional;^\d{1,15}\.\d{2,4}$;;0;1;"  O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com `CREDITO_PESSOAL_CLEAN`).
 ";Não permitido;string;1000.0400;4

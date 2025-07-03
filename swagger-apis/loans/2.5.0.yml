@@ -863,9 +863,10 @@ components:
           minLength: 4
           example: '1000.0400'
           description: >
-            Informa o valor da próxima parcela à vencer. Para contratos liquidados, retornar zero, seguindo o pattern.  
-            [Restrição]  
-            O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
+            Informa o valor de face da próxima parcela à vencer. Para contratos liquidados, retornar zero, seguindo o pattern.  
+
+            [Restrição] 
+            O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com `CREDITO_PESSOAL_CLEAN`).
     LoansContractedFee:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
