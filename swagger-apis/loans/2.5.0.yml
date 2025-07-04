@@ -215,14 +215,11 @@ paths:
       operationId: loansGetContractsContractIdScheduledInstalments
       parameters:
         - $ref: '#/components/parameters/contractId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseLoansInstalments'
@@ -267,14 +264,11 @@ paths:
       operationId: loansGetContractsContractIdPayments
       parameters:
         - $ref: '#/components/parameters/contractId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseLoansPayments'
@@ -598,6 +592,18 @@ components:
         - OPERACOES_GARANTIDAS_OUTRAS_ENTIDADES
         - ACORDOS_COMPENSACAO
       example: CESSAO_DIREITOS_CREDITORIOS
+    LinksNonPaginated:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 4048
+          description: URI completo que gerou a resposta atual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
     Links:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -713,7 +719,8 @@ components:
           maxLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-01-05'
-          description: Data de contratação da operação de crédito. Especificação RFC-3339
+          description: |
+            Data de contratação da operação de crédito. Especificação RFC-3339. Para produtos rotativos, productSubType `CHEQUE_ESPECIAL` e `CONTA_GARANTIDA`, caso tenha-se múltiplas contratações do mesmo produto, deve-se enviar à última data disponível.
         disbursementDates:
           type: array
           minItems: 1
@@ -735,7 +742,7 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2018-01-15'
           description: |
-            Data de liquidação da operação.
+            Data de liquidação da operação. Data do cancelamento do contrato para casos em que não há saldo devedor restante. No caso de cancelamento com saldo devedor, a data só deve ser preenchida quando o mesmo for liquidado.
         contractAmount:
           type: string
           format: double
@@ -763,8 +770,7 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2028-01-15'
           description: |
-            Data do último vencimento da operação, seguindo a especificação RFC-3339.
-            Informação deve ser enviada caso ela exista. Especialmente para contratos repactuados, deve-se alterar a data para a do último vencimento.
+            Data do último vencimento da operação, seguindo a especificação RFC-3339. Informação deve ser enviada caso ela exista. Especialmente para contratos repactuados, deve-se alterar a data para a do último vencimento. Para produtos rotativos, productSubType `CHEQUE_ESPECIAL` e `CONTA_GARANTIDA`, o campo representa a data fim da renovação para contratos ativos ou data do cancelamento para contratos cancelados ou vencidos.
         instalmentPeriodicity:
           $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
         instalmentPeriodicityAdditionalInfo:
@@ -857,9 +863,10 @@ components:
           minLength: 4
           example: '1000.0400'
           description: >
-            Informa o valor da próxima parcela à vencer. Para contratos liquidados, retornar zero, seguindo o pattern.  
-            [Restrição]  
-            O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN).
+            Informa o valor de face (corresponde ao valor da parcela no vencimento). Para contratos liquidados, retornar zero, seguindo o pattern.
+            
+            [Restrição] 
+            O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com `CREDITO_PESSOAL_CLEAN`).
     LoansContractedFee:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -1163,16 +1170,16 @@ components:
           description: |
             Valor necessário para o cliente liquidar a dívida, ou seja, este campo deve ser preenchido com o saldo devedor atualizado descrito no DDC (Documento Descritivo de Crédito). 
             O valor a liquidar atualizado do dia deve ser ajustado para compartilhamento pela Transmissora até às 10:00 do mesmo dia, especialmente para Crédito Pessoal Clean, escopo de Portabilidade de Crédito, pois este valor é utilizado pela Receptora em papel de Proponente para pagamento à Transmissora em papel de Credora.
-        lastUpdatedcontractOutstandingBalanceDateTime:
+        lastUpdatedContractOutstandingBalance:
           type: string
           format: date-time
           description: |
             Data e hora da última atualização do valor do campo contractOutstandingBalance, conforme especificação RFC-3339, formato UTC. 
             
             [Restrição] O envio do campo será obrigatório para CPC (campo “productSubTypeCategory” preenchido com CREDITO_PESSOAL_CLEAN na identificação da operação, no endpoint /contracts/{contractId}).
-          minLength: 20
-          maxLength: 20
-          example: "2021-05-21T08:30:00Z"
+          minLength: 24
+          maxLength: 24
+          example: "2021-05-21T08:30:03.374Z"
         totalRemainingAmount:
           description: |
             Valor total que falta para o cliente liquidar o contrato, considerando o somatório total de todas as parcelas a vencer e vencidas, bem como todas as taxas, tarifas e encargos das parcelas. Nos casos de contrato com taxas pós-fixadas, considerar apenas valores pré-fixados, visto que o cálculo pós-fixado ocorre apenas em momento futuro, e que o valor está sujeito às variações de seu indexador. 
@@ -1243,8 +1250,7 @@ components:
           minLength: 4
           example: '1000.0400'
           description: |
-            Valor do pagamento referente ao  contrato da modalidade de crédito consultada.
-            Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+            Valor do pagamento referente ao contrato da modalidade de crédito consultada . Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais. Se encargos e taxas foram pagos juntos da parcela, a soma total deve ser adicionada ao valor da parcela neste campo. Caso o pagamento de taxas e encargos tenham sido feitos a parte, devem ser listados no campo ovelParcel.
         overParcel:
           type: object
           description: |
@@ -1350,6 +1356,18 @@ components:
           maxLength: 3
           description: 'Moeda referente ao valor monetário, seguindo o modelo ISO-4217.'
           example: BRL
+    MetaNonPaginated:
+      type: object
+      description: Meta informações referente à API requisitada.
+      required:
+        - requestDateTime
+      properties:
+        requestDateTime:
+          description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
+          type: string
+          maxLength: 20
+          format: date-time
+          example: '2021-05-21T08:30:00Z'
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -1413,9 +1431,9 @@ components:
         data:
           $ref: '#/components/schemas/LoansContract'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksNonPaginated'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaNonPaginated'
     ResponseLoansInstalments:
       type: object
       required:
@@ -1426,9 +1444,9 @@ components:
         data:
           $ref: '#/components/schemas/LoansInstalments'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksNonPaginated'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaNonPaginated'
     ResponseLoansPayments:
       type: object
       required:
@@ -1439,9 +1457,9 @@ components:
         data:
           $ref: '#/components/schemas/LoansPayments'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksNonPaginated'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaNonPaginated'
     ResponseLoansWarranties:
       type: object
       required:
