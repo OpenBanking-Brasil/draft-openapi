@@ -464,7 +464,7 @@ components:
     EnumContractTaxPeriodicity:
       type: string
       description: |
-        "Periodicidade da taxa . (Vide  Enum)
+        "Periodicidade da taxa. (Vide  Enum)
         a.m - ao mês
         a.a. - ao ano"
       enum:
@@ -962,7 +962,7 @@ components:
           maxLength: 9
           minLength: 8
           description: |
-            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Para taxas pós fixadas necessário informar o indexador (campo referentialRateIndexerSubType).
+            Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045.O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Para taxas pós fixadas necessário informar o indexador (campo referentialRateIndexerSubType).
             
             [Restrição] Este campo é de envio obrigatório caso não seja enviado o campo preFixedRate.
           example: '0.550000'
@@ -1125,7 +1125,7 @@ components:
           pattern: '^[0-9A-Z]{12}[0-9]{2}$'
           maxLength: 14
           example: '21128159000166'
-          description: 'Representação alfanumérica completa do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas a representação alfanumérica do CNPJ, sem máscara.' 
+          description: 'Representação alfanumérica completa do CNPJ da instituição responsável pelo contrato de empréstimo afim de identificar a instituição credora nos casos de portabilidade de crédito - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas a representação alfanumérica do CNPJ, sem máscara.'
         productType:
           $ref: '#/components/schemas/EnumContractProductTypeLoans'
         productSubType:
@@ -1250,7 +1250,7 @@ components:
           minLength: 4
           example: '1000.0400'
           description: |
-            Valor do pagamento referente ao contrato da modalidade de crédito consultada . Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais. Se encargos e taxas foram pagos juntos da parcela, a soma total deve ser adicionada ao valor da parcela neste campo. Caso o pagamento de taxas e encargos tenham sido feitos a parte, devem ser listados no campo ovelParcel.
+            Valor do pagamento referente ao contrato da modalidade de crédito consultada. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais. Se encargos e taxas foram pagos juntos da parcela, a soma total deve ser adicionada ao valor da parcela neste campo. Caso o pagamento de taxas e encargos tenham sido feitos a parte, devem ser listados no campo ovelParcel.
         overParcel:
           type: object
           description: |

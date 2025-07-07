@@ -112,7 +112,7 @@ EFETIVA";1;1;"";Não permitido;string;EFETIVA;
 - COMPOSTO (para cada período do contrato (diário, mensal, anual etc.), há um “novo capital” para a cobrança da taxa de juros contratada. Esse “novo capital” é a soma do capital e do juro cobrado no período anterior. Exemplo: em um empréstimo de R$1.000, com taxa de juros composta de 8% a.a., com duração de 2 anos, o total de juros será R$80 no primeiro ano. No segundo ano, os juros vão ser somados ao capital (R$1.000 + R$ 80 = R$ 1.080), resultando em juros de R$ 86 (8%de R$ 1.080))""
 ";Texto;;Obrigatório;;"SIMPLES 
 COMPOSTO";1;1;"";Não permitido;string;SIMPLES;
-/data/interestRates/taxPeriodicity;taxPeriodicity;"""Periodicidade da taxa . (Vide  Enum)
+/data/interestRates/taxPeriodicity;taxPeriodicity;"""Periodicidade da taxa. (Vide  Enum)
 a.m - ao mês
 a.a. - ao ano""
 ";Texto;;Obrigatório;;"AM 
@@ -160,7 +160,7 @@ OUTROS_INDEXADORES";0;1;" Caso no campo postFixedRate seja informado um valor ap
 [Restrição] Este campo é de envio obrigatório caso não seja enviado o campo postFixedRate.
 ";Texto;9;Condicional;^\d{1,2}\.\d{6}$;;0;1;" Este campo é de envio obrigatório caso não seja enviado o campo postFixedRate.
 ";Não permitido;string;0.600000;8
-/data/interestRates/postFixedRate;postFixedRate;"Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Para taxas pós fixadas necessário informar o indexador (campo referentialRateIndexerSubType).
+/data/interestRates/postFixedRate;postFixedRate;"Taxa pós fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045.O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Para taxas pós fixadas necessário informar o indexador (campo referentialRateIndexerSubType).
 
 [Restrição] Este campo é de envio obrigatório caso não seja enviado o campo preFixedRate.
 ";Texto;9;Condicional;^\d{1,2}\.\d{6}$;;0;1;" Este campo é de envio obrigatório caso não seja enviado o campo preFixedRate.
