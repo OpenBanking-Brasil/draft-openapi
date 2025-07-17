@@ -505,6 +505,7 @@ components:
                   - totalNumberOfInstallments
                   - installmentAmount
                   - dueDate
+                  - contractAmount
                 properties:
                   interestRates:
                     type: array
@@ -753,6 +754,28 @@ components:
                     example: '2020-07-21T08:30:00Z'
                     description: |    
                       Prazo (data de vencimento final) da operação. Especificação RFC-3339.
+                  contractAmount:
+                    type: object
+                    description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        maxLength: 20
+                        minLength: 4
+                        example: '1000.0400'
+                        description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                      currency:
+                        type: string
+                        pattern: '^(\w{3}){1}$'
+                        maxLength: 3
+                        minLength: 3
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217
               creationDateTime:
                 type: string
                 description: |
@@ -1075,6 +1098,7 @@ components:
                   - totalNumberOfInstallments
                   - instalmentPeriodicity
                   - dueDate
+                  - contractAmount
                 properties:
                   CET:
                     type: string
@@ -1317,6 +1341,28 @@ components:
                     minLength: 20
                     pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
                     example: '2020-07-21T08:30:00Z'
+                  contractAmount:
+                    type: object
+                    description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        maxLength: 20
+                        minLength: 4
+                        example: '1000.0400'
+                        description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                      currency:
+                        type: string
+                        pattern: '^(\w{3}){1}$'
+                        maxLength: 3
+                        minLength: 3
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217
               status:
                 type: string
                 description: |
