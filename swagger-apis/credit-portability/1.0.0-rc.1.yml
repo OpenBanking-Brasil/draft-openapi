@@ -505,6 +505,7 @@ components:
                   - totalNumberOfInstallments
                   - installmentAmount
                   - dueDate
+                  - contractAmount
                 properties:
                   interestRates:
                     type: array
@@ -753,6 +754,28 @@ components:
                     example: '2020-07-21T08:30:00Z'
                     description: |    
                       Prazo (data de vencimento final) da operação. Especificação RFC-3339.
+                  contractAmount:
+                    type: object
+                    description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        maxLength: 20
+                        minLength: 4
+                        example: '1000.0400'
+                        description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                      currency:
+                        type: string
+                        pattern: '^(\w{3}){1}$'
+                        maxLength: 3
+                        minLength: 3
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217
               creationDateTime:
                 type: string
                 description: |
@@ -772,13 +795,14 @@ components:
           minItems: 0
           description: Conjunto de informações de contratos de empréstimos/financiamentos mantidos pelo cliente na instituição credora e para os quais ele tenha fornecido consentimento
           required:
+            - portabilityId
             - creationDateTime
           properties:
               portabilityId:
                 type: string
                 pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-                maxLength: 100
-                minLength: 1
+                maxLength: 36
+                minLength: 36
                 example: 54d5348c-1a3f-4ff4-a8a8-d0724fb806c6
                 description: "Código identificador do pedido de portabilidade realizado."
               status:
@@ -934,8 +958,8 @@ components:
                 description: Código identificador do pedido de portabilidade realizado.
                 type: string
                 pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
-                maxLength: 100
-                minLength: 1
+                maxLength: 36
+                minLength: 36
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
               customerContact:
                 type: array
@@ -1075,6 +1099,7 @@ components:
                   - totalNumberOfInstallments
                   - instalmentPeriodicity
                   - dueDate
+                  - contractAmount
                 properties:
                   CET:
                     type: string
@@ -1317,6 +1342,28 @@ components:
                     minLength: 20
                     pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
                     example: '2020-07-21T08:30:00Z'
+                  contractAmount:
+                    type: object
+                    description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        maxLength: 20
+                        minLength: 4
+                        example: '1000.0400'
+                        description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                      currency:
+                        type: string
+                        pattern: '^(\w{3}){1}$'
+                        maxLength: 3
+                        minLength: 3
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217
               status:
                 type: string
                 description: |
@@ -1828,8 +1875,8 @@ components:
               portabilityId:
                 type: string
                 pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-                maxLength: 100
-                minLength: 1
+                maxLength: 36
+                minLength: 36
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
                 description: "Código identificador do pedido de portabilidade realizado."
               paymentDateTime:
@@ -1949,8 +1996,8 @@ components:
               portabilityId:
                 type: string
                 pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-                maxLength: 100
-                minLength: 1
+                maxLength: 36
+                minLength: 36
                 example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
                 description: "Código identificador do pedido de portabilidade realizado."
               paymentDateTime:
@@ -2158,7 +2205,8 @@ components:
       schema:
         type: string
         pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
-        maxLength: 100
+        maxLength: 36
+        minLength: 36
   securitySchemes:
     OpenId:
       type: openIdConnect
