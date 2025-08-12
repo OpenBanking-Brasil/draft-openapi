@@ -829,7 +829,9 @@ components:
 
             Deve-se ter apenas a representação alfanumérica do CNPJ, sem máscara.
 
-            [Restrição] Informação adicional específica para quando o productSubType for igual a CREDITO_PESSOAL_COM_CONSIGNACAO
+            [Restrição] Informação adicional específica para quando o `productSubType` for igual a `CREDITO_PESSOAL_COM_CONSIGNACAO`. 
+            Este campo é de envio obrigatório somente enquanto houver vínculo (consignação ativa). 
+            Nos casos de desconsignação, o campo pode ser omitido.
         interestRates:
           type: array
           description: |
