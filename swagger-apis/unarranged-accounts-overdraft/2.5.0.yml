@@ -1361,7 +1361,11 @@ components:
           type: string
           maxLength: 20
           format: date-time
-          example: '2021-05-21T08:30:00Z'    
+          example: '2021-05-21T08:30:00Z'  
+    X-V:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0  
     XFapiInteractionId:
       type: string
       format: uuid
@@ -1478,6 +1482,11 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
       content:
         application/json:
           schema:
@@ -1488,6 +1497,11 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
       content:
         application/json:
           schema:
@@ -1498,6 +1512,11 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
       content:
         application/json:
           schema:
@@ -1508,6 +1527,11 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
       content:
         application/json:
           schema:
@@ -1518,6 +1542,11 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
       content:
         application/json:
           schema:
