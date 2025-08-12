@@ -559,7 +559,7 @@ components:
     EnumContractTaxPeriodicity:
       type: string
       description: |
-        "Periodicidade da taxa . (Vide  Enum)
+        "Periodicidade da taxa. (Vide  Enum)
         a.m - ao mês
         a.a. - ao ano"
       enum:
@@ -1190,7 +1190,6 @@ components:
         - calculation
         - referentialRateIndexerType
         - preFixedRate
-        - postFixedRate
       properties:
         taxType:
           $ref: '#/components/schemas/EnumContractTaxType'
@@ -1234,7 +1233,9 @@ components:
           maxLength: 9
           minLength: 8
           description: |
-            Taxa pós-fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045 .O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%). Preencher o campo não aplicável ao contrato com zeros, seguindo o pattern (0.000000).
+            Taxa pós-fixada aplicada sob o contrato da modalidade crédito. p.ex. 0.0045. O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.1500. Este valor representa 15%. O valor 1 representa 100%).
+            
+            [Restrição] Este campo é de envio obrigatório caso não seja enviado o campo `preFixedRate`.
           example: '0.550000'
         additionalInfo:
           type: string
