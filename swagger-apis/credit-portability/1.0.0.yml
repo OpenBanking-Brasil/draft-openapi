@@ -402,7 +402,7 @@ components:
                     properties:
                       companyName:
                         type: string
-                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        pattern: '^[^\s](?:.*[^\s])?$'
                         maxLength: 80
                         example: Instituição Credora               
                         description: 'Nome da Instituição Credora.'
@@ -421,7 +421,7 @@ components:
                     properties:
                       companyName:
                         type: string
-                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        pattern: '^[^\s](?:.*[^\s])?$'
                         maxLength: 80
                         example: Instituição Proponente
                         description: 'Nome da Instituição Proponente'
@@ -531,13 +531,13 @@ components:
                         feeName:
                           type: string
                           maxLength: 140
-                          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                          pattern: '^[^\s](?:.*[^\s])?$'
                           description: Denominação da Tarifa pactuada
                           example: Renovação de cadastro
                         feeCode:
                           type: string
                           maxLength: 140
-                          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                          pattern: '^[^\s](?:.*[^\s])?$'
                           description: Sigla identificadora da tarifa pactuada
                           example: CADASTRO
                         feeChargeType:
@@ -628,7 +628,7 @@ components:
                             Campo para informações adicionais.
                 
                             [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
-                          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                          pattern: '^[^\s](?:.*[^\s])?$'
                           example: Informações adicionais sobre encargos.
                         chargeRate:
                           type: string
@@ -697,7 +697,7 @@ components:
                       - SEM SISTEMA DE AMORTIZAÇÃO
                   amortizationScheduledAdditionalInfo:
                     type: string
-                    pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                    pattern: '^[^\s](?:.*[^\s])?$'
                     maxLength: 200
                     example: Informações complementares relativa à amortização do tipo `OUTROS`
                     description: |
@@ -911,7 +911,7 @@ components:
                       - REGISTRADORA
                   companyName:
                         type: string
-                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        pattern: '^[^\s](?:.*[^\s])?$'
                         maxLength: 80
                         example: Empresa da Organização A              
                         description: |
@@ -997,7 +997,7 @@ components:
                     properties:
                       companyName:
                         type: string
-                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        pattern: '^[^\s](?:.*[^\s])?$'
                         maxLength: 80
                         example: Instituição Credora               
                         description: 'Nome da Instituição Credora.'
@@ -1016,7 +1016,7 @@ components:
                     properties:
                       companyName:
                         type: string
-                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        pattern: '^[^\s](?:.*[^\s])?$'
                         maxLength: 80
                         example: Instituição Proponente
                         description: 'Nome da Instituição Proponente'
@@ -1134,7 +1134,7 @@ components:
                       - SEM SISTEMA DE AMORTIZAÇÃO
                   amortizationScheduledAdditionalInfo:
                     type: string
-                    pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                    pattern: '^[^\s](?:.*[^\s])?$'
                     maxLength: 200
                     example: Informações complementares relativa à amortização do tipo `OUTROS`
                     description: |
@@ -1164,13 +1164,13 @@ components:
                         feeName:
                           type: string
                           maxLength: 140
-                          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                          pattern: '^[^\s](?:.*[^\s])?$'
                           description: Denominação da Tarifa pactuada
                           example: Renovação de cadastro
                         feeCode:
                           type: string
                           maxLength: 140
-                          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                          pattern: '^[^\s](?:.*[^\s])?$'
                           description: Sigla identificadora da tarifa pactuada
                           example: CADASTRO
                         feeChargeType:
@@ -1260,7 +1260,7 @@ components:
                             Campo para informações adicionais.
                 
                             [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
-                          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                          pattern: '^[^\s](?:.*[^\s])?$'
                           example: Informações adicionais sobre encargos.
                         chargeRate:
                           type: string
@@ -1450,7 +1450,7 @@ components:
                       [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`
                     type: string
                     maxLength: 144
-                    pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                    pattern: '^[^\s](?:.*[^\s])?$'
                     example: Informações Adicionais                   
                   digitalSignatureProof:
                     type: object
@@ -1553,7 +1553,7 @@ components:
                           
                           [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS.
                         maxLength: 144
-                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        pattern: '^[^\s](?:.*[^\s])?$'
                         example: Informações Adicionais
               loanSettlementInstruction:
                 type: object
@@ -1644,7 +1644,7 @@ components:
                     Nome do proprietário da conta a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
                     
                     [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
-                  pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                  pattern: '^[^\s](?:.*[^\s])?$'
                   maxLength: 80
                   minLength: 1
                   example: 'Instituicao Credora'
@@ -1748,7 +1748,7 @@ components:
             Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
             [Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionado o tipo ou subtipo `OUTRO`.
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](?:.*[^\s])?$'
           example: Informações adicionais
         preFixedRate:
           type: string
@@ -1771,7 +1771,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 1200
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](?:.*[^\s])?$'
           example: Informações adicionais
           description: |
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
@@ -1851,7 +1851,7 @@ components:
                 typeAdditionalInfo:
                   type: string
                   maxLength: 144
-                  pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                  pattern: '^[^\s](?:.*[^\s])?$'
                   example: "Informações Adicionais"
                   description: |
                     Informação adicional sobre rejeição de portabilidade de crédito. 
@@ -1912,7 +1912,7 @@ components:
                     description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
               transactionId:
                 type: string
-                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                pattern: '^[^\s](?:.*[^\s])?$'
                 maxLength: 20
                 minLength: 1
                 example: 'STR20181108000000013'
@@ -1969,7 +1969,7 @@ components:
                 typeAdditionalInfo:
                   type: string
                   maxLength: 144
-                  pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                  pattern: '^[^\s](?:.*[^\s])?$'
                   example: "Informações Adicionais"
                   description: |
                     Informação adicional sobre rejeição de portabilidade de crédito. 
@@ -2033,7 +2033,7 @@ components:
                     description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
               transactionId:
                 type: string
-                pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                pattern: '^[^\s](?:.*[^\s])?$'
                 maxLength: 20
                 minLength: 1
                 example: 'STR20181108000000013'
