@@ -1104,7 +1104,7 @@ components:
           $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
         instalmentPeriodicityAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 50
           example: Informações adicionais sobre periodicidade
           description: |
@@ -1148,7 +1148,7 @@ components:
           example: SAC
         amortizationScheduledAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 200
           example: Informações complementares relativa à amortização do tipo 'OUTROS'
           description: |
