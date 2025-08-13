@@ -544,7 +544,7 @@ components:
         referentialRateIndexerAdditionalInfo:
           type: string
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Informações adicionais
           description: |
             Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
@@ -573,7 +573,7 @@ components:
         additionalInfo:
           type: string
           maxLength: 1200
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Informações adicionais
           description: |
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
@@ -634,7 +634,7 @@ components:
           description: Valor do pagamento do encargo pago fora da parcela. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
         chargeAdditionalInfo:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 140
           example: Informações adicionais
           description: |
@@ -684,7 +684,7 @@ components:
         productName:
           type: string
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Crédito Pessoal Consignado
           description: |
             Denominação/Identificação do nome da Modalidade da Operação de Crédito divulgado ao cliente
@@ -763,7 +763,7 @@ components:
           example: SEMANAL
         instalmentPeriodicityAdditionalInfo:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 50
           example: Informações adicionais sobre periodicidade
           description: |
@@ -813,7 +813,7 @@ components:
           example: SAC
         amortizationScheduledAdditionalInfo:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 200
           example: Informações complementares relativa à amortização do tipo 'OUTROS'
           description: |
@@ -853,13 +853,13 @@ components:
         feeName:
           type: string
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           description: Denominação da Tarifa pactuada
           example: Excesso em Conta
         feeCode:
           type: string
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           description: Sigla identificadora da tarifa pactuada
           example: EXCESSO_CONTA
         feeChargeType:
@@ -915,14 +915,14 @@ components:
         feeName:
           type: string
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Reavaliação periódica do bem
           description: |
             Denominação da Tarifa pactuada.
         feeCode:
           type: string
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: aval_bem
           description: |
             Sigla identificadora da tarifa pactuada.  
@@ -952,7 +952,7 @@ components:
             Campo para informações adicionais.
 
             [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Informações adicionais sobre encargos.
         chargeRate:
           type: string
@@ -1055,7 +1055,7 @@ components:
           description: 'Identifica de forma única o contrato da operação de crédito do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
         brandName:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 80
           example: Organização A
           description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
