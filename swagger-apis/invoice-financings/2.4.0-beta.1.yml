@@ -306,6 +306,13 @@ paths:
             - 'consent:consentId'
             - invoice-financings
 components:
+  headers:
+    X-V: 
+      description: |
+          Cabeçalho que indica a versão implementada da API pela instituição financeira para atender à solicitação. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2.
+      required: true
+      schema:
+        $ref: '#/components/schemas/X-V'
   schemas:
     EnumContractAmortizationScheduled:
       type: string
@@ -1403,6 +1410,10 @@ components:
       minLength: 1
       maxLength: 36
       example: "d78fc4e5-37ca-4da3-adf2-9b082bf92280"
+    X-V:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0
   parameters:
     Authorization:
       name: Authorization
@@ -1512,6 +1523,8 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
@@ -1522,6 +1535,8 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
@@ -1532,6 +1547,8 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
@@ -1542,6 +1559,8 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
@@ -1552,6 +1571,8 @@ components:
         x-fapi-interaction-id:
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
