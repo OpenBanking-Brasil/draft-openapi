@@ -216,14 +216,11 @@ paths:
       operationId: invoiceFinancingsGetContractsContractIdScheduledInstalments
       parameters:
         - $ref: '#/components/parameters/contractId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsInstalments'
@@ -268,14 +265,11 @@ paths:
       operationId: invoiceFinancingsGetContractsContractIdPayments
       parameters:
         - $ref: '#/components/parameters/contractId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseInvoiceFinancingsPayments'
@@ -1247,6 +1241,18 @@ components:
           maxLength: 2000
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+    LinksSingle:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 2000
+          description: URI completo que gerou a resposta atual.
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
     Meta:
       type: object
       description: Meta informações referente à API requisitada.
@@ -1271,7 +1277,7 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-    MetaError:
+    MetaSingle:
       type: object
       description: Meta informações referente à API requisitada.
       required:
@@ -1315,7 +1321,7 @@ components:
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
         meta:
-          $ref: '#/components/schemas/MetaError'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseInvoiceFinancingsContract:
       type: object
       required:
@@ -1326,9 +1332,9 @@ components:
         data:
           $ref: '#/components/schemas/InvoiceFinancingsContract'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksSingle'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseInvoiceFinancingsInstalments:
       type: object
       required:
@@ -1339,9 +1345,9 @@ components:
         data:
           $ref: '#/components/schemas/InvoiceFinancingsInstalments'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksSingle'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseInvoiceFinancingsContractList:
       type: object
       required:
@@ -1369,9 +1375,9 @@ components:
         data:
           $ref: '#/components/schemas/InvoiceFinancingsPayments'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksSingle'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseInvoiceFinancingsWarranties:
       type: object
       required:
