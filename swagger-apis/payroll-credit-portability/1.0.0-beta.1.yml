@@ -117,8 +117,165 @@ paths:
             - openId
             - 'consent:consentId'
             - loans
+  '/portabilities/{portabilityId}':
+    get:
+      tags:
+        - Credit Portability
+      summary: Consulta portabilidade de crédito através da propriedade portabilityId.
+      description: Endpoint responsável por consultar pedidos de portabilidade de crédito.
+      operationId: payrollCreditPortabilityGetPortabilitiesByPortabilityId
+      parameters:
+        - $ref: '#/components/parameters/portabilityId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponsePortabilitiesByPortabilityId'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - payroll-credit-portability
 components:
   schemas:
+    ResponsePortabilityEligibility:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Conjunto de informações de contratos de empréstimos/financiamentos mantidos pelo cliente na instituição credora e para os quais ele tenha fornecido consentimento
+          required:
+            - contractId
+            - portability
+          properties:
+              contractId:
+                type: string
+                pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
+                maxLength: 100
+                minLength: 1
+                example: '92792126019929279212650822221989319252576'
+                description: 'Identifica de forma única o contrato da operação de crédito do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+              portability:
+                type: object
+                required:
+                  - isEligible
+                properties:
+                  isEligible:
+                    type: boolean
+                    description: Sinaliza se as características do contrato é elegível para pedido de portabilidade de crédito via OFB (sem considerar a disponibilidade da portabilidade de crédito)
+                  ineligible:
+                    type: object
+                    required:
+                      - reasonType
+                    description: |
+                      Objeto para auxiliar a Instituição Proponente a entender o porque um contrato está inelegivel para pedido de portabilidade de crédito
+                      
+                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `FALSE`
+                    properties:
+                      reasonType:
+                        type: string
+                        example: CLIENTE_COM_ACAO_JUDICIAL
+                        enum:
+                          - CONTRATO_LIQUIDADO
+                          - CLIENTE_COM_ACAO_JUDICIAL
+                          - MODALIDADE_OPERACAO_INCOMPATIVEL
+                          - FLUXO_COM_PARCELA_IRREGULAR
+                          - TIPO_PESSOA_INVALIDO
+                          - OUTROS
+                        description: |
+                          Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito
+                          Informação sobre o motivo de inelegibilidade
+                          -`CONTRATO_LIQUIDADO`: Contrato liquidado pelo cliente.
+                          -`CLIENTE_COM_ACAO_JUDICIAL`: Cliente possui ação judicial
+                          -`MODALIDADE_OPERACAO_INCOMPATIVEL`: Caso o contrato tenha uma modalidade diferente do praticado no escopo de modalidades disponiveis para portabilidade de crédito
+                          -`FLUXO_COM_PARCELA_IRREGULAR`: Empréstimos com fluxo de pagamento irregular
+                          -`TIPO_PESSOA_INVALIDO`: Empréstimo pertence a um tipo de pessoa diferente de pessoa natural 
+                          -`OUTROS`: Caso exista algum motivo de recusa que não se encaixa nas opções disponiveis de `reasonType`, o campo `reasonTypeAdditionalInfo` deverá ser preenchido com o motivo da inelegibilidade.
+                          
+                      reasonTypeAdditionalInfo:
+                        description: |
+                          Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. Deve ser preenchido como uma proposta para inclusão nas definições, exemplo `MOTIVO_NAO_MAPEADO`: descrição de usar esse motivo específico. Ao utilizar essa opção, é obrigatório enviar um ticket para a estrutura open finance para mapeamento em futuras versões.
+ 
+                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `reasonType` for igual a `OUTROS`.
+                        type: string
+                  status:
+                    type: string
+                    description: |
+                      Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito
+                      
+                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `TRUE`
+                    enum:
+                      - DISPONIVEL
+                      - EM_ANDAMENTO
+                  statusUpdateDateTime:
+                    type: string
+                    maxLength: 20
+                    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                    example: "2020-07-21T08:30:00Z"
+                    description: |
+                      Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+                      
+                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `TRUE`
+                  
+                  channel:
+                    type: string
+                    description: |
+                      Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito
+                      
+                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`
+                    enum:
+                      - OFB
+                      - REGISTRADORA
+                  companyName:
+                        type: string
+                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                        maxLength: 80
+                        example: Empresa da Organização A              
+                        description: |
+                          Nome da Instituição Proponente responsável pelo pedido de portabilidade de credito anterior a atual consulta p.ex.Empresa A.
+                          
+                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`         
+                  companyCnpj:
+                        type: string
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
+                        maxLength: 14
+                        minLength: 14
+                        example: '21128159000166'
+                        description: |
+                          Número completo do CNPJ da instituição
+                          O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
+                          Deve-se ter apenas números do CNPJ, sem máscara
+
+                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
     RequestCreditPortability:
       type: object
       required:
@@ -600,6 +757,693 @@ components:
                 example: '2020-07-21T08:30:00Z'
         meta:
           $ref: '#/components/schemas/Meta'
+    ResponsePortabilitiesByPortabilityId:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Conjunto de informações referentes à Proposta de Portabilidade de Crédito da Proponente para a Credora
+          required:
+            - customerContact
+            - institution
+            - contractIdentification
+            - proposedContract
+            - portabilityId
+            - status
+            - statusUpdateDateTime
+            - creationDateTime
+          properties:
+              portabilityId:
+                description: Código identificador do pedido de portabilidade realizado.
+                type: string
+                pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+                maxLength: 36
+                minLength: 36
+                example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
+              customerContact:
+                type: array
+                minItems: 0
+                description: Dados de contato do cliente.
+                items:
+                  type: object
+                  required:
+                    - type
+                    - value 
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                        - TELEFONE
+                        - EMAIL
+                      description: "Tipo do contato do cliente."
+                    value:
+                      type: string
+                      pattern: ^([1-9]{2}(?:[2-8]|9[0-9])[0-9]{3}[0-9]{4})|([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})$
+                      example: "11999999999"
+              institution:
+                type: object
+                description: Informações sobre proponente e credora participantes do presente pedido de portabilidade de crédito.
+                required:
+                  - creditor
+                  - proposing
+                properties:
+                  creditor:
+                    type: object
+                    description: Informações sobre a instituição credora.
+                    required:
+                      - companyName
+                      - companyCnpj
+                    properties:
+                      companyName:
+                        type: string
+                        pattern: '^[^\s](?:.*[^\s])?$'
+                        maxLength: 80
+                        example: Instituição Credora               
+                        description: 'Nome da Instituição Credora.'
+                      companyCnpj:
+                        type: string
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
+                        maxLength: 14
+                        example: '21128159000166'
+                        description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+                  proposing:
+                    type: object
+                    description: Informações sobre a instituição proponente
+                    required:
+                      - companyName
+                      - companyCnpj
+                    properties:
+                      companyName:
+                        type: string
+                        pattern: '^[^\s](?:.*[^\s])?$'
+                        maxLength: 80
+                        example: Instituição Proponente
+                        description: 'Nome da Instituição Proponente'
+                      companyCnpj:
+                        type: string
+                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
+                        maxLength: 14
+                        example: '21128159000166'
+                        description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+                      contact:
+                        type: array
+                        minItems: 1
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              enum:
+                                - EMAIL
+                                - TELEFONE
+                              description: "Tipo do contato da Instituição Proponente."
+                            value:
+                              type: string
+                              pattern: ^([1-9]{2}(?:[2-8]|9[0-9])[0-9]{3}[0-9]{4})|([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})$
+                              example: "contato@instituicaoproponente.com.br"
+              contractIdentification:
+                type: object
+                required:
+                  - contractId
+                  - contractNumber
+                  - ipocCode
+                  - siapeContractId
+                properties:
+                  contractId:
+                    type: string
+                    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$
+                    maxLength: 100
+                    minLength: 1
+                    example: "92792126019929279212650822221989319252576"
+                    description: "Identifica de forma única o contrato da operação de crédito do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora."
+                  contractNumber:
+                    type: string
+                    pattern:  ^[\w\W]{1,100}$
+                    maxLength: 100
+                    minLength: 1
+                    example: "1324926521496"
+                    description: "Número do contrato dado pela instituição contratante."
+                  ipocCode:
+                    type: string
+                    pattern:  ^[\w\W]{22,67}$
+                    maxLength: 67
+                    minLength: 22
+                    example: "92792126019929279212650822221989319252576"
+                    description: |
+                      Número padronizado do contrato - IPOC (Identificação Padronizada da Operação de Crédito). Segundo DOC 3040, composta por:
+
+
+                      CNPJ da instituição: 8 (oito) posições iniciais;
+                      Modalidade da operação: 4 (quatro) posições;
+                      Tipo do cliente: 1 (uma) posição( 1 = pessoa natural - CPF, 2= pessoa jurídica
+                      
+                      – CNPJ, 3 = pessoa física no exterior, 4 = pessoa jurídica no exterior, 5 = pessoa natural sem CPF e 6 = pessoa jurídica sem CNPJ);
+                      
+                      - Código do cliente: O número de posições varia conforme o tipo do cliente:
+                      Para clientes pessoa física com CPF (tipo de cliente = 1), informar as 11 (onze) posições do CPF;
+                      Para clientes pessoa jurídica com CNPJ (tipo de cliente = 2), informar as 8 (oito) posições iniciais do CNPJ;
+                      Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
+                      
+                      - Código do contrato: 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
+                  siapeContractId:
+                    type: string
+                    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$
+                    maxLength: 20
+                    minLength: 1
+                    example: "12346579841058798Asq"
+                    description: "Número do contrato dado pela instituição contratante no sistema SIAPE do SERPRO."
+              proposedContract:
+                type: object
+                minItems: 1
+                description: Proposta da Proponente para Portabilidade de Crédito.
+                required:
+                  - CET
+                  - amortizationScheduled
+                  - interestRates
+                  - contractedFees
+                  - contractedFinanceCharges
+                  - digitalSignatureProof
+                  - totalNumberOfInstalments
+                  - instalmentPeriodicity
+                  - dueDate
+                  - contractAmount
+                properties:
+                  CET:
+                    type: string
+                    pattern: '^\d{1,6}\.\d{6}$'
+                    maxLength: 13
+                    minLength: 8
+                    example: '0.290000'
+                    description: |
+                      CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
+            
+                      O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros (representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+            
+                      Para o público PF (pessoa física) o campo é de envio obrigatório para contratos firmados a partir de 2008, conforme Resolução CMN 3.517. Para o público PJ (pessoa jurídica) o campo é de envio obrigatório para contratos firmados a partir de 2011, conforme Resolução CMN 3.909. O campo poderá ser preenchido com 0.00 em cenários nos quais a casa não tenha a informação de CET (Custo efetivo total) apenas para as exceções listadas abaixo: 
+            
+                      - Em contratos anteriores a 2008 (para o público PF); 
+                      - Em contratos anteriores a 2011 (para o público PJ); 
+                      - Público PJ de médio ou grande porte. 
+                  amortizationScheduled:
+                    type: string
+                    enum:
+                      - SAC
+                      - PRICE
+                      - SAM
+                      - SEM_SISTEMA_AMORTIZACAO
+                      - OUTROS
+                    example: SAC
+                    description: |
+                      Sistema de amortização (Vide Enum):
+                      - SAC (Sistema de Amortização Constante) - É aquele em que o valor da amortização permanece igual até o final. Os juros cobrados sobre o parcelamento não entram nesta conta.
+                      - PRICE (Sistema Francês de Amortização) - As parcelas são fixas do início ao fim do contrato. Ou seja, todas as parcelas terão o mesmo valor, desde a primeira até a última. Nos primeiros pagamentos, a maior parte do valor da prestação corresponde aos juros. Ao longo do tempo, a taxa de juros vai decrescendo. Como o valor da prestação é fixo, com o passar das parcelas, o valor de amortização vai aumentando.
+                      - SAM (Sistema de Amortização Misto) - Cada prestação (pagamento) é a média aritmética das prestações respectivas no Sistemas Price e no Sistema de Amortização Constante (SAC).
+                      - SEM SISTEMA DE AMORTIZAÇÃO
+                  amortizationScheduledAdditionalInfo:
+                    type: string
+                    pattern: '^[^\s](?:.*[^\s])?$'
+                    maxLength: 200
+                    example: Informações complementares relativa à amortização do tipo `OUTROS`
+                    description: |
+                      Informação relativa ao complemento da amortização
+
+                      [Restrição] Campo de preenchimento obrigatório quando o campo amortizationScheduled for igual `OUTROS`
+                  interestRates:
+                    type: array
+                    description: |
+                      Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito.  
+                      Caso o contrato não possua taxas de juros, deve ser compartilhada uma lista vazia. Caso o contrato possua uma taxa de juros com valor 0, deve ser compartilhado um objeto com o valor 0 de forma explícita.
+                    items:
+                      $ref: '#/components/schemas/LoansContractInterestRate'
+                    minItems: 0
+                  contractedFees:
+                    type: array
+                    description: Lista que traz as informações das tarifas pactuadas no contrato.
+                    items:
+                      type: object
+                      description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
+                      required:
+                        - feeName
+                        - feeCode
+                        - feeChargeType
+                        - feeCharge
+                      properties:
+                        feeName:
+                          type: string
+                          maxLength: 140
+                          pattern: '^[^\s](?:.*[^\s])?$'
+                          description: Denominação da Tarifa pactuada
+                          example: Renovação de cadastro
+                        feeCode:
+                          type: string
+                          maxLength: 140
+                          pattern: '^[^\s](?:.*[^\s])?$'
+                          description: Sigla identificadora da tarifa pactuada
+                          example: CADASTRO
+                        feeChargeType:
+                          type: string
+                          description: Tipo de cobrança para a tarifa pactuada no contrato.
+                          enum:
+                            - UNICA
+                            - POR_PARCELA
+                          example: UNICA
+                        feeCharge:
+                          type: string
+                          description: |
+                            "Forma de cobrança relativa a tarifa pactuada no contrato. (Vide Enum)
+                            - Mínimo
+                            - Máximo
+                            - Fixo
+                            - Percentual"
+                          enum:
+                            - MINIMO
+                            - MAXIMO
+                            - FIXO
+                            - PERCENTUAL
+                          example: MINIMO
+                        feeAmount:
+                          type: object
+                          minItems: 1
+                          description: |
+                            Objeto para representar o valor monetário da tarifa pactuada no contrato.
+                            
+                            [Restrição] Preenchimento obrigatório quando a forma de cobrança for diferente de Percentual.
+                          required:
+                            - amount
+                            - currency
+                          properties:
+                            amount:
+                              type: string
+                              format: double
+                              maxLength: 20
+                              minLength: 4
+                              pattern: '^\d{1,15}\.\d{2,4}$'
+                              example: '1000.0400'
+                              description: Valor monetário da tarifa pactuada no contrato.
+                            currency:
+                              type: string
+                              maxLength: 3
+                              minLength: 3
+                              pattern: '^(\w{3}){1}$'
+                              example: 'BRL'
+                              description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                        feeRate:
+                          type: string
+                          pattern: '^\d{1}\.\d{6}$'
+                          format: double
+                          maxLength: 8
+                          minLength: 8
+                          description: |
+                            É o valor da tarifa em percentual pactuada no contrato.
+                
+                            [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
+                          example: '0.062000'
+                    minItems: 0
+                  contractedFinanceCharges:
+                    type: array
+                    description: Lista que traz os encargos pactuados no contrato
+                    items:
+                      type: object
+                      description: Conjunto de informações referentes à identificação da operação de crédito
+                      required:
+                        - chargeType
+                      properties:
+                        chargeType:
+                          type: string
+                          description: Tipo de encargo pactuado no contrato.
+                          enum:
+                            - JUROS_REMUNERATORIOS_POR_ATRASO
+                            - MULTA_ATRASO_PAGAMENTO
+                            - JUROS_MORA_ATRASO
+                            - IOF_CONTRATACAO
+                            - IOF_POR_ATRASO
+                            - SEM_ENCARGO
+                            - OUTROS
+                          example: JUROS_REMUNERATORIOS_POR_ATRASO
+                        chargeAdditionalInfo:
+                          type: string
+                          maxLength: 140
+                          description: |
+                            Campo para informações adicionais.
+                
+                            [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
+                          pattern: '^[^\s](?:.*[^\s])?$'
+                          example: Informações adicionais sobre encargos.
+                        chargeRate:
+                          type: string
+                          pattern: '^\d{1}\.\d{6}$'
+                          format: double
+                          maxLength: 8
+                          minLength: 8
+                          description: |
+                            Representa o valor do encargo em percentual pactuado no contrato.
+                
+                            O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
+                          example: '0.070000'
+                    minItems: 0
+                  digitalSignatureProof:
+                    type: object
+                    properties:
+                      documentId:
+                        type: string
+                        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+                        maxLength: 100
+                        minLength: 1
+                        example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
+                        description: "Código identificador do Documento assinado na instituição proponente."
+                      signatureDateTime:
+                        type: string
+                        maxLength: 20
+                        pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                        example: "2020-07-21T08:30:00Z"
+                        description: |
+                          Data e hora em que o contrato foi assinado pelo cliente  no canal digital da Instituição Proponente
+                    required:
+                      - documentId
+                      - signatureDateTime
+                  totalNumberOfInstalments:
+                    type: number
+                    description: total de parcelas, segundo a periodicidade regular das parcelas referente à Modalidade de Crédito informada.
+                    example: 30
+                  instalmentPeriodicity:
+                    type: string
+                    description: Informação relativa à periodicidade regular das parcelas. (Vide Enum) sem periodicidade regular, diario, semanal, quinzenal, mensal, bimestral, trimestral, semestral, anual.
+                    enum:
+                      - SEM_PERIODICIDADE_REGULAR
+                      - DIARIO
+                      - SEMANAL
+                      - QUINZENAL
+                      - MENSAL
+                      - BIMESTRAL
+                      - TRIMESTRAL
+                      - SEMESTRAL
+                      - ANUAL
+                    example: SEM_PERIODICIDADE_REGULAR
+                  instalmentAmount:
+                    type: object
+                    minItems: 1
+                    description: Objeto para representar o Valor da parcela regular da operação após portabilidade.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        maxLength: 20
+                        minLength: 4
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        example: '1000.0400'
+                        description: Valor da parcela regular da operação após portabilidade. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
+                      currency:
+                        type: string
+                        maxLength: 3
+                        minLength: 3
+                        pattern: '^(\w{3}){1}$'
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                  dueDate:
+                    type: string
+                    description: Prazo (data de vencimento final) da operação. Especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339)
+                    maxLength: 20
+                    minLength: 20
+                    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                    example: '2020-07-21T08:30:00Z'
+                  contractAmount:
+                    type: object
+                    description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        maxLength: 20
+                        minLength: 4
+                        example: '1000.0400'
+                        description: Valor do saldo remanescente do contrato de empréstimo original utilizado para compor a proposta.
+                      currency:
+                        type: string
+                        pattern: '^(\w{3}){1}$'
+                        maxLength: 3
+                        minLength: 3
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217
+              status:
+                type: string
+                description: |
+                  Informação sobre o status de um pedido de portabilidade de crédito, onde:
+                  
+                  - `RECEIVED`: Estado inicial. Indica que o pedido de portabilidade foi solicitado junto a instituição credora. O pedido deve permanecer neste estado até que o próximo dia útil (D+1) aonde começará a contar o prazo de 3 dias úteis para a etapa de contraproposta e o pedido de portabilidade deverá ser movido para PENDING
+                  - `PENDING`: Indica que o pedido de portabilidade de crédito está na fase de contraproposta, onde a instituição credora poderá enviar uma contraproposta ou não para o cliente por qualquer canal (email, telefone, etc.) porém o aceite só deverá ser valido se o cliente aprovar no canal digital da instituição credora
+                  - `ACCEPTED_SETTLEMENT_IN_PROGRESS`: Indica que a contraproposta não foi aceita pelo cliente e a instituição proponente terá que quitar o valor do contrato no mesmo dia em que o estado foi ativado
+                  - `ACCEPTED_SETTLEMENT_COMPLETED`: Indica que a instituição proponente já liquidou o contrato e comunicou a respeito a credora que está validando os dados do contratos bem como valores recebidos para a quitação do mesmo (nesta etapa a instituição credora tem 2 dias úteis para fornecer a confirmação e o recibo de quitação do contrato de empréstimo)
+                  - `AWAITING_CONTRACT_DISCHARGE`: Indica que a instituição credora finalizou a portabilidade de crédito fornecendo as informações referente a quitação do contrato original, ficando pendente a solicitação de desaverbação junto a averbadora do contrato consignado para a transferência da margem consignada 
+                  - `PORTABILITY_COMPLETED`: Indica que o pedido de portabilidade foi concluído com sucesso
+                  - `REJECTED`: Indica que o pedido de portabilidade de crédito foi rejeitado, seja porque o cliente aceitou a contraproposta, ou porque a proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades
+                  - `CANCELLED`: Indica que o cliente cancelou o pedido de portabilidade de crédito
+                  - `PAYMENT_ISSUE`: Indica que a Instituição Credora encontrou alguma inconsistência na liquidação efetuada e que a Instituição Proponente deverá realizar ajustes conforme sugerido pela Instituição Credora para solucionar a pendencia antes do cancelamento do pedido de portabilidade de crédito
+                enum:
+                  - RECEIVED
+                  - PENDING
+                  - ACCEPTED_SETTLEMENT_IN_PROGRESS
+                  - ACCEPTED_SETTLEMENT_COMPLETED
+                  - AWAITING_CONTRACT_DISCHARGE
+                  - PORTABILITY_COMPLETED
+                  - REJECTED
+                  - CANCELLED
+                  - PAYMENT_ISSUE
+              statusUpdateDateTime:
+                type: string
+                maxLength: 20
+                pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                example: "2020-07-21T08:30:00Z"
+                description: |
+                  Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
+              statusReason:
+                type: object
+                description: |
+                  Motivo de recusa do pedido de portabilidade
+                  
+                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `status` for igual a `REJECTED` ou `CANCELLED` ou `PAYMENT_ISSUE`
+                properties: 
+                  reasonType:
+                    description: |
+                      Motivo de recusa do pedido de portabilidade, onde:
+                      
+                      `CANCELADO_PELO_CLIENTE` - Cliente desiste do pedido da portabilidade 
+                      
+                      `SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE` - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente 
+                      
+                      `POLITICA_DE_CREDITO` - Proponente desiste da oferta ao cliente por políticas internas 
+                      
+                      `RETENCAO_DO_CLIENTE` - Cliente aceitou contraproposta da instituição credora (dentro do prazo)
+                      
+                      `CONTRATO_JA_LIQUIDADO` - Contrato liquidado pelo cliente. 
+                      
+                      `DIVERGENCIA_DE_PAGAMENTO_EFETUADO` - Proponente realizou a liquidação com valor divergente 
+
+                      `DECURSO_DO_PRAZO_PARA_PAGAMENTO` - Proponente realizou a liquidação fora do prazo 
+                      
+                      `PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO` - Proponente não realizou a liquidação do contrato 
+                      
+                      `PORTABILIDADE_EM_ANDAMENTO` - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato. 
+                      
+                      `CLIENTE_COM_ACAO_JUDICIAL` - Possui ação judicial 
+
+                      `MODALIDADE_DA_OPERACAO_INCOMPATIVEL` - Modalidade divergente da indicada pela instituição proponente
+
+                      `OUTROS` - Motivo da rejeição não se encaixa nas opções disponíveis
+                    type: string
+                    enum:
+                      - CANCELADO_PELO_CLIENTE
+                      - SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE
+                      - POLITICA_DE_CREDITO
+                      - RETENCAO_DO_CLIENTE
+                      - CONTRATO_JA_LIQUIDADO
+                      - DIVERGENCIA_DE_PAGAMENTO_EFETUADO
+                      - DECURSO_DO_PRAZO_PARA_PAGAMENTO
+                      - PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO
+                      - PORTABILIDADE_EM_ANDAMENTO
+                      - CLIENTE_COM_ACAO_JUDICIAL
+                      - MODALIDADE_DA_OPERACAO_INCOMPATIVEL
+                      - OUTROS
+                  reasonTypeAdditionalInfo: 
+                    description: |
+                      Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito.
+                      Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance 
+                      para discussão e mapeamento em futuras versões.
+
+                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `reasonType` for igual `OUTROS`
+                    type: string
+                    maxLength: 144
+                    pattern: '^[^\s](?:.*[^\s])?$'
+                    example: Informações Adicionais                   
+                  digitalSignatureProof:
+                    type: object
+                    description: |
+                      Comprovante de assinatura da contraproposta
+                      
+                      [RESTRIÇÃO] Objeto de preenchimento obrigatório quando campo `reasonType` for igual a `RETENCAO_DO_CLIENTE`
+                    properties:
+                      documentId:
+                        type: string
+                        pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+                        maxLength: 100
+                        minLength: 1
+                        example: "54d5348c-1a3f-4ff4-a8a8-d0724fb806c6"
+                        description: "Código identificador do Documento assinado na instituição proponente."
+                      signatureDateTime:
+                        type: string
+                        maxLength: 20
+                        pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                        example: "2020-07-21T08:30:00Z"
+                        description: |
+                          Data e hora em que o contrato foi assinado pelo cliente  no canal digital da Instituição Proponente
+                    required:
+                      - documentId
+                      - signatureDateTime
+              creationDateTime:
+                type: string
+                description: |
+                  Data e hora em que a Proponente registrou a presente proposta (chamada ao POST /portabilities).
+                  Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC-0 (UTC time format).
+                maxLength: 20
+                minLength: 20
+                pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                example: '2020-07-21T08:30:00Z'
+              rejection:
+                type: object
+                description: |
+                  Objeto contendo detalhes do cancelamento do pedido de portabilidade de crédito junto a Instituição Credora.
+
+                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `REJECTED` ou `CANCELLED`
+                required:
+                  - rejectedBy
+                  - reason
+                properties:
+                  rejectedBy:
+                    type: string
+                    description: |
+                      Informar usuário responsável pela rejeição da proposta, onde:
+                      PROPONENTE - Indica que o pedido de portabilidade de crédito foi rejeitado pela proponente, seja porque a
+                      proponente rejeitou a liquidação que excedeu em 15% o valor do contrato original, entre outras possibilidades.
+                      USUARIO - Indica que o cliente cancelou o pedido de portabilidade de crédito.
+                      CREDORA- Indica que a Instituição Credora cancelou o contrato por retenção do cliente ou outros motivos
+                      conforme motivo de recusa.
+                    example: PROPONENTE
+                    enum:
+                      - PROPONENTE
+                      - USUARIO
+                      - CREDORA
+                  reason:
+                    type: object
+                    description: Motivo de recusa do pedido de portabilidade de crédito.
+                    required:
+                      - type
+                    properties:
+                      type:
+                        type: string
+                        description: |
+                          Motivo de recusa do pedido de portabilidade, onde:
+                          CANCELADO_PELO_CLIENTE - Cliente desiste do pedido da portabilidade;   
+                          SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE - Saldo devedor atualizado divergente (superior a 15%) do informado inicialmente;   
+                          POLITICA_DE_CREDITO - Proponente desiste da oferta ao cliente por políticas internas;   
+                          RETENCAO_DO_CLIENTE - Cliente aceitou contraproposta da instituição credora (dentro do prazo);   
+                          CONTRATO_JA_LIQUIDADO - Contrato liquidado pelo cliente;   
+                          DIVERGENCIA_DE_PAGAMENTO_EFETUADO - Proponente realizou a liquidação com valor divergente;   
+                          DECURSO_DO_PRAZO_PARA_PAGAMENTO - Proponente realizou a liquidação fora do prazo;   
+                          PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO - Proponente não realizou a liquidação da Portabilidade;   
+                          PORTABILIDADE_EM_ANDAMENTO - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato;   
+                          CLIENTE_COM_ACAO_JUDICIAL - Possui ação judicial;   
+                          MODALIDADE_DA_OPERACAO_INCOMPATIVEL - Modalidade divergente da indicada pela instituição proponente;  
+                          OUTROS - Motivo da rejeição não se encaixa nas opções disponíveis.  
+                        enum:
+                        - CANCELADO_PELO_CLIENTE
+                        - SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE
+                        - POLITICA_DE_CREDITO
+                        - RETENCAO_DO_CLIENTE
+                        - CONTRATO_JA_LIQUIDADO
+                        - DIVERGENCIA_DE_PAGAMENTO_EFETUADO
+                        - DECURSO_DO_PRAZO_PARA_PAGAMENTO 
+                        - PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO
+                        - PORTABILIDADE_EM_ANDAMENTO
+                        - CLIENTE_COM_ACAO_JUDICIAL
+                        - MODALIDADE_DA_OPERACAO_INCOMPATIVEL
+                        - OUTROS
+                        example: CANCELADO_PELO_CLIENTE
+                      typeAdditionalInfo:
+                        type: string
+                        description: |
+                          Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
+                          Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
+                          
+                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo type for igual a OUTROS.
+                        maxLength: 144
+                        pattern: '^[^\s](?:.*[^\s])?$'
+                        example: Informações Adicionais
+              loanSettlementInstruction:
+                type: object
+                description: |
+                  Objeto contendo o recibo de quitação do contrato original de empréstimo após finalizado o
+                  pedido de portabilidade de crédito com sucesso junto a Instituição Credora.
+
+                  [RESTRIÇÃO] Campo de preenchimento obrigatório quando `status` for igual a `PORTABILITY_COMPLETED` ou `AWAITING_CONTRACT_DISCHARGE`
+                required:
+                  - settlementDateTime
+                  - settlementAmount
+                  - transactionId
+                properties:
+                  settlementDateTime:
+                    type: string
+                    description: Data e hora em que a instituição credora realizou a quitação do contrato de empréstimo.
+                    maxLength: 20
+                    minLength: 20
+                    pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$'
+                    example: '2020-07-21T08:30:00Z'
+                  settlementAmount:
+                    type: object
+                    minItems: 1
+                    description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
+                    required:
+                      - amount
+                      - currency
+                    properties:
+                      amount:
+                        type: string
+                        format: double
+                        maxLength: 20
+                        minLength: 4
+                        pattern: '^\d{1,15}\.\d{2,4}$'
+                        example: '1000.0400'
+                        description: Valor pago para liquidação do contrato de empréstimo.
+                      currency:
+                        type: string
+                        maxLength: 3
+                        minLength: 3
+                        pattern: '^(\w{3}){1}$'
+                        example: 'BRL'
+                        description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+                  transactionId:
+                    type: string
+                    description: |
+                      Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
+                      
+                      No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
+                    maxLength: 20
+                    minLength: 1
+                    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{1,20}$'
+                    example: 'STR20181108000000013'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
     LoansContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -725,121 +1569,6 @@ components:
         - TRFC_POS
         - OUTROS_INDEXADORES
       example: TJLP
-    ResponsePortabilityEligibility:
-      type: object
-      required:
-        - data
-      properties:
-        data:
-          type: object
-          description: Conjunto de informações de contratos de empréstimos/financiamentos mantidos pelo cliente na instituição credora e para os quais ele tenha fornecido consentimento
-          required:
-            - contractId
-            - portability
-          properties:
-              contractId:
-                type: string
-                pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
-                maxLength: 100
-                minLength: 1
-                example: '92792126019929279212650822221989319252576'
-                description: 'Identifica de forma única o contrato da operação de crédito do cliente, mantendo as regras de imutabilidade dentro da instituição transmissora.'
-              portability:
-                type: object
-                required:
-                  - isEligible
-                properties:
-                  isEligible:
-                    type: boolean
-                    description: Sinaliza se as características do contrato é elegível para pedido de portabilidade de crédito via OFB (sem considerar a disponibilidade da portabilidade de crédito)
-                  ineligible:
-                    type: object
-                    required:
-                      - reasonType
-                    description: |
-                      Objeto para auxiliar a Instituição Proponente a entender o porque um contrato está inelegivel para pedido de portabilidade de crédito
-                      
-                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `FALSE`
-                    properties:
-                      reasonType:
-                        type: string
-                        example: CLIENTE_COM_ACAO_JUDICIAL
-                        enum:
-                          - CONTRATO_LIQUIDADO
-                          - CLIENTE_COM_ACAO_JUDICIAL
-                          - MODALIDADE_OPERACAO_INCOMPATIVEL
-                          - FLUXO_COM_PARCELA_IRREGULAR
-                          - TIPO_PESSOA_INVALIDO
-                          - OUTROS
-                        description: |
-                          Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito
-                          Informação sobre o motivo de inelegibilidade
-                          -`CONTRATO_LIQUIDADO`: Contrato liquidado pelo cliente.
-                          -`CLIENTE_COM_ACAO_JUDICIAL`: Cliente possui ação judicial
-                          -`MODALIDADE_OPERACAO_INCOMPATIVEL`: Caso o contrato tenha uma modalidade diferente do praticado no escopo de modalidades disponiveis para portabilidade de crédito
-                          -`FLUXO_COM_PARCELA_IRREGULAR`: Empréstimos com fluxo de pagamento irregular
-                          -`TIPO_PESSOA_INVALIDO`: Empréstimo pertence a um tipo de pessoa diferente de pessoa natural 
-                          -`OUTROS`: Caso exista algum motivo de recusa que não se encaixa nas opções disponiveis de `reasonType`, o campo `reasonTypeAdditionalInfo` deverá ser preenchido com o motivo da inelegibilidade.
-                          
-                      reasonTypeAdditionalInfo:
-                        description: |
-                          Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. Deve ser preenchido como uma proposta para inclusão nas definições, exemplo `MOTIVO_NAO_MAPEADO`: descrição de usar esse motivo específico. Ao utilizar essa opção, é obrigatório enviar um ticket para a estrutura open finance para mapeamento em futuras versões.
- 
-                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `reasonType` for igual a `OUTROS`.
-                        type: string
-                  status:
-                    type: string
-                    description: |
-                      Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito
-                      
-                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `TRUE`
-                    enum:
-                      - DISPONIVEL
-                      - EM_ANDAMENTO
-                  statusUpdateDateTime:
-                    type: string
-                    maxLength: 20
-                    pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
-                    example: "2020-07-21T08:30:00Z"
-                    description: |
-                      Data e hora em que o contrato teve o status atualizado. Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC(UTC time format).
-                      
-                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `isEligible` for igual a `TRUE`
-                  
-                  channel:
-                    type: string
-                    description: |
-                      Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito
-                      
-                      [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`
-                    enum:
-                      - OFB
-                      - REGISTRADORA
-                  companyName:
-                        type: string
-                        pattern: '^(?!\s)[\w\W\s]*[^\s]$'
-                        maxLength: 80
-                        example: Empresa da Organização A              
-                        description: |
-                          Nome da Instituição Proponente responsável pelo pedido de portabilidade de credito anterior a atual consulta p.ex.Empresa A.
-                          
-                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`         
-                  companyCnpj:
-                        type: string
-                        pattern: '^[0-9A-Z]{12}[0-9]{2}$'
-                        maxLength: 14
-                        minLength: 14
-                        example: '21128159000166'
-                        description: |
-                          Número completo do CNPJ da instituição
-                          O CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica.
-                          Deve-se ter apenas números do CNPJ, sem máscara
-
-                          [RESTRIÇÃO] Campo de preenchimento obrigatório quando o campo `status` for igual a `EM_ANDAMENTO`
-        links:
-          $ref: '#/components/schemas/Links'
-        meta:
-          $ref: '#/components/schemas/Meta'
     Meta:
       type: object
       description: Meta informações referentes à API requisitada.
@@ -987,6 +1716,16 @@ components:
         minLength: 1
         maxLength: 36
         example: d78fc4e5-37ca-4da3-adf2-9b082bf92280
+    portabilityId:
+      name: portabilityId
+      in: path
+      description: Identificador do pedido de portabilidade de crédito.
+      required: true
+      schema:
+        type: string
+        pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
+        maxLength: 36
+        minLength: 36
   securitySchemes:
     OpenId:
       type: openIdConnect
@@ -1011,23 +1750,6 @@ components:
             openId: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
             'consent:consentId': Fluxo OAuth necessário para que a instituição proponente tenha acesso aos dados na instituição credora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
   responses:
-    POSTResponseCreditPortability:
-      description: Dados da solicitação de portabilidade de crédito.
-      headers:
-        x-fapi-interaction-id:
-          description: |
-            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
-        x-v:
-          description: |
-            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
-          schema:
-            $ref: '#/components/schemas/X-V'
-      content:
-        application/jwt:
-          schema:
-            $ref: '#/components/schemas/POSTResponseCreditPortability'
     OKResponsePortabilityEligibility:
       description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
@@ -1045,6 +1767,40 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponsePortabilityEligibility'
+    POSTResponseCreditPortability:
+      description: Dados da solicitação de portabilidade de crédito.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/POSTResponseCreditPortability'
+    OKResponsePortabilitiesByPortabilityId:
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponsePortabilitiesByPortabilityId'
     BadRequest:
       description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
       headers:
