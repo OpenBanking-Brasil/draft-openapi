@@ -159,7 +159,7 @@ PERCENTUAL";1;1;"";Não permitido;string;MINIMO;
 /data/contractedFees/feeRate;feeRate;"É o valor da tarifa em percentual pactuada no contrato.
 
 [Restrição] Preenchimento obrigatório quando a forma de cobrança for Percentual.
-";Texto;8;Condicional;^[01]\.\d{6}$;;0;1;" Preenchimento obrigatório quando a forma de cobrança for Percentual.
+";Texto;8;Condicional;^\d{1}\.\d{6}$;;0;1;" Preenchimento obrigatório quando a forma de cobrança for Percentual.
 ";Não permitido;string;0.062000;8
 /data/contractedFinanceCharges;contractedFinanceCharges;Lista que traz os encargos pactuados no contrato;Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/contractedFinanceCharges/chargeType;chargeType;Tipo de encargo pactuado no contrato.;Texto;;Obrigatório;;"JUROS_REMUNERATORIOS_POR_ATRASO 
