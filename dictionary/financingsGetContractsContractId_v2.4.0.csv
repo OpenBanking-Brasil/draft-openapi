@@ -151,6 +151,7 @@ O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas
 [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
 ";Texto;1200;Condicional;^[^\s](.*[^\s])?$;;0;1;" Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
 ";Não permitido;string;Informações adicionais;
+/data/interestRates/hasInsuranceContracted;hasInsuranceContracted;Campo que identifica se existe seguro contratado para o Adiantamento a Depositante, onde seguro contratado é true e não contratado é false.;Booleano;;Opcional;;;0;1;"";Não permitido;boolean;;
 /data/contractedFees;contractedFees;"Lista que traz as informações das tarifas pactuadas no contrato.
 ";Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/contractedFees/feeName;feeName;Denominação da Tarifa pactuada;Texto;140;Obrigatório;^[^\s](.*[^\s])?$;;1;1;"";Não permitido;string;Excesso em Conta;
