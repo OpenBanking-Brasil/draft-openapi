@@ -777,6 +777,9 @@ components:
           items:
             $ref: '#/components/schemas/InvoiceFinancingsFinanceCharge'
           minItems: 0
+        hasInsuranceContracted:
+          type: boolean
+          description: Campo que identifica se existe seguro contratado para o Adiantamento a Depositante, onde seguro contratado é true e não contratado é false.
     InvoiceFinancingsContractedWarranty:
       type: object
       description: Conjunto de informações referentes às garantias que avalizam a operação de crédito contratada
