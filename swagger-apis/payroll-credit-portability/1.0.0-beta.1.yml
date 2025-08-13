@@ -2,7 +2,18 @@ openapi: 3.0.0
 info:
   title: API Payroll Credit Portability - Open Finance Brasil
   description: |
-    A API de Portabilidade de Crédito - Consignado permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições para o Open Finance Brasil.
+    A API de Portabilidade de Crédito Consignado permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições para o Open Finance Brasil.
+
+    # Orientações
+    
+    ## Assinatura de payloads:
+      No contexto da API de Portabilidade de crédito, os payloads de mensagem que trafegam tanto por parte da instituição credora quanto por parte da instituição proponente devem estar assinados. Para o processo de assinatura destes payloads as instituições devem seguir as especificações de segurança publicadas no Portal do desenvolvedor  
+        &nbsp;&nbsp;- Certificados exigidos para assinatura de mensagens: [[PT] Padrão de Certificados Open Finance Brasil 2.1](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/245694518/PT+Padr+o+de+Certificados+Open+Finance+Brasil+2.1)  
+        &nbsp;&nbsp;- Como assinar o payload JWS: [Como Assinar o Payload](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/905740608/Como+assinar+o+payload+-+PC+Portabilidade+de+Cr+dito+-+CPC)
+    
+    ## Controle de Acesso
+    - Os endpoints [GET] /portabilities/{portabilityId}, [GET] /portabilities/{portabilityId}/account-data, [POST] /portabilities/{portabilityId}/payment, [PATCH] / portabilities/{portabilityId}/cancel da API de Portabilidade de crédito devem utilizar o escopo client_credentials
+    - Os endpoints [GET] /credit-operations/{contractId}/portability-eligibility e [POST] /portabilities devem utilizar o escopo authorization_code para validar a permissions de LOANS
   version: 1.0.0-beta.1
   license:
     name: Apache 2.0
@@ -17,11 +28,55 @@ servers:
   - url: 'https://apih.banco.com.br/open-banking/payroll-credit-portability/v1'
     description: Servidor de Homologação
 tags:
+  - name: Account data
+    description: 'Informação dos dados bancários para liquidação de contrato via STR exclusiva do OFB.'
   - name: Concurrency Management
     description: 'Para evitar o envio de múltiplas solicitações de portabilidade para o mesmo contrato, as instituições devem implementar mecanismos que permitam: recusar solicitações simultâneas de portabilidade de crédito referentes ao mesmo contrato, seja por meio da registradora ou do Open Finance Brasil (OFB), priorizando sempre a solicitação mais antiga.'
   - name: Credit Portability
     description: 'Permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições.'
 paths:
+  /portabilities/{portabilityId}/account-data:
+    get:
+      tags:
+        - Account data
+      summary: Obtém os dados necessários para realização do pagamento da operação via TED.
+      description: Método responsável por recuperar informações de contas  para realização do pagamento via TED.
+      operationId: payrollCreditPortabilityGetAccountData
+      parameters:
+        - $ref: '#/components/parameters/portabilityId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseAccountData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - payroll-credit-portability
   '/credit-operations/{contractId}/portability-eligibility':
     get:
       tags:
@@ -161,6 +216,72 @@ paths:
             - payroll-credit-portability
 components:
   schemas:
+    ResponseAccountData:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Dados para realização do pagamento da operação via TED
+          required:
+            - strCode
+          properties:
+            strCode:
+              type: object
+              required:
+                - ispb
+                - branchCode
+                - hasFinancialAgent
+              properties:
+                ispb:
+                  type: string
+                  pattern: '^[0-9A-Z]{8}$'
+                  maxLength: 8
+                  minLength: 8
+                  description: Número do ISPB da Instituição credora a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                  example: '22896431'
+                name:
+                  type: string
+                  description: |
+                    Nome do proprietário da conta a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                    
+                    [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
+                  pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+                  maxLength: 80
+                  minLength: 1
+                  example: 'Instituicao Credora'
+                companyCnpj:
+                  type: string
+                  description: |
+                    CNPJ do proprietário da conta a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                    
+                    [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
+                  pattern: '^[0-9A-Z]{12}[0-9]{2}$'
+                  maxLength: 14
+                  minLength: 14
+                  example: '21128159000166'
+                branchCode:
+                  type: number
+                  description: Número da Agência creditada a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                  example: 0001
+                hasFinancialAgent:
+                  type: boolean
+                  description: Instituição trabalha com agente financeiro ao invés da conta reserva?
+                  example: true
+                accountNumber:
+                  type: number
+                  description: |
+                    Número da conta bancária da credora a ser usada na STR para pagamento de portabilidade de crédito exclusiva para o OFB.
+                    
+                    [RESTRIÇÃO] campo de preenchimento obrigatório quando campo `hasFinancialAgent` for igual a true
+                  example: 12345678
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
     ResponsePortabilityEligibility:
       type: object
       required:
@@ -1737,7 +1858,7 @@ components:
         clientCredentials:
           tokenUrl: 'https://authserver.example/token'
           scopes:
-            credit-portability: Escopo necessário para acesso à API Portabilidade de Crédito.
+            payroll-credit-portability: Escopo necessário para acesso à API Portabilidade de Crédito.
     OAuth2AuthorizationCodeLoans:
       type: oauth2
       description: Fluxo OAuth necessário para que a receptora tenha acesso aos dados na instituição transmissora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
@@ -1750,6 +1871,23 @@ components:
             openId: Indica que a autorização está sendo realizada utilizando o protocolo definido pela openid.
             'consent:consentId': Fluxo OAuth necessário para que a instituição proponente tenha acesso aos dados na instituição credora. Requer o processo de redirecionamento e autenticação do usuário a que se referem os dados.
   responses:
+    OKResponseAccountData:
+      description: Dados para realização do pagamento da operação via TED.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponseAccountData'
     OKResponsePortabilityEligibility:
       description: Dados dos contratos de empréstimo obtidos com sucesso.
       headers:
