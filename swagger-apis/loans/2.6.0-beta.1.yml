@@ -1052,9 +1052,9 @@ components:
           maximum: 999999999
           example: 130632
           description: |
-            Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+            Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada. Deve corresponder à soma de `paidInstalments` + `pastDueInstalments` + `dueInstalments`.
 
-            [Restrição] Obrigatoriamente deve ser preenchido caso o typeNumberOfInstalments seja diferente de SEM_PRAZO_TOTAL.
+            [Restrição] Obrigatoriamente deve ser preenchido caso o `typeNumberOfInstalments` seja diferente de `SEM_PRAZO_TOTAL`.
         typeContractRemaining:
           type: string
           enum:
