@@ -1045,7 +1045,7 @@ components:
           pattern: '^[^\s](.*[^\s])?$'
           example: AD
           description: |
-            Denominação/Identificação do nome da Modalidade da Operação de Crédito divulgado ao cliente
+            Denominação/Identificação do nofme da Modalidade da Operação de Crédito divulgado ao cliente
         productType:
           $ref: '#/components/schemas/ProductType'
         productSubType:
@@ -1108,7 +1108,7 @@ components:
           $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
         instalmentPeriodicityAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 50
           example: Informações adicionais sobre periodicidade
           description: |
@@ -1152,7 +1152,7 @@ components:
           example: SAC
         amortizationScheduledAdditionalInfo:
           type: string
-          pattern: '[\w\W\s]*'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 200
           example: Informações complementares relativa à amortização do tipo 'OUTROS'
           description: |
