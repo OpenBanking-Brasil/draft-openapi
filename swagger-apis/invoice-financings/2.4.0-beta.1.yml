@@ -343,7 +343,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '[\w\W\s]+'
+          pattern: '^[^\s](.*[^\s])?$'
           description: |
             Denominação da Tarifa pactuada
           example: Excesso em Conta
@@ -351,7 +351,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '[\w\W\s]+'
+          pattern: '^[^\s](.*[^\s])?$'
           description: |
             Sigla identificadora da tarifa pactuada
           example: EXCESSO_CONTA
@@ -647,7 +647,7 @@ components:
         productName:
           type: string
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: AD
           description: |
             Denominação/Identificação do nome da Modalidade da Operação de Crédito divulgado ao cliente
@@ -712,7 +712,7 @@ components:
           $ref: '#/components/schemas/EnumContractInstalmentPeriodicity'
         instalmentPeriodicityAdditionalInfo:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 50
           example: Informações adicionais sobre periodicidade
           description: |
@@ -746,7 +746,7 @@ components:
           $ref: '#/components/schemas/EnumContractAmortizationScheduled'
         amortizationScheduledAdditionalInfo:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 200
           example: Informações complementares relativa à amortização do tipo 'OUTROS'
           description: |
@@ -841,7 +841,7 @@ components:
             Campo livre para complementar a informação relativa ao Tipo de taxa referencial ou indexador.
             [Restrição] Obrigatório para complementar a informação relativa ao Tipo de taxa referencial ou indexador, quando selecionada o tipo ou subtipo OUTRO.
           maxLength: 140
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Informações adicionais de Indexador ou tipo de taxa referencial
         preFixedRate:
           type: string
@@ -872,7 +872,7 @@ components:
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
 
             [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Informações adicionais
     InvoiceFinancingsFinanceCharge:
       type: object
@@ -889,7 +889,7 @@ components:
             Campo para informações adicionais.
 
             [Restrição] Obrigatório se selecionada a opção 'OUTROS' em Tipo de encargo pactuado no contrato.
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Informações adicionais sobre encargos
         chargeRate:
           type: string
@@ -1007,7 +1007,7 @@ components:
         brandName:
           type: string
           description: 'Nome da Marca reportada pelo participante no Open Finance. Recomenda-se utilizar, sempre que possível, o mesmo nome de marca atribuído no campo do diretório Customer Friendly Server Name (Authorisation Server).'
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 80
           example: Organização A
         companyCnpj:
@@ -1084,7 +1084,7 @@ components:
         instalmentId:
           type: string
           maxLength: 100
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: '15'
           description: |
             Identificador de parcela, de responsabilidade de cada Instituição transmissora.  
@@ -1147,7 +1147,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '[\w\W\s]+'
+          pattern: '^[^\s](.*[^\s])?$'
           description: |
             Denominação da Tarifa pactuada.
           example: Excesso em Conta
@@ -1155,7 +1155,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '[\w\W\s]+'
+          pattern: '^[^\s](.*[^\s])?$'
           description: |
             Sigla identificadora da tarifa pactuada.
           example: EXCESSO_CONTA
@@ -1194,7 +1194,7 @@ components:
             Campo livre para preenchimento das informações adicionais referente ao encargo.
 
             [Restrição] Obrigatório quando chargeType for igual 'OUTROS'.
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           example: Informações adicionais
           maxLength: 140
         chargeAmount:
