@@ -216,14 +216,11 @@ paths:
       operationId: financingsGetContractsContractIdScheduledInstalments
       parameters:
         - $ref: '#/components/parameters/contractId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseFinancingsInstalments'
@@ -268,14 +265,11 @@ paths:
       operationId: financingsGetContractsContractIdPayments
       parameters:
         - $ref: '#/components/parameters/contractId'
-        - $ref: '#/components/parameters/page'
-        - $ref: '#/components/parameters/pageSize'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
         - $ref: '#/components/parameters/xFapiInteractionId'
         - $ref: '#/components/parameters/xCustomerUserAgent'
-        - $ref: '#/components/parameters/pagination-key'
       responses:
         '200':
           $ref: '#/components/responses/OKResponseFinancingsPayments'
@@ -345,7 +339,7 @@ components:
                 pattern: '[\w\W\s]*'
                 maxLength: 2048
         meta:
-          $ref: '#/components/schemas/MetaError'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseFinancingsContractList:
       type: object
       required:
@@ -359,9 +353,9 @@ components:
           items:
             $ref: '#/components/schemas/FinancingsListContract'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksSingle'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseFinancingsContract:
       type: object
       required:
@@ -385,9 +379,9 @@ components:
         data:
           $ref: '#/components/schemas/FinancingsInstalments'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksSingle'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseFinancingsPayments:
       type: object
       required:
@@ -398,9 +392,9 @@ components:
         data:
           $ref: '#/components/schemas/FinancingsPayments'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksSingle'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseFinancingsWarranties:
       type: object
       required:
@@ -1325,7 +1319,7 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
-    MetaError:
+    MetaSingle:
       type: object
       description: Meta informações referente à API requisitada.
       required:
@@ -1372,6 +1366,18 @@ components:
           format: url
           maxLength: 4048
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
+          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
+    LinksSingle:
+      type: object
+      description: Referências para outros recusos da API requisitada.
+      required:
+        - self
+      properties:
+        self:
+          type: string
+          format: url
+          maxLength: 4048
+          description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
     X-V:
       type: string
