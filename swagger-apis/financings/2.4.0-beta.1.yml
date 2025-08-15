@@ -309,10 +309,14 @@ components:
   headers:
     X-V: 
       description: |
-          Cabeçalho que indica a versão implementada da API pela instituição financeira para atender à solicitação. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2.
+          Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
       required: true
       schema:
         $ref: '#/components/schemas/X-V'
+    XFapiInteractionId:
+      description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+      schema:
+        $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
     ResponseErrorWithAbleAdditionalProperties:
       type: object
@@ -360,9 +364,9 @@ components:
           items:
             $ref: '#/components/schemas/FinancingsListContract'
         links:
-          $ref: '#/components/schemas/LinksSingle'
+          $ref: '#/components/schemas/Links'
         meta:
-          $ref: '#/components/schemas/MetaSingle'
+          $ref: '#/components/schemas/Meta'
     ResponseFinancingsContract:
       type: object
       required:
@@ -373,9 +377,9 @@ components:
         data:
           $ref: '#/components/schemas/FinancingsContract'
         links:
-          $ref: '#/components/schemas/Links'
+          $ref: '#/components/schemas/LinksSingle'
         meta:
-          $ref: '#/components/schemas/Meta'
+          $ref: '#/components/schemas/MetaSingle'
     ResponseFinancingsInstalments:
       type: object
       required:
@@ -580,9 +584,6 @@ components:
             Texto com informações adicionais sobre a composição das taxas de juros pactuadas. 
 
             [Restrição] Caso a instituição possua a informação para compartilhamento, esta deverá ser informada.
-        hasInsuranceContracted:
-          type: boolean
-          description: Campo que identifica se existe seguro contratado para o Adiantamento a Depositante, onde seguro contratado é true e não contratado é false.
     FinancingsBalloonPayment:
       type: object
       description: Lista que traz as datas de vencimento e valor das parcelas não regulares  do contrato da modalidade de crédito consultada.
@@ -847,6 +848,9 @@ components:
           description: Lista que traz os encargos pactuados no contrato
           items:
             $ref: '#/components/schemas/FinancingsFinanceCharge'
+        hasInsuranceContracted:
+          type: boolean
+          description: Campo que identifica se existe seguro contratado para o Adiantamento a Depositante, onde seguro contratado é true e não contratado é false.
     FinancingsContractFee:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -1400,7 +1404,6 @@ components:
       minLength: 1
       maxLength: 36
       example: "d78fc4e5-37ca-4da3-adf2-9b082bf92280"
-      description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
   parameters:
     Authorization:
       name: Authorization
@@ -1508,8 +1511,7 @@ components:
       description: Lista de contratos obtida com sucesso.
       headers:
         x-fapi-interaction-id:
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
       content:
@@ -1520,8 +1522,7 @@ components:
       description: Dados do contrato de financiamento identificado por contractId
       headers:
         x-fapi-interaction-id:
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
       content:
@@ -1532,8 +1533,7 @@ components:
       description: Lista de garantias vinculadas ao contrato de financiamento identificado por contractId
       headers:
         x-fapi-interaction-id:
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
       content:
@@ -1544,8 +1544,7 @@ components:
       description: Dados do cronograma de parcelas do contrato de financiamento identificado por contractId
       headers:
         x-fapi-interaction-id:
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
       content:
@@ -1556,8 +1555,7 @@ components:
       description: Dados de pagamentos do contrato de financiamento identificado por contractId
       headers:
         x-fapi-interaction-id:
-          schema:
-            $ref: '#/components/schemas/XFapiInteractionId'
+          $ref: '#/components/headers/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
       content:
