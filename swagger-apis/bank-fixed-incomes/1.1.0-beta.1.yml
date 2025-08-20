@@ -3,7 +3,7 @@ info:
   title: API Bank Fixed Incomes - Open Finance Brasil
   description: |
     API de informações de operações de Renda Fixa Bancária Open Finance Brasil (Fase 4). API que retorna informações de operações de investimento do tipo Renda Fixa Bancária (CDB/RDB, LCI e LCA) mantidas nas instituições transmissoras por seus clientes, incluindo dados como denominação do produto, rentabilidade, quantidade, prazos, saldos em posição do cliente e movimentações financeiras. Não possui segregação entre pessoa natural e pessoa jurídica. Requer consentimento do cliente para todos os endpoints. A exposição se dará por cada operação de renda fixa contratada pelo cliente.
-  version: 1.1.0
+  version: 1.1.0-beta.1
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -479,7 +479,13 @@ components:
             referenceDateTime:
               type: string
               format: date-time
-              description: 'data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).'
+              description: |
+                Data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).
+
+                No preenchimento do campo é esperado que a instituição informe a última vez que capturou a posição para compartilhamento no Open Finance. Dessa forma, é possível que:
+                - Caso a instituição capture dados de forma síncrona, essa informação seja de até uma hora atrás;
+                - Caso a instituição capture dados de forma assíncrona, essa informação seja de horas ou dias atrás;
+                - Quando a posição for zerada: mesmo conteúdo do campo requestDateTime  
               pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$)'
               example: '2022-07-21T17:32:00Z'
               maxLength: 20
