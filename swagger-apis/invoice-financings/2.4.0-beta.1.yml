@@ -350,7 +350,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '^[^\s](.*[^\s])?$'
+          pattern: '[\w\W\s]+'
           description: |
             Denominação da Tarifa pactuada
           example: Excesso em Conta
@@ -358,7 +358,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '^[^\s](.*[^\s])?$'
+          pattern: '[\w\W\s]+'
           description: |
             Sigla identificadora da tarifa pactuada
           example: EXCESSO_CONTA
@@ -780,7 +780,7 @@ components:
           minItems: 0
         hasInsuranceContracted:
           type: boolean
-          description: Campo que identifica se existe seguro contratado para o Adiantamento a Depositante, onde seguro contratado é true e não contratado é false.
+          description: Campo que identifica se existe seguro contratado para o Direito Creditório Descontado, onde seguro contratado é true e não contratado é false.
     InvoiceFinancingsContractedWarranty:
       type: object
       description: Conjunto de informações referentes às garantias que avalizam a operação de crédito contratada
@@ -1020,7 +1020,7 @@ components:
         companyCnpj:
           type: string
           pattern: '^[0-9A-Z]{12}[0-9]{2}$'
-          description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara.'
+          description: 'Registro completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde a representação alfanumérica da inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os caracteres do CNPJ, sem máscara.'
           maxLength: 14
           example: '21128159000166'
         productType:
@@ -1154,7 +1154,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '^[^\s](.*[^\s])?$'
+          pattern: '[\w\W\s]+'
           description: |
             Denominação da Tarifa pactuada.
           example: Excesso em Conta
@@ -1162,7 +1162,7 @@ components:
           type: string
           maxLength: 140
           minLength: 2
-          pattern: '^[^\s](.*[^\s])?$'
+          pattern: '[\w\W\s]+'
           description: |
             Sigla identificadora da tarifa pactuada.
           example: EXCESSO_CONTA
@@ -1414,6 +1414,7 @@ components:
       type: string
       pattern: '^\d+\.\d+\.\d+$'
       example: 1.0.0
+      description: "Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2"
   parameters:
     Authorization:
       name: Authorization
@@ -1522,6 +1523,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
+            description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
             $ref: '#/components/schemas/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
@@ -1534,6 +1536,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
+            description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
             $ref: '#/components/schemas/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
@@ -1545,7 +1548,9 @@ components:
       description: Lista de garantias vinculadas ao contrato de antecipação de recebíveis identificado por contractId
       headers:
         x-fapi-interaction-id:
+          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
           schema:
+            description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
             $ref: '#/components/schemas/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
@@ -1558,6 +1563,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
+            description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
             $ref: '#/components/schemas/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
@@ -1570,6 +1576,7 @@ components:
       headers:
         x-fapi-interaction-id:
           schema:
+            description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
             $ref: '#/components/schemas/XFapiInteractionId'
         x-v:
           $ref: '#/components/headers/X-V'
