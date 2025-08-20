@@ -1,0 +1,16 @@
+Xpath,Nome,Definição,Tipo de Dado,Tamanho,Formato,Valores possíveis,Obrigatório
+typeNumberOfInstalments,typeNumberOfInstalments,Tipo de prazo total do contrato referente à modalidade de crédito informada.,string,,,"['DIA', 'SEMANA', 'MES', 'ANO', 'SEM_PRAZO_TOTAL']",False
+totalNumberOfInstalments,totalNumberOfInstalments,"Prazo Total segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+
+[Restrição] Obrigatoriamente deve ser preenchido caso o typeNumberOfInstalments seja diferente de SEM_PRAZO_TOTAL.
+",number,,,,False
+typeContractRemaining,typeContractRemaining,"Tipo de prazo remanescente do contrato referente à modalidade de crédito informada.
+",string,,,"['DIA', 'SEMANA', 'MES', 'ANO', 'SEM_PRAZO_REMANESCENTE']",False
+contractRemainingNumber,contractRemainingNumber,"Prazo Remanescente segundo o tipo (dia, semana, mês, ano) referente à Modalidade de Crédito informada.
+
+[Restrição] Obrigatoriamente deve ser preenchido caso o typeContractRemaining seja diferente de SEM_PRAZO_REMANESCENTE.
+",number,,,,False
+paidInstalments,paidInstalments,"Quantidade de prestações pagas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)",number,,,,False
+dueInstalments,dueInstalments,"Quantidade de prestações a vencer.(No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)",number,,,,False
+pastDueInstalments,pastDueInstalments,"Quantidade de prestações vencidas. (No caso de modalidades que não possuam parcelas, o número de prestações é igual a zero)",number,,,,False
+balloonPayments,balloonPayments,Lista que traz as datas de vencimento e valor das parcelas não regulares do contrato da modalidade de crédito consultada,array,,,,False
