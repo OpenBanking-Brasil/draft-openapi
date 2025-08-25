@@ -23,9 +23,9 @@ Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimai
 ";Não permitido;object;;
 /data/releases/overParcel/fees;fees;Lista das tarifas que foram pagas fora da parcela, só para pagamento avulso.;Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/releases/overParcel/fees/feeName;feeName;"Denominação da Tarifa pactuada.
-";Texto;140;Obrigatório;^[^\s](.*[^\s])?$;;1;1;"";Não permitido;string;Excesso em Conta;2
+";Texto;140;Obrigatório;[\w\W\s]+;;1;1;"";Não permitido;string;Excesso em Conta;2
 /data/releases/overParcel/fees/feeCode;feeCode;"Sigla identificadora da tarifa pactuada.
-";Texto;140;Obrigatório;^[^\s](.*[^\s])?$;;1;1;"";Não permitido;string;EXCESSO_CONTA;2
+";Texto;140;Obrigatório;[\w\W\s]+;;1;1;"";Não permitido;string;EXCESSO_CONTA;2
 /data/releases/overParcel/fees/feeAmount;feeAmount;"Valor monetário da tarifa pactuada no contrato.
 
 Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
