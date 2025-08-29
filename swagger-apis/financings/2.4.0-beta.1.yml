@@ -850,7 +850,7 @@ components:
             $ref: '#/components/schemas/FinancingsFinanceCharge'
         hasInsuranceContracted:
           type: boolean
-          description: Campo que identifica se existe seguro contratado para o Financiamento, onde seguro contratado é true e não contratado é false.
+          description: Campo que identifica se existe seguro contratado para o Financiamento, onde seguro contratado é true e não contratado é false. O não envio do campo significa que a instituição não oferece este produto.
     FinancingsContractFee:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -939,8 +939,8 @@ components:
         feeAmount:
           type: string
           format: double
-          pattern: '^\d{1,15}\.\d{2,4}$'
-          maxLength: 20
+          pattern: '^-?\d{1,15}\.\d{2,4}$'
+          maxLength: 21
           minLength: 4
           example: '1000.0400'
           description: |
