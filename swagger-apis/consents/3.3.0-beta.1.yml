@@ -1019,6 +1019,29 @@ components:
                       maxLength: 140
                       pattern: '^[^\s](.*[^\s])?$'
                       example: Tempo de confirmação da múltipla alçada excedido.
+            journey:
+              type: object
+              description: >
+                Informações adicionais sobre o contexto de Jornada Otimizada.
+                [RESTRIÇÃO] Objeto de envio obrigatório quando o usuário manifestar consentimento para compartilhamento de saldo 
+                através da Jornada Otimizada.
+              properties:
+                isLinked:
+                  type: boolean
+                  example: true
+                  description: >
+                    Campo para identificação de consentimento iniciado em Jornada Otimizada.
+                    [RESTRIÇÃO] Campo de preenchimento obrigatório para todo consentimento iniciado a partir da jornada otimizada,
+                    independente do status do consentimento.
+                linkId:
+                  type: string
+                  pattern: ^urn:[a-zA-Z0-9][a-zA-Z0-9-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$
+                  maxLength: 256
+                  example: urn:bancoex:C1DD331237
+                  description: >
+                    Identificador do consentimento de pagamento/vínculo ao qual este consentimento está vinculado.
+                    [RESTRIÇÃO] Esse campo será preenchido caso o consentimento tenha sido autorizado ou rejeitado por ação do cliente.
+
         links:
           $ref: '#/components/schemas/LinksConsents'
         meta:
