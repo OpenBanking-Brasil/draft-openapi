@@ -1060,9 +1060,9 @@ components:
       description: |
         Percentual do indexador acordado com o cliente na contratação. Em casos de produtos progressivos, considerar a taxa máxima contratada. 
         É esperado que o preenchimento deste campo pelas participantes seja enviado conforme foi acordado no momento da contratação.
-      maxLength: 8
+      maxLength: 9
       minLength: 8
-      pattern: '^\d{1}\.\d{6}$'
+      pattern: '^-?\d{1}\.\d{6}$'
       example: '1.100000'
     PurchaseUnitPrice:
       type: object
@@ -1106,8 +1106,8 @@ components:
           description: |
             Percentual do indexador de emissão do contrato.    
             [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO' ou quando se tratar de produto com remuneração híbrida.
-          maxLength: 8
-          pattern: '^\d{1}\.\d{6}$'
+          maxLength: 9
+          pattern: '^-?\d{1}\.\d{6}$'
           example: '1.100000'
         rateType:
           $ref: '#/components/schemas/EnumRateType'
