@@ -603,8 +603,8 @@ components:
                 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. 
                 Este valor representa 15%. O valor 1 representa 100%). 
                 É esperado que o preenchimento deste campo pelas participantes seja enviado conforme foi acordado no momento da contratação.
-              pattern: '^\d{1}\.\d{6}$'
-              maxLength: 8
+              pattern: '^-?\d{1}\.\d{6}$'
+              maxLength: 9
               minLength: 8
               example: '1.000000'
         links:
@@ -765,8 +765,8 @@ components:
         postFixedIndexerPercentage:
           type: string
           format: double
-          pattern: '^\d{1}\.\d{6}$'
-          maxLength: 8
+          pattern: '^-?\d{1}\.\d{6}$'
+          maxLength: 9
           minLength: 8
           example: '1.100000'
           description: |
