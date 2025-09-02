@@ -1380,8 +1380,10 @@ components:
     fromTransactionDate:
       name: fromTransactionDate
       description: |
-        Data inicial de filtragem.      
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        Data inicial de filtragem.
+
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `toTransactionDate`.
+        Caso os campo `fromTransactionDate` e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.  
       required: false
       in: query
       schema:
@@ -1392,8 +1394,10 @@ components:
     toTransactionDate:
       name: toTransactionDate
       description: |
-        Data final de filtragem.      
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        Data final de filtragem.
+
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `fromTransactionDate`.
+        Caso os campo `fromTransactionDate` e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.  
       required: false
       in: query
       schema:
