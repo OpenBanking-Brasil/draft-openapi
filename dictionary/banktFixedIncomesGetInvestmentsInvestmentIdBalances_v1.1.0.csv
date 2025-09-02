@@ -1,6 +1,8 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
 /data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/referenceDateTime;referenceDateTime;"Data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).
+/data/referenceDateTime;referenceDateTime;"Data e hora da última posição consolidada a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos.
+Deve respeitar o prazo máximo de tempestividade da API, conforme a página [""Orientações""](https://openfinancebrasil.atlassian.net/wiki/spaces/OF/pages/102957060).
+Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).
 
 No preenchimento do campo é esperado que a instituição informe a última vez que capturou a posição para compartilhamento no Open Finance. Dessa forma, é possível que:
 - Caso a instituição capture dados de forma síncrona, essa informação seja de até uma hora atrás;
