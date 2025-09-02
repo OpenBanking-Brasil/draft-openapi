@@ -566,7 +566,7 @@ components:
 
             Caso a instituição tenha a informação, o envio será obrigatório.
           maxLength: 14
-          pattern: '^\d{14}$'
+          pattern: '^[0-9A-Z]{12}[0-9]{2}$'
           example: '11225860000140'
         isinCode:
           type: string
@@ -584,7 +584,7 @@ components:
           description: |
             CNPJ do devedor. Caso a transmissora possua a informação para os produtos CRI e CRA, o envio deste campo é obrigatório.
           maxLength: 14
-          pattern: '^\d{14}$'
+          pattern: '^[0-9A-Z]{12}[0-9]{2}$'
           example: '11225860000140'
         debtorName:
           type: string
@@ -820,9 +820,9 @@ components:
           example: Organização A
         companyCnpj:
           type: string
-          description: 'Número completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde ao número de inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os números do CNPJ, sem máscara'
+          description: 'Registro completo do CNPJ da instituição responsável pelo Cadastro - o CNPJ corresponde a representação alfanumérica da inscrição no Cadastro de Pessoa Jurídica. Deve-se ter apenas os caracteres do CNPJ, sem máscara'
           maxLength: 14
-          pattern: '^\d{14}$'
+          pattern: '^[0-9A-Z]{12}[0-9]{2}$'
           example: '21128159000166'
         investmentType:
           $ref: '#/components/schemas/EnumInvestimentType'
