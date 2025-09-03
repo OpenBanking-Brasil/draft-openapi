@@ -295,6 +295,13 @@ paths:
             - 'consent:consentId'
             - bank-fixed-incomes
 components:
+  headers:
+    X-V: 
+      description: |
+          Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+      required: true
+      schema:
+        $ref: '#/components/schemas/X-V'
   schemas:
     ResponseError:
       type: object
@@ -1171,6 +1178,10 @@ components:
       maxLength: 20
       pattern: '^\d{1,15}\.\d{2,4}$'
       example: '1000.0004'
+    X-V:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0  
   securitySchemes:
     OAuth2AuthorizationCode:
       type: oauth2
@@ -1324,24 +1335,36 @@ components:
   responses:
     OkResponseBankFixedIncomesBalances:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseBankFixedIncomesBalances'
     OkResponseBankFixedIncomesProductList:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseBankFixedIncomesProductList'
     ResponseBankFixedIncomeIdentifyProduct:
       description: Dados de fundos de investimentos obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseBankFixedIncomesProductIdentification'
     ResponseBankFixedIncomesProductMovement:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
