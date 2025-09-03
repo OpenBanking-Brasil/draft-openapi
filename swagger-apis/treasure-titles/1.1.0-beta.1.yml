@@ -295,6 +295,13 @@ paths:
             - 'consent:consentId'
             - treasure-titles
 components:
+  headers:
+    X-V: 
+      description: |
+          Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+      required: true
+      schema:
+        $ref: '#/components/schemas/X-V'
   schemas:
     LockedWithAdditionalProperties:
       type: object
@@ -1198,6 +1205,10 @@ components:
       pattern: '[\w\W\s]*'
       example: Diária
       type: string
+    X-V:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0
   securitySchemes:
     OAuth2AuthorizationCode:
       type: oauth2
@@ -1351,30 +1362,45 @@ components:
   responses:
     OkResponseTreasureTitlesBalances:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseTreasureTitlesBalances'
     OkResponseTreasureTitlesProductList:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseTreasureTitlesListProduct'
     ResponseTreasureTitlesIdentifyProduct:
       description: Dados de fundos de investimentos obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseTreasureTitlesIdentifyProduct'
     ResponseTreasureTitlesProductTransactions:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseTreasureTitlesProductTransactions'
     ResponseTreasureTitlesProductTransactionsCurrent:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
