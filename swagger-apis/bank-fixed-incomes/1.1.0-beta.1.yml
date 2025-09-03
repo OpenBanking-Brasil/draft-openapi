@@ -211,31 +211,31 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
-          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
-          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
         '403':
-          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
         '404':
-          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
         '405':
-          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
         '406':
-          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
         '422':
-          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
         '423':
-          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
-          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
         '504':
-          $ref: '#/components/responses/TransactionsGatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
-          $ref: '#/components/responses/TransactionsSiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         default:
-          $ref: '#/components/responses/TransactionsDefaultWithAdditionalProperties'
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
         - OAuth2AuthorizationCode:
             - openid
@@ -264,31 +264,31 @@ paths:
         '200':
           $ref: '#/components/responses/ResponseBankFixedIncomesProductMovement'
         '400':
-          $ref: '#/components/responses/TransactionsBadRequestWithAdditionalProperties'
+          $ref: '#/components/responses/BadRequestWithAdditionalProperties'
         '401':
-          $ref: '#/components/responses/TransactionsUnauthorizedWithAdditionalProperties'
+          $ref: '#/components/responses/UnauthorizedWithAdditionalProperties'
         '403':
-          $ref: '#/components/responses/TransactionsForbiddenWithAdditionalProperties'
+          $ref: '#/components/responses/ForbiddenWithAdditionalProperties'
         '404':
-          $ref: '#/components/responses/TransactionsNotFoundWithAdditionalProperties'
+          $ref: '#/components/responses/NotFoundWithAdditionalProperties'
         '405':
-          $ref: '#/components/responses/TransactionsMethodNotAllowedWithAdditionalProperties'
+          $ref: '#/components/responses/MethodNotAllowedWithAdditionalProperties'
         '406':
-          $ref: '#/components/responses/TransactionsNotAcceptableWithAdditionalProperties'
+          $ref: '#/components/responses/NotAcceptableWithAdditionalProperties'
         '422':
-          $ref: '#/components/responses/TransactionsUnprocessableEntityWithAdditionalProperties'
+          $ref: '#/components/responses/UnprocessableEntityWithAdditionalProperties'
         '423':
-          $ref: '#/components/responses/TransactionsLockedWithAdditionalProperties'
+          $ref: '#/components/responses/LockedWithAdditionalProperties'
         '429':
-          $ref: '#/components/responses/TransactionsTooManyRequestsWithAdditionalProperties'
+          $ref: '#/components/responses/TooManyRequestsWithAdditionalProperties'
         '500':
-          $ref: '#/components/responses/TransactionsInternalServerErrorWithAdditionalProperties'
+          $ref: '#/components/responses/InternalServerErrorWithAdditionalProperties'
         '504':
-          $ref: '#/components/responses/TransactionsGatewayTimeoutWithAdditionalProperties'
+          $ref: '#/components/responses/GatewayTimeoutWithAdditionalProperties'
         '529':
-          $ref: '#/components/responses/TransactionsSiteIsOverloadedWithAdditionalProperties'
+          $ref: '#/components/responses/SiteIsOverloadedWithAdditionalProperties'
         default:
-          $ref: '#/components/responses/TransactionsDefaultWithAdditionalProperties'
+          $ref: '#/components/responses/DefaultWithAdditionalProperties'
       security:
         - OAuth2AuthorizationCode:
             - openid
@@ -307,64 +307,6 @@ components:
       schema:
         $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
-    ResponseError:
-      type: object
-      required:
-        - errors
-      properties:
-        errors:
-          type: array
-          minItems: 1
-          maxItems: 13
-          items:
-            type: object
-            required:
-              - code
-              - title
-              - detail
-            properties:
-              code:
-                description: Código de erro específico do endpoint
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              title:
-                description: Título legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 255
-              detail:
-                description: Descrição legível por humanos deste erro específico
-                type: string
-                pattern: '[\w\W\s]*'
-                maxLength: 2048
-            additionalProperties: false
-        meta:
-          type: object
-          description: Meta informações referente a API requisitada.
-          required:
-            - totalRecords
-            - totalPages
-            - requestDateTime
-          properties:
-            totalRecords:
-              type: integer
-              format: int32
-              description: Número total de registros no resultado
-              example: 1
-            totalPages:
-              type: integer
-              format: int32
-              description: Número total de páginas no resultado
-              example: 1
-            requestDateTime:
-              description: 'Data e hora da consulta, conforme especificação RFC-3339, formato UTC.'
-              type: string
-              maxLength: 20
-              format: date-time
-              example: '2021-05-21T08:30:00Z'
-          additionalProperties: false
-      additionalProperties: false
     ResponseErrorMetaSingle:
       type: object
       required:
@@ -1396,152 +1338,74 @@ components:
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     ForbiddenWithAdditionalProperties:
       description: O token tem escopo incorreto ou uma política de segurança foi violada
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     GatewayTimeoutWithAdditionalProperties:
       description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     InternalServerErrorWithAdditionalProperties:
       description: Ocorreu um erro no gateway da API ou no microsserviço
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     LockedWithAdditionalProperties:
       description: Locked
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     MethodNotAllowedWithAdditionalProperties:
       description: O consumidor tentou acessar o recurso com um método não suportado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotAcceptableWithAdditionalProperties:
       description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     NotFoundWithAdditionalProperties:
       description: O recurso solicitado não existe ou não foi implementado
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     TooManyRequestsWithAdditionalProperties:
       description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     UnauthorizedWithAdditionalProperties:
       description: Cabeçalho de autenticação ausente/inválido ou token inválido
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     UnprocessableEntityWithAdditionalProperties:
       description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     DefaultWithAdditionalProperties:
       description: Erro inesperado.
       content:
         application/json; charset=utf-8:
           schema:
-            $ref: '#/components/schemas/ResponseError'
+            $ref: '#/components/schemas/ResponseErrorMetaSingle'
     SiteIsOverloadedWithAdditionalProperties:
-      description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseError'
-    TransactionsBadRequestWithAdditionalProperties:
-      description: 'A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsForbiddenWithAdditionalProperties:
-      description: O token tem escopo incorreto ou uma política de segurança foi violada
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsGatewayTimeoutWithAdditionalProperties:
-      description: GATEWAY TIMEOUT - A requisição não foi atendida dentro do tempo limite estabelecido
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsInternalServerErrorWithAdditionalProperties:
-      description: Ocorreu um erro no gateway da API ou no microsserviço
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsLockedWithAdditionalProperties:
-      description: Locked
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsMethodNotAllowedWithAdditionalProperties:
-      description: O consumidor tentou acessar o recurso com um método não suportado
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsNotAcceptableWithAdditionalProperties:
-      description: A solicitação continha um cabeçalho Accept diferente dos tipos de mídia permitidos ou um conjunto de caracteres diferente de UTF-8
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsNotFoundWithAdditionalProperties:
-      description: O recurso solicitado não existe ou não foi implementado
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsTooManyRequestsWithAdditionalProperties:
-      description: 'A operação foi recusada, pois muitas solicitações foram feitas dentro de um determinado período ou o limite global de requisições concorrentes foi atingido'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsUnauthorizedWithAdditionalProperties:
-      description: Cabeçalho de autenticação ausente/inválido ou token inválido
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsUnprocessableEntityWithAdditionalProperties:
-      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsDefaultWithAdditionalProperties:
-      description: Erro inesperado.
-      content:
-        application/json; charset=utf-8:
-          schema:
-            $ref: '#/components/schemas/ResponseErrorMetaSingle'
-    TransactionsSiteIsOverloadedWithAdditionalProperties:
       description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
       content:
         application/json; charset=utf-8:
