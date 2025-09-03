@@ -1386,7 +1386,8 @@ components:
       description: |
         Data inicial de filtragem.
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionConversionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restrição]  Deve obrigatoriamente sempre ser enviado em conjunto com o campo `toTransactionConversionDate`. 
+        Caso os campo `fromTransactionConversionDate` e `toTransactionConversionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
@@ -1399,7 +1400,8 @@ components:
       description: |
         Data final de filtragem.
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionConversionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `fromTransactionConversionDate`. 
+        Caso os campo `fromTransactionConversionDate`  e `toTransactionConversionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
