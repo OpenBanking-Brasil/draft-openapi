@@ -289,6 +289,12 @@ paths:
             - 'consent:consentId'
             - credit-fixed-incomes
 components:
+  headers:
+    X-V: 
+      description: "Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2"
+      required: true
+      schema:
+        $ref: '#/components/schemas/X-V'
   schemas:
     ResponseCreditFixedIncomesProductList:
       type: object
@@ -1454,6 +1460,10 @@ components:
               maxLength: 20
               format: date-time
               example: '2021-05-21T08:30:00Z'
+    X-V:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0
   parameters:
     InvestmentId:
       name: investmentId
@@ -1605,30 +1615,45 @@ components:
   responses:
     ResponseCreditFixedIncomesProductList:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseCreditFixedIncomesProductList'
     ResponseCreditFixedIncomesProductIdentification:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseCreditFixedIncomesProductIdentification'
     ResponseCreditFixedIncomesBalances:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseCreditFixedIncomesBalances'
     ResponseCreditFixedIncomesTransactions:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseCreditFixedIncomesTransactions'
     ResponseCreditFixedIncomesTransactionsCurrent:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
