@@ -305,6 +305,13 @@ paths:
             - 'consent:consentId'
             - funds
 components:
+  headers:
+    X-V: 
+      description: |
+          Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+      required: true
+      schema:
+        $ref: '#/components/schemas/X-V'
   schemas:
     ResponseFundsProductList:
       type: object
@@ -995,35 +1002,35 @@ components:
         self:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%.\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%\+.~#?&\/\/=]*)$'
@@ -1036,35 +1043,35 @@ components:
         self:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
@@ -1077,28 +1084,28 @@ components:
         self:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
           format: uri
-          maxLength: 2000
+          maxLength: 4048
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
           pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
@@ -1374,6 +1381,10 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
+    X-V:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0
   parameters:
     InvestmentId:
       name: investmentId
@@ -1527,30 +1538,45 @@ components:
   responses:
     OkResponseFundsProductList:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsProductList'
     OkResponseFundsProductIdentification:
       description: Dados de fundos de investimentos obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsProductIdentification'
     ResponseFundsBalances:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsBalances'
     OKResponseFundsTransactions:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsTransactions'
     OKResponseFundsTransactionsCurrent:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
