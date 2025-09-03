@@ -141,14 +141,7 @@ paths:
         - Quantidade de ativos: 0.00
         - Data e hora da última posição: mesmo conteúdo do campo requestDateTime
       parameters:
-        - name: investmentId
-          in: path
-          description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
-          required: true
-          schema:
-            type: string
-            pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
-            example: '92792126019929200000000000000000000000000'
+        - $ref: '#/components/parameters/InvestmentId'
         - $ref: '#/components/parameters/Authorization'
         - $ref: '#/components/parameters/xFapiAuthDate'
         - $ref: '#/components/parameters/xFapiCustomerIpAddress'
@@ -391,7 +384,7 @@ components:
                 example: '92792126019929200000000000000000000000000'
             additionalProperties: false
         links:
-          $ref: '#/components/schemas/BankFixedIncomeProductListLinks'
+          $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/BankFixedIncomesMeta'
       additionalProperties: false
@@ -405,7 +398,7 @@ components:
         data:
           $ref: '#/components/schemas/IdentifyProduct'
         links:
-          $ref: '#/components/schemas/BankFixedIncomeLinks'
+          $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/BankFixedIncomesMeta'
       additionalProperties: false
@@ -561,7 +554,7 @@ components:
               minLength: 8
               example: '1.000000'
         links:
-          $ref: '#/components/schemas/BankFixedIncomeLinks'
+          $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/BankFixedIncomesMeta'
       additionalProperties: false
@@ -810,7 +803,7 @@ components:
           format: date-time
           example: '2021-05-21T08:30:00Z'
       additionalProperties: false
-    BankFixedIncomeProductListLinks:
+    Links:
       type: object
       description: Referências para outros recusos da API requisitada.
       required:
@@ -818,80 +811,34 @@ components:
       properties:
         self:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         last:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%.\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%\+.~#?&\/\/=]*)$'
-    BankFixedIncomeLinks:
-      type: object
-      description: Referências para outros recusos da API requisitada.
-      required:
-        - self
-      properties:
-        self:
-          type: string
-          format: uri
-          maxLength: 4048
-          description: URI completo que gerou a resposta atual.
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        first:
-          type: string
-          format: uri
-          maxLength: 4048
-          description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        prev:
-          type: string
-          format: uri
-          maxLength: 4048
-          description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        next:
-          type: string
-          format: uri
-          maxLength: 4048
-          description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
-        last:
-          type: string
-          format: uri
-          maxLength: 4048
-          description: URI da última página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
-          example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     BankFixedIncomeTransactionsLinks:
       type: object
       description: Referências para outros recusos da API requisitada.
@@ -900,32 +847,28 @@ components:
       properties:
         self:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: URI completo que gerou a resposta atual.
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         first:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: URI da primeira página que originou essa lista de resultados. Restrição - Obrigatório quando não for a primeira página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         prev:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: "URI da página anterior dessa lista de resultados. Restrição - \tObrigatório quando não for a primeira página da resposta"
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
         next:
           type: string
-          format: uri
+          format: url
           maxLength: 4048
           description: URI da próxima página dessa lista de resultados. Restrição - Obrigatório quando não for a última página da resposta
           example: 'https://api.banco.com.br/open-banking/api/v1/resource'
-          pattern: '^(https:\/\/)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)$'
     BankFixedIncomesProductMovement:
       type: object
       required:
