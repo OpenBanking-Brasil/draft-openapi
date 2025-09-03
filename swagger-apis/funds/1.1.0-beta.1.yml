@@ -305,6 +305,13 @@ paths:
             - 'consent:consentId'
             - funds
 components:
+  headers:
+    X-V: 
+      description: |
+          Cabeçalho que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+      required: true
+      schema:
+        $ref: '#/components/schemas/X-V'
   schemas:
     ResponseFundsProductList:
       type: object
@@ -1374,6 +1381,10 @@ components:
           maxLength: 20
           format: date-time
           example: '2021-05-21T08:30:00Z'
+    X-V:
+      type: string
+      pattern: '^\d+\.\d+\.\d+$'
+      example: 1.0.0
   parameters:
     InvestmentId:
       name: investmentId
@@ -1527,30 +1538,45 @@ components:
   responses:
     OkResponseFundsProductList:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsProductList'
     OkResponseFundsProductIdentification:
       description: Dados de fundos de investimentos obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsProductIdentification'
     ResponseFundsBalances:
       description: Dados obtidos com sucesso
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsBalances'
     OKResponseFundsTransactions:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ResponseFundsTransactions'
     OKResponseFundsTransactionsCurrent:
       description: Dados obtidos com sucesso.
+      headers:
+        x-v:
+          $ref: '#/components/headers/X-V'
       content:
         application/json:
           schema:
