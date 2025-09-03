@@ -1,5 +1,5 @@
 ﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
-/data;data;Lista de títulos de renda fixa bancária mantidos pelo cliente na instituição transmissora e para as quais ele tenha fornecido consentimento;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/referenceDateTime;referenceDateTime;"data e hora da última posição consolidada disponível a que se referem os dados transacionais do cliente disponíveis nos canais eletrônicos; Na representação data deve se considerar os minutos e segundos como zero (00:00:00Z).";Date Hora;20;Obrigatório;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$);;1;1;"";Não permitido;string;2022-07-21T17:32:00Z;
 /data/quantity;quantity;Quantidade de títulos detidos na data da posição do cliente;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.0004;
 /data/updatedUnitPrice;updatedUnitPrice;Valor bruto unitário atualizado na data de referência.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -23,13 +23,13 @@
 /data/purchaseUnitPrice;purchaseUnitPrice;Valor unitário negociado com o cliente na data de aquisição;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/purchaseUnitPrice/amount;amount;Valor relacionado ao objeto.;Texto;24;Obrigatório;^\d{1,15}\.\d{2,8}$;;1;1;"";Não permitido;string;1000.000004;
 /data/purchaseUnitPrice/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/preFixedRate;preFixedRate;"Taxa de remuneração acordada com o cliente na contratação. 
-Em casos de produtos progressivos, considerar taxa vigente. p.ex. 0.014500. 
+/data/preFixedRate;preFixedRate;"Taxa de remuneração acordada com o cliente na contratação. Em casos de produtos progressivos, considerar a taxa máxima contratada. 
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. 
-Este valor representa 15%. O valor 1 representa 100%). É esperado que o preenchimento deste campo pelas participantes seja enviado de acordo com o campo preFixedRate do endpoint /investment/{investmentId}.
-";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.300000;8
-/data/postFixedIndexerPercentage;postFixedIndexerPercentage;"Percentual do indexador acordado com o cliente na contratação. 
-Em casos de produtos progressivos, considerar taxa vigente. p.ex. 0.014500. 
+Este valor representa 15%. O valor 1 representa 100%). 
+É esperado que o preenchimento deste campo pelas participantes seja enviado conforme foi acordado no momento da contratação.
+";Texto;9;Opcional;^-?\d{1}\.\d{6}$;;0;1;"";Não permitido;string;0.300000;8
+/data/postFixedIndexerPercentage;postFixedIndexerPercentage;"Percentual do indexador acordado com o cliente na contratação. Em casos de produtos progressivos, considerar a taxa máxima contratada. 
 O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. 
-Este valor representa 15%. O valor 1 representa 100%). É esperado que o preenchimento deste campo pelas participantes seja enviado de acordo com o campo postFixedIndexerPercentage do endpoint /investment/{investmentId}.
+Este valor representa 15%. O valor 1 representa 100%). 
+É esperado que o preenchimento deste campo pelas participantes seja enviado conforme foi acordado no momento da contratação.
 ";Texto;8;Opcional;^\d{1}\.\d{6}$;;0;1;"";Não permitido;string;1.000000;8
