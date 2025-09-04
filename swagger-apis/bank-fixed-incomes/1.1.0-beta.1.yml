@@ -297,6 +297,7 @@ components:
         $ref: '#/components/schemas/X-V'
     XFapiInteractionId:
       description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+      required: true
       schema:
         $ref: '#/components/schemas/XFapiInteractionId'
   schemas:
@@ -722,6 +723,8 @@ components:
 
             O preenchimento deve respeitar as 6 casas decimais, mesmo que venham preenchidas com zeros(representação de porcentagem p.ex: 0.150000. Este valor representa 15%. O valor 1 representa 100%).
 
+            Um valor negativo neste campo indica que a taxa do indexador está sendo deduzida (descontada) da rentabilidade final do produto, em vez de ser acrescida.
+
             [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'indexer' for preenchido de forma diferente de 'PRE_FIXADO' ou quando se tratar de produto com remuneração híbrida.
         rateType:
           $ref: '#/components/schemas/EnumRateType'
@@ -905,7 +908,7 @@ components:
           description: Data da movimentação.
         transactionUnitPrice:
           type: object
-          description: Preço unitário bruto negociado na transação.
+          description: Preço unitário bruto negociado as transferências de custódia, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU marcado pela instituição na data de transferência.
           required:
             - amount
             - currency
@@ -1199,7 +1202,7 @@ components:
       description: |
         Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `toTransactionDate`. Caso os campo `fromTransactionDate` e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
@@ -1225,7 +1228,7 @@ components:
       description: |
         Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).
 
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `fromTransactionDate` . Caso os campo `fromTransactionDate` e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
