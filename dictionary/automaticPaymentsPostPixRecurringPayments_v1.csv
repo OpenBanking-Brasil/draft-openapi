@@ -33,7 +33,7 @@ sempre com a utilização de timezone UTC(UTC time format).
 /data/ibgeTownCode;ibgeTownCode;"O campo ibgeTownCode no arranjo Pix tem o mesmo comportamento que o campo codMun descrito no item 1.6.6 do manual do Pix.
 
 1. Caso a informação referente ao município não seja enviada, o PSP do recebedor assumirá que não existem feriados estaduais e municipais no período em questão;
-";Texto;7;Obrigatório;^\d{7}$;;1;1;"";Não permitido;string;5300108;7
+";Texto;7;Opcional;^\d{7}$;;0;1;"";Não permitido;string;5300108;7
 /data/status;status;"Estado atual do pagamento. O estado evolui na seguinte ordem:
 - RCVD (Received) - Indica que a requisição de pagamento foi recebida com sucesso pela detentora, mas ainda há validações a serem feitas antes de ser submetida para liquidação.
 - CANC (Cancelled) - Indica que a transação Pix pendente foi cancelada com sucesso pelo usuário antes que fosse confirmada (ACCP) ou rejeitada (RJCT) pela detentora.
@@ -41,7 +41,7 @@ sempre com a utilização de timezone UTC(UTC time format).
 - ACPD (Accepted Clearing Processed) - Indica que a detentora já submeteu a transação para liquidação, mas ainda não tem a confirmação se foi liquidada ou rejeitada.
 - RJCT (Rejected) Indica que a transação foi rejeitada pela detentora ou pelo SPI.
 - ACSC (Accepted Settlement Completed Debitor Account) - Indica que a transação foi efetivada pela detentora ou pelo SPI.
-- PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise.
+- PDNG (Pending) - Indica que a detentora reteve temporariamente a transação Pix para análise. Não se aplica para Transferências inteligentes.
 - SCHD (Scheduled) - Indica que a transação Pix foi agendada com sucesso na detentora.  
 Em caso insucesso:
 - RJCT (REJECTED) - Instrução de pagamento rejeitada.
@@ -70,6 +70,10 @@ Motivo da rejeição do pagamento. Informações complementares sobre o motivo d
 - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR
 - FALHA_INFRAESTRUTURA_DETENTORA
 - TITULARIDADE_INCONSISTENTE
+- LIMITE_PERIODO_VALOR_EXCEDIDO
+- LIMITE_PERIODO_QUANTIDADE_EXCEDIDO
+- LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO
+- LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 
 [Restrição] Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Texto;;Obrigatório;;"SALDO_INSUFICIENTE 
@@ -84,23 +88,31 @@ FALHA_INFRAESTRUTURA_ICP
 FALHA_INFRAESTRUTURA_PSP_RECEBEDOR 
 FALHA_INFRAESTRUTURA_DETENTORA 
 CONSENTIMENTO_INVALIDO 
-TITULARIDADE_INCONSISTENTE";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
+TITULARIDADE_INCONSISTENTE 
+LIMITE_PERIODO_VALOR_EXCEDIDO 
+LIMITE_PERIODO_QUANTIDADE_EXCEDIDO 
+LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO 
+LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO";1;1;" Esse motivo deverá ser enviado quando o campo `/data/status` for igual a RJCT (REJECTED).
 ";Não permitido;string;SALDO_INSUFICIENTE;
 /data/rejectionReason/detail;detail;"Detalhe sobre o código identificador do motivo de rejeição.
 
 - SALDO_INSUFICIENTE: A conta selecionada não possui saldo suficiente para realizar o pagamento;
-- VALOR_ACIMA_LIMITE: O valor (ou quantidade de transações) ultrapassa a faixa de limite parametrizada na detentora para permitir a realização de transações pelo cliente;
+- VALOR_ACIMA_LIMITE: Valida se o valor ultrapassa o limite estabelecido [na instituição (conta ou canal)/no arranjo] para permitir a realização de transações pelo cliente;
 - VALOR_INVALIDO: O valor enviado não é válido; 
 - NAO_INFORMADO: Não reportado/identificado pela instituição detentora de conta;
 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO: Dados do pagamento divergentes dos dados do consentimento;
 - PAGAMENTO_RECUSADO_DETENTORA: [descrição do motivo de recusa];
 - PAGAMENTO_RECUSADO_SPI: [código de erro conforme tabela de domínios reason PACS.002];
-- CONSENTIMENTO_INVALIDO: Consentimento inválido (status diferente de ""AUTHORISED"" ou está expirado);
+- CONSENTIMENTO_INVALIDO: Consentimento inválido (em status final);
 - FALHA_INFRAESTRUTURA_SPI: Indica uma falha no Sistema de Pagamentos Instantâneos (SPI);
 - FALHA_INFRAESTRUTURA_ICP: Indica uma falha na Infraestrutura de Chaves Públicas (ICP);
 - FALHA_INFRAESTRUTURA_PSP_RECEBEDOR: Indica uma falha na infraestrutura do Prestador de Serviço de Pagamento (PSP) que recebe o pagamento;
 - FALHA_INFRAESTRUTURA_DETENTORA: indica uma falha na infraestrutura da instituição detentora das informações ou recursos;
 - TITULARIDADE_INCONSISTENTE: Conta atualmente não associada ao CPF/CNPJ do consentimento de longa duração
+- LIMITE_PERIODO_VALOR_EXCEDIDO: A transação não pode ser realizada pois o valor parametrizado no consentimento foi excedido.
+- LIMITE_PERIODO_QUANTIDADE_EXCEDIDO: A transação não pode ser realizada pois a quantidade parametrizada no consentimento foi excedida.
+- LIMITE_VALOR_TOTAL_CONSENTIMENTO_EXCEDIDO: O valor da transação excede o limite global do consentimento.       
+- LIMITE_VALOR_TRANSACAO_CONSENTIMENTO_EXCEDIDO: O valor da transação ultrapassar o limite de valor por transação.
 ";Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;;
 /data/cnpjInitiator;cnpjInitiator;CNPJ do Iniciador de Pagamento devidamente habilitado para a prestação de Serviço de Iniciação no Pix.;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;50685362000135;
 /data/payment;payment;Objeto contendo as informações do pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
@@ -111,10 +123,7 @@ TITULARIDADE_INCONSISTENTE";1;1;" Esse motivo deverá ser enviado quando o campo
 /data/remittanceInformation;remittanceInformation;"Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional em um pagamento, a ser enviada ao recebedor.
 ";Texto;140;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Pagamento da nota RSTO035-002.;
 /data/creditorAccount;creditorAccount;"Objeto que contém a identificação da conta de destino do beneficiário/recebedor.
-
-[Restrição] Se localInstrument for igual a MANU, o campo creditorAccount deve ser preenchido.
-";Objeto;;Condicional;;;0;1;" Se localInstrument for igual a MANU, o campo creditorAccount deve ser preenchido.
-";Não permitido;object;;
+";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/creditorAccount/ispb;ispb;"Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.
 ";Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;12345678;8
 /data/creditorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito. 
@@ -122,7 +131,7 @@ TITULARIDADE_INCONSISTENTE";1;1;" Esse motivo deverá ser enviado quando o campo
 no exercício de atividades da instituição, não podendo ser móvel ou transitória).
 
 [Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
-";Texto;4;Obrigatório;^[0-9]{1,4}$;;1;1;" Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+";Texto;4;Condicional;^[0-9]{1,4}$;;0;1;" Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
 ";Não permitido;string;1774;1
 /data/creditorAccount/number;number;"Deve ser preenchido com o número da conta transacional do usuário recebedor, com dígito verificador (se este existir),
 se houver valor alfanumérico, este deve ser convertido para 0.
@@ -176,11 +185,8 @@ Valores possíveis:
 CANCELADO_PENDENCIA - Pagamento cancelado enquanto estava na situação PDNG
 
 CANCELADO_AGENDAMENTO - Pagamento cancelado enquanto estava na situação SCHD
-
-CANCELADO_MULTIPLAS_ALCADAS - Pagamento cancelado enquanto estava na situação PATC
 ";Texto;;Obrigatório;;"CANCELADO_PENDENCIA 
-CANCELADO_AGENDAMENTO 
-CANCELADO_MULTIPLAS_ALCADAS";1;1;"";Não permitido;string;CANCELADO_PENDENCIA;
+CANCELADO_AGENDAMENTO";1;1;"";Não permitido;string;CANCELADO_PENDENCIA;
 /data/cancellation/cancelledFrom;cancelledFrom;"Campo utilizado para informar o meio pelo qual foi realizado o cancelamento.
 
 Valores possíveis:
@@ -212,18 +218,23 @@ INIC";1;1;"";Não permitido;string;DICT;
 /data/proxy;proxy;"Chave cadastrada no DICT pertencente ao recebedor. Os tipos de chaves podem ser: telefone, e-mail, cpf/cnpj ou chave aleatória. 
 No caso de telefone celular deve ser informado no padrão E.1641. Para e-mail deve ter o formato xxxxxxxx@xxxxxxx.xxx(.xx) e no máximo 77 caracteres. 
 No caso de CPF deverá ser informado com 11 números, sem pontos ou traços. Para o caso de CNPJ deverá ser informado com 14 números, sem pontos ou traços. 
-No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122). 
-Se informado, a detentora da conta deve validar o proxy no DICT quando localInstrument for igual a DICT e validar o campo creditorAccount. 
-Esta validação é opcional caso o localInstrument for igual a INIC.
+No caso de chave aleatória deve ser informado o UUID gerado pelo DICT, conforme formato especificado na [RFC4122](https://tools.ietf.org/html/rfc4122).
 
-[Restrição] Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
-";Texto;;Condicional;[\w\W\s]*;;0;1;" Se localInstrument for igual a DICT, o campo proxy deve ser preenchido.
+[Restrição] Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
+
+[Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
+";Texto;;Condicional;[\w\W\s]*;;0;1;" Se localInstrument for igual a DICT ou INIC, o campo proxy deve ser preenchido.
+
+[Restrição] Se informado, a detentora da conta deve validar o proxy no DICT (quando localInstrument for igual a DICT) e validar o objeto creditorAccount. Ação opcional caso o localInstrument for igual a INIC
 ";Não permitido;string;11221131242;
 /data/transactionIdentification;transactionIdentification;"Trata-se de um identificador de transação que deve ser retransmitido intacto pelo PSP do pagador ao gerar a ordem de pagamento. 
 Essa informação permitirá ao recebedor identificar e correlacionar a transferência, quando recebida, com a apresentação das instruções ao pagador. 
 Os caracteres permitidos no contexto do Pix para o campo txid (EMV 62-05) são:Letras minúsculas, de 'a' a 'z' Letras maiúsculas, de 'A' a 'z' Dígitos decimais, de '0' a '9'.
 ";Texto;35;Opcional;^[a-zA-Z0-9]{1,35}$;;0;1;"";Não permitido;string;E00038166201907261559y6j6;
-/data/document;document;Informações do documento identificador.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
-/data/document/identification;identification;Número do documento de identificação oficial do titular pessoa natural ou jurídica.;Texto;14;Obrigatório;^(?:\d{11}|\d{14})$;;1;1;"";Não permitido;string;11111111111111;11
+/data/document;document;Informações do documento identificador do recebedor da transação.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/document/identification;identification;"Número do documento de identificação oficial do recebedor pessoa natural ou jurídica. 
+O valor informado deve ser igual a um dos valores enviados na etapa de criação do consentimento (dentro do array “/data/creditors”). 
+Quando não respeitada essa regra, deve ser retornado pelo detentor, de maneira síncrona, erro HTTP 422 - PAGAMENTO_DIVERGENTE_CONSENTIMENTO
+";Texto;14;Obrigatório;^(?:\d{11}|\d{14})$;;1;1;"";Não permitido;string;11111111111111;11
 /data/document/rel;rel;Tipo do documento de identificação oficial do titular pessoa natural ou jurídica.;Texto;;Obrigatório;;"CPF 
 CNPJ";1;1;"";Não permitido;string;CNPJ;

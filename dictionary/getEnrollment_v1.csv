@@ -73,7 +73,7 @@ Pode estar ausente em cenários de processos automatizados realizarem o cancelam
 • REJEITADO_FALHA_FIDO: Vínculo de conta rejeitado por falha técnica no processo de validação ou associação da credencial pública FIDO.
 
 • REJEITADO_OUTRO: Outros motivos não descritos pelas demais. Indicar, neste caso, o motivo em ""additionalInformation"".
-";Texto;;Obrigatório;;"REJEITADO_TEMPO_EXPIRADO_AUTHORISATION 
+";Texto;;Obrigatório;;"REJEITADO_TEMPO_EXPIRADO_RISK_SIGNALS 
 REJEITADO_TEMPO_EXPIRADO_ACCOUNT_HOLDER_VALIDATION 
 REJEITADO_TEMPO_EXPIRADO_ENROLLMENT 
 REJEITADO_MAXIMO_CHALLENGES_ATINGIDO 
@@ -84,6 +84,22 @@ REJEITADO_FALHA_HYBRID_FLOW
 REJEITADO_FALHA_FIDO 
 REJEITADO_SEGURANCA_INTERNA 
 REJEITADO_OUTRO";1;1;"";Não permitido;string;;
+/data/cancellation/reason/revocationReason;revocationReason;"Indica o motivo do cancelamento do vínculo de conta. Valores possíveis:
+
+• REVOGADO_MANUALMENTE: Cancelamento manual, explicitamente a mando do usuário.
+
+• REVOGADO_VALIDADE_EXPIRADA: Expiração automática ao atingir o prazo limite do vínculo de conta.
+
+• REVOGADO_FALHA_INFRAESTRUTURA: Falha na infraestrutura na detentora.
+
+• REVOGADO_SEGURANCA_INTERNA: Vínculo de conta rejeitado devido à políticas de segurança tanto da iniciadora quanto da detentora.
+
+• REVOGADO_OUTRO: Outros motivos não descritos pelas demais. Indicar, neste caso, o motivo em ""additionalInformation"".
+";Texto;;Obrigatório;;"REVOGADO_MANUALMENTE 
+REVOGADO_VALIDADE_EXPIRADA 
+REVOGADO_FALHA_INFRAESTRUTURA 
+REVOGADO_SEGURANCA_INTERNA 
+REVOGADO_OUTRO";1;1;"";Não permitido;string;;
 /data/cancellation/additionalInformation;additionalInformation;;Texto;2048;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Contrato entre iniciadora e detentora interrompido;
 /data/cancellation/cancelledFrom;cancelledFrom;"Campo utilizado para informar o meio pelo qual foi realizado o cancelamento do vínculo de conta. Valores possíveis:
 
