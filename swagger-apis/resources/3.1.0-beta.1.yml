@@ -342,7 +342,7 @@ components:
       required: false
       schema:
         type: string
-        pattern: '[\w\W\s]*'
+        pattern: '^[^\s](.*[^\s])?$'
         minLength: 1
         maxLength: 255
     xFapiAuthDate:
@@ -362,7 +362,7 @@ components:
       required: false
       schema:
         type: string
-        pattern: '[\w\W\s]*'
+        pattern: '^[^\s](.*[^\s])?$'
         minLength: 1
         maxLength: 255
     xFapiInteractionId:
