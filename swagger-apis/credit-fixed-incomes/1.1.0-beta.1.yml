@@ -1138,9 +1138,9 @@ components:
         transactionUnitPrice:
           type: object
           description: |
-            valor unitário negociado com o cliente na data de aquisição
+            Valor unitário negociado com o cliente na data de aquisição. Em transferências de custódia, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU marcado pela instituição na data de transferência.
 
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com os valores 'COMPRA', 'VENDA' ou 'VENCIMENTO'.
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo `transactionType` for preenchido com os valores `COMPRA`, `VENDA` ou `VENCIMENTO`.
           required:
             - amount
             - currency
