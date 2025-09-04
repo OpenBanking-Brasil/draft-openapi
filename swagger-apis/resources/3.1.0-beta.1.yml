@@ -72,6 +72,8 @@ paths:
           $ref: '#/components/responses/MethodNotAllowed'
         '406':
           $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
         '429':
           $ref: '#/components/responses/TooManyRequests'
         '500':
@@ -465,6 +467,12 @@ components:
             $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
     SiteIsOverloaded:
       description: 'O site está sobrecarregado e a operação foi recusada, pois foi atingido o limite máximo de TPS global, neste momento.'
+      content:
+        application/json; charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/ResponseErrorWithAbleAdditionalProperties'
+    UnprocessableEntity:
+      description: 'A sintaxe da requisição esta correta, mas não foi possível processar as instruções presentes.'
       content:
         application/json; charset=utf-8:
           schema:
