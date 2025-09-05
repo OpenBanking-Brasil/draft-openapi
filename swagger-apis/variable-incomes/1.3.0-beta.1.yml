@@ -664,8 +664,8 @@ components:
         brokerNoteId:
           type: string
           description: |
-            Identificador da nota de negociação.
-
+            Identifica de forma única o relacionamento do cliente com o produto para cada número de nota de negociação, mantendo as regras de imutabilidade dentro da instituição transmissora. O conteúdo desse campo deve ser utilizado como parâmetro na chamada do endpoint `GET /broker-notes/{brokerNoteId}`. 
+            
             [Restrição] Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -771,8 +771,8 @@ components:
         brokerNoteId:
           type: string
           description: |
-            Identificador da nota de negociação.
-
+            Identifica de forma única o relacionamento do cliente com o produto para cada número de nota de negociação, mantendo as regras de imutabilidade dentro da instituição transmissora. O conteúdo desse campo deve ser utilizado como parâmetro na chamada do endpoint `GET /broker-notes/{brokerNoteId}`. 
+            
             [Restrição] Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -1022,7 +1022,7 @@ components:
       properties:
         brokerNoteNumber:
           type: string
-          description: Identificador da nota de negociação.
+          description: Identificador da nota de negociação. Não deve ser utilizado como chave na API.
           maxLength: 16
           pattern: '^\d{1,16}$'
           example: '1854009930314350'
@@ -1431,7 +1431,7 @@ components:
     BrokerNoteId:
       name: brokerNoteId
       in: path
-      description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+      description: 'Identifica de forma única o relacionamento do cliente com o produto para cada número de nota de negociação, mantendo as regras de imutabilidade dentro da instituição transmissora.'
       required: true
       schema:
         type: string
