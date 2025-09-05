@@ -589,9 +589,7 @@ components:
           type: string
           format: date
           description: |
-            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição.
-
-            [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
+            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição. Data do pregão: compartilhar movimentos até a data da posição.
           maxLength: 10
           minLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -698,9 +696,7 @@ components:
           type: string
           format: date
           description: |
-            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição.
-
-            [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
+            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição. Data do pregão: compartilhar movimentos até a data da posição.
           maxLength: 10
           minLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -1284,6 +1280,7 @@ components:
       example: 1.0.0
     XFapiInteractionId:
       type: string
+      required: true
       format: uuid
       pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       minLength: 1
@@ -1408,8 +1405,9 @@ components:
     fromTransactionDateCurrent:
       name: fromTransactionDate
       description: |
-        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).       
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6). 
+        
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `toTransactionDate`. Caso os campo `fromTransactionDate`  e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
@@ -1420,8 +1418,9 @@ components:
     toTransactionDateCurrent:
       name: toTransactionDate
       description: |
-        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).       
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6). 
+        
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `fromTransactionDate` . Caso os campo `fromTransactionDate`  e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
