@@ -589,9 +589,7 @@ components:
           type: string
           format: date
           description: |
-            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição.
-
-            [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
+            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição. Data do pregão: compartilhar movimentos até a data da posição.
           maxLength: 10
           minLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -607,9 +605,9 @@ components:
         transactionUnitPrice:
           type: object
           description: |
-            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com os valores 'COMPRA' ou 'VENDA'.
+            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento. Em transferências de custódia, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU marcado pela instituição na data de transferência. 
+            
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo `transactionType` for preenchido com os valores `COMPRA` ou `VENDA`.
           required:
             - amount
             - currency
@@ -666,8 +664,8 @@ components:
         brokerNoteId:
           type: string
           description: |
-            Identificador da nota de negociação.
-
+            Identifica de forma única o relacionamento do cliente com o produto para cada número de nota de negociação, mantendo as regras de imutabilidade dentro da instituição transmissora. O conteúdo desse campo deve ser utilizado como parâmetro na chamada do endpoint `GET /broker-notes/{brokerNoteId}`. 
+            
             [Restrição] Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -698,9 +696,7 @@ components:
           type: string
           format: date
           description: |
-            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição.
-
-            [Restrição] Data do pregão: compartilhar movimentos até a data da posição.
+            Data da movimentação de acordo com a data visualizada pelo cliente nos canais da instituição. Data do pregão: compartilhar movimentos até a data da posição.
           maxLength: 10
           minLength: 10
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
@@ -716,9 +712,9 @@ components:
         transactionUnitPrice:
           type: object
           description: |
-            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com os valores 'COMPRA' ou 'VENDA'.
+            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento. Em transferências de custódia, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU marcado pela instituição na data de transferência. 
+            
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo `transactionType` for preenchido com os valores `COMPRA` ou `VENDA`.
           required:
             - amount
             - currency
@@ -775,8 +771,8 @@ components:
         brokerNoteId:
           type: string
           description: |
-            Identificador da nota de negociação.
-
+            Identifica de forma única o relacionamento do cliente com o produto para cada número de nota de negociação, mantendo as regras de imutabilidade dentro da instituição transmissora. O conteúdo desse campo deve ser utilizado como parâmetro na chamada do endpoint `GET /broker-notes/{brokerNoteId}`. 
+            
             [Restrição] Informação de envio obrigatório caso o motivo da movimentação seja compra ou venda.
           maxLength: 100
           pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$'
@@ -1026,7 +1022,7 @@ components:
       properties:
         brokerNoteNumber:
           type: string
-          description: Identificador da nota de negociação.
+          description: Identificador da nota de negociação. Não deve ser utilizado como chave na API.
           maxLength: 16
           pattern: '^\d{1,16}$'
           example: '1854009930314350'
@@ -1284,6 +1280,7 @@ components:
       example: 1.0.0
     XFapiInteractionId:
       type: string
+      required: true
       format: uuid
       pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       minLength: 1
@@ -1408,8 +1405,9 @@ components:
     fromTransactionDateCurrent:
       name: fromTransactionDate
       description: |
-        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).       
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo toTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        Data inicial de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6). 
+        
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `toTransactionDate`. Caso os campo `fromTransactionDate`  e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
@@ -1420,8 +1418,9 @@ components:
     toTransactionDateCurrent:
       name: toTransactionDate
       description: |
-        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6).       
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo fromTransactionDate seja informado. Caso não seja informado, deve ser assumido o dia atual.
+        Data final de filtragem. O período máximo utilizado no filtro é de 7 dias inclusive (D-6). 
+        
+        [Restrição] Deve obrigatoriamente sempre ser enviado em conjunto com o campo `fromTransactionDate` . Caso os campo `fromTransactionDate`  e `toTransactionDate` não sejam enviados, deve ser assumido o dia atual como data padrão.
       required: false
       in: query
       schema:
@@ -1432,7 +1431,7 @@ components:
     BrokerNoteId:
       name: brokerNoteId
       in: path
-      description: 'Identifica de forma única  o relacionamento do cliente com o produto, mantendo as regras de imutabilidade dentro da instituição transmissora.'
+      description: 'Identifica de forma única o relacionamento do cliente com o produto para cada número de nota de negociação, mantendo as regras de imutabilidade dentro da instituição transmissora.'
       required: true
       schema:
         type: string
