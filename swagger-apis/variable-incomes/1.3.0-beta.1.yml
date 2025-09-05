@@ -605,9 +605,9 @@ components:
         transactionUnitPrice:
           type: object
           description: |
-            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com os valores 'COMPRA' ou 'VENDA'.
+            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento. Em transferências de custódia, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU marcado pela instituição na data de transferência. 
+            
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo `transactionType` for preenchido com os valores `COMPRA` ou `VENDA`.
           required:
             - amount
             - currency
@@ -712,9 +712,9 @@ components:
         transactionUnitPrice:
           type: object
           description: |
-            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento.
-
-            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo 'transactionType' for preenchido com os valores 'COMPRA' ou 'VENDA'.
+            Preço unitário da movimentação: valor da unidade do produto na movimentação do investimento. Em transferências de custódia, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU marcado pela instituição na data de transferência. 
+            
+            [Restrição] Campo de preenchimento obrigatório pelas participantes quando o campo `transactionType` for preenchido com os valores `COMPRA` ou `VENDA`.
           required:
             - amount
             - currency
