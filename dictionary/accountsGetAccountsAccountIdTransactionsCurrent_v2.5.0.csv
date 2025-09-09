@@ -54,7 +54,7 @@ OUTROS";1;1;"";Não permitido;string;PIX;
 /data/transactionAmount;transactionAmount;Valor da transação. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/transactionAmount/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0400;4
 /data/transactionAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/transactionDateTime;transactionDateTime;"Data e hora original da transação.
+/data/transactionDateTime;transactionDateTime;"Data e hora original da transação que é informada nos canais digitais. Para lançamentos Futuros a data informada deve ser a data prevista de efetivação informada nos canais digitais. Caso a instituição não saiba o horário certo da efetivação, os valores hora, minuto, segundo e milissegundo, podem ser preenchidos com zero. Após a efetivação da transação, o campo deve ser preenchido com a data e a hora da efetivação da transação.
 ";Texto;24;Obrigatório;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;1;1;"";Não permitido;string;2016-01-29T12:29:03.374Z;
 /data/partieCnpjCpf;partieCnpjCpf;"Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação). Com a IN BCB nº 371, a partir de 02/05/23, o envio das informações de identificação de contraparte tornou-se obrigatória para transações de pagamento. Para maiores detalhes, favor consultar a página `Orientações - Contas`.
 

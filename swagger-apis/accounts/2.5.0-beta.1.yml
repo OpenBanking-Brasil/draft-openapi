@@ -950,7 +950,7 @@ components:
           maxLength: 24
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           description: |
-            Data e hora original da transação.
+            Data e hora original da transação que é informada nos canais digitais. Para lançamentos Futuros a data informada deve ser a data prevista de efetivação informada nos canais digitais. Caso a instituição não saiba o horário certo da efetivação, os valores hora, minuto, segundo e milissegundo, podem ser preenchidos com zero. Após a efetivação da transação, o campo deve ser preenchido com a data e a hora da efetivação da transação.
           example: '2016-01-29T12:29:03.374Z'
         partieCnpjCpf:
           type: string
