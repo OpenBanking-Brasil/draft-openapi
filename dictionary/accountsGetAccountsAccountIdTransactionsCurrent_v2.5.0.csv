@@ -46,15 +46,20 @@ RESGATE_APLIC_FINANCEIRA
 OPERACAO_CREDITO 
 TRANSFERENCIA_SALDO_RESERVADO 
 OUTROS";1;1;"";Não permitido;string;PIX;
+/data/typeAdditionalInfo;typeAdditionalInfo;"Informações complementares para tipo de transação. 
+
+[Restrição] Este campo é de envio obrigatório caso o campo `type` seja definido como `OUTROS`.
+";Texto;;Condicional;[\w\W\s]*;;0;1;" Este campo é de envio obrigatório caso o campo `type` seja definido como `OUTROS`.
+";Não permitido;string;APLIC_FINANCEIRA;
 /data/transactionAmount;transactionAmount;Valor da transação. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/transactionAmount/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0400;4
 /data/transactionAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
-/data/transactionDateTime;transactionDateTime;"Data e hora original da transação.
+/data/transactionDateTime;transactionDateTime;"Data e hora original da transação que é informada nos canais digitais. Para lançamentos Futuros a data informada deve ser a data prevista de efetivação informada nos canais digitais. Caso a instituição não saiba o horário certo da efetivação, os valores hora, minuto, segundo e milissegundo, podem ser preenchidos com zero. Após a efetivação da transação, o campo deve ser preenchido com a data e a hora da efetivação da transação.
 ";Texto;24;Obrigatório;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;1;1;"";Não permitido;string;2016-01-29T12:29:03.374Z;
 /data/partieCnpjCpf;partieCnpjCpf;"Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação). Com a IN BCB nº 371, a partir de 02/05/23, o envio das informações de identificação de contraparte tornou-se obrigatória para transações de pagamento. Para maiores detalhes, favor consultar a página `Orientações - Contas`.
 
 [Restrição] Quando o ""type“ for preenchido com valor FOLHA_PAGAMENTO e a transmissora for a responsável pelo pagamento de salário (banco-folha), o partieCnpjCpf informado deve ser do empregador relacionado.
-";Texto;14;Condicional;^\d{11}$|^\d{14}$;;0;1;" Quando o ""type“ for preenchido com valor FOLHA_PAGAMENTO e a transmissora for a responsável pelo pagamento de salário (banco-folha), o partieCnpjCpf informado deve ser do empregador relacionado.
+";Texto;14;Condicional;^[0‑9]{11}|[0‑9A‑Z]{12}[0‑9]{2}$;;0;1;" Quando o ""type“ for preenchido com valor FOLHA_PAGAMENTO e a transmissora for a responsável pelo pagamento de salário (banco-folha), o partieCnpjCpf informado deve ser do empregador relacionado.
 ";Não permitido;string;43908445778;
 /data/partiePersonType;partiePersonType;"Identificação do Tipo de Pessoa da pessoa envolvida na transação.   
 Pessoa Natural - Informar CPF no campo “partieCnpjCpf”.   
@@ -65,3 +70,9 @@ PESSOA_JURIDICA";0;1;"";Não permitido;string;PESSOA_NATURAL;
 /data/partieBranchCode;partieBranchCode;Código da Agência detentora da conta da pessoa envolvida na transação. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória);Texto;4;Opcional;^\d{4}$;;0;1;"";Não permitido;string;6272;
 /data/partieNumber;partieNumber;Número da conta da pessoa envolvida na transação;Texto;20;Opcional;^\d{8,20}$;;0;1;"";Não permitido;string;67890854360;
 /data/partieCheckDigit;partieCheckDigit;Dígito da conta da pessoa envolvida na transação;Texto;1;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;4;
+/data/codeISPB;codeISPB;código único atribuído pelo Banco Central do Brasil a cada instituição financeira participante do sistema de pagamentos referente à instituição envolvida na transação.;Texto;;Opcional;^\d{8}$;;0;1;"";Não permitido;string;00300300;
+/data/transactionAccountingDateTime;transactionAccountingDateTime;"data contábil da transação. 
+
+[Restrição] Campo de envio obrigatório quando o campo `completedAuthorisedPaymentType` foi definido com o enum `TRANSACAO_EFETIVADA`.
+";Texto;24;Condicional;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;0;1;" Campo de envio obrigatório quando o campo `completedAuthorisedPaymentType` foi definido com o enum `TRANSACAO_EFETIVADA`.
+";Não permitido;string;2016-01-29T12:29:03.374Z;
