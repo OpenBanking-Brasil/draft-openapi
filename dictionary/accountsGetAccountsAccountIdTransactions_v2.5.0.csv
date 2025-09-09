@@ -46,6 +46,11 @@ RESGATE_APLIC_FINANCEIRA
 OPERACAO_CREDITO 
 TRANSFERENCIA_SALDO_RESERVADO 
 OUTROS";1;1;"";Não permitido;string;PIX;
+/data/typeAdditionalInfo;typeAdditionalInfo;"Informações complementares para tipo de transação. 
+
+[Restrição] Este campo é de envio obrigatório caso o campo `type` seja definido como `OUTROS`.
+";Texto;;Condicional;[\w\W\s]*;;0;1;" Este campo é de envio obrigatório caso o campo `type` seja definido como `OUTROS`.
+";Não permitido;string;APLIC_FINANCEIRA;
 /data/transactionAmount;transactionAmount;Valor da transação. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/transactionAmount/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0400;4
 /data/transactionAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;

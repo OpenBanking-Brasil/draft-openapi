@@ -935,6 +935,14 @@ components:
           example: Transferencia Enviada Lima Santos
         type:
           $ref: '#/components/schemas/EnumTransactionTypes'
+        typeAdditionalInfo:
+          type: string
+          pattern: '[\w\W\s]*'
+          description: |
+            Informações complementares para tipo de transação. 
+            
+            [Restrição] Este campo é de envio obrigatório caso o campo `type` seja definido como `OUTROS`.
+          example: 'APLIC_FINANCEIRA'
         transactionAmount:
           $ref: '#/components/schemas/AccountTransactionsDataAmount'
         transactionDateTime:
