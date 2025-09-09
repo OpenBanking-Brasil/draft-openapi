@@ -979,6 +979,11 @@ components:
           pattern: '[\w\W\s]*'
           description: Dígito da conta da pessoa envolvida na transação
           example: '4'
+        codeISPB:
+          type: string
+          pattern: '^\d{8}$'
+          description: código único atribuído pelo Banco Central do Brasil a cada instituição financeira participante do sistema de pagamentos referente à instituição envolvida na transação.
+          example: '00300300'
     AccountTransactionsDataAmount:
       type: object
       description: Valor da transação. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
