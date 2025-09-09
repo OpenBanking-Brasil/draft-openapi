@@ -71,3 +71,8 @@ PESSOA_JURIDICA";0;1;"";Não permitido;string;PESSOA_NATURAL;
 /data/partieNumber;partieNumber;Número da conta da pessoa envolvida na transação;Texto;20;Opcional;^\d{8,20}$;;0;1;"";Não permitido;string;67890854360;
 /data/partieCheckDigit;partieCheckDigit;Dígito da conta da pessoa envolvida na transação;Texto;1;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;4;
 /data/codeISPB;codeISPB;código único atribuído pelo Banco Central do Brasil a cada instituição financeira participante do sistema de pagamentos referente à instituição envolvida na transação.;Texto;;Opcional;^\d{8}$;;0;1;"";Não permitido;string;00300300;
+/data/transactionAccountingDateTime;transactionAccountingDateTime;"data contábil da transação. 
+
+[Restrição] Campo de envio obrigatório quando o campo `completedAuthorisedPaymentType` foi definido com o enum `TRANSACAO_EFETIVADA`.
+";Texto;24;Condicional;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;0;1;" Campo de envio obrigatório quando o campo `completedAuthorisedPaymentType` foi definido com o enum `TRANSACAO_EFETIVADA`.
+";Não permitido;string;2016-01-29T12:29:03.374Z;
