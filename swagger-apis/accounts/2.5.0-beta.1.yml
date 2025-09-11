@@ -997,15 +997,6 @@ components:
              - Para transações de `CREDITO` (entrada de recursos na conta): informar o ISPB da instituição de origem dos recursos.
              - Para transações de `DEBITO` (saída de recursos na conta): informar o ISPB da instituição de destino dos recursos.
           example: '00300300'
-        transactionAccountingDateTime:
-          type: string
-          pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
-          maxLength: 24
-          description: |
-            data contábil da transação. 
-          
-            [Restrição] Campo de envio obrigatório quando o campo `completedAuthorisedPaymentType` foi definido com o enum `TRANSACAO_EFETIVADA`.
-          example: '2016-01-29T12:29:03.374Z'  
     AccountTransactionsDataAmount:
       type: object
       description: Valor da transação. Expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais.
