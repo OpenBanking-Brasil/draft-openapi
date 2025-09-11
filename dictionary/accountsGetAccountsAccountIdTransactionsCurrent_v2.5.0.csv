@@ -76,8 +76,3 @@ Este campo identifica o ISPB da instituição contraparte da transação e deve 
  - Para transações de `CREDITO` (entrada de recursos na conta): informar o ISPB da instituição de origem dos recursos.
  - Para transações de `DEBITO` (saída de recursos na conta): informar o ISPB da instituição de destino dos recursos.
 ";Texto;;Opcional;^\d{8}$;;0;1;"";Não permitido;string;00300300;
-/data/transactionAccountingDateTime;transactionAccountingDateTime;"data contábil da transação. 
-
-[Restrição] Campo de envio obrigatório quando o campo `completedAuthorisedPaymentType` foi definido com o enum `TRANSACAO_EFETIVADA`.
-";Texto;24;Condicional;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;0;1;" Campo de envio obrigatório quando o campo `completedAuthorisedPaymentType` foi definido com o enum `TRANSACAO_EFETIVADA`.
-";Não permitido;string;2016-01-29T12:29:03.374Z;
