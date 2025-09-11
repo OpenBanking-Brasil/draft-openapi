@@ -63,9 +63,9 @@ OUTROS";0;1;" Preenchimento obrigatório se o tipo transação selecionado for '
 [Restrição] O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
 ";Número;999;Condicional;;;0;1;" O campo deve ser preenchido quando houverem parcelas relacionadas a transação.
 ";Não permitido;number;12;
-/data/brazilianAmount;brazilianAmount;"Valor original da transação. Expresso em valor monetário com no mínimo 2 casas decimais e no máximo 4 casas decimais. 
-Deve ser sempre preenchido com o valor original da transação independente da nacionalidade, sem convertê-lo. 
-Para compras parceladas o valor do campo deve corresponder ao valor da parcela. 
+/data/brazilianAmount;brazilianAmount;"Valor da transação expresso em valor monetário com no mínimo 2 casas e no máximo 4 casas decimais, em moeda corrente do Brasil. 
+Deve ser o valor de amount convertido para BRL (em caso de compra internacional) ou o mesmo valor de amount (em caso de compra nacional). 
+Para compras parceladas o valor do campo deve corresponder ao valor da parcela.
 ";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/brazilianAmount/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0400;4
 /data/brazilianAmount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
@@ -83,6 +83,7 @@ Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por
 /data/billPostDate;billPostDate;"- Para transações já inseridas em fatura: Data definitiva em que a transação foi inserida na fatura. 
 Para compras parceladas, a data deve ser a data onde a parcela foi efetivamente registrada na fatura do cliente.
 - Para transações ainda não inseridas em fatura: Preencher com a data de previsão de vencimento da fatura na qual a transação/parcela será inserida, caso exista.
+- Preencher o campo com a data dummy: 0001-01-01, apenas para os casos nos quais ainda não houver a data de inserção na fatura.
 ";Data;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2021-05-21;
 /data/payeeMCC;payeeMCC;"O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
 ";Número;2147483647;Opcional;;;0;1;"";Não permitido;number;5137;
