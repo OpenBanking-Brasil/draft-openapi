@@ -73,8 +73,8 @@ QUARTA_FEIRA
 QUINTA_FEIRA 
 SEXTA_FEIRA 
 SABADO";1;1;"";Não permitido;string;;
-/data/availability/standards/openingTime;openingTime;Horário de abertura da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;1;1;"";Não permitido;string;;
-/data/availability/standards/closingTime;closingTime;Horário de fechamento da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)|Z$;;1;1;"";Não permitido;string;;
+/data/availability/standards/openingTime;openingTime;Horário de abertura da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;;
+/data/availability/standards/closingTime;closingTime;Horário de fechamento da dependência bancária (UTC);Texto;13;Obrigatório;Opcional;^(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;;
 /data/availability/exception;exception;Em campo texto devem ser registradas todas as Exceções para o não atendimento;Texto;2000;Opcional;Opcional;^(?!\s)[\w\W\s]*[^\s]$;;0;1;"";Não permitido;string;Exceto feriados municipais, estaduais e nacionais;1
 /data/availability/isPublicAccessAllowed;isPublicAccessAllowed;Indica se a instalação da Dependência tem acesso restrito a clientes;Booleano;;Opcional;Opcional;;;0;1;"";Não permitido;boolean;true;
 /data/phones;phones;Lista de telefones da Dependência;Lista;;Opcional;Opcional;;;1;N;"";Não permitido;array;;

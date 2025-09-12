@@ -1,0 +1,103 @@
+﻿Xpath;Nome;Definição;Tipo de Dado;Tamanho;Mandatoriedade;Formato;Domínio;Mínimo de Ocorrências;Máximo de Ocorrências;Restrições;Nulidade;Tipo de Dado Json;Exemplo;Tamanho mínimo
+/data;data;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/consentId;consentId;"Identificador único do consentimento criado para a iniciação de pagamento solicitada. Deverá ser um URN - Uniform Resource Name. 
+Um URN, conforme definido na [RFC8141](https://tools.ietf.org/html/rfc8141) é um Uniform Resource Identifier - URI - que é atribuído sob o URI scheme ""urn"" e um namespace URN específico, com a intenção de que o URN seja um identificador de recurso persistente e independente da localização. 
+Considerando a string urn:bancoex:C1DD33123 como exemplo para consentId temos: 
+- o namespace(urn) 
+- o identificador associado ao namespace da instituição transmissora (bancoex).  
+- o identificador específico dentro do namespace (C1DD33123).  
+Informações mais detalhadas sobre a construção de namespaces devem ser consultadas na [RFC8141](https://tools.ietf.org/html/rfc8141).
+";Texto;256;Obrigatório;"^urn:[a-zA-Z0-9][a-zA-Z0-9\-]{0,31}:[a-zA-Z0-9()+,\-.:=@;$_!*'%\/?#]+$";;1;1;"";Não permitido;string;urn:bancoex:C1DD33123;
+/data/creationDateTime;creationDateTime;;Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
+/data/statusUpdateDateTime;statusUpdateDateTime;;Texto;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
+/data/status;status;"Status atual do consentimento de acordo com a máquina de estados  
+- AWAITING_CONFIGURATION - Aguardando configuração de pagamentos  
+- AWAITING_AUTHORISATION - Aguardando autorização  
+- PARTIALLY_ACCEPTED - Parcialmente aceito 
+- AUTHORISED - Autorizado  
+- REJECTED - Rejeitado  
+- CONSUMED - Consumido
+";Texto;;Obrigatório;;"AWAITING_CONFIGURATION 
+AWAITING_AUTHORISATION 
+PARTIALLY_ACCEPTED 
+AUTHORISED 
+REJECTED 
+CONSUMED";1;1;"";Não permitido;string;AWAITING_CONFIGURATION;
+/data/loggedUser;loggedUser;Usuário (pessoa natural) que encontra-se logado na instituição Iniciadora de Pagamento.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/loggedUser/document;document;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/loggedUser/document/identification;identification;Número do documento de identificação oficial do usuário.;Texto;11;Obrigatório;^\d{11}$;;1;1;"";Não permitido;string;11111111111;
+/data/loggedUser/document/rel;rel;Tipo do documento de identificação oficial do usuário.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;CPF;
+/data/businessEntity;businessEntity;"Usuário (pessoa jurídica) que encontra-se logado na instituição Iniciadora de Pagamento.
+
+[Restrição] Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
+";Objeto;;Condicional;;;0;1;" Preenchimento obrigatório se usuário logado na instituição Iniciadora de Pagamento for um CNPJ (pessoa jurídica).
+";Não permitido;object;;
+/data/businessEntity/document;document;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/businessEntity/document/identification;identification;Número do documento de identificação oficial do titular pessoa jurídica.;Texto;14;Obrigatório;^\d{14}$;;1;1;"";Não permitido;string;11111111111111;
+/data/businessEntity/document/rel;rel;Tipo do documento de identificação oficial do titular pessoa jurídica.;Texto;4;Obrigatório;^[A-Z]{4}$;;1;1;"";Não permitido;string;CNPJ;
+/data/additionalInformation;additionalInformation;Deve ser preenchido sempre que o usuário pagador inserir alguma informação adicional no consentimento.;Texto;140;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Pagamentos de Novembro;
+/data/batchConfiguration;batchConfiguration;;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/batchConfiguration/totalPayments;totalPayments;Quantidade de pagamentos que será enviado pelo iniciador de pagamentos.;Inteiro;200;Obrigatório;;;1;1;"";Não permitido;integer;200;
+/data/batchConfiguration/totalAmount;totalAmount;Valor total da soma de todos os valores que serão enviados para os pagamentos informados pelo inciador de pagamentos.;Texto;19;Obrigatório;^((\d{1,16}\.\d{2}))$;;1;1;"";Não permitido;string;100000.12;4
+/data/rejection;rejection;"Motivos de rejeição do consentimento.
+
+[Restrição] Preenchimento obrigatório quando /data/status for enviado igual a REJECTED
+";Objeto;;Condicional;;;0;1;" Preenchimento obrigatório quando /data/status for enviado igual a REJECTED
+";Não permitido;object;;
+/data/rejection/rejectedBy;rejectedBy;;Texto;;Obrigatório;;"USUARIO 
+INICIADORA 
+DETENTORA";1;1;"";Não permitido;string;INICIADORA;
+/data/rejection/rejectedFrom;rejectedFrom;;Texto;;Obrigatório;;;1;1;"";Não permitido;string;DETENTORA;
+/data/rejection/rejectedAt;rejectedAt;Data e hora em que ocorreu a rejeição do consentimento.;Texto;;Obrigatório;;;1;1;"";Não permitido;string;2021-05-21T08:30:00Z;
+/data/rejection/reason;reason;;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/rejection/reason/code;code;"Código descritivo do motivo de rejeição do consentimento.
+
+- NAO_INFORMADO
+- FALHA_INFRAESTRUTURA
+- TEMPO_EXPIRADO_AUTORIZACAO
+- REJEITADO_USUARIO
+- VALOR_ACIMA_LIMITE
+- CONTA_NAO_PERMITE_PAGAMENTO
+";Texto;;Obrigatório;;"NAO_INFORMADO 
+FALHA_INFRAESTRUTURA 
+TEMPO_EXPIRADO_AUTORIZACAO 
+REJEITADO_USUARIO 
+VALOR_ACIMA_LIMITE 
+CONTA_NAO_PERMITE_PAGAMENTO";1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
+/data/rejection/reason/detail;detail;"Detalhes do erro representado pelo código.
+
+- NAO_INFORMADO: Não informada pela detentora de conta;
+- FALHA_INFRAESTRUTURA: [Descrição de qual falha na infraestrutura inviabilizou o processamento];
+- TEMPO_EXPIRADO_AUTORIZACAO: Consentimento expirou antes que o usuário pudesse confirmá-lo;
+- REJEITADO_USUARIO: O usuário rejeitou a autorização do consentimento;
+- VALOR_ACIMA_LIMITE: O valor ultrapassa o limite estabelecido [na instituição/no arranjo/outros] para permitir a realização de transações pelo cliente;
+- CONTA_NAO_PERMITE_PAGAMENTO: A conta selecionada é do tipo [salario/investimento/liquidação/outros] e não permite realizar esse pagamento;
+";Texto;;Obrigatório;;;1;1;"";Não permitido;string;VALOR_ACIMA_LIMITE;
+/data/revocation;revocation;"Objeto contendo as informações de revogação dos consentimentos.
+
+[Restrição] Campo de preenchimento obrigatório caso status do consentimento igual a ""REVOKED"".
+";Objeto;;Condicional;;;0;1;" Campo de preenchimento obrigatório caso status do consentimento igual a ""REVOKED"".
+";Não permitido;object;;
+/data/revocation/revokedBy;revokedBy;Quem iniciou a solicitação de revogação.;Texto;;Obrigatório;;"INICIADORA 
+USUARIO 
+DETENTORA";1;1;"";Não permitido;string;INICIADORA;
+/data/revocation/revokedFrom;revokedFrom;Canal onde iniciou-se o processo de revogação.;Texto;;Obrigatório;;"INICIADORA 
+DETENTORA";1;1;"";Não permitido;string;DETENTORA;
+/data/revocation/reason;reason;Informações sobre o motivo da revogação;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/revocation/reason/code;code;Código indicador do motivo da revogação.;Texto;;Obrigatório;;"NAO_INFORMADO 
+REVOGADO_USUARIO 
+REVOGADO_RECEBEDOR";1;1;"";Não permitido;string;REVOGADO_RECEBEDOR;
+/data/revocation/reason/detail;detail;Detalhe sobre o motivo de revogação indicado no campo /data/revocation/reason/code.;Texto;2048;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;O usuário rejeitou a autorização do consentimento;
+/data/debtorAccount;debtorAccount;Objeto que contém a identificação da conta de origem do pagador. As informações quanto à conta de origem do pagador poderão ser trazidas no consentimento para a detentora, caso a iniciadora tenha coletado essas informações do cliente. Do contrário, será coletada na detentora e trazida para a iniciadora como resposta à criação do pagamento.;Objeto;;Opcional;;;0;1;"";Não permitido;object;;
+/data/debtorAccount/ispb;ispb;Deve ser preenchido com o ISPB (Identificador do Sistema de Pagamentos Brasileiros) do participante do SPI (Sistema de pagamentos instantâneos) somente com números.;Texto;8;Obrigatório;^[0-9]{8}$;;1;1;"";Não permitido;string;12345678;8
+/data/debtorAccount/issuer;issuer;"Código da Agência emissora da conta sem dígito. (Agência é a dependência destinada ao atendimento aos clientes, ao público em geral e aos associados de cooperativas de crédito, no exercício de atividades da instituição, não podendo ser móvel ou transitória).
+
+[Restrição] Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+";Texto;4;Condicional;^[0-9]{1,4}$;;0;1;" Preenchimento obrigatório para os seguintes tipos de conta: CACC (CONTA_DEPOSITO_A_VISTA) e SVGS (CONTA_POUPANCA).
+";Não permitido;string;1774;1
+/data/debtorAccount/number;number;Deve ser preenchido com o número da conta transacional do usuário pagador, com dígito verificador (se este existir), se houver valor alfanumérico, este deve ser convertido para 0.;Texto;20;Obrigatório;^[0-9]{1,20}$;;1;1;"";Não permitido;string;1234567890;1
+/data/debtorAccount/accountType;accountType;"Tipos de contas usadas para pagamento. Modalidades tradicionais previstas pela Resolução 4.753, não contemplando contas vinculadas, conta de domiciliados no exterior, contas em moedas estrangeiras e conta correspondente moeda eletrônica. 
+Segue descrição de cada valor do ENUM.: CACC - Current - Conta Corrente. SVGS - Savings - Conta de Poupança. TRAN - TransactingAccount - Conta de Pagamento pré-paga.
+";Texto;;Obrigatório;;"CACC 
+SVGS 
+TRAN";1;1;"";Não permitido;string;CACC;
