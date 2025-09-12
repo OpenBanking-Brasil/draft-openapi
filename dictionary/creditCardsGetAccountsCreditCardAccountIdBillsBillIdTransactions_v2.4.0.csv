@@ -5,7 +5,7 @@
 ";Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;1;1;"";Não permitido;string;TXpRMU9UQTROMWhZV2xSU1FUazJSMDl;1
 /data/identificationNumber;identificationNumber;"Número de identificação do cartão: corresponde aos 4 últimos dígitos do cartão para PF, ou então, preencher com um identificador para PJ, com as caracteristicas definidas para os IDs no Open Finance.
 ";Texto;100;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;1;1;"";Não permitido;string;4453;1
-/data/transactionName;transactionName;Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato).;Texto;200;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;PGTO;
+/data/transactionName;transactionName;Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato e fatura).;Texto;200;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;PGTO;
 /data/billId;billId;Código único e imutável que identifica a fatura onde consta a transação informada.;Texto;100;Opcional;^[a-zA-Z0-9][a-zA-Z0-9-]{0,99}$;;0;1;"";Não permitido;string;MTU0OTU1NjI2NTk4OTRmc2ZhZDRmc2Q1NmZkM;1
 /data/creditDebitType;creditDebitType;"Indicador do tipo de lançamento: 
 Débito (no extrato) Em um extrato bancário, os débitos, marcados com a letra “D” ao lado do valor registrado, informam as saídas de dinheiro na conta-corrente.
@@ -70,19 +70,10 @@ OUTROS";0;1;" Preenchimento obrigatório se o tipo transação selecionado for '
 /data/amount/amount;amount;Valor relacionado ao objeto.;Texto;20;Obrigatório;^\d{1,15}\.\d{2,4}$;;1;1;"";Não permitido;string;1000.0400;4
 /data/amount/currency;currency;Moeda referente ao valor monetário, seguindo o modelo ISO-4217.;Texto;3;Obrigatório;^[A-Z]{3}$;;1;1;"";Não permitido;string;BRL;
 /data/transactionDateTime;transactionDateTime;"Data e hora da transação disponível para os clientes nos canais digitais da instituição. 
-Nas compras parceladas, deve-se considerar como data válida aquela em que a parcela se tornou disponível ao cliente nos canais digitais. 
 Neste momento, é obrigatório preencher com dados reais com precisão de data, hora e minuto, mesmo que a instituição não exiba para o cliente nesse nível de granularidade, em algumas situações. 
 Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por exemplo: 2024-01-29T11:15:00.000Z.
 ";Date Hora;24;Obrigatório;(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$);;1;1;"";Não permitido;string;2016-01-29T12:29:03.374Z;
-/data/billPostDate;billPostDate;"Data definitiva em que a transação foi inserida na fatura.
-Para compras parceladas, a data deve ser a data onde a parcela foi efetivamente registrada na fatura do cliente.
+/data/billPostDate;billPostDate;"Data em que a transação foi inserida na fatura.
 ";Data;20;Obrigatório;^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$;;1;1;"";Não permitido;string;2021-05-21;
 /data/payeeMCC;payeeMCC;"O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
 ";Número;2147483647;Opcional;;;0;1;"";Não permitido;number;5137;
-/data/partiePersonType;partiePersonType;"Identificação do Tipo de Pessoa da pessoa envolvida na transação.
-Pessoa Natural - Informar CPF no campo `partieCnpjCpf`.
-Pessoa Jurídica - Informar CNPJ no campo `partieCnpjCpf`.
-";Texto;;Opcional;;"PESSOA_NATURAL 
-PESSOA_JURIDICA";0;1;"";Não permitido;string;PESSOA_NATURAL;
-/data/partieCnpjCpf;partieCnpjCpf;Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação).;Texto;14;Opcional;^([0-9]{11})$|^([0-9A-Z]{12}[0-9]{2})$;;0;1;"";Não permitido;string;43908445778;
-/data/partieName;partieName;Nome ou razão socia da pessoa envolvida na transação: pagador ou recebedor.;Texto;70;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Luiza e Benjamin Assessoria Jurídica Ltda;
