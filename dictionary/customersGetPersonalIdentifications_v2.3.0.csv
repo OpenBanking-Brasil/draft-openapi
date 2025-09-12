@@ -96,7 +96,9 @@ Persistindo excesso após a abreviação de todos os intermediários, aplicar tr
 (aquele pelo qual travestis e transexuais se reconhecem, 
 bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local).
 ";Texto;70;Opcional;^[\w\W]*$;;0;1;"";Não permitido;string;;
-/data/contacts;contacts;Conjunto de informações referentes às formas para contatar o cliente.;Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
+/data/contacts;contacts;"Conjunto de informações referentes às formas para contatar o cliente.
+Os dados deste campo são de envio obrigatório. Só não devem ser enviados caso a instituição não os possua.
+";Objeto;;Obrigatório;;;1;1;"";Não permitido;object;;
 /data/contacts/postalAddresses;postalAddresses;Lista de endereços da pessoa natural;Lista;;Obrigatório;;;0;N;"";Não permitido;array;;
 /data/contacts/postalAddresses/isMain;isMain;Indica se o endereço informado é o principal.;Booleano;;Obrigatório;;;1;1;"";Não permitido;boolean;true;
 /data/contacts/postalAddresses/address;address;Corresponde ao endereço residencial do cliente.;Texto;150;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Av Naburo Ykesaki, 1270;

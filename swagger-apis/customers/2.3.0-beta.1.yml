@@ -608,7 +608,9 @@ components:
           description: Lista e-mails de contato
     PersonalContacts:
       type: object
-      description: Conjunto de informações referentes às formas para contatar o cliente.
+      description: |
+        Conjunto de informações referentes às formas para contatar o cliente.
+        Os dados deste campo são de envio obrigatório. Só não devem ser enviados caso a instituição não os possua.
       required:
         - postalAddresses
         - phones
