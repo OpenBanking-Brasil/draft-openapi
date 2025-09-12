@@ -956,7 +956,7 @@ components:
       properties:
         employerName:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 80
           description: |
             Nome do empregador conforme recebido pela comunicação de portabilidade. O empregador pode ser pessoa natural ou pessoa jurídica, quando se tratar de pessoa jurídica, deve haver o envio da razão social.
@@ -998,7 +998,7 @@ components:
       properties:
         employerName:
           type: string
-          pattern: '^(?!\s)[\w\W\s]*[^\s]$'
+          pattern: '^[^\s](.*[^\s])?$'
           maxLength: 80
           description: |
             Nome do empregador conforme registrado na abertura da conta salário. O empregador pode ser pessoa natural ou pessoa jurídica, quando se tratar de pessoa jurídica, deve haver o envio da razão social.
