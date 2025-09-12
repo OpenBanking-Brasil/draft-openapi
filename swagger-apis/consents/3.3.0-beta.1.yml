@@ -143,7 +143,7 @@ info:
     - No caso de criação ou renovação de consentimentos com prazo indeterminado, a receptora não deve enviar o atributo expirationDateTime. Para prazos determinados o campo deve ser enviado.
     - A renovação de consentimento (`POST /consents/{consentId}/extends`) deve ser possível por apenas um cliente logado. 
     Isso implica que qualquer usuário (`loggedUser`) com permissão para o consentimento Pessoa Jurídica deve ser capaz de finalizar o fluxo de renovação sem redirecionamento. Para consentimentos Pessoa Natural apenas o `loggedUser` criador do consentimento consegue renovar sem redirecionamento.
-  version: 3.2.0
+  version: 3.3.0-beta.1
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0'
@@ -1473,7 +1473,7 @@ components:
         type: string
         pattern: '^[^\s](.*[^\s])?$'
         minLength: 1
-        maxLength: 100
+        maxLength: 255
     xCustomerUserAgentExtensions:
       name: x-customer-user-agent
       in: header
