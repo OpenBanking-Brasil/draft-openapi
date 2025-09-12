@@ -1060,7 +1060,7 @@ components:
           maxLength: 200
           pattern: '[\w\W\s]*'
           example: PGTO
-          description: Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato).
+          description: Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato e fatura).
         billId:
           type: string
           maxLength: 100
@@ -1126,7 +1126,6 @@ components:
           example: '2016-01-29T12:29:03.374Z'
           description: |
             Data e hora da transação disponível para os clientes nos canais digitais da instituição. 
-            Nas compras parceladas, deve-se considerar como data válida aquela em que a parcela se tornou disponível ao cliente nos canais digitais. 
             Neste momento, é obrigatório preencher com dados reais com precisão de data, hora e minuto, mesmo que a instituição não exiba para o cliente nesse nível de granularidade, em algumas situações. 
             Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por exemplo: 2024-01-29T11:15:00.000Z.
         billPostDate:
@@ -1136,8 +1135,7 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
           description: |
-            Data definitiva em que a transação foi inserida na fatura.
-            Para compras parceladas, a data deve ser a data onde a parcela foi efetivamente registrada na fatura do cliente.
+            Data em que a transação foi inserida na fatura.
         payeeMCC:
           type: number
           format: integer
@@ -1145,28 +1143,6 @@ components:
           example: 5137
           description: |
             O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
-        partiePersonType:
-          type: string
-          example: 'PESSOA_NATURAL'
-          enum:
-            - PESSOA_NATURAL
-            - PESSOA_JURIDICA
-          description: |
-            Identificação do Tipo de Pessoa da pessoa envolvida na transação.
-            Pessoa Natural - Informar CPF no campo `partieCnpjCpf`.
-            Pessoa Jurídica - Informar CNPJ no campo `partieCnpjCpf`.
-        partieCnpjCpf:
-          type: string
-          pattern: '^([0-9]{11})$|^([0-9A-Z]{12}[0-9]{2})$'
-          maxLength: 14
-          example: '43908445778'
-          description: 'Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação).'
-        partieName:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 70
-          example: 'Luiza e Benjamin Assessoria Jurídica Ltda'
-          description: 'Nome ou razão socia da pessoa envolvida na transação: pagador ou recebedor.'
     CreditCardAccountsTransaction:
       type: object
       description: Lista que traz os valores relativos aos saldos do Limite de crédito total da conta de pagamento pós-paga
@@ -1271,7 +1247,6 @@ components:
           example: '2016-01-29T12:29:03.374Z'
           description: |
             Data e hora da transação disponível para os clientes nos canais digitais da instituição. 
-            Nas compras parceladas, deve-se considerar como data válida aquela em que a parcela se tornou disponível ao cliente nos canais digitais. 
             Neste momento, é obrigatório preencher com dados reais com precisão de data, hora e minuto, mesmo que a instituição não exiba para o cliente nesse nível de granularidade, em algumas situações. 
             Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por exemplo: 2024-01-29T11:15:00.000Z.
         billPostDate:
@@ -1281,10 +1256,8 @@ components:
           pattern: '^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])$'
           example: '2021-05-21'
           description: |
-            - Para transações já inseridas em fatura: Data definitiva em que a transação foi inserida na fatura. 
-            Para compras parceladas, a data deve ser a data onde a parcela foi efetivamente registrada na fatura do cliente.
-            - Para transações ainda não inseridas em fatura: Preencher com a data de previsão de vencimento da fatura na qual a transação/parcela será inserida, caso exista.
-            - Preencher o campo com a data dummy: 0001-01-01, apenas para os casos nos quais ainda não houver a data de inserção na fatura.
+            Data em que a transação foi inserida na fatura. 
+            Preencher o campo com a data dummy: 0001-01-01, apenas para os casos nos quais ainda não houver a data de inserção na fatura.
         payeeMCC:
           type: number
           format: integer
@@ -1292,28 +1265,6 @@ components:
           example: 5137
           description: |
             O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
-        partiePersonType:
-          type: string
-          example: 'PESSOA_NATURAL'
-          enum:
-            - PESSOA_NATURAL
-            - PESSOA_JURIDICA
-          description: |
-            Identificação do Tipo de Pessoa da pessoa envolvida na transação.
-            Pessoa Natural - Informar CPF no campo `partieCnpjCpf`.
-            Pessoa Jurídica - Informar CNPJ no campo `partieCnpjCpf`.
-        partieCnpjCpf:
-          type: string
-          pattern: '^([0-9]{11})$|^([0-9A-Z]{12}[0-9]{2})$'
-          maxLength: 14
-          example: '43908445778'
-          description: 'Identificação da pessoa envolvida na transação: pagador ou recebedor (Preencher com o CPF ou CNPJ, sem formatação).'
-        partieName:
-          type: string
-          pattern: '[\w\W\s]*'
-          maxLength: 70
-          example: 'Luiza e Benjamin Assessoria Jurídica Ltda'
-          description: 'Nome ou razão socia da pessoa envolvida na transação: pagador ou recebedor.'
     EnumCreditCardAccountFee:
       type: string
       description: |
@@ -1782,9 +1733,9 @@ components:
     fromTransactionDateBills:
       name: fromTransactionDate
       description: |
-        Data final de filtragem.
+        Data inicial de filtragem.
         
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo `toTransactionDate` seja informado. 
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo `fromTransactionDate` seja informado. 
         Caso não seja informado os campos de filtro deve se retornar todas as transações correspondentes a fatura. 
         A filtragem deve ser feita utilizando o campo `transactionDateTime`.
       required: false
@@ -1865,9 +1816,9 @@ components:
     toTransactionDateBills:
       name: toTransactionDate
       description: |
-        Data inicial de filtragem.
+        Data final de filtragem.
         
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo `fromTransactionDate` seja informado. 
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo `toTransactionDate` seja informado. 
         Caso não seja informado os campos de filtro deve se retornar todas as transações correspondentes a fatura. 
         A filtragem deve ser feita utilizando o campo `transactionDateTime`.
       required: false
