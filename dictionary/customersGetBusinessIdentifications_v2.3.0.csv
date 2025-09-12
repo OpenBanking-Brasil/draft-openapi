@@ -28,7 +28,10 @@ O administrador é o responsável por desempenhar todas as funções administrat
 Sócio não tem qualquer envolvimento nas atividades administrativas da sociedade.
 ";Texto;;Obrigatório;;"SOCIO 
 ADMINISTRADOR";1;1;"";Não permitido;string;;
-/data/parties/civilName;civilName;"Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)
+/data/parties/civilName;civilName;"Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+
+Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
 
 [Restrição] O campo civilName deve ser obrigatoriamente preenchido quando personType for PESSOA_NATURAL.
 ";Texto;70;Condicional;[\w\W\s]*;;0;1;" O campo civilName deve ser obrigatoriamente preenchido quando personType for PESSOA_NATURAL.

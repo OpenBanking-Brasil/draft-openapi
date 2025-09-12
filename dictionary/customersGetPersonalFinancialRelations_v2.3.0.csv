@@ -29,7 +29,11 @@ Procurador - é qualquer pessoa que represente a Pessoa Natural em algum negóci
 ";Texto;;Obrigatório;;"REPRESENTANTE_LEGAL 
 PROCURADOR";1;1;"";Não permitido;string;PROCURADOR;
 /data/procurators/cpfNumber;cpfNumber;Número completo do CPF. O CPF é o Cadastro de Pessoa natural. Ele é um documento feito pela Receita Federal e serve para identificar os contribuintes. O CPF é uma numeração com 11 dígitos, que só mudam por decisão judicial. O documento é emitido pela receita federal;Texto;11;Obrigatório;^\d{11}$;;1;1;"";Não permitido;string;73677831148;
-/data/procurators/civilName;civilName;Nome civil completo da pessoa natural. (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte);Texto;70;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Elza Milena Stefany Teixeira;
+/data/procurators/civilName;civilName;"Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+
+Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
+";Texto;70;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Elza Milena Stefany Teixeira;
 /data/procurators/socialName;socialName;Nome social da pessoa natural, se houver. (aquele pelo qual travestis e transexuais se reconhecem, bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Nº 51.180, de 14 de janeiro de 2010);Texto;70;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Carlos;
 /data/accounts;accounts;"Lista de contas depósito à vista, poupança e pagamento pré-pagas mantidas pelo cliente na instituição transmissora.
 ";Lista;;Obrigatório;;;0;N;"";Não permitido;array;;

@@ -22,7 +22,11 @@ Procurador - é qualquer pessoa que represente a Pessoa Natural em algum negóci
 ";Texto;;Obrigatório;;"REPRESENTANTE_LEGAL 
 PROCURADOR";1;1;"";Não permitido;string;PROCURADOR;
 /data/procurators/cnpjCpfNumber;cnpjCpfNumber;Identificação do Representante Legal ou Procurador. Número do cadastro nas Receita Federal  (Preencher com CPF ou CNPJ sem formatação);Texto;14;Obrigatório;^[0-9]{11}|[0-9A-Z]{12}[0-9]{2}$;;1;1;"";Não permitido;string;73677831148;
-/data/procurators/civilName;civilName;Nome civil completo ou Razão Social;Texto;70;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Elza Milena Stefany Teixeira;
+/data/procurators/civilName;civilName;"Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+
+Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
+";Texto;70;Obrigatório;[\w\W\s]*;;1;1;"";Não permitido;string;Elza Milena Stefany Teixeira;
 /data/procurators/socialName;socialName;"Nome social da pessoa natural, se houver. Aquele pelo qual travestis e transexuais se reconhecem, 
 bem como são identificados por sua comunidade e em seu meio social, conforme Decreto Local.
 ";Texto;70;Opcional;[\w\W\s]*;;0;1;"";Não permitido;string;Stefany Teixeirass;
