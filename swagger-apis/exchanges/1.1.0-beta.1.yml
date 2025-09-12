@@ -856,12 +856,11 @@ components:
     XFapiInteractionId:
       description: 'Um UUID [RFC4122](RFC 4122: A Universally Unique IDentifier (UUID) URN Namespace ) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
       type: string
-      required: true
       format: uuid
       pattern: '^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$'
       minLength: 1
       maxLength: 36
-      example: "d78fc4e5-37ca-4da3-adf2-9b082bf92280"  
+      example: 'd78fc4e5-37ca-4da3-adf2-9b082bf92280' 
   parameters:
     OperationId:
       name: operationId
@@ -974,6 +973,8 @@ components:
         x-v:
           $ref: '#/components/headers/X-V'
         x-fapi-interaction-id:
+          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          required: true
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'  
       content:
@@ -986,6 +987,8 @@ components:
         x-v:
           $ref: '#/components/headers/X-V'
         x-fapi-interaction-id:
+          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          required: true
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'  
       content:
@@ -998,6 +1001,8 @@ components:
         x-v:
           $ref: '#/components/headers/X-V'
         x-fapi-interaction-id:
+          description: 'Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela receptora (client) e o seu valor deve ser “espelhado” pela transmissora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a transmissora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A receptora deve acatar o valor recebido da transmissora.'
+          required: true
           schema:
             $ref: '#/components/schemas/XFapiInteractionId'  
       content:
