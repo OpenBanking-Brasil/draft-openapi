@@ -1179,7 +1179,7 @@ components:
           maxLength: 200
           pattern: '[\w\W\s]*'
           example: PGTO
-          description: Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato).
+          description: Literal usada na instituição financeira para identificar a transação. A informação apresentada precisa ser a mesma utilizada nos canais eletrônicos da instituição (extrato e fatura).
         billId:
           type: string
           maxLength: 100
@@ -1735,7 +1735,7 @@ components:
       description: |
         Data inicial de filtragem.
         
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo `fromTransactionDate` seja informado. 
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo `toTransactionDate` seja informado. 
         Caso não seja informado os campos de filtro deve se retornar todas as transações correspondentes a fatura. 
         A filtragem deve ser feita utilizando o campo `transactionDateTime`.
       required: false
@@ -1818,7 +1818,7 @@ components:
       description: |
         Data final de filtragem.
         
-        [Restrição] Deve obrigatoriamente ser enviado caso o campo `toTransactionDate` seja informado. 
+        [Restrição] Deve obrigatoriamente ser enviado caso o campo `fromTransactionDate` seja informado. 
         Caso não seja informado os campos de filtro deve se retornar todas as transações correspondentes a fatura. 
         A filtragem deve ser feita utilizando o campo `transactionDateTime`.
       required: false
