@@ -512,7 +512,11 @@ components:
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Elza Milena Stefany Teixeira
-          description: Nome civil completo ou Razão Social
+          description: |
+            Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+            
+            Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+            Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
         socialName:
           type: string
           maxLength: 70
@@ -1494,7 +1498,10 @@ components:
           pattern: '[\w\W\s]*'
           example: Juan Kaique Cláudio Fernandes
           description: |
-            Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)
+            Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+            
+            Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+            Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
 
             [Restrição] O campo civilName deve ser obrigatoriamente preenchido quando personType for PESSOA_NATURAL.
         socialName:
@@ -1701,7 +1708,11 @@ components:
           maxLength: 70
           pattern: '^[\w\W]*$'
           example: Juan Kaique Cláudio Fernandes
-          description: 'Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)'
+          description: |
+            Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+            
+            Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+            Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
         socialName:
           type: string
           maxLength: 70
@@ -1775,9 +1786,10 @@ components:
                 pattern: '^[\w\W]*$'
                 example: Marcelo Cláudio Fernandes
                 description: |
-                  Nome civil completo da pessoa relativa à filiação.
-                  (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, 
-                  com o qual será identificada por toda a sua vida, bem como após a sua morte).
+                  Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+                  
+                  Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+                  Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
               socialName:
                 type: string
                 maxLength: 70
@@ -1849,7 +1861,11 @@ components:
           maxLength: 70
           pattern: '[\w\W\s]*'
           example: Elza Milena Stefany Teixeira
-          description: 'Nome civil completo da pessoa natural. (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte)'
+          description: |
+            Nome civil completo da pessoa natural (Direito fundamental da pessoa, o nome civil é aquele atribuído à pessoa natural desde o registro de seu nascimento, com o qual será identificada por toda a sua vida, bem como após a sua morte).
+            
+            Caso o nome civil informado exceda o limite de 70 caracteres, devem ser mantidos o primeiro e o último nome completos, realizando abreviação progressiva dos nomes intermediários (reduzindo-os às respectivas iniciais, seguidas de ponto), até que o nome se ajuste ao limite definido. 
+            Persistindo excesso após a abreviação de todos os intermediários, aplicar truncamento simples ao final do campo para respeitar o limite máximo. Não utilizar reticências.
         socialName:
           type: string
           maxLength: 70
