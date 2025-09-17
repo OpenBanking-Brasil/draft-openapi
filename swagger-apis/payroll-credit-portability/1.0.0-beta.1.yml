@@ -1464,6 +1464,8 @@ components:
 
                       `MODALIDADE_DA_OPERACAO_INCOMPATIVEL` - Modalidade divergente da indicada pela instituição proponente
 
+                      `RESERVA_DA_MARGEM` - Não foi possível realizar a reserva da margem consignada pela instituição proponente.
+
                       `OUTROS` - Motivo da rejeição não se encaixa nas opções disponíveis
                     type: string
                     enum:
@@ -1478,6 +1480,7 @@ components:
                       - PORTABILIDADE_EM_ANDAMENTO
                       - CLIENTE_COM_ACAO_JUDICIAL
                       - MODALIDADE_DA_OPERACAO_INCOMPATIVEL
+                      - RESERVA_DA_MARGEM
                       - OUTROS
                   reasonTypeAdditionalInfo: 
                     description: |
@@ -1568,6 +1571,7 @@ components:
                           PORTABILIDADE_EM_ANDAMENTO - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato;   
                           CLIENTE_COM_ACAO_JUDICIAL - Possui ação judicial;   
                           MODALIDADE_DA_OPERACAO_INCOMPATIVEL - Modalidade divergente da indicada pela instituição proponente;  
+                          RESERVA_DA_MARGEM - Não foi possível realizar a reserva da margem consignada pela instituição proponente;  
                           OUTROS - Motivo da rejeição não se encaixa nas opções disponíveis.  
                         enum:
                         - CANCELADO_PELO_CLIENTE
@@ -1581,6 +1585,7 @@ components:
                         - PORTABILIDADE_EM_ANDAMENTO
                         - CLIENTE_COM_ACAO_JUDICIAL
                         - MODALIDADE_DA_OPERACAO_INCOMPATIVEL
+                        - RESERVA_DA_MARGEM
                         - OUTROS
                         example: CANCELADO_PELO_CLIENTE
                       typeAdditionalInfo:
