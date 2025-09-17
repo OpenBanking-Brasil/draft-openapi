@@ -71,6 +71,8 @@ tags:
     description: 'Permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições.'
   - name: Registering Entity
     description: 'Fornece dados do contrato consignado junto a averbadora.'
+  - name: Payments
+    description: 'Informa a Instituição Credora a respeito da liquidação efetuada através da STR exclusiva do OFB.'
 paths:
   /portabilities/{portabilityId}/account-data:
     get:
@@ -78,7 +80,7 @@ paths:
         - Account data
       summary: Obtém os dados necessários para realização do pagamento da operação via TED.
       description: Método responsável por recuperar informações de contas  para realização do pagamento via TED.
-      operationId: payrollCreditPortabilityGetAccountData
+      operationId: payrollCreditPortabilityGetPortabilitiesPortabilityIdAccountData
       parameters:
         - $ref: '#/components/parameters/portabilityId'
         - $ref: '#/components/parameters/Authorization'
@@ -317,6 +319,55 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/OKResponseRegisteringEntity'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - payroll-credit-portability
+  /portabilities/{portabilityId}/payment:
+    post:
+      tags:
+        - Payments
+      summary: Comunica a Instituição Credora a respeito da liquidação da portabilidade de crédito.
+      description: Comunica a Instituição Credora a respeito da liquidação da portabilidade de crédito.
+      operationId: payrollCreditPortabilityGetPortabilitiesPortabilityIdPayment
+      parameters:
+        - $ref: '#/components/parameters/portabilityId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: '#/components/schemas/RequestCreditPortabilityPayment'
+        description: Payload para comunicar a liquidação efetuada pela proponente a credora e iniciar a proxima etapa do fluxo de portabilidade de crédito.
+        required: true
+      responses:
+        '202':
+          $ref: '#/components/responses/POSTResponseCreditPortabilityPayment'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -1840,6 +1891,117 @@ components:
           $ref: '#/components/schemas/Links'
         meta:
           $ref: '#/components/schemas/Meta'
+    RequestCreditPortabilityPayment:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Objeto para notificar a respeito da liquidação efetuada pela proponente a credora
+          required:
+            - paymentDateTime
+            - paymentAmount
+            - transactionId
+          properties:
+              paymentDateTime:
+                type: string
+                maxLength: 20
+                pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                example: "2020-07-21T08:30:00Z"
+                description: |
+                  Data e hora em que o pagamento à instituição credora foi realizado pela instituição proponente. 
+                  Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC-0 (UTC time format)
+              paymentAmount:
+                type: object
+                minItems: 1
+                description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
+                required:
+                  - amount
+                  - currency
+                properties:
+                  amount:
+                    type: string
+                    format: double
+                    maxLength: 20
+                    minLength: 4
+                    pattern: '^\d{1,15}\.\d{2,4}$'
+                    example: '1000.0400'
+                    description: Valor pago para liquidação do contrato de empréstimo.
+                  currency:
+                    type: string
+                    maxLength: 3
+                    minLength: 3
+                    pattern: '^(\w{3}){1}$'
+                    example: 'BRL'
+                    description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+              transactionId:
+                type: string
+                pattern: '^[^\s](?:.*[^\s])?$'
+                maxLength: 20
+                minLength: 1
+                example: 'STR20181108000000013'
+                description: |
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
+                  
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
+    POSTResponseCreditPortabilityPayment:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          minItems: 0
+          description: Objeto para notificar a respeito da liquidação efetuada pela proponente a credora
+          required:
+            - paymentDateTime
+            - paymentAmount
+            - transactionId
+          properties:
+              paymentDateTime:
+                type: string
+                maxLength: 20
+                pattern: ^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)Z$
+                example: "2020-07-21T08:30:00Z"
+                description: |
+                  Data e hora em que o pagamento à instituição credora foi realizado pela instituição proponente. 
+                  Uma string com data e hora conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), sempre com a utilização de timezone UTC-0 (UTC time format)
+              paymentAmount:
+                type: object
+                minItems: 1
+                description: Objeto para representar o valor pago para liquidação do contrato de empréstimo.
+                required:
+                  - amount
+                  - currency
+                properties:
+                  amount:
+                    type: string
+                    format: double
+                    maxLength: 20
+                    minLength: 4
+                    pattern: '^\d{1,15}\.\d{2,4}$'
+                    example: '1000.0400'
+                    description: Valor pago para liquidação do contrato de empréstimo.
+                  currency:
+                    type: string
+                    maxLength: 3
+                    minLength: 3
+                    pattern: '^(\w{3}){1}$'
+                    example: 'BRL'
+                    description: Moeda referenciada ao campo `amount`, segundo modelo ISO-4217.
+              transactionId:
+                type: string
+                pattern: '^[^\s](?:.*[^\s])?$'
+                maxLength: 20
+                minLength: 1
+                example: 'STR20181108000000013'
+                description: |
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
+                  
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
+        meta:
+          $ref: '#/components/schemas/Meta'
     LoansContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -2248,6 +2410,23 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/ResponseRegisteringEntity'
+    POSTResponseCreditPortabilityPayment:
+      description: Dados dos contratos de empréstimo obtidos com sucesso.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/POSTResponseCreditPortabilityPayment'
     BadRequest:
       description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
       headers:
