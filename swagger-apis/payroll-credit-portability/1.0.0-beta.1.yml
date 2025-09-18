@@ -69,6 +69,8 @@ tags:
     description: 'Para evitar o envio de múltiplas solicitações de portabilidade para o mesmo contrato, as instituições devem implementar mecanismos que permitam: recusar solicitações simultâneas de portabilidade de crédito referentes ao mesmo contrato, seja por meio da registradora ou do Open Finance Brasil (OFB), priorizando sempre a solicitação mais antiga.'
   - name: Credit Portability
     description: 'Permite que usuários transfiram suas operações de crédito e arrendamento mercantil entre instituições financeiras em busca de melhores condições.'
+  - name: Registering Entity
+    description: 'Fornece dados do contrato consignado junto a averbadora.'
 paths:
   /portabilities/{portabilityId}/account-data:
     get:
@@ -273,6 +275,48 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/PatchResponseCreditPortabilityCancel'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - payroll-credit-portability
+  '/credit-operations/{contractId}/registering-entity':
+    get:
+      tags:
+        - Registering Entity
+      summary: Obtém os dados necessários para identificar o contrato a ser portado junto a averbadora.
+      description: Obtém os dados necessários para identificar o contrato a ser portado junto a averbadora.
+      operationId: payrollCreditPortabilityGetCreditOperationsContractIdRegisteringEntity
+      parameters:
+        - $ref: '#/components/parameters/contractId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      responses:
+        '200':
+          $ref: '#/components/responses/OKResponseRegisteringEntity'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -583,7 +627,6 @@ components:
                   - contractId
                   - contractNumber
                   - ipocCode
-                  - siapeContractId
                 properties:
                   contractId:
                     type: string
@@ -621,13 +664,6 @@ components:
                       Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
                       
                       - Código do contrato: 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres
-                  siapeContractId:
-                    type: string
-                    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$
-                    maxLength: 20
-                    minLength: 1
-                    example: "12346579841058798Asq"
-                    description: "Número do contrato dado pela instituição contratante no sistema SIAPE do SERPRO."
               proposedContract:
                 type: object
                 minItems: 1
@@ -1076,7 +1112,6 @@ components:
                   - contractId
                   - contractNumber
                   - ipocCode
-                  - siapeContractId
                 properties:
                   contractId:
                     type: string
@@ -1114,13 +1149,6 @@ components:
                       Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) posições com complemento de zeros à esquerda se a identificação tiver tamanho inferior;
                       
                       - Código do contrato: 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
-                  siapeContractId:
-                    type: string
-                    pattern: ^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$
-                    maxLength: 20
-                    minLength: 1
-                    example: "12346579841058798Asq"
-                    description: "Número do contrato dado pela instituição contratante no sistema SIAPE do SERPRO."
               proposedContract:
                 type: object
                 minItems: 1
@@ -1774,6 +1802,44 @@ components:
                     [RESTRIÇÃO] Campo de preenchimento obrigatório quando campo `type` for igual a `OUTROS` ou quando o campo `type` for igual a `RESERVA_DE_MARGEM`.
         meta:
           $ref: '#/components/schemas/Meta'
+    ResponseRegisteringEntity:
+      type: object
+      required:
+        - data
+        - links
+        - meta
+      properties:
+        data:
+          type: object
+          description: Dados para identificação do contrato a ser portado junto a averbadora
+          required:
+            - payrollData
+          properties:
+            payrollData:
+              description: Dados do contrato de empréstimo consignado.
+              type: object
+              required:
+                - contractId
+                - registeringEntity
+              properties:
+                contractId:
+                  type: string
+                  pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$'
+                  maxLength: 20
+                  minLength: 1
+                  description: Número do contrato dado pela instituição contratante no sistema da averbadora.
+                  example: '12346579841058798Asq'
+                registeringEntity:
+                  type: string
+                  enum:
+                    - SERPRO
+                  description: |
+                    Nome da averbadora do empréstimo consignado.
+                  example: 'SERPRO'
+        links:
+          $ref: '#/components/schemas/Links'
+        meta:
+          $ref: '#/components/schemas/Meta'
     LoansContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -2165,6 +2231,23 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/PatchResponseCreditPortabilityCancel'
+    OKResponseRegisteringEntity:
+      description: Dados para auxiliar a identificação do contrato a ser portado junto a averbadora.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/ResponseRegisteringEntity'
     BadRequest:
       description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
       headers:
