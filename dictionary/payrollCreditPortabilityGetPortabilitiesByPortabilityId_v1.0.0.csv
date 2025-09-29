@@ -35,7 +35,6 @@ Para os demais clientes (tipos de cliente 3, 4, 5 e 6), informar 14 (catorze) po
 
 - Código do contrato: 1 (uma) até 40 (quarenta) posições, sem complemento de caracteres.
 ";Texto;67;Obrigatório;^[\w\W]{22,67}$;;1;1;"";Não permitido;string;92792126019929279212650822221989319252576;22
-/data/contractIdentification/siapeContractId;siapeContractId;Número do contrato dado pela instituição contratante no sistema SIAPE do SERPRO.;Texto;20;Obrigatório;^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$;;1;1;"";Não permitido;string;12346579841058798Asq;1
 /data/proposedContract;proposedContract;Proposta da Proponente para Portabilidade de Crédito.;Objeto;;Obrigatório;;;1;;"";Não permitido;object;;
 /data/proposedContract/CET;CET;"CET – Custo Efetivo Total deve ser expresso na forma de taxa percentual anual e incorpora todos os encargos e despesas incidentes nas operações de crédito (taxa de juro, mas também tarifas, tributos, seguros e outras despesas cobradas).
 
@@ -238,6 +237,8 @@ PAYMENT_ISSUE";1;1;"";Não permitido;string;;
 
 `MODALIDADE_DA_OPERACAO_INCOMPATIVEL` - Modalidade divergente da indicada pela instituição proponente
 
+`RESERVA_DA_MARGEM` - Não foi possível realizar a reserva da margem consignada pela instituição proponente.
+
 `OUTROS` - Motivo da rejeição não se encaixa nas opções disponíveis
 ";Texto;;Opcional;;"CANCELADO_PELO_CLIENTE 
 SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE 
@@ -250,6 +251,7 @@ PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO
 PORTABILIDADE_EM_ANDAMENTO 
 CLIENTE_COM_ACAO_JUDICIAL 
 MODALIDADE_DA_OPERACAO_INCOMPATIVEL 
+RESERVA_DA_MARGEM 
 OUTROS";0;1;"";Não permitido;string;;
 /data/statusReason/reasonTypeAdditionalInfo;reasonTypeAdditionalInfo;"Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito.
 Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance 
@@ -293,6 +295,7 @@ PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO - Proponente não realizou a liq
 PORTABILIDADE_EM_ANDAMENTO - Posteriormente à efetivação do pedido de portabilidade, a IF credora identificou que o cliente já possui outro pedido de portabilidade em andamento para o mesmo contrato;   
 CLIENTE_COM_ACAO_JUDICIAL - Possui ação judicial;   
 MODALIDADE_DA_OPERACAO_INCOMPATIVEL - Modalidade divergente da indicada pela instituição proponente;  
+RESERVA_DA_MARGEM - Não foi possível realizar a reserva da margem consignada pela instituição proponente;  
 OUTROS - Motivo da rejeição não se encaixa nas opções disponíveis.  
 ";Texto;;Obrigatório;;"CANCELADO_PELO_CLIENTE 
 SALDO_DEVEDOR_ATUALIZADO_SUBSTANCIALMENTE_DIVERGENTE 
@@ -305,6 +308,7 @@ PORTABILIDADE_CANCELADA_POR_FALTA_DE_LIQUIDACAO
 PORTABILIDADE_EM_ANDAMENTO 
 CLIENTE_COM_ACAO_JUDICIAL 
 MODALIDADE_DA_OPERACAO_INCOMPATIVEL 
+RESERVA_DA_MARGEM 
 OUTROS";1;1;"";Não permitido;string;CANCELADO_PELO_CLIENTE;
 /data/rejection/reason/typeAdditionalInfo;typeAdditionalInfo;"Informação sobre a disponibilidade ou não de um contrato para a portabilidade de crédito. 
 Ao utilizar essa opção, é fortemente recomendável enviar um ticket como sugestão da estrutura Open Finance para discussão e mapeamento em futuras versões.
