@@ -381,7 +381,7 @@ paths:
         '406':
           $ref: '#/components/responses/NotAcceptable'
         '422':
-          $ref: '#/components/responses/UnprocessableEntity'
+          $ref: '#/components/responses/UnprocessableEntityPostPayments'
         '500':
           $ref: '#/components/responses/InternalServerError'
         '504':
@@ -2157,6 +2157,14 @@ components:
         - PARAMETRO_NAO_INFORMADO: Valida se todos os campos obrigatórios são informados.
         - PARAMETRO_INVALIDO: Valida se parâmetros informados obedecem a formatação especificada.
         - NAO_INFORMADO: Demais validações não explicitamente informadas.
+    EnumErrorsRequestPayments:
+      type: string
+      enum:
+        - PAGAMENTO_EFETUADO_FORA_PRAZO
+      example: PAGAMENTO_EFETUADO_FORA_PRAZO
+      description: |
+        Códigos de erros previstos para portabilidade de crédito:
+        - PAGAMENTO_EFETUADO_FORA_PRAZO: Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE. Obs.: Caso o pagamento tenha sido feito por engano a Instituição Proponente deve solicitar o estorno.
     Meta:
       type: object
       description: Meta informações referentes à API requisitada.
@@ -2240,6 +2248,43 @@ components:
             properties:
               code:
                 $ref: '#/components/schemas/EnumErrorsRequestPortability'
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          type: object
+          properties:
+            requestDateTime:
+              description: 'Data e hora da consulta, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+    422ResponseErrorPostPayments:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 0
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                $ref: '#/components/schemas/EnumErrorsRequestPayments'
               title:
                 description: Título legível por humanos deste erro específico
                 type: string
@@ -2672,6 +2717,33 @@ components:
                   - code: EM_ANDAMENTO
                     title: já existe um pedido de portabilidade de crédito para o contrato solicitado
                     detail: já existe um pedido de portabilidade de crédito para o contrato solicitado
+                meta:
+                  requestDateTime: '2021-05-21T08:30:00Z'
+    UnprocessableEntityPostPayments:
+      description: A sintaxe da requisição está correta, mas não foi possível processar as instruções presentes.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/422ResponseErrorPostPayments'
+          examples:
+            Saldo insuficiente:
+              summary: Pagamento efetuado fora do prazo
+              value:
+                errors:
+                  - code: PAGAMENTO_EFETUADO_FORA_PRAZO
+                    title: Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE
+                    detail: Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
     SiteIsOverloaded:
