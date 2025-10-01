@@ -1945,8 +1945,12 @@ components:
           pattern: '[\w\W\s]*'
           example: '01'
           description: |
-            Campo livre, de preenchimento obrigatório. Se selecionada a opção *occupationCode* "RECEITA_FEDERAL" ou "CBO", informar o código desta lista padronizada.   
-            Se selecionada *occupationCode* "OUTRO", informar o descritivo da ocupação quando a IF não segue a lista padronizada da Receita Federal e nem da CBO.
+            Campo de livre preenchimento para informar o código da ocupação ou um descritivo da ocupação. Ao preencher o campo atentar para o seguintes pontos:
+            - Quando selecionada a opção `occupationCode` `RECEITA_FEDERAL` ou `CBO`, informar o código desta lista padronizada;
+            - Se selecionada `occupationCode` `OUTRO`, informar o descritivo da ocupação quando a IF não segue a lista padronizada da Receita Federal e nem da CBO;
+            - No envio do código padronizado da Receita Federal e CBO, informar somente o código conforme consta nas listas correspondentes.
+            
+            [Restrição] Este campo é de envio obrigatório quando o campo `/data/occupationCode` for enviado. 
         informedIncome:
           $ref: '#/components/schemas/InformedIncome'
         informedPatrimony:
