@@ -442,8 +442,8 @@ components:
               type: string
               format: double
               description: Quantidade de títulos detidos na data da posição do cliente
-              maxLength: 24
-              pattern: '^\d{1,15}\.\d{2,8}$'
+              maxLength: 26
+              pattern: '^\d{1,15}\.\d{2,10}$'
               example: '1000.0004'
             updatedUnitPrice:
               type: object
@@ -456,8 +456,8 @@ components:
                   description: Valor relacionado ao objeto.
                   type: string
                   format: double
-                  maxLength: 24
-                  pattern: '^\d{1,15}\.\d{2,8}$'
+                  maxLength: 26
+                  pattern: '^\d{1,15}\.\d{2,10}$'
                   example: '1000.000004'
                 currency:
                   $ref: '#/components/schemas/BalanceCurrency'
