@@ -908,7 +908,7 @@ components:
           description: Data da movimentação.
         transactionUnitPrice:
           type: object
-          description: Preço unitário bruto negociado nas transferências de custódia, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU marcado pela instituição na data de transferência.
+          description: Preço unitário bruto negociado na transação. Para os casos de `transactionType` definido como `TRANSFERENCIA_CUSTODIA`, quando o PU original (da instituição de origem) não estiver disponível para a transmissora, deve ser informado o PU da data de transferência. Para os demais casos vale o preço unitário original (da instituição de origem).
           required:
             - amount
             - currency
