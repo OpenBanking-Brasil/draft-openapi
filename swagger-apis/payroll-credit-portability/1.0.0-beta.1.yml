@@ -393,6 +393,56 @@ paths:
       security:
         - OAuth2ClientCredentials:
             - payroll-credit-portability
+    
+  /portabilities/{portabilityId}/payment-reversal:
+    post:
+      tags:
+        - Payments
+      summary: Solicita o estorno da STR efetuada para liquidar o contrato consignado devido ao fato da Instituição Credora não ter desaverbado o contrato em tempo ábil conforme SLA definido pela SERPRO de 10 dias contados a partir da data de criação da solicitação da reserva da mergem para Instituição Proponente.
+      description: Solicita o estorno da STR efetuada para liquidar o contrato consignado.
+      operationId: payrollCreditPortabilityPostPortabilitiesPortabilityIdPaymentReversal
+      parameters:
+        - $ref: '#/components/parameters/portabilityId'
+        - $ref: '#/components/parameters/Authorization'
+        - $ref: '#/components/parameters/xFapiAuthDate'
+        - $ref: '#/components/parameters/xFapiCustomerIpAddress'
+        - $ref: '#/components/parameters/xFapiInteractionId'
+        - $ref: '#/components/parameters/xCustomerUserAgent'
+      requestBody:
+        content:
+          application/jwt:
+            schema:
+              $ref: '#/components/schemas/RequestCreditPortabilityPaymentReversal'
+        description: Payload para comunicar a liquidação efetuada pela proponente a credora e iniciar a proxima etapa do fluxo de portabilidade de crédito.
+        required: true
+      responses:
+        '202':
+          $ref: '#/components/responses/POSTResponseCreditPortabilityPaymentReversal'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '405':
+          $ref: '#/components/responses/MethodNotAllowed'
+        '406':
+          $ref: '#/components/responses/NotAcceptable'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntityPostPaymentReversal'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+        '504':
+          $ref: '#/components/responses/GatewayTimeout'
+        '529':
+          $ref: '#/components/responses/SiteIsOverloaded'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - OAuth2ClientCredentials:
+            - payroll-credit-portability
 components:
   schemas:
     ResponseAccountData:
@@ -2010,6 +2060,102 @@ components:
                   No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
         meta:
           $ref: '#/components/schemas/Meta'
+    RequestCreditPortabilityPaymentReversal:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          description: Objeto para notificar a respeito da solicita o estorno da STR efetuada para liquidar o contrato consignado.
+          required:
+            - transactionId
+            - payrollData
+          properties:
+              transactionId:
+                type: string
+                pattern: '^[^\s](?:.*[^\s])?$'
+                maxLength: 20
+                minLength: 1
+                example: 'STR20181108000000013'
+                description: |
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
+                  
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
+              payrollData:
+                description: Dados do contrato de empréstimo consignado.
+                type: object
+                required:
+                  - contractId
+                  - registeringEntity
+                properties:
+                  contractId:
+                    type: string
+                    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$'
+                    maxLength: 20
+                    minLength: 1
+                    description: Número do contrato dado pela instituição contratante no sistema da averbadora.
+                    example: '12346579841058798Asq'
+                  registeringEntity:
+                    type: string
+                    enum:
+                      - SERPRO
+                    description: |
+                      Nome da averbadora do empréstimo consignado.
+                    example: 'SERPRO'
+    POSTResponseCreditPortabilityPaymentReversal:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          type: object
+          minItems: 0
+          description: Objeto para notificar a respeito da solicita o estorno da STR efetuada para liquidar o contrato consignado.
+          required:
+            - transactionId
+            - payrollData
+          properties:
+              transactionId:
+                type: string
+                pattern: '^[^\s](?:.*[^\s])?$'
+                maxLength: 20
+                minLength: 1
+                example: 'STR20181108000000013'
+                description: |
+                  Identificador da transação utilizada para proponente liquidar a portabilidade de crédito com a credora.
+                  
+                  No contexto da STR0052, utilizar o valor do campo de retorno NumCtrlSTR (Numero de Controle da STR)
+              payrollData:
+                description: Dados do contrato de empréstimo consignado.
+                type: object
+                required:
+                  - contractId
+                  - registeringEntity
+                properties:
+                  contractId:
+                    type: string
+                    pattern: '^[a-zA-Z0-9][a-zA-Z0-9-]{0,19}$'
+                    maxLength: 20
+                    minLength: 1
+                    description: Número do contrato dado pela instituição contratante no sistema da averbadora.
+                    example: '12346579841058798Asq'
+                  registeringEntity:
+                    type: string
+                    enum:
+                      - SERPRO
+                    description: |
+                      Nome da averbadora do empréstimo consignado.
+                    example: 'SERPRO'
+        meta:
+            type: object
+            properties:
+              requestDateTime:
+                description: 'Data e hora da consulta, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.'
+                type: string
+                maxLength: 20
+                format: date-time
+                example: '2021-05-21T08:30:00Z'
     LoansContractInterestRate:
       type: object
       description: Objeto que traz o conjunto de informações necessárias para demonstrar a composição das taxas de juros remuneratórios da Modalidade de crédito
@@ -2181,6 +2327,14 @@ components:
       description: |
         Códigos de erros previstos para portabilidade de crédito:
         - PAGAMENTO_EFETUADO_FORA_PRAZO: Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE. Obs.: Caso o pagamento tenha sido feito por engano a Instituição Proponente deve solicitar o estorno.
+    EnumErrorsPostPaymentReversal:
+      type: string
+      enum:
+        - DESAVERBACAO_POSSIVEL
+      example: DESAVERBACAO_POSSIVEL
+      description: |
+        Códigos de erros previstos para portabilidade de crédito:
+        - DESAVERBACAO_POSSIVEL: A Instituição credora tem um SLA de 10 dias contados apartir da comunicação do pagamento através do endpoint [POST] /portabilities/{portabilityId}/payment para realizar desaverbar o contrato consignado de empréstimo junto ao SERPRO.
     Meta:
       type: object
       description: Meta informações referentes à API requisitada.
@@ -2338,6 +2492,43 @@ components:
             properties:
               code:
                 $ref: '#/components/schemas/EnumErrorsPostPayments'
+              title:
+                description: Título legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 255
+              detail:
+                description: Descrição legível por humanos deste erro específico
+                type: string
+                pattern: '[\w\W\s]*'
+                maxLength: 2048
+        meta:
+          type: object
+          properties:
+            requestDateTime:
+              description: 'Data e hora da consulta, conforme especificação [RFC-3339](https://datatracker.ietf.org/doc/html/rfc3339), formato UTC.'
+              type: string
+              maxLength: 20
+              format: date-time
+              example: '2021-05-21T08:30:00Z'
+    422ResponseErrorPostPaymentReversal:
+      type: object
+      required:
+        - errors
+      properties:
+        errors:
+          type: array
+          minItems: 0
+          maxItems: 13
+          items:
+            type: object
+            required:
+              - code
+              - title
+              - detail
+            properties:
+              code:
+                $ref: '#/components/schemas/EnumErrorsPostPaymentReversal'
               title:
                 description: Título legível por humanos deste erro específico
                 type: string
@@ -2592,6 +2783,23 @@ components:
         application/jwt:
           schema:
             $ref: '#/components/schemas/POSTResponseCreditPortabilityPayment'
+    POSTResponseCreditPortabilityPaymentReversal:
+      description: Dados da solicita o estorno da STR efetuada para liquidar o contrato consignado.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/POSTResponseCreditPortabilityPaymentReversal'
     BadRequest:
       description: A requisição foi malformada, omitindo atributos obrigatórios, seja no payload ou através de atributos na URL.
       headers:
@@ -2824,6 +3032,33 @@ components:
                   - code: PAGAMENTO_EFETUADO_FORA_PRAZO
                     title: Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE
                     detail: Estado da portabilidade diferente de ACCEPTED_SETTLEMENT_IN_PROGRESS ou PAYMENT_ISSUE
+                meta:
+                  requestDateTime: '2021-05-21T08:30:00Z'
+    UnprocessableEntityPostPaymentReversal:
+      description: A sintaxe da requisição está correta, mas não foi possível processar as instruções presentes.
+      headers:
+        x-fapi-interaction-id:
+          description: |
+            Um UUID [RFC4122](https://tools.ietf.org/html/rfc4122) usado como um ID de correlação entre request e response. Campo de geração e envio obrigatório pela IF Proponente (client) e o seu valor deve ser “espelhado” pela IF Credora (server) no cabeçalho de resposta. Caso não seja recebido ou se for recebido um valor inválido, a IF Credora deve gerar um x-fapi-interaction-id e retorná-lo na resposta com o HTTP Status Code 400. A IF Proponente deve acatar o valor recebido da IF Credora.
+          schema:
+            $ref: '#/components/schemas/XFapiInteractionId'
+        x-v:
+          description: |
+            Cabeçalho de envio obrigatório que indica a versão implementada da API pela instituição financeira. Deve ser preenchido de forma completa, por exemplo: x-v : 1.0.2
+          schema:
+            $ref: '#/components/schemas/X-V'
+      content:
+        application/jwt:
+          schema:
+            $ref: '#/components/schemas/422ResponseErrorPostPaymentReversal'
+          examples:
+            Saldo insuficiente:
+              summary: DESAVERBACAO_POSSIVEL
+              value:
+                errors:
+                  - code: DESAVERBACAO_POSSIVEL
+                    title: Desaverbação ainda no prazo do SLA de 10 dias.
+                    detail: Desaverbação ainda no prazo do SLA de 10 dias.
                 meta:
                   requestDateTime: '2021-05-21T08:30:00Z'
     SiteIsOverloaded:
