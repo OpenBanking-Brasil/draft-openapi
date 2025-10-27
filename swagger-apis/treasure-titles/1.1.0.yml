@@ -700,8 +700,7 @@ components:
       format: double
     TreasureTitlesGrossAmount:
       description: |
-        Valor do investimento anterior à dedução de impostos, taxas e
-        tarifas (se houver), atualizado (a mercado) na data de referência.
+        Valor do investimento anterior à dedução de impostos, taxas e tarifas (se houver), atualizado (a mercado) na data de referência. Importante: Apenas o imposto e o IOF são compartilhados na versão atual da especificação, porém outras taxas podem ser aplicáveis no cálculo desse valor.   
       type: object
       required:
         - amount
@@ -821,7 +820,7 @@ components:
           example: '2021-05-21T08:30:00Z'
       additionalProperties: false
     TreasureTitlesNetAmount:
-      description: 'Valor do investimento posterior a dedução de impostos, taxas e tarifas (se houver), atualizado (a mercado) na data de referência.'
+      description: 'Valor do investimento posterior a dedução de impostos, taxas e tarifas (se houver), atualizado (a mercado) na data de referência. Importante: Apenas o imposto e o IOF são compartilhados na versão atual da especificação, porém outras taxas podem ser aplicáveis no cálculo desse valor.  '
       type: object
       required:
         - amount
