@@ -40,7 +40,7 @@ info:
     ### `/accounts/{accountId}/overdraft-limits`
       - permissions:
         - GET: **ACCOUNTS_OVERDRAFT_LIMITS_READ**
-    ### `/accounts/{accountId}/reserved-balances`
+    ### `/accounts/{accountId}/reserved_balances`
       - permissions:
         - GET: **ACCOUNTS_BALANCES_READ**
 
@@ -415,7 +415,7 @@ paths:
           OAuth2Security:
             - 'consent:consentId'
             - accounts
-  '/accounts/{accountId}/reserved-balances':
+  '/accounts/{accountId}/reserved_balances':
     get:
       tags:
         - Accounts
@@ -636,7 +636,7 @@ components:
           type: boolean
           description: |
             Informa se o cliente possui um saldo reservado. Caso o cliente possua reservas de saldo ativas, inclusive nos casos de saldo zerado, o valor enviado deve ser `TRUE`.
-            Caso o cliente não possua o produto, deve ser `FALSE`. Se o campo retornar `TRUE`, os dados do saldo reservado se encontram no endpoint `GET /accounts/{accountId}/reserved-balances`
+            Caso o cliente não possua o produto, deve ser `FALSE`. Se o campo retornar `TRUE`, os dados do saldo reservado se encontram no endpoint `GET /accounts/{accountId}/reserved_balances`
             
             [Restrição] Campo de envio obrigatório pela transmissora que oferta produtos de reservas de saldo atrelados à conta. 
             Este campo refere-se exclusivamente a saldos de reserva que não estão associados a investimentos. 
