@@ -75,7 +75,7 @@ info:
       | OUTROS            | D0                      | Fatura fechada        |
       |-------------------|-------------------------|-----------------------|
       ```
-  version: 2.4.0-rc.1
+  version: 2.4.0-beta.2
   license:
     name: Apache 2.0
     url: 'https://www.apache.org/licenses/LICENSE-2.0'
@@ -1125,9 +1125,9 @@ components:
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           example: '2016-01-29T12:29:03.374Z'
           description: |
-            Data e hora da transação. 
-
-            Nas compras parceladas, o `transactionDateTime` deve ser idêntico em todas as parcelas. O campo deve obrigatoriamente refletir a informação exibida ao cliente nos canais digitais da instituição, com precisão de data, hora e minuto — mesmo que a instituição não exiba esse nível de granularidade em seus canais. Nesses casos, os segundos e milissegundos podem ser preenchidos com zero (0). Exemplo: 2024-01-29T11:15:00.000Z.
+            Data e hora da transação disponível para os clientes nos canais digitais da instituição. 
+            Neste momento, é obrigatório preencher com dados reais com precisão de data, hora e minuto, mesmo que a instituição não exiba para o cliente nesse nível de granularidade, em algumas situações. 
+            Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por exemplo: 2024-01-29T11:15:00.000Z.
         billPostDate:
           type: string
           format: date
@@ -1249,9 +1249,9 @@ components:
           pattern: '(^(\d{4})-(1[0-2]|0?[1-9])-(3[01]|[12][0-9]|0?[1-9])T(?:[01]\d|2[0123]):(?:[012345]\d):(?:[012345]\d)\.(?:[0-9]){3}Z$)'
           example: '2016-01-29T12:29:03.374Z'
           description: |
-            Data e hora da transação. 
-
-            Nas compras parceladas, o `transactionDateTime` deve ser idêntico em todas as parcelas. O campo deve obrigatoriamente refletir a informação exibida ao cliente nos canais digitais da instituição, com precisão de data, hora e minuto — mesmo que a instituição não exiba esse nível de granularidade em seus canais. Nesses casos, os segundos e milissegundos podem ser preenchidos com zero (0). Exemplo: 2024-01-29T11:15:00.000Z.
+            Data e hora da transação disponível para os clientes nos canais digitais da instituição. 
+            Neste momento, é obrigatório preencher com dados reais com precisão de data, hora e minuto, mesmo que a instituição não exiba para o cliente nesse nível de granularidade, em algumas situações. 
+            Dessa forma, os segundos e milissegundos podem ser preenchidos com zero (0), por exemplo: 2024-01-29T11:15:00.000Z.
         billPostDate:
           type: string
           format: date
