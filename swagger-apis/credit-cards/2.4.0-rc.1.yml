@@ -1143,6 +1143,8 @@ components:
           example: 5137
           description: |
             O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
+
+            [Restrição] Informação de envio obrigatório quando o valor do campo transactionType for igual a PAGAMENTO.
     CreditCardAccountsTransaction:
       type: object
       description: Lista que traz os valores relativos aos saldos do Limite de crédito total da conta de pagamento pós-paga
@@ -1156,6 +1158,7 @@ components:
         - amount
         - transactionDateTime
         - billPostDate
+        - billForecastDate
       properties:
         transactionId:
           type: string
@@ -1258,6 +1261,16 @@ components:
           description: |
             Data em que a transação foi inserida na fatura. 
             Preencher o campo com a data dummy: 0001-01-01, apenas para os casos nos quais ainda não houver a data de inserção na fatura.
+        billForecastDate:
+          type: string
+          pattern: '^(\d{4})-(1[0-2]|0?[1-9])$'
+          example: '2021-05'
+          description: |
+            Mês e ano em que a transação/parcela será faturada, podendo ser uma fatura aberta, futura ou fechada.
+
+            - Caso seja uma transação futura, essa data poderá ser ajustada conforme o cliente altere os ciclos de sua fatura. Independentemente disso, o mês e o ano devem corresponder exatamente à previsão de cobrança dessa parcela.
+
+            - Todas as transações devem ser refletidas de forma idêntica aos canais digitais, e, caso não estejam nos canais, devem ser apresentadas conforme a previsão de cobrança da casa.
         payeeMCC:
           type: number
           format: integer
@@ -1265,6 +1278,8 @@ components:
           example: 5137
           description: |
             O MCC ou o código da categoria do estabelecimento comercial. Os MCCs são agrupados segundo suas similaridades. O MCC é usado para classificar o negócio pelo tipo fornecido de bens ou serviços. Os MCCs são atribuídos por tipo de comerciante (por exemplo, um para hotéis, um para lojas de materiais de escritório, etc.) ou por nome de comerciante (por exemplo, 3000 para a United Airlines).
+
+            [Restrição] Informação de envio obrigatório quando o valor do campo transactionType for igual a PAGAMENTO.
     EnumCreditCardAccountFee:
       type: string
       description: |
